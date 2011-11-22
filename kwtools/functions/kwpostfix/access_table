@@ -1,0 +1,224 @@
+# Funktion access_table{{{
+#
+# usage: access_table [ -c ] $FILE
+# -c - Tabellenformat cidr Unterstuetzung
+#
+# }
+#
+access_table() {
+	unset -- CIDR
+	autoload -U no_ok_and_dunno_txt_msg
+	if [ "$#" = 2 ] ; then
+		FILE="$2"
+		CIDR=Yes
+	else
+		FILE="$1"
+	fi
+# Funktion access_menue{{{
+access_menue() {
+	ACCESS_MENU=$(gettext 'Adresse "$ADR" Aktion "$ACTION" Text "$TEXT" $gv_Save "" $gv_Back ""')
+	menubox "$TABLE_TITLE" "$gv_Menupoint" "$ACCESS_MENU"
+}
+#}}}
+# Funktion access_aendern{{{
+access_aendern() {
+access_menue
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help "$TAB_HELP"
+			access_menue
+			;;
+		Ad*)
+			# Adresse auswählen{{{
+			U_OPT=regexp
+			ADR_MSG=$(gettext 'Geben Sie bitte eine Mailadresse, User, IP, domain, ... ein (Bsp. user@ | @domain.de | user@domain.de | 192.168. | 192.168.0.1 ).')
+			inputbox "TABLE_TITLE" "$ADR_MSG" "$ADR"
+			if [ "$gv_Auswahl" ] ; then
+				if [ "$CIDR" = Yes ] ; then
+					case "$gv_Auswahl" in
+						[0-9]*.[0-9]*.[0-9]*.[0-9]*/[0-9]*)
+							ADR="$gv_Auswahl"
+							;;
+						*)	no_input_msg
+							unset -- ADR
+							;;
+					esac
+				else
+					case "$gv_Auswahl" in
+						[a-z,A-Z,0-9]*[@]*|.[a-z,A-Z,0-9-_]*.*|[0-9]*.|@[a-z,A-Z,0-9]*.*)
+							# Usernamen/subdomains/alle so beginnenden IP's uebernehmen
+							ADR="$gv_Auswahl"
+							;;
+						[0-9]*.0)
+							# IP-Netz ueberpruefen
+							ADR="${gv_Auswahl%0}"
+							;;
+						[0-9]*.[0-9]*.*)
+							# IP Adresse uebernehmen
+							ADR="$gv_Auswahl"
+							;;
+						[a-z,A-Z,0-9]*[a-z,A-Z,0-9-_.]*.*)
+							# Host, Domainnamen uebernehmen/pruefen
+							ADR="$gv_Auswahl"
+							;;
+						*)	no_input_msg
+							unset -- ADR
+							;;
+					esac
+				fi
+			else
+				no_input_msg
+				unset -- ADR
+			fi
+			#}}}
+			access_menue
+			;;
+		A[ck]tion)
+			# Aktion auswählen
+			kwpostfix_action
+			case $ACTION in
+				OK|DUNNO)	unset -- TEXT
+					;;
+			esac
+			access_menue
+			;;
+		Text)
+			# Nachricht eintippen die gesendet wird.{{{
+			case $ACTION in
+				OK|DUNNO)	unset -- TEXT
+					no_ok_and_dunno_txt_msg
+					;;
+				*)
+					U_OPT=regexp
+					ERROR_MSG=$(gettext 'Geben Sie einen Text ein, der auf einen bestimmten Fehlercode oder Aktion gesendet werden soll.')
+					inputbox "$TABLE_TITLE" "$ERROR_MSG" "$TEXT"
+					if [ "$gv_Auswahl" ] ; then
+						TEXT="`print $gv_Auswahl | sed -e 's#"#\\\\"#g ; s#\\$#\\\\$#g'`"
+					else
+						unset -- TEXT
+						no_input_msg
+					fi
+					;;
+			esac
+			#}}}
+			access_menue
+			;;
+		$gv_Save)
+			# speichern{{{
+			if [ -n "$TEXT" ] ; then
+				TXT="`print $TEXT | sed -e 's#\\\##g'`"
+			fi
+			if [ "$ADR" -a "$ACTION" ] ; then
+				if [ "$AENDERN_ADR" ] ; then
+					sed -e "s#^${AENDERN_ADR// /.*}.*#${ADR}	${ACTION} ${TXT}#" $FILE >$FILE$$
+					mv $FILE$$ $FILE
+				else
+					grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
+					>> $FILE$$ <<< "$ADR $ACTION $TXT"
+					mv $FILE$$ $FILE
+				fi
+			else
+				MSG=$(gettext 'Sie muessen mindestens die Menuepunkte Adresse und Aktion belegen.')
+				msgbox "$gv_Attention" "$MSG"
+			fi
+			#}}}
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+}
+#}}}
+tabellen_menue
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help tab_help
+			tabellen_menue
+			;;
+		$gv_Display)
+			# Ansicht der Einträge
+			tab_ansicht
+			tabellen_menue
+			;;
+		$gv_Create)
+			# Werte anlegen
+			unset -- ADR CODE ACTION TEXT AENDERN_ADR
+			access_aendern
+			tabellen_menue
+			;;
+		$gv_Change)
+			# Eintraege aendern{{{
+			unset ADR CODE ACTION TEXT
+			key_value "$FILE"
+			if [ "$AUSWAHL" ] ; then
+				CHANGE_MENU=($AUSWAHL)
+				U_OPT=regexp
+				menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help tab_wert_help
+							menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+							;;
+						*)	#
+							# Auswahl verändern
+							#
+							print "$gv_Auswahl" | sed -e 's#\\\"#\\\"#g ; s#\\\.#\\\\\\.#g ; 
+								s#\\\s#\\\\\\s#g ; s#"\$#\\"\\\\$#g ; s#\"#\\\\"#g' | \
+							while read ADRESSE ACT REST ; do
+								ADR="$ADRESSE"
+								ACTION="$ACT"
+								TEXT="$REST"
+							done
+							AENDERN_ADR="$ADR $ACTION $TEXT"
+							access_aendern
+							break
+							;;
+					esac
+				done
+			else
+				no_entry_msg
+			fi
+			#}}}
+			tabellen_menue
+			;;
+		$gv_Delete)
+			# Einträge löschen{{{
+			#
+			key_value "$FILE"
+			if [ "$AUSWAHL_MULTI" ] ; then
+				DEL_MENU=($AUSWAHL_MULTI)
+				U_OPT=no
+				checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help kwpostfix_del_help
+							U_OPT=no
+							checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+							;;	
+						*)	# Löschen
+							 while read ADRESS ; do
+								grep -v "^${ADRESS// /.*}" $FILE >$FILE$$
+								mv $FILE$$ $FILE
+							done <${gv_LogFile}$$
+							break
+							;;
+					esac
+				done
+			else
+				no_entry_msg
+			fi
+			#}}}
+			tabellen_menue
+			;;
+		D*)
+			# Datenbank neu erzeugen und Postfix anweisen die Einstellungen neu einzulesen
+			db_new_reread "$WAS_IST" "$FILE"
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+}
+#}}}

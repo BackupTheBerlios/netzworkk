@@ -1,0 +1,17 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+BIN_PATH=/usr/bin
+
+for i in create.cal.pl kwholiday kwtex-cal kwplaner kwtermin ; do
+	rm -f ${BIN_PATH}/${i} &>/dev/null
+done
+
+cd $DIR
+for i in kwplaner kwtermin ; do
+	rm -rf ${i}* &>/dev/null
+done
+
+rm -rf ${DIR%/*/*}/doc/kwtools-utils-pim &>/dev/null
+exit 0
+

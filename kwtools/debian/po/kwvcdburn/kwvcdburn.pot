@@ -1,0 +1,218 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-16 16:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../multi/kwvcdburn:43
+msgid "Konfigurationsuebernahme"
+msgstr ""
+
+#: ../../multi/kwvcdburn:44
+#, sh-format
+msgid ""
+"Soll die Konfigurations Datei ${gv_HomePath}/.kwtools/vcdburnrc nach "
+"${gv_HomePath}/.kwtools/kwvcdburnrc uebernommen werden (ja/nein)? Bei nein "
+"wird die alte Konfigurationsdatei nur geloescht."
+msgstr ""
+
+#: ../../multi/kwvcdburn:76
+msgid ""
+"Vergeben Sie einen Namen fuer die Video-CD ohne .cue Endung, ansonsten "
+"heisst sie videocd.cue."
+msgstr ""
+
+#: ../../multi/kwvcdburn:77
+msgid ""
+"Vergeben Sie einen Namen fuer die Photo-CD ohne .cue Endung, ansonsten wird "
+"die Datei photocd.cue genannt."
+msgstr ""
+
+#: ../../multi/kwvcdburn:80
+msgid "Video-CD"
+msgstr ""
+
+#: ../../multi/kwvcdburn:81
+msgid "Photo-CD"
+msgstr ""
+
+#: ../../multi/kwvcdburn:82
+msgid "brennen"
+msgstr ""
+
+#: ../../multi/kwvcdburn:135
+msgid ""
+"Soll aus allen Dateien eine einheitliche Video-CD Struktur erzeugt werden "
+"(Ja/nein)?"
+msgstr ""
+
+#: ../../multi/kwvcdburn:142
+#, sh-format
+msgid "Erzeuge Video-CD ${FILE_NAME}.cue aus de(r/n) Dateie(n) ${FILE_NAME}."
+msgstr ""
+
+#: ../../multi/kwvcdburn:152
+msgid "Erzeuge Video-CD: ${file% }."
+msgstr ""
+
+#: ../../multi/kwvcdburn:228
+msgid "Auswahl"
+msgstr ""
+
+#: ../../multi/kwvcdburn:229
+msgid "komplett"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:8
+msgid "Mountverz."
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:9
+msgid "Video_Typ"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:10
+msgid "Bildformat"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:11
+msgid "Groesse"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:12
+msgid "Framerate"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:13
+msgid "Framegroesse"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:62
+msgid "vcd1"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:63
+msgid "vcd2"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:64
+msgid "svcd"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:65
+msgid "hqvcd"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:68
+msgid "Waehlen Sie einen Video-CD Typ aus."
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:99
+msgid "Waehlen Sie das Bildformat aus (Standard ist 2)."
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:131
+msgid ""
+"Geben Sie die Bildgroesse, in Kilobyte als Integer Zahl, ein (Standard ist "
+"200)."
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:146
+msgid "Waehlen Sie die Framerate aus (Standard ist 25)."
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:177
+msgid "MONOCHROM"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:178
+msgid "VCD"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:179
+msgid "SVCD"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:180
+msgid "DVD"
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:183
+msgid ""
+"Waehlen Sie die Framegroesse aus oder geben Sie sie ein (Standard sind "
+"480x576/PAL/SVCD)."
+msgstr ""
+
+#: ../../functions/kwvcdburn/kwvcdburn_conf:204
+msgid "Geben Sie die Framegroesse ein (z. B. 480x576/PAL/SVCD)"
+msgstr ""
+
+#: ../../help/kwvcdburn/conf_help:3
+msgid ""
+"Mount Verz.: Mount Verzeichnis waehlen das eventuell vorher\n"
+"\\teingebunden werden muss. Dieses muss in der /etc/fstab bekannt sein und\n"
+"\\tSie muessen auch dementsprechende Rechte besitzen.\n"
+"\n"
+"Verz.: Waehlen Sie ein Standardverzeichnis, in welchen ihre Film \n"
+"\\tOrdner liegen. Ansonsten wird das Home Verzeichnis genommen.\n"
+"\n"
+"Video_Typ: Hier sollten Sie ihr Video CD Format waehlen, falls Sie \n"
+"\\tnicht SVCD (Standard) benutzen wollen. Es stehen vcd1 \n"
+"\\tvcd2, svcd und hqvcd zur Verfuegung.\n"
+"\n"
+"Bildformat: Waehlen Sie das Bildformat aus. Zur Verfuegung stehen\n"
+"\\t1=1:1, 2=4:3, 3=16:9 und 4=2.21:1. Standard ist 2.\n"
+"\n"
+"Groesse: Geben Sie die Groesse des Bildes, in KByte, ein. Standard\n"
+"\\tist 200.\n"
+"\n"
+"Framerate: Auswahl der Framerate. Zur Auswahl stehen 25 (PAL/EU)\n"
+"\\tund 30000 (NTSC/amerikanischer Kontinent). Standard ist 25.\n"
+"\n"
+"Framegroesse: Auswahl oder Eingabe der Groesse fuer die Frames.\n"
+"\\tZur Auswahl stehen MONOCHROM, VCD, SVCD und DVD. Standard ist\n"
+"\\t480x576 (PAL/SVCD."
+msgstr ""
+
+#: ../../help/kwvcdburn/help:3
+msgid ""
+"Mit kwvcdburn koennen Sie ihre MPEG Filme in verschiedene Video CD\n"
+"Formate konvertieren und anschliessend auf CD brennen. Sie koennen\n"
+"auch Photos zum erstellen einer Photo-Video-CD auswaehlen.\n"
+"\n"
+"Zum Brennen benutzt kwvcdburn \"cdrdao\" und zur Video CD Erstellung\n"
+"\"vcdimager\".\n"
+"\n"
+"Als erstes sollten Sie kwvcdburn konfigurieren, um sich die Arbeit\n"
+"zu erleichtern."
+msgstr ""
+
+#: ../../help/kwvcdburn/vcd_help:2
+#, sh-format
+msgid "Dateiauswahl::${gv_Help}"
+msgstr ""
+
+#: ../../help/kwvcdburn/vcd_help:3
+msgid "Hier koennen Sie einen Fim aussuchen und ihn auf CD-R/CD-RW brennen."
+msgstr ""
+
+#: ../../help/kwvcdburn/vcdtype_help:3
+msgid ""
+"Eine Erklaerung der einzelnen Viedeo CD Spezifikationen finden\n"
+"Sie hier.\n"
+"\n"
+"http://www.vcdimager.org/pub/vcdimager/manuals/0.7/vcdimager.html#SEC49"
+msgstr ""

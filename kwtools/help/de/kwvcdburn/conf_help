@@ -1,0 +1,13 @@
+kwvcdburn::Konfiguration::Hilfe
+
+Mount Verz.: Mount Verzeichnis waehlen das eventuell vorher gmountet
+       werden muss. Dieses muss in der /etc/fstab bekannt sein und
+       sie muessen auch dementsprechende Rechte besitzen.
+
+Verz.: Waehlen Sie ein Standardverzeichnis, in welchen ihre Film 
+       Ordner liegen. Ansonsten wird das Home Verzeichnis genommen.
+
+Video Type: Hier sollten Sie ihr Video CD Format waehlen, falls Sie 
+            nicht SVCD (Standard) benutzen wollen. Es stehen vcd1 
+            vcd2, svcd und hqvcd zur Verfuegung.
+

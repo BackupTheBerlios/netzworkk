@@ -1,0 +1,86 @@
+# Funktion kwcryptsetup Konfiguration speichern{{{
+#
+# usage: kwcryptsetup_config
+#
+kwcryptsetup_config() {
+#
+# Konfiguration schreiben.
+#
+> ${gv_HomePath}/.kwtools/kwcryptsetuprc <<< "# Beginn ~/.kwtools/kwcryptsetuprc
+#
+# Autor: Kai Wilke <kiste@netzworkk.de>
+
+# Geben Sie ein vielfaches von 512 Byte Sektoren ein (8 = 4096 Byte).
+ALIGN=\"$ALIGN\"
+
+# Groesse des Laufwerks (Bsp. 1G=1GByte, 20M=20MByte). Es gehen die Masseinheiten
+# k, K, m, M, g, G, t, T. 
+SIZE=\"$SIZE\"
+
+# Soll gnupg zum entschluesseln der Schluesseldatei verwendet werden (yes/no)?
+GPG=\"$GPG\"
+
+# Angabe des Hashwertes der fuer die Passphrase verwendet werden soll
+# (Standard ist sha512).
+HASH=\"$HASH\"
+
+# Zeit fuer den Passwort Prozess, in Mikrosekunden. Standard ist 1.
+ITERATION_TIME=\"$ITERATION_TIME\"
+
+# Datei die die Schluessel enthaelt, voller Pfad.
+KEY_FILE=\"$KEY_FILE\"
+
+# Schluesselgroesse (128, 192, 256). Standard ist 256.
+KEY_SIZE=\"$KEY_SIZE\"
+
+# Soll beim starten des Laufwerks eine Warnung ausgegeben werden,
+# wenn dieses nicht existiert (yes/no)?
+LOUD=\"$LOUD\"
+
+# Mountverzeichnis fuer externe Laufwerke (USBstick).
+MOUNT_PATH=\"$MOUNT_PATH\"
+
+# Soll das Laufwerk nicht beim starten des Rechners erstellt
+# werden, sondern manuell (yes/no)?
+NOAUTO=\"$NOAUTO\"
+
+# Soll das Laufwerk verzoegert erstellt werden, zum Beispiel
+# nachdem RAID Arrays oder LVMs erstellt worden sind (yes/no)?
+NOEARLY=\"$NOEARLY\"
+
+# Geben Sie eine Zahl ein um wieviele Sektoren der 1. Sektor
+# verschoben werden soll. Also ab welchem Sektor das original
+# Laufwerk auf das verschluesselte Laufwerk abgebildet werden soll.
+OFFSET=\"$OFFSET\"
+
+# Soll das Laufwerk im Nur Lesemodus erstellt werden (yes/no)?
+READONLY=\"$READONLY\"
+
+# Anzahl der Sektoren die zur Berechnung des
+# Initialisierungsverktor uebersprungen werden sollen.
+SKIP=\"$SKIP\"
+
+# Soll openssl zum entschluesseln der Schluesseldatei verwendet werden (yes/no)?
+SSL=\"$SSL\"
+
+# Timeout fuer die Passwort-Abfrage (Standard ist 5 Sekunden).
+TIMEOUT=\"$TIMEOUT\"
+
+# Mit welchem Dateisystem Soll ein temporaeres Laufwerk erstellt
+# werden (ext2, ext3,...).
+TMPFS=\"$TMPFS\"
+
+# Wiederholungen der Passwort-Abfrage (Standard ist 3).
+TRIES=\"$TRIES\"
+
+# Soll die Erweiterung "Luks" verwendet werden (yes/no)? Standard ist yes.
+USELUKS=\"$USELUKS\"
+
+# Soll die Passphrase nochmal ueberprueft werden (ja/nein)?
+VERIFY=\"$VERIFY\"
+
+# End ~/.kwtools/kwcryptsetuprc"
+
+read_file kwcryptsetuprc
+}
+#}}}

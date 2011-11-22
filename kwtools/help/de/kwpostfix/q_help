@@ -1,0 +1,36 @@
+kwpostfix::Konfiguration::p*::Hilfe
+
+qmgr_clog_warn_time: ?
+
+qmgr_fudge_factor: Prozentsatz an Resourcen, den ausgehende Mails
+        von Postfix zur Verfuegung gestellt werden bekommen.
+
+qmgr_message_active_limit: Maximalzahl gleichzeitiger Mails in der
+        active-Queue
+
+qmgr_message_recipient_limit: Maximal Groesse der Verwaltungstabelle
+        des qmgr.
+
+qmgr_message_recipient_minimum: Minimale Groesse der
+        Verwaltungstabelle des qmgr. 
+
+qmqpd_authorized_clients: rhosts, Postfix unterstuetzt auch das
+        Protokoll QMQP, das eigentlich zum MTA qmail gehoert. Die in
+        diesem Parameter angegebenen Rechner duerfen Postfix mit QMQP
+        kontakten.
+
+qmqpd_error_delay: Wartezeit nach einem Fehler in einer
+        QMQP-Verbindung
+
+qmqpd_timeout: Zimaout beim Aufruf des qmqpd.
+
+queue_directory: Pfad zu den Queue Ordnern.
+
+queue_file_attribute_count_limit:
+
+queue_minfree: Minimaler Plattenplatz in Bytes, der noch frei ist,
+        ansonsten verweigert Postfix die Annahme von Mails.
+
+queue_run_delay: Anzahl der Sekunden, nach denen Postfix die
+        deferred-Queue nach zuzustellenden Mails durchsucht.
+

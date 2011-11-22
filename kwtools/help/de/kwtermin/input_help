@@ -1,0 +1,17 @@
+kwtermin::Termine:Eingabe::Hilfe
+
+Datum: Datum des Termins.
+
+Warnzeit: Ist die Zeit die vor dem Termin gewarnt werden soll.
+
+Startzeit: Wann beginnt der Termin.
+
+Betreff: Kurzbeschreibung des Termins.
+
+Text: Ausfuehrliche Beschreibung des Termins.
+
+Wiederholung: Wiederholung oder Kennzeichnung der Termine, taeglich,
+        woechentlich, ... oder Geburtstag und Ferien/Urlaub.
+
+CC: An wen soll dieser Termin noch verschickt werden, getrennt
+        durch ein Komma.

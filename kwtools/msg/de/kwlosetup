@@ -1,0 +1,15 @@
+block_size_menue;512 "" 1k "" 2k "" 4k "" 8k "" 16k "" 32k "" 64k ""
+conf_menue;Blockgroesse "$BLOCK_SIZE" Container "$CONTAINER" Groesse "$COUNT_SIZE" Multi_Key "$MULTI_KEY" Verschluessellung "$ENCRYPT" Mountverz. "$MOUNT_PATH" Verzeichnis "$KEY_FILE_PATH" speichern "" zurueck ""
+haupt_menue;Konfiguration "" Container "" Partition "" Swap "" beenden ""
+#
+cont_size;Geben Sie hier bitte die Groesse des Containers in Byte an (1KByte = 1024).
+del_swap_data;Das loeschen der unverschluesselten Daten auf der Swap Partition kann, je nach Groesse, etwas dauern.
+fstab_info;Sie koennen jetzt die Zeichenkette \"$WERT Mountpath $FS Mountoptionen,loop=/dev/loop?,encryption=$ENCRYPT 0 0\" in die Datei /etc/fstab eintragen. Die Werte fuer loop, Mountpath, Mountoptionen muessen Sie anpassen.
+fstab_info_multi;Sie koennen jetzt die Zeichenkette \"$WERT Mountpath $FS Mountoptionen,loop=/dev/loop?,encryption=$ENCRYPT,gpgkey=$KEY_FILE 0 0\" in die Datei /etc/fstab eintragen. Die Werte fuer loop, Mountpath, Mountoptionen muessen Sie anpassen.
+fstab_info_sw;Sie koennen jetzt die Zeichenkette \"$WERT none swap sw,loop=/dev/loop?,encryption=AES128 0 0\" in die Datei /etc/fstab eintragen. Den Wert fuer loop muessen Sie anpassen.
+gpgpass;Geben Sie bitte die Passphrase Ihres gpg Schluessels ein!
+input_cont;Geben Sie bitten den Dateinamen des Containers ein.
+multi_key;Wollen Sie Multi_Key aktivieren? Lesen Sie auch die Hilfe dazu.
+create_multi_key_info;Das erstellen der verschluesselten Schluesseldatei kann etwas Zeit in Anspruch nehmen.
+no_conf;Sie haben nicht alle Parameter in der Konfiguration eingestellt.
+passwd;Geben Sie bitte ein mindestens 20 Zeichen langes Passwort ein!

@@ -1,0 +1,93 @@
+.\"     Title: KWSND2SNDFM
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2008
+.\"    Manual: Handbuch f\(:ur kwsnd2sndfm
+.\"    Source: Version 0.0.3
+.\"
+.TH "KWSND2SNDFM" "1" "07/04/2008" "Version 0.0.3" "Handbuch f\(:ur kwsnd2sndfm"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwsnd2sndfm \- ein Zshell Script zur Audio Konvertierung.
+.SH "SYNTAX"
+.HP 12
+\fBkwsnd2sndfm\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwsnd2sndfm\fR
+k\(:onnen Sie Dateien in verschiedene Soundformate encodieren und decodieren\&. Zur Zeit stehen zur Auswahl:
+\fIraw,wav\fR
+\->
+\fImp3,ogg\fR
+(nur wenn
+\fBoggenc\fR
+(vorbis\-tools) installiert ist) und
+\fImp3,ogg\fR
+\->
+\fIwav,raw\fR\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Hier kann man allgemeine Einstellungen vornehmen\&. Mount Verzeichnis, falls die Partition, in denen die Musik Dateien liegen, nicht st\(:andig ins Dateisystem eingebunden ist\&. Basis Verzeichnis in dem die Musik Dateien liegen die man de\-, encodieren oder brennen m\(:ochte\&. Dieses Verzeichnis dient zur schnelleren Auswahl\&.
+.RE
+.PP
+\fBDecodierung\fR
+.RS 4
+Musik Dateien decodieren von
+\fIMP3/OGG\fR
+zu
+\fIWAV\fR
+oder
+\fIRAW\fR
+Musik Dateien\&.
+.RE
+.PP
+\fBEncodierung\fR
+.RS 4
+Musik Dateien encodieren von
+\fIWAV/RAW\fR
+zu
+\fIMP3\fR
+oder
+\fIOGG\fR
+Musik Dateien\&.
+.RE
+.PP
+\fBbrennen\fR
+.RS 4
+Sounddateien brennen\&. Dabei wird die Funktion
+\fIaudio_burn\fR
+je nach Auswahl, mit den Optionen
+\fBCD\fR
+oder
+\fBDVD\fR
+aufgerufen\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwsnd2sndfmrc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwsnd2sndfm\fR\&. F\(:ur weitere Details siehe
+\fBkwsnd2sndfmrc\fR(5)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwsnd2sndfmrc\fR(5),
+\fBlame\fR(1),
+\fBoggdec\fR(1),
+\fBoggenc\fR(5)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

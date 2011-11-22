@@ -1,0 +1,109 @@
+.\"     Title: KWPOSTFIX
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2008
+.\"    Manual: Handbuch f\(:ur kwpostfix
+.\"    Source: Version 0.1.10
+.\"
+.TH "KWPOSTFIX" "1" "07/04/2008" "Version 0.1.10" "Handbuch f\(:ur kwpostfix"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwpostfix \- Administration des Mail Transfer Agenten (MTA) postfix.
+.SH "SYNTAX"
+.HP 10
+\fBkwpostfix\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBkwpostfix\fR
+ist ein Frontend, zur Administration des MTA
+\fBpostfix\fR\&. Es kann \(:uber 300 Parameter konfigurieren und mehr als 25 Tabellen bearbeiten\&. Es unterst\(:utzt alle Tabellentypen und deren Syntax\&.
+.PP
+\fBNotiz:\fR
+Man kann noch nicht alle Tabellen, die man in der Datei
+\fI/etc/postfix/main\&.cf\fR
+angeben kann, konfigurieren\&. Nur die haupts\(:achlichsten\&. Ausserdem konnte der Tabellentyp
+\(lq\fBldap\fR\(rq
+noch nicht getestet werden\&.
+.SH "OPTIONEN"
+.PP
+\fBQuickly\-Konfiguration\fR
+.RS 4
+Eine simple Konfiguration mittels dem Distributions speziefischen Konfigurationsprogramm\&. Bei Debian ist dies
+\(lq\fBdpkg\-reconfigure\fR \fBpostfix\fR\(rq\&.
+.RE
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration der
+\fI/etc/kwtools/main\&.cf\fR
+mit fast allen M\(:oglichkeiten, die zur Verf\(:ugung stehen\&. Bei der Eintragung von IPv6 Adressen, diese immer in eckige Klammern
+\(lq[]\(rq
+stellen, da es sonst zu Komplikationen kommt\&. Die IPv6 Adresse besitzt das Zeichen
+\(lq:\(rq
+und der Eintrag
+\fItype:tabelle\fR
+auch\&.
+.RE
+.PP
+\fBTabellen\fR
+.RS 4
+Ansicht, anlegen, \(:andern und l\(:oschen von Tabellen Eintragungen\&. Danach wird die Tabelle neu erstellt (Datenbank neu erzeugen)\&.
+.sp
+\fBNotiz:\fR
+Es werden nur die von ihrem System unterst\(:utzten Tabellentypen angeboten\&.
+\fBbtree\fR,
+\fBcidr\fR,
+\fB(s)dbm\fR,
+\fBenviron\fR,
+\fBhash\fR,
+\fBnis\fR,
+\fBpcre\fR,
+\fBproxy\fR,
+\fBregexp\fR,
+\fBstatic\fR
+und
+\fBtcp\fR
+sind Standard\&.
+.RE
+.PP
+\fBSteuerdatei\fR
+.RS 4
+Ansicht, anlegen, \(:andern und l\(:oschen von Eintragungen in der Steuerdatei
+\fI/etc/postfix/master\&.cf\fR\&.
+.RE
+.PP
+\fBAufr\(:aumen\fR
+.RS 4
+L\(:oscht \(:ubrig gebliebene tempor\(:are Dateien, checkt die Queue\-Struktur und repariert diese gegebenfalls\&. Da
+\fBpostfix\fR
+in seinem Queue\-File auf die Inode Nummer der Datei Bezug nimmt, m\(:ussen Sie diesen Men\(:upunkt nach dem zur\(:uck spielen eines Backups aufrufen (\fBpostsuper\fR
+\fB\-s\fR)\&.
+.RE
+.SH "DATEIEN"
+.PP
+\fI/etc/postfix/main\&.cf\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur alle Parameter von
+\fBpostfix\fR\&.
+.RE
+.PP
+\fI/etc/postfix/master\&.cf\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur alle Prozesse von
+\fBpostfix\fR\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBpostfix\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

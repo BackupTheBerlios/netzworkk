@@ -1,0 +1,431 @@
+kwpostfix::Konfiguration::haupt::Hilfe
+
+In einigen Faellen koennen anstelle von Tabellen auch normale
+Eintragungen vorgenommen werden. Gibts es viele Eintragungen ist
+eine Tabelle sicher sinnvoller, als alles in der main.cf zu
+speichern.
+
+NOTIZ: Achten sie auf die eckigen Klammern bei IPv6 Adressen,
+        da sie einen ":" besitzen und sonst in Konflikt mit
+        type:tabelle stehen.
+
+Konfiguration_directory: Verzeichnis welche die Tabellen und
+        Konfigurationsdateien enthaelt.
+
+2bounce_notice_recipient: Welcher User soll die Double-Bounces be-
+        kommen (postmaster)? Double-Bounces sind gebouncte Mails die
+        wiederum nicht zustellbar sind.
+
+alias_database: bestimmt welche Tabelle mit dem Befehl newaliases
+        erzeugt wird.
+
+alias_maps: Tabelle mit den Mailaliasen.
+
+allow_mail_to_commands: Auswahl der Tabellen in denen Mails an
+        Programme gepipt werden duerfen.
+
+allow_mail_to_files: Auswahl der Tabellen in denen Mails in Dateien
+        umgelenkt werden duerfen.
+
+allow_min_user:Sollen Mailadressen, die mit einem "-" beginnen
+        erlaubt werden (ja/nein)?
+
+allow_percent_hack: Soll "rewrite" Adressen wie
+        user%domain1.de@domain2.de nach user@domain1.de umschreiben
+        (ja/nein)?
+
+allow_untrusted_routing: Sollen Mailadressen mit dopellten "@" oder
+        "%", die also ein fremdes Mailrouting beinhalten, erlaubt
+        werden (ja/nein)?
+
+alternate_config_directories: Pfad zu weiteren Konfigurations Ver-
+        zeichnissen.
+
+always_bcc: An welchem Account soll von jeder Mail ein BCC geschickt
+        werden.
+
+append_at_myorigin: Soll bei einem reinen Usernamen ohne Hostanteil
+        $myorigin angehaengt werden (ja/nein)?
+
+append_dot_mydomain: Soll bei einem nicht FQDN-Hostnamen in der Mail-
+        adresse $mydomain angehaengt werden (ja/nein)?
+
+best_mx_transport: Weist einer Mail eine neue Transportmethode zu,
+        wenn der Mailserver der beste MX-Host fuer diese Domain ist.
+        Sinnvoll ist z. B. der Wert "local". Das verhindert eine
+        Bounce mit "Mail loops back to myself", wenn in der
+        virtual_transport Tabelle nicht "domain.de anything" gesetzt
+        ist.
+
+biff: Soll die Zusammenarbeit mit dem biff-Daemon, einem kleinen
+        tool zur Information ueber neu hereingekommene Mails,
+        aktiviert werden (ja/nein)?
+
+body_checks: Tabelle fuer die Filterung eines Mailbodies.
+
+body_checks_size_limit: Anzahl Bytes an Text, im Body oder an-
+        gehaengter, Nachricht soll von "body_checks" untersucht
+        werden.
+
+bounce_notice_recipient: Mailadresse, an die Benachritigungen ueber
+        Bounces gehen, sofern "notify_classes = bounce" gesetzt ist.
+
+bounce_size_limit: Anzahl an Bytes, die bei einem Bounce maximal
+        zurueckgeschickt werden.
+
+broken_sasl_auth_clients: Soll ein anderer Begruessungstring fuer
+        SMTP-AUTH aktiviert werden (ja/nein)? Umgeht einen Outlock-
+        Fehler.
+
+canonical_maps: Tabelle zum umwandeln von Empfaenger- und Absender-
+        adressen im SMTP_Enveloper und Mailheader.
+
+command_directory: Pfad zu den Postfix Programmen (/usr/sbin).
+
+command_time_limit: Maximalzeit, die "local" auf externe Programme
+        wartet, danach wird abgebrochen.
+
+content_filter: Transportmethode an die jede Mail weitergeleitet
+        wird.
+
+daemon_directory: Pfad zu den Postfix Modulen.
+
+daemon_timeout: Timeout, nach dem ein nicht antwortender Daemon ge-
+        killt und neu gestartet wird.
+
+debug_peer_level: Logstufe, um die im Debug-Modus ausfuehrlicher
+        geloggt werden.
+
+debug_peer_list: Eine Liste von Hostnamen, IP-Nummern, Mailadressen,
+        bei denen ausfuehrlicher geloggt wird.
+
+defer_transports: Mails dieser Transportmethode werden in die Queue
+        gestellt und erst bei einem expliziten "Queue flush"
+        ausgeliefert.
+
+delay_notice_recipient: Postadressen, die bei Mailverspaetungen be-
+        nachrichtigt werden, sofern "notify_classes = delay" gesetzt
+        ist (postmaster).
+
+delay_warning_time: Verspaetung einer Mail, ab der der Absender in-
+        formiert wird (haeufig 4 Stunden).
+
+deliver_lock_attempts: Maximale Anzahl der Versuche, in denen Postfix
+        versucht eine Datei fuer sich zu locken.
+
+deliver_lock_delay: Wartezeit, befor Postfix auf eine gelockte Datei
+        erneut zuzugreifen versucht.
+
+disable_dns_lookups: Sollen DNS-Lookups vollstaendig deaktiviert
+        werden (ja/nein)? Zum Beispiel bei Dialup-Netzwerken.
+
+disable_verp_bounces: Sollen Bounces an VERP Adressen deaktiviert
+        werden (ja/nein)? Stattdessen wird ein normaler Bounce ge-
+        sendet.
+
+disable_vrfy_command: Soll das SMTP Kommando VRFY deaktiviert werden
+        (ja/nein)?
+
+double_bounce_sender: Absenderadresse fuer "Double Bounces"
+        (double-bounce)
+
+duplicate_filter_limit: Maximale Anzahl der gemerkten Empfaenger in
+        der Adressliste von "local" oder "cleanup", wenn diese dop-
+        pelte Adressen herausfiltern.
+
+empty_adress_recipient: Mailadresse, die bei fehlenden Angaben
+        eingesetzt wird (MAILER-DAEMON).
+
+error_notice_recipient: Mailadresse, die bei Fehlern zu benach-
+        richtigen ist (postmaster).
+
+expand_owner_alias: Soll bei ausgehenden Mailinglistenmails die
+        Adresse "listenname-owner", anhand der "aliases" Tabelle
+        direct in die echte Mailadresse des Owners aufgeloest werden
+        (ja/nein)?
+
+export_environment: Environment Variablen, die Postfix nachgeladenen
+        Programmen zur Verfuegung stellt, z.B. TZ (Timezone) wird fuer
+        korrektes Zeitverhalten auf SYSV Systemen benoetigt.
+        Siehe sample-misc.cf.
+
+extract_recipient_limit: Maximale Anzahl der Empfaenger, die Postfix
+        aus dem Header liest, bevor er abbricht.
+
+fallback_transport: Standard Transportmethode, auf die bei Fehlern
+        zurueckgegriffen wird.
+
+fast_flush_domains: Baut fuer diese Domains eine seperate Logdatei
+        auf, damit diese bei ETRN schneller aus den Queues heraus-
+        gefischt und zugestellt werden koennen.
+
+fast_flush_purge_time: Maximale Haltezeit fuer eine leere fast-flush
+        Logdatei. Man kann Minuten, Stunden, Tage, Wochen und Monate
+        auswaehlen.
+
+fast_flush_refresh_time: Zeit, nach der die Logdatei fuer ein Ziel neu
+        aufgebaut werden muss.
+
+fault_injection_code: 1 aktiviert einen Testmodus, um korrupte Mails
+        einspeisen zu koennen. Muss auf 0 stehen fuer echte Mailserver.
+
+fork_attempts: Maximalanzahl der Versuche, einen neuen Prozess zu
+        initiieren (5).
+
+fork_delay: Wartezeit zwischen 2 Versuchen um einen neuen Prozess zu
+        initiieren (1s).
+
+forward_path: Dateien/Variablen in denen nach persoehnlichen Weiter-
+        leitungen eines Users gesucht wird. Die erste gefundene Datei
+        wird benutzt.
+        ($home/.forward$rcipient_delimiter$extension $home/.forward).
+
+hash_queue_depth: Tiefe der Hash Struktur in der Queue (2).
+
+hash_queue_names: Queues in denen eine Hash Struktur aufgebaut werden
+        soll (incoming,active,deferred,bounce,defer,flush,hold,trace).
+
+header_checks: Tabelle mit Mustern, fuer eine Filterung des Mailheader.
+
+header_size_limit: Maximale Laenge des Headers.
+
+home_mailbox: optionaler Pfad zum Maildir des Benutzers, relativ zu 
+        seinem Home Verzeichnis. Standard ist /var/spool/mail/usr
+        oder /var/mail/usr. Bei qmail muss der Pfad mit einem / enden.
+
+hopcount_limit: Maximale Anzahl an passierten Mailservern, verhindert
+        Endlosschleifen.
+
+ignore-mx_lookup_error: Soll Postfix, sofern eine MX Abfrage kein
+        Ergebnis liefert das ganze an den A-Record schicken (ja/nein)?
+
+import_environment: Environment Variablen die von Postfix eingelesen
+        werden. TZ und MAIL_CONFIG werden auf jedenfall benoetigt.
+        Siehe sample-misc.cf.
+
+in_flow_delay: Wenn Postfix vor lauter einkommenden Mails die aus-
+        gehenden Queues nicht mehr bearbeiten kann, werden ein-
+        kommende Mails um diese Zeit (1s) verzoegert angenommen.
+        Dadurch gewinnt Postfix Zeit, seine Queues abzuarbeiten.
+
+inet_interfaces: IP-Nummern, auf denen Postfix einen Port oeffnet und
+        Verbindungen annimmt.
+
+initial_destination_concurrency: Anzahl gleichzeitiger Verbindungen
+        zu einem anderen Host. Postfix schaltet spaeter gegebenfalls
+        weitere Parallelverbindungen dazu. Sollte nicht auf 1 stehen
+        sonst blockiert eine defekte Empfaengeradresse die gesamten
+        Mails an dieses Ziel. Integer Zahlen von 1 bis .... sind er-
+        laubt.
+
+ipc_idle: Timeout nach dem die Inter-Prozess-Kommunikation zwischen
+        2 Programmen wird, wenn Sie keine Daten mehr auszutauschen
+        hatten (300s).
+
+ipc_timeout: Genereller Timeout fuer die Inter-Prozess-Kommunikation
+        (IPC) zwischen den Postfix Prozessen.
+
+line_length_limit: Maximallaenge einer Zeile in Bytes, danach wird
+        Sie umbrochen (2048).
+
+local_command_shell: Shell, in denen Kommandos ausgefuehrt werden.
+
+local_destination_concurrency_limit: Maximalanzahl gleichzeitig zu-
+        zustellender lokaler Mails.
+
+local_destination_recipient_limit: Maximale Empfaengeranzahl bei
+        lokaler Zustellung der Mails. Groessere Empfaengerlisten
+        werden auf mehrere Mails aufgeteilt.
+
+local_recipient_maps: Tabelle mit lokalen Mailadressen, fuer die
+        Postfix Mails annehmen soll. Unzustellbare Mails werden gar
+        nicht erst angenommen.
+
+local_transport: Transportmethode fuer lokale Mails (local).
+
+luser_relay: Unzustellbare Mails werden nicht gebounct, sondern an
+        diese Adresse weitergeschickt. die Variablen $user, $shell
+        etc. sind zulaessig, z. B. $user@test.domain.de. Siehe
+        sample-local.cf.gz und LOCAL_RECIPIENT_README.gz.
+
+maps_rbl_domains: Zu benutzende domains fuer eine RBL-Pruefung,
+        getrennt durch ein Komma. Eine gute Anlaufstelle fuer
+        weitere Info's ist: http://www.spamsites.org.
+
+masquerade_classes: Bereiche in denen Postfix Mailadressen maskieren
+        soll.
+
+masquerade_domains: Bei Absendeadressen der angegebenen Domain(s)
+        wird der Hostanteil herausgeloescht. Aus user@test.domain.de
+        wird user@domain.de
+
+masquerade_exceptions: Maladressen dieser Nutzer werden nicht
+        maskiert. (z.B. root)
+
+max_idle: Nach dieser Zeit ohne Aufgabe beendet sich das jeweilige
+        Postfix-Modul, es wird gegenbenenfalls spaeter vom Postfix
+        Masterprogramm erneut gestartet (100s).
+
+max_use: Anzahl der maximalen Jobs, bevor ein Modul sich beendet und
+        vom Postfix Masterprogramm erneut gestartet wird, verhindert
+        Speicherlecks (100).
+
+maximal_backoff_time: Maximalzeit, nach denen Postfix wieder versucht
+        eine Mail zuzustellen, bzw. einen Host zu erreichen (4000s).
+
+maximal_queue_lifetime: Anzahl der Tage, nach denen eine Mail nicht
+        weiter versucht zuzustellen (4d). 
+
+message_size_limit: Maximale Groesse einer Mail, danach verweigert
+        Postfix die Annahme (10240000).
+
+minimal_backoff_time: Minimalzeit, bevor Postfix eine unzustellbare
+        Mail wieder versucht ein Mail zuzustellen, bzw. einen Ziel-
+        host zu kontaktieren (1000s)
+
+mime_header_checks: Tabelle fuer eine Filterung des MIME Header.
+
+mydestination: Liste von Domains fuer die Postfix der Final
+        Destination ist und sie lokal zustellt.
+
+mydomain: Domain des Mailservers.
+
+myhostname: FQDN-Hostname des Mailservers.
+
+mynetworks: Tabelle mit IP-Nummern/IP-Bereiche, die bei
+        "permit_mynetworks" relayen duerfen.
+
+mynetworks_style: Wie bei mynetworks, verzichtet aber auf die Angabe
+        der IP-Bereiche, sondern schaltet pauschal den WERT frei.
+        Werte sind "subnet" (Subnetz), "host" (Mailserver selbst)
+        und class (das ganze Class A/B/C-Netz des Servers)
+
+myorigin: Hostname der bei der Erzeugung neuer Mails benutzt wird.
+        Bei Netzen mit vielen Hosts sollten Sie diesen Wert auf
+        $mydomain setzen.
+
+nested_header_checks: Tabelle fuer eine Filterung des Header in 
+        angehaengten Nachrichten.
+
+notify_classes: Bereiche, in denen der Postmaster bei Fehlern
+        informiert wird (resource,software). Weitere Moeglichkeiten:
+        bounce (unzustellbare Mails),policy (REJECTS bei
+        Restrictions),delay (Mailverzoegerungen),2bounce (Double
+        Bounces).
+
+owner_request_special: Soll eine besondere Behandlung, fuer die
+        Adressen "owner-listenname" und "listenname-request", bei
+        Mailinglisten aktiviert werden (ja/nein)?
+
+parent_domain_matches_subdomains: Parameter, in denen eine Domain-
+        angabe automatisch auch deren Subdomains miterfasst. Para-
+        meter: debug_peer_list, fast_flush_domains,mynetworks,
+        permit_mx_backup_networks,qmqpd_authorized_clients,
+        relay_domains,smtpd_access_maps.
+
+permit_mx_backup_networks: Postfix wird hier angewiesen, Mails zu
+        relayen, wenn nur ein MX-Record auf diesen Server zeigt.
+        permit_mx_backup_networks schraenkt das soweit wieder ein,
+        dass der hoechste MX-Host aus dem hier ganennten Netzbereich
+        kommen muss, damit Postfix die Mails annimmt und relayt.
+        Damit wird verhindert, dass Postfix fuer beliebige (fremde)
+        Domains als Backup Server missbraucht wird.
+
+prepend_delivered_header: In welchen Faellen soll ein "Delivered-To:"
+        Header in die Mail eingefuegt werden, um daran spaeter
+        eventuelle Mailschleifen zu entdecken und zu blocken
+        (command, file, forward). Bei Mail forwarding ist das Abschalten
+        des Headers nicht empfohlen.
+
+prozess_id_directory: Verzeichnis fuer Dateien mit Prozess-ID's, re-
+        lativ zu /var/spool/postfix
+
+program_directory: Pfad zu den Postfix Programmen.
+
+propagate_unmatched_extension: Legt fest, ob Mailextensions auch in
+        den hier angegebenen Tabellen beruecksichtigt werden sollen,
+        sodass je nach Extension unterschiedlich reagiert werden
+        kann (canonical, virtual_transport).
+
+recipient_bcc_maps: Tabelle, an die "Blind Carbon-Copy" Mails
+        geschickt werden, wenn der dementsprechende Empfaenger
+        erkannt wird.
+
+recipient_canonical_maps: Tabelle zum umwandeln von Empfaenger-
+        adressen im SMTP_Enveloper und Mailheader.
+
+recipient_delimiter: Trennzeichen, um in der Empfaengeradresse die
+        Mailextension abzutrennen.
+
+relay_clientcerts: Tabelle mit den Zertrifikaten der entfernten
+        Clients fuer die Postfix die Erlaubnis erteilen soll
+        (man 5 postconf).
+
+relay_destination_concurrency_limit: Maximalzahl gleichzeitiger
+        Verbindungen zu einem Ziel.
+
+relay_destination_recipient_limit: Maximalzahl der Empfaenger in
+        einer Mail. Groessere Empfaengerlisten werden auf mehrere
+        Mails aufgeteilt.
+
+relay_domains: Domains fuer die bzw. von denen Postfix relayed.
+
+relayhost: Host, an den alle ausgehenden Mails zugestellt werden,
+        statt diese an den MX-Host zu senden. Zum Beispiel:
+        [address], [address]:port, domain oder host.
+
+relocated_maps: Tabelle fuer umgezogene Mailadressen.
+
+require_home_directory: Soll die Existenz eines Home Verzeichnisses
+        eines lokalen Emfaengers erzwungen werden (ja/nein)?
+
+sender_bcc_maps: Tabelle, an die "Blind Carbon-Copy" Mails
+        geschickt werden, wenn der dementsprechende Sender
+        erkannt wird.
+
+sender_canonical_maps: Tabelle zum umwandeln von Absendereradressen
+        im SMTP_Enveloper und Mailheader.
+
+sendmail_path: Pfad zum Sendmail Ersatz sendmail.
+
+service_throttle_time: Ein abgestuerztes Modul wird erst nach dieser
+        Wartezeit neu gestartet, um Endlosschleifen zu vermeiden,
+        die Rechner lahm legen koennten (60s).
+
+setgid_group: GroupID fuer die "maildrop" Queue.
+
+soft_bounce: Soll "Soft Bounce" aktiviert werden (ja/nein)? "Soft
+        Bounce" dient dem Austesten eines Servers. Bounce Nachrichten
+        werden erzeugt, die Mails verbleiben aber in der Mailqueue
+        fuer spaetere Zustellversuche.
+
+stale_lock_time: Alter, nach denen Postfix offenbar liegengebliebene
+        Lock-Dateien zwangsweise entfernt (500s).
+
+strict_rfc821_envelopes: Sollen korrekte Envelope-Adressen nach
+        RFC2821 erzwungen werden (ja/nein)? Z. B. Mailadressen in <>.
+
+sun_mailtool_compability: Soll die Zusammenarbeit mit mailtool von
+        Sun uralt Solaris aktiviert werden (ja/nein)?
+
+swap_bangpath: Sollen gebangte Routpfade aus UUCP Verbindungen in
+        eine Domainform umgeschrieben werden (ja/nein)? Aus site!user
+        wird user@site.
+
+syslog_facility: Ausgabekanal fuer Logmeldungungen an syslogd (mail).
+        Siehe man 5 syslog.conf.
+
+syslog_name: Ausgabename fuer Logmeldungungen an syslogd.
+
+transport_maps: Tabelle mit den Transporteintraegen.
+
+transport_retry_time: Wartezeit, bevor ein ein gestoerter Postfix
+        Transport erneut angesprochen wird (60s).
+
+undisclosed_recipient_header: Header, der eingefuegt wird, wenn kein
+        Header To: in der Mail vorgefunden wird
+        (To: undisclosed-recipients:;).
+
+verp_delimiter_filter: Zeichen, die fuer eine Kodierung der Mail-
+        adresse bei VERP genutzt werden koennen (-=+).
+

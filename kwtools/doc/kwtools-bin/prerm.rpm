@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+BIN_PATH=/usr/bin
+
+rm -f ${BIN_PATH}/kwadmin &>/dev/null
+rm -rf ${DIR}/kwadmin* ${DIR%/*/*}/doc/kwtools-bin &>/dev/null
+exit 0
+

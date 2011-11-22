@@ -1,0 +1,74 @@
+.\"     Title: KWRSYNC_BACKUP
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 06/12/2008
+.\"    Manual: Benutzerhandbuch f\(:ur kwrsync_backup
+.\"    Source: Version 0.1.5
+.\"
+.TH "KWRSYNC_BACKUP" "8" "06/12/2008" "Version 0.1.5" "Benutzerhandbuch f\(:ur kwrsync_b"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwrsync_backup \- ein Zshell Script um eine Momentaufnahme von Rechnern zu erstellen.
+.SH "SYNTAX"
+.HP 15
+\fBkwrsync_backup\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwrsync_backup\fR
+k\(:onnen Sie eine Momentaufnahme von Rechnern machen, auch remote\&. Dies k\(:onnen Sie entweder manuell oder per
+\fIcrontab\fR
+Eintrag machen\&. Dabei werden die konfigurierten Verzeichnisse gesichert und danach Hardlinks (Rotierung) auf die Dateien/Verzeichnisse erstellt\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration von
+\fBkwrsync_backup\fR\&.
+.RE
+.PP
+\fBBackup\fR
+.RS 4
+Backup der zu sichernden Verzeichnisse und Server starten\&.
+.RE
+.PP
+\fBRotierung\fR
+.RS 4
+Backup Verzeichnisse rotieren\&.
+.RE
+.PP
+.RS 4
+.RE
+.SH "DATEIEN"
+.PP
+\fI/etc/kwtools/kwrsync_backup\&.cf\fR
+.RS 4
+Haupt Konfiguration Datei f\(:ur
+\fBkwrsync_backup\fR\&. Siehe
+\fBkwrsync_backup.cf\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.PP
+\fI/etc/kwtools/kwrsync_backup\-excludes\fR
+.RS 4
+Beinhaltet Verzeichnisse/Dateien die nicht mit einbezogen werden sollen (z\&.B\&.
+\fI/sys\fR,
+\fI/proc\fR)
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwrsync_backup.cf\fR(5),
+\fBkwrsync_backup_cron\fR(8),
+\fBrsync\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

@@ -1,0 +1,16 @@
+kwlvm::Volume Groups::splitten::Hilfe
+
+Hier kann man eine Volume Group in 2 VG's splitten.
+
+VG: Auswahl einer existierenden Volume Group, die 
+    gesplittet werden soll.
+
+neue VG: Eingabe des neuen Namen zu der die VG gesplittet
+         werden soll. Es wird also die alte VG und eine
+         neue enstehen.
+
+PV: Hier koennen Sie die PV's auswaehlen die zu der neuen VG
+    gehoeren sollen. 
+
+NOTIZ: Ein PV muss fuer die existierende VG bleiben, ansonsten
+        ist es dasselbe wie umbenennen.

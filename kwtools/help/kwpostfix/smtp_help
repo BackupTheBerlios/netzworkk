@@ -1,0 +1,210 @@
+# smtp_help fuer kwpostfix{{{
+TITLE=$(gettext 'Konfiguration::smtp::Hilfe')
+MSG=$(gettext 'smtp_always_send_ehlo: Soll sich Postfix immer als ESMTP-faehiger
+\tServer indentifizieren (ja/nein)
+
+smtp_bind_address: IPv4-Adresse, die fuer ausgehende Verbindungen
+\tvia SMTP benutzt wird. Ist keine Angabe waehlt Postfix die
+\tsinnvollste aus allen IP-Adressen des Servers aus.
+
+smtp_bind_address6: IPv6-Adresse, die fuer ausgehende Verbindungen
+\tvia SMTP benutzt wird. Ist keine Angabe waehlt Postfix die
+\tsinnvollste aus allen IP-Adressen des Servers aus.
+\t(Bsp. 2001:240:5c7:0:250:56ff:fe89:1) 
+
+smtp_cname_overrides_servername: Soll das ueberschreiben der Server-
+\tnamen, die der SMTP client zum loggen benutzt, bei DNS CNAME
+\trecords erlaubt werden (ja/nein)? Dies geschieht beim SASL
+\tPasswort nachschlagen, bei der TLS Regel Entscheidung oder
+\tbei der TLS Zertifikat Bestaetigung.
+
+smtp_connect_timeout: Timeout fuer den Aufbau der Verbindung. Wenn
+\tdies "0" ist, wird der Standardwert fuer TCP/IP Verbindungen
+\taus dem Kernel genommen.
+
+smtp_connection_cache_destinations: Soll die SMTP Verbindung
+\tpermanent gecacht werden (ja/nein)?
+
+smtp_connection_cache_on_demand: Soll die SMTP Verbindung zeitweilig
+\tgecacht werden, wenn ein Ziel ein hohes Mail Aufkommen in
+\tder "active" Warteschlange hat (ja/nein)?
+
+smtp_connection_cache_reuse_limit: Zeit ab wann der Cache einer SMTP
+\tSitzung neu benutzt wird bevor sie geschlossen wird (Bsp.
+\t10).
+
+smtp_connection_cache_time_limit: Zeit die ein unbenutzter SMTP
+\tClient Socket offen gelassen werden soll (Bsp. 2s).
+
+smtp_data_done_timeout: Timeout nach Uebertragung einer Mail.
+
+smtp_data_init_timeout: Timeout nach Absenden des SMTP-Kommandos
+\tDATA.
+
+smtp_data_xfer_timeout: Timeout bei Uebertragung einer Mail.
+
+smtp_defer_if_no_mx_address_found: Soll die Mail Zustellung zurueck-
+\tgestellt werden, wenn ein MX record nicht zu einer IP
+\tAdresse aufgeloest werden kann (ja/nein)?
+
+smtp_destination_concurrency_limit: Maximale Anzahl gleichzeitiger
+\tVerbindungen per SMTP zu einem Rechner.
+
+smtp_destination_recipient_limit: Maximale Anzahl der Empfaenger in
+\teiner Mail, die ueber SMTP versendet wird. Groessere
+\tEmpfaengerlisten werden auf mehrere Mails aufgeteilt.
+
+smtp_discard_ehlo_keyword_address_maps: Tabelle von SMTP Server mit
+\tEHLO Schluesselwoertern (starttls, auth, ...) die der SMTP
+\tClient ignorieren soll, bei einer EHLO Antwort vom
+\tentfernten SMTP Server.
+
+smtp_discard_ehlo_keywords: Eine Liste von EHLO Schluesselwoertern
+\t(starttls, auth, ...) die der SMTP Client ignorieren soll,
+\tbei einer EHLO Antwort von einem entfernten SMTP Server.
+
+smtp_enforce_tls: Soll SSL/TLS beim Versand einer Mail erzwungen
+\twerden (ja/nein)?
+
+smtp_fallback_relay: Liste von optionalen Rechnernamen, an welchen
+\tunzustellbare/fehlerhafte Mails, zur weiteren Bearbeitung,
+\tgesendet werden.
+
+smtp_generic_maps: Tabelle die die Umschreibung von lokal gueltigen
+\tAdressen zu global gueltigen Adressen beim versenden uebers
+\tInternet.
+
+smtp_helo_name: Rechnername der in einem SMTP_EHLO oder HELO
+\tKommando gesendet werden soll.
+
+smtp_helo_timeout: Timeout nach Absenden des Kommandos EHLO/HELO
+
+smtp_host_lookup: Welchen Mechanismus soll der Client zum nach-
+\tschauen von Rechner IP Adressen benutzen (Bsp. dns).)
+
+smtp_line_length_limit: Die maximale Laenge vom Nachrichten Kopf
+\tund der Zeilen im Hauptteil der Mail.
+
+smtp_mail_timeout: Timeout nach dem Versand des SMTP-Kommandos
+\tMAIL FROM:
+
+smtp_mx_address_limit: Maximale Anzahl von MX (Mailverteiler) IP
+\tAdressen.
+
+smtp_mx_session_limit: Maximale Anzahl von SMTP Sitzungen pro Zu-
+\tstellung, bevor aufgegeben wird oder die Zustelllung geht
+\tzurueck.
+
+smtp_never_send_ehlo: Soll sich Postfix nie als ESMTP-faehiger Server
+\tidentifizieren (ja/nein)?
+
+smtp_pix_workaround_delay_time: Workaround fuer einen Fehler in Cisco
+\tPIX Firewalls. Fuegt eine Wartezeit vor dem "." ein, der die
+\tDATA-Uebertragung in einer SMTP-Sitzung beendet.
+
+smtp_pix_workaround_threshold_time: Wenn eine Mail laenger als diese
+\tZeit in der Mailqueue liegt, geht Postfix daon aus, dass die
+\tCisco PIX fehlerhaft ist, und wendet die Verzoegerung an, um 
+\tden Fehler auszugleichen.
+
+smtp_quit_timeout: Timeout nach Uebertragung des Kommandos QUIT.
+
+smtp_quote_rfc821_envelope: Sollen die Adressen im SMTP MAIL FROM
+\tund RCPT TO Kommando gequotet werden (ja/nein)?
+
+smtp_randomize_addresses: Soll die Reihenfolge der Enveloper-Adressen
+\tbei einer SMTP-Sitzung gemixt werden (ja/nein)? Das verhindert
+\t, das stets die gleiche defekte Adresse die gesamte
+\tAuslieferung einer Mail blockiert.
+
+smtp_rcpt_timeout: Timeout nach Uebertragung des SMTP-Kommandos
+\tRCPT TO:
+
+smtp_rset_timeout: Timeout nach Uebertragung des SMTP-Kommandos
+\tRSET TO:
+
+smtp_sasl_auth_enable:  Soll die Identifizierung ueber SMTP-Auth bei
+\tausgehenden Mails aktiviert werden (ja/nein)?
+
+smtp_sasl_mechanism_filter: Einge SMTP Server unterstuetzen
+\tAuthentifizierungsmassnahmen, die obwohl auf den clients
+\tverfuegbar, in der Praxis nicht arbeiten oder nur mit
+\tBerechtigungsnachweisen zur Authentifizierung arbeiten. Mit
+\tdiesem Parameter kann man die Liste der Server Mechanismen,
+\tdie der SMTP client beruecksichtigen soll, weiter
+\teinschraenken (man sasl).
+
+smtp_sasl_password_maps: Tabelle mit den Passwortdaten fuer ausgehende
+\tSMTP-Auth Verbindungen.
+
+smtp_sasl_security_options: zulaessige Identifizierungsmethoden bei
+\tausgehenden SMTP-Auth Verbindungen.
+
+smtp_sasl_tls_security_options: zulaessige Identifizierungsmethoden
+\tbei ausgehenden SMTP-Auth Verbindungen, per SSL/TLS.
+
+smtp_send_xforward_command: Soll ein nicht Standard XFORWARD
+\tKommando gesendet werden, falls SMTP Server EHLO XFORWARD
+\tunterstuetzt (ja/nein)?
+
+smtp_skip_5xx_greeting: Soll der Begruessungsstring bei einem
+\tSMTP-Code 5xx (dauerhafter Fehler) ignoriert werden (ja/nein)?
+\tBei yes wird dann trotzdem versucht die Mail abzusetzen.
+
+smtp_skip_quit_response: Soll die Sitzung nach dem Kommando QUIT
+\tgetrennt werden (ja/nein), oder soll auf eine Antwort gewartet
+\twerden?
+
+smtp_starttls_timeout: Timeout, zum lesen und schreiben waehrend TLS
+\tgestartet wird.
+
+smtp_tls_CAfile: Datei welche das Zertifikat Authority besitzt.
+
+smtp_tls_CApath: Verzeichnis in dem die Zertifikate liegen. Diese
+\twerden dann mit den Rechten des Mail Servers gelesen.
+
+smtp_tls_cert_file: Datei (RSA) welche das unterschriebene
+\tprivate Zertifikat besitzt.
+
+smtp_tls_cipherlist: Siehe OpenSSL Dokumentation (Bsp. DEFAULT,
+\tman ciphers).
+
+smtp_tls_dcert_file: Datei (DSA) welche das unterschriebene private
+\tZertifikat besitzt.
+
+smtp_tls_dkey_file: Datei (DSA) welche das unterschriebene,
+\tunverschluesselte private Zertifikat besitzt.
+
+smtp_tls_enforce_peername: Soll der entfernte SMTP Server die
+\tInformationen, fuer Rechnernamen im Zertifikat suchen
+\t(ja/nein)?
+
+smtp_tls_key_file: Datei (RSA) welche das unterschriebene,
+\tunverschluesselte private Zertifikat besitzt.
+
+smtp_tls_loglevel: Loglevel auswaehlen.
+
+smtp_tls_note_starttls_offer: Soll der Rechnername vom entfernten
+\tSMTP Server geloggt werden, falls TLS nicht fuer diesen
+\tServer aktiviert ist (ja/nein)?)
+
+smtp_tls_per_site: Tabelle fuer die Regeln der TLS Benutzung von
+\tSMTP Clients.
+
+smtp_tls_scert_verifydepth: Ueberpruefungstiefe des Server
+\tZertifikat.
+
+smtp_tls_session_cache_database: Datei die den TLS Sitzungs Cache
+\tfuer SMTP Clients enthaelt. Dadurch koennen mehrere SMTP
+\tProzesse die Sitzungs Informationen benutzen.
+
+smtp_tls_session_cache_timeout: Verfallzeit der TLS Sitzungs Cache
+\tInformation fuer SMTP Clients.
+
+smtp_use_tls: Soll SMTP-Auth bei ausgehenden Verbindungen benutzt
+\twerden, falls es ein entfernter SMTP Server STARTTLS
+\tanbietet (ja/nein)?
+
+smtp_xforward_timeout: Timeout fuer den SMTP Clienten fuer das
+\tsenden eines XFORWARD Kommandos und der Antwort vom Server.')
+#}}}

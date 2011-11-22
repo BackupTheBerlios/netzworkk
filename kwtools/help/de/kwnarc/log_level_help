@@ -1,0 +1,4 @@
+kwnarc_Konfiguration::Logkonfiguration::Loglevel
+
+Hier kann man das Loglevel einstellen (man 5 syslog.conf).
+Standard ist debug.

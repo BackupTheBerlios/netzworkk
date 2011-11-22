@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>Berlios:Projekt:netzworkk:Doku:kwtools</TITLE>
+        <meta name="generator" content="quanta">
+        <meta name="keywords" lang="en" content="Netzworkk, Netzwerk, kwtools, rsync">
+        <meta name="description" lang="en" content="">
+        <meta name="author" content="Kai Wilke / netzworkk.de">
+        <meta name="publisher" content="Kai Wilke / netzworkk.de">
+        <meta name="copyright" content="Kai Wilke / netzworkk.de">
+        <meta name="date" content="2005-11-26">
+        <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+        <meta name="content-language" content="de">
+        <LINK href="../../../css/style.css" type=text/css rel=stylesheet>
+        <SCRIPT language=JavaScript>
+<!--
+function IJ_swapImgRestore() { //v3.0
+  var i,x,a=document.IJ_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function IJ_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.IJ_p) d.IJ_p=new Array();
+    var i,j=d.IJ_p.length,a=IJ_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.IJ_p[j]=new Image; d.IJ_p[j++].src=a[i];}}
+}
+
+function IJ_findObj(n, d) { //v4.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=IJ_findObj(n,d.layers[i].document);
+  if(!x && document.getElementById) x=document.getElementById(n); return x;
+}
+
+function IJ_swapImage() { //v3.0
+  var i,j=0,x,a=IJ_swapImage.arguments; document.IJ_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=IJ_findObj(a[i]))!=null){document.IJ_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function IJ_nbGroup(event, grpName) { //v3.0
+  var i,img,nbArr,args=IJ_nbGroup.arguments;
+  if (event == "init" && args.length > 2) {
+    if ((img = IJ_findObj(args[2])) != null && !img.IJ_init) {
+      img.IJ_init = true; img.IJ_up = args[3]; img.IJ_dn = img.src;
+      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
+      nbArr[nbArr.length] = img;
+      for (i=4; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
+        if (!img.IJ_up) img.IJ_up = img.src;
+        img.src = img.IJ_dn = args[i+1];
+        nbArr[nbArr.length] = img;
+    } }
+  } else if (event == "over") {
+    document.IJ_nbOver = nbArr = new Array();
+    for (i=1; i < args.length-1; i+=3) if ((img = IJ_findObj(args[i])) != null) {
+      if (!img.IJ_up) img.IJ_up = img.src;
+      img.src = (img.IJ_dn && args[i+2]) ? args[i+2] : args[i+1];
+      nbArr[nbArr.length] = img;
+    }
+  } else if (event == "out" ) {
+    for (i=0; i < document.IJ_nbOver.length; i++) {
+      img = document.IJ_nbOver[i]; img.src = (img.IJ_dn) ? img.IJ_dn : img.IJ_up; }
+  } else if (event == "down") {
+    if ((nbArr = document[grpName]) != null)
+      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.IJ_up; img.IJ_dn = 0; }
+    document[grpName] = nbArr = new Array();
+    for (i=2; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
+      if (!img.IJ_up) img.IJ_up = img.src;
+      img.src = img.IJ_dn = args[i+1];
+      nbArr[nbArr.length] = img;
+  } }
+}
+//-->
+</SCRIPT>
+</HEAD>
+<BODY onLoad="IJ_preloadImages('../../../images/trans.gif','../../../images/arrow.gif','../../../images/buttons/standort.gif','../../../images/buttons/mail_gen.gif','../../../images/arraw_r.gif','../../../images/arraw_h.gif','../../../images/arraw_l.gif','../../../images/buttons/berlios.jpg',')">
+<TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width=150>
+      <TABLE width="100%" border=0>
+        <TBODY>
+                <TR>
+                        <TD colSpan=2 height=10></TD>
+                </TR>
+                <tr>
+                        <td colspan=2 id="sub-1"><a href="../../../index.html">Home</a></td>
+                </tr>
+                        <td colspan=2 id="sub-1"><a href="../../../doku/index.html">Dokumentation</a></td>
+                </tr>
+                <tr>
+                        <td><img src="../../../images/trans.gif" width="20" height="10" border="0"></td>
+                        <td id="sub-2"><a href="../../../doku/devel/index.html">Entwicklung</a></td>
+                </tr>
+                <tr>
+                        <td><img src="../../../images/arrow.gif" width="20" height="10" border="0"></td>
+                        <td id="sub-2"><a href="../../../doku/kwtools/index.html">kwtools</a></td>
+                </tr>
+                <tr>
+                        <td colspan=2 id="sub-1"><a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/netzworkk" target="_blank">CVS</a></td>
+                </tr>
+                <tr>
+                        <td colspan=2 id="sub-1"><a href="../../../ftp.html" target="_blank">FTP</a></td>
+                </tr>
+        </TBODY>
+      </TABLE>
+    </TD>
+    <TD vAlign=top>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+                <TR>
+                        <TD width="2%" height=15></TD>
+                        <TD width="96%"></TD>
+                        <TD width="2%"></TD>
+                </TR>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><center><a href="../../../doku/kwtools/net/postfix.html" target="_top"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+                                <img src="../../../images/trans.gif" width="15" height="8" border="0">
+                                <a href="../../../doku/kwtools/net.html" target="_top"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
+                                <img src="../../../images/trans.gif" width="15" height="8" border="0">
+                                <a href="../../../doku/kwtools/net/openmosix.html" target="_top"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h2><a name=kwrsync_backup>1.4.5. kwrsync_backup</a></h2>
+                                <p>kwrsync_backup zieht ein Momentaufnahme (Snapshot) von Rechnern und kann das 
+				Backup Verzeichnis rotieren. kwrsync_backup_cron kann vom Cron Daemon gestartet 
+				werden und macht das gleiche wie kwrsync_backup im Hintergrund.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h4><a name=config></a>1.4.5.0 Konfiguration</a></h4>
+				<p>Hier kann man kwrsync_backup konfigurieren</p>
+				<p><b>Ausschluss_Datei</b> Hier kann man eine Datei bearbeiten, in der die 
+				Verzeichnisse und Dateien stehen die nicht mit ins Backup fliessen sollen.
+				Sie sollten z.B. die Verzeichnisse /proc und /sys nicht miteinbeziehen, da sie
+				nicht fuer die Wiederherstellung benoetigt werden.</p>
+				<p><b>Backupverz.</b> In welchem Verzeichnis sollen die Backups gespeichert 
+				werden. Diese liegen dann unter Backupverz/Rechner/snapshot.0. Es gibt max. 7 
+				Sicherungsverzeichnisse (snapshot.0-6).</p>
+				<p><b>Bandbreite</b> Manchmal kann es sinnvoll sein die Bandbreiter, der 
+				Uebertragung zu limitieren. Geben Sie hier einen Wert in Kbyte/s an.</p>
+				<p><b>Check_Platz</b> Soll der noch freie Platz der Festplatte/Partition
+				ueberprueft werden (yes/no).</p>
+				<p><b>Minimum_Platz</b> Wieviel Platz soll auf der Festplatte/Partition noch frei 
+				sein, in Prozent.</p>
+				<p><b>Mountverz.</b> Hier wird das Verzeichnis ausgewaehlt, welches ins
+				Dateisystem vorher eingebunden werden muss, wo sich das Backup
+				Verzeichnis befindet. Es muss bereits in der /etc/fstab konfiguriert
+				sein.</p>
+				<p><b>Remote_shell</b> Welche Shell soll fuer Uebertragung genutzt werden.
+				Zur Auswahl stehen ssh und rsh, falls sie installiert sind. Der ssh
+				besitzt eine Kompression und uebertraegt alles verschluesselt.</p>
+				<p><b>Server</b> Server die zu sichern sind, getrennt durch ein
+				Leerzeichen. Dies koennen IP-Adressen, Rechnernamen oder
+				Rechnenername.domain.de (FQDN) sein.</p>
+				<p><b>User</b> Fuer welchem User soll ein crontab Eintrag (kwrsync_backup_cron) 
+				gemacht werden. Standard ist root. Dieser User muss auf diesem Rechner ein Konto 
+				haben und einen Eintrag in /etc/sudoers, fuer die Ausfuehrung von 
+				kwrsync_backup_cron.</p>
+				<p><b>crontab</b> Hier kann man einen crontab Eintrag, fuer das Script 
+				kwrsync_backup_cron, erzeugen. Dieses Script erstellt im Hintergrund die Backups 
+				und rotiert das Backup Verzeichnis.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h4><a name=backup></a>1.4.5.1 Backup</a></h4>
+				<p>Erstellt eine Momentaufnahme von den Rechnern, die in der Konfigurationsdatei 
+				eingestellt wurden.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h4><a name=rotate></a>1.4.5.2 Rotierung</a></h4>
+				<p>Rotiert das Backup Verzeichnis. Dies geschieht per Hardlink-Kopie, so das nicht 
+				nennenswerter zusaetzlicher, Speicherplatz benoetigt wird. Dabei wird aus snapshot.0
+				--> snapshot.1, aus snapshot.1 --> snapshot.2, u.s.w.. Dabei wird immer die
+				aelteste Version (snapshot.7) geloescht.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h4><a name=info></a>1.4.5.3 Beachtenswertes</a></h4>
+				<p>Sie sollten einen eigenen User (Bsp.:rsyncbackup) fuer kwrsync_backup
+				auf dem Backup Host erstellen, damit sich root nicht dauernd einloggen muss.
+				Diesen User kann man dann mit dem Programm sudo das Ausfuehren des rsync 
+				Kommandos zulassen. Mit passwd User -l kann man ihm das Login verbieten.<br>
+				- Loggen Sie sich auf jeden zu sichernden Host als root ein und erzeugen einen ssh 
+				Key (ssh-keygen -t dsa), ohne Passphrase. Bei Frage nach der Passphrase einfach 
+				Enter druecken.<br>
+				- Auf dem Backup Host loggen Sie sich als root ein und kopieren die Datei 
+				/root/.ssh/id-dsa.pub nach /root/.ssh/authorized_keys. Dort tragen Sie das rsync 
+				Kommando command="sudo rsync --server --sender -vlogDtprz  --delete-excluded 
+				--numeric-ids /" vor dem Key ein (command="sudo rsync ... ssh-dss AAA....).<br>
+				- Diese Datei kopieren Sie auf jeden Host der zu sichern ist, 
+				ins Verzeichnis /root/.ssh/.<br>
+				<b>Notiz:</b> Achten Sie darauf das, auf allen Rechnern, in der Datei 
+				/etc/ssh/sshd_config beim Parameter AuthorizedKeysFile      %h/.ssh/authorized_keys 
+				steht.</p>
+				<p>Eine Beispiel Datei (/etc/sudoers) fuer den Backup Host koennte so aussehen:<br>
+				# Host alias specification<br>
+				Host_Alias BACKUP_HOST = backuphost.domain.de<br>
+				# User alias specification<br>
+				User_Alias USER_ALIAS = kwrsyncbackup<br>
+				# Cmnd alias specification<br>
+				Cmnd_Alias KWRSYNC_CRON = /usr/lib/kwtools/kwrsync_backup_cron<br>
+				# User privilege specification<br>
+				root    ALL=(ALL) ALL<br>
+				kwrsyncbackup   BACKUP_HOST=NOPASSWD: KWRSYNC_CRON</p>
+				<p>Der User kwrsyncbackup (USER_ALIAS) darf auf dem Backup Host backuphost.domain.de 
+				(BACKUP_HOST) das Kommando (KWRSYNC_CRON) /usr/lib/kwrsync_backup_cron, ohne 
+				Passwort ausfuehren.</p>
+												
+				<p>Programme die auf Dateiebene sichern sollten vor dem Backup ihre Daten 
+				sichern, damit ihre Backups nicht inkonsestent sind (Bsp.: Datenbanken).
+				Bei postresql kann man sich ein Script, mit folgendem Inhalt, schreiben:<br>
+				pg_dumpall | gzip >/var/lib/postgres/fulldump.sql.gz.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h4><a name=links></a>1.4.5.4 Links</a></h4>
+				<p><a href="http://www.heinlein-support.de/web/wissen/rsync-backup/">http://www.heinlein-su
+				pport.de/web/wissen/rsync-backup/</a><br>
+				<a href="http://www.linux-magazin.de/Artikel/ausgabe/2004/09/backups/backups.html">
+				http://www.linux-magazin.de/Artikel/ausgabe/2004/09/backups/backups.html</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br><center><a href="../../../doku/kwtools/net/postfix.html" target="_top"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+                                <img src="../../../images/trans.gif" width="15" height="8" border="0">
+                                <a href="../../../doku/kwtools/net.html" target="_top"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
+                                <img src="../../../images/trans.gif" width="15" height="8" border="0">
+                                <a href="../../../doku/kwtools/net/openmosix.html" target="_top"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center></td>
+                        <td></td>
+                </tr>
+        </TBODY>
+      </TABLE>
+    </TD>
+    <TD vAlign=top width=150>
+      <table cellspacing=0 cellpadding=0 width=150 border=0>
+        <tbody>
+                <tr>
+                        <td colspan=3><img src="../../../images/trans.gif" width="1" height="15"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 colspan=3><img src="../../../images/trans.gif" width="1" height="8"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle width=75><a href="mailto:kiste@netzworkk.de"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
+                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.netzworkk.de"><img height=28 alt=Homepage... src="../../../images/buttons/standort.gif" width=34 border=0></a></td>
+                        <td id=main-2 align=middle>&nbsp;</td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle><b>Mail</b></td>
+                        <td id=main-2 align=middle><b>Homepage</b></td>
+                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.berlios.de"><img height=15 alt=Berlioskontakt... src="../../../images/buttons/berlios.jpg" width=34 border=0></a></td>
+                        <td id=main-2 align=middle width=75><img height=28 src="../../../images/trans.gif" width=34 border=0></td>
+                        <td id=main-2 align=middle>&nbsp;</td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle><b>Berlios</b></td>
+                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="75" height="15"></td>
+                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="3"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="8"></td>
+                </tr>
+                <tr>
+                        <td colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
+                </tr>
+                <tr>
+                        <td colspan=3 align=middle><h3>Mailinglists</h3></td>
+                </tr>
+                <tr>
+                        <td id=main-2 colspan=3><img src="../../../images/trans.gif" width="1" height="8"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle width=75 colspan=2><a href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools" target="_blank"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
+                        <td id=main-2 align=middle>&nbsp;</td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle colspan=2><b>netzworkk-kwtools</b></td>
+                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle width=75 colspan=2><a target=_blank href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
+                        <td id=main-2 align=middle>&nbsp;</td>
+                </tr>
+                <tr>
+                        <td id=main-2 align=middle colspan=2><b>netzworkk-linuxrc</b></td>
+                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
+                </tr>
+                <tr>
+                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="8"></td>
+                </tr>
+        </tbody>
+      </table>
+    </TD>
+  </TR></TBODY></TABLE></BODY></HTML>

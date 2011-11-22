@@ -1,0 +1,102 @@
+.\"     Title: KWCRYPTSETUP
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 11/05/2008
+.\"    Manual: Handbuch f\(:ur kwcryptsetup
+.\"    Source: Version 0.0.6
+.\"
+.TH "KWCRYPTSETUP" "8" "11/05/2008" "Version 0.0.6" "Handbuch f\(:ur kwcryptsetup"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwcryptsetup \- Zshell Script f\(:ur das Programm cryptsetup
+.SH "SYNTAX"
+.HP 13
+\fBkwcryptsetup\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwcryptsetup\fR
+k\(:onnen Sie verschl\(:usselte Laufwerke bzw\&. Container (Image\-Datei) erstellen\&. Daf\(:ur werden die Programme
+\fBcryptsetup\fR,
+\fBdmsetup\fR
+und
+\fBlosetup\fR
+benutzt\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration der Standardwerte f\(:ur zu erstellende Laufwerke\&.
+.RE
+.PP
+\fBStatus\fR
+.RS 4
+Anzeige des Status von verschl\(:usselten Laufwerken, die in der Konfigurations Datei
+\fI/etc/crypttab\fR
+eingetragen sind\&.
+.RE
+.PP
+\fBLUKS\fR
+.RS 4
+Hier k\(:onnen Sie Schl\(:ussel addieren, l\(:oschen oder sich den Dump von verschl\(:uesselten Laufwerken, mit LUKS Erweiterung, anschauen\&.
+.RE
+.PP
+\fBLaufwerke\fR
+.RS 4
+Hier kann man verschl\(:uesselte Laufwerke/Container erstellen, l\(:oschen, vergr\(:ossern, verkleinern und deren Optionen \(:andern und den Inhalt der Datei
+\fI/etc/crypttab\fR
+ansehen\&.
+.RE
+.PP
+\fBSchl\(:ussel\fR
+.RS 4
+Hier k\(:onnen Sie eine Schl\(:usseldatei erstellen\&. Diese wird aus der Ger\(:atedatei
+\fI/dev/urandom\fR
+erzeugt\&. Sind die Programme
+\fBgnupg\fR
+und/oder
+\fBopenssl\fR
+installiert kann man diese auch gleichzeitig verschl\(:usseln\&. Ansonsten wird keine Schl\(:usseldatei erstellt\&.
+.RE
+.PP
+\fBstart\fR
+.RS 4
+Starten von verschl\(:usselten Laufwerken, die in der Konfigurations Datei
+\fI/etc/crypttab\fR
+eingetragen sind\&.
+.RE
+.PP
+\fBstop\fR
+.RS 4
+Stoppen von verschl\(:usselten Laufwerken, die in der Konfigurations Datei
+\fI/etc/crypttab\fR
+eingetragen sind\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwcryptsetuprc\fR
+.RS 4
+Konfigurations Datei f\(:ur
+\fBkwcryptsetup\fR\&. Siehe
+\fBkwcryptsetuprc\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBcryptsetup\fR(8),
+\fBdmsetup\fR(8),
+\fBgpg\fR(1),
+\fBkwcryptsetuprc\fR(5),
+\fBopenssl\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

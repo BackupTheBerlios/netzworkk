@@ -1,0 +1,20 @@
+# Funktion (choice_key_file), Auswahl einer Schluesseldatei# {{{
+#
+# usage: choice_key_file
+#
+choice_key_file() {
+	if [ "$#" -eq 1 ] ; then
+		unset -- FILE
+		local FILE
+		FILE="$1"
+		file_choice "${FILE%/*}" only
+		if [ -n "$WERT" ] ; then
+			KEY_FILE="${VERZ}/${WERT}"
+		else
+			KEY_FILE="none"
+		fi
+	else
+		no_para_msg $0
+	fi
+}
+## }}}

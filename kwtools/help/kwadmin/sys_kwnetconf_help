@@ -1,0 +1,4 @@
+# sys_kwnetconf_help fuer kwadmin{{{
+MSG=$(gettext 'kwnetconf: Ein Wrapper Script fuer verschiedene Scripte zur
+\tKonfiguration ihres Netzwerks.')
+#}}}

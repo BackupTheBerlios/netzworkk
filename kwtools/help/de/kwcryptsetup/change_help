@@ -1,0 +1,5 @@
+kwcryptsetup::Management::veraendern::Hilfe
+
+Veraendern von ein oder mehreren verschluesselten Laufwerke. Dabei
+werden die Eintraege der Konfigurationsdatei /etc/crypttab benutzt.
+

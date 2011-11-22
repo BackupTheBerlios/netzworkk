@@ -1,0 +1,5 @@
+# grub_part_help fuer kwgrub{{{
+TITLE="${gv_Configuration}::${lv_Partition}::${gv_Help}"
+MSG=$(gettext 'Hier kann man eine Partition, im Grub spezifischen Format,
+zur weiteren Verarbeitung auswaehlen.')
+#}}}

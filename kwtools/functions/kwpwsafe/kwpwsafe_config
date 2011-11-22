@@ -1,0 +1,24 @@
+# Funktion kwpwsafe Konfiguration schreiben{{{
+#
+# usage: kwpwsafe_config
+#
+kwpwsafe_config() {
+#
+# Konfiguration schreiben.
+#
+> ${gv_HomePath}/.kwtools/kwpwsaferc <<< "# Beginn ~/.kwtools/kwpwsaferc
+#
+# Autor: Kai Wilke <kiste@netzworkk.de>
+
+# Standard Datenbank
+DEFAULT_PWSAFE_FILE=\"$DEFAULT_PWSAFE_FILE\"
+
+# Passwortlaenge diebeim generieren eines Passwortes
+# benutzt werden soll.
+PASSWD_LENGTH=\"$PASSWD_LENGTH\"
+
+# End ~/.kwtools/kwpwsaferc"
+
+read_file kwpwsaferc
+}
+#}}}

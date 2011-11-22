@@ -1,0 +1,5 @@
+# kwrsynctab_help fuer kwrsync{{{
+TITLE=$(gettext 'Verzeichnisse::${gv_Help}')
+MSG=$(gettext 'Hier koennen Sie die Datei ~/.ktools/kwrsynctab ansehen, deren
+Eintraege aendern, welche anlegen und loeschen.')
+#}}}

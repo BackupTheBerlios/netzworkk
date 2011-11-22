@@ -1,0 +1,9 @@
+kwlvm::Volume Groups::verbinden::Hilfe
+
+Hier kann man 2 Volume Groups zu einer verbinden.
+
+VG: Auswahl einer existierenden Volume Group, die 
+    zu einer anderen hinzugefuegt werden soll.
+
+neue VG: Auswahl der neuen VG zu der die andere gehoeren 
+         soll.

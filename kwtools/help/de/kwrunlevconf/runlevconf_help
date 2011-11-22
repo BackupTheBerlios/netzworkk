@@ -1,0 +1,29 @@
+kwrunlevconf::Runlevelkonfigurtion::Hilfe
+
+Runlevel: 0,1,6 Sind standardmaessig die Runlevel in denen die 
+        Init-Scripte gestoppt werden.
+		  
+S:   Administration, nur root hat Zugriff und nur die noetigsten 
+     Dienste werden gestartet. Wird vom Runlevel 1 gestartet.
+0:   Systemstop
+1:   Single User Mode		  
+2-5: Multi User Mode
+6:   reboot
+
+Hier kann man den Status der Runlevel Scripts aendern.
+
+Nr: Eingabe der Nummer an welcher Stelle das Script gestartet werden
+        soll (01-99). Wenn das Script nicht gestartet werden soll
+        geben Sie ein - (Minuszeichen) ein.
+
+Start: Soll der dienst im jeweiligen Runlevel gestartet werden
+       (ja/nein)?
+
+NOTIZ: Lesen Sie unbedingt die Dokumentation ihrer Distribution. 
+       Normalerweise liegt auch eine README Datei im Runlevel
+       Verzeichnis.
+       Debian: /etc/init.d/README
+       SuSE: /etc/init.d/REDAME 
+       CentOS: hat keine oder finde ich nicht (Handbuch?).
+       Fedora: hat keine oder finde ich nicht (Handbuch?).
+

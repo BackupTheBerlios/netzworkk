@@ -1,0 +1,23 @@
+kwcryptsetup::Laufwerke::Hilfe
+
+NOTIZ: Sie koennen keine verschluesselten Laufwerke auf bestimmten
+        Blockgeraeten erstellem. Dazu zaehlt z.B. das "loop" Device.
+
+anlegen: Verschluesseltes Laufwerk oder Container erstellen. Dabei
+        wird auch gleich ein Eintrag in der Datei /etc/crypttab
+        vorgenommen.
+
+aendern: Optionen von verschluesselten Laufwerken oder Containern
+        veraendern.
+
+vergroessern: Vergroesserung von verschluesselten Laufwerken oder
+        Containern.
+
+verkleinern: Verkleinerung von verschluesselten Laufwerken oder
+        Containern.
+
+loeschen: Loeschen von Containern bzw. Partitionen. Heisst, ver-
+        schluesselte Laufwerke werden gestoppt und vorhandene
+        Container (Dateien) geloescht. In der Datei /etc/crypttab
+        werden die dementsprechenden Eintraege geloescht.
+

@@ -1,0 +1,114 @@
+.\"     Title: KWUSER
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 01/24/2010
+.\"    Manual: Handbuch f\(:ur kwuser
+.\"    Source: Version 0.3.6
+.\"
+.TH "KWUSER" "8" "01/24/2010" "Version 0.3.6" "Handbuch f\(:ur kwuser"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwuser \- ein Zshell Script zur Benutzer Verwaltung.
+.SH "SYNTAX"
+.HP 7
+\fBkwuser\fR [\fB\ \-m\ \fR]
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwuser\fR
+k\(:onnen Sie Benutzer anlegen, ver\(:andern, l\(:oschen und die Datei
+\fI/etc/passwd\fR
+ansehen\&. Beim anlegen eines Benutzers muss immer ein Passwort mit angegeben werden\&. Die Variable die es enth\(:alt wird sofort nach dem Gebrauch gel\(:oscht\&.
+.PP
+Die Option
+\fB\-m\fR
+ist ein Sonderfall mit der Sie viele Benutzer gleichzeitig anlegen k\(:onnen\&. Es erscheint dann eine etwas andere Men\(:uauswahl mit den zus\(:atzlichen Punkten Prefix, Prefix_Homeverz\&. und Anzahl\&. Die Benutzer werden dann mit der Kombination aus Prefix+Anzahl erstellt\&.
+.PP
+Die Passw\(:orter stehen danach in der Datei
+\fI/root/passwd\-prefix\&.txt\fR\&. Es wird ein Hash mittels openssl f\(:ur die Passw\(:orter gebildet\&. Sie sollten diese Datei ordentlich sichern! Die Datei hat das Format:
+.sp
+.RS 4
+.nf
+User Passwort
+.fi
+.RE
+.sp
+
+Auch sollten Sie bei der Erstellung von mehr als 10000 Benutzern lieber eine Datenbank benutzen\&. Die Geschwindigkeit ist dann besser\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Belegung von Standard Werten zum anlegen von neuen Benutzern\&.
+.RE
+.PP
+\fBAnsicht\fR
+.RS 4
+Ansicht der Datei
+\fI/etc/passwd\fR\&.
+.RE
+.PP
+\fBanlegen\fR
+.RS 4
+Einen Benutzer anlegen\&. Dabei wird bei der Auswahl die Benutzer\- und Gruppen\-ID \(:uberpr\(:uft, ob diese schon vergeben ist\&. Falls
+\fB\(lqQuota\(rq\fR
+konfiguriert wurde wird dieses auch gleich f\(:ur den Benutzer eingestellt, falls das Homeverzeichnis auf einer eigenen Partition liegt und
+\fB\(lqQuota\(rq\fR
+Unterst\(:utzung besitzt\&.
+.RE
+.PP
+\fB\(:andern\fR
+.RS 4
+Vorhandenen Benutzer \(:andern, zum Beispiel dessen Rechte\&.
+.RE
+.PP
+\fBl\(:oschen\fR
+.RS 4
+Ein oder mehrere Benutzer l\(:oschen\&.
+.RE
+.SH "DATEIEN"
+.PP
+\fI/etc/passwd\fR
+.RS 4
+Datei mit den Benutzer Informationen\&. Siehe
+\fBpasswd\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.PP
+\fI/etc/shadow\fR
+.RS 4
+Datei mit den sicheren Benutzer Informationen\&. Siehe
+\fBshadow\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.PP
+\fI/root/\&.kwtools/kwuserrc\fR
+.RS 4
+Datei mit den Standard Werten zum anlegen von Benutzern\&. Siehe
+\fBkwuserrc\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwuserrc\fR(5),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)
+.PP
+\fBnewusers\fR(8)
+(nicht bei (Open)SuSE vorhanden)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2010 Kai Wilke
+.br

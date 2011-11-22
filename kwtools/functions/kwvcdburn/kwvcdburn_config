@@ -1,0 +1,39 @@
+# Funktion kwvcdburn_config{{{
+kwvcdburn_config() {
+#
+# Konfiguration von kwvcdburnrc schreiben.
+#
+> ${gv_HomePath}/.kwtools/kwvcdburnrc <<< "# Beginn ~/.kwtools/kwvcdburnrc
+#
+# Autor: Kai Wilke <kiste@netzworkk.de>
+
+# Geben sie hier das Grund Verzeichnis an, in welchem die
+# Filme gespeichert werden.
+FILM_DIR=\"$FILM_DIR\"
+
+# Welcher VCD Type soll benutzt werden? (svcd,vcd1,vcd2,hqvcd)
+VCD_TYPE=\"$VCD_TYPE\"
+
+# Wie heiﬂt das Verzeichnis, welches gemountet werden muss.
+MOUNT_PATH=\"$MOUNT_PATH\"
+
+# Geben Sie die Groesse des Bildes, in KByte, ein. Standard
+# ist 200.
+SIZE=\"$SIZE\"
+
+# Geben Sie das Bildformat ein. Zur Verfuegung stehen
+# 1=1:1, 2=4:3, 3=16:9 und 4=2.21:1. Standard ist 2.
+IMAGE_FORMAT=\"$IMAGE_FORMAT\"
+
+# Framerate, 25 ist PAL (EU) und 30000 ist NTSC (amerikanischer Kontinent).
+FRAME_RATE=\"$FRAME_RATE\"
+
+# Framegroesse eingeben. MONOCHROM, VCD, SVCD, DVD, oder selber
+# eingeben. Standard ist 480x576 PAL/SVCD.
+FRAME_SIZE=\"$FRAME_SIZE\"
+
+# End ~/.kwtools/kwvcdburnrc"
+
+read_file kwvcdburnrc
+}
+#}}}

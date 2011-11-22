@@ -1,0 +1,6 @@
+dhcp_man_menue;dhcp "" manuell "" zurueck ""
+konf_menue;IP_Adresse "$IP" Gateway "$GATE" speichern "" zurueck ""
+ip_adr;Geben Sie bitte die IP-Adresse fuer diese Netzwerkkarte ein (z.B. 192.168.0.1).
+ip_gate;Geben Sie bitte die IP-Adresse fuer den Gateway ein (z.B. 192.168.0.10).
+no_dhcp;Entweder konnte das Kernel Modul fuer die Netzwerkkarte nicht geladen werden oder es ist kein dhcp Server erreichbar.
+no_ip;Sie muessen erst eine gueltige IP-Adresse fuer diesen Rechner eingeben.

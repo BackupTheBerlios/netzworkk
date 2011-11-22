@@ -1,0 +1,4 @@
+# utils_kwgpgcrypt_help fuer kwadmin{{{
+MSG=$(gettext 'kwgpgcrypt: Mit diesem Script kann man einzelne Dateien oder ganze
+\tVerzeichnisse verschluesseln und signieren.')
+#}}}

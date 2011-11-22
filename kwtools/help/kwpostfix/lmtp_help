@@ -1,0 +1,59 @@
+# lmtp_help fuer kwpostfix{{{
+TITLE=$(gettext 'Konfiguration::lmtp::Hilfe')
+MSG=$(gettext 'lmtp_cache_connection: Soll die LMTP-Verbindung offen gehalten
+\twerden, um diese fuer mehrere Mails nacheinander zu nutzen
+\t(ja/nein).
+
+lmtp_connect_timeout: Timeout fuer den Aufbau der Verbindung. Wenn
+\tdie Zahl 0 ist wird der Standardwert fuer TCP/IP Verbindungen
+\taus dem Kernel genommen.
+
+lmtp_data_done_timeout: Timeout nach erfolgter Uebertragung der Mail
+\tper LMTP.
+
+lmtp_data_init_timeout: Timeout nach dem LMTP Kommando DATA.
+
+lmtp_data_xfer_timeout: Timeout waehrend der Uebertragung einer Mail
+\tan einen LMTP Server.
+
+lmtp_destination_concurrency_limit: Maximale Anzahl gleichzeitiger
+\tVerbindungen per LMTP zu einem Rechner.
+
+lmtp_destination_recipient_limit: Maximalzahl der Empfaenger in
+\teiner Mail. Groessere Empfaengerlisten werden auf mehrere
+\tMails aufgeteilt.
+
+lmtp_lhlo_timeout: Timeout nach dem LMTP Kommando LHLO.
+
+lmtp_mail_timeout: Timeout nach dem LMTP Kommando MAIL FROM:
+
+lmtp_quit_timeout: Timeout nach dem LMTP Kommando QUIT.
+
+lmtp_rcpt_timeout: Timeout nach dem LMTP Kommando RCPT TO:
+
+lmtp_rset_timeout: Timeout nach dem LMTP Kommando RSET.
+
+lmtp_sasl_auth_enable: Soll SMTP-Auth beim Versand ueber LMTP
+\taktiviert werden (ja/nein)?
+
+lmtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern fuer
+\tauthentifizierte Verbindungen.
+
+lmtp_sasl_security_options: zu benutzende Authentifizierungs-
+\tmoeglichkeiten bei LMTP Verbindungen (noplaintext,
+\tnoanonymous ...).
+
+lmtp_send_xforward_command: Soll ein XFORWARD Befehl an den LMTP
+\tServer gesendet werden, falls der LMTP LHLO dies
+\tunterstuetzt (ja/nein)?
+
+lmtp_skip_quit_response: Soll die LMTP Sitzung nach dem Quit, ohne
+\tauf eine Antwort des LMTP Servers abzuwarten, beendet werden
+\t(ja/nein)?
+
+lmtp_tcp_port: TCP Port, auf dem der LMTP Server angesprochen wird
+\t(24).
+
+lmtp_xforward_timeout: Timeout fuer den LMTP clienten beim senden
+\teines XFORWARD Befehls und dessen Antwort.')
+#}}}

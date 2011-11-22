@@ -1,0 +1,59 @@
+# Funktion kwrsync_home_exec{{{
+#
+# usage: kwrsync_home_exec
+#
+kwrsync_home_exec() {
+	if [ -n "${R_HOST[1]}" ] ; then
+		for i in ${=R_HOST} ; {
+			if [ "$i" != localhost -o "$i" != "`hostname`" ] ; then
+				if [[ -n $RSYNC_RSH ]] ; then
+					# Kompression und remote Shell einschalten
+					RSH_OPT="-ze $RSYNC_RSH"
+				else
+					# Nur Kompression einschalten
+					RSH_OPT="-z"
+				fi
+				PROG_OPT="-avHAXu --numeric-ids $RSH_OPT -b --suffix=_`date +%d.%m.%Y` --bwlimit=${BW_LIMIT:-0} ${HOME}/* ${i}:${HOME}"
+			else
+				continue
+			fi
+			LOG_HOME_START_MSG=$(gettext 'Starte $HOME rsync nach $h ...')
+			LOG_HOME_ERR_MSG=$(gettext 'Fatal: $HOME rsync nach $h mit Fehlern beendet!')
+			LOG_HOME_FINISH_MSG=$(gettext 'Beende $HOME rsync nach $h ...')
+			FINISH_MSG=$(gettext 'kwrsync_cron: rsync beendet ($h) ')
+			HOME_ERROR_MSG=$(gettext 'kwrsync_cron: $HOME rsync nach $h mit Fehlern beendet! ')
+			# Logging beginnen.
+			sys_logger -n syslog "$gv_ScriptName" "$LOG_HOME_START_MSG"
+			if [ -n "$gv_Terminal" ] ; then
+				TITLE=$(gettext 'Homesyncronisation')
+				MSG=$(gettext 'Syncronisiere das Home Verzeichnis mit dem Rechner $i.')
+				(rsync ${=PROG_OPT} 2>/dev/null || sys_logger -r syslog "$gv_ScriptName" "$LOG_HOME_ERR_MSG") | \
+				rsync ${=PROG_OPT} | progressbox "$TITLE" "$MSG"
+				# Fertig!
+				sys_logger -n syslog "$gv_ScriptName" "$LOG_HOME_FINISH_MSG"
+				# Sicher ist sicher...
+				sync
+			else
+				rsync ${=PROG_OPT}
+				# Rueckgabewert pruefen.
+				# 0 = fehlerfrei, 
+				# 24 ist harmlos; tritt auf, wenn waehrend der Laufzeit
+				# von rsync noch (/tmp?) Dateien veraendert oder geloescht wurden.
+				# Alles andere ist fatal -- siehe man (1) rsync
+				if ! [ $? = 24 -o $? = 0 ] ; then
+					sys_logger -r syslog "$gv_ScriptName" "$LOG_HOME_ERR_MSG"
+					Not_Net=$(gettext 'kein Netz?')
+					> "${gv_WorkDir}/error" <<< "$Not_Net"
+					mail -s "$HOME_ERROR_MSG" $USER < "${gv_WorkDir}/error"
+				else
+					sys_logger -n syslog "$gv_ScriptName" "$LOG_HOME_FINISH_MSG"
+					# Sicher ist sicher...
+					sync
+				fi
+			fi
+		}
+	else
+		no_host_rsh_msg
+	fi
+}
+#}}}

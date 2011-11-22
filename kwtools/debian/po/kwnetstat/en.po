@@ -1,0 +1,54 @@
+# kwnetstat english Translation.
+# Copyright (C) 2011
+# This file is distributed under the same license as the kwtools-utils package.
+# Kai Wilke <kiste@netzworkk.de>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kwnetstat-0.2.13\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-16 16:46+0200\n"
+"PO-Revision-Date: 2011-04-16 16:48+0200\n"
+"Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../net/kwnetstat:46
+#, fuzzy
+msgid ""
+"a alles off C \"Routing Information vom Cache\" off\n"
+"\te \"Zusatzinfos\" off F \"Routing Information vom FIB\" off\n"
+"   \tg \"IPv6/IPv4 Gruppenmitgliedschaften\" off i \"Tabelle aller "
+"Netzwerkverbindugen\" off\n"
+"   \tl \"lauschende Sockets\" off M \"Masquerade Verbindungen\" off\n"
+"   \tn \"Anzeige numerischer Adressen\" off o \"Zeitgeber bestehender "
+"Verbindungen\" off\n"
+"   \tp \"PID und Programmname\" off r Routingtabelle off s Statistik off\n"
+"   \tt \"nur bestehende tcp Verbindungen\" off u \"nur bestehende udp "
+"Verbindungen\" off\n"
+"   \tw \"nur raw Verbindungen\" off x \"nur unix domain Sockets\" off"
+msgstr ""
+"a all off C \"routing information from cache\" off e \"additional infos\" "
+"off F \"routing information from FIB\" off g \"IPv6/IPv4 group membership\" "
+"off i \"table of all network interfaces\" off l \"listening sockets\" off M "
+"\"Masquerade connections\" off n \"Display numerical addresses\" off o "
+"\"Timer of connections to established\" off p \"PID and Programname\" off r "
+"Routingtable off s Statistics off t \"only tcp connections to established\" "
+"off u \"only udp connections to established\" off w \"only raw connections\" "
+"off x \"only unix domain sockets\" off"
+
+#: ../../help/kwnetstat/help:3
+msgid ""
+"Mit kwnetstat koennen Sie einige Informationen ueber ihr Netzwerk,\n"
+"zum jetzigen Zeitpunkt sammeln. Es wird das Programm netstat \n"
+"dafuer genutzt. Vergewissern Sie sich das der richtige Pager\n"
+"in der Konfigurations Datei /etc/kwtools/main.cf eingestellt\n"
+"ist. So beendet sich der Pager more sofort wenn die Groesse der\n"
+"Anzeige kleiner ist als die des Terminal^^.\n"
+"\n"
+"Die einzelnen Optionen koennen meist gemixt werden. Nur \"i\", \"r\" und \n"
+"\"s\" muessen einzeln ausgewaehlt werden."
+msgstr ""

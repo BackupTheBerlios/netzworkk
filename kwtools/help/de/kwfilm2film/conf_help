@@ -1,0 +1,31 @@
+kwfilm2film::Konfiguration::Hilfe
+
+Audio_Bitrate: Hier kann man von 8 bit bis 320 bit waehlen.
+
+Audio_Export_Modul: Auswahl des Audio Moduls fuer den Output. Wird
+        keines ausgewaehlt, wird das Modul "null" benutzt.
+
+Audio_Import_Modul: Auswahl des Audio Moduls fuer den Input.
+
+Aufloesung: Auswahl zwischen DVD, PAL und NTSC.
+
+Buffergroesse: Hier kann man von 46 Kbyte bis 9192 KByte waehlen.
+
+Datei_Groesse: Ab welcher Dateigroesse wird gesplittet. Waehlen sie
+        am beste die Groesse des Medium auf das Sie die Datei(en)
+        brennen wollen.
+
+Mount_Verz.: Welches Verzeichnis soll eventuell beim Start von
+        kwfilm2film ins Dateisystem eingebunden werden.
+
+Verzeichnis: In welchem Verz. liegen Standardmaessig ihre Filme.
+
+Sampler_Rate: Auswahl zwischen Stereo (44100Hz) und Mono (22050Hz).
+
+Video_Export_Modul: Auswahl des Video Moduls fuer den Output.
+        Dieses muss eingestellt werden, sonst gibt es eine Info
+        Nachricht und das Video nicht konvertiert.
+
+Video_Import_Modul: Auswahl des Video Moduls fuer den Input.
+
+Video_Type: Auswahl des Video Types fuer das Multiplexing.

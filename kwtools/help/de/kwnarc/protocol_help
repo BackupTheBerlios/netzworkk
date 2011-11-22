@@ -1,0 +1,5 @@
+kwnarc::Konfiguration::Protokoll::Hilfe
+
+Hier koennen Sie das zu verwendene TCP/IP Protokoll auswaehlen.
+tcp oder udp. In der Datei /etc/services stehen die gebraeuch-
+lichsten Portnummern samt Protokoll.

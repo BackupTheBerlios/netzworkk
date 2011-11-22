@@ -1,0 +1,5 @@
+# name_help fuer kwlogrotate{{{
+TITLE="${Name}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie entweder eine vorhandene Konfiguration aendern oder
+eine neue anlegen.')
+#}}}

@@ -1,0 +1,7 @@
+uhr::Zeitserver::Hilfe
+
+Server: Zeitserver getrennt durch ein Leerzeichen eingeben.
+
+aktualisieren: Einstellung der Uhr und des Datums, auch im BIOS.
+
+NOTIZ: Als Programme werden ntpdate und hwclock benutzt.

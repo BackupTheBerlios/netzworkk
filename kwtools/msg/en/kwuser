@@ -1,0 +1,10 @@
+haupt_menue;anlegen "" aendern "" loeschen "" beenden ""
+konf_menue;User "$NUSER" User_ID "$NUSER_ID" Gruppe "$NGROUP" Gruppen "$NGROUPS" Kommentar "$COMMENT" Shell "$U_SHELL" Home "$HOME_V" Passwort "$PASSPHRASE1" speichern "" zurueck ""
+check_user;Sie muessen mindestens einen User Namen und ein Passwort eingeben.
+comment;Geben Sie hier einen Kommentar zur Person ein (Bsp.: Vorname Name).
+ex_user_id;Diese User ID ($NUMBER) ist schon vergeben. Bitte nehmen Sie eine andere.
+no_user_auswahl;Sie muessen erst einen User Namen eingeben/auswaehlen, bevor Sie hier etwas aendern koennen.
+passwd;Geben Sie hier bitte ein Passwort fuer den User, $NUSER, ein.
+passwd1;Geben Sie bitte erneut das selbige Passwort fuer den User, $NUSER, ein.
+user_name;Geben Sie hier bitte einen User Namen ein. Es duerfen keine Sonderzeichen benutzt werden.
+user_id;Geben Sie hier bitte die User ID an. Das kann eine Zahl von 1 bis 65535 sein. Es wird geprueft ob, diese schon vergeben ist.

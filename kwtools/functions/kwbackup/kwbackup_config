@@ -1,0 +1,25 @@
+# Funktion kwbackup_config{{{
+kwbackup_config() {
+#
+# Konfiguration von kwbackuprc schreiben.
+#
+> ${gv_HomePath}/.kwtools/kwbackuprc <<< "# Beginn ~/.kwtools/kwbackuprc
+#
+# Autor: Kai Wilke <kiste@netzworkk.de>
+#
+# Backupverzeichnis
+BACKUP_PATH=\"$BACKUP_PATH\"
+
+# Backupverzeichnis mounten (yes|no) 
+MOUNT_PATH=\"$MOUNT_PATH\"
+
+# Verzeichnisse die regelmaessig gesichert werden sollen.
+# Nicht das Rootfilesystem (/), das wird auch so gesichert.
+# Getrennt durch ein Leerzeichen (/home /mnt/audio)
+DIRS=\"$DIRS\"
+
+# End ~/.kwtools/kwbackuprc"
+
+read_file kwbackuprc
+}
+#}}}

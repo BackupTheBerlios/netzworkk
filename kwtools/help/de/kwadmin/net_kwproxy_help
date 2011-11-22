@@ -1,0 +1,5 @@
+kwproxy: Setzt die Umgebungsvariablen http_proxy und ftp_proxy.
+        Die Dateien /etc/profile oder /etc/zsh/zprofile werden 
+        nicht veraendert. Diese muessen manuell editiert werden. 
+        "source /etc/default/proxy", siehe Programm Hilfe.
+

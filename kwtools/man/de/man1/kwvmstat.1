@@ -1,0 +1,92 @@
+.\"     Title: KWVMSTAT
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/03/2008
+.\"    Manual: Benutzerhandbuch f\(:ur kwvmstat
+.\"    Source: Version 0.2.4
+.\"
+.TH "KWVMSTAT" "1" "07/03/2008" "Version 0.2.4" "Benutzerhandbuch f\(:ur kwvmstat"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwvmstat \- ein Zshell Frontend Script f\(:ur vmstat.
+.SH "SYNTAX"
+.HP 9
+\fBkwvmstat\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBkwvmstat\fR
+gibt Informationen \(:uber Prozesse, Speicher, Speicherseiten (paging), Block Input/Output (IO) und der Aktivit\(:at des Prozessors aus\&. Genaueres steht in der Manpage von
+\fBvmstat\fR\&. Einige Optionen kann man in der Datei
+\fI~/\&.kwtools/kwvmstatrc\fR
+einstellen\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Einstellung von Verz\(:ogerung, Anzahl und Speichereinheit f\(:ur die Anzeige\&.
+.RE
+.PP
+\fBa\fR
+.RS 4
+Anzeige von in/aktivem Speicher\&.
+.RE
+.PP
+\fBd\fR
+.RS 4
+Anzeige einer Statistik \(:uber Festplatten\&.
+.RE
+.PP
+\fBD\fR
+.RS 4
+Anzeige der Festplattentabelle\&.
+.RE
+.PP
+\fBf\fR
+.RS 4
+Anzeige der forks seitdem starten des Rechners\&.
+.RE
+.PP
+\fBm\fR
+.RS 4
+Anzeige slabinfo\&.
+.RE
+.PP
+\fBp\fR
+.RS 4
+Anzeige einer Statistik \(:uber Partitionen\&.
+.sp
+\fBNotiz:\fR
+Ben\(:otigt root Rechte\&. Diese Option wid nur angezeigt wenn man
+\fBkwvmstat\fR
+als root aufruft\&.
+.RE
+.PP
+\fBs\fR
+.RS 4
+Anzeige von verschiedenen Speicher Statistiken\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwvmstatrc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwvmstat\fR\&. Siehe
+\fBkwvmstatrc\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwvmstatrc\fR(5),
+\fBvmstat\fR(8)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

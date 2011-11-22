@@ -1,0 +1,8 @@
+# multi_cdid_help fuer kwrip{{{
+TITLE="${lv_Audio}::${lv_Rip}::${gv_Help}"
+MSG=$(gettext 'Gibt es mehrere Informationen zu einer CD-Id koennen Sie hier
+auswaehlen, zu welcher CD Sie die Informationen benoetigen. Es werden die
+Artisten der Scheibe aufgelistet. Zusaetzlich haben Sie die Moeglichkeit selber
+Artist und Album einzugeben. Falls zum Beispiel keine oder falsche
+Informationen von der CD-Datenbank geholt werden.')
+#}}}

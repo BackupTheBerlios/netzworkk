@@ -1,0 +1,85 @@
+# Betriebsystem Backup: 1. OS-incrementiel, 2. wenn älter als 60 Tage ganze OS{{{
+# Ohne /home
+#
+# usage: backup_sys
+#
+kwbackup_sys() {
+	Tar_Opt="--ignore-failed-read"
+	Sys_Dirs="bin boot dev etc lib opt root sbin tmp usr/bin usr/games usr/include usr/lib usr/local usr/sbin usr/share usr/src usr/X11R6 var/backups var/cache var/lib var/local var/lock var/log var/mail var/opt var/run var/spool var/tmp"
+	pushd ${BACKUP_PATH}/sys
+	for i in $Sys_Dirs ; {
+		Bzip_File="`ls ${${i//\//_}#_}*.bz2`"
+		Tar_File_New="${${i//\//_}#_}-${Date}.tar"
+		# Nummerierung
+		ANZ=0
+		while test -e ${Tar_File_New}.bz2 ; do
+			Tar_File_New=${Tar_File_New/-*.tar/-${Date}-${ANZ}.tar}
+			(( ANZ++ ))
+		done
+		#
+		if test ! -e ${Tar_File_New}.bz2 ; then
+			# Gibt es schon Backups wird nach welchen die aelter als 60 Tage sind gesucht.
+			# Sind welche vorhanden wird ein komplettes Backup gemacht und alle Dateien
+			# in $Bzip_File geloescht.
+			if [ "$Bzip_File" ] ; then
+				ANZ=1
+				for B in $Bzip_File ; {
+					Fund="`find . -type f -mtime +60 -name $B`"
+					if [ -n "$Fund" ] ; then
+						Last_Backup_Os[ANZ]="$Fund"
+						(( ANZ++ ))
+					fi
+				}
+				if [ "$Last_Backup_Os" ]; then
+					#
+					# Jetzt wird ein neues OS-Backup angelegt.
+					#
+					# Beim ausfuehren von kwbackup_cron ueber "cron" gibts keine Terminal Ausgabe.
+					# Das wird hier geprueft.
+					if [ "$gv_Terminal" ] ; then
+						prog_exec -p tar "-cPvf $Tar_File_New $Tar_Opt /${i}" | \
+							progressbox "$ACTION_TITLE" "$DIR_MSG" || (print ; prog_failure)
+						prog_exec -i bzip2 "-v $Tar_File_New"
+					else
+						tar -cPvf $Tar_File_New "$Tar_Opt" /${i}
+						bzip2 -v $Tar_File_New
+					fi
+					#
+					# Nachdem kompletten neusichern der System Verzeichnisse, 
+					# werden die älteren (60 Tage) gelöscht, auch *.tar Dateien
+					# falls es mal einen Abbruch gab.
+					#
+					setopt globsubst
+					print ${Bzip_File//\.bz2/*} | xargs rm -f &>/dev/null
+					unsetopt globsubst
+				else
+					# Dateien der letzten 7 Tage, die veraendert wurden, finden und sichern.
+					if [ "$gv_Terminal" ] ; then
+						prog_exec -p find "/${i} -type f -ctime -7 -exec tar -uPvf $Tar_File_New $Tar_Opt {} \;" | \
+							progressbox "$ACTION_TITLE" "$DIR_LAST_MSG" || (print ; prog_failure)
+						prog_exec -i bzip2 "-v $Tar_File_New"
+					else
+						tar -uPvf $Tar_File_New "$Tar_Opt" "$f"
+						bzip2 -v $Tar_File_New
+					fi
+				fi
+			else
+				# Beim ausfuehren von kwbackup_cron ueber "cron" gibts keine Terminal Ausgabe.
+				# Das wird hier geprueft.
+				# vollstaendiges Backup.
+				if [ "$gv_Terminal" ] ; then
+					prog_exec -p tar "-cPvf $Tar_File_New $Tar_Opt /${i}" | \
+						progressbox "$ACTION_TITLE" "$DIR_MSG" || (print ; prog_failure)
+					prog_exec -i bzip2 "-v $Tar_File_New"
+				else
+					tar -cPvf $Tar_File_New "$Tar_Opt" /${i}
+					bzip2 -v $Tar_File_New
+				fi
+			fi
+		else
+			file_existed_msg "${Tar_File_New}.bz2"
+		fi
+	}
+	popd
+}
+#}}}

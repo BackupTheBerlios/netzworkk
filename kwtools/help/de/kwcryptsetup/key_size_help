@@ -1,0 +1,5 @@
+kwcryptsetup::Schluesselgroesse::Hilfe
+
+Hier koennen Sie eine Schluesselgroesse auswaehlen. Zur Verfuegung
+stehen 128, 192 und 256 Bit (kwcryptsetup Standard, siehe man 8
+cryptsetup).

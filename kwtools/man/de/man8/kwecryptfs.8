@@ -1,0 +1,76 @@
+.\"     Title: KWECRYPTFS
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 11/26/2008
+.\"    Manual: Handbuch f\(:ur kwecryptfs
+.\"    Source: Version 0.0.1
+.\"
+.TH "KWECRYPTFS" "8" "11/26/2008" "Version 0.0.1" "Handbuch f\(:ur kwecryptfs"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwecryptfs \- Zshell Script f\(:ur das Dateisystem ecryptfs
+.SH "SYNTAX"
+.HP 11
+\fBkwecryptfs\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwecryptfs\fR
+k\(:onnen Sie Verzeichnisse Datei weise verschl\(:usseln\&. Daf\(:ur wird die Krypto\-API des Kernels benutzt\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration der Standardwerte zum erstellen von verschl\(:usselten Verzeichnissen\&.
+.RE
+.PP
+\fBVerzeichnis\fR
+.RS 4
+Erstellung, \(:Anderung und l\(:oschen von verschl\(:usselten Verzeichnissen\&.
+.RE
+.PP
+\fBSchl\(:ussel\fR
+.RS 4
+Hier k\(:onnen Sie eine Schl\(:usseldatei erstellen oder l\(:oschen\&.
+.RE
+.PP
+\fBstart\fR
+.RS 4
+Starten von verschl\(:usselten Verzeichnissen, die in der Konfigurations Datei
+\fI/etc/fstab\fR
+eingetragen sind\&.
+.RE
+.PP
+\fBstop\fR
+.RS 4
+Stoppen von verschl\(:usselten Verzeichnissen, die in der Konfigurations Datei
+\fI/etc/fstab\fR
+eingetragen sind\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwecryptfsrc\fR
+.RS 4
+Konfigurations Datei f\(:ur
+\fBkwecryptfs\fR\&. Siehe
+\fBkwecryptfsrc\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBecryptfs\fR(7),
+\fBfstab\fR(5),
+\fBkwecryptfsrc\fR(5),
+\fBmount\fR(8)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

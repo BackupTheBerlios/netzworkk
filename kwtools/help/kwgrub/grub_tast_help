@@ -1,0 +1,5 @@
+# boot_help fuer kwgrub{{{
+TITLE="${gv_Configuration}::${lv_Keyboard}::${gv_Help}"
+MSG=$(gettext 'Auswahl der Tastatur. Es stehen nur deutsch und englisch zu
+Auswahl.')
+#}}}

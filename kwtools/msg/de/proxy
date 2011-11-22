@@ -1,0 +1,2 @@
+haupt_menue;http_proxy "$http_proxy" ftp_proxy "$ftp_proxy" speichern "" zurueck ""
+proxy;Tragen Sie bitte ihren Proxy ein (protokoll://host:port).

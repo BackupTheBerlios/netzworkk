@@ -1,0 +1,129 @@
+# Mail Parameter einstellen{{{
+#
+# usage: mail_conf
+#
+mail_conf() {
+postconf -c $MAIL_CONFIG | grep '^mail' | sed -e 's#\"#\\\"#g ; s# = #="#g ;
+	s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+read_file -f ${gv_WorkDir}/postfix$$
+# Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
+mailbox_command="${${mailbox_command//\"/\\\"}//\$/\\\$}"
+rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+#
+# Funktion conf_mail_menue{{{
+MAIL_TITLE=$(gettext 'Konfiguration::Mail')
+conf_mail_menue() {
+MAIL_MENU=(mail_name \"\$mail_name\"
+mail_owner \"\$mail_owner\"
+mail_spool_directory \"\$mail_spool_directory\"
+mailbox_command \"\$mailbox_command\"
+mailbox_command_maps \"\$mailbox_command_maps\"
+mailbox_delivery_lock \"\$mailbox_delivery_lock\"
+mailbox_size_limit \"\$mailbox_size_limit\"
+mailbox_transport \"\$mailbox_transport\"
+postfix \"reload\"
+$gv_Back \"\")
+menubox "$MAIL_TITLE" "$gv_Menupoint" "$MAIL_MENU"
+}
+#}}}
+conf_mail_menue
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help mail_help
+			conf_mail_menue
+			;;
+		mail_n*)
+			# Mail Name fuer Begruessungs Banner{{{
+			MAIL_NAME_MSG=$(gettext 'Geben Sie den Namen des Mailservers, fuer den Begruessungs Banner ein (Bsp. Postfix).')
+			inputbox "$MAIL_TITLE" "$MAIL_NAME_MSG"
+			if [ "$gv_Auswahl" ] ; then
+				mail_name="$gv_Auswahl"
+				postconf -e mail_name="$gv_Auswahl"
+			else
+				mail_name=""
+				postconf -e mail_name=""
+			fi
+			#}}}
+			conf_mail_menue
+			;;
+		mail_o*)
+			# Mail user auswaehlen{{{
+			user_auswahl
+			mail_owner="$WERT"
+			postconf -e mail_owner="$WERT"
+			#}}}
+			conf_mail_menue
+			;;
+		mail_s*)
+			# mail spool Verzeichnis einstellen{{{
+			dselect "$mail_spool_directory"
+			if [ "$VERZ" ] ; then
+				dselect_check "$VERZ"
+				if [ "$VERZ" ] ; then
+					mail_spool_directory="$VERZ"
+					postconf -e mail_spool_directory="$VERZ"
+				fi
+			fi
+			#}}}
+			conf_mail_menue
+			;;
+		mailbox_command)
+			# Mailbox Kommando{{{
+			U_OPT=hk
+			MAILBOX_CMD_MSG=$(gettext 'Geben Sie ein Kommando fuer Mailboxen (Bsp. /usr/bin/procmail -t -a '"${EXTENSION}"').')
+			inputbox "$MAIL_TITLE" "$MAILBOX_CMD_MSG" "$mailbox_command"
+			if [ "$gv_Auswahl" ] ; then
+				# Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
+				mailbox_command="${${${gv_Auswahl//\\/}//\"/\\\"}//\$/\\\$}"
+				postconf -e mailbox_command="${gv_Auswahl//\\/}"
+			else
+				mailbox_command=""
+				postconf -e mailbox_command=""
+			fi
+			#}}}
+			conf_mail_menue
+			;;
+		mailbox_c*_m*)
+			#
+			tab_support_wahl "$gv_Auswahl"
+			mailbox_command_maps="$MAPS"
+			postconf -e mailbox_command_maps="$MAPS"
+			#
+			conf_mail_menue
+			;;
+		mailbox_d*)
+			# Lockart einstellen# {{{
+			lock_art "$mailbox_delivery_lock"
+			mailbox_delivery_lock="$WERT"
+			postconf -e mailbox_delivery_lock="$WERT"
+			## }}}
+			conf_mail_menue
+			;;
+		mailbox_s*)
+			# Mailbox Groesse einstellen{{{
+			number_input -b "$mailbox_size_limit"
+			if [ "$NUMBER" ] ; then
+				mailbox_size_limit="$NUMBER"
+				postconf -e mailbox_size_limit="$NUMBER"
+			fi
+			#}}}
+			conf_mail_menue
+			;;
+		mailbox_t*)
+			# Mailbox Transport Methode, wird aus master.cf gelesen{{{
+			transport_methode
+			mailbox_transport="$WERT"
+			postconf -e mailbox_transport="$WERT"
+			#}}}
+			conf_mail_menue
+			;;
+		p*)	#
+			postfix_start_reload
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+}
+#}}}

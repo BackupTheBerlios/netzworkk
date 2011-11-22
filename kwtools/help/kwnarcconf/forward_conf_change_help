@@ -1,0 +1,4 @@
+# forward_conf_change_help fuer kwnarcconf{{{
+TITLE="${lv_Port_Conf}::${gv_Change}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie vorhandene Regeln aendern.')
+#}}}

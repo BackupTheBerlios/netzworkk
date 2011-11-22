@@ -1,0 +1,95 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.04.2011
+#
+# Script: kwnetstat, zeigt einige nuetzliche Informationen
+#		  ueber das Netzwerk an.
+#
+# Version: 0.2.13
+
+trap 'setterm -inversescreen off ; setterm -reset ;
+rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+#
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+# script_init enthaelt die globalen Scripteinstellungen und laedt
+# diese automatisch.
+#
+autoload -U script_init
+
+# Scriptinitialisierung
+script_init
+
+# auf Programme pruefen.
+prog_check netstat
+if [ -z "$PROGS" ] ; then
+	exit 0
+fi
+
+# Variablen
+TITLE_MENU=$(gettext 'a alles off C "Routing Information vom Cache" off
+	e "Zusatzinfos" off F "Routing Information vom FIB" off
+   	g "IPv6/IPv4 Gruppenmitgliedschaften" off i "Tabelle aller Netzwerkverbindugen" off
+   	l "lauschende Sockets" off M "Masquerade Verbindungen" off
+   	n "Anzeige numerischer Adressen" off o "Zeitgeber bestehender Verbindungen" off
+   	p "PID und Programmname" off r Routingtabelle off s Statistik off
+   	t "nur bestehende tcp Verbindungen" off u "nur bestehende udp Verbindungen" off
+   	w "nur raw Verbindungen" off x "nur unix domain Sockets" off')
+# Funktion Hauptmenue{{{
+haupt_menue() {
+	# Variable U_OPT: Dadurch werden die leerzeichen zwischen den 
+	# Optionen entfernt und dem Programm als eine Einheit uebergeben (-rvf).
+	# Muss nach Gebrauch wieder geloescht werden.
+	U_OPT="-"
+	checklist "$gv_Mainmenu" "$gv_Menupoint" "$TITLE_MENU"
+}
+#}}}
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+#
+haupt_menue
+while [ "$gv_Auswahl" ] ; do
+	case $gv_Auswahl in
+		HELP*)
+    	    # Hilfe Messagebox
+			script_help help
+			haupt_menue
+			;;
+		*)	#
+			case $gv_Auswahl in
+				[a-z]*r* | r[a-z]* | [a-z]*s* | s[a-z]*)	no_option_msg
+					;;
+				a*i* | ei[a-z]* | i[a-z]*)	no_option_msg
+					;;
+				*)	#
+					if [ -n "$PAGER" ] ; then
+						netstat -${gv_Auswahl} | $PAGER
+					else
+						no_pager_msg
+					fi
+					;;
+			esac
+			haupt_menue
+			;;
+	esac
+done
+exit 0

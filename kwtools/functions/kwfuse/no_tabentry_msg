@@ -1,0 +1,8 @@
+# Funktion no_tabentry_msg# {{{
+#
+# usage: no_tabentry_msg
+no_tabentry_msg() {
+	MSG=$(gettext 'Es ist kein Eintrag fuer FUSE vorhanden.')
+	infobox "$gv_Info" "$MSG" 3
+}
+## }}}

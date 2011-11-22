@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+SBIN_PATH=/usr/sbin
+
+rm -f ${SBIN_PATH}/kwraid &>/dev/null
+rm -rf ${DIR}/kwraid* ${DIR%/*/*}/doc/kwtools-sys-raid &>/dev/null
+exit 0
+

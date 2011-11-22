@@ -1,0 +1,4 @@
+# utils_kwplaner_help fuer kwadmin{{{
+MSG=$(gettext 'kwplaner: Termin Verwaltung, Kalender Ausdruck mit Bildern,
+\tFeiertags Anzeige, etc.')
+#}}}

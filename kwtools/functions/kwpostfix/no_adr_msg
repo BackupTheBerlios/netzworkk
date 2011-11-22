@@ -1,0 +1,7 @@
+# Funktion, no_adr_msg# {{{
+# usage: no_adr_msg
+no_adr_msg() {
+	MSG=$(gettext 'Sie muessen erst eine Adresse eingeben, bevor Sie speichern koennen.')
+	msgbox "$gv_Attention" "$MSG"
+}
+## }}}

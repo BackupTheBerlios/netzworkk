@@ -1,0 +1,8 @@
+# Funktion, Nachricht falls keine LV's vorhanden sind{{{
+#
+# usage: no_lv_msg
+no_lv_msg() {
+	MSG=$(gettext 'Es sind keine Logischen Volumes vorhanden.')
+	msgbox "$gv_Attention" "$MSG"
+}
+#}}}

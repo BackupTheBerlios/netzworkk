@@ -1,0 +1,4 @@
+haupt_menue;Zeitserver "" Uhrzeit "$UHR" Datum "$DATE" beenden ""
+timeserver_menue;Server "$NTPSERVERS" aktualisieren "" speichern "" zurueck ""
+atom_clock;Stellen Sie hier bitte die Atomzeitserver ein, von denen die Zeit und das Datum geholt werden sollen.
+no_ntp_servers;Es sind keine Zeitserver konfiguriert/angegeben.

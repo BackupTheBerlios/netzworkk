@@ -1,0 +1,5 @@
+# lv_auswahl_help fuer kwlvm{{{
+TITLE="${lv_Logical_Vol}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie eine oder mehrere Logische Volumes zur weiteren
+Bearbeitung auswaehlen.')
+#}}}

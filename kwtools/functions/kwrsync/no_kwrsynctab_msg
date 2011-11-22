@@ -1,0 +1,6 @@
+# Funktion no_kwrsynctab_msg{{{
+no_kwrsynctab_msg() {
+	MSG=$(gettext 'Es sind keine Eintrage fuer kwrsync vorhanden.')
+	msgbox "$gv_Attention" "$MSG"
+}
+#}}}

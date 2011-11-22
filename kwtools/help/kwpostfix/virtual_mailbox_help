@@ -1,0 +1,16 @@
+# virtual_mailbox_help fuer kwpostfix{{{
+TITLE=$(gettext 'Tabellen::virtual_mailbox::Hilfe')
+MSG=$(gettext 'Hier kann man den Empfaenger Adressen einen Alias geben, an dem
+dann die Mail gesendet wird.
+
+Tabellen:
+virtual_mailbox_maps
+
+Format:
+# genau diese Mailadresse in die Mailbox domain.de/info
+info@domain.de\tdomain.de/info
+# alle Mailadressen dieser Domain (catch-all) - sofern diese nicht
+# durch user@domain.de bereits erfasst wurden, in die Mailbox
+# domain.de/catch-all.
+@domain.de\tdomain.de/catch-all')
+#}}}

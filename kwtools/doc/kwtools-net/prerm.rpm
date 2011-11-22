@@ -1,0 +1,21 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+BIN_PATH=/usr/bin
+SBIN_PATH=/usr/sbin
+
+for i in kwrsync_backup kwproxy ; do
+	rm -f ${SBIN_PATH}/${i} &>/dev/null
+done
+
+for i in kwmutt kwnetstat kwrsync ; do
+	rm -f ${BIN_PATH}/${i} &>/dev/null
+done
+
+cd $DIR
+for i in kwmutt kwrsync_backup kwrsync ; do
+	rm -rf ${i}* &>/dev/null
+done
+
+rm -rf ${DIR%/*/*}/doc/kwtools-net &>/dev/null
+exit 0

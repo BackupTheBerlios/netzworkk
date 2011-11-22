@@ -1,0 +1,4 @@
+# utils_kwbackup_help fuer kwadmin{{{
+MSG=$(gettext 'kwbackup: Sicherung der Systemverzeichnisse und Verzeichnisse Ihrer
+\tWahl. Entweder per crontab oder manuell.')
+#}}}

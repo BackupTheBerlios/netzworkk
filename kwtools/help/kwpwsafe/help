@@ -1,0 +1,15 @@
+# help# {{{
+TITLE="$gv_Help"
+MSG=$(gettext 'Mit kwpwsafe koennen Sie Ihre Passwoerter und die dazu
+gehoerigen Benutzernamen verwalten beziehungsweise abrufen.
+
+Konfiguration: Hier koennen Sie die Standard Datenbank und die
+\tPasswortlaenge des zu generierenden Passwortes auswaehlen
+\tbeziehungsweise eingeben.
+
+Datenbank oeffnen: Zu bearbeitende Datenbank auswaehlen.
+
+Datenbank verwalten: Datenbanken erstellen, Passwort aendern
+\tund Datenbanken loeschen.
+')
+#}}}

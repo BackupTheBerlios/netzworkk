@@ -1,0 +1,109 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke <kiste@netzworkk.de> 30.11.2007
+#
+# Script: kwfirewall, Firewall mit iptables.
+#       Konfiguriert, startet, stopt die Firewall
+#       und liest die Regeln neu ein, bzw. bietet
+#       eine Ansicht der Regeln
+#
+# Version: 0.1.7
+
+unsetopt nomatch
+
+# Ausfuehren von Befehlen auf bestimmte Signale.
+# Notiz. Immer den Namen verwenden, da es auf einigen OS
+# eine andere Numerierung geben kann.
+#
+trap 'setterm -inversescreen off ; setterm -reset ;
+rm -rf $SCRIPT_LOCK $gv_WorkDir >/dev/null 2>&1' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+#
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=$FPATH:${Script_init_Fpath}
+fi
+
+#
+# script_init enthaelt die globalen Scripteinstellungen und laedt
+# diese automatisch.
+#
+autoload script_init
+
+# Scriptinitialisierung
+script_init
+root_check
+
+# Die Variable "$IST_FILE" wird von der Funktion file_choice/file_filter benoetigt.
+IST_FILE=${gv_WorkDir}/modules_auswahl
+# Nachdem das Script initialiiert wurde, kann man die anderen
+# benoetigten Funktionen laden.
+autoload firewall_view firewall_start_stop
+
+#
+# Wenn es eine KONFIGURATIONSRC Datei gibt einlesen.
+#
+read_file -f ${ETC_PATH}/firewall.cf
+
+# falls die Variable IPTABLES nicht belegt ist wird sie jetzt belegt.
+# Nur IPv4!
+if [ -z "$IPTABLES"  ] ; then
+	IPTABLES="`which iptables`"
+fi
+
+# Funktion haupt_menue{{{
+MAIN_MENU=$(gettext 'Ansicht "" Konfiguration "" Firewall "start/stop/reload" "$gv_Exit" ""')
+haupt_menue ()
+{
+	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+}
+#}}}
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+#
+haupt_menue
+while [ "$gv_Auswahl" ] ; do
+	case $gv_Auswahl in
+		HELP*)
+			script_help help
+			haupt_menue
+			;;
+		Ansicht|View)
+			# Ansicht aller vorhandenen Regelketten
+			firewall_view
+			haupt_menue
+			;;
+		[CK]onfiguration)
+			# Die Erstellung und Konfiguration der Regelketten
+			autoload firewall_conf firewall_config
+			# Funktion hw_conf ausfuehren
+			hw_conf
+			firewall_conf
+			haupt_menue
+			;;
+		Firewall)
+			# startet, stopt oder reload/restartet die firewall
+			firewall_start_stop
+			haupt_menue
+			;;
+		beenden|exit)	break
+			;;
+	esac
+done	
+#
+exit 0

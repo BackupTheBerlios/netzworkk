@@ -1,0 +1,515 @@
+# Funktion firewall_conf{{{
+#
+# benoetigt die Funktionen firewall_config und hw_conf
+#
+# usage: firewall_conf
+firewall_conf ()
+{
+	NETLIST=$(gettext '$DEVICE_LIST keine ""')
+	PORT_MSG=$(gettext 'Geben Sie hier bitte die Ports, getrennt durch ein Leerzeichen, die freigeschaltet werden sollen ein (Bsp. www https 53).')
+	# Funktion firewall_conf_menue{{{
+	firewall_conf_menue ()
+	{
+		CONF_MENU=$(gettext 'Programm "$IPTABLES" Module "$MODULES" Forward "$FORWARD" Masquerading "$MASQERADE" DMZ_DEV "$DMZ_DEV" INT_DEV "$INT_DEV" LAN_DEV "$LAN_DEV" DMZ "$DMZ" LAN "$LAN" TCP_FW_TO_DMZ "$TCP_FW_TO_DMZ" UDP_FW_TO_DMZ "$UDP_FW_TO_DMZ" TCP_FW_TO_INT "$TCP_FW_TO_INT" UDP_FW_TO_INT "$UDP_FW_TO_INT" TCP_FW_TO_LAN "$TCP_FW_TO_LAN" UDP_FW_TO_LAN "$UDP_FW_TO_LAN" TCP_DMZ_TO_FW "$TCP_DMZ_TO_FW" UDP_DMZ_TO_FW "$UDP_DMZ_TO_FW" TCP_LAN_TO_FW "$TCP_LAN_TO_FW" UDP_LAN_TO_FW "$UDP_LAN_TO_FW" TCP_INT_TO_FW "$TCP_INT_TO_FW" UDP_INT_TO_FW "$UDP_INT_TO_FW" TCP_INT_TO_LAN "$TCP_INT_TO_LAN" UDP_INT_TO_LAN "$UDP_INT_TO_LAN" TCP_LAN_TO_INT "$TCP_LAN_TO_INT" UDP_LAN_TO_INT "$UDP_LAN_TO_INT" TCP_INT_TO_DMZ "$TCP_INT_TO_DMZ" UDP_INT_TO_DMZ "$UDP_INT_TO_DMZ" TCP_DMZ_TO_INT "$TCP_DMZ_TO_INT" UDP_DMZ_TO_INT "$UDP_DMZ_TO_INT" TCP_LAN_TO_DMZ "$TCP_LAN_TO_DMZ" UDP_LAN_TO_DMZ "$UDP_LAN_TO_DMZ" TCP_DMZ_TO_LAN "$TCP_DMZ_TO_LAN" UDP_DMZ_TO_LAN "$UDP_DMZ_TO_LAN" TCP_INT_TO_DMZ_NAT "$TCP_INT_TO_DMZ_NAT" UDP_INT_TO_DMZ_NAT "$UDP_INT_TO_DMZ_NAT" TCP_INT_TO_LAN_NAT "$TCP_INT_TO_LAN_NAT" UDP_INT_TO_LAN_NAT "$UDP_INT_TO_LAN_NAT" $gv_Save "" $gv_Back ""')
+		menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+	}
+	#}}}
+	firewall_conf_menue
+	while [ "$gv_Auswahl" ] ; do
+		case $gv_Auswahl in
+			HELP*)
+				script_help conf_help
+				firewall_conf_menue
+				;;
+			Programm)
+				# ip(6)tables Programm{{{
+				FORMAT="ELF"
+				SUFFIX=""
+				file_choice /sbin einfach $IPTABLES
+				if [ -n "$WERT" ] ; then
+					IPTABLES="${VERZ}/${WERT}"
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			Module)
+				# Modules_list{{{
+				kernel_release
+				FORMAT="ELF"
+				SUFFIX="$gv_K_Suffix"
+				if [ "${IPTABLES##*/}" = iptables ] ; then
+					NETFILTER_PATH="/lib/modules/${gv_K_Release}/kernel/net/ipv4/netfilter"
+					file_choice $NETFILTER_PATH multi "$MODULES"
+					if [ -n "$WERT" ] ; then
+						MODULES="$WERT"
+						# IST_FILE wird von der Funktion file_filter benoetigt.
+						# Dient zum Vergleich was schon vorher ausgewaehlt wurde
+						# und dann schin mit on gekennzeichnet wird.
+						for i in $MODULES ; {
+							>> $IST_FILE <<< "$i"
+						}
+					else
+						unset -- MODULES
+					fi
+				elif [ "${IPTABLES##*/}" = ip6tables ] ; then
+					NETFILTER_PATH="/lib/modules/${gv_K_Release}/kernel/net/ipv6/netfilter"
+					file_choice $NETFILTER_PATH multi "$MODULES"
+					if [ -n "$WERT" ] ; then
+						MODULES="$WERT"
+						for i in $MODULES ; {
+							>> $IST_FILE <<< "$i"
+						}
+					else
+						unset -- MODULES
+					fi
+				else
+					MSG=$(gettext 'Sie muessen erst das ip(6)tables Programm auswaehlen.')
+					msgbox "$gv_Info" "$MSG"
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			Forward)
+				# Forward aktivieren?{{{
+				FW_TITLE=$(gettext 'Konfiguration::Forwarding')
+				FW_MSG=$(gettext 'Soll das Forwarding zwischen den Interfaces aktiviert werden (ja/nein)?')
+				yesno "$FW_TITLE" "$FW_MSG"
+				if [ "$?" = 0 ] ; then
+					FORWARD=yes
+				else
+					FORWARD=no
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			Masquerading)
+				# Masquerading aktivieren?{{{
+				M_TITLE=$(gettext 'Konfiguration::Masquerading')
+				M_MSG=$(gettext 'Soll das Masquerading fuer das Interface zum Internet aktiviert werden (ja/nein)?')
+				yesno "$M_TITLE" "$M_MSG"
+				if [ "$?" = 0 ] ; then
+					MASQERADE=yes
+				else
+					MASQERADE=no
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			DMZ_DEV)
+				# Interface zur DMZ{{{
+				DMZ_TITLE=$(gettext 'Konfiguration::DMZ_interface')
+				DMZ_MSG=$(gettext 'Wahlen Sie Ihre Schnittstelle zur DMZ aus.')
+				netcard
+				menubox "$DMZ_TITLE" "$DMZ_MSG" "$NETLIST"
+				while [ "$gv_Auswahl" ] ; do
+					case $gv_Auswahl in
+						HELP*)	script_help allgm/netcard_help
+							menubox "$DMZ_TITLE" "$DMZ_MSG" "$NETLIST"
+							;;
+						keine|none)	unset -- DMZ_DEV
+							break
+							;;
+						*)	DMZ_DEV=${${${DEVICE_LIST[gv_Auswahl]}[2]}%%_*}
+							break
+							;;
+					esac
+				done
+				firewall_conf_menue
+				#}}}
+				;;
+			INT_DEV)
+				# Interface zum	Internet{{{
+				INT_TITLE=$(gettext 'Konfiguration::INT_interface')
+				INT_MSG=$(gettext 'Geben Sie Ihre Schnittstelle zum Internet ein (z.B. ppp0).')
+				inputbox "$INT_TITLE" "$INT_MSG" "$INT_DEV"
+				if [ "$gv_Auswahl" ] ; then
+					INT_DEV="$gv_Auswahl"
+				else
+					unset -- INT_DEV
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			LAN_DEV)
+				# Interface zum LAN{{{
+				LAN_TITLE=$(gettext 'Konfiguration::LAN_interface')
+				LAN_MSG=$(gettext 'Wahlen Sie Ihre Schnittstelle zum LAN aus.')
+				netcard
+				NETLIST="$DEVICE_LIST $gv_None \"\""
+				menubox "$LAN_TITLE" "$LAN_MSG" "$NETLIST"
+				while [ "$gv_Auswahl" ] ; do
+					case $gv_Auswahl in
+						HELP*)	script_help allgm/netcard_help
+							menubox "$LAN_TITLE" "$LAN_MSG" "$NETLIST"
+							;;
+						keine|none)	unset -- DMZ_DEV
+							break
+							;;
+						*)	LAN_DEV=${${${DEVICE_LIST[gv_Auswahl]}[2]}%%_*}
+							break
+							;;
+					esac
+				done
+				firewall_conf_menue
+				#}}}
+				;;
+			DMZ)
+				# Netzmaske der DMZ{{{
+				# noch kein ipv6 moeglich
+				DMZ_NM_TITLE=$(gettext 'Konfiguration::DMZ_Netzmaske')
+				DMZ_NM_MSG=$(gettext 'Geben Sie die Netzmaske der DMZ ein (z.B. 192.168.0.0/24).')
+				inputbox "$DMZ_NM_TITLE" "$DMZ_NM_MSG" "$DMZ"
+				if [ "$gv_Auswahl" ] ; then
+					case $gv_Auswahl in
+						1[0-9]*.[0-9]*.[0-9]*.0/[1-9][0-9]*)
+							DMZ="$gv_Auswahl"
+							;;
+						*)	no_input_msg
+							unset DMZ
+							;;
+					esac
+				else
+					unset -- DMZ
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			LAN)
+				# Netzmaske vom LAN{{{
+				# noch kein ipv6 moeglich
+				LAN_NM_TITLE=$(gettext 'Konfiguration::LAN_Netzmaske')
+				LAN_NM_MSG=$(gettext 'Geben Sie die Netzmaske des LAN ein (z.B. 192.168.0.0/24).')
+				inputbox "$LAN_NM_TITLE" "$LAN_NM_MSG" "$LAN"
+				if [ "$gv_Auswahl" ] ; then
+					case $gv_Auswahl in
+						1[0-9]*.[0-9]*.[0-9]*.0/[1-9][0-9]*)
+							LAN="$gv_Auswahl"
+							;;
+						*)	no_input_msg
+							unset LAN
+							;;
+					esac
+				else
+					unset -- LAN
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_FW_TO_DMZ)
+				# Ports von FW to DMZ{{{
+				inputbox "${gv_Configuration}::TCP_FW_TO_DMZ" "$PORT_MSG" "$TCP_FW_TO_DMZ"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_FW_TO_DMZ="$gv_Auswahl"
+				else
+					unset -- TCP_FW_TO_DMZ
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_FW_TO_DMZ) 
+				# Ports von FW to DMZ{{{
+				inputbox "${gv_Configuration}::UDP_FW_TO_DMZ" "$PORT_MSG" "$UDP_FW_TO_DMZ"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_FW_TO_DMZ="$gv_Auswahl"
+				else
+					unset -- UDP_FW_TO_DMZ
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_FW_TO_INT) 
+				# Ports von INT to FW{{{
+				inputbox "${gv_Configuration}::TCP_FW_TO_INT" "$PORT_MSG" "$TCP_FW_TO_INT"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_FW_TO_INT="$gv_Auswahl"
+				else
+					unset -- TCP_FW_TO_INT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_FW_TO_INT) 
+				# Ports von INT to FW{{{
+				inputbox "${gv_Configuration}::UDP_FW_TO_INT" "$PORT_MSG" "$UDP_FW_TO_INT"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_FW_TO_INT="$gv_Auswahl"
+				else
+					unset -- UDP_FW_TO_INT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_FW_TO_LAN) 
+				# Ports von FW to LAN{{{
+				inputbox "${gv_Configuration}::TCP_FW_TO_LAN" "$PORT_MSG" "$TCP_FW_TO_LAN"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_FW_TO_LAN="$gv_Auswahl"
+				else
+					unset -- TCP_FW_TO_LAN
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_FW_TO_LAN) 
+				# Ports von FW to LAN{{{
+				inputbox "${gv_Configuration}::UDP_FW_TO_LAN" "$PORT_MSG" "$UDP_FW_TO_LAN"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_FW_TO_LAN="$gv_Auswahl"
+				else
+					unset -- UDP_FW_TO_LAN
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_DMZ_TO_FW) 
+				# Ports von DMZ to FW{{{
+				inputbox "${gv_Configuration}::TCP_DMZ_TO_FW" "$PORT_MSG" "$TCP_DMZ_TO_FW"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_DMZ_TO_FW="$gv_Auswahl"
+				else
+					unset -- TCP_DMZ_TO_FW
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_DMZ_TO_FW) 
+				# Ports von DMZ to FW{{{
+				inputbox "${gv_Configuration}::UDP_DMZ_TO_FW" "$PORT_MSG" "$UDP_DMZ_TO_FW"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_DMZ_TO_FW="$gv_Auswahl"
+				else
+					unset -- UDP_DMZ_TO_FW
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_LAN_TO_FW) 
+				# Ports von LAN to FW{{{
+				inputbox "${gv_Configuration}::TCP_LAN_TO_FW" "$PORT_MSG" "$TCP_LAN_TO_FW"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_LAN_TO_FW="$gv_Auswahl"
+				else
+					unset -- TCP_LAN_TO_FW
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_LAN_TO_FW) 
+				# Ports von LAN to FW{{{
+				inputbox "${gv_Configuration}::UDP_LAN_TO_FW" "$PORT_MSG" "$UDP_LAN_TO_FW"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_LAN_TO_FW="$gv_Auswahl"
+				else
+					unset -- UDP_LAN_TO_FW
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_INT_TO_FW) 
+				# Ports von INT to FW{{{
+				inputbox "${gv_Configuration}::TCP_INT_TO_FW" "$PORT_MSG" "$TCP_INT_TO_FW"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_INT_TO_FW="$gv_Auswahl"
+				else
+					unset -- TCP_INT_TO_FW
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_INT_TO_FW) 
+				# Ports von INT to FW{{{
+				inputbox "${gv_Configuration}::UDP_INT_TO_FW" "$PORT_MSG" "$UDP_INT_TO_FW"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_INT_TO_FW="$gv_Auswahl"
+				else
+					unset -- UDP_INT_TO_FW
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_INT_TO_LAN) 
+				# Ports von INT to LAN{{{
+				inputbox "${gv_Configuration}::TCP_INT_TO_LAN" "$PORT_MSG" "$TCP_INT_TO_LAN"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_INT_TO_LAN="$gv_Auswahl"
+				else
+					unset -- TCP_INT_TO_LAN
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_INT_TO_LAN) 
+				# Ports von INT to LAN{{{
+				inputbox "${gv_Configuration}::UDP_INT_TO_LAN" "$PORT_MSG" "$UDP_INT_TO_LAN"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_INT_TO_LAN="$gv_Auswahl"
+				else
+					unset -- UDP_INT_TO_LAN
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_LAN_TO_INT) 
+				# Ports von LAN to INT{{{
+				inputbox "${gv_Configuration}::TCP_LAN_TO_INT" "$PORT_MSG" "$TCP_LAN_TO_INT"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_LAN_TO_INT="$gv_Auswahl"
+				else
+					unset -- TCP_LAN_TO_INT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_LAN_TO_INT) 
+				# Ports von LAN to INT{{{
+				inputbox "${gv_Configuration}::UDP_LAN_TO_INT" "$PORT_MSG" "$UDP_LAN_TO_INT"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_LAN_TO_INT="$gv_Auswahl"
+				else
+					unset -- UDP_LAN_TO_INT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_INT_TO_DMZ) 
+				# Ports von INT to DMZ{{{
+				inputbox "${gv_Configuration}::TCP_INT_TO_DMZ" "$PORT_MSG" "$TCP_INT_TO_DMZ"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_INT_TO_DMZ="$gv_Auswahl"
+				else
+					unset -- TCP_INT_TO_DMZ
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_INT_TO_DMZ) 
+				# Ports von INT to DMZ{{{
+				inputbox "${gv_Configuration}::UDP_INT_TO_DMZ" "$PORT_MSG" "$UDP_INT_TO_DMZ"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_INT_TO_DMZ="$gv_Auswahl"
+				else
+					unset -- UDP_INT_TO_DMZ
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_DMZ_TO_INT) 
+				# Ports von DMZ to INT{{{
+				inputbox "${gv_Configuration}::TCP_DMZ_TO_INT" "$PORT_MSG" "$TCP_DMZ_TO_INT"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_DMZ_TO_INT="$gv_Auswahl"
+				else
+					unset -- TCP_DMZ_TO_INT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_DMZ_TO_INT) 
+				# Ports von DMZ to INT{{{
+				inputbox "${gv_Configuration}::UDP_DMZ_TO_INT" "$PORT_MSG" "$UDP_DMZ_TO_INT"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_DMZ_TO_INT="$gv_Auswahl"
+				else
+					unset -- UDP_DMZ_TO_INT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_LAN_TO_DMZ) 
+				# Ports von LAN to DMZ{{{
+				inputbox "${gv_Configuration}::TCP_LAN_TO_DMZ" "$PORT_MSG" "$TCP_LAN_TO_DMZ"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_LAN_TO_DMZ="$gv_Auswahl"
+				else
+					unset -- TCP_LAN_TO_DMZ
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_LAN_TO_DMZ) 
+				# Ports von LAN to DMZ{{{
+				inputbox "${gv_Configuration}::UDP_LAN_TO_DMZ" "$PORT_MSG" "$UDP_LAN_TO_DMZ"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_LAN_TO_DMZ="$gv_Auswahl"
+				else
+					unset -- UDP_LAN_TO_DMZ
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_DMZ_TO_LAN) 
+				# Ports von DMZ to LAN{{{
+				inputbox "${gv_Configuration}::TCP_DMZ_TO_LAN" "$PORT_MSG" "$TCP_DMZ_TO_LAN"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_DMZ_TO_LAN="$gv_Auswahl"
+				else
+					unset -- TCP_DMZ_TO_LAN
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_DMZ_TO_LAN) 
+				# Ports von DMZ to LAN{{{
+				inputbox "${gv_Configuration}::UDP_DMZ_TO_LAN" "$PORT_MSG" "$UDP_DMZ_TO_LAN"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_DMZ_TO_LAN="$gv_Auswahl"
+				else
+					unset -- UDP_DMZ_TO_LAN
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_INT_TO_DMZ_NAT)
+				# DMZ-Host:Ports vom Internet to DMZ{{{
+				inputbox "${gv_Configuration}::TCP_INT_TO_DMZ_NAT" "$PORT_MSG" "$TCP_INT_TO_DMZ_NAT"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_INT_TO_DMZ_NAT="$gv_Auswahl"
+				else
+					unset -- TCP_INT_TO_DMZ_NAT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_INT_TO_DMZ_NAT)
+				# DMZ-Host:Ports vom Internet to DMZ{{{
+				inputbox "${gv_Configuration}::UDP_INT_TO_DMZ_NAT" "$PORT_MSG" "$UDP_INT_TO_DMZ_NAT"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_INT_TO_DMZ_NAT="$gv_Auswahl"
+				else
+					unset -- UDP_INT_TO_DMZ_NAT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			TCP_INT_TO_LAN_NAT) 
+				# LAN-Host:Ports vom Internet to LAN{{{
+				inputbox "${gv_Configuration}::TCP_INT_TO_LAN_NAT" "$PORT_MSG" "$TCP_INT_TO_LAN_NAT"
+				if [ "$gv_Auswahl" ] ; then
+					TCP_INT_TO_LAN_NAT="$gv_Auswahl"
+				else
+					unset -- TCP_INT_TO_LAN_NAT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			UDP_INT_TO_LAN_NAT) 
+				# LAN-Host:Ports vom Internet to LAN{{{
+				inputbox "${gv_Configuration}::UDP_INT_TO_LAN_NAT" "$PORT_MSG" "$UDP_INT_TO_LAN_NAT"
+				if [ "$gv_Auswahl" ] ; then
+					UDP_INT_TO_LAN_NAT="$gv_Auswahl"
+				else
+					unset -- UDP_INT_TO_LAN_NAT
+				fi
+				firewall_conf_menue
+				#}}}
+				;;
+			speichern|save)
+				firewall_config
+				break
+				;;
+			zurueck|back)	break
+				;;
+		esac
+	done	
+}
+#}}}

@@ -1,0 +1,19 @@
+kwcryptsetup::Management::erstellen::Hilfe
+
+Erstellen von verschluesselten Laufwerken. Dabei wird die
+Konfiguration in die Datei /etc/crypttab eingetragen, damit diese
+auch automatisch (Boot) aktiviert werden koennen.
+
+Container: Ein verschluesseltes Datei-Image erstellen.
+
+Achtung: Erstellen Sie kein Journaling Dateisystem auf dem
+        Container, wenn der Container auf einem Journaling Datei-
+        system liegt.
+
+Partition: Eine verschluesselte Partition, Logisches Volume (LV) oder
+        RAID Laufwerk erstellen.
+
+NOTIZ: Wenn das Laufwerk schon vorhanden ist, wird nachgefragt ob es
+        ueberschrieben werden soll. Fuer das Einlesen der Optionen des
+        Laufwerks wird die Datei "/etc/crypttab" hergenommen.
+

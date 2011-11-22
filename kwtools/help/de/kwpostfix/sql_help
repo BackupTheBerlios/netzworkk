@@ -1,0 +1,30 @@
+kwpostfix::SQL-Datenbank::Hilfe
+
+Hier kann man, falls mit einkompiliert, Mysql und Postgresql
+konfigurieren.
+
+Datei: Dateiname, kann nicht veraendert werden.
+
+Datenbank: Name der Datenbank eingeben.
+
+Benutzer: Benutzer, der sich in die Datenbank einloggen darf
+         (z.B. postfix).
+
+Passwort: Passwort des Datenbank Benutzers.
+
+Tabelle: Datenbank Tabellenname eingeben.
+
+Rechner: Rechner, auf denen die Datennbank laeuft. Dies koennen auch
+        mehrere sein, getrennt durch ein Leerzeichen.
+
+Source_Feld: Dies ist der Spaltenname der Tabelle, der den zu be-
+        handelten Eintrag enthaelt.
+
+Ziel_Feld: Dies ist der Spaltenname der Tabelle, der den zu be-
+        handelten Eintrag mapt.
+
+Konditionen:
+
+Funktion: Datenbank Funktion, dann braucht man nicht Tabelle,
+        Source_Feld, Ziel_Feld und Konditionen eingeben.
+

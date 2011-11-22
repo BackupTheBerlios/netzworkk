@@ -1,0 +1,11 @@
+haupt_menue;Konfiguration "" Backup "" Rotierung "" beenden ""
+konf_menue;Ausschluss_Datei "bearbeiten" Backupverz. "$BACKUP_PATH" Bandbreite "$BW_LIMIT" Check_Platz "$CHECK_HDMINFREE" Minimum_Platz "$HDMINFREE" Mountverz. "$MOUNT_PATH" Remote_shell "$RSYNC_RSH" Server "$SERVER" User "$USER_RUN" crontab "bearbeiten (dialog)" speichern "" zurueck ""
+#
+bw_limit;Geben Sie hier ein Limit fuer die Bandbreite, in Kbyte/s, bei der Uebertragung ein (256=256Kb/s).
+check_size;Soll die Fetsplatten/Prtitionsgroesse gecheckt werden (yes/no)?
+hdminfree;Geben Sie hier den Platz in Prozent an, den die Partition/Festplatte mindestens haben sollte, in welcher das Backup gespeichert soll.
+logfile;${S}-log
+no_backup_path;Sie haben kein Backup Verzeichnis angegeben. Konfigurieren Sie dies erst.
+no_space_fp;Es ist nicht mehr genug Platz vorhanden.
+rotate;Rotiere Backup.
+server;Geben Sie hier die Rechner an von denen ein Backup gezogen werden soll.

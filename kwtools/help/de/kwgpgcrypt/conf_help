@@ -1,0 +1,13 @@
+kwgpgcrypt::Konfiguration::Hilfe
+
+Standard_Schluessel_ID_lang: Hier kann man nichts auswaehlen, dient nur
+        zur Anzeige. Wird aber benoetigt. Diesem Schluessel wird 
+        ultimativ vertraut.
+
+NOTIZ: Dies sollte ihr eigener sein.
+
+Schluessel_server: Hier kann man einen Schluessel Server angeben.
+
+Standard_Schluessel_ID: Hier kann man die ID auswaehlen mit welchem 
+        Schluessel man standardmaessig signiert, verschluesselt etc..
+

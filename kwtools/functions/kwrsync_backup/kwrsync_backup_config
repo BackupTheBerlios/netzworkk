@@ -1,0 +1,54 @@
+# Funktion um die Konfiguration zu schreiben.{{{
+#
+# usage: kwrsync_backup_config
+#
+kwrsync_backup_config() {
+#
+if [ ! -d "${KWRSYNC_CF%/*}" ] ; then
+	create_file -d ${KWRSYNC_CF%/*}
+fi	
+#
+# $KWRSYNC_CF schreiben.
+#
+> $KWRSYNC_CF <<< "# Beginn $KWRSYNC_CF
+#
+# Autor: Kai Wilke <kiste@netzworkk.de>
+
+# Unter welchem Pfad wird gesichert?
+BACKUP_PATH=\"$BACKUP_PATH\"
+
+# Weitere Optionen fuer rsync. Ggf. macht eine Limitierung 
+# der Bandbreite Sinn, Angabe in kbyte/sec:
+# BW_LIMIT="--bwlimit=256"
+BW_LIMIT=\"$BW_LIMIT\"
+#
+# Soll geprueft werden, ob noch ein gewisser Prozentsatz 
+# an Plattenplatz und Inodes frei ist?
+# CHECK_HDMINFREE=yes/no
+# HDMINFREE= Integerzahl zwischen 0 und <100 (Prozent)
+# Ist die benutzte Kilobyte oder Inode Prozentzahl kleiner
+# als die angegebene maximale Prozentzahl an Plattenplatz
+# ($HDMINFREE), wird ein Backup durchgefuehrt.
+HDMINFREE=\"$HDMINFREE\"
+CHECK_HDMINFREE=\"$CHECK_HDMINFREE\"
+
+# Partition die gemountet werden soll.
+MOUNT_PATH=\"$MOUNT_PATH\"
+
+# Remote Shell für die Übertragung nutzen (rsh,ssh).
+# ssh ist eine Secure Shell, rsh hat keine Verschluesselung.
+RSYNC_RSH=\"$RSYNC_RSH\"
+
+# Server die gesichert werden sollen, getrennt durch ein Leerzeichen.
+SERVER=\"$SERVER\"
+
+# Fuer welchen User soll der Crontab Eintrag (kwrsync_backup_cron)
+# erstellt werden. Wenn der User nicht root ist benoetigt er einen
+# Eintrag in /etc/sudoers, damit er das Script ausfuehren darf.
+USER_RUN=\"$USER_RUN\"
+
+# End $KWRSYNC_CF"
+#
+read_file -f $KWRSYNC_CF
+}
+#}}}

@@ -1,0 +1,10 @@
+haupt_menue;anlegen "" veraendern "" loeschen "" beenden ""
+log_aendern_menue;Programm "$COMPRESSART" --------- "" Name "$NAME" Logdatei "$DATEI" Anzahl "$ANZAHL" Rotierzeit "$ROTATE" Mail "$M_ADDR" Groesse "$SIZE" Kompression "$COMPRESS" Rechte "$CREATE" Script "$SCRIPT" speichern "" zurueck ""
+rotate_menue;taeglich "" woechentlich "" monatlich ""
+size_menue;100k "" 250k "" 500k "" 1M "" 2M "" 4M "" 10M "" 25M ""
+check_input;Sie muessen erst die Menuepunkte Name, Logdatei, Anzahl und Rotierzeit mit Werten belegen. Alle anderen Menuepunkte sind optional.
+logrotate_anz;Geben Sie bitte eine Zahl an wie oft die Log Datei rotiert werden soll.
+logrotate_name;Geben Sie hier bitte den Namen fuer die Konfigurationsdatei ein. Am besten den Namen des Service.
+no_logrotate_conf;Die Datei $NAME ist keine Logrotate Konfiguration.
+no_logfile_sel;Sie muessen erst mindestens ein Logdatei auswaehlen.
+rotate_cmd;Geben Sie hier bitte einen Befehl ein, der den Daemon (Server) veranlasst seine Einstellungen neu zu laden. Oder vielleicht hat der daemon auch einen eigenen rotate Befehl, wie squid (Proxy). Bsp:$KILL_ART syslogd.

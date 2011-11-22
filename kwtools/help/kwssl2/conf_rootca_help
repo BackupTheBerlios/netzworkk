@@ -1,0 +1,8 @@
+# conf_rootca_help fuer kwssl2{{{
+MSG=$(gettext 'CA Name: Name ist gleich RootCA und kann nicht geaendern werden.
+\tDies dient nur zur Anzeige des Namens (RootCA).
+
+allgemeiner Name: Geben Sie einen allgemeinen Namen ein (z. B.
+\tIhren Namen).
+')
+#}}}

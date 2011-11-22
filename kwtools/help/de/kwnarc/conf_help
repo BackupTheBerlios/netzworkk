@@ -1,0 +1,18 @@
+kwnarc::Konfiguration::Hilfe
+
+Hauptkonfiguration: Hier konfiguriert man alle wichtigen Parameter
+        fuer narc - Datei /etc/narc/narc.conf
+
+Portweiterleitung: Hier koennen Sie Regeln erstellen, aendern oder
+        loeschen, wie sich einige Pakete verhalten sollen, deren
+        Zieladresse umgeschrieben werden soll.
+
+Logkonfiguration: Hier koennen Sie das Logging Verhalten von narc
+        einstellen.
+
+Zusatzkonfiguration: Falls man noch extra Einstellungen benoetigt
+        koennen Sie das hier tun. Dazu koennen Sie die Variable
+        "EDITOR", in der Datei /etc/kwtools/main.cf, mit einem
+        Editor ihrer Wahl belegen. Ansonsten wird die Dialogbox
+        "editbox" verwendet.
+

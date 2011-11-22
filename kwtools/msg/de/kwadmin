@@ -1,0 +1,9 @@
+konf_menue;Hilfeverz. "$HELP_PATH" kwtoolsverz. "$KWTOOLS_PATH" Sprache "$LANGUAGE" Paketmanagment "$PAKET_MANAGE" speichern "" zurueck ""
+select_package_menue;dpkg "" rpm "" tar ""
+konf;Konfiguration
+graphic;Grafik
+lang;de deutsch en englisch
+multi;Multimedia
+net;Netzwerk
+sys;System
+utils;Dienstprogramme

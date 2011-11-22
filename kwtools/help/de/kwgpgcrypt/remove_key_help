@@ -1,0 +1,4 @@
+kwgpgcrypt::Schluessel_Management::loeschen::Hilfe
+
+Hier koennen Sie mehrere Schluessel gleichzeitig loeschen. Wenn es
+auch einen sicheren Schluessel dazu gibt wird er mit geloescht.

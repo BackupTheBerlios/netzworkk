@@ -1,0 +1,14 @@
+# help fuer kwcamera{{{
+TITLE="$gv_Help"
+MSG=$(gettext 'Mit diesem Script kann man seine Digital Kamera bedienen.
+Jedenfalls soweit es die Treiber von gphoto2 zulassen.
+
+Konfiguration: allgemeine Einstellungen von kwcamera
+
+Download: Vorschau und download von Bildern/Filmen und Thumbnails.
+
+Loeschen: aller Bilder und Thumbnails
+
+Kamera_Einstellung: Hier kann man Bildqualitaet, Uhrzeit, etc. der
+\tDigital Kamera einstellen.')
+#}}}

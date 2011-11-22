@@ -1,0 +1,16 @@
+# conf_serverca_help fuer kwssl2{{{
+MSG=$(gettext 'Servername: Geben Sie den Namen des Servers ein, fuer das dieses
+\tZertifikat gelten soll. Dieser Name wird auch zur Benennung der
+\tZertifikatsdateien benutzt.
+
+NOTIZ: Denken Sie daran das einige Server nur "Servername"
+\tgleich servername.example.de fuer das Zertifikat akzeptieren, aber
+\tnicht wenn Ihr Name oder was anderes da steht.
+
+\tDesweiteren benoetigen Server Zertifikate nicht unbedingt ein
+\tPasswort, da man dieses bei jedem Start des Servers eingeben
+\tmuesste.
+
+SubCA Passwort: Geben Sie das Passwort fuer diese SubCA ein.
+')
+#}}}

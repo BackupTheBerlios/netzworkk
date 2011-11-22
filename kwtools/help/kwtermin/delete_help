@@ -1,0 +1,12 @@
+# delete_help fuer kwtermin{{{
+TITLE="${gv_Delete}::${gv_Help}"
+MSG=$(gettext 'Heute: Alle tagesaktuellen Termine loeschen.
+
+Woche: Alle Termine der letzten Woche loeschen.
+
+Monat: Alle Termine des letzten Monats loeschen.
+
+Jahr: Alle Termine des letzten Jahres loeschen.
+
+alle: Alle Termine loeschen, vergangene wie kommende.')
+#}}}

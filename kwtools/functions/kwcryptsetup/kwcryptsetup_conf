@@ -1,0 +1,513 @@
+# Funktion kwcryptsetup_conf# {{{
+#
+# benoetigt die Funktion kwcryptsetup_config
+#
+# usage: kwcryptsetup_conf
+#
+kwcryptsetup_conf() {
+	lv_Align=$(gettext 'Ausrichtung')
+	lv_Gnupg=$(gettext 'gnupg')
+	lv_Hash=$(gettext 'Hash')
+	lv_Iteration_Time=$(gettext 'Passwort-Zeit')
+	lv_Keyfile=$(gettext 'Schluesseldatei')
+	lv_Keysize=$(gettext 'Schluesselgroesse')
+	lv_Mountdir=$(gettext 'Mountverz.')
+	lv_Noauto=$(gettext 'Noauto')
+	lv_Noearly=$(gettext 'Verzoegerung')
+	lv_Offset=$(gettext 'Offset')
+	lv_Readonly=$(gettext 'nur_lesen')
+	lv_Size=$(gettext 'Groesse')
+	lv_Skip=$(gettext 'Skip')
+	lv_Ssl=$(gettext 'ssl')
+	lv_Swap=$(gettext 'Swap')
+	lv_Use_Luks=$(gettext 'LUKS_benutzen')
+	lv_Timeout=$(gettext 'Timeout')
+	lv_Tmp=$(gettext 'Temporaer')
+	lv_Tries=$(gettext 'Wiederholungen')
+	lv_Verify=$(gettext 'Passwort_ueberpruefen')
+	lv_Warn=$(gettext 'Warnung')
+	#
+	local Konf_Opt
+	if [ "$#" = 1 ] ; then
+		Konf_Opt="$1"
+	else
+		unset -- Konf_Opt
+	fi
+	# Funktion conf_menu# {{{
+	conf_menu() {
+		unset -- MAKESWAP KONF
+		if [ -z "$HASH" ] ; then
+			HASH=sha512
+		fi
+		if [ -z "$KEY_SIZE" ] ; then
+			KEY_SIZE=256
+		fi
+		if [ -z "$VERIFY" ] ; then
+			VERIFY=yes
+		fi
+		#
+		if [[ $Konf_Opt == --change ]] ; then
+			KONF_MENU=($lv_Gnupg \"$GPG\" $lv_Hash \"$HASH\"
+			$lv_Mountdir \"$MOUNT_PATH\" $lv_Noauto \"$NOAUTO\"
+			$lv_Readonly \"$READONLY\" $lv_Verify \"$VERIFY\"
+			$lv_Iteration_Time \"$ITERATION_TIME\"
+			$lv_Keyfile \"$KEY_FILE\" $lv_Ssl \"$SSL\"
+			$lv_Timeout \"$TIMEOUT\" $lv_Noearly \"$NOEARLY\"
+			$lv_Warn \"$LOUD\" $lv_Tries \"$TRIES\"
+			$gv_Save \"\" $gv_Back \"\")
+		elif [[ $Konf_Opt == --cont ]] ; then
+			unset -- USELUKS
+			KONF_MENU=($lv_Size \"$SIZE\" $lv_Gnupg \"$GPG\"
+			$lv_Hash \"$HASH\"
+			$lv_Mountdir \"$MOUNT_PATH\" $lv_Noauto \"$NOAUTO\"
+			$lv_Offset \"$OFFSET\" $lv_Readonly \"$READONLY\"
+			$lv_Verify \"$VERIFY\" $lv_Iteration_Time \"$ITERATION_TIME\"
+			$lv_Keyfile \"$KEY_FILE\" $lv_Keysize \"$KEY_SIZE\"
+			$lv_Skip \"$SKIP\" $lv_Ssl \"$SSL\"
+			$lv_Tmp \"$TMPFS\" $lv_Timeout \"$TIMEOUT\"
+			$lv_Noearly \"$NOEARLY\" $lv_Warn \"$LOUD\"
+			$lv_Tries \"$TRIES\" $gv_Save \"\" $gv_Back \"\")
+		elif [[ $Konf_Opt == --part ]] ; then
+			KONF_MENU=($lv_Align \"$ALIGN\" $lv_Gnupg \"$GPG\"
+			$lv_Hash \"$HASH\" $lv_Use_Luks \"$USELUKS\"
+			$lv_Mountdir \"$MOUNT_PATH\" $lv_Noauto \"$NOAUTO\"
+			$lv_Offset \"$OFFSET\" $lv_Readonly \"$READONLY\"
+			$lv_Verify \"$VERIFY\" $lv_Iteration_Time \"$ITERATION_TIME\"
+			$lv_Keyfile \"$KEY_FILE\" $lv_Keysize \"$KEY_SIZE\"
+			$lv_Skip \"$SKIP\" $lv_Ssl \"$SSL\"
+			$lv_Tmp \"$TMPFS\" $lv_Timeout \"$TIMEOUT\"
+			$lv_Noearly \"$NOEARLY\" $lv_Warn \"$LOUD\"
+			$lv_Tries \"$TRIES\" $gv_Save \"\" $gv_Back \"\")
+		elif [[ $Konf_Opt == --swap ]] ; then
+			unset -- HASH VERIFY
+			MAKESWAP=yes
+			KONF_MENU=($lv_Align \"$ALIGN\" 
+			$lv_Use_Luks \"$USELUKS\"
+			$lv_Offset \"$OFFSET\"
+			$lv_Keysize \"$KEY_SIZE\"
+			$lv_Skip \"$SKIP\"
+			$lv_Noearly \"$NOEARLY\" $lv_Warn \"$LOUD\"
+			$gv_Save \"\" $gv_Back \"\")
+		else
+			# fertig
+			KONF=yes
+			KONF_MENU=($lv_Align \"$ALIGN\" $lv_Size \"$SIZE\"
+			$lv_Gnupg \"$GPG\" $lv_Hash \"$HASH\" $lv_Use_Luks \"$USELUKS\"
+			$lv_Mountdir \"$MOUNT_PATH\" $lv_Noauto \"$NOAUTO\"
+			$lv_Offset \"$OFFSET\" $lv_Readonly \"$READONLY\" 
+			$lv_Verify \"$VERIFY\" $lv_Iteration_Time \"$ITERATION_TIME\"
+			$lv_Keyfile \"$KEY_FILE\" $lv_Keysize \"$KEY_SIZE\"
+			$lv_Skip \"$SKIP\" $lv_Ssl \"$SSL\" $lv_Swap \"$MAKESWAP\"
+			$lv_Tmp \"$TMPFS\" $lv_Timeout \"$TIMEOUT\"
+			$lv_Noearly \"$NOEARLY\" $lv_Warn \"$LOUD\"
+			$lv_Tries \"$TRIES\" $gv_Save \"\" $gv_Back \"\")
+		fi
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$KONF_MENU"
+		else
+			menubox "$gv_Configuration" "$gv_Menupoint" "$KONF_MENU"
+		fi
+	}
+	## }}}
+	conf_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help conf_help
+				conf_menu
+				;;
+			$lv_Align)
+				# Ausrichtung bei RAID.# {{{
+				ALIGN_MSG=$(gettext 'Geben Sie ein vielfaches von 512 Byte Sektoren ein (8 = 4096 Byte).')
+				number_input "$gv_Configuration" "$ALIGN_MSG" "$ALIGN"
+				if [ "$NUMBER" ] ; then
+					ALIGN="$NUMBER"
+				else
+					ALIGN=""
+				fi
+				## }}}
+				conf_menu $lv_Align
+				;;
+			$lv_Size)
+				# Groesse der Partition, eingeben.# {{{
+				# Funktion no_2mb_size_msg# {{{
+				no_2mb_size_msg() {
+					MSG=$(gettext 'Sie muessen schon eine Groesse von mehr als 2 MByte auswaehlen.')
+					msgbox "$gv_Attention" "$MSG"
+					unset -- SIZE
+				}
+				## }}}
+				SIZE_MSG=$(gettext 'Geben Sie die Groesse des Containers ein (>2MByte). Es gehen die Groesenangaben [kKmMgGtTpPzZ].')
+				number_input -D "$gv_Configuration" "$SIZE_MSG" "$SIZE"
+				if [ -n "$NUMBER" ] ; then
+					# Laufwerksangaben in KiloByte umrechnen
+					convert_drive_size "${NUMBER##*[0-9]}" "${NUMBER%%[a-zA-Z]*}"
+					if [ -n "$SIZE_KB" ] ; then
+						if [[ "$SIZE_KB" -gt 2048 ]] ; then
+							SIZE="$NUMBER"
+						else
+							no_2mb_size_msg
+						fi
+					fi
+				fi
+				## }}}
+				conf_menu $lv_Size
+				;;
+			$lv_Gnupg)
+				# Soll gnupg verwendet werden?# {{{
+				GPG_MSG=$(gettext 'Soll gnupg zum entschluesseln der Schluesseldatei verwendet werden (ja/nein)?')
+				yesno "$gv_Configuration" "$GPG_MSG"
+				if [ "$?" = 0 ] ; then
+					GPG=yes
+					if [ -n "$SSL" ] ; then
+						SSL=no
+						MSG=$(gettext 'Die Optionen ssl und gpg sind nicht zusammen erlaubt, ssl wird auf "no" gesetzt.')
+						msgbox "$gv_Info" "$MSG"
+					fi
+				else
+					GPG=no
+				fi
+				## }}}
+				conf_menu $lv_Gnupg
+				;;
+			$lv_Hash)
+				# Soll Hash verwendet werden?# {{{
+				HASH_MSG=$(gettext 'Waehlen Sie einen Hashwert fuer die Passphrase aus (Standard ist sha512).')
+				HASH_MENU=($gv_None \"\" ripemd160 \"\" rmd160 \"\" rmd160compat \"\" sha256 \"\" sha384 \"\" sha512 \"\")
+				menubox "$gv_Configuration" "$HASH_MSG" "$HASH_MENU"
+				# Auswahl anbieten
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help conf_help
+							menubox "$gv_Configuration" "$HASH_MSG" "$HASH_MENU"
+							;;
+						$gv_None)
+							unset -- HASH
+							break
+							;;
+						*)
+							# Auswahl uebernehmen
+							HASH="$gv_Auswahl"
+							break
+							;;
+					esac
+				done
+				## }}}
+				conf_menu $lv_Hash
+				;;
+			$lv_Use_Luks)
+				# Soll die Erweiterung Luks verwendet werden?# {{{
+				LUKS_MSG=$(gettext 'Soll die Erweiterung "LUKS" verwendet werden (ja/nein)?')
+				yesno "$gv_Configuration" "$LUKS_MSG"
+				if [ "$?" = 0 ] ; then
+					USELUKS=yes
+				else
+					USELUKS=no
+				fi
+				## }}}
+				conf_menu $lv_Use_Luks
+				;;
+			$lv_Mountdir) 
+				# Mount Verzeichnis eingeben
+				mount_path "$MOUNT_PATH"
+				conf_menu $lv_Mountdir
+				;;
+			$lv_Noauto)
+				# Auswahl ob beim Bootprozess das Laufwerk gemappt werden soll,# {{{
+				# oder erst spaeter manuell (Ja/Nein).
+				NOAUTO_MSG=$(gettext 'Soll das verschluesselte Laufwerk beim Start des Rechners manuell erstellt werden (ja/nein)?')
+				yesno "$gv_Configuration" "$NOAUTO_MSG"
+				if [ "$?" = 0 ] ; then
+					NOAUTO=yes
+				else
+					NOAUTO=no
+				fi
+				## }}}
+				conf_menu $lv_Noauto
+				;;
+			$lv_Offset)
+				# Offset/Versatz in Sektoren eingeben.# {{{
+				OFFSET_MSG=$(gettext 'Geben Sie eine Zahl ein um wieviele Sektoren der 1. Sektor verschoben werden soll. Also ab welchem Sektor das original Laufwerk auf das verschluesselte Laufwerk abgebildet werden soll.')
+				number_input "$gv_Configuration" "$OFFSET_MSG" "$OFFSET"
+				if [ "$NUMBER" ] ; then
+					OFFSET="$NUMBER"
+				else
+					OFFSET=""
+				fi
+				## }}}
+				conf_menu $lv_Offset
+				;;
+			$lv_Readonly)
+				# Setup Readonly?# {{{
+				RO_MSG=$(gettext 'Soll das Laufwerk im Nur Lesemodus erstellt werden (ja/nein)?')
+				yesno "$gv_Configuration" "$RO_MSG"
+				if [ "$?" = 0 ] ; then
+					READONLY=yes
+				else
+					READONLY=no
+				fi
+				## }}}
+				conf_menu $lv_Readonly
+				;;
+			$lv_Verify)
+				# Soll die Passphrase uberprueft werden?# {{{
+				PASS_VERIFY_MSG=$(gettext 'Soll die Passphrase nochmal ueberprueft werden (ja/nein)?')
+				yesno "$gv_Configuration" "$PASS_VERIFY_MSG"
+				if [ "$?" = 0 ] ; then
+					VERIFY=yes
+				else
+					VERIFY=no
+				fi
+				## }}}
+				conf_menu $lv_Verify
+				;;
+			$lv_Iteration_Time)	
+				# Passwortzeit eingeben# {{{
+				ITERATION_MSG=$(gettext 'Geben Sie die Zeit, in Mikrosekunden, fuer den Passwort Prozess, ein (Standard ist 1).')
+				number_input "$gv_Configuration" "$ITERATION_MSG" "${ITERATION_TIME:-1}"
+				if [ "$NUMBER" ] ; then
+					ITERATION_TIME="$NUMBER"
+				else
+					ITERATION_TIME="1"
+				fi
+				## }}}
+				conf_menu $lv_Iteration_Time
+				;;
+			$lv_Keyfile)
+				# Schluesseldatei auswaehlen
+				choice_key_file "$KEY_FILE"
+				conf_menu $lv_Keyfile
+				;;
+			$lv_Keysize)
+				# Schluesselgroesse eingeben# {{{
+				KEY_SIZE_MSG=$(gettext 'Waehlen Sie bitte die Schluesselgroesse aus (Standard ist 256).')
+				KEY_SIZE_MENU=(128 \"\" 192 \"\" 256 \"\")
+				menubox "$gv_Configuration" "$KEY_SIZE_MSG" "$KEY_SIZE_MENU"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help key_size_help
+							menubox "$gv_Configuration" "$KEY_SIZE_MSG" "$KEY_SIZE_MENU"
+							;;
+						*)	# Wert uebernehmen
+							KEY_SIZE="$gv_Auswahl"
+							break
+							;;
+					esac
+				done
+				## }}}
+				conf_menu $lv_Keysize
+				;;
+			$lv_Skip)
+				# skip in Sektoren eingeben, Ueberspringen der Sektoren.# {{{
+				SKIP_MSG=$(gettext 'Geben Sie die Zahl der Sektoren ein die uebersprungen werden sollen zur Berechnung des Initialisierungsvektors. Siehe Hilfe.')
+				number_input "$gv_Configuration" "$SKIP_MSG" "$SKIP"
+				if [ "$NUMBER" ] ; then
+					SKIP="$NUMBER"
+				else
+					SKIP=""
+				fi
+				## }}}
+				conf_menu $lv_Skip
+				;;
+			$lv_Ssl)
+				# Soll openssl verwendet werden?# {{{
+				SSL_MSG=$(gettext 'Soll openssl zum entschluesseln der Schluesseldatei verwendet werden (ja/nein)?')
+				yesno "$gv_Configuration" "$SSL_MSG"
+				if [ "$?" = 0 ] ; then
+					SSL=yes
+					if [ "$GPG" = yes ] ; then
+						GPG=no
+						MSG=$(gettext 'Die Optionen ssl und gpg sind nicht zusammen erlaubt, gnupg wird "no" gesetzt.')
+						msgbox "$gv_Info" "$MSG"
+					fi
+				else
+					SSL=no
+				fi
+				## }}}
+				conf_menu $lv_Ssl
+				;;
+			$lv_Swap)
+				# Soll ein Swap Laufwerk erstellt werden?# {{{
+				SWAP_MSG=$(gettext 'Soll ein verschluesseltes Swap-Laufwerk erstellt werden (ja/nein)?')
+				yesno "$gv_Configuration" "$SWAP_MSG"
+				if [ "$?" = 0 ] ; then
+					MAKESWAP=yes
+					if [ -n "$TMPFS" ] ; then
+						TMPFS=no
+						MSG=$(gettext 'Die Optionen temporaer und swap sind nicht zusammen erlaubt, temporaer wird auf \"no\" gesetzt.')
+						msgbox "$gv_Info" "$MSG"
+					fi
+				else
+					MAKESWAP=no
+				fi
+				## }}}
+				conf_menu $lv_Swap
+				;;
+			$lv_Tmp)
+				# Soll ein temporaeres Laufwerk erstellt werden?# {{{
+				TMP_MSG=$(gettext 'Soll ein verschluesseltes temporaeres Laufwerk erstellt werden (ja/nein)?')
+				yesno "$gv_Configuration" "$TMP_MSG"
+				if [ "$?" = 0 ] ; then
+					formatprogs_check
+					if [ -n "$FM_Menue" ] ; then
+						menubox "$gv_Configuration" "$gv_Menupoint" "$FM_Menue"
+						while [ -n "$gv_Auswahl" ] ; do
+							case "$gv_Auswahl" in
+								HELP*)	script_help share/format_help
+									menubox "$gv_Configuration" "$gv_Menupoint" "$FM_Menue"
+									;;
+								*)
+									# uebernehmen
+									TMPFS="$gv_Auswahl"
+									if [ "$MAKESWAP" = yes ] ; then
+										MAKESWAP=no
+										MSG=$(gettext 'Die Optionen temporaer und swap sind nicht zusammen erlaubt, swap wird auf \"no\" gesetzt.')
+										msgbox "$gv_Info" "$MSG"
+									fi
+									break
+							esac
+						done
+					fi
+				else
+					TMPFS=""
+				fi
+				## }}}
+				conf_menu $lv_Tmp
+				;;
+			$lv_Timeout)
+				# Timeout eingeben fuer die Passwort Abfrage.# {{{
+				TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout, in Sekunden, fuer die Passwort-Abfrage ein (Standard ist 5).')
+				number_input "$gv_Configuration" "$TIMEOUT_MSG" "${TIMEOUT:-5}"
+				if [ "$NUMBER" ] ; then
+					TIMEOUT="$NUMBER"
+				else
+					TIMEOUT="5"
+				fi
+				## }}}
+				conf_menu $lv_Timeout
+				;;
+			$lv_Noearly)
+				# Auswahl ob beim Bootprozess das Laufwerk erst spaeter erstellt# {{{
+				# werden soll, z. B. nachdem LVM oder RAID Arrays erstellt worden sind
+				# (Ja/Nein).
+				NOEARLY_MSG=$(gettext 'Soll das verschluesselte Laufwerk beim Start des Rechners verzoegert erstellt werden, zum Beispiel nach dem erstellen von RAID Arrays (ja/nein)?')
+				yesno "$gv_Configuration" "$NOEARLY_MSG"
+				if [ "$?" = 0 ] ; then
+					NOEARLY=yes
+				else
+					NOEARLY=no
+				fi
+				## }}}
+				conf_menu $lv_Noearly
+				;;
+			$lv_Warn)
+				# Soll loud verwendet werden?# {{{
+				LOUD_MSG=$(gettext 'Soll beim starten des Laufwerks eine Warnung ausgegeben werden, wenn dieses nicht existiert?')
+				yesno "$gv_Configuration" "$LOUD_MSG"
+				if [ "$?" = 0 ] ; then
+					LOUD=yes
+				else
+					LOUD=no
+				fi
+				## }}}
+				conf_menu $lv_Warn
+				;;
+			$lv_Tries)
+				# Wie oft soll versucht werden, die Passphrase eingeben zu koennen.# {{{
+				TRIES_MSG=$(gettext 'Geben Sie ein, wie oft die Passphrasenabfrage versucht werden soll zu wiederholen (Standard ist 3).')
+				number_input "$gv_Configuration" "$TRIES_MSG" "${TRIES:-3}"
+				if [ "$NUMBER" ] ; then
+					TRIES="$NUMBER"
+				else
+					TRIES="3"
+				fi
+				## }}}
+				conf_menu $lv_Tries
+				;;
+			$gv_Save)
+				# speichern# {{{
+				if [ "$KONF" = yes ] ; then
+					autoload -U kwcryptsetup_config
+					kwcryptsetup_config
+				else
+					# Einstellungen fuer das veraendern von Laufwerken.# {{{
+					if [ "$MAKESWAP" != yes ] ; then
+						OPT="tries=${TRIES:-3},timeout=${TIMEOUT:-5}"
+						PARAMS="--tries="${TRIES:-3}" --timeout="${TIMEOUT:-5}"" 
+					else
+						OPT="swap"
+					fi
+					if [ -n "$ALIGN" ] ; then
+						PARAMS="$PARAMS --align-payload=${ALIGN}"
+					fi
+					if [ -n "$CIPHER" ] ; then
+						OPT="${OPT},cipher=${CIPHER}"
+						PARAMS="$PARAMS --cipher=${CIPHER}"
+					fi
+					if [ "$GPG" = yes ] ; then
+						OPT="${OPT},gpg"
+					fi
+					if [ -n "$HASH" ] ; then
+						OPT="${OPT},hash=${HASH}"
+						PARAMS="$PARAMS --hash=${HASH}"
+					fi
+					if [ -n "$KEY_SIZE" ] ; then
+						PARAMS="$PARAMS --key-size=${KEY_SIZE}"
+						OPT="${OPT},size=${KEY_SIZE}"
+					fi
+					if [ "$LOUD" = yes ] ; then
+						OPT="${OPT},loud"
+					fi
+					if [ "$NOAUTO" = yes ] ; then
+						OPT="${OPT},noauto"
+					fi
+					if [ "$NOEARLY" = yes ] ; then
+						OPT="${OPT},noearly"
+					fi
+					if [ "$TMPFS" ] ; then
+						OPT="${OPT},tmp=$TMPFS"
+					fi
+					if [ "$OFFSET" ] ; then
+						OPT="${OPT},offset=$OFFSET"
+						PARAMS="$PARAMS --offset $OFFSET"
+					fi
+					if [ "$READONLY" = yes ] ; then
+						OPT="${OPT},readonly"
+						PARAMS="$PARAMS --readonly"
+					fi
+					if [ "$SKIP" ] ; then
+						OPT="${OPT},skip=$SKIP"
+						PARAMS="$PARAMS --skip $SKIP"
+					fi
+					if [ "$SSL" = yes ] ; then
+						OPT="${OPT},ssl"
+					fi
+					if [ "$USELUKS" = yes ] ; then
+						OPT="${OPT},luks"
+					fi
+					if [ "$VERIFY" = yes ] ; then
+						OPT="${OPT},verify"
+						PARAMS="$PARAMS --verify-passphrase"
+					fi
+					if [[ $MAKESWAP == yes ]] ; then
+						PARAMS="$PARAMS --key-file=/dev/urandom"
+						KEY_FILE=/dev/urandom
+					else
+						if [ "$KEY_FILE" != none -a ! -z "$KEY_FILE" ] ; then
+							PARAMS="$PARAMS --key-file $KEY_FILE"
+						else
+							PARAMS="$PARAMS --key-file=-"
+							KEY_FILE=none
+						fi
+					fi
+					## }}}
+				fi
+				## }}}
+				break
+				;;
+			$gv_Back)	unset -- PARAMS 
+				break
+				;;
+		esac
+	done
+}
+## }}}

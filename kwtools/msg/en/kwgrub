@@ -1,0 +1,18 @@
+boot_konf_menue;Name "$TITEL_L" Kernel_Part "$KERNEL_PART" Kernel "$VMLINUZ"	Root_Part "$ROOT_PART" Append "$APPEND" Initrd "$INITRD" Makeactive "$MAKEACTIVE" speichern "" loeschen "" zurueck "" 
+haupt_menue;Boot_Konfiguration "" Konfiguration "" Installation "" beenden ""
+install_menue;Kernel_Part "$KERNEL_PART" MBR_Floppy_Part "$MBR_FLOPPY_PART" Root_Part "$ROOT_PART" installieren "" $ZURUECK ""
+konf_menue;Passwort "$PASS" Standard_Boot "$DEFAULT_BOOT" Tastatur "$TAST" Timeout "$TIMEOUT" speichern "" zurueck "" 
+mb_menue;MBR "" Floppy "" Partition ""
+tast_menue;deutsch "" englisch ""
+timeout_menue;0 "" 5 "" 10 "" 15 "" 20 "" 30 ""
+append;Geben Sie bitte ihre Werte ein (z.B. vga=791, s. kernel Dokumentation).
+check_input;Einer der Menuepunkte Kernel_Part, Root_Part oder MBR_Floppy_Part sind nicht belegt.
+check_input_boot;Entweder die Menuepunkte Kernel_Part,Root_Part,Kernel und Name oder Kernel_Part, Root_Part und Makeactive sind nicht belegt. Initrd und Append sind nur wichtig wenn ihr System sie zum booten benoetigt.
+default_notiz;Achten Sie auf den richtigen Wert fuer default in der Konfiguration. Egal ob Sie gerade eine Boot Konfiguration loeschen, veraendern oder anlegen, der Wert aendert sich in jeden Fall. Lesen Sie dazu die Hilfe in der Konfiguration.
+makeactive;Hier brauchen Sie nur mit ja/yes antworten, wenn sie einen anderen Bootloader beim Start ausfuehren wollen/muessen. Zum Beispiel bei Windows.
+makeactive_msg;Es wurde Makeactive ausgewaehlt. Dafuer brauchen Sie nicht die Menuepunkte Root_Part, Append, Kernel und Initrd belegen.
+memtest;Als Kernel wurde memtest* ausgewaehlt. Dafuer brauchen Sie nicht die Menuepunkte Root_Part, Append, Makeactive und Initrd belegen.
+no_select_del;Sie muessen erst eine Boot Konfiguration, im Menuepunkt Name, zum loeschen auswaehlen.
+no_stage_found;Es wurden keine *stage* Dateien gefunden. Sie muessen erst grub installieren.
+passwd;Geben Sie hier bitte ein Passwort fuer den Bootprozess ein.
+titel;Geben Sie hier bitte eine Namen fuer ihre neue Konfiguration ein.

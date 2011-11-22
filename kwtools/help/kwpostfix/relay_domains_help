@@ -1,0 +1,15 @@
+# relay_domains_help fuer kwpostfix{{{
+TITLE=$(gettext 'Tabellen::relay_domains::Hilfe')
+MSG=$(gettext 'Hier kann man Postfix einstellen fuer welche Domains er zustendig
+ist.
+
+Tabellen:
+relay_domains
+
+Form:
+domain.de\t:
+host\t\t:
+
+NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
+\tTabellen.')
+#}}}

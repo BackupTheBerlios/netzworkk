@@ -1,0 +1,8 @@
+# Funktion no_host_rsh_msg# {{{
+#
+# usage: no_host_rsh_msg
+no_host_rsh_msg() {
+	MSG=$(gettext 'Sie muessen erst den Ziel Rechner und die remote Shell konfigurieren, um Ihr Homeverzeichnis zu syncronisieren.')
+	msgbox "$gv_Attention" "$MSG"
+}
+## }}}

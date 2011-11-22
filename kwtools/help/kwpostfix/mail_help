@@ -1,0 +1,27 @@
+# mail_help fuer kwpostfix{{{
+TITLE=$(gettext 'Konfiguration::mail::Hilfe')
+MSG=$(gettext 'mail_name: Name fuer den SMTP-Begruessungsbanner
+
+mail_owner: Userkennung von Postfix
+
+mail_release_date: Datum der Postfix-Version
+
+mail_spool_directory: Pfad zum Mail spool Verzeichnis
+
+mailbox_command: Programm zum schreiben der Mails in die lokalen
+\tPostfaecher (default: local)
+
+mailbox_command_maps: Tabelle, um einzelnen Adressen ein anderes
+\tmailbox_command zuweisen zu koennen.
+
+mailbox_delivery_lock: Art des lockens bei lokaler Zustellung in
+\tdie Postfaecher.
+
+mailbox_size_limit: Maximale Groesse eines einzelnen Postfaches in
+\tByte, danach wird gebounct.
+
+mailbox_transport: optionale Transportmethode, bevor eine Mail in
+\tdie Postfaecher einsortiert werden soll.
+
+mailq_path: Pfad zum Programm mailq.')
+#}}}

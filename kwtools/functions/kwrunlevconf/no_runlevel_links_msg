@@ -1,0 +1,8 @@
+# Funktion no_runlevel_links_msg# {{{
+#
+# usage: no_runlevel_links_msg
+no_runlevel_links_msg() {
+	MSG=$(gettext 'Es sind keine Runlevel Links vorhanden.')
+	msgbox "$gv_Attention" "$MSG"
+}
+## }}}

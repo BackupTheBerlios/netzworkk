@@ -1,0 +1,5 @@
+# group_del_help fuer kwgroup{{{
+TITLE="${gv_Delete}::${gv_Help}"
+MSG=$(gettext 'Hier kann man eine oder mehrere Gruppen auswaehlen, um Sie zu
+loeschen.')
+#}}}

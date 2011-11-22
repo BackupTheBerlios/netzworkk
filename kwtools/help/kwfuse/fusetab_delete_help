@@ -1,0 +1,5 @@
+# fusetab_delete_help fuer kwfuse{{{
+TITLE="fusetab::${gv_Delete}::${gv_Help}"
+MSG=$(gettext 'Hier kann man ein oder mehrere Konfigurationseintraege auswaehlen
+und loeschen.')
+#}}}

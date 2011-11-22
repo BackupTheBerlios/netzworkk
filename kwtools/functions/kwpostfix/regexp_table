@@ -1,0 +1,241 @@
+# Funktion für alle *regexp*-Tabellen{{{
+#
+regexp_table() {
+	FILE="$1"
+	FLAGS=ix
+	autoload -U no_ok_and_dunno_txt_msg
+# funktion regexp_menue{{{
+regexp_menue() {
+	U_OPT=regexp
+	REGEXP_MENU=$(gettext 'Zeichenkette "$STRING" Flags "$FLAGS" Aktion "$ACTION" Text "$TEXT" $gv_Save "" $gv_Back ""')
+	menubox "$TABLE_TITLE" "$gv_Menupoint" "$REGEXP_MENU"
+}
+#}}}
+# Funktion regexp_aendern{{{
+#
+regexp_aendern() {
+	regexp_menue
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl"  in
+			HELP*)	script_help "$TAB_HELP"
+				regexp_menue
+				;;
+			Zeichenkette|String)
+				# Zeichenkette eingeben{{{
+				U_OPT=regexp
+				STRING_MSG=$(gettext 'Geben Sie bitte eine Zeichenkette ein nach der gesucht werden soll (man 5 regexp_table).')
+				inputbox "$TABLE_TITLE" "$STRING_MSG" "$STRING"
+				if [ "$gv_Auswahl" ] ; then
+					#
+					# Eingabe überprüfen auf Anfang (/) und End (/)
+					# alles quoten, was irgendwie von der shell ausgewertet wird.
+					#
+					case $gv_Auswahl in
+						/*/ | \!/*/)	
+							STRING="`print $gv_Auswahl | sed -e 's#"#\\\\\\"#g ; s#\\$#\\\\$#g ; s#\.(#\\\\\\.(#g'`"
+							;;
+						*)	unset -- STRING
+							no_input_msg
+							;;
+					esac
+				else
+					no_input_msg
+					unset -- STRING
+				fi
+				#}}}
+				regexp_menue
+				;;
+			Flags)
+				# Flags für den RA auswählen
+				flags_auswahl
+				regexp_menue
+				;;
+			A[ck]tion)
+				# Aktion ausführen (OK, REJECT....)
+				kwpostfix_action
+				case $ACTION in
+					OK|DUNNO)	unset -- TEXT
+						;;
+				esac
+				regexp_menue
+				;;
+			Text)
+				# Text eingeben{{{
+				case $ACTION in
+					OK|DUNNO)	unset -- TEXT
+						no_ok_and_dunno_txt_msg
+						;;
+					*)
+						U_OPT=regexp
+						ERROR_MSG=$(gettext 'Geben Sie einen Text ein, der auf einen bestimmten Fehlercode oder Aktion gesendet werden soll.')
+						inputbox "$TABLE_TITLE" "$ERROR_MSG" "${TEXT//\"/\\\"}"
+						if [ "$gv_Auswahl" ] ; then
+							TEXT="$gv_Auswahl"
+						else
+							unset -- TEXT
+							no_input_msg
+						fi
+						;;
+				esac
+				#}}}
+				regexp_menue
+				;;
+			$gv_Save)
+				# Einstellungen speichern{{{
+				if [ "$STRING" -a "$ACTION" -a "$TEXT" ] ; then
+					if [ "$AENDERN_ADR" ] ; then
+						sed -e "s#^${(qq)AENDERN_ADR}.*#${STRING}${FLAGS}	$ACTION ${TEXT}#" $FILE >$FILE$$
+						mv $FILE$$ $FILE
+					else
+						grep -v "^${STRING}${FLAGS}[[:space:]]${ACTION}" $FILE >$FILE$$
+						>> $FILE$$ <<< "${STRING}${FLAGS}	$ACTION $TEXT"
+						mv $FILE$$ $FILE
+					fi
+				elif [ "$STRING" -a "$ACTION" ] ; then
+					if [ "$AENDERN_ADR" ] ; then
+						sed -e "s#^${AENDERN_ADR}.*#${STRING}${FLAGS}	$ACTION#" $FILE >$FILE$$
+						mv $FILE$$ $FILE
+					else
+						grep -v "^${STRING}${FLAGS}[[:space:]]${ACTION}" $FILE >$FILE$$
+						>> $FILE$$ <<< "${STRING}${FLAGS}	$ACTION"
+						mv $FILE$$ $FILE
+					fi
+				else
+					MSG=$(gettext 'Sie muessen erst die Menuepunkte Zeichenkette und Aktion belegen. Text ist optional.')
+					msgbox "$gv_Attention" "$MSG"
+				fi
+				#}}}
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}
+tabellen_menue
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help tab_help
+			tabellen_menue
+			;;
+		$gv_Display)
+			# Ansicht der Einträge
+			tab_ansicht
+			tabellen_menue
+			;;
+		$gv_Create)
+			# Werte anlegen
+			unset -- STRING FLAGS ACTION TEXT AENDERN_ADR
+			regexp_aendern
+			tabellen_menue
+			;;
+		$gv_Change)
+			# Einträge verändern{{{
+			key_value "$FILE"
+			if [ "$AUSWAHL" ] ; then
+				CHANGE_MENU=($AUSWAHL)
+				U_OPT=regexp
+				menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help tab_wert_help
+							U_OPT=regexp
+							menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+							;;
+						*)
+							# Auswahl verändern
+							print "$gv_Auswahl" | sed -e 's#\.(#\\\\\\.(#g ; 
+									s#\\\"#\\\\\\\\\\"#g ; s#"\$#"\\\\\\$#g ;
+									s#\\\s#\\\\\\\\s#g ; s#\"#\\\\"#g' | \
+							while read String Action REST ; do
+								case "${(qq)String}" in
+									/*/*|!/*/*)	STRING="${String%/*}/"
+										FLAGS="${String##*/}"
+										;;
+									*)	STRING="$String"
+										unset -- FLAGS
+										;;
+								esac
+								ACTION="$Action"
+								TEXT="${REST}"
+							done
+							AENDERN_ADR="${STRING}${FLAGS}.*${ACTION}.*"
+							#
+							#Aendern_Nr=${${$(grep -n "^${STRING}${FLAGS}.*${ACTION}.*" $FILE)[1]}%:*} 
+							regexp_aendern
+							break
+							;;
+					esac
+				done
+			else
+				no_entry_msg
+			fi
+			#}}}
+			tabellen_menue
+			;;
+		$gv_Delete)
+			# Einträge löschen{{{
+			key_value "$FILE"
+			if [ "$AUSWAHL_MULTI" ] ; then
+				DEL_MENU=($AUSWAHL_MULTI)
+				U_OPT=regexp
+				checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help kwpostfix_del_help
+							U_OPT=regexp
+							checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+							;;	
+						*)	# Löschen
+							print "$gv_Auswahl" | sed -e 's#\.(#\\\\\\.(#g ; 
+									s#\\\"#\\\\\\\\\\"#g ; s#"\$#"\\\\\\$#g ;
+									s#\\\s#\\\\\\\\s#g ; s#\"#\\\\"#g' | \
+							while read String Action REST ; do
+								case $String in
+									/*/*|!/*/*)	STRING="${String%/*}/"
+										FLAGS="${String##*/}"
+										;;
+									*)	STRING="$String"
+										unset -- FLAGS
+										;;
+								esac
+								ACTION="$Action"
+								TEXT="${REST//\"/\\\"}"
+							done
+							#############################################
+							# TODO:
+							# Warum shwordsplit?
+							# eher [[:space:]]* ?
+							# Wieso grep?
+							#############################################
+							setopt shwordsplit
+							if [ -n "$TEXT" ] ; then
+								grep -v "^${STRING}${FLAGS}[[:space:]]${ACTION}[[:space:]]${TEXT}" $FILE >$FILE$$
+							else
+								grep -v "^${STRING}${FLAGS}[[:space:]]${ACTION}" $FILE >$FILE$$
+							fi
+							mv $FILE$$ $FILE
+							unsetopt shwordsplit
+							#
+							break
+							;;
+					esac
+				done
+			else
+				no_entry_msg
+			fi
+			#}}}
+			tabellen_menue
+			;;
+		D*)
+			# Einstellungen neu einzulesen
+			postfix_start_reload
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+}
+#}}}

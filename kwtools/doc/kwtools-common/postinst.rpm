@@ -1,0 +1,15 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+CONF=/etc/kwtools
+
+echo ""
+echo "Compile functions from kwtools-scripts"
+echo ""
+/bin/zsh -fc 'setopt extendedglob ; for i in /usr/share/kwtools/functions/sys ; do
+	zcompile -U -M $i.zwc $i/*~*.zwc(^/) ; chmod 644 $i.zwc ; done'	
+
+sed -e "s#PAKET_MANAGE.*#PAKET_MANAGE=rpm#" \
+	${CONF}/main.cf >/tmp/main.cf$$
+mv /tmp/main.cf$$ ${CONF}/main.cf
+exit 0

@@ -1,0 +1,34 @@
+kwvdvdburn::Konfiguration::Hilfe
+
+DVD Create Verz.: Hier sollten Sie ein Verzeichnis waehlen, das
+       grosse Datenmengen aufnehmen kann. Dort wird die 
+       Verzeichnisstruktur der DVD mit den Daten angelegt.
+
+Kapitel_Intervall: Geben Sie eine Zahl an, nach wieviel Sekunden ein
+       neues Kapitel erstellt werden soll.
+
+Mountverz.: Mount Verzeichnis waehlen das eventuell vorher gmountet
+       werden muss. Dieses muss in der /etc/fstab bekannt sein und
+       Sie muessen auch die dementsprechende Rechte besitzen.
+
+Titel: Geben Sie hier einen Titel fuer die DVD ein. Bei mehreren
+       Titeln stehen die namen des Films unter dem Titel so das Sie
+       dann lieber etwas wie DVD 1 eingeben koennen.
+
+TV_Format: Waehlen Sie hier die gewuenschte Fernseher Aufloesung aus.
+       PAL/DVD (meist Europa) oder NTSC/DVD (meist Amerika).
+
+TV_Groesse: Wenn ihr Fernseher die Menues nicht ordentlich anzeigen
+       kann, koennen Sie hier einen kleineren Wert, fuer die Aufloesung,
+       als bei TV_Format eingeben. Bei mir funktioniert 635x535 sehr
+       gut, bei 720x576 TV_Format.
+
+Verz.: Waehlen Sie ein Standardverzeichnis, in welchen ihre Filme 
+       Ordner liegen. Ansonsten wird das Home Verzeichnis genommen.
+
+VMGM_background: Hintergrundbild fuer das VMG Menue. Das ist das 
+       Hintergrundbild welches auf dem 1. Video gezeigt wird. Wo
+       auch der Titel der DVD angezeigt wird.
+
+VTSM_background: Hintergundbild fuer die Kapitelauswahl.
+

@@ -1,0 +1,30 @@
+kwrsync::Hilfe
+
+Mit kwrsync koennen Sie ganz einfach voreingestellte Verzeichnisse
+mit anderen Rechnern synchronisieren lassen. Und zwar entweder ueber 
+einen crontab Eintrag (kwrsync_cron) oder manuell. Die Daten fuer
+die Syncronisation werden in der ~/.kwtools/kwrsynctab gespeichert.
+
+Konfiguration: allgemeine Konfiguration. Wird hauptsaechlich von
+        Homesync verwendet.
+
+Verzeichnisse: Hier koennen Sie verschiedene Konfigurationseintraege
+        fuer kwrsync in einer Tabelle anlegen, aendern oder loeschen.
+
+Homesync: Syncronisiert Ihr ganzes Homeverzeichnis und macht bei 
+        eventuellen Datei Ueberschreibungen ein Backup mit der 
+        Endung des aktuellen Datums.
+
+Synchronisation: siehe Homesync, bloss das hier die voreingestellten 
+        Verzeichnisse zum Zuge kommen.  
+
+NOTIZ: Sie sollten sicherstellen das Sie Schreibrechte fuer das 
+        Verzeichnis, auf dem Zielrechner, haben. Desweiteren sollte
+        man entweder die Datei .rhost (bei Protokoll rsh) anlegen
+        oder ssh dementsprechend konfigurieren, heisst eine identische
+        Datei Names ~/.ssh/authorized_keys, auf dem Rsync-Server wie
+        Quellrechner, anlegen (ohne Passphrase).
+
+        Zur Zeit ist die Passworteingabe bzw. Passphraseabfrage nicht 
+        vorgesehen, da das sowieso nicht mit den crontab Eintraegen 
+        funktionieren wuerde.

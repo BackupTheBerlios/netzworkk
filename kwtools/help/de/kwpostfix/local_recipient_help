@@ -1,0 +1,23 @@
+kwpostfix::Tabellen::local_recipient::Hilfe
+
+Hier kann man Postfix einstellen fuer welche lokalen Empfaenger
+Adressen er Mails annehmen soll. Lokaler Empfaenger ist wenn die
+Doamin auf einen der Werte von $mydestination, $inet_interfaces
+oder $proxy_interfaces passt.
+
+Bei regulaeren Tabellentypen (regexp,pcre) muss die volle lokale
+Mailadresse eingegeben werden (user@domain.de).
+
+Tabellen:
+local_recipient_maps
+
+Form:
+# Fuer diese Domain werden Mails lokal eingeliefert.
+@domain.de            :
+# Fuer diesen User werden Mails lokal eingeliefert.
+user                  :
+# Fuer diesen Mailadresse werden Mails lokal eingeliefert.
+user@domain.de        :
+
+NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
+        Tabellen.

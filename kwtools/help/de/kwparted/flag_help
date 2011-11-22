@@ -1,0 +1,6 @@
+kwparted::Partitionierung::Bearbeitung::Flag::Hilfe
+
+Flags kennzeichnen die Partition, ob Sie nun eine Bootpartition
+ist oder ein LVM etc. (optional). Ist nur wichtig wenn Sie
+Bootpartition ein Windows/Dos Dateisystem besitzen, ein LVM oder
+ein RAID erstellen wollen.

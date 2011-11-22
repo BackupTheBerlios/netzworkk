@@ -1,0 +1,4 @@
+kwlvm::Volume Groups::konvertieren::Hilfe
+
+Hier kann man den Metadatentype von VG's, zu LVM1 oder LVM2,
+konvertieren.

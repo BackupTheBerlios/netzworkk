@@ -1,0 +1,8 @@
+# Funktion all_pv_in_vg_msg# {{{
+#
+# usage: all_pv_in_vg_msg
+all_pv_in_vg_msg() {
+	MSG=$(gettext 'Es sind alle PVs einer VG zugeordnet.')
+	msgbox "$gv_Attention" "$MSG"
+}
+## }}}

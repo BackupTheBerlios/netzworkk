@@ -1,0 +1,68 @@
+.\"     Title: KWRUNLEVCONF
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 12/20/2009
+.\"    Manual: Benutzerhandbuch f\(:ur kwrunlevconf
+.\"    Source: Version 0.2.12
+.\"
+.TH "KWRUNLEVCONF" "8" "12/20/2009" "Version 0.2.12" "Benutzerhandbuch f\(:ur kwrunlevc"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwrunlevconf \- ein Zshell Script zur Konfiguration der Runlevel.
+.SH "SYNTAX"
+.HP 13
+\fBkwrunlevconf\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwrunlevconf\fR
+k\(:onnen Sie ihre Runlevel konfigurieren\&. Diese starten und initialisieren Dienste und konfigurieren Ihr System\&.
+\fBkwrunlevconf\fR
+unterst\(:utzt die Runlevel Systeme
+\fBsysv\-rc\fR
+und
+\fBfile\-rc\fR\&.
+.PP
+\fBNotiz:\fR
+Beim OS SuSE wird
+\fB"yast runlevel"\fR
+benutzt\&.
+.SH "OPTIONEN"
+.PP
+\fBInit\-Script\fR
+.RS 4
+Auswahl des Init\-Scriptes\&. Es wird angezeigt, welche zur Startzeit gestartet werden und welche von Hand gestartet werden m\(:ussen\&. Dabei kann man Start/Stop Nummern zwischen 01 und 99 ausw\(:ahlen und ob es in dem Runlevel gestartet werden soll oder nicht\&.
+.RE
+.PP
+\fBStandard\fR
+.RS 4
+Auswahl des Runlevel, welcher nach dem booten gestartet werden soll (Standard Start Runlevel)\&.
+.RE
+.SH "DATEI"
+.PP
+\fI/etc/inittab\fR
+.RS 4
+Konfiguration Datei f\(:ur
+\fBinit\fR\&. Siehe
+\fBinittab\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBinittab\fR(5),
+\fBinvoke-rc.d\fR(8),
+\fBrc-update\fR(8),
+\fBrunlevel.conf\fR(5),
+\fBupdate-rc.d\fR(8)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2009 Kai Wilke
+.br

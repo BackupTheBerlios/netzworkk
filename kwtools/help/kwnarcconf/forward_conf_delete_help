@@ -1,0 +1,5 @@
+# forward_conf_delete_help fuer kwnarcconf{{{
+TITLE="${lv_Port_Conf}::${gv_Delete}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie ein oder mehrere vorhandene Regeln gleichzeitig
+loeschen.')
+#}}}

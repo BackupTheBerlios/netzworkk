@@ -1,0 +1,82 @@
+.\"     Title: KWRSYNC
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2008
+.\"    Manual: Benutzerhandbuch f\(:ur kwrsync
+.\"    Source: Version 0.0.6
+.\"
+.TH "KWRSYNC" "1" "07/04/2008" "Version 0.0.6" "Benutzerhandbuch f\(:ur kwrsync"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwrsync \- Ein Zshell Script zur Synchronisation mittels rsync.
+.SH "SYNTAX"
+.HP 8
+\fBkwrsync\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBkwrsync\fR, ein Zshell Script zur Synchronisation von Ihrem Homeverzeichnis oder Verzeichnissen Ihrer Wahl\&. Dies kann auch per
+\fBcrontab\fR
+eingestellt werden\&.
+\fBCron\fR
+startet dann zum konfigurierten Zeitpunkt das Script
+\fBkwrsync_cron\fR\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Allgemeine Konfiguration von
+\fBkwrsync\fR\&. Wird haupts\(:achlich vom Men\(:upunkt
+\fBHomesync\fR
+benutzt\&.
+.RE
+.PP
+\fBVerzeichnisse\fR
+.RS 4
+Konfiguration der
+\fIkwrsynctab\fR
+Datei\&. Diese beinhaltet alle Parameter um Verzeichnisse mit anderen Rechner zu synchronisieren\&. Lesen Sie dazu
+\fBkwrsynctab\fR(5)\&.
+.RE
+.PP
+\fBHomesync\fR
+.RS 4
+Rekursive Synchronisation des Home Verzeichnisses mit entfernten Rechnern\&.
+.RE
+.PP
+\fBSynchronisation\fR
+.RS 4
+Rekursive Synchronisation der konfigurierten Verzeichnisse mit einem lokalen oder entfernten (andere Rechner) Verzeichnis\&.
+.RE
+.SH "DATEIEN"
+.PP
+\fI~/\&.kwtools/kwrsyncrc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwrsync\fR
+F\(:ur weitere Details siehe
+\fBkwrsyncrc\fR(5)\&.
+.RE
+.PP
+\fI~/\&.kwtools/kwrsynctab\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur die Synchronistaion der konfigurierten Verzeichnisse\&. F\(:ur weitere Details siehe
+\fBkwrsynctab\fR(5)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwrsync_cron\fR(1),
+\fBkwrsyncrc\fR(5),
+\fBkwrsynctab\fR(5),
+\fBrsync\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

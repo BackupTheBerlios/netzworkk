@@ -1,0 +1,6 @@
+kwnarc::Konfiguration::Hauptkonfiguration::Allow_ICMP_Messages
+
+Hier koennen Sie die mehrere ICMP Massages auswaehlen, die von ihrer
+Fierwall erlaubt sind. Die Liste wird von "iptables -p icmp -h"
+erzeugt.
+Siehe http://www.iana.org/assignments/icmp-parameters

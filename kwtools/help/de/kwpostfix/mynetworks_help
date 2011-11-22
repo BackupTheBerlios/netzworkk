@@ -1,0 +1,18 @@
+kwpostfix::Tabellen::mynetworks::Hilfe
+
+Hier kann man Postfix einstellen fuer welches Netz/Host es
+zustendig ist, und von deren Clients Mail angenommen werden.
+
+Tabellen:
+mynetworks
+
+Form:
+192.168.0.0/24                   :
+127.0.0.1                        :
+[fe80::2e0:7dff:fe83:be3a]/64    :
+[::1]/128                        :
+
+NOTIZ: Das : steht nur fuer die Konformitaet der Tabellen. IPv6
+       Adressen muessen in eckige Klammern gesetzt werden, da es
+       das Zeichen ":" in der Adresse gibt und dadurch Probleme
+       mit dem anderen ":" Zeichen gibt.

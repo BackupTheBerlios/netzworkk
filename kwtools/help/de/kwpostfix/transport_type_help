@@ -1,0 +1,7 @@
+kwpostfix::Steuerdatei::Konfiguration::Hilfe
+
+fifo: Benannte Weiterleitung.
+
+inet: Inet Socket.
+
+unix: Unix Domain

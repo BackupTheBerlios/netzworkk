@@ -1,0 +1,9 @@
+haupt_menue;Konfiguration "" Audio "" Video "" beenden ""
+konf_menue;Audioverz. "$AUDIO_DIR" Leselaufwerk "$READ_DEVICE" Mountverz. "$MOUNT_PATH" Proxy "$PROXY" Videoverz. "$VIDEO_DIR" speichern "" zurueck ""
+cddb_serv;Geben Sie hier den CD-Datenbank Server an, in dem nach den Titeln, Liednamen etc. nachgeschaut werden soll.
+movie_name;Geben Sie bitte den Namen des Films an.
+no_audio_cd;Sie muessen erst eine Audio CD in ihr Laufwerk einlegen.
+no_cddb_info;Fuer diese CD gibt es keine Information in der freedb.freedb.org CDDB-Datenbank. Alle Lieder werden in ${VERZ}/${Artist}/${Album} gespeichert.
+no_read_device;Sie muessen wenigstens das Leselaufwerk auswaehlen.
+no_video_cd;Sie muessen erst eine Video CD in ihr Laufwerk einlegen.
+proxy;Geben Sie hier Ihren Proxy an (Rechnername:Port). Rechnername kann auch eine IP-Adresse sein.

@@ -1,0 +1,237 @@
+kwpostfix::Konfiguration::smtpd::Hilfe
+
+smtpd_authorized_verp_clients: Welchen SMTP Clients soll die VERP
+        Style Zustellung erlaubt werden. Der Postfix QMQP Server
+        benutzt dies als eigenen Zugriffkontroll Machanismus und
+        die lokale Zustellung (via /usr/sbin/sendmail etc.) ist
+        immer erlaubt. Geben Sie eine Liste von Rechnern,
+        IP-Adressen, Subnetze (Netz/Maske) oder .domain ein.
+
+smtpd_authorized_xclient_hosts: Geben Sie eine Liste von Rechnern,
+        IP-Adressen, Subnetze (Netz/Maske) oder .domain ein, die
+        das XCLIENT Feature benutzen duerfen.
+
+smtpd_authorized_xforward_hosts: Soll den SMTP Clients das XFORWARD
+        Feature erlaubt werden (ja/nein)? Damit werden die realen
+        Mailadressen und IP Adressen geloggt, falls das Mail Filtern
+        eingeschaltet ist.
+
+smtpd_banner: Text der auf den Status Code 220, als Begruessung,
+        folgt (Bsp. $myhostname ESMTP $mail_name). 
+
+smtpd_client_connection_count_limit: Wieviel simultane Verbindungen
+        sind fuer beliebige clients erlaubt (Standard: 50).
+
+smtpd_client_connection_rate_limit: Maximale Nummer von Verbindungs-
+        versuchen beliebiger clients pro Zeiteinheit (Standard: 0).
+
+smtpd_client_event_limit_exceptions: Clients die von Verbindungs-
+        anzahl, -rate oder von SMTP Rate Restrictionen ausgenommen
+        werden sollen (Standard: $mynetworks).
+
+smtpd_client_message_rate_limit: Maximale Nummer von Versuchen,
+        Nachrichten beliebiger clients pro Zeiteinheit zuzustellen,
+        egal ob oder nicht Postfix diese gerade akzeptiert
+        (Standard: 0).
+
+smtpd_client_recipient_rate_limit: Maximale Anzahl von Empfaenger
+        Adressen die beliebige clients pro Zeiteinheit an diesen
+        Server senden duerfen, egal ob oder nicht Postfix diese
+        gerade akzeptiert (Standard: 0).
+
+smtpd_client_restrictions: Restrictions-Pruefungen direct nach dem
+        Connect des Clients.
+
+smtpd_data_restrictions: Optionale Zugriffs Restrictionen fuer den
+        SMTP DATA Befehl und seinem Inhalt.
+
+smtpd_delay_reject: ein REJECT einer Restriction wird aufgehoben
+        und erst nach der Pruefung von RCPT TO: ausgegeben, auch wenn
+        es schon vorher feststeht. Schlechte Mailclients kapieren
+        den REJECT nach einem MAIL FROM: sonst nicht und versuchen
+        immer wieder Mail einzuliefern. (yes=kein Abbruch
+        no=sofortiger Abbruch).
+
+smtpd_discard_ehlo_keyword_address_maps: Tabelle von SMTP Clients mit
+        EHLO Schluesselwoertern (starttls, auth, ...) die der SMTP
+        Server nicht senden soll, bei einer EHLO Antwort vom einem
+        entfernten SMTP Client.
+
+smtpd_discard_ehlo_keywords: Eine Liste von EHLO Schluesselwoertern
+        (starttls, auth, ...) die der SMTP Server nicht senden soll,
+        bei einer EHLO Antwort von einem entfernten SMTP Client.
+
+smtpd_end_of_data_restrictions: Optionale Zugriffs Restrictionen
+        fuer den SMTP END_OF_DATA Befehl und seinem Inhalt.
+
+smtpd_enforce_tls: Soll SSL/TLS bei eingehenden Verbindungen
+        erzwungen werden (ja/nein)?
+
+smtpd_error_sleep_time: Anzahl in Sekunden vor der Angabe eines SMTP
+        Fehlercodes.
+
+smtpd_etrn_restrictions: limitiert das SMTP Kommando ETRN auf die
+        hier genannten Rechnern.
+
+smtpd_expansion_filter: legt fest welche Zeichen, bei Umleitung zu
+        einem Kommando, bei eingehenden verbindungen, benutzt werden
+        duerfen.
+
+smtpd_forbidden_commands: Geben Sie die Kommandos ein in welchen
+        Faellen der SMTP Server die Sitzung sofort, mit dem Code
+        221 beendet (Bsp. CONNECT GET POST). Getrennt mit einem
+        Leerzeichen.
+
+smtpd_hard_error_limit: Anzahl der Fehler in einer SMTP-Sitzung,
+        nach der Postfix die Verbindung abbricht.
+
+smtpd_helo_required: Muss ein Client das Kommando HELO senden
+        (ja/nein)?
+
+smtpd_helo_restrictions: Restrictions-Pruefungen nach dem HELO
+        Kommando.
+
+smtpd_history_flush_threshold: maximale Kommandos zum debuggen.
+
+smtpd_junk_command_limit: maximale Muell-Kommandos, um Verbindungen
+        offen zu halten. 
+
+smtpd_noop_commands: defeniert SMTP-Kommandos, auf denen Postfix
+        zwar ein 250 OK ausgibt, aber keinerlei Aktion taetigt. Wenn
+        der Wert leer ist, gilt weiterhin der SMTP-Befejl NOOP.
+
+smtpd_null_access_lookup_key: Setzt einen Wert nach dem in den
+        lookup Tabellen gesucht wird, wenn eine Mail keinen Absender
+        hatte. So lassen sich auch Bounces mit einem OK oder REJECT
+        versehen.
+
+smtpd_policy_service_max_idle: Zeit bevor eine unbenutzte Verbindung
+        von einem Policy clienten geschlossen wird (Standard: 300s).
+
+smtpd_policy_service_max_ttl: Zeit bevor eine aktive Verbindung
+        von einem Policy clienten geschlossen wird (Standard: 1000s).
+
+smtpd_policy_service_timeout: Zeitlimit einer Verbindung zum senden
+        oder empfangen von einem Policy Server (Standard: 100s).
+
+smtpd_proxy_ehlo: Mit welchem Namen soll der Postfix Server sich selbst
+        ankuendigen, wenn ein EHLO Befehl an einen Proxy Filter ge-
+        sendet wird.
+
+smtpd_proxy_filter: Rechnername und TCP Port vom mail Proxy Filter
+        Server (Bsp. hostname:port).
+
+smtpd_proxy_timeout: Timeout fuer die Verbindung zum Proxy Filter
+        (Standard: 100s).
+
+smtpd_recipient_limit: Maximalanzahl der SMTP-Envelope-Empfaenger in
+        einer Mail.
+
+smtpd_recipient_overshoot_limit: Die Nummer von Empfaengern die ein
+        entfernter SMTP Client senden kann ueber das Limit, welches
+        man in "smtpd_recipient_limit" spezifiert wird. Darueber
+        wird der SMTP Server den Fehlerzaehler mit jedem wegge-
+        schmissen Kommando erhoehen.
+
+smtpd_recipient_restrictions: Restrictions nach dem SMTP-Envelope
+        Empfaenger.
+
+smtpd_reject_unlisted_recipient: Soll der SMTP Server Mails mit unbe-
+        kannter Empfaenger Adresse verwerfen (ja/nein)? Nur wenn
+        nicht explicit reject_unlisted_sender Zugriffseinschraenk-
+        ungen spezifiert sind.
+
+smtpd_reject_unlisted_sender: Soll der SMTP Server Mails mit unbe-
+        kannter Absender Adresse verwerfen (ja/nein)? Nur wenn
+        nicht explicit reject_unlisted_sender Zugriffseinschraenk-
+        ungen spezifiert sind.
+
+smtpd_restriction_classes: defeniert Restrictionsclasses.
+
+smtpd_sasl_application_name: Der Applikationsname der fuer die SASL
+        Server Initialisierung benutzt werden soll (Bsp. smtpd).
+
+smtpd_sasl_auth_enable: Soll SMTP-Auth auch bei eingehenden
+        Verbindungen aktiviert werden (ja/nein)?
+
+smtpd_sasl_exceptions_networks: Welchen SMTP Clients soll kein AUTH
+        Support angeboten werden?
+
+smtpd_sasl_local_domain: Domain, die bei SMTP-Auth an die
+        Nutzerkennung mit angehaengt wird, wenn diese in der
+        Datenbank ueberprueft wird.
+
+smtpd_sasl_security_options: Zulaessige Identifizierungsmethoden bei
+        eingehenden SMTP-Auth Verbindungen.
+
+smtpd_sasl_tls_security_options: zulaessige Identifizierungsmethoden
+        bei eingehenden SMTP-Auth Verbindungen, per SSL/TLS.
+
+smtpd_sender_login_maps: Zugriffstabelle fuer SMTP-Auth.
+
+smtpd_sender_restrictions: Restrictions nach dem SMTP-Envelope Sender.
+
+smtpd_soft_error_limit: Anzahl der Fehler in einer SMTP-Sitzung,
+        nach der Postfix eine Sonderwartezeit einlegt.
+
+smtpd_starttls_timeout: Timeout, zum lesen und schreiben waehrend TLS
+        gestartet wird.
+
+smtpd_timeout: Timeout der Inaktivitaet, nachdem smtpd eine Verbindung
+        abbricht.
+
+smtpd_tls_CAfile: Datei welche das Zertifikat Authority besitzt. 
+
+smtpd_tls_CApath: Verzeichnis in dem die Zertifikate liegen. Diese
+        werden dann mit den Rechten des Mail Servers gelesen.
+
+smtpd_tls_ask_ccert: Muss beim Server explizit nach einem Client
+        Zertifikat nachgefragt werden (ja/nein)?
+
+smtpd_tls_auth_only: Soll nur SSL/TLS bei eingehenden Verbindungen
+        genutzt werden (ja/nein)?
+
+smtpd_tls_ccert_verifydepth: Überpruefungstiefe des Client
+        Zertifikat.
+
+smtpd_tls_cert_file: Datei (RSA) welche das unterschriebene
+        private Zertifikat besitzt.
+
+smtpd_tls_cipherlist: Siehe OpenSSL Dokumentation (Bsp. DEFAULT,
+        man ciphers).
+
+smtpd_tls_dcert_file: Datei (DSA) welche das unterschriebene private
+        Zertifikat besitzt.
+
+smtpd_tls_dh1024_param_file:
+
+smtpd_tls_dh512_param_file:
+
+smtpd_tls_dkey_file: Datei (DSA) welche das unterschriebene,
+        unverschluesselte private Zertifikat besitzt.
+
+smtpd_tls_key_file: Datei (RSA) welche das unterschriebene,
+        unverschluesselte private Zertifikat besitzt.
+
+smtpd_tls_loglevel: Loglevel auswaehlen
+
+smtpd_tls_received_header: Soll dieser Server ($myhosname), fuer
+        eingehende Mails, die received Zeilen loggen (ja/nein)?
+
+smtpd_tls_req_ccert: Benoetigen SMTP Clients ein Zertifikat
+        (ja/nein)?
+
+smtpd_tls_session_cache_database: Datei die den TLS Sitzungs Cache
+        des SMTP Servers enthaelt. Dadurch koennen mehrere SMTP
+        Prozesse die Sitzungs Informationen benutzen.
+
+smtpd_tls_session_cache_timeout: Verfallzeit der TLS Session Cache
+        Information des SMTP Servers.
+
+smtpd_tls_wrappermode: Soll die Kompalitaet zu Outlock eingestellt
+        werden (ja/nein)? Es ist nicht gut dies hier einzustellen.
+        Stellen Sie dies lieber in der master.cf ein.
+
+smtpd_use_tls: Soll SMTP-Auth bei eingehenden Verbindungen benutzt
+        werden (ja/nein)?
+

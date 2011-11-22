@@ -1,0 +1,25 @@
+kwpostfix::Tabellen::transport
+
+Hier kann man die Transportmethoden von Postfix einstellen.
+
+Tabelle:
+transport_maps
+virtual_transport
+
+Form:
+# schickt die Mails per UUCP weiter an den Host uuucpgate
+uucptest.de        uucp:uucpgate
+# Mails an diese Domain werden direkt auf mail.domain.de
+# eingeliefert (eckige Klammern), allerdings nicht auf Port 25
+# sondern auf Port 10025.
+host.domain.de     smtp:[mail.domain.de]:10025
+# Alle Mails an Subdomains von domain.de gehen an den MX-Server von
+# mail.domain.de (keine eckigen Klammern).
+.domain.de         smtp:test.domain.de
+# Diese Domain reichen wir per lmtp weiter
+kundendomain.de    lmtp:
+# Alle Mails dieses Users werden woanders abgeliefert.
+tux@domain.de      smtp:[intern.domain.de]
+# Und man kann den Postfix-Error-Mailer als Transportweg einsetzen
+# der erzeugt dann ein Bounce mit Erklaerung:
+aol.de             error:Tippfehler, die korrekte Domain ist aol.com

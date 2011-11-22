@@ -1,0 +1,36 @@
+# error_conf_help fuer kwpostfix{{{
+TITLE=$(gettext 'Konfiguration::Fehlercodes::Hilfe')
+MSG=$(gettext 'access_map_reject_code: SMTP-Fehlercode bei einem REJECT aus einer
+\taccess Tabelle.
+
+invalid_hostname_reject_code: SMTP-Errorcode bei ungueltigen Host-
+\tnamen im SMTP_Kommando HELO/EHLO (501).
+
+maps_rbl_reject_code: SMTP-Errorcode bei einem "REJECT" nach
+\tRBL-Pruefung.
+
+non_fqdn_reject_code: SMTP-Code bei einem "REJECT" wegen eines nicht
+\tFQDN-Hostnamens (504).
+
+reject_code: allgemeiner SMTP-Code bei einem "REJECT".
+
+relay_domains_reject_code: SMTP-Errorcode bei einem "Relay Access
+\tdenied" (554).
+
+unknown_address_reject_code: SMTP_Errorcode bei unbekannten Mail-
+\tadressen. (450)
+
+unknown_client_reject_code: SMTP-Errorcode bei einem "REJECT" eines
+\tClients nach einer "access" Tabelle (450).
+
+unknown_hostname_reject_code: SMTP_Errorcode bei unbekannten/nicht-
+\taufloesbaren Hostnamen (450).
+
+unknown_local_recipient_reject_code: 
+
+unknown_relay_recipient_reject_code: 
+
+unknown_virtual_alias_reject_code: 
+
+unknown_virtual_mailbox_reject_code:')
+#}}}

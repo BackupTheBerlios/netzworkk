@@ -1,0 +1,3 @@
+# multi_kwxmms2_help fuer kwadmin{{{
+MSG=$(gettext 'kwxmms2: Client fuer das X-Music-Multiplexing System 2 (xmms2).')
+#}}}

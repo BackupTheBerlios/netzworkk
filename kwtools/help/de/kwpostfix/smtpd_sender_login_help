@@ -1,0 +1,20 @@
+kwpostfix::Tabellen::smtpd_sender_login::Hilfe
+
+Lookup Tabbelle mit den SASL Login Namen, die Besitzer der Sender
+(MAIL FROM) Adresse sind.
+
+Tabellen:
+smtpd_sender_login_maps
+
+Form:
+# hoechste Prioritaet
+user@domain.de        :
+# Dieser Lookup geht nur wenn die Domain auf eins der Muster, in
+# den Parametern von, $myorigin, $mydestination, $inet_interfaces
+# oder $proxy_interfaces passt.
+user                  :
+# kleinste Prioritaet
+@domain.de            :
+
+NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
+        Tabellen.

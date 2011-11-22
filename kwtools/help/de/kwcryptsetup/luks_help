@@ -1,0 +1,32 @@
+kwcryptsetup::LUKS::Hilfe
+
+Achten Sie auf ihre Schluessel Slots und deren Passphrasen!
+
+LUKSinfo: Hier wird ein Dump fuer jedes verschluesselte Laufwerk
+        mit LUKS Erweiterung angezeigt. So kann man z.B. herraus-
+        finden wieviele und welche Slots im Luks Header schon
+        vergeben sind.
+
+Schluessel_addieren: Solange noch freie Schluessel Slots vorhanden
+        sind kann man Passphrasen dazu addieren. Es wird dabei eine
+        schon vorhandene Passphrase abgefragt oder eine Schluessel-
+        datei mit dem Schluessel entschluesselt, bevor die neue
+        angelegt wird.
+
+NOTIZ: Bei Verwendung einer Schluesseldatei wird eine Auswahl von
+        Dateien angeboten. Erzeugen Sie vorher die richtigen
+        Schluesseldateien! Menuepunkt "Schluessel".
+        Bei interaktiver Schlusseluebergabe uebergibt man die
+        Passphrase per "dialogbox".
+
+Schluessel_loeschen: Wenn der LUKS Header mehr als eine Passphrase
+        besitzt werden hier die benutzten Schluessel Slots (Zahlen)
+        angeboten, um deren Passphrase zu loeschen. Dabei wird eine
+        vorhandene Passphrase abgefragt oder eine Schluesseldatei
+        mit dem Schluessel entschluesselt, bevor dies geschieht.
+        
+NOTIZ: Achten Sie darauf das Sie nicht die Passphrase loeschen die
+        Sie fuer den Zugriff aufs Laufwerk benoetigen. Merken Sie
+        sich diese! Bedenken Sie die Schluesseldatei!
+        Die Passphrase wird nachdem beenden, des addieren oder
+        loeschen Prozesses sofort wieder geloescht.

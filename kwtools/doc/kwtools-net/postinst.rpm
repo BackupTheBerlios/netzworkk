@@ -1,0 +1,33 @@
+#!/bin/sh
+
+EXEC=/usr/lib/kwtools/net
+BIN_PATH=/usr/bin
+SBIN_PATH=/usr/sbin
+
+cd $BIN_PATH
+for i in kwmutt kwnetstat kwrsync ; do
+	if [ -L $i ] ; then
+		rm $i &>/dev/null
+		ln -sf ${EXEC}/${i} ${BIN_PATH}
+	else
+		ln -sf ${EXEC}/${i} ${BIN_PATH}
+	fi
+done
+
+for i in kwrsync_backup kwproxy ; do
+	if [ -L $i ] ; then
+		rm $i &>/dev/null
+		ln -sf ${EXEC}/${i} ${SBIN_PATH}
+	else
+		ln -sf ${EXEC}/${i} ${SBIN_PATH}
+	fi
+done
+
+
+echo ""
+echo "Compile functions from kwtools-scripts"
+echo ""
+/bin/zsh -fc 'setopt extendedglob ; for i in /usr/share/kwtools/functions/kwmutt /usr/share/kwtools/functions/kwrsync_backup /usr/share/kwtools/functions/kwrsync ; do
+	zcompile -U -M $i.zwc $i/*~*.zwc(^/) ; chmod 644 $i.zwc ; done'	
+
+exit 0

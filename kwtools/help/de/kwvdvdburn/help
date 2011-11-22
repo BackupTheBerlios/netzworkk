@@ -1,0 +1,11 @@
+kwvdvdburn::Hilfe
+
+Mit kwvdvdburn koennen Sie ihre MPEG Video Stream Dateien (*.m?v) in
+MPEG system Stream Dateien (*.mpg) multiplexen und auf DVD brennen.
+Der Audio Stream ist seperat in der Datei *.mpa
+
+Sie koennen mehrere Filme auswaehlen, die gemeinsam auf die DVD
+gebrannt werden sollen, solange der Platz reicht.
+
+Als erstes sollten Sie kwvdvdburn konfigurieren, um sich die Arbeit
+zu erleichtern.

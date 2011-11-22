@@ -1,0 +1,101 @@
+.\"     Title: KWUSERRC
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 01/13/2010
+.\"    Manual: 
+.\"    Source: Version 0.3.6
+.\"
+.TH "KWUSERRC" "5" "01/13/2010" "Version 0.3.6" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwuserrc \- Konfigurations Datei f\(:ur kwuser.
+.SH "BESCHREIBUNG"
+.PP
+Beim Start von
+\fBkwuser\fR
+wird die Datei
+\fI/root/\&.kwtools/kwuserrc\fR
+eingelesen\&. Sie beinhaltet die Variablen die von
+\fBkwuser\fR
+benutzt werden k\(:onnen, zum erstellen von neuen Benutzern\&. Beginnt eine Zeile mit
+\(lq#\(rq
+oder ist leer wird dies als Kommentar interpretiert\&.
+.SH "OPTIONEN"
+.PP
+\fBKW_GROUP\fR
+.RS 4
+Hauptgruppe des zu erstellenden Benutzers bestimmen (Bsp\&.:
+\fIusers\fR)\&.
+.RE
+.PP
+\fBKW_GROUPS\fR
+.RS 4
+Gruppen einstellen zu welchen der zu erstellende Benutzer geh\(:oren soll\&. Wird keine Gruppe eingestellt kommt die Gruppe
+\fI\(lqusers\(rq\fR
+zum Zuge (Standard)\&.
+.RE
+.PP
+\fBShell\fR
+.RS 4
+Eine der installierten Shells, als Standard, zum erstellen von Benutzer Accounts ausw\(:ahlen\&.
+.RE
+.PP
+\fBPasswortl\(:ange\fR
+.RS 4
+Eingabe einer Passwortl\(:ange die beim generieren eines Passwortes benutzt werden soll\&. Wird nichts angegeben wird eine L\(:ange von 8 Zeichen benutzt\&.
+.RE
+.PP
+\fBErstlogin\fR
+.RS 4
+Zu Einstellungen (Passwortaenderung) beim 1\&. Login auffordern (\fIyes\fR/\fIno\fR)? Standard ist
+\fI\(lqyes\(rq\fR\&.
+.sp
+Notiz: Ben\(:otigt das Paket
+\fB\(lqkwtools\-sys\-kwpasswd\(rq\fR, ausser Sie benutzen die Sourcen\&.
+.RE
+.SH ""
+.PP
+Quota Einstellungen zum anlegen von Benutzern\&. Quota bedeutet Plattenplatzbeschr\(:ankung\&. Quota wird nur angelegt wenn das Home Verzeichnis des Benutzers auch auf einer eigenen Partition mit
+\fB\(lqQuota\(rq\fR
+Unterst\(:utzung liegt (Bsp\&.: /home/user = /home
+\fBQuota\fR
+Laufwerk)\&.
+.SH ""
+.PP
+\fBBH_LIMIT\fR
+.RS 4
+Gr\(:osse des Block Hardlimits\&. Als Masseinheit stehen k,K,Kb,KB,m,M,Mb,MB,g,G,Gb,GB,\&.\&.\&.\&. zur Verf\(:ugung\&.
+.RE
+.PP
+\fBBS_LIMIT\fR
+.RS 4
+Gr\(:osse des Block Softlimits\&. Siehe Block_Hardlimit\&.
+.RE
+.SH "DATEI"
+.PP
+\fI/root/\&.kwtools/kwuserrc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwuser\fR\&. F\(:ur weitere Details siehe
+\fBkwuser\fR(8)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwuser\fR(8),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5),
+\fBrepquota\fR(8),
+\fBsetquota\fR(8),
+\fBshadow\fR(5)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2010 Kai Wilke
+.br

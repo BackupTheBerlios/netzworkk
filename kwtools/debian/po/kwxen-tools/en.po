@@ -1,0 +1,622 @@
+# kwxen-tools english Translation.
+# Copyright (C) 2008
+# This file is distributed under the same license as the kwtools-sys-xen package.
+# Kai Wilke <kiste@netzworkk.de>, 2009.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: kwxen-tools-0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-07 12:02+0100\n"
+"PO-Revision-Date: 2009-01-07 12:12+0200\n"
+"Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../sys/kwxen-tools:72
+msgid "nicht aktiv"
+msgstr "no activ"
+
+#: ../../sys/kwxen-tools:73
+msgid "aktiv"
+msgstr "activ"
+
+#: ../../sys/kwxen-tools:75
+msgid "Laufwerke"
+msgstr "Drives"
+
+#: ../../sys/kwxen-tools:76
+msgid "start_stop"
+msgstr "start_stop"
+
+#: ../../sys/kwxen-tools:143
+msgid "Virtuelle Maschinen (DomU)"
+msgstr "Virtual Machines (DomU)"
+
+#: ../../sys/kwxen-tools:152
+#, fuzzy
+msgid "Start oder Stop von VM (DomU)."
+msgstr "Start or stop a VM (DomU)."
+
+#: ../../sys/kwxen-tools:153
+msgid ""
+"Waehlen Sie eine oder mehere VM (DomU) aus um Sie zu starten oder zu stoppen."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:16
+msgid "Benutzerfaecher"
+msgstr "Accounts"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:17
+msgid "Admins"
+msgstr "Admins"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:18
+msgid "Architektur"
+msgstr "Architecture"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:19
+msgid "Broadcast"
+msgstr "Broadcast"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:20
+msgid "Cache"
+msgstr "Cache"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:21
+#, fuzzy
+msgid "Konfigurationsdatei"
+msgstr "Configurationfile"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:22
+msgid "DHCP"
+msgstr "DHCP"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:23
+msgid "Dateisystem"
+msgstr "Filesystem"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:24
+msgid "Funktion"
+msgstr "Function"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:25
+msgid "Funktionsargumente"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:26
+msgid "Funktionsverz."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:27
+msgid "Gateway"
+msgstr "Gateway"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:28
+msgid "Generell"
+msgstr "General"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:29
+msgid "hooks"
+msgstr "hooks"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:30
+msgid "Rechnername"
+msgstr "Hostname"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:31
+msgid "IDE_Namen"
+msgstr "IDE_Name"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:32
+msgid "Imagegroesse"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:33
+msgid "Image_Volume"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:34
+msgid "Image_aufbewahren"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:35
+msgid "Initrd"
+msgstr "Initrd"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:36
+msgid "Installation"
+msgstr "Installation"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:37
+msgid "keine_Installation"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:38
+msgid "IP"
+msgstr "IP"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:39
+msgid "Kernel"
+msgstr "Kernel"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:40
+msgid "LVM"
+msgstr "LVM"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:41
+msgid "MAC-Adresse"
+msgstr "MAC-Address"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:42
+msgid "zwingend"
+msgstr "mandatory"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:43
+msgid "Netzmaske"
+msgstr "Netmask"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:44
+msgid "Netzwerk"
+msgstr "Network"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:45
+msgid "Arbeitsspeicher"
+msgstr "Memory"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:46
+msgid "ueberschreiben"
+msgstr "override"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:47
+msgid "Passwort"
+msgstr "Password"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:48
+msgid "Groesse"
+msgstr "Size"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:49
+msgid "Start"
+msgstr "Start"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:50
+msgid "keine_Swap"
+msgstr "No_Swap"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:51
+msgid "Swapgroesse"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:52
+msgid "Swap_Volume"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:53
+msgid "Distribution"
+msgstr "Distribution"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:54
+msgid "Methode"
+msgstr "Methode"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:55
+msgid "Quelle"
+msgstr "Source"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:56
+msgid "Server"
+msgstr "Server"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:57
+msgid "Vorlage"
+msgstr "Template"
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:104
+#, sh-format
+msgid ""
+"Sie muessen erst einen der Menuepunkte \"LVM\" oder \"$gv_Directory\" mit "
+"einem Wert belegen."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:116
+#, sh-format
+msgid ""
+"Geben Sie die Groesse des Gast Betriebssystem ein (Bsp.: 1G, 500M, "
+"1024000000K). Es sind noch \"$Kb_Is_Free\" KByte frei."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:141
+#, sh-format
+msgid ""
+"Geben Sie die Groesse des Swap Laufwerks ein (Bsp.: 1G, 500M, 1024000000K). "
+"Es sind noch \"$Kb_Is_Free\" KByte frei."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:288
+msgid ""
+"Sollen alle Benutzerfaecher auf das Gast Betriebssystem kopiert werden (ja/"
+"nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:319
+#, sh-format
+msgid ""
+"Geben Sie die Groesse des Arbeitsspeichers vom Gast Betriebssystem ein "
+"(Bsp.: 1G, 500M, 1024000000K). Es sind noch \"${Mem_Free}Kb\" frei."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:326
+#, sh-format
+msgid ""
+"Die Groesse ($NUMBER) ueberschreitet den noch zu vergebenden Arbeitsspeicher "
+"(${Mem_Free}Kb)."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:341
+msgid ""
+"Sollen .deb Dateien gecachet werden, falls das neue Gast Betriebssystem mit "
+"debootstrap installiert wird (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:358
+msgid "Waehlen Sie ein Dateisystem aus."
+msgstr "Please select a Filesystem."
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:427
+msgid ""
+"Sollen IDE Namen fuer die virtuellen Laufwerke benutzt werden (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:461
+#: ../../functions/kwxen-tools/kwxen-tools_conf:597
+#, fuzzy
+msgid ""
+"Waehlen Sie eine LV aus auf der das Gast Betriebssystem erstellt werden soll."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:474
+msgid ""
+"Soll das Image des Gast Betriebssystems behalten werden falls die "
+"Installation fehlschlaegt (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:500
+msgid "Soll keine Installation durchgefuehrt werden (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:539
+msgid ""
+"Sollen einige Einstellungen nach dem erstellen des Images ausgefuehrt werden "
+"(ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:551
+msgid ""
+"Soll das root Passwort interactiv, bei der Erstellungdes Laufwerks, "
+"eingegeben werden (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:563
+msgid ""
+"Soll das neue Gast Betriebssystem nachdem erstellen gestartet werden (ja/"
+"nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:609
+msgid "Soll kein Swap Laufwerk benutzt werden (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:622
+msgid ""
+"Sollen existierende Gast Betriebssysteme ueberschrieben werden (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:641
+msgid "Waehlen Sie die Architektur des Gast Betriebssystem aus."
+msgstr "Please select the architectur from the guest operation system."
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:682
+#, fuzzy
+msgid ""
+"Waehlen Sie die Distribution aus, die als Gast Betriebssystem installiert "
+"werden soll."
+msgstr ""
+"Please select the distribution do you install then guest operation system."
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:697
+msgid ""
+"Es wurden keine Distributions Dateien fuer diese Installationsmethode "
+"gefunden"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:714
+msgid ""
+"Sie muessen erst eine der Installations Methoden debootstrap oder rpmstrap "
+"auswaehlen, damit Sie eine Distribution auswaehlen koennen."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:723
+msgid "Waehlen Sie eine Installationsmethode fuer das Gast Betriebssystem aus."
+msgstr ""
+"Please select a methode of installation for the guest operation system."
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:770
+msgid ""
+"Sie muessen erst den Menuepunkt Methode mit einem der Werte \"copy\" oder "
+"\"tar\" belegen."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:778
+msgid ""
+"Geben Sie bitte einen Server an von dem die Pakete gezogen werden sollen "
+"(Bsp.: http://ftp2.de.debian.org/debian)."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:869
+msgid "Soll die Mac-Adresse der 1. Netzwerkkarte benutzt werden (ja/nein)"
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:877
+#, fuzzy
+msgid "Es ist keine Netzwerkkarte vorhanden."
+msgstr "It is not netcard present."
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:895
+msgid ""
+"Waehlen Sie eine VG aus in der das Gast Betriebssystem erstellt werden soll."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_conf:1132
+msgid ""
+"Sie muesssen mindenstens die Menuepunkte Rechnername, die Groesse und LVM "
+"oder Verzeichnis mit Werten belegen."
+msgstr ""
+
+#: ../../functions/kwxen-tools/kwxen-tools_drive_conf:196
+#, fuzzy
+msgid "Aendern von VM (DomU)."
+msgstr "Change of VM (DomU)."
+
+#: ../../functions/kwxen-tools/no_vm_msg:4
+msgid "Es sind keine virtuellen Maschinen vorhanden."
+msgstr "It is not virtual machine present."
+
+#: ../../help/kwxen-tools/domu_change_help:2
+msgid "Konfiguration::aendern::Hilfe"
+msgstr "Configuration::change::Help"
+
+#: ../../help/kwxen-tools/domu_change_help:3
+#, fuzzy
+msgid "Waehlen Sie eine DomU zur Veraenderung aus."
+msgstr "Please select a DomU to change."
+
+#: ../../help/kwxen-tools/domu_del_help:2
+msgid "Konfiguration::loeschen::Hilfe"
+msgstr "Configuration::delete::Help"
+
+#: ../../help/kwxen-tools/domu_del_help:3
+msgid ""
+"Loeschen von ein oder mehreren Laufwerken. Dabei wird auch die\n"
+"Konfigurationsdatei in /etc/xen geloescht."
+msgstr ""
+
+#: ../../help/kwxen-tools/kwxen-tools_conf_help:2
+msgid "Konfiguration::Hilfe"
+msgstr "Configuration::Help"
+
+#: ../../help/kwxen-tools/kwxen-tools_conf_help:3
+#, sh-format
+msgid ""
+"---Generell---\n"
+"\n"
+"Hier koennen Sie generelle Optionen fuer das Gast Betriebssystem\n"
+"vergeben.\n"
+"\n"
+"Accounts: Sollen alle nicht System Accounts auf das Gast\n"
+"\\tBetriebssystem kopiert werden (ja/nein)?\n"
+"\n"
+"Admins:\n"
+"\n"
+"Arbeitsspeicher: Hier koennen Sie den Arbeitsspeicher fuer das Gast\n"
+"\\tBetriebssystem vergeben (Bsp.: 128M). Ist der Gesamtspeicher\n"
+"\\tgroesser als 128 MByte wird die Differenz vom Gesamtspeicher\n"
+"\\tund 64 MByte zur Verfuegung gestellt.\n"
+"\n"
+"Cache: Sollen .deb files auf dem neuen Gast Betriebssystem, mittels\n"
+"\\tdebootstrap, gecachet werden (ja/nein)? \n"
+"\n"
+"NOTIZ: Funktioniert nur mit der Installationsmethode \"debootstrap\".\n"
+"\\tAnsonsten wird diese Option nicht angezeigt.\n"
+"\n"
+"Dateisystem: Waehlen Sie hier das Dateisystem aus. Zur Zeit stehen\n"
+"\\tnur ext3, reiserfs und xfs.\n"
+"\n"
+"Funktion:\n"
+"\n"
+"Funktionsargumente:\n"
+"\n"
+"NOTIZ: Funktion und Funktionsargumente gehen zur Zeit nur fuer das\n"
+"\\tBetriebssystem GNU/Debian.\n"
+"\n"
+"Funktionsverz.: Verzeichnis in dem die Funktionen liegen. Standard\n"
+"\\tist /etc/xen-tools/role.d.\n"
+"\n"
+"Groesse: Geben Sie die Groesse des Gast Betriebssystem ein (Bsp.:\n"
+"\\t1G, 500M, 1024000000K). Es sollten mehr als 249 MByte sein,\n"
+"\\tansonsten gibts es eine Fehlermeldung ueber nicht genuegend\n"
+"\\tPlatz fuer das Gast Betriebssystem.\n"
+"\n"
+"IDE_Namen: Sollen IDE-Namen anstatt SCSI Namen fuer die virtuellen\n"
+"\\tLaufwerke verwendet werden (ja/nein)? Bsp.: hda antatt sda.\n"
+"\n"
+"Imagegroesse: Waehlen Sie ob die ganze Disk oder nur der kleinste\n"
+"\\tbenoetigte Platz fuer das Image belegt werden soll\n"
+"\\t(sparse oder full).\n"
+"\n"
+"NOTIZ: Wenn Sie im Menuepunkt \"zwingend\" LVM anstatt Verzeichnis\n"
+"\\tausgewaehlt haben, wird diese Einstellung ignoriert und\n"
+"\\timmer die Option \"full\" benutzt.\n"
+"\n"
+"Image_Volume: Auswahl einer Logischen Volume, auf dem das Betriebs-\n"
+"\\tsystem istalliert werden soll.\n"
+"\n"
+"Image_aufbewahren: Soll das Image des Gast Betriebssystems auf-\n"
+"\\tbewahrt werden falls die Installation fehlschlaegt\n"
+"\\t(ja/nein)?\n"
+"\n"
+"Initrd: Auswahl der Initial Ramdisk, die vom Gast Betriebssystem\n"
+"\\tbenutzt werden soll (Bsp.: /boot/initrd.img-2.6.18-4-xen).\n"
+"\n"
+"keine_Installation: Soll eine Installation durchgefuehrt werden\n"
+"\\t(ja/nein)? Bei \"nein\" wird kein Gast Betriebssystem\n"
+"\\tinstalliert und keine Konfigurationsdatei erstellt. Dient\n"
+"\\tzu Testzwecken.\n"
+"\n"
+"Kernel: Auswahl des Kernels, der vom Gast Betriebssystem benutzt\n"
+"\\twerden soll (Bsp.: /boot/vmlinuz-2.6.18-4-xen).\n"
+"\n"
+"Konfigurationsdatei: Hier koennen Sie eine Konfigurationsdatei\n"
+"\\tauswaehlen deren Konfiguration zu der globalen\n"
+"\\tKonfiguration hinzu addiert wird.\n"
+"\n"
+"hooks: Sollen einige Einstellungen nach dem erstellen des Images\n"
+"\\tausgefuehrt werden (ja/nein)?\n"
+"\n"
+"Passwort: Soll das root Passwort interactiv, bei der Erstellung des\n"
+"\\tGast Betriebssystems, eingegeben werden (ja/nein)?\n"
+"\n"
+"Start: Soll das neue Gast Betriebssystem nachdem erstellen gestartet\n"
+"\\twerden (ja/nein)?\n"
+"\n"
+"Swapgroesse: Geben Sie die Groesse des Swap Laufwerks fuer das Gast\n"
+"\\tBetriebssystem ein (Bsp.: 1G, 500M, 1024000000K).\n"
+"\n"
+"Swap_Volume: Auswahl einer Logischen Volume, auf dem das Betriebs-\n"
+"\\tsystem istalliert werden soll.\n"
+"\n"
+"keine_Swap: Soll kein Swap Laufwerk benutzt werden (ja/nein)?\n"
+"\n"
+"ueberschreiben: Sollen existierende Gast Betriebssysteme\n"
+"\\tueberschrieben werden (ja/nein)? Dies kann sinnvoll sein\n"
+"\\twenn bei der Installation etwas schiefgeht und man den\n"
+"\\tselben Namen des Gast Betriebssystems behalten moechte.\n"
+"\n"
+"NOTIZ: Der Rechnername ist auch der Name des Gast Betriebssystems.\n"
+"\n"
+"----------------------------------------------------------------\n"
+"\n"
+"---Installation---\n"
+"\n"
+"Hier koennen Sie verschiedenen Installationsoptionen einstellen,\n"
+"wie Distribution oder Architektur des Rechners.\n"
+"\n"
+"Architektur: Waehlen Sie die Architektur des Gast Betriebssystem\n"
+"\\taus. Zur Zeit gehen nur amd64, i386 und i686.\n"
+"\n"
+"NOTIZ: Wird nur benutzt falls als Installationsmethode \"debootstrap\"\n"
+"\\toder \"rpmstrap\" benutzt wird.\n"
+"\\tAnsonsten wird diese Option nicht angezeigt.\n"
+"\n"
+"Distribution: Waehlen Sie die Distribution aus die als Gast\n"
+"\\tBetriebssystem installiert werden soll.\n"
+"\n"
+"NOTIZ: Geht nur bei der Auswahl der Installationsmethoden\n"
+"\\t\"debootstrap\" oder \"rpmstrap\".\n"
+"\\tAnsonsten wird diese Option nicht angezeigt.\n"
+"\n"
+"Methode: Waehlen Sie eine Installationsmethode fuer das Gast\n"
+"\\tBetriebssystem aus. Zur Auswahl stehen debootstrap, rpmstrap\n"
+"\\tcopy und tar.\n"
+"\n"
+"Quelle: Falls Sie als Installationsmethode \"copy\" oder \"tar\" ausge-\n"
+"\\twaehlt wurde, koennen Sie hier fuer \"tar\" das \"Verzeichnis/\n"
+"\\tfile.tar\" auswaehlen und fuer \"copy\" Den Pfad zur einer\n"
+"\\tbestehenden Installation.\n"
+"\n"
+"Server: Geben Sie bitte einen Server an von dem die Pakete gezogen\n"
+"\\twerden sollen (Bsp.: http://ftp2.de.debian.org/debian).\n"
+"\n"
+"NOTIZ: Achten Sie auf Ihre Proxy Einstellungen.\n"
+"\n"
+"Vorlage: Auswahl der Konfigurationsdatei die als Vorlage benutzt\n"
+"\\twerden soll (Bsp.: /etc/xen-tools/vm01.domain.de.cfg).\n"
+"\n"
+"----------------------------------------------------------------\n"
+"\n"
+"---Netzwerk---\n"
+"\n"
+"Hier koennen Sie alles fuers Netzwerk, des Gast Betriebssystems,\n"
+"konfigurieren, wie die automatische Konfiguration per dhcp oder\n"
+"manuell.\n"
+"\n"
+"Die Konfigurationsoptionen fuers Netzwerk. Kann man auch spaeter\n"
+"konfigurieren.\n"
+"\n"
+"DHCP: Soll das Netzwerk per dhcp konfiguriert werden (ja/nein)?\n"
+"\\t\n"
+"\n"
+"NOTIZ: Bei \"ja\" werden alle Variablen der manuellen Konfiguration\n"
+"\\tgeloescht und auch umgekehrt.\n"
+"\n"
+"IP: Manuelle Konfiguration des Netzwerks. Hier koennen Sie bis\n"
+"\\tzu 3 IP-Adressen fuer die Netzwerkschnittstelle vergeben\n"
+"\\t(Bsp.: 192.168.0.1 192.168.0.2).\n"
+"\n"
+"Broadcast: Eingabe der Broadcast Adresse (Bsp.: 192.168.0.255).\n"
+"\\tIst optional.\n"
+"\n"
+"Netzmaske: Eingabe der Adresse der Netmaske (Bsp.: 255.255.255.0).\n"
+"\\tIst optional.\n"
+"\n"
+"Gateway: Eingabe der IP-Adresse fuer den Gateway\n"
+"\\t(Bsp.: 192.168.0.10).\n"
+"\n"
+"MAC-Adresse: Auswahl einer der vorhandenen MAC-Adressen fuer die 1.\n"
+"\\tIP-Adresse.\n"
+"\n"
+"NOTIZ: Diese wird nur fuer die erste Netzwerk Schnittstelle benutzt.\n"
+"\\tBei der manuellen Konfiguration ueber den Menuepunkt \"IP\"\n"
+"\\tkann man bis zu 3 IP Adressen pro Netzwerkkarte verteilen.\n"
+"\\tNur die erste Netzwerkschnittstelle wird fuer diese MAC-\n"
+"\\tAdresse verwendet.\n"
+"\n"
+"----------------------------------------------------------------\n"
+"\n"
+"---zwingend---\n"
+"\n"
+"Konfigurationsoptionen die zwingend fuer die Erstellung eines Gast\n"
+"Betriebssystem benoetigt werden. Man muss mindestens die Menuepunkte\n"
+"\"Rechnername\" und \"LVM\" oder \"Verzeichnis\" mit Werten belegen.\n"
+"\n"
+"LVM: Waehlen Sie eine Volume Group (VG) aus in der das Gast\n"
+"\\tBetriebssystem erstellt werden soll (Bsp.: vg2). Es werden\n"
+"\\tnur vorhandene VGs aufgelistet und der noch freie VG Platz\n"
+"\\twird geprueft. Die Variable \"$DOMU_DIR\" wird bei Auswahl\n"
+"\\teiner VG und noch freien Platz dieser geloescht. Siehe\n"
+"\\tMenuepunkt \"Verzeichnis\".\n"
+"\n"
+"Rechnername: Geben Sie hier den Rechnernamen fuer das Gast\n"
+"\\tBetriebssystem ein (Bsp.: vm01.domain.de (FQDN)).\n"
+"\n"
+"NOTIZ: Der Rechnername ist ein muss, denn er verleiht dem Image fuer\n"
+"\\tdas Gast Betriebssystem auch den Namen\n"
+"\\t(Bsp.: vm01.domain.de.cfg, vg2-vm01.domain.de--disk und\n"
+"\\tevtl. vg2-vm01.domain.de--swap (LVM), oder\n"
+"\\t/Verzeichnis/domains/vm01.domain.de/{disk,swap}.img (Verz.)).\n"
+"\n"
+"Verzeichnis: Auswahl des Verzeichnisses in dem das Image fuer das\n"
+"\\tGast Betriebssystem erstellt werden soll. Unterverzeichnisse\n"
+"\\twie domain/Rechnername werden erstellt. Darunter liegen die\n"
+"\\tImages mit den Namen disk.img und evtl. swap.img. Es wird\n"
+"\\tder noch freie Platz geprueft. Die Variable \"$DOMU_LVM\"\n"
+"\\twird bei Auswahl eines Verzeichnisses und noch freien Platz\n"
+"\\tdessen geloescht. Siehe Menuepunkt \"LVM\".\n"
+"\n"
+"NOTIZ: Der minimale noch freie Platz ist auf 64 MByte Swap und 250\n"
+"\\tMByte \"minimal\" System begrenzt. Bei allem was kleiner ist\n"
+"\\terscheint eine Fehlermeldung."
+msgstr ""

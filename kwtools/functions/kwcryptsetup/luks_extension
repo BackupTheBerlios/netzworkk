@@ -1,0 +1,323 @@
+# Funktion Lukserweiterung behandeln, luks_extension# {{{
+luks_extension() {
+	PASS_MSG=$(gettext 'Geben Sie eine ihrer Passphrasen ein die nicht geloescht werden soll.')
+	lv_Luksinfo=$(gettext 'LUKSinfo')
+	lv_Key_Add=$(gettext 'Schluessel_addieren')
+	lv_Key_Del=$(gettext 'Schluessel_loeschen')
+	# Funktion luks_ext_menu# {{{
+	luks_ext_menu() {
+		LUKS_TITLE="$lv_Luks"
+		LUKS_MENU=($lv_Luksinfo \"\" $lv_Key_Add \"\" $lv_Key_Del \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$LUKS_TITLE" "$gv_Menupoint" "$LUKS_MENU"
+		else
+			menubox "$LUKS_TITLE" "$gv_Menupoint" "$LUKS_MENU"
+		fi
+	}
+	## }}}
+	luks_ext_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help luks_help
+				luks_ext_menu
+				;;
+			$lv_LUKSinfo)
+				# Luksinformationen von verschluesselten Laufwerken anzeigen (/etc/crypttab)# {{{
+				INFO_TITLE="${lv_Luks}::${lv_Luksinfo}"
+				checklist "$INFO_TITLE" "$MULTI_BLOCK_DEVICE_MSG" "$MAP_DEV_M"
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help luks_help
+							checklist "$INFO_TITLE" "$MULTI_BLOCK_DEVICE_MSG" "$MAP_DEV_M"
+							;;
+						*)	# Auswahl anzeigen
+							rm -f ${gv_WorkDir}/dmstate &>/dev/null
+		 					for i in ${=gv_Auswahl} ; {
+								if [ -f "${gv_WorkDir}/dmstate" ] ; then
+									cryptsetup luksDump $i 2>/dev/null >>${gv_WorkDir}/dmstate
+									print "" >>${gv_WorkDir}/dmstate
+								else
+									cryptsetup luksDump $i 2>/dev/null >${gv_WorkDir}/dmstate
+									print "" >>${gv_WorkDir}/dmstate
+								fi
+							}
+							#
+							if [ -f ${gv_WorkDir}/dmstate -a "`wc -l < ${gv_WorkDir}/dmstate`" -gt 1 ] ; then
+								view_file ${gv_WorkDir}/dmstate
+							else
+								MSG=$(gettext 'Es sind keine Luksinformationen vorhanden. Ueberpruefen Sie ihre Konfiguration (/etc/crypttab)!')
+								msgbox "$gv_Attention" "$MSG"
+							fi
+							break
+							;;
+					esac
+				done
+				## }}}
+				luks_ext_menu $lv_LUKSinfo
+				;;
+			$lv_Key_Add)
+				# eine Passphrase addieren{{{
+				# Funktion (add_gpg_ssl_slot), adiert mittels gpg/ssl# {{{
+				# Schluesseldatei oder Passphrase eine neue Passphrase.
+				#
+				# usage: del_gpg_ssl_slot [ -g | -s ] KEY_FILE
+				# usage: nichts
+				#
+				add_gpg_ssl_slot() {
+					unset -- Opt File
+					local File Opt
+					Opt="$1"
+					File="$2"
+					case "$Opt" in
+						-[gs])
+							# GPG/SSL Schluesseldatei entschluesseln, falls noch# {{{
+							# nicht vorhanden.
+							if [ ! -f "$gv_TmpKey" ] ; then
+								decrypt "$Opt" "$File" && KeyFile=$gv_TmpKey
+								choice_key_file "$KEY_FILE"
+								if [ -f "$gv_Auswahl" ] ; then
+									decrypt "$Opt" "$gv_Auswahl" && NewKeyFile=$gv_TmpKey
+									cryptsetup --key-file "$KeyFile" luksAddKey $Luks_Dev "$NewKeyFile" || return 1
+								else
+									unset -- NewKeyFile
+									no_input_msg
+									return 1
+								fi
+							else
+								# Schluessel ist schon entschluesselt.
+								choice_key_file "$KEY_FILE"
+								if [ -f "$gv_Auswahl" ] ; then
+									decrypt "$Opt" "$gv_Auswahl" && NewKeyFile=$gv_TmpKey
+									cryptsetup --key-file "$KeyFile" luksAddKey $Luks_Dev "$NewKeyFile" || return 1
+								else
+									unset -- NewKeyFile
+									no_input_msg
+									return 1
+								fi
+							fi
+							## }}}
+							;;
+						*)
+							# Passphrase eingeben# {{{
+	            			PASSWD_MSG=$(gettext 'Geben Sie einen vorhandenen Schluessel fuer das Laufwerk "$Luks_Dev" ein, dann einen neuen und wiederholen den neuen Schluessel im Feld darunter. Mit den Pfeiltasten koennen Sie zwischen den Eingabefeldern springen.')
+	         				mixed_password -o "$gv_Passwd_TITLE" "$PASSWD_MSG" 8 21
+							[[ -z "$gv_Pass" ]] && return 0
+							# Man muss den neuen Schlüssel
+							# erst in Datei schreiben
+							print "$gv_Pass" >${gv_WorkDir}/passphrase
+							print "$gv_Old_Pass" | cryptsetup luksAddKey $Luks_Dev ${gv_WorkDir}/passphrase || return 1
+							## }}}
+							;;
+					esac
+					return 0
+				}
+				## }}}
+				ADD_TITLE="${lv_Luks}::${lv_Key_Add}"
+				radiolist "$ADD_TITLE" "$SINGLE_BLOCK_DEVICE_MSG" "$MAP_DEV_M"
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help luks_help
+							radiolist "$ADD_TITLE" "$SINGLE_BLOCK_DEVICE_MSG" "$MAP_DEV_M"
+							;;
+						*)	# Schluessel addieren
+							Luks_Dev="$gv_Auswahl"
+							# Suche nach der Anzahl der noch freien Schluessel Slots# {{{
+							Anz=1
+							Anz1=0
+							unset -- SLOT_NR
+							print -l ${(M)"${(f)$(cryptsetup luksDump $gv_Auswahl)}"##(Key Slot*)} | while read a b nr state ; do
+								if [ "$Anz1" -le 7 ] ; then
+									if [ "$state" = DISABLED ] ; then
+										SLOT_NR="$Anz"
+										(( Anz++ ))
+									fi
+									(( Anz1++ ))
+								else
+									break
+								fi
+							done
+							## }}}
+							# Gibt es noch mehr als 1 freien Slot kann man einen hinzufuegen.
+							if [ "$SLOT_NR" -ge 1 ] ; then
+								if [ -n "$KEY_FILE" -a "$SSL" = yes ] ; then
+									add_gpg_ssl_slot -s "$KEY_FILE"
+								elif [ -n "$KEY_FILE" -a "$GPG" = yes ] ; then
+									add_gpg_ssl_slot -g "$KEY_FILE"
+								else
+									add_gpg_ssl_slot
+								fi
+								# Fehlermeldung das das dazufuegen einer Passphrase
+								# fehlgeschlagen ist
+								if [ "$?" != 0 ] ; then
+									MSG=$(gettext 'Das dazufuegen der Passphrase ist fehlgeschlagen.')
+									msgbox "$gv_Attention" "$MSG"
+								fi
+								# entschlüsselte Schlüssel-Dateien und Dateien mit
+								# Passphrase schreddern.
+								clean_keys
+								shred -uz ${gv_WorkDir}/passphrase &>/dev/null
+								unset -- gv_Pass gv_Old_Pass
+							else
+								# no_free_slot_msg
+								MSG=$(gettext 'Es gibt keine freien Schluessel Slots mehr. Sie muessen erst einen loeschen.')
+								msgbox "$gv_Info" "$MSG"
+							fi
+							break
+						;;
+					esac
+				done
+				#}}}
+				luks_ext_menu $lv_Key_Add
+				;;
+			$lv_Key_del)
+				# eine Passphrase loeschen{{{
+				# Funktion (no_del_pass_msg), Passphrase wurde nicht geloescht.# {{{
+				#
+				# usage: no_del_pass_msg
+				#
+				no_del_pass_msg() {
+					MSG=$(gettext 'Das Loeschen der Passphrase, im Slot $Slot, ist fehlgeschlagen.')
+					msgbox "$gv_Attention" "$MSG"
+					continue
+				}
+				## }}}
+				DEL_TITLE="${lv_Luks}::${lv_Key_Del}"
+				radiolist "$DEL_TITLE" "$SINGLE_BLOCK_DEVICE_MSG" "$MAP_DEV_M"
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help luks_help
+							radiolist "$DEL_TITLE" "$SINGLE_BLOCK_DEVICE_MSG" "$MAP_DEV_M"
+							;;
+						*)	#
+							Luks_Dev="$gv_Auswahl"
+							# Suche nach noch aktiven Schluessel Slots# {{{
+							Anz=1
+							Anz1=0
+							unset -- SLOT_NR
+							print -l ${(M)"${(f)$(cryptsetup luksDump $Luks_Dev)}"##(Key Slot*)} | while read a b nr state ; do
+								if [ "$Anz1" -le 7 ] ; then
+									if [ "$state" = ENABLED ] ; then
+										SLOT_NR[Anz]="${nr%:} \"\" off"
+										(( Anz++ ))
+									fi
+									(( Anz1++ ))
+								else
+									break
+								fi
+							done
+							## }}}
+							# Funktion (del_gpg_ssl_slot), loescht mittels gpg/ssl Schluesseldatei Passphrasen. oder ineraktiv# {{{
+							#
+							# usage: del_gpg_ssl_slot [ -g | -s ] KEY_FILE
+							# usage: nichts
+							#
+							del_gpg_ssl_slot() {
+								unset -- Opt File
+								local File Opt
+								Opt="$1"
+								File="$2"
+								case "$Opt" in
+									-[gs])
+										# Schluesseldatei wenn nicht vorhanden entschluesseln.
+										if [ ! -f "$gv_TmpKey" ] ; then
+											decrypt "$Opt" "$File" && KeyFile=$gv_TmpKey
+											if [ -f "$KeyFile" ] ; then
+												for i in $Slots_Nr ; {
+													Slot="$i"
+													cryptsetup --key-file "$KeyFile" luksKillSlot $Luks_Dev "$Slot"
+													if [ "$?" != 0 ] ; then
+														no_del_pass_msg
+													fi
+												}
+											else
+												unset -- KeyFile Slot
+												no_input_msg
+											fi
+										else
+											# Schluessel ist schon entschluesselt.
+											for i in $Slots_Nr ; {
+												Slot="$i"
+												cryptsetup --key-file "$gv_TmpKey" luksKillSlot $Luks_Dev "$Slot"
+												if [ "$?" != 0 ] ; then
+													no_del_pass_msg
+												fi
+											}
+											unset -- KeyFile Slot
+										fi
+										# entschlüsselte Schluessel Datei schreddern
+										clean_keys
+										;;
+									*)
+										# Eine Passphrase eingeben und Passphrasen loeschen.
+										password "$DEL_TITLE" "$PASS_MSG"
+										if [ -n "$PASSPHRASE" ] ; then
+											for i in $Slots_Nr ; {
+												Slot="$i"
+												print $PASSPHRASE | cryptsetup luksKillSlot "$Luks_Dev" "$Slot"
+												if [ "$?" != 0 ] ; then
+													no_del_pass_msg
+												fi
+											}
+											unset -- PASSPHRASE
+										fi
+										;;
+								esac
+							}
+							## }}}
+							# Gibt es noch mehr als 1 freien Slot werden sie angeboten.
+							if [ "${#SLOT_NR[@]}" -gt 1 ] ; then
+								FREE_MSG=$(gettext 'Bis auf einen noch freien Schluessel Slot, koennen Sie alle auswaehlen.')
+								checklist "$DEL_TITLE" "$FREE_MSG" "$SLOT_NR"
+								while [ -n "$gv_Auswahl" ] ; do
+									case "$gv_Auswahl" in
+										HELP*)	script_help luks_help
+											checklist "$DEL_TITLE" "$FREE_MSG" "$SLOT_NR"
+											;;
+										*)	# Schluessel loeschen
+											# Auswahl zaehlen
+											unset -- Slots_Nr Anz
+											integer Anz
+											Slots_Nr="$gv_Auswahl"
+											Anz=0
+											for i in $Slots_Nr ; {
+												(( Anz++ ))
+											}
+											# Schluessel der einzelnen Slots loeschen,
+											# wenn kleiner als 1 Schluessel. 1 muss
+											# vorhanden bleiben.
+											if [ "$Anz" -lt "${#SLOT_NR[@]}" ] ; then
+												if [ -n "$KEY_FILE" -a "$SSL" = yes ] ; then
+													del_gpg_ssl_slot -s "$KEY_FILE"
+												elif [ -n "$KEY_FILE" -a "$GPG" = yes ] ; then
+													del_gpg_ssl_slot -g "$KEY_FILE"
+												else
+													del_gpg_ssl_slot
+												fi
+												break
+											else
+												# zuviele Schluessel ausgewaehlt
+												MSG=$(gettext 'Sie haben zuviele Schluessel Slots ausgewaehlt. Einer muss uebrig bleiben.')
+												msgbox "$gv_Attention" "$MSG"
+												checklist "$DEL_TITLE" "$FREE_MSG" "$SLOT_NR"
+											fi
+											;;
+									esac
+								done
+							else
+								# no_free_slot_msg
+								MSG=$(gettext 'Es gibt keine Schluessel Slots zum loeschen mehr.')
+								msgbox "$gv_Info" "$MSG"
+							fi
+							break
+						;;
+					esac
+				done
+				#}}}
+				luks_ext_menu $lv_Key_del
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+## }}}

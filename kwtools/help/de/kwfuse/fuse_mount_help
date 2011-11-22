@@ -1,0 +1,7 @@
+kwfuse::Laufwerke_ein_ausbinden::Hilfe
+
+Hier kann man ein oder mehrere Konfigurationseintraege, aus der
+/etc/fstab Datei auswaehlen und ins Dateisystem einbinden
+beziehungsweise ausbinden.
+
+NOTIZ: Zur Zeit geht nur das Dateisystem NTFS.

@@ -1,0 +1,4 @@
+kwlogrotate::Rotierzeit::Hilfe
+
+Hier koennen Sie zwischen taeglich, woechentlich und monatlich
+auswaehlen, wann die Logdatei(en) rotiert werden sollen.

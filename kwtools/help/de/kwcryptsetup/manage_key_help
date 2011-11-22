@@ -1,0 +1,17 @@
+kwcryptsetup::Schluessel::Hilfe
+
+Hier koennen Sie eine Schlusseldatei erstellen, entweder
+verschluesselt (gnupg, openssl) oder nicht.
+
+
+Dateiname: Geben Sie hier den Dateinamen, fuer die Schlusseldatei
+        ein.
+
+Verschluesselung: Waehlen Sie hier die Verschluesselung aus. Zur
+        Verfuegung stehen gpg, ssl oder keine. Bei der Auswahl von
+        "keine" wird die Schlusseldatei nicht verschluesselt.
+
+NOTIZ: Fuer die gpg Schluessel Erstellung muss der Benutzer "root"
+        die dementsprechenden Schluessel besitzen. Man muss ja nicht
+        den "root" Schluessel verteilen, zur Aktivierung der
+        Laufwerke/Container.

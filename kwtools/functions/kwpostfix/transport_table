@@ -1,0 +1,256 @@
+# Funktion transport_table{{{
+#
+transport_table() {
+	FILE="$1"
+	autoload -U no_adr_msg
+# Funktion transport_menue{{{
+transport_menue() {
+	TRANSPORT_MENU=$(gettext 'Adresse "$ADR" Transport "$TRANS" Server "$MX_HOST" Port "$PORT" $gv_Save "" $gv_Back ""')
+	menubox "$TABLE_TITLE" "$gv_Menupoint" "$TRANSPORT_MENU"
+}
+#}}}
+# Funktion transport_aendern{{{
+transport_aendern() {
+	# Funktion no_server_port_msg# {{{
+	no_server_port_msg() {
+		MSG=$(gettext 'Beim Transportweg \"error\" brauchen Sie keinen Server oder Port angeben.')
+		msgbox "$gv_Attention" "$MSG"
+	}
+	## }}}
+transport_menue
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help "$TAB_HELP"
+			transport_menue
+			;;
+		Adress*)
+			# Adresse waehlen{{{
+			ADRESS_MSG=$(gettext 'Geben Sie entweder eine Mailadresse, Domain, oder Subdomain ein fuer die Postfix Mail annehmen soll (Bsp. domain.de | .subdomain.de).')
+			inputbox "$TABLE_TITLE" "$ADRESS_MSG" "$ADR"
+			if [ "$gv_Auswahl" ] ; then
+				case "$gv_Auswahl" in
+					[a-z,A-Z,0-9-_.]*@*.*)	ADR="$gv_Auswahl"
+						;;
+					[.a-z,A-Z,0-9]*.*)	ADR="$gv_Auswahl"
+						;;
+					*)	unset -- ADR
+						no_input_msg
+						;;
+				esac
+			else
+				unset -- ADR
+				no_input_msg
+			fi
+			#}}}
+			transport_menue
+			;;
+		Transport)
+			# Transport Methode waehlen{{{
+			transport_methode
+			if [ "$WERT" = error ] ; then
+				ERROR_MSG=$(gettext 'Geben Sie einen Text fuer den Transportweg \"error\" ein.')
+				inputbox "$TABLE_TITLE" "$ERROR_MSG" "${TRANS#*:}"
+				if [ -n "$gv_Auswahl" ] ; then
+					TRANS="${WERT}:${gv_Auswahl}"
+					unset -- MX_HOST PORT
+				else
+					unset -- TRANS
+				fi
+			else
+				TRANS="$WERT"
+			fi
+			#}}}
+			transport_menue
+			;;
+		Server)
+			# Server eingeben{{{
+			if [ "${TRANS%:*}" != error ] ; then
+				SERVER_MSG=$(gettext 'Geben Sie hier bitte einen, Mail Servernamen ein (Bsp. mx.domain.de | 192.168.0.1).')
+				inputbox "$TABLE_TITLE" "$SERVER_MSG" "$MX_HOST"
+				if [ "$gv_Auswahl" ] ; then
+					# Server in eckige Klammern stellen?
+					SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
+					yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
+					if [ "$?" = 0 ] ; then
+						MX_HOST="[${gv_Auswahl}]"
+					else
+						MX_HOST="$gv_Auswahl"
+					fi
+				else
+					unset -- MX_HOST
+					no_input_msg
+				fi
+			else
+				no_server_port_msg
+			fi
+			#}}}
+			transport_menue
+			;;
+		Port)
+			# Port vergeben{{{
+			if [ "${TRANS%:*}" != error ] ; then
+				TRANSPORT_PORT_MSG=$(gettext 'Geben Sie hier einen Port fuer den Transport ($TRANS) ein (Bsp. 25).')
+				inputbox "$TABLE_TITLE" "$TRANSPORT_PORT_MSG" "$PORT"
+				if [ "$gv_Auswahl" ] ; then
+					PORT="$gv_Auswahl"
+					if [ "$PORT" = 0 ] ; then
+						no_input_msg
+						unset -- PORT
+					fi
+				else
+					unset -- PORT
+					no_input_msg
+				fi
+			else
+				no_server_port_msg
+			fi
+			#}}}
+			transport_menue
+			;;
+		$gv_Save)
+			# Eintraege speichern{{{
+			if [ "$ADR" ] ; then
+				if [ "$AENDERN_ADR" ] ; then
+					if [ "${TRANS%:*}" != error ] ; then
+						if [ "$PORT" ] ; then
+							sed -e "s#^${AENDERN_ADR}.*${AENDERN_ADR1// /.*}.*#${ADR}	${TRANS}:${MX_HOST}:${PORT}#" $FILE >$FILE$$
+						else
+							sed -e "s#^${AENDERN_ADR}.*${AENDERN_ADR1// /.*}.*#${ADR}	${TRANS}:${MX_HOST}#" $FILE >$FILE$$
+						fi
+					else
+						sed -e "s#^${AENDERN_ADR}.*${AENDERN_ADR1// /.*}.*#${ADR}	${TRANS}#" $FILE >$FILE$$
+					fi
+					mv $FILE$$ $FILE
+				else
+					grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
+					if [ "${TRANS%:*}" != error ] ; then
+						if [ "$PORT" ] ; then
+							>> $FILE$$ <<< "$ADR	${TRANS}:${MX_HOST}:${PORT}"
+						else
+							>> $FILE$$ <<< "$ADR	${TRANS}:${MX_HOST}"
+						fi
+					else
+						>> $FILE$$ <<< "$ADR	$TRANS"
+					fi
+					mv $FILE$$ $FILE
+				fi
+			else
+				no_adr_msg
+			fi
+			#}}}
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+}
+#}}}
+tabellen_menue
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help tab_help
+			tabellen_menue
+			;;
+		$gv_Display)
+			# Ansicht der Eintraege
+			tab_ansicht
+			tabellen_menue
+			;;
+		$gv_Create)
+			# Werte anlegen
+			unset -- PORT MX_HOST ADR TRANS
+			transport_aendern
+			tabellen_menue
+			;;
+		$gv_Change)
+			# Eintraege aendern{{{
+			key_value "$FILE"
+			if [ "$AUSWAHL" ] ; then
+				CHANGE_MENU=($AUSWAHL)
+				menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help tab_wert_help
+							menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+							;;
+						*)
+							# Auswahl aendern
+							print "${(s.:.)${gv_Auswahl}}" | \
+							while read ADRESSE TRANSP MXHOST REST ; do
+								if [ "${TRANSP%:*}" != error ] ; then
+									ADR="$ADRESSE"
+									TRANS="$TRANSP"
+									MX_HOST="$MXHOST"
+									if [ -n "$REST" ] ; then
+										PORT="$REST"
+									else
+										unset -- PORT
+									fi
+									AENDERN_ADR="$ADR"
+									# Diese Variablen werden veraendert.
+									if [ "$MX_HOST" -a "$PORT" ] ; then
+										AENDERN_ADR1="${TRANS}:${MX_HOST}:${PORT}"
+									elif [ "$MX_HOST" ] ; then
+										AENDERN_ADR1="${TRANS}:${MX_HOST}"
+									else
+										AENDERN_ADR1="${TRANS}:"
+									fi
+								else
+									ADR="$ADRESSE"
+									TRANS="${TRANSP}:${MXHOST} ${REST}"
+									AENDERN_ADR="$ADR"
+									AENDERN_ADR1="$TRANS"
+								fi
+							done
+							transport_aendern
+							break
+							;;
+					esac
+				done
+			else
+				no_entry_msg
+			fi
+			#}}}
+			tabellen_menue
+			;;
+		$gv_Delete)	
+			# Eintraege loeschen{{{
+			key_value "$FILE"
+			if [ "$AUSWAHL_MULTI" ] ; then
+				DEL_MENU=($AUSWAHL_MULTI)
+				U_OPT=no
+				checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help kwpostfix_del_help
+							U_OPT=no
+							checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+							;;	
+						*)	# Loeschen
+							while read ADRESS ; do
+								grep -v "^${${${ADRESS// /.*}//\]/\\]}//\[/\\[}" $FILE >$FILE$$
+								mv $FILE$$ $FILE
+							done < $gv_LogFile$$
+							break
+							;;
+					esac
+				done
+			else
+				no_entry_msg
+			fi
+			#}}}
+			tabellen_menue
+			;;
+		D*)
+			# Datenbank neu erzeugen und Postfix anweisen
+			# die Einstellungen neu einzulesen
+			db_new_reread "$WAS_IST" "$FILE"
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+}
+#}}}

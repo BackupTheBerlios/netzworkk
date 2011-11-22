@@ -1,0 +1,90 @@
+haupt_menue;Konfiguration "" Restart "" Status "" beenden ""
+conf_menue;Hauptkonfiguration "" Logkonfiguration "" Portweiterleitung "" Zusatzkonfiguration "" zurueck ""
+forward_eingabe_menue;Interface "$INTERFACE" Protokoll "$PROTOCOL" Orig_IP "$ORIG_IP" Orig_Port "$ORIG_PORT" New_IP "$NEW_IP" New_Port "$NEW_PORT" speichern "" zurueck ""
+forward_menue;anlegen "" aendern "" loeschen "" zurueck ""
+ingress_filter;1 "simpel" 2 "RFC1812" zurueck ""
+log_conf_menue;BURST_MAX "$BURST_MAX" LOG_ALL_ELSE "$LOG_ALL_ELSE" LOG_DROPS "$LOG_DROPS" LOG_ICMP "$LOG_ICMP" LOG_ILLEGAL "$LOG_ILLEGAL" LOG_INVALID "$LOG_INVALID" LOG_IPLIMIT_EXCEED "$LOG_IPLIMIT_EXCEED" LOG_PACKET_LENGTH "$LOG_PACKET_LENGTH" LOG_PROBES "$LOG_PROBES" LOG_RATE "$LOG_RATE" LOG_SMB "$LOG_SMB" LOG_SPOOF "$LOG_SPOOF" NORM_LOG_LEVEL "$NORM_LOG_LEVEL" WARN_LOG_LEVEL "$WARN_LOG_LEVEL" speichern "" zurueck ""
+loopback_mode_menue;loose "" normal "" paranoid "" zurueck ""
+main_conf_menue;IPTABLES "$IPTABLES" START_IPTABLES "$START_IPTABLES" LOAD_MODULES "$LOAD_MODULES" ACCEPT_SOURCE_ROUTE "$ACCEPT_SOURCE_ROUTE" ALLOW_ICMP_MESSAGE "$ALLOW_ICMP_MESSAGE" ALLOW_TCP_DMZ "$ALLOW_TCP_DMZ" ALLOW_TCP_DMZ_RANGE "$ALLOW_TCP_DMZ_RANGE" ALLOW_UDP_DMZ "$ALLOW_UDP_DMZ" ALLOW_UDP_DMZ_RANGE "$ALLOW_UDP_DMZ_RANGE" ALLOW_TCP_EXT "$ALLOW_TCP_EXT" ALLOW_TCP_EXT_RANGE "$ALLOW_TCP_EXT_RANGE" ALLOW_UDP_EXT "$ALLOW_UDP_EXT" ALLOW_UDP_EXT_RANGE "$ALLOW_UDP_EXT_RANGE" ALLOW_TCP_LAN "$ALLOW_TCP_LAN" ALLOW_TCP_LAN_RANGE "$ALLOW_TCP_LAN_RANGE" ALLOW_UDP_LAN "$ALLOW_UDP_LAN" ALLOW_UDP_LAN_RANGE "$ALLOW_UDP_LAN_RANGE" ALWAYS_FORWARD "$ALWAYS_FORWARD" ANSWER_PING "$ANSWER_PING" ANSWER_TRACEROUTE "$ANSWER_TRACEROUTE" ANTI_SMURF "$ANTI_SMURF" BIND_IP "$BIND_IP" BROADCAST_NETWORKS "$BROADCAST_NETWORKS" CHECK_SYN_PACKET_LENGTH "$CHECK_SYN_PACKET_LENGTH" CUSTOM_SCRIPT "$CUSTOM_SCRIPT" DMZ_INTERFACE "$DMZ_INTERFACE" DROP_BROADCASTS "$DROP_BROADCASTS" DROP_UNCLEAN_PACKETS "$DROP_UNCLEAN_PACKETS" DYNAMIC_EXTERNAL_IP "$DYNAMIC_EXTERNAL_IP" ENABLE_IPLIMIT "$ENABLE_IPLIMIT" ENABLE_LIMIT_RATE "$ENABLE_LIMIT_RATE" ENABLE_TCP_ECN "$ENABLE_TCP_ECN" EXECUTE_CUSTOM_SCRIPT "$EXECUTE_CUSTOM_SCRIPT" EXTERNAL_INTERFACE "$EXTERNAL_INTERFACE" EXTERNAL_INTERFACE_IP "$EXTERNAL_INTERFACE_IP" FINSCAN "$FINSCAN" FORWARD_LAN_TO_DMZ "$FORWARD_LAN_TO_DMZ" ILLEGAL_TCP_FLAGS "$ILLEGAL_TCP_FLAGS" INGRESS_FILTER "$INGRESS_FILTER" IPLIMIT_MAX_ACCEPT "$IPLIMIT_MAX_ACCEPT" IPLIMIT_NETMASK "$IPLIMIT_NETMASK" LAN_INTERFACE "$LAN_INTERFACE" LIMIT_BURST "$LIMIT_BURST" LIMIT_RATE "$LIMIT_RATE" LOG_MARTIANS "$LOG_MARTIANS" LOOPBACK_ACCEPT "$LOOPBACK_ACCEPT" LOOPBACK_MODE "$LOOPBACK_MODE" MASQUERADE "$MASQUERADE" NAT_MODULES "$NAT_MODULES" NULLSCAN "$NULLSCAN" PACKET_LENGTH "$PACKET_LENGTH" PORT_FORWARD "$PORT_FORWARD" PRELOAD_IP_MODULES "$PRELOAD_IP_MODULES" PRIVATE_NETWORKS "$PRIVATE_NETWORKS" PROTECT_FROM_DMZ "$PROTECT_FROM_DMZ" PROTECT_FROM_LAN "$PROTECT_FROM_LAN" RESERVED_NETWORKS "$RESERVED_NETWORKS" SYNCOOKIES "$SYNCOOKIES" TCP_PROBE "$TCP_PROBE" TCP_PROBE2 "$TCP_PROBE2" UDP_PROBE "$UDP_PROBE" UDP_PROBE2 "$UDP_PROBE2" XMASSCAN "$XMASSCAN" speichern "" zurueck ""
+log_level_menue;alert "" crit "" debug "" emerg "" info "" notice "" warning "" zurueck ""
+protocol_menue;tcp "" udp ""
+#
+accept_source_route;ACCEPT_SOURCE_ROUTE einschalten (Kernel_option yes/no)?
+allow_icmp_messages;Waehlen Sie hier die ICMP Nachrichten aus, die erlaubt werden sollen.
+allow_tcp_dmz;Geben Sie hier die TCP Ports ein, durch ein Komma getrennt, die zur DMZ erlaubt werden sollen (Bsp. 80,442 - www,https).
+allow_udp_dmz;Geben Sie hier die UDP Ports ein, durch ein Komma getrennt, die zur DMZ erlaubt werden sollen (Bsp. 53,22 - domain,ssh).
+allow_tcp_dmz_range;Geben Sie hier Bereiche oder einzelne TCP Ports ein, getrennt durch ein Leerzeichen, die in die DMZ erlaubt werden sollen (Bsp. 80,442 - www,https).
+allow_udp_dmz_range;Geben Sie hier Bereiche oder einzelne UDP Ports ein, getrennt durch ein Leerzeichen, die in die DMZ erlaubt werden sollen (Bsp. 6000:6010 3128).
+allow_tcp_ext;Geben Sie hier die TCP Ports ein, getrennt durch ein Komma, die zum externen Interface weitergeleitet werden sollen (Bsp. 80,442 - www,https).
+allow_udp_ext;Geben Sie hier die UDP Ports ein, getrennt durch ein Komma, die zum externen Interface weitergeleitet werden sollen (Bsp. 53,22 - domain,ssh).
+allow_tcp_ext_range;Geben Sie hier Bereiche oder einzelne TCP Ports ein, getrennt durch ein Leerzeichen, die vom externe Interface erlaubt werden sollen (Bsp. 80,442 - www,https).
+allow_udp_ext_range;Geben Sie hier Bereiche oder einzelne UDP Ports ein, getrennt durch ein Leerzeichen, die vom externen Interface erlaubt werden sollen (Bsp. 6000:6010 3128).
+allow_tcp_lan;Geben Sie hier die TCP Ports ein, durch ein Komma getrennt, die zum LAN erlaubt werden sollen (Bsp. 80,442 - www,https).
+allow_udp_lan;Geben Sie hier die UDP Ports ein, durch ein Komma getrennt, die zum LAN erlaubt werden sollen (Bsp. 53,22 - domain,ssh).
+allow_tcp_lan_range;Geben Sie hier Bereiche oder einzelne TCP Ports ein, getrennt durch ein Leerzeichen, die ins LAN erlaubt werden sollen (Bsp. 80,442 - www,https).
+allow_udp_lan_range;Geben Sie hier Bereiche oder einzelne UDP Ports ein, getrennt durch ein Leerzeichen, die ins LAN erlaubt werden sollen (Bsp. 6000:6010 3128).
+always_forward;Sollen Ports immer weitergeleitet werden (yes/no)?
+answer_ping;Auf Ping antworten (yes/no)? Wenn traceroute von Windows Rechnern eingeschaltet werden soll muss ANSWER_PING auf yes stehen.
+answer_traceroute;Soll auf Traceroute Anfragen geantwortet werden (yes/no)?
+anti_smurf;ANIT_SMURF anschalten (Kernel_option yes/no)?
+auth_reject;Anfragen auf den Auth Port abweisen einschalten (yes/no)? Bei no werden die Anfragen verwerfen. 
+bind_ip;Geben Sie hier ein oder mehrere IP Adressen des lokalen Rechner, von denen DNS Server kontaktet werden sollen (Bsp. 192.168.0.5).
+broadcast_networks;Geben Sie hier Netzmasken ein von denen Broadcast Anfragen weggeschmissen werden sollen (Bsp. 0.0.0.0/8 255.255.255.255).
+burst_max;Wieviele Paket sollen hoehsten geloggt werden (Bsp. 5).
+check_syn_packet_length;Soll die SYN Paketlaenge ueberprueft werden (yes/no)?
+drop_broadcast;Broadcast Anfragen wegschmeissen (yes/no)?
+drop_unclean_packats;Pakete die als unclean gekennzeichnet sind verwerfen (yes/no)? Experimentell (Sollte man nicht benutzen).
+dynamic_external_ip;Wird Ihre Externe IP Adresse automatisch vergeben (yes/no)?
+enable_limit_rate;Generelle Limitierung der Netzwerk Rate einschalten (yes/no)?
+enable_iplimit;Soll die TCP basierte Netzwerk Rate limitiert werden (yes/no)?
+enable_tcp_ecn;Soll die TCP Congestion Notification eingeschaltet werden (yes/no)?
+execute_custom_script;Zusatz-Konfigration mit einbeziehen (yes/no)?
+external_interface;Geben Sie hier bitte ihr externes Interface an (Bsp. ippp0, ppp0, eth0).
+external_interface_ip;Geben Sie hier bitte die IP Adressen fuer das externe Interface ein (Bsp. 192.168.0.5).
+finscan;Sollen Anfragen mit dem TCP Flag FIN verworfen werden bzw. als illegal gekennzeichnet weren (yes/no)?
+forward_lan_to_dmz;Sollen Pakete vom LAN zur DMZ weitergeleitet werden (yes/no)?
+illegal_tcp_flags;Geben Sie hier die illegalen TCP Flag Kombinationen, durch ein Leerzeichen getrennt, ein.
+interface;Vergeben Sie hier das Interface an das die Pakete weitergeleitet werden sollen (Bsp.: eth0).
+iplimit_max_accept;Geben Sie hier die Anzahl der Verbindungen an, ab der pro IPLIMIT_NETMASK Verbindungen angenommen werden sollen (Bsp. 16).
+iplimit_netmask;Geben Sie hier den Netmask Schluessel ein (Bsp. 24 = 192.168.0.0/24).
+limit_burst;Generelle Limitierung der Paketrate, ab welcher Initialnr der Pakete soll, laut Zeit, neu nachgeschaut werden.
+limit_rate;Generelle Limitierung der Paketrate, wie oft soll nachgeschaut werden (Zeit)?
+load_modules;Sollen Netfilter Kernel Module geladen werden (yes/no)?
+log_all_else;Alles loggen was nicht irgendwie auf ein Muster passt (yes/no)?.
+log_drops;Sollen Drops geloggt werden, bei nein haben alle anderen LOG-Optionen kein Effekt (Yes/no)?
+log_icmp;ICMP Pakete loggen (yes/no)?
+log_illegal;Illegale TCP Flags loggen (yes/no)?
+log_invalid;Pakete loggen die nicht zu einer gueltigen Verbindung gehoeren (yes/no)?
+log_iplimit_exceed;Verbindungen loggen die den Wert IPLIMIT_MAX_ACCEPT ueberschreiten (yes/no)?
+log_limit_exceed;Verbindungen loggen die den Wert LIMIT_RATE ueberschreiten (yes/no)?.
+log_martians;Soll die Kerneloption LOG_MARTIANS (loggt unmoegliche Quell IP Adressen) eingeschaltet werden (yes/no)?
+loopback_accept;Soll der Traffic auf's loopback Device erlaubt werden (yes/no)?
+log_packet_length;TCP SYN Pakete loggen die eine irre Header Laenge besitzen (PACKET_LENGTH) (yes/no)?
+log_probes;Monitoring von TCP/UDP Probe Ports (yes/no)?
+log_rate;Log Rate Limitierung.
+log_smb;SMB/Windows CIFS verwandte Pakete loggen (yes/no)?
+log_spoof;Pakete loggen die in der Anti-Spoof Section definiert sind (yes/no)?
+masquerade;Soll Masquerading (NAT - Netzwerk Adress Translation) eingeschaltet werden (yes/no)?
+newip;Geben Sie hier die IP Adresse an, an welche die Pakete weitergeleitet werden sollen (Bsp.: 192.168.1.1).
+newport;Geben Sie hier den Port an, an welchen die Pakete weitergeleitet werden sollen (Bsp.: 80).
+no_allow_wert;Der Wert ($NO_ALLOW_WERT) ist falsch und wird nicht benutzt.
+no_input;Sie muessen, bis auf Interface, alle Menuepunkte mit Werten belegen.
+no_iptable_prog;Sie muessen erst das ip(6)tables Programm auswaehlen.
+no_rules;Es sind keine Forward Regeln definiert.
+nullscan;Sollen Anfragen mit dem TCP Flags NONE verworfen werden (yes/no)?
+origip;Geben Sie hier die IP Adresse an, an welche die Pakete urspruenglich gehen sollten (Bsp.: 192.168.0.1).
+origport;Geben Sie hier den Port an, an welchen die Pakete urspruenglich gehen sollten (Bsp.: 81).
+packet_length;Geben Sie hier bitte den Bereich der Paketlaenge, in Bytes, ein (Bsp. 40:68).
+port_forward;Soll die Port Weiterleitung eingeschaltet werden (yes/no)?
+private_networks;Antispoofing Option - Geben Sie hier ihre privaten Netzwerke ein die geschuetzt werden sollen (Bsp. 192.168.0.0/24).
+protect_from_lan;Soll der Rechner vor dem internen Netzwerk (LAN) geschuetzt werden (yes/no)?
+protect_from_dmz;Soll der Rechner vor der Demilitarisierten Zone (DMZ) geschuetzt werden (yes/no)?
+only_15_ports;Es duerfen nur 15 Ports pro Zeile eingegeben werden.
+reserved_networks;Antispoofing Option - Geben Sie hier ihre reservierten Netzwerke ein die geschuetzt werden sollen (Bsp. 127.0.0.0/8).
+start_iptables;Soll die Firewall (iptables) beim booten gestartet werden (yes/no)?
+syncookies;Soll die Kerneloption syn-cookies (syn-flooding attacks) eingeschaltet werden (yes/no)?
+# Enable syn-cookies (syn-flooding attacks)
+tcp_probe;Geben Sie hier die TCP Ports ein, durch ein Komma getrennt, die erlaubt werden sollen (Bsp. 80,442 - www,https).
+udp_probe;Geben Sie hier die UDP Ports ein, durch ein Komma getrennt, die erlaubt werden sollen (Bsp. 53,22 - domain,ssh).
+use_color;Soll eine farbige Darstellung benutzt werden, falls moeglich (yes/no)?
+xmasscan;Sollen die Anfragen mit der TCP Flags Kombination URG,PSH,FIN verworfen werden (yes/no)?

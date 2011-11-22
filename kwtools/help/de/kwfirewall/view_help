@@ -1,0 +1,16 @@
+kwfirewall::Ansicht::Hilfe
+
+Hier kann man sich die Regeln einer Kette (chain) ansehen.
+		
+Diese Regelketten, falls definiert bedeuten folgendes:
+Es gibt ein einfaches Konzept.
+dmz_int - von der Demilitarisierten Zone (DMZ) ins Internet
+lan_dmz - vom Local Area Network (LAN) in die DMZ
+lan_in  - vom LAN in den Firewall Rechner
+out_lan - vom Firewall Rechner ins LAN
+etc.
+
+NOTIZ: Die Regelketten FORWARD, INPUT, OUTPUT und die NAT Ketten
+       POSTROUTING und PREROUTING sind built-in Regelketten. Mit
+       der Taste "q" beendet man die Ansicht.
+

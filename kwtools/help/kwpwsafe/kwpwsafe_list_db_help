@@ -1,0 +1,5 @@
+# kwpwsafe_list_db_help# {{{
+TITLE="${lv_Db}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie aus der Liste eine Datenbank auswaehlen um sie
+weiter zu bearbeiten oder Daten abfragen.')
+#}}}

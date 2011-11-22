@@ -1,0 +1,4 @@
+# vcd_help fuer kwvcdburn{{{
+TITLE=$(gettext 'Dateiauswahl::${gv_Help}')
+MSG=$(gettext 'Hier koennen Sie einen Fim aussuchen und ihn auf CD-R/CD-RW brennen.')
+#}}}

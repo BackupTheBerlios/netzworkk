@@ -1,0 +1,23 @@
+kwlogrotate::Rechte::Hilfe
+
+Mode: Hier koennen Sie die Lese- und Schreibrechte einstellen. Diese
+      werden in Zahlen eingegeben (1=ausfuehren , 2=schreiben,
+      4=lesen). Man kann diese Zahlen unterschiedlich zusammen 
+      rechnen (0640).
+
+User: Hier koennen Sie einen User auswaehlen, der Besitzer der 
+      Logdatei sein soll. Es werden nur installierte User angezeigt.
+
+NOTIZ: Bedenken Sie das einige Programme Ihren eigenen Usernamen
+       benoetigen. postgresql und squid sind zum Beispiel solche 
+       Kandidaten.
+
+Gruppe: Hier koennen Sie eine Gruppe fuer die Logdatei auswaehlen. Es
+        werden nur installierte Gruppen angezeigt.
+
+NOTIZ: Bedenken Sie das einige Programme Ihren eigenen Gruppennamen
+       benoetigen. postgresql und squid sind zum Beispiel solche 
+       Kandidaten.
+
+       Wenn Sie sich nicht sicher sind, lesen Sie erst die 
+       Dokumentation zu den einzelnen Programmen.

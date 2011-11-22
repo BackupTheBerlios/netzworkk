@@ -1,0 +1,4 @@
+# sys_kwcryptsetup_help fuer kwadmin{{{
+MSG=$(gettext 'kwcryptsetup: Mit diesem Script koennen Sie verschluesselte Container
+\t(Datei mit Dateisystem) und Laufwerke erstellen.')
+#}}}

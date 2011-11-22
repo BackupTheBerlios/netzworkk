@@ -1,0 +1,4 @@
+# key_help fuer kwlosetup{{{
+TITLE="${gv_Configuration}::${lv_Encryption}::${gv_Help}"
+MSG=$(gettext 'Auswahl der Schluessellaenge und des Verschluessellungsverfahrens.')
+#}}}

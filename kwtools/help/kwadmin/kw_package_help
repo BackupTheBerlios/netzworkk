@@ -1,0 +1,7 @@
+# kw_package_help fuer kwadmin{{{
+TITLE=$(gettext 'Konfiguration::Paketsystem::Hilfe')
+MSG=$(gettext 'Hier koennen Sie Ihr Paketmanagementsystem auswaehlen.
+dpkg - Debian, grml,...
+rpm - OpenSuSE, CentOS,...
+tar - Sourcen')
+#}}}

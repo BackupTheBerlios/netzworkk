@@ -1,0 +1,20 @@
+kwrsync::Verzeichnisse::Konfiguration:Hilfe
+
+Sourceverz.: Lokales Verzeichnis waehlen.
+
+Remoteverz.: In welches Verzeichnis soll syncronisiert werden. Kann
+        local wie remote sein. Bei remote muessen Sie auch den Ziel-
+        rechner angeben.
+
+Zielrechner: Eingabe der IP-Nummern oder Namen der Zielrechner. Name
+        geht nur wenn dieser Rechner auch bekannt ist (z.B. DNS).
+        Die Erreichbarkeit wird nach der Eingabe geprueft.
+
+Remote_shell: Auswahl einer der installierten remote Shells
+        (z.B. ssh).
+
+Ausschluss: Dateien/Verzeichnisse die von der Synchronisation
+        ausgeschlossen werden sollen. Diese muessen relativ zum
+        Pfad des Sourceverz. liegen. Bei einem Sourceverz. von
+        /home/user/foo ist dann der Ausschluss einer Datei z. B.
+        foo/bar.

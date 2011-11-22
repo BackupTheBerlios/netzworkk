@@ -1,0 +1,5 @@
+# sys_kwfuse_help fuer kwadmin{{{
+MSG=$(gettext 'kwfuse: Dies ist ein Frontend Script fuer Fuse. Mit Fuse koennen Sie
+\tDateiesyteme in den Linux Kernel exportieren und deren
+\tRechte verwalten.')
+#}}}

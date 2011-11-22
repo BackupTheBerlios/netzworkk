@@ -1,0 +1,235 @@
+# default Parameter einstellen{{{
+#
+default_conf() {
+	postconf -c $MAIL_CONFIG | grep '^default_' | sed -e 's# = #="# ;
+	s#\$##g ; s#\?#\\\?#g ; s#{#\\\{#g ; s#}#\\\}#g ; s#$#"#' >${gv_WorkDir}/postfix$$
+	read_file -f ${gv_WorkDir}/postfix$$
+	rm -rf ${gv_WorkDir}/postfix$$ &>/dev/null 
+	#
+	# Funktion conf_default_menue{{{
+	DEFAULT_TITLE=$(gettext 'Konfiguration::Standard')
+	conf_default_menue() {
+	DEFAULT_MENU=(default_database_type \"\$default_database_type\"
+	default_delivery_slot_cost \"\$default_delivery_slot_cost\"
+	default_delivery_slot_discount \"\$default_delivery_slot_discount\"
+	default_delivery_slot_loan \"\$default_delivery_slot_loan\"
+	default_destination_concurrency_limit \"\$default_destination_concurrency_limit\"
+	default_destination_recipient_limit \"\$default_destination_recipient_limit\"
+	default_extra_recipient_limit \"\$default_extra_recipient_limit\"
+	default_minimum_delivery_slots \"\$default_minimum_delivery_slots\"
+	default_privs \"\$default_privs\"
+	default_process_limit \"\$default_process_limit\"
+	default_rbl_reply \"\$default_rbl_reply\"
+	default_recipient_limit \"\$default_recipient_limit\"
+	default_transport \"\$default_transport\"
+	default_verp_delimiters \"\$default_verp_delimiters\"
+	postfix \"reload\"
+	$gv_Back \"\")
+	menubox "$DEFAULT_TITLE" "$gv_Menupoint" "$DEFAULT_MENU"
+	}
+	#}}}
+	conf_default_menue
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help default_help
+				conf_default_menue
+				;;
+			default_da*)
+				# Standard Datenbank Type vergeben.{{{
+				tab_support_wahl -s
+				if [ "$MAPS" ] ; then
+					default_database_type="$MAPS"
+					postconf -e default_database_type="$MAPS"
+				else
+					default_database_type="hash"
+					postconf -e default_database_type="hash"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_delivery_slot_c*)
+				#{{{
+				number_input -i "$default_delivery_slot_cost"
+				if [ "$NUMBER" ] ; then
+					default_delivery_slot_cost="$NUMBER"
+					postconf -e default_delivery_slot_cost="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_delivery_slot_d*)
+				#{{{
+				number_input -i "$default_delivery_slot_discount"
+				if [ "$NUMBER" ] ; then
+					default_delivery_slot_discount="$NUMBER"
+					postconf -e default_delivery_slot_discount="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_delivery_slot_l*)
+				#{{{
+				number_input -i "$default_delivery_slot_loan"
+				if [ "$NUMBER" ] ; then
+					default_delivery_slot_loan="$NUMBER"
+					postconf -e default_delivery_slot_loan="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_destination_c*)
+				# Maximalanzahl gleichzeitiger Verbindungen zu einem Ziel{{{
+				number_input -i "$default_destination_concurrency_limit"
+				if [ "$NUMBER" ] ; then
+					default_destination_concurrency_limit="$NUMBER"
+					postconf -e default_destination_concurrency_limit="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_destination_r*)
+				# Maximalanzahl der Empfänger in einer einzigen Mails{{{
+				# Grösser Empfängerlisten werden in mehrere Mails aufgeteilt
+				number_input -i "$default_destination_recipient_limit"
+				if [ "$NUMBER" ] ; then
+					default_destination_recipient_limit="$NUMBER"
+					postconf -e default_destination_recipient_limit="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_e*)
+				# Maximal Anzahl gleichzeitiger zuzustellender extra Mails{{{
+				number_input -i "$default_extra_recipient_limit"
+				if [ "$NUMBER"  ] ; then
+					default_extra_recipient_limit="$NUMBER"
+					postconf -e default_extra_recipient_limit="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_m*)
+				# Minimale Anzahl an Zustell Slots{{{
+				number_input -i "$default_minimum_delivery_slots"
+				if [ "$NUMBER" ] ; then
+					default_minimum_delivery_slots="$NUMBER"
+					postconf -e default_minimum_delivery_slots="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_pri*)
+				# Default Nutzerrechte für nachgeladene Programme und{{{
+				# Dateizugriffe.
+				user_auswahl
+				if [ "$WERT" ] ; then
+					default_privs="$WERT"
+					postconf -e default_privs="$WERT"
+				else
+					default_privs="nobody"
+					postconf -e default_privs="nobody"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_pro*)
+				# Maximal Anzahl gleichzeitiger Prozesse einer Art,{{{
+				# sofern, in master.cf, nicht anders angegeben.
+				number_input -i "$default_process_limit"
+				if [ "$NUMBER" ] ; then
+					default_process_limit="$NUMBER"
+					postconf -e default_process_limit="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_rb*)
+				# RBL Einstellungen{{{
+				# vorherige Einstellungen quoten
+				print \"${default_rbl_reply}// /\" \"}\" >${gv_WorkDir}/default_conf
+				for i in client client_address client_name helo_name rbl_class \
+					rbl_code rbl_domain rbl_reason rbl_what recipient recipient_domain \
+					recipient_name sender sender_domain sender_name name\?text name:text ; {
+					# Pruefen ob die Option schon ausgewaehlt wurde
+					if [ "`print ${(M)$(< ${gv_WorkDir}/default_conf)##\"${i}\"}`" ] ; then
+						RBL_MENU[Anz]="$i \"\" on"
+					else
+						RBL_MENU[Anz]="$i \"\" off"
+					fi
+				}
+				#
+				checklist "$DEFAULT_TITLE" "$gv_Menupoint" "$RBL_MENU" "$default_rbl_reply"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help rbl_help
+							checklist "$DEFAULT_TITLE" "$gv_Menupoint" "$RBL_MENU" "$default_rbl_reply"
+							;;
+						*)	# übernehmen
+							default_rbl_reply="$gv_Auswahl"
+							postconf -e default_rbl_reply="$gv_Auswahl"
+							break
+							;;
+					esac
+				done
+				check_gv_Auswahl default_rbl_reply "postconf -e default_rbl_reply="""
+				#}}}
+				conf_default_menue
+				;;
+			default_rec*)
+				# Maximalanzahl Empfänger{{{
+				number_input -i "$default_recipient_limit"
+				if [ "$NUMBER" ] ; then
+					default_recipient_limit="$NUMBER"
+					postconf -e default_recipient_limit="$NUMBER"
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			default_t*)
+				# Standard Transport Methode{{{
+				#
+				transport_methode
+				default_transport="$WERT"
+				postconf -e default_transport="$WERT"
+				#}}}
+				conf_default_menue
+				;;
+			default_v*)
+				# Welche Zeichen ersetzen im Return-Path "." und "@"{{{
+				CHAR_MSG=$(gettext 'Waehlen Sie die Zeichen aus die im Return-Path die Zeichen \".\" und \"@\" ersetzen sollen.')
+				# Werte mit on oder off belegen ($VERP_MENU).
+				verp_delimiter "$default_verp_delimiters"
+				#
+				U_OPT=-
+				checklist "$DEFAULT_TITLE" "$CHAR_MSG" "$VERP_MENU" "$default_verp_delimiters"
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help default_help
+							U_OPT=-
+							checklist "$DEFAULT_TITLE" "$CHAR_MSG" "$VERP_MENU" "$default_verp_delimiters"
+							;;
+						*)	# übernehmen
+							default_verp_delimiters="$gv_Auswahl"
+							postconf -e default_verp_delimiters="$gv_Auswahl"
+							break
+							;;
+					esac
+				done
+				#
+				if [ -z "$gv_Auswahl" ] ; then
+					default_verp_delimiters="+="
+					postconf -e default_verp_delimiters="+="
+				fi
+				#}}}
+				conf_default_menue
+				;;
+			p*)	#
+				postfix_start_reload
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}

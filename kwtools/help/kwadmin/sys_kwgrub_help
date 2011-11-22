@@ -1,0 +1,6 @@
+# sys_kwgrub_help fuer kwadmin{{{
+MSG=$(gettext 'kwgrub: Mit kwgrub koennen Sie ihren Bootloader installieren, auch
+\tin verschiedene Festplatten MBRs, in der Konfigurationsdatei
+\tmenu.lst Einstellungen vornehmen, so wie anlegen und
+\tloeschen von verschiedenen Boot Einstellungen.')
+#}}}

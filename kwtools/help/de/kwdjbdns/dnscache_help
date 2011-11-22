@@ -1,0 +1,20 @@
+kwdjbdns::Konfiguration::dnscache::Hilfe
+
+external: Einstellung das dieser Rechner einen externen DNS Cache
+        startet, den andere benutzen koennen. Im Gegensatz zur 
+        Workstation kann ihr Cache nur von ihrem Rechner benutzt
+        werden.
+
+external-forwarding: Einstellung das dieser Rechner einen externen 
+        DNS Cache startet, den andere benutzen koennen, um Internet
+        Adressen zu finden. Ist fast das gleiche, wie external,
+        bloss mit besserer Performence.
+
+forwarding: Einstellung das ein einzelner Rechner einen anderen DNS
+        Cache fuer seine Anfragen benutzt, um Internet Adressen
+        zu finden. Ist fast das gleiche, wie Workstation, bloss 
+        mit besserer Performence. 
+
+Workstation: Einstellung das ein einzelner Rechner einen anderen DNS
+        Cache fuer seine Anfragen benutzt, um Internet Adressen
+        zu finden.

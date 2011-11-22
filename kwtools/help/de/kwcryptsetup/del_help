@@ -1,0 +1,5 @@
+kwcryptsetup::Management::loeschen::Hilfe
+
+Loeschen von ein oder mehreren verschluesselten Laufwerken. Dabei
+werden auch die Eintraege der Konfigurationsdatei /etc/crypttab
+geloescht.

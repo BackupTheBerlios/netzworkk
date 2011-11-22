@@ -1,0 +1,175 @@
+access_menue;Adresse "$ADR" Aktion "$ACTION" Text "$TEXT" speichern "" zurueck ""
+alias_menue;"lokaler Empfaenger" "$ADR" "anderer Empfaenger" "$EXT_ADR" speichern "" zurueck ""
+haupt_menue;Quickly-Konfiguration "" Konfiguration "" Tabellen "" Steuerdatei "" Aufraeumen "" beenden ""
+konf_menue;Haupt "" Standard "" Fehlercodes "" Mail "" LMTP "" Queue "" SMTP "" SMTPD "" TLS "" Virtual "" zurueck ""
+ldap_conf_menue;Datei "$FILE" Benutzer "$DB_User" Passwort "$PASSPHRASE1" Port "$Port" Rechner "$DB_Host" Suchbasis "$Search_Base" Timeout "$Timeout" LDAP-Filter "$Ldap_Filter" Attribute "$Attribute" speichern "" zurueck ""
+master_conf_menue;Ansicht "" anlegen "" veraendern "" loeschen "" Postfix reload zurueck ""
+master_conf_aendern_menue;Service "$SERVICE" Typ "$TYPE" Privat "$PRIVATE" Unpriviligiert "$UNPRIV" Chroot "$CHROOT" Aufwachzeit "$WAKEUP" Max_Prozesse "$MAXPROC" Befehl "$COMMAND" Argumente "$ARGS" speichern "" zurueck ""
+multi_mail_adr;Geben Sie hier 1 oder mehrere Mailadressen, durch 1 Komma getrennt, ein (user1@domain.de, user2@domain.de).
+mynetworks_menue;Rechner/Netz "$ADR" speichern "" zurueck ""
+mysql_conf_menue;Datei "$FILE" Benutzer "$DB_User" Passwort "$PASSPHRASE1" Datenbank "$DB_Name" Tabelle "$Table" ID_Feld "$ID_Field" Welches_Feld "$Where_Field" Konditionen "$Kond" Rechner "$DB_Host" speichern "" zurueck ""
+pgsql_conf_menue;Datei "$FILE" Benutzer "$DB_User" Passwort "$PASSPHRASE1" Datenbank "$DB_Name" Tabelle "$Table" Source_Feld "$Where_Field" Ziel_Feld "$Select_Field" Konditionen "$Kond" Funktion "$Func" Rechner "$DB_Host" speichern "" zurueck ""
+random_dev;dev:/dev/random "" dev:/dev/urandom ""
+recipient_menue;Adresse "$ADR" $SPEICHERN "" $ZURUECK ""
+regexp_menue;Zeichenkette "$STRING" Flags "$FLAGS" Aktion "$ACTION" Text "$TEXT" speichern "" zurueck ""
+relay_domain_menue;Rechner/Domain "$ADR" speichern "" zurueck ""
+simple_adr_menue;Adresse "$ADR" Empfaenger "$E_ADR" speichern "" zurueck ""
+tabellen_menue;Ansicht "" anlegen "" veraendern "" loeschen "" Datenbank "neu erzeugen/postfix reload" zurueck ""
+tab_wert_auswahl;Eingabe "" Namensuebernahme "" Variablenauswahl "" zurueck ""
+transport_menue;Adresse "$ADR" Transport "$TRANS" Server "$MX_HOST" Port "$PORT" speichern "" zurueck ""
+virtual_alias_menue;Virtual_domain "$DOMAIN" Adresse "$ADR" Empfaenger "$E_ADR" speichern "" zurueck ""
+virtual_alias_mb_domain_menue;Domain "$DOMAIN" speichern "" zurueck ""
+virtual_id_menue;Adresse "$ADR" ID "$ID" speichern "" zurueck ""
+#
+2bounce_notice_recipient;Geben Sie hier bitte eine Zieladresse fuer Double Bounces ein (postmaster).
+access_string;Geben Sie hier bitte eine Domain, Mailadresse, Hostnamen, IP, IP-Netz einen usernamen oder regulaeren Ausdruck ein (Bsp. user@ | domain.de | 192.168.).
+allow_min_user;Sollen Mailadressen die mit einem \"-\" beginnen erlaubt werden (yes/no)?
+allow_percent_hack;Dies kontrolliert das umschreiben von mail Adressen, der Form user%domain --> user@domain (yes/no).
+allow_untrusted_routing;Sollen Mailadressen mit dopellten \"@\" oder \"%\", die also ein fremdes Mailrouting beinhalten, erlaubt werden (yes/no)?
+alternate_config_directories;Geben Sie hier bitte weitere Konfigurationsverzeichnisse, getrennt durch ein Leerzeichen, ein.
+append_at_myorigin;Dies kontrolliert das umschreiben von mail Adressen, der Form user --> user@mydomain (yes/no).
+append_dot_mydomain;Dies kontrolliert das umschreiben von mail Adressen, der Form user@host --> user@host.mydomain (yes/no).
+biff;Soll die Zusammenarbeit mit biff aktiviert werden, einem Informationstool ueber neu hereingekommene Mails (yes/no)?
+bounce_notice_recipient;Geben Sie hier bitte eine Mailadresse ein, an die Benachrichtigungen von Bounces gehen (postmaster).
+broken_sasl_auth_clients;Soll dieser Server einen anderen Begruessungstext ausgeben fuer SMTP-AUTH (yes/no)?
+check_virtual_domain;Pruefen Sie, ob schon eine virtual Domain angelegt wurde fuer die Postfix Mails annimmt.
+com_args;Geben Sie hier die Argumente fuer den Befehl ein. Schauen Sie dazu in die jeweilige Dokumentation.
+db_function;Geben Sie hier die Datenbank-Funktion ein.
+db_host;Geben Sie hier die Rechnernamen, getrennt durch Leerzeichen, ein auf dem die Datenbank laeuft. 
+db_name;Geben Sie hier den Namen der Datenbank ein.
+db_passwd;Geben Sie bitte das Passwort fuer die Datenbank ein.
+db_passwd_repeat;Geben Sie bitte erneut das Passwort fuer die Datenbank ein.
+db_table;Geben Sie hier den Tabellennamen ein.
+db_user;Geben Sie hier den Benutzer ein, der sich in die Datenbank einloggen darf.
+debug_peer_list;Geben Sie hier bitte eine Liste von IP, Hostnamen oder Mailadressen ein die ausfuehrlicher geloggt werden sollen (Bsp.: 192.168.0.0/24 $myhostname).
+delay_notice_recipient;Geben Sie hier bitte eine Mailadresse ein, die bei Mailverspaetigungen benachrichtigt wird (postmaster).
+disable_dns_lookups;Sollen die Rechnernamen, der zu versendenen Mails, bei einem DNS Server nicht nachgeschlagen werden (yes/no)?
+disable_verp_bounces;Sollen Bounces an VERP Adressen deaktiviert werden (yes/no)?
+disable_vrfy_command;Soll das SMTP-Kommando VRFY deaktiviert werden (yes/no)?
+double_bounce_sender;Geben Sie hier bitte eine Absenderadresse fuer Double Bounces ein (double-bounce).
+eckige_klammern;Soll der Rechner ($Z_HOST) in eckige Klammern (direkte Einlieferung) gestellt werden?
+empty_address_recipient;Geben Sie hier bitte eine Mailadresse ein, die bei fehlenden Angaben eingesetzt wird (MAILER-DAEMON).
+error_code;Geben Sie hier bitte einen Fehlercode, der 4XX oder 5XX Serie ein. Lesen Sie dazu bitte die Hilfe.
+error_notice_recipient;Geben Sie hier bitte eine Mailadresse ein, die bei Fehlern zu benachrichtigen ist (postmaster).
+error_text;Geben Sie hier bitte einen Text ein, der auf einen bestimmten Fehlercode oder Aktion gesendet werden soll.
+expand_owner_alias;Soll bei ausgehenden Mailinglistenmails der listenname-owner anhand der alias Tabelle direkt in die echte Mailadresse aufgeloest werden (yes/no)?
+export_environment;Geben Sie hier bitte die Variablen ein, die an externe Programme uebergeben werden sollen.
+failure_initial_destination_concurrency;Der Wert von von initial_destination_concurrency darf nicht auf $NUMBER stehen, da sonst eine defekte Empfaengeradresse den gesamten Mailverkehr blockiert.
+fallback_relay;Geben Sie hier einen Rechner an, an den fehlerhafte, unzustellbare Mails weitergeleitet werden sollen.
+forward_path;Geben Sie hier Dateien/Variablen ein, in denen nach persoehnlichen Weiterleitungen eines Nutzers gesucht wird (\$home/.forward).
+home_mailbox;Geben Sie hier bitte das optionale Mailboxverzeichnis eines Benutzer, relativ zu seinem Homeverzeichnis, ein.
+host_domain;Geben Sie hier bitte den Namen eines Rechners oder einer Domain ein (Bsp. host1.domain.de | domain.de).
+domain;Geben Sie hier bitte den Namen einer Domain ein (Bsp. domain.de).
+host_ja_nein;Soll der Rechnername mit vorangestellt werden (yes/no)?
+ignore_mx_lookup_error;Soll Postfix, sofern eine MX Abfrage kein Ergebnis liefert das ganze an den A-Record schicken (yes/no)?
+import_environment;Geben Sie hier bitte die Variablen ein, die von Postfix eingelesen werden sollen.
+input_attribute;Geben Sie hier die Attribute der Verzeichnisse ein, die DNs oder URLs enthalten (Bsp. ldapsource_special_result_attribute = member).
+input_ldap_port;Geben Sie hier den Port des LDAP-Servers ein. Standard ist Port 389.
+input_ldap_timeout;Geben Sie hier den Timout bei einer Verbindungsanfrage ein (Standard ist 10 Sekunden).
+input_maps;Hier koennen Sie Variablen und/oder Dateien eingeben (Bsp. \$alias_maps \$virtual_mailbox_maps unix:passwd.byname).
+input_query_filter;Gebei Sie hier den LDAP-Filter ein, mit dem das LDAP-Verzeichnis durchsucht wird.(Bsp. ldapsource_query_filter = (&(mail=%s)(paid_up=true)) ).
+input_txt;Geben Sie hier einen Text fuer den Transportweg "error" ein.
+ip_net_in;Geben Sie hier bitte die IP eines Rechners oder eines Netzes ein (Bsp. 192.168.0.1 | 192.168.0.0/24).
+lmtp_bind_address;Geben Sie hier bitte die IPv4 Adresse ein, die fuer ausgehende Verbindungen via LMTP genutzt werden soll (Bsp. 192.168.0.1).
+lmtp_bind_address6;Geben Sie hier bitte die IPv6 Adresse ein, die fuer ausgehende Verbindungen via LMTP genutzt werden soll (Bsp. 2001:240:5c7:0:250:56ff:fe89:1).
+lmtp_more_connect;LMTP Verbindung, fuer mehrere mails nacheinander nutzen (yes/no)?
+lmtp_port;Geben Sie bitte den Port fuer das Protokoll LMTP ein (Bsp. 24)?
+lmtp_sasl_auth;SMTP-AUTH beim Versand ueber LMTP aktivieren (yes/no)?
+lmtp_skip_quit_response;Beenden einer LMTP Sitzung nach dem QUIT Kommando, ohne auf Antwort zu warten (yes/no)?
+log_level;0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug
+luser_relay;Geben Sie hier eine Mailadresse ein, an die unzustellbare Mails, die nicht gebounct werden sollen, weitergeleitet werden.
+mail_adr;Geben Sie hier eine Mailadresse ein (Bsp. user@domain.de).
+mail_adr_domain_subdomain;Geben Sie entweder eine Mailadresse, Domain, oder Subdomain ein fuer die Postfix Mail annehmen soll (Bsp.: domain.de | .subdomain.de).
+mail_banner;Geben Sie hier den Namen des Mailservers, fuer den Begruessungs Banner ein (Bsp. Postfix).
+mail_or_domain;Geben Sie hier bitte eine Mailadresse oder domain ein (Bsp. @domain.de | user@domain.de).
+mail_server;Geben Sie hier bitte einen, Mail Servernamen ein (Bsp.: mx.domain.de | 192.168.0.1).
+mailbox_cmd;Geben Sie hier ein Kommando fuer Mailboxen (Bsp. /usr/bin/procmail -t -a "${EXTENSION}").
+mailbox_path;Geben Sie hier den Pfad relativ zum Parameter "virtual_mailbox_base" ein (Bsp. virtual_mailbox_base = /var/mail/vhosts, Pfad = domain.de/info = Mailbox /var/mail/vhosts/domain.de/info).
+masquerade_domains;Geben Sie hier die Domains, getrennt durch ein Leerzeichen an, die Sie maskieren moechten. Lesen Sie bitte die Hilfe dazu.
+more_adr;Geben Sie hier bitte einen oder mehrere Empfaenger ein, an die die Mail weitergeleitet werden soll. Getrennt mit einem Komma und Leerzeichen. Dies koennen auch externe Adressen sein (Bsp. user1, user2 | freund@domain.de).
+mydestination;Geben Sie hier bitte eine Liste von Domains ein fuer die Postfix die Mails lokal zustellt, getrennt durch ein Komma und Leerzeichen (Bsp. $myhostname, localhost.$mydomain, $mydomain).
+mydomain;Geben Sie hier bitte den Domainnamen ein, fuer den dieser Mail Server zustaendig ist (Bsp. domain.de).
+myhostname;Geben Sie hier den FQDN-Rechnernamen fuer diesen Mailserver ein (Bsp. host1.domain.de).
+no_adr;Sie muessen erst eine Adresse eingeben, bevor Sie was speichern koennen.
+no_adr_action;Sie muessen mindestens die Menuepunkte Adresse und Aktion belegen.
+no_adr_and_adr;Sie muessen erst die Menuepunkte lokaler Empfaenger und andere Empfaenger belegen.
+no_adr_and_bcc;Sie muessen erst die Menuepunkte Adresse und Empfaenger belegen.
+no_del;Konnte die Auswahl nicht loeschen. Bitte editieren Sie die master.cf loeschen den Eintrag von manuell.
+no_eintrag_msg;Beim Transportweg \"error\" brauchen Sie keinen Server oder Port angeben.
+no_hash_queue;Die Mailqueue defer muss eine Hashstruktur besitzen, sonst leidet die Performance.
+no_host_domain;Sie muessen erst einen Rechnernamen oder einen Domainnamen eingeben.
+no_domain;Sie muessen erst einen Domainnamen eingeben (Bsp. domain.de).
+no_inet_private;Beim Type ($TYPE) muss Privat auf n (no) stehen.
+no_input;Sie haben einige Menuepunkte vergessen zu belegen, die benoetigt werden. Lesen Sie bitte die Hilfe.
+no_ip_net;Sie muessen erst eine IP Adresse oder eine IP fuers Netz eingeben.
+no_postfix_module;In diesem Verzeichnis ($VERZ) liegen keine Postfix Module.
+no_postfix_prog;In diesem Verzeichnis ($VERZ) liegen keine Postfix Programme.
+no_restrictions;Sie muessen mindestens einen der folgenden Restritions auswaehlen: defer, defer_if_permit, reject, reject_unauth_destination.
+no_sendmail_prog;In diesem Verzeichnis ($VERZ) liegt kein Programm Namens sendmail.
+no_serv_cmd;Sie muessen noch die Menuepunkte Service, Befehl und eventuell Argumente mit Werten belegen.
+no_service_chroot;Beim Service ($SERVICE) muss Unpriv und Chroot auf n (no) stehen.
+no_service_maxproc;Beim Service ($SERVICE) darf der maximale Prozessstart keinen Wert besitzen.
+no_service_unpriv;Beim Service ($SERVICE) muss Unpriviligiert auf n (no) stehen.
+no_service_wert;Beim Service ($SERVICE) muss die Aufwachzeit einen Wert besitzen.
+no_start_postfix;Postfix konnte nicht neu geladen beziehungsweise gestartet werden. Berichtigen Sie bitte den Fehler in Ihrer Konfiguration.
+no_string_action;Sie muessen erst die Menuepunkte Zeichenkette und Aktion belegen. Text ist optional.
+no_tab_format;Das Tabellen-Format ($WAS_IST) wird noch nicht, fuer diese Tabelle, von kwpostfix unterstuetzt.
+no_tabs;Es sind keine Tabellen vorhenden. Sie muessen erst welche kreieren.
+no_text;Bei der Aktion ($ACTION) kann man keinen Antworttext vergeben.
+no_transport_methode;Es sind keine Transport Methoden, in $MASTER_CF, definiert.
+no_virtual_and_adr;Sie muessen erst eine virtuelle Domain oder eine Adresse und eine Empfaengeradresse eingeben, bevor Sie was $SPEICHERN koennen.
+no_virtual_domain;Sie muessen erst eine virtuelle Domain, fuer diese Adresse ($ADR) eingeben.
+no_virtual_mailbox_base;Sie muessen erst in der VIRTUAL-Konfiguration den Parameter "virtual_mailbox_base" belegen.
+owner_request_special;Soll eine besondere Behandlung fuer die Adressen owner-listenname und listenname-request aktiviert werden (yes/no)?
+permit_mx_backup;Bei permit_mx_backup kann optional die Restriction permit_mx_backup_networks belegt werden (Haupt).
+permit_mx_backup_networks;Geben Sie hier bitte die IP-Netze ein, fuer die Postfix Mails annimmt/relayt wenn ein MX-Record auf diese Server zeigt. Es muss der hoechste MX-Host sein, sonst verweigert Postfix die Annahme (Bsp.: 192.168.0.0/16 192.168.10.0/24).
+permit_mx_backup_networks_auswahl_msg;Achten Sie darauf das 'permit_mx_backup' in den smtpd_recipient_restrictions aktiviert ist. 
+postfix_version;Geben Sie hier die Version ein (Bsp. 2.0.16)
+qmail_clients;Geben Sie bitte die Rechner oder IP-Adressen ein, die das Qmail-Protokoll nutzen duerfen.
+rbl_domains;Geben Sie hier Bitte ein oder mehrere RBL-Domains, getrennt durch ein Leerzeichen, ein (Bsp. relays.ordb.org, list.dsbl.org)
+regexp_string;Geben Sie hier bitte eine Zeichenkette ein nach der gesucht werden soll (man 5 regexp_table).
+relayhost;Geben Sie hier den Host an, an den alle ausgehenden Mails geschickt werden soll (Bsp. [smtp.domain.de] , smtp.domain.de:25).
+require_home_directory;Soll die Existenz eines Home Verzeichnisses, eines lokalen Empfaengers erzwungen werden (yes/no)?
+search_base;Geben Sie hier die zu verwendende LDAP-Suchbasis ein (Bsp. dc=domain.de,dc=de)
+select_field;Geben Sie hier den Spaltennamen der Tabelle, der den zu behandelten Eintrag mapt, ein.
+service_name;Geben Sie hier einen Namen fuer diesen Service ein.
+smtp_always_send_ehlo;Soll sich postfix immer als ESMTP-faehiger Server indentifizieren (yes/no)?
+smtp_bind_address;Geben Sie hier bitte die IPv4 Adresse ein, die fuer ausgehende Verbindungen via SMTP genutzt Werden soll (Bsp. 192.168.0.1).
+smtp_bind_address6;Geben Sie hier bitte die IPv6 Adresse ein, die fuer ausgehende Verbindungen via SMTP genutzt Werden soll (Bsp. 2001:240:5c7:0:250:56ff:fe89:1).
+smtp_enforce_tls;SSL/TLS fuer den Versand erzwingen (yes/no)?
+smtp_never_send_ehlo;Soll postfix sich nie als ESMTP-faehiger Server identifizieren (yes/no)?
+smtp_randomize_addresses;Reihenfolge der envelope Adressen mixen (yes/no)?
+smtp_sasl_auth_enable;SMTP-AUTH Identifierzierung aktivieren (yes/no)?
+smtp_skip_4xx_greeting;Begruessungstext bei SMTP_Code 4xx (temporaerer Fehler) ignorieren (yes/no)?
+smtp_skip_5xx_greeting;Begruessungstext bei SMTP_Code 5xx (dauerhafter Fehler) ignorieren (yes/no)?
+smtp_skip_quit_response;Trennung ohne warten auf Antwort nach dem SMTP Kommando QUIT (yes/no)?
+smtp_tls_enforce_peername;smtp_tls_enforce_peername aktivieren (yes/no)?
+smtp_tls_note_starttls_offer;smtp_tls_note_starttls_offer aktivieren (yes/no)?
+smtp_use_tls;smtp_use_tls aktivieren (yes/no)?
+smtpd_delay_reject;Soll bei einem REJECT, einer Restriktion, nicht sofort abgebrochen werden (yes/no)? Siehe Hilfe.
+smtpd_enforce_tls;Soll SSL/TLS bei eingehenden Verbindungen erzwungen werden (yes/no)?
+smtpd_helo_required;Muss ein Client ein HELO senden (yes/no)?
+smtpd_noop_commands;Geben Sie hier SMTP-Komandos ein, auf denen postfix zwar ein 250 (OK) ausgibt, aber keinerlei Aktion taetig.
+smtpd_null_access_lookup_key;Geben Sie hier einen Wert ein, nach dem in den Tabellen gesucht wird, wenn eine Mail keinen Absender hat.
+smtpd_sasl_auth_enable;SMTP-AUTH, fuer eingehende mails, benutzen (yes/no)?
+smtpd_sasl_local_domain;Geben Sie hier bitte den Domainnamen ein, der an die Nutzererkennung angehaengt wird (Bsp.: domain.de).
+smtpd_tls_ask_ccert;Fragen welches Certrifikat Clients bekommen (yes/no)?
+smtpd_tls_auth_only;Soll dieser Server, fuer eingehende Mails, SSL/TLS benutzen (yes/no)?
+smtpd_tls_received_header;Soll dieser Server ($myhosname), fuer eingehende Mails, die received Zeilen loggen (yes/no)?
+smtpd_tls_req_ccert;Benoetigen Clients ein Certrifikat (yes/no)?
+smtpd_tls_wrappermode;Soll dieser Server, fuer eingehende Mails, den Wrapper benutzen (yes/no)?
+smtpd_use_tls;Soll dieser Server, fuer eingehende Mails, SSL/TLS benutzen (yes/no)?
+soft_bounce;Soll soft_bounce, zum testen des Servers aktiviert werden (yes/no)?
+static_maps;Geben Sie entweder eine Zahl (5432, z.B. Postgresql Port) oder einen Text ein. Lesen Sie bitte die Hilfe.
+strict_rfc821_envelopes;Soll die korrekte Envelope-Adresse, nach RFC 2821, erzwungen werden (yes/no)?
+sun_mailtool_compatibility;Soll die Zusammenarbeit mit Mailtool von Sun\'s uralt Solaris aktiviert werden (yes/no)?
+swap_bangpath;Sollen gebangte Routpfade aus UUCP Verbindungen in eine Domainform umgeschrieben werden (yes/no)?
+syslog_facility;Geben Sie hier bitte den Ausgabekanal fuer Logmeldungen, an den Syslogd ein (mail,news,..., man 5 syslog.conf).
+syslog_name;Geben Sie hier bitte einen Namen ein, der in der Ausgabe von Postfix an den Syslogd erscheint (postfix).
+tls_prng_cache;Soll dieser Wert (\$queue_directory/prng_exch) aktiviert werden (yes/no)?
+transport_port;Geben Sie hier einen Port fuer den Transport ($TRANS) ein (Bsp. 25).
+undisclosed_recipients_header;Geben Sie hier einen Header ein, der eingefuegt wird, wenn die Mail keinen Header To: besitzt.
+user_mail_or_domain;Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).
+user_mail_or_ip_or_domains;Geben Sie hier bitte eine Mailadresse, User, IP, domain, ... ein (Bsp. user@ | @domain.de | user@domain.de | 192.168. | 192.168.0.1 ).
+virtual_domain;Geben Sie hier eine virtuelle domain ein (domain.de).
+where_field;Geben Sie hier den Spaltennamen der Tabelle, der den zu behandelten Eintrag enthaelt, ein.

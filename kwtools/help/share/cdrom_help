@@ -1,0 +1,5 @@
+# cdrom_help {{{
+TITLE=$(gettext '${gv_Configuration}::Laufwerke::${gv_Help}')
+MSG=$(gettext 'Hier kann man aus allen vorhandenen CD/DVD Laufwerken eines
+auswaehlen.')
+#}}}

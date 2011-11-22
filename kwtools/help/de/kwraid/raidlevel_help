@@ -1,0 +1,78 @@
+kwraid::Erstellung::raid-level::Hilfe
+
+Hier kann man zwischen den RAID Levels linear, 0, 1, 4, 5, 6 und 10
+auswaehlen. Die Level 6 und 10 stehen nur zur Auswahl ab Kernel
+>2.5.
+
+linear: Der Linear Modus verbindet mehrere Partitionen 
+        unterschiedlicher Groesse zu einem Gesamtverbund, der 
+        allerdings nicht parallel, sondern nacheinander beschrieben
+        wird. Ist die erste Partition voll, wird auf der naechsten 
+        weitergeschrieben. Dadurch sind weder Performancevorteile
+        zu erwarten noch eine gesteigerte Sicherheit. Im Gegenteil.
+        Ist eine Partition des Linear-Verbundes defekt, ist meist 
+        auch der gesamte Verbund hinueber.
+        Zu beachten ist das dieser Level keine Ersatzpartitionen
+        erlaubt.
+
+0: Wie bei Linear werden die FP zu einer logischen Einheit zusammen
+        gefasst, mit dem Unterschied, dass die Schreib/Lesezugriffe 
+        parallel auf die einzelnen FP verteilt werden. Da der
+        Zugriff parallel ausgefuehrt wird, sind die FP immer gleich
+        belegt, d.h. es muessen immer gleich grosse Partitionen
+        angelegt werden. Auch hier werden keine Redundanz-Daten
+        gespeichert, d.h. faellt eine FP aus sind alle Daten ver-
+        loren. Zu beachten ist das dieser Level keine Ersatzparti-
+        tionen erlaubt.
+
+1: Ein RAID-1 Verbund wird auch als »Spiegelsystem« bezeichnet, da 
+        hier der gesamte Inhalt einer Partition auf eine oder
+        mehrere andere gespiegelt und damit eins zu eins dupliziert
+        wird. Wir haben hier also den ersten Fall von Redundanz.
+        Desweiteren koennen hier, falls es erwuenscht ist, zum
+        ersten mal Spare-Disks zum Einsatz kommen. Diese liegen
+        pauschal erstmal brach im System und werden erst um Ihre
+        Mitarbeit bemueht, wenn eine Partition des RAID-1 Verbundes
+        ausgefallen ist. Spare-Disks bieten also einen zusaetz-
+        lichen Ausfallschutz, um nach einem Ausfall moeglichst 
+        schnell wieder ein redundantes System zu bekommen. 
+
+4: Sie moechten mehrere, aber mindestens drei etwa gleich grosse 
+        Partitionen zusammenfassen, die sowohl einen Geschindig-
+        keitsvorteil als auch erhoehte Sicherheit bieten sollen.
+        Das Verfahren der Datenverteilung beim Schreibzugriff ist
+        hierbei genauso wie beim RAID-0 Verbund, allerdings kommt
+        hier eine zusaetzliche Partition mit Paritaetsinformationen
+        hinzu. Faellt eine Partition aus, so kann diese, falls eine
+        Spare-Disk vorhanden ist, sofort wieder rekonstruiert
+        werden; fallen zwei Partitionen aus, ist aber auch hier
+        Schluss und die Daten sind verloren.
+
+5: Ein RAID-5 Verbund loest nun das klassische RAID-4 Problem
+        elegant, indem es die Paritaetsinformationen gleichmaessig
+        ueber alle im RAID-5 Verbund laufenden Partitionen verteilt.
+        Hierdurch wird der Flaschenhals einer einzelnen Paritaets-
+        Partition wirksam umgangen, weshalb sich RAID-5 als Sicher-
+        heit und Geschwindigkeit bietender RAID-Verbund grosser
+        Beliebtheit erfreut. Faellt eine Partition aus, beginnt das
+        RAID-5, falls Spare-Disks vorhanden sind, sofort mit der
+        Rekonstruktion der Daten, allerdings kann RAID-5 auch nur
+        den Verlust einer Partition verkraften. Genauso wie beim 
+        RAID-4 sind beim zeitgleichen Verlust zweier Partitionen
+        alle Daten verloren.
+
+6: Ein RAID-6 ist gleich dem RAID-5, bloss das hier 2 Parity-
+        bereiche genutzt werden.
+
+10: RAID-10 ist eine Kombination von RAID-0 und RAID-1. Man benötigt
+        mindestens 4 FP, wobei 2 RAID-1 Verbunde zu 1 RAID-0
+        Verbund zusammengefuegt werden. Es sind aber auch andere
+        Anordnungen moeglich. Auch hier besteht die Moeglichkeit
+        Spare-Disks mit einzubinden. Faellt eine FP aus sind die
+        Daten, dank der redundanten Speicherung noch vorhanden oder
+        bei Spare-Disks beginnt die Rekonstruktion. Fallen mehr als
+        1 FP gleichzeitig aus , so kommt es drauf an das die RAID-1
+        Verbunde funktionstuechtig bleiben. Ist eines der Verbunde
+        beschaedigt sind die Daten verloren. Da keine Parity-Daten
+        gespeichert werden, ist der Lese/Schreibzugriff deutlich 
+        schneller als bei einer einzelnen FP aus dem Array.

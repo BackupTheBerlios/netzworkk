@@ -1,0 +1,5 @@
+# cal_view_help fuer kwplaner{{{
+TITLE="${gv_Configuration}::${gv_Display}::${gv_Help}"
+MSG=$(gettext 'Hier kann man die Kalenderansicht auswaehlen. Diese dient fuer
+das Script kwtermin.')
+#}}}

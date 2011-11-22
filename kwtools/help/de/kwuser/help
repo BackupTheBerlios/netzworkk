@@ -1,0 +1,12 @@
+kwuser::Hilfe
+
+Mit kwuser koennen Sie User anlegen, deren Rechte aendern und
+natuerlich auch loeschen. Das Passwort muss man nur beim anlegen
+eines Benutzers miteingeben.
+
+anlegen: Benutzer anlegen.
+
+aendern: Vorhandene Einstellungen eines Benutzers aendern.
+
+loeschen: Benutzer loeschen. Dabei werden die Home-Verzeichnisse
+        rekursiv geloescht.

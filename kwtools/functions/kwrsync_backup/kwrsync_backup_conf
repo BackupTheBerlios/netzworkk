@@ -1,0 +1,208 @@
+# Funktion um kwrsync_backup zu konfigurieren.{{{
+#
+# usage: kwrsync_backup_conf
+#
+kwrsync_backup_conf() {
+	local Anz
+	lv_Exclude_File=$(gettext 'Ausschluss_Datei')
+	lv_Backup_Dir=$(gettext 'Backupverz.')
+	lv_Bandwith=$(gettext 'Bandbreite')
+	lv_Check_Space=$(gettext 'Check_Platz')
+	lv_Minimal_Space=$(gettext 'Minimum_Platz')
+	lv_Mount_Dir=$(gettext 'Mountverz.')
+	lv_Remote_Shell=$(gettext 'Remote_Shell')
+	lv_Server=$(gettext 'Server')
+	lv_User=$(gettext 'Benutzer')
+	lv_Crontab=$(gettext 'crontab')
+	lv_Crontab_Change=$(gettext 'bearbeiten (dialog)')
+	# Funktion kwrsync_backup_conf_menue{{{
+	kwrsync_backup_conf_menue() {
+		CONF_MENU=($lv_Exclude_File \"$gv_Change\" $lv_Backup_Dir \"$BACKUP_PATH\"
+		$lv_Bandwith \"$BW_LIMIT\" $lv_Check_Space \"$CHECK_HDMINFREE\"
+		$lv_Minimal_Space \"$HDMINFREE\" $lv_Mount_Dir \"$MOUNT_PATH\"
+		$lv_Remote_Shell \"$RSYNC_RSH\"
+		$lv_Server \"$SERVER\"
+		$lv_User \"$USER_RUN\" $lv_Crontab \"$lv_Crontab_Change\"
+		$gv_Save \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+		else
+			menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+		fi
+	}
+	#}}}
+	kwrsync_backup_conf_menue
+	while [ "$gv_Auswahl" ] ; do
+		case $gv_Auswahl in
+			HELP*)	script_help conf_help
+				kwrsync_backup_conf_menue
+				;;
+			$lv_Exclude_File)
+				# Exclude Datei bearbeiten{{{
+				EXCLUDE_TITLE=$(gettext 'Ausschluss_Datei')
+				exec_edit_prog "$lv_Exclude_File" "$EXCLUDE_FILE"
+				#}}}
+				kwrsync_backup_conf_menue $lv_Exclude_File
+				;;
+			$lv_Backup_Dir)
+				# Backup Verzeichnis angeben{{{
+				dselect "$BACKUP_PATH"
+				if [ "$VERZ" ] ; then
+					dselect_check -c "$VERZ"
+					if [ "$VERZ" ] ; then
+						user_device_check "$VERZ" AIE
+						BACKUP_PATH="$VERZ"
+					fi
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Backup_Dir
+				;;
+			$lv_Bandwith)
+				# Bandbreite limitieren.{{{
+				B_TITLE=(${gv_Configuration}::${lv_Bandwith})
+				B_MSG=$(gettext 'Geben Sie hier ein Limit fuer die Bandbreite, in Kbyte/s, bei der Uebertragung ein (256=256Kb/s).')
+				number_input "$B_TITLE" "$B_MSG" "$BW_LIMIT"
+				if [ "$NUMBER" ] ; then
+					BW_LIMIT="$gv_Auswahl"
+				else
+					BW_LIMIT=0
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Bandwith
+				;;
+			$lv_Check_Space)
+				# Soll der Partitions-/Festplattenplatz gecheckt werden?{{{
+				C_TITLE=(${gv_Configuration}::${lv_Check_Space})
+				C_MSG=$(gettext 'Soll die Festplatten/Partitionsgroesse gecheckt werden (yes/no)?')
+				yesno "$C_TITLE" "$C_MSG"
+				if [ "$?" = 0 ] ; then
+					CHECK_HDMINFREE=yes
+				else
+					CHECK_HDMINFREE=no
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Check_Space
+				;;
+			$lv_Minimal_Space)
+				# Minimum des Platzes angeben, in Prozent.{{{
+				MIN_TITLE=(${gv_Configuration}::${lv_Minimal_Space})
+				MIN_MSG=$(gettext 'Geben Sie hier den Platz in Prozent an, den die Partition/Festplatte mindestens haben sollte, in welcher das Backup gespeichert soll.')
+				number_input "$MIN_TITLE" "$MIN_MSG" "$HDMINFREE"
+				if [ "$NUMBER" ] ; then
+					HDMINFREE="$NUMBER"
+				else
+					HDMINFREE=90
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Minimal_Space
+				;;
+			$lv_Mount_Dir)
+				# Mount Pfad auswaehlen
+				mount_path "$MOUNT_PATH"
+				kwrsync_backup_conf_menue $lv_Mount_Dir
+				;;
+			$lv_Server)
+				# Server eingeben getrennt durch ein Leerzeichen.{{{
+				S_TITLE=(${gv_Configuration}::${lv_Server})
+				S_MSG=$(gettext 'Geben Sie hier die Rechner an von denen ein Backup gezogen werden soll.')
+				inputbox "$S_TITLE" "$S_MSG" "$SERVER"
+				if [ "$gv_Auswahl" ] ; then
+					SERVER="$gv_Auswahl"
+				else
+					unset -- SERVER
+					no_input_msg
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Server
+				;;
+			$lv_Remote_Shell)
+				# Transport Auswahl{{{
+				remote_sh
+				if [ "${R_SHELL[1]}" ] ; then
+					R_TITLE=(${gv_Configuration}::${lv_Remote_Shell})
+					R_MSG=$(gettext 'Waehlen Sie Ihre Remote Shell aus.')
+					menubox "$R_TITLE" "$R_MSG" "$R_SHELL"
+					while [ "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help share/remote_shell_help
+								menubox "$R_TITLE" "$R_MSG" "$R_SHELL"
+								;;
+							*)	RSYNC_RSH="$gv_Auswahl"
+								break
+								;;
+						esac
+					done
+				else
+					unset -- RSYNC_RSH
+					no_remote_shell_msg
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Remote_Shell
+				;;
+			$lv_User)
+				# Userauswahl unter dem alles laufen soll{{{
+				#####################################
+				# TODO: Ein lokaler Benutzer wird
+				# nicht benoetigt, da sich ja root
+				# remote einloggt (?).
+				#####################################
+				user_group_check -p
+				if [ -n "$U_G_ARRAY" ] ; then
+					lv_No_User=$(gettext 'kein_Benutzer')
+					U_MSG=$(gettext 'Waehlen Sie einen Benutzer aus, der sich anstelle von "root" auf den zu sichernden Rechnern einloggen darf.')
+					U_MENU=($lv_No_User \"\" $U_G_ARRAY)
+					U_TITLE=(${gv_Configuration}::${lv_User})
+					menubox "$U_TITLE" "$U_MSG" "$U_MENU"
+					while [ -n "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help share/user_help
+								menubox "$U_TITLE" "$U_MSG" "$U_MENU"
+								;;
+							kein*|no*)
+								USER_RUN=""
+								break
+								;;
+							*)	USER_RUN="$gv_Auswahl"
+								break
+								;;
+						esac
+					done
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_User
+				;;
+			$lv_Crontab)
+				# crontab für kwrsync_backup_cron konfigurieren.{{{
+				crontbconf kwrsync_backup_cron 
+				#}}}
+				kwrsync_backup_conf_menue $lv_Crontab
+				;;
+			$gv_Save)
+				# Konfiguration speichern# {{{
+				kwrsync_backup_config
+				if [ -n "$USER_RUN" -a ! -f /root/.ssh/id_dsa.pub ] ; then
+					NO_ID_DSA_MSG=$(gettext 'Es gibt keinen DSA Schluessel (ssh) fuer den Benutzer \"root\". Soll jetzt einer erstellt werden (Ja/Nein)? Beantworten Sie bei \"Ja\" die Frage nach der Passphrase mit \"ENTER\", sonst ist kein automatischer \"cronjob\" moeglich.')
+					yesno "$gv_Info" "$NO_ID_DSA_MSG" 2
+					if [ "$?" -eq 0 ] ; then
+						PROG_OPT="-t dsa -b 1024 -f /root/.ssh/id_dsa"
+						ssh-keygen "$PROG_OPT" || (MSG=$(gettext 'Es konnte kein Schluessl erstellt werden') ; msgbox "$gv_Attention" "$MSG")
+						print "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids . /\" "$(< /root/.ssh/id_dsa.pub) > /root/.ssh/authorized_keys.rsync
+						# Nachricht das man jetzt den Schluessel auf die
+						# zusichernden Hosts kopieren sollte.
+						MSG=$(gettext 'Sie koennen jetzt die Datei /root/.ssh/authorized_keys.rsync auf die zu sichernden Rechner ($SERVER), ins ~/.ssh Verzeichnis des Benutzers \"$USER_RUN\" kopieren. Diesen Benutzer sollten Sie vorher anlegen oder angelegt haben.')
+						msgbox "$gv_Info" "$MSG"
+					fi
+				else
+					print "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids . /\" "$(< /root/.ssh/id_dsa.pub) > /root/.ssh/authorized_keys.rsync
+					MSG=$(gettext 'Denken Sie dran die Datei /root/.ssh/authorized_keys(.rsync) auf die zu sichernden Rechner ($SERVER), ins ~/.ssh Verzeichnis des Benutzers \"$USER_RUN\" zu kopieren. Diesen Benutzer sollten Sie vorher anlegen oder angelegt haben. Lesen Sie dazu die Hilfe!')
+					msgbox "$gv_Info" "$MSG"
+				fi
+				## }}}
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac		
+	done
+}
+#}}}

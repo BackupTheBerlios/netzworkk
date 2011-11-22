@@ -1,0 +1,10 @@
+kwfilm2film::Video konvertieren::Hilfe
+
+Hier kann man Videos in andere Formate konvertieren oder
+demultiplexte Videos multiplexen. Dazu muss vorher der Video
+Type konfiguriert werden.
+
+NOTIZ: Denken Sie an die richtigen Export_Module in der 
+       Konfiguration, da diese nicht automatisch ausgewaehlt
+       werden, ausser die Video Export Module bei den vorgegebenen
+       Video Konvertierungen (Bsp.: AVI --> MPEG2).

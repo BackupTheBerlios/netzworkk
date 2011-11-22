@@ -1,0 +1,6 @@
+# utils_help fuer kwadmin{{{
+TITLE="${UTILS_TITLE}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie einzelne Dienstprogramme aufrufen und konfigurieren.
+Dieses sind meist kleine Scripte fuer die Verwaltung von
+persoenlichen Dingen und Anzeigen.')
+#}}}

@@ -1,0 +1,46 @@
+# Funktion firewall_view{{{
+firewall_view ()
+{
+	# Alle Chains herausfinden
+	unset -- CHAIN
+	ANZ=0
+	$IPTABLES -L | awk '/^Chain/{print $2}' | while read c ; do
+		(( ANZ++ ))
+		CHAIN[ANZ]="$c \"\""
+	done
+	CHAIN="$CHAIN nat \"\""
+	#
+	# Funktion firewall_view_menue{{{
+	V_TITLE=$(gettext 'Ansicht')
+	V_MSG=$(gettext 'Waehlen Sie eine Regelkette aus.')
+	firewall_view_menue ()
+	{
+		menubox "$V_TITLE" "$V_MSG" "$CHAIN"
+	}
+	#}}}
+	firewall_view_menue
+	while [ "$gv_Auswahl" ] ; do
+		case $gv_Auswahl in
+			HELP*)
+				script_help view_help
+				firewall_view_menue
+				;;
+			nat)
+				# NAT Tabelle anzeigen 
+				PROG_OPT="-t $gv_Auswahl -L"
+				prog_exec $IPTABLES "$PROG_OPT >$gv_LogFile"
+				view_file $gv_LogFile
+				firewall_view_menue
+				;;
+			*)	# Alle anderen gefundenen Regelketten anzeigen lassen
+				PROG_OPT="-L $gv_Auswahl"
+				prog_exec $IPTABLES "$PROG_OPT >$gv_LogFile"
+				view_file $gv_LogFile
+				firewall_view_menue
+				;;
+			zurueck|back)	break
+				;;
+		esac
+	done	
+}
+#}}}

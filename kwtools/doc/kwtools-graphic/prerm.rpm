@@ -1,0 +1,15 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+BIN_PATH=/usr/bin
+
+for i in kwcamera ; do
+	rm -f ${BIN_PATH}/${i} &>/dev/null
+done
+
+cd $DIR
+for i in kwcamera ; do
+	rm -rf ${i}* &>/dev/null
+done
+rm -rf ${DIR%/*/*}/doc/kwtools-graphic &>/dev/null
+exit 0

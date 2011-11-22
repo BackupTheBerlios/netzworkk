@@ -1,0 +1,8 @@
+# help fuer kwnetcardconf{{{
+TITLE="$gv_Help"
+MSG=$(gettext 'Mit kwnetcardconf koennen Sie ihre Netzwerkkarten konfigurieren.
+Waehlen Sie ein Interface (Bsp.: eth0) zur weiteren Bearbeitung aus. 
+
+Die Anzeige ist unterteilt in:
+Schnittstelle_Kartentyp_MAC-Adresse_Treiber')
+#}}}

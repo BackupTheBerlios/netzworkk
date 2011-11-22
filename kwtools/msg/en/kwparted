@@ -1,0 +1,13 @@
+disk_info;Laufwerks-Info
+flag_menue;boot "" lba "" lvm "" palo "" raid "" root "" swap ""
+fs_type_menue;ext2 "" ext3 "" fat32 "" linux-swap ""
+part_konf_menue;Groesse "$Size" Dateisystem_Type "$Fs_Type" Partitions_Type "$Ist_Part_Type" Flag "$Flag" speichern "" loeschen "" zurueck ""
+check_input;Sie muessen erst die Menuepunkte Groesse, Partitions_Type, und/oder Filesystem_Type/Flag belegen.
+defect_fp;Man kann keine Partitionstabelle anlegen. Vielleicht ist Ihre Festplatte kaputt oder Ihre BIOS Einstellungen sind falsch.
+free;frei
+no_empty_del;Leeren Festplattenplatz koennen Sie nicht loeschen.
+no_swap_flag;Wenn das Dateisystem schon als linux-swap gekennzeichnet ist, kann man kein weiteres Flag vergeben.
+no_fs_type;Einer erweiterten Partition kann man keinen Dateisystem_Type geben.
+no_parttab;Diese Festplatte hat keine Partitionstabelle. Sie wird jetzt, mit dem Label msdos, erstellt.
+part_size;Geben Sie bitte die Groesse dieser Partition in Mb ein. Sie koennen diese Groesse ($Size Mb) nur verkleinern.
+unbekannt;unbekannt

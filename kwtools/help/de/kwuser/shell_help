@@ -1,0 +1,6 @@
+kwuser::Shell::Hilfe
+
+Hier koennen Sie eine der installierten Shells auswaehlen.
+/bin/false = keine Login shell
+
+Die Login Shell ist die Standard Shell nachdem einloggen.

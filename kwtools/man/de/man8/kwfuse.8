@@ -1,0 +1,85 @@
+.\"     Title: KWFUSE
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 06/11/2008
+.\"    Manual: Benutzerhandbuch f\(:ur kwfuse
+.\"    Source: Version 0.1.6
+.\"
+.TH "KWFUSE" "8" "06/11/2008" "Version 0.1.6" "Benutzerhandbuch f\(:ur kwfuse"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwfuse \- Ein Frondend Zshell Script f\(:ur FUSE (filesystem in userspace).
+.SH "SYNTAX"
+.HP 7
+\fBkwfuse\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwfuse\fR
+kann man die Dateien
+\fI/etc/fuse\&.conf\fR
+und
+\fI/etc/fstab\fR
+bearbeiten bzw\&. erstellen und
+\fB\(lqFUSE\(rq\fR
+basierte Dateisysteme einbinden\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration der Datei
+\fI/etc/fuse\&.conf\fR\&.
+.RE
+.PP
+\fBfusetab bearbeiten\fR
+.RS 4
+Hier wird eigentlich die Datei
+\fI/etc/fstab\fR
+bearbeitet\&. Es werden, zur Zeit auch, nur
+\fB\(lqFUSE\(rq\fR
+Dateisysteme herausgefiltert\&.
+.RE
+.PP
+\fBLaufwerk ausbinden\fR
+.RS 4
+\fB\(lqFUSE\(rq\fR
+Dateisysteme ausbinden\&.
+.RE
+.PP
+\fBLaufwerk einbinden\fR
+.RS 4
+\fB\(lqFUSE\(rq\fR
+Dateisysteme einbinden\&. Normale Benutzer ben\(:otigen Schreibrechte auf den Einh\(:angepunkt des Laufwerks\&.
+.RE
+.SH "DATEIEN"
+.PP
+\fI/etc/fuse\&.conf\fR
+.RS 4
+Haupt Konfigurations Datei f\(:ur
+\fBkwfuse\fR\&. Siehe
+\fBfusermount\fR(8)
+f\(:ur weitere Details\&.
+.RE
+.PP
+\fI/etc/fstab\fR
+.RS 4
+Konfigurations Datei f\(:ur Speichermedien (Festplatten, CD, DVD, \&.\&.\&.)\&. Siehe
+\fBfstab\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBfstab\fR(5),
+\fBfusermount\fR(8)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

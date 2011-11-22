@@ -1,0 +1,21 @@
+# ca_certs_import_help fuer kwssl2{{{
+TITLE="${lv_CA_Import}::${gv_Help}"
+MSG=$(gettext 'privater Schluessel (Passwort): Eingabe des Passwortes fuer den
+\tprivaten Schluessel. Ist wichtig fuer das importieren.
+
+Name: Eingabe des Namens fuer die lokale Speicherung.
+
+neues CA Passwort: Eingabe eines neuen Passwortes und dessen
+\tBestaetigung
+
+Passwort generieren: Ein neues CA Passwort generieren.
+
+CA Zertifikat:
+
+privater CA Schluessel:
+
+openssl index Datei:
+
+Verzeichnis mit Zertifikaten:
+')
+#}}}

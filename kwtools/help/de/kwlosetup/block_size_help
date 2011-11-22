@@ -1,0 +1,5 @@
+kwlosetup::Konfiguration::Blockgroesse::Hilfe
+
+Hier kann man die Blockgroesse des Container auswaehlen.
+Und zwar von 512 Byte bis 64 KByte. Standard sind 1 KByte.
+

@@ -1,0 +1,32 @@
+haupt_menue;Erstellung "" Monitor "" raid_hotadd_remove "" Status "" beenden ""
+konf_menue;raiddev "$RAIDDEV" raid-level "$RAIDLEVEL" nr-raid-disk "$NRRAIDDISK" chunk-size "$CHUNKSIZE" persistent-superblock "$PERSISTENTSUPERBLOCK" parity-algorithm "$PARITYALGORITHM" nr-spare-disk "$NRSPAREDISK" raiddisks "$RAIDDISKS" sparedisks "$SPAREDISKS" speichern/erzeugen "" zurueck ""
+nrspare_menue;0 "" 1 "" 2 "" 3 ""
+parity_menue;left-symmetric "" right-symmetric "" left-asymmetric "" right-asymmetric ""
+persistent_superblock_menue;0 "" 1 ""
+raidhotadd_remove_menue;Partition_entfernen "" Partitionierung "" Partition_hinzufuegen "" zurueck ""
+all_part_in_raid;Es sind schon alle Partitionen/Arrays vergeben,oder es sind zu wenige fuer die Erstellung eines Arrays.
+chunksize;Die Chunk-Size muß ein Vielfaches von 4 sein.
+chunksize_input;Geben Sie bitte die Chunk-Size an (4-512).
+info_change_disk_part;Sie koennen jetzt die Partition/Festplatte wechseln. Achten Sie darauf das beim Festplattenwechsel, alle dazugehoerigen Partitionen aus dem Array entfernt wurden.
+no_chunksize;Die Chunk-Size muss >=4 und <=512 sein.
+no_create_raid;Es sind alle 255 RAID Arrays in Benutzung.
+no_faulty_disks;Es sind in diesem Array keine fehlenden Partitionen/Festplatten. Zur Auswahl stehen deshalb alle Partitionen/Festplatten.
+no_input;Sie muessen erst die Menuepunkte raiddev und raiddisks auswaehlen und mit Werten belegen.
+no_input_sparedisk;Sie muessen erst den Menuepunkt sparedisks auswaehlen und mit Werten belegen.
+no_nrraiddisk_one;Bei RAID muß die Partition-, Festplattenanzahl allgemein groesser 1 sein.  
+no_nrraiddisk_three;Beim RAID-Level "$RAIDLEVEL" muß die Partition-/Festplattenanzahl groesser oder gleich 3 sein.  
+no_parity;Im RAID-Level "$RAIDLEVEL" gibts keine Parity-Infos.
+no_raid;Es sind keine RAID Devices vorhanden.
+no_raid_change;In diesem RAIDLEVEL ($RAIDLEVEL) kann diese Software keine Partition tauschen, da es entweder garnicht geht oder sehr schwierig ist.
+no_raidtab;Es gibt keine Konfigurationsdatei $RAIDTAB.
+no_spare_disk;Es sind keine Ersatzfestplatten/-Partitionen vorhanden.
+part_anz;Sie muessen "$PANZ" Partitionen angeben. Siehe Menuepunkt nr-raid-disk oder nr-spare-disk.
+part_raid_del;Soll die Partition "$HDDEV" aus dem RAID Array "$RAIDDEV" entfernt werden (yes/no)?
+raid10_md_anz;Es sind nicht genuegend RAID 0,1 Arrays vorhanden.
+raiddisk_anz;Geben Sie bitte die Festplatten-Anzahl an (z.B. 5).
+raid_hotplug_warning;Hoffentlich wissen Sie was Sie hier tun. Wenn Ihre Hardware nicht Hotplugfaehig ist, kann dies Ihre Geraete zerstoeren.\n\nNOTIZ: Es funktioniert nur mit SCSI Festplatten.
+raid_init;Die Initialisierung der RAID Arrays kann etwas dauern. Pruefen Sie anschliessend, ob alle Arrays richtig initialisiert wurden (Status).
+raid_level_part;Denken Sie daran das in diesem RAID Level ($RAIDLEVEL) die Anzahl der Festplatten-/Partitionenanzahl groesser oder gleich 3 sein muss.
+raid_level6_part;Denken Sie daran das in diesem RAID Level ($RAIDLEVEL) die Anzahl der Festplatten-/Partitionenanzahl groesser oder gleich 4 sein muss.
+raid_level1_part;Denken Sie daran das in diesem RAID Level ($RAIDLEVEL) die Anzahl der Festplatten-/Partitionenanzahl groesser oder gleich 2 sein muss.
+raid_level10_part;Denken Sie daran das in diesem RAID Level ($RAIDLEVEL) die Anzahl der Arrays groesser gleich 2 sein muss.

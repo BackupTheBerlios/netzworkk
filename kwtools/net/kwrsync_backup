@@ -1,0 +1,152 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke  <kiste@netzworkk.de> 28.07.2011
+#
+# Script: kwrsync_backup, erstellt remote Backups mittels dem Programm rsync
+# Version: 0.1.11
+
+# Ausfuehren von Befehlen auf bestimmte Signale.
+# Notiz. Immer den Namen verwenden, da es auf einigen OS
+# eine andere Numerierung geben kann.
+#
+trap 'setterm -inversescreen off ; setterm -reset ;
+rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+#
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+#
+# script_init enthaelt die globalen Scripteinstellungen und laedt
+# diese automatisch.
+#
+autoload -U script_init
+
+# Scriptinitialisierung
+script_init
+
+# auf Programme pruefen.
+prog_check rsync
+if [ -z "$PROGS" ] ; then
+	exit 0
+fi
+
+# auf Root pruefen
+root_check
+
+# Nachdem das Script initialiiert wurde, kann man die anderen
+# benoetigten Funktionen laden.
+autoload -U kwrsync_backup_exec kwrsync_backup_rotate
+
+# Variablen
+lv_Backup=$(gettext 'Backup')
+lv_Rotate=$(gettext 'Rotierung')
+KWRSYNC_CF=${ETC_PATH}/kwrsync_backup.cf
+EXCLUDE_FILE=${ETC_PATH}/kwrsync_backup-excludes
+MAIN_MENU=($gv_Configuration \"\" $lv_Backup \"\" $lv_Rotate \"\" $gv_Exit \"\")
+#
+# Wenn es eine Konfigurationsdatei gibt einlesen.
+#
+read_file -f $KWRSYNC_CF
+if [ -z "$BW_LIMIT" ] ; then
+	BW_LIMIT=0
+fi
+if [ -z "$SERVER" ] ; then
+	SERVER=localhost
+fi
+
+# Funktion haupt_menue{{{
+haupt_menue() {
+	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+}
+#}}}
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+fs_conf
+net_conf
+haupt_menue
+while [ "$gv_Auswahl" ] ; do
+	case $gv_Auswahl in
+		HELP*)
+    	    # Hilfe
+			script_help help
+			haupt_menue
+			;;
+		$gv_Configuration)
+			# Konfiguration# {{{
+			autoload -U kwrsync_backup_conf kwrsync_backup_config
+			kwrsync_backup_conf
+			## }}}
+			haupt_menue
+			;;
+		$lv_Backup)
+			# Pruefen auf freien Plattenplatz. Ist die benutzte# {{{
+			# Kilobyte oder Inode Prozentzahl kleiner als die angegebene
+			# minimale Prozentzahl an Plattenplatz ($HDMINFREE), wird ein
+			# Backup durchgefuehrt.
+			if [ "$BACKUP_PATH" ] ; then
+				if [ "$CHECK_HDMINFREE" = yes ] ; then
+					Kb_Is_Free=${${(s: :)${(M)${(f)"$(df $BACKUP_PATH)"}##*%}%\%}[9]}
+					Inode_Is_Free=${${(s: :)${(M)${(f)"$(df -i $BACKUP_PATH)"}##*%}%\%}[9]}
+					if [ "$Kb_Is_Free" -ge "$HDMINFREE" -o "$Inode_Is_Free" -ge "$HDMINFREE" ] ; then
+						no_space_fp_msg
+					else
+						kwrsync_backup_exec
+					fi
+				else
+					kwrsync_backup_exec
+				fi
+			else
+				no_backup_path_msg
+			fi
+			## }}}
+			haupt_menue
+			;;
+		$lv_Rotate)
+			# Pruefe auf freien Plattenplatz (s. Backup)# {{{
+			if [ "$BACKUP_PATH" ] ; then
+				if [ "$CHECK_HDMINFREE" = yes ] ; then
+					Kb_Is_Free=${${(s: :)${(M)${(f)"$(df $BACKUP_PATH)"}##*%}%\%}[9]}
+					Inode_Is_Free=${${(s: :)${(M)${(f)"$(df -i $BACKUP_PATH)"}##*%}%\%}[9]}
+					if [ "$Kb_Is_Free" -ge "$HDMINFREE" -o "$Inode_Is_Free" -ge "$HDMINFREE" ] ; then
+						no_space_fp_msg
+					else
+						kwrsync_backup_rotate
+					fi
+				else
+					kwrsync_backup_rotate
+				fi
+			else
+				no_backup_path_msg
+			fi
+			## }}}
+			haupt_menue
+			;;
+		$gv_Exit)	break
+			;;
+	esac
+done
+#
+# Festplatte unmounten falls MOUNT_PATH belegt ist
+if [ "$MOUNT_PATH" ] ; then
+	mount_check -u "$MOUNT_PATH"
+fi
+#
+exit 0

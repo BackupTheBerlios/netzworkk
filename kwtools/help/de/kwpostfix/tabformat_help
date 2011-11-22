@@ -1,0 +1,62 @@
+kwpostfix::Tabellentypen::Hilfe
+
+Listet alle supporteten oder nur die benoetigten Tabellentypen auf.
+Postfix's Tabellen sind spezifiziert als Typ:Name, wo Typ einer der
+aufgelisteten ist. Die Syntax des Tabellennamen entnehmen Sie der
+Beschreibung zu den Typen.
+
+btree: Ein sortierter, ausgeglichener Strukturbaum. Dies ist nur
+      auf Systemen mit Unterstuetzung fuer Berkeley DB Datenbanken
+      verfuegbar. 
+
+cidr: Eine Tabelle die Werte, mit dem Classenless Internet Domain
+      Routing, assoziiert (CIDR, man 5 cidr_table).
+
+environ: Die UNIX-Prozess Umgebung. Der lookup Schluessel ist der
+      variable Name. Urspruenglich durchgefuehrt fuer Pruefungen kann
+      jemand dies eines Tages nuetzlich finden.
+
+hash: Ein indizierter Dateitype basierend auf Hashing. Dies ist nur
+      auf Systemen mit Unterstuetzung fuer Berkeley DB Datenbanken
+      verfuegbar.
+
+ldap (nur lesbar): Fuehrt lookups ueber das LDAP Protokoll durch.
+      Dies ist beschrieben in der Datei LDAP_README.
+
+mysql (nur lesbar): Fuehrt lookups ueber das MYSQL Protokoll durch.
+      Dies ist beschrieben in der Datei MYSQL_README.
+
+pcre (nur lesbar): Eine Lookup Tabelle basierend auf Perl kompatibeln
+      regulaeren Ausdruecken. Dieses Dateiformat ist beschrieben in
+      man 5 pcre_table.
+
+proxy (nur lesbar): Eine Lookup Tabelle die implementiert ist via
+      dem Postfix Service proxymap (man 8 proxymap).
+
+regexp (nur lesbar): Eine Lookup Tabelle basierend auf regulaeren
+      Ausdruecken. Dieses Dateiformat ist beschrieben in
+      man 5 regexp_table.
+
+(s)dbm: dbm, ein indizierter Dateitype basierend auf Hashing. Dies
+      ist nur auf Systemen mit Unterstuetzung fuer DBM Datenbanken
+      verfuegbar.
+
+static (nur lesbar): Eine Tabelle, der immer den Namen als lookup
+      Resultat zurueck gibt. Zum Beispiel, static:foobar bringt immer 
+      den String foobar als lookup Resultat zurueck.
+
+unix (nur lesbar): Ein begrenzter Weg um die UNIX Authentication
+      Datenbank abzufragen.
+
+      unix:passwd.byname
+      Die Tabelle ist die UNIX Passwort Datenbank. Der Schluessel ist
+      ein Login Name. Das Resultat ist ein Passwort Eintrag in der
+      Datei passwd (man 5 passwd).
+
+      unix:group.byname
+      Die Tabelle ist die UNIX Gruppen Datenbank. Der Schluessel ist
+      ein Gruppen Name. Das Resultat ist ein Gruppen Eintrag in der
+      Datei group (man 5 group).
+
+NOTIZ: Andere Tabellentypen existieren nur, wenn Sie in postfix
+      mit einkompiliert wurden.

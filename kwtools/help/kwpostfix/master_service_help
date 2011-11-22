@@ -1,0 +1,4 @@
+# master_service_help fuer kwpostfix{{{
+TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
+MSG=$(gettext 'Auswahl eines Services zur weiteren Bearbeitung.')
+#}}}

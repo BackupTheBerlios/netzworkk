@@ -1,0 +1,5 @@
+# conf_change_help {{{
+TITLE="${gv_Change}::${gv_Help}"
+MSG=$(gettext 'Hier kann man einen Eintrag aus der ${gv_Configuration} zur weiteren
+Bearbeitung auswaehlen.')
+#}}}

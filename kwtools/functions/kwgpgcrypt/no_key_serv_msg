@@ -1,0 +1,8 @@
+# Funktion no_key_serv_msg{{{
+#
+# usage: no_key_serv_msg
+no_key_serv_msg() {
+	MSG=$(gettext 'Sie muessen erst einen Schluesselserver einstellen.')
+	msgbox "$gv_Attention" "$MSG"
+}
+#}}}

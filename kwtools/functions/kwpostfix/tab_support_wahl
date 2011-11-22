@@ -1,0 +1,294 @@
+# Funktion Tabellen Format Auswahl{{{
+#
+# usage: tab_support_wahl $Variable
+#
+tab_support_wahl() {
+	unset -- MAPS
+	autoload -U password_display different_passwd
+	AUSWAHL="$1"
+	TAB_VALUE_TITLE=$(gettext 'Konfiguration::Tabellentyp::$AUSWAHL')
+	#
+	# Für den Standard Tabellentyp wird -s (single) benötigt.
+	# Es wird dann nicht weiter nach Tabelle anlegen oder Namen
+	# übernehmen gefragt.
+	#
+	if [ "$1" = -s ] ; then
+		MAPS="$gv_Auswahl"
+	else
+		# Funktion tab_wert_auswahl_menue{{{
+		#
+		TAB_VALUE_MENU=$(gettext 'Eingabe "" Namensuebernahme "" Variablenauswahl "" $gv_Back ""')
+		tab_wert_auswahl_menue() {
+			menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$TAB_VALUE_MENU"
+		}
+		#}}}
+		tab_wert_auswahl_menue
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help tab_wert_auswahl_help
+					tab_wert_auswahl_menue
+					;;
+				Eingabe|Input)
+					# Datei/Variabl Eingabe# {{{
+					V_Wert="$(postconf -h $AUSWAHL)"
+					INPUT_MSG=$(gettext 'Hier koennen Sie Variablen und/oder Dateien eingeben (Bsp. \$alias_maps \$virtual_mailbox_maps unix:passwd.byname).')
+					inputbox "$TAB_VALUE_TITLE" "$INPUT_MSG" "${V_Wert//\$/\\\$}"
+					if [ "$gv_Auswahl" ] ; then
+						MAPS="$gv_Auswahl"
+					else
+						MAPS=""
+					fi
+					break
+					## }}}
+					;;
+				Name*)
+					# Namensuebernahme{{{
+					# Funktion format_menue{{{
+					# TABS_A - ohne die Tabellenformate pcre und regexp
+					# TABS_C - alle Tabellenformate + cidr
+					# TABS_M - alle Tabellenformate
+					# TABS_R - nur die Tabellenformate pcre und regexp
+					TABFORMAT_MSG=$(gettext 'Waehlen Sie das Tabellenformat aus.')
+					format_menue() {
+					case "$AUSWAHL" in
+						*checks)
+							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_R"
+							TABS_WAHL="$TABS_R"
+							;;
+						*access)
+							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_C"
+							TABS_WAHL="$TABS_C"
+							;;
+						smtpd_sender_login_maps|relay_recipient_maps)
+							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_A"
+							TABS_WAHL="$TABS_A"
+							;;
+						*)
+							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_M"
+							TABS_WAHL="$TABS_M"
+							;;
+					esac
+					}
+					#}}}
+					format_menue
+					if [ -z "$gv_Auswahl" ] ; then
+						MAPS=""
+					fi
+					#
+					while [ "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help tabformat_help
+							format_menue
+							;;
+							envi*)
+								# environ{{{
+								Anz=1
+								printenv | awk -F= '{print $1}' | while read v ; do
+									Var[Anz]="$v \"\""
+									(( Anz++ ))
+								done
+								#
+								menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Var"
+								while [ "$gv_Auswahl" ] ; do
+									case $gv_Auswahl in
+										HELP*)	script_help share/var_help
+											menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Var"
+											;;
+										*)	# Wert übernehmen
+											MAPS="environ:${gv_Auswahl}"
+											break
+											;;
+									esac
+								done
+								unset -- Var
+								#}}}
+								break
+								;;
+							nis)
+								# nis{{{
+								if [ "$AUSWAHL" = alias_maps -o "$AUSWAHL" = alias_database ] ; then
+									MAPS="${gv_Auswahl}:mail.aliases"
+								else
+									MAPS="${gv_Auswahl}:${AUSWAHL}"
+								fi
+								break
+								#}}}
+								;;
+							ldap)
+								# LDAP Datenbanken{{{
+								if [ "$AUSWAHL" = alias_database ] ; then
+									AUSWAHL=alias_maps
+								fi
+								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+								create_file ${MAPS##*:}
+								break
+								#}}}
+								;;
+							proxy)
+								# proxymap Konfiguration{{{
+								unset -- Proxy_Map TAB_Proxy_S
+								Tabwahl="$gv_Auswahl"
+								TAB_Proxy_S=${TABS_WAHL//proxy \"\"/}
+								# Tabellentype Auswahl fuer proxy
+								TAB_VALUE_PROXY_TITLE=$(gettext 'Konfiguration::Tabellentype::proxymap')
+								menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$TAB_Proxy_S"
+								while [ "$gv_Auswahl" ] ; do
+									case "$gv_Auswahl" in
+										HELP*)	script_help proxy_tabformat_help
+											menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$TAB_Proxy_S"
+											;;
+										*)
+											Proxy_Map="$gv_Auswahl"
+											break
+											;;
+									esac
+								done
+								# Wurde die Variable "Proxy_Map" belegt wird sie jetzt eingesetzt.
+								if [ "$Proxy_Map" ] ; then
+									case "$Proxy_Map" in
+										ldap)
+											# Proxymap LDAP Datenbanken{{{
+											if [ "$AUSWAHL" = alias_database ] ; then
+												AUSWAHL=alias_maps
+											fi
+											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+											create_file ${MAPS##*:}
+											#}}}
+											;;
+										*sql)
+											# Proxymap SQL Datenbanken{{{
+											if [ "$AUSWAHL" = alias_database ] ; then
+												AUSWAHL=alias_maps
+											fi
+											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+											create_file ${MAPS##*:}
+											#}}}
+											;;
+										nis)
+											# Proxymap NIS Datenbanken{{{
+											if [ "$AUSWAHL" = alias_maps -o "$AUSWAHL" = alias_database ] ; then
+												MAPS="${Tabwahl}:${Proxy_Map}:mail.aliases"
+											else
+												MAPS="${Tabwahl}:${Proxy_Map}:${AUSWAHL}"
+											fi
+											#}}}
+											;;
+										unix)
+											# Proxymap unix{{{
+											Unix_Name="passwd.byname \"\" group.byname \"\" $ZURUECK \"\""
+											menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$Unix_Name"
+											#
+											while [ "$gv_Auswahl" ] ; do
+												case $gv_Auswahl in
+												HELP*)	script_help tabformat_help
+													menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$Unix_Name"
+													;;
+												*)	# Wert übernehmen
+													MAPS="${Tabwahl}:${Proxy_Map}:${gv_Auswahl}"
+													break
+													;;
+												$gv_Back)	break
+													;;
+												esac
+											done
+											#}}}
+											;;
+										*)
+											# alle anderten Tabellentypen
+											if [ "$AUSWAHL" = alias_database ] ; then
+												AUSWAHL=alias_maps
+											fi
+											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${AUSWAHL}"
+											;;
+									esac
+								else
+									unset -- MAPS
+									no_input_msg
+								fi
+								break
+								#}}}
+								;;
+							*sql)
+								# SQL Datenbanken{{{
+								if [ "$AUSWAHL" = alias_database ] ; then
+									AUSWAHL=alias_maps
+								fi
+								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+								create_file ${MAPS##*:}
+								break
+								#}}}
+								;;
+							static)
+								# static{{{
+								STATIC_MSG=$(gettext 'Geben Sie entweder eine Zahl (5432, z.B. Postgresql Port) oder einen Text ein. Lesen Sie bitte die Hilfe.')
+								inputbox "$TAB_VALUE_TITLE" "$STATIC_MSG"
+								#
+								if [ "$gv_Auswahl" ] ; then
+									MAPS="static:${gv_Auswahl}"
+								else
+									unset -- MAPS
+								fi
+								#}}}
+								break
+								;;
+							un*)
+								# unix{{{
+								Nis_Name="passwd.byname \"\" group.byname \"\" $ZURUECK \"\""
+								menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Nis_Name"
+								#
+								while [ "$gv_Auswahl" ] ; do
+									case $gv_Auswahl in
+										HELP*)	script_help tabformat_help
+											menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Nis_Name"
+											;;
+										*)	# Wert übernehmen
+											MAPS="unix:${gv_Auswahl}"
+											break
+											;;
+										$gv_Back)	break
+											;;
+									esac
+								done
+								#}}}
+								break
+								;;
+							*)	#
+								# Auswahl übernehmen{{{
+								#
+								if [ "$AUSWAHL" = alias_maps -o "$AUSWAHL" = alias_database ] ; then
+									MAPS="${gv_Auswahl}:/etc/aliases"
+									create_file ${MAPS#*:}
+								else
+									MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${AUSWAHL}"
+									create_file ${MAPS#*:}
+								fi
+								#}}}
+								break
+								;;
+						esac
+					done
+					break
+					#}}}
+					;;
+				Va*)
+					# Für diese Werte die Postfix Variablen generieren{{{
+					Werte="_checks |_database|_maps |mailbox_domains |_limit |alias_domains |rbl_domains |relay_domains |mynetworks |virtual_transport"
+					# AUSWAHL ist der eigene Parametername der einzustellen ist.
+					# Dieser wird nicht zur Auswahl angezeigt.
+					postfix_variable $Werte $AUSWAHL
+					if [ "$WERT" ] ; then
+						MAPS="\$${WERT}"
+					else
+						unset -- MAPS
+					fi
+					break
+					#}}}
+					;;
+				$gv_Back)
+					break
+					;;
+			esac
+		done
+	fi
+}
+#}}}

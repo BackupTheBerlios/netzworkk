@@ -1,0 +1,8 @@
+# Funktion check_backup_path_msg{{{
+#
+# usage: check_backup_path_msg
+check_backup_path_msg() {
+	MSG=$(gettext 'Sie muessen mindestens den Menuepunkt Backup_Verzeichnis belegen.')
+	msgbox "$ACHTUNG" "$MSG"
+}
+#}}}

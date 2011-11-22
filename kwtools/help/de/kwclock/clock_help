@@ -1,0 +1,8 @@
+uhr::Uhreinstellung::Hilfe
+
+Stunde: Stunde einstellen.
+
+Minute: Minute einstellen.
+
+NOTIZ: Sie sollten immer auf Sekunde Null die Uhrzeit speichern, da
+        das Programm "date" die Sekunden immer auf Null setzt.

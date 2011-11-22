@@ -1,0 +1,4 @@
+cal_view_menue;t taeglich w woechentlich m monatlich y jaehrlich zurueck ""
+haupt_menue;Konfiguration "" kwholiday "" kwtex-cal "" termin "" beenden ""
+konf_menue;Kalenderansicht "$CAL_VIEW" Kalender "$CAL" Mailadresse "$MAIL_ADR" Rechner "$PLAN_HOST" Staat/B.-Land "$BLAND" Verzeichnis "$FEIERTAG_DIR" speichern "" zurueck ""
+plan_host;Geben Sie bitte den Rechnernamen an auf dem plan/netplan laeuft.

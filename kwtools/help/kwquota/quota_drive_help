@@ -1,0 +1,4 @@
+# quota_drive_help{{{
+TITLE=$(gettext '${gv_Configuration}::Quota Laufwerksauswahl::${gv_Help}')
+MSG=$(gettext 'Hier kann man Quota Laufwerke zur weiteren Verarbeitung auswaehlen.')
+#}}}

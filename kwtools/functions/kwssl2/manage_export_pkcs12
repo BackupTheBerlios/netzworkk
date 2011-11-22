@@ -1,0 +1,212 @@
+# Funktion (manage_export_pkcs12), managed das exportieren ins# {{{
+# PKCS#12 Format.
+#
+manage_export_pkcs12() {
+	#
+	if [[ ${#argv} == 2 ]] && [ -f ${KWSSL_DIR}/${SUBDIR}/${1} ] ; then
+		#
+		UNSET_EXPORT=(EXPORTKEYPASS KEYPASS DISPLAYNAME YESNO_PASS PKCS_VALUE)
+		unset -- $UNSET_EXPORT
+		# Export Dateiname und FORMAT erst einmal festlegen
+		export_filename_format "$1" "$2"
+		#
+		# Funktion (export_pkcs12_menu)# {{{
+		#
+		# Variablen
+		lv_ExportFilename=$(gettext 'Export Dateiname')
+		lv_KeyPass=$(gettext 'Schluessel Passwort')
+		lv_ExportPass=$(gettext 'Export Passwort')
+		lv_Display_Name=$(gettext 'Anzeigename')
+		lv_YesNo_Pass=$(gettext 'Mit/Ohne Passwort')
+		lv_PKCS_Structure=$(gettext 'PKCS#12 Struktur')
+		#
+		YESNO_PASS=${YESNO_PASS:-$gv_Yes}
+		PKCS_VALUE=${PKCS_VALUE:-$gv_Yes}
+		#
+		export_pkcs12_menu() {
+			if [[ $YESNO_PASS == $gv_Yes ]] ; then
+				EXPORT_PKCS12_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
+				\"$lv_YesNo_Pass\" \"$YESNO_PASS\"
+				\"$lv_KeyPass\" \"$KEYPASS\"
+				\"$lv_ExportPass\" \"$EXPORTKEYPASS\"
+				$lv_Display_Name \"$DISPLAYNAME\"
+				\"$lv_PKCS_Structure\" \"$PKCS_VALUE\"
+				$gv_Create \"\" $gv_Back \"\")
+			else
+				EXPORT_PKCS12_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
+				\"$lv_YesNo_Pass\" \"$YESNO_PASS\"
+				\"$lv_KeyPass\" \"$KEYPASS\"
+				$lv_Display_Name \"$DISPLAYNAME\"
+				\"$lv_PKCS_Structure\" \"$PKCS_VALUE\"
+				$gv_Create \"\" $gv_Back \"\")
+			fi
+			#
+			if [[ ${#argv} == 1 ]] ; then
+				menubox -d "$1" "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_PKCS12_MENU"
+			else
+				menubox "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_PKCS12_MENU"
+			fi
+		}
+		## }}}
+		export_pkcs12_menu
+		while [ "$gv_Auswahl" ] ; do
+			case $gv_Auswahl in
+				HELP*)
+		    	    # Hilfe Messagebox
+					script_help export_pkcs12_help
+					export_pkcs12_menu
+					;;
+				"$lv_ExportFilename")
+					# Dateiname fuer den Export eingaben# {{{
+					export_filename $FORMAT
+					## }}}
+					export_pkcs12_menu $lv_ExportFilename
+					;;
+				"$lv_YesNo_Pass")
+					# mit oder ohne Passwort exportieren.# {{{
+					MSG=$(gettext 'Mit oder ohne Passwort exportieren (ja/nein)? Standard ist ja - mit Passwort.')
+					yesno "$gv_Info" "$MSG"
+					if [ "$?" = 0 ] ; then
+						YESNO_PASS=$gv_Yes
+					else
+						YESNO_PASS=$gv_No
+					fi
+					## }}}
+					export_pkcs12_menu $lv_YesNo_Pass
+					;;
+				"$lv_KeyPass")
+					# Schluessel Password Eingabe# {{{
+					KEYPASS_MSG=$(gettext 'Geben Sie das Schluessel Passwort ein.')
+					inputbox "$lv_KeyPass" "$KEYPASS_MSG" "$KEYPASS"
+					if [ -n "$gv_Auswahl" ] ; then
+						KEYPASS="$gv_Auswahl"
+					else
+						unset -- KEYPASS
+					fi
+					## }}}
+					export_pkcs12_menu $lv_KeyPass
+					;;
+				"$lv_ExportPass")
+					# Export Password Eingabe# {{{
+					EXPORTKEYPASS_MSG=$(gettext 'Geben Sie das Export Passwort ein.')
+					inputbox "$lv_ExportPass" "$EXPORTKEYPASS_MSG" "$EXPORTKEYPASS"
+					if [ -n "$gv_Auswahl" ] ; then
+						EXPORTKEYPASS="$gv_Auswahl"
+					else
+						unset -- EXPORTKEYPASS
+					fi
+					## }}}
+					export_pkcs12_menu $lv_ExportPass
+					;;
+				$lv_Display_Name)
+					# Anzeigename eingeben# {{{
+					DISPLAYNAME_MSG=$(gettext 'Geben Sie den Anzeigenamen ein.')
+					inputbox "$lv_Display_Name" "$DISPLAYNAME_MSG" "$DISPLAYNAME"
+					if [ -n "$gv_Auswahl" ] ; then
+						DISPLAYNAME="$gv_Auswahl"
+					else
+						unset -- DISPLAYNAME
+					fi
+					## }}}
+					export_pkcs12_menu $lv_Display_Name
+					;;
+				"$lv_PKCS_Structure")
+					# Zertifikat in die PKCS#12 Struktur hinzufuegen .# {{{
+					MSG=$(gettext 'Soll das Zertifikat in die PKCS#12 Struktur hinzugefuegt werden (ja/nein)?')
+					yesno "$gv_Info" "$MSG"
+					if [ "$?" = 0 ] ; then
+						PKCS_VALUE=$gv_Yes
+					else
+						PKCS_VALUE=$gv_No
+					fi
+					## }}}
+					export_pkcs12_menu $lv_PKCS_Structure
+					;;
+				$gv_Create)
+					# exportieren# {{{
+					unset -- PROG_OPT
+					# Funktion (check_displayname)# {{{
+					#
+					check_displayname() {
+						if [ -n "$DISPLAYNAME" ] ; then
+							PROG_OPT+=(-name "$DISPLAYNAME")
+						else
+							PROG_OPT+=(-name "$ExportName $KEYLENGTH Bit Zertifikat")
+						fi
+					}
+					## }}}
+					# Funktion (check_pkcs12_structure)# {{{
+					check_pkcs12_structure() {
+						unset -- CACERT CAKEY
+						if [[ $PKCS_VALUE == $gv_Yes ]] ; then
+							if [ "$ExportName" = cacert ] ; then
+								PROG_OPT+=(-certfile ${KWSSL_DIR}/${SUBDIR}/cachain.pem)
+							else
+								PROG_OPT+=(-certfile ${KWSSL_DIR}/${SUBDIR}/${ExportName}.cachain.pem)
+							fi
+						fi
+					}
+					## }}}
+					if [[ $YESNO_PASS == $gv_Yes ]] ; then
+						if [ -n "$KEYPASS" -a -n "$EXPORTKEYPASS" ] ; then
+							# Variablen CAKEY und CACERT belegen
+							check_ca_filenames
+							# grundlegende Befehlsoptionen in der Variable
+							# PROG_OPT speichern.
+							PROG_OPT=(pkcs12 -export -inkey "$CAKEY"
+							-in "$CACERT" -out "$Export_FileName"
+							-passin pass:${KEYPASS} -passout pass:${EXPORTKEYPASS})
+							# Anzeigename belegen falls nicht erfolgt.
+							check_displayname
+							# pkcs12 Struktur mit hinzufuegen
+							check_pkcs12_structure
+							# Pefehl ausfuehren
+							openssl $PROG_OPT || (prog_failure ; unset -- $UNSET_EXPORT)
+							# fertig, Variablen loeschen
+							unset -- $UNSET_EXPORT
+							break
+						else
+							MSG=$(gettext 'Sie muessen auch die Menuepunkte $lv_KeyPass und $lv_ExportPass mit Werten belegen.')
+							msgbox "$gv_Info" "$MSG"
+							# Menue noch mal ausfuehren
+							export_pkcs12_menu
+						fi
+					else
+						if [ -n "$KEYPASS" ] ; then
+							# Variablen CAKEY und CACERT belegen
+							check_ca_filenames
+							# grundlegende Befehlsoptionen in der Variable
+							# PROG_OPT speichern.
+							PROG_OPT=(pkcs12 -export -inkey "$CAKEY"
+							-in "$CACERT" -out "$Export_FileName"
+							-passin pass:${KEYPASS} -passout pass: -nodes)
+							# Anzeigename belegen falls nicht erfolgt.
+							check_displayname
+							# pkcs12 Struktur mit hinzufuegen
+							check_pkcs12_structure
+							# Pefehl ausfuehren
+							openssl $PROG_OPT || (prog_failure ; unset -- $UNSET_EXPORT)
+							# fertig, Variablen loeschen
+							unset -- $UNSET_EXPORT
+							break
+						else
+							MSG=$(gettext 'Sie muessen auch den Menuepunkt $lv_KeyPass mit einem Wert belegen.')
+							msgbox "$gv_Info" "$MSG"
+							# Menue noch mal ausfuehren
+							export_pkcs12_menu
+						fi
+					fi
+					## }}}
+					;;
+				$gv_Back)
+					# Abbrechen
+					unset -- $UNSET_EXPORT
+					break
+					;;
+			esac
+		done
+	else
+		no_para_msg $0
+	fi
+}
+# }}}

@@ -1,0 +1,6 @@
+haupt_menue;Konfiguration "" Backup "" beenden ""
+haupt_menue_sys;Konfiguration "" Backup "" System_Backup "" beenden ""
+konf_menue;Backup_verzeichnis "$BACKUP_PATH" Mount_verzeichnis "$MOUNT_PATH" Verzeichnisse "$DIRS" crontab "" speichern "" zurueck ""
+check_backup_dir;Sie muessen mindestens den Menuepunkt Backup_verzeichnis belegen.
+backup_dirs;Geben Sie hier die Verzeichnisse an die gesichert werden sollen	(getrennt durch 1 Leerzeichen).
+tar_existed;Die Datei ${Tar_File_New}.bz2 existiert bereits.

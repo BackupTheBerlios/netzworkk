@@ -1,0 +1,105 @@
+'\" t
+.\"     Title: KWGRUB2
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: 01/22/2011
+.\"    Manual: Benutzerhandbuch f\(:ur kwgrub2
+.\"    Source: Version 0.0.1
+.\"  Language: English
+.\"
+.TH "KWGRUB2" "8" "01/22/2011" "Version 0.0.1" "Benutzerhandbuch f\(:ur kwgrub2"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kwgrub2 \- ein Zshell Frontend Script f\(:ur grub2
+.SH "SYNOPSIS"
+.HP \w'\fBkwgrub2\fR\ 'u
+\fBkwgrub2\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwgrub2\fR
+k\(:onnen Sie den Bootloader
+\fBgrub2\fR
+verwalten\&. Dazu geh\(:ort die Konfiguration der Datei
+/etc/default/grub
+zu bearbeiten und
+\fBgrub2\fR
+in den Master Boot Record (\fBMBR\fR), oder in den
+\fBBootsektor\fR
+einer Partition zu installieren\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Hier kann man die Konfiguration der Datei
+/etc/default/grub
+verwalten\&. Lesen Sie dazu die Programm Hilfe oder
+\fBinfo grub\fR\&.
+.RE
+.PP
+\fBSicherheit\fR
+.RS 4
+Hier k\(:onnen Sie den Passwortschutz f\(:ur das Bootmen\(:u erstellen bzw\&. \(:andern\&.
+.RE
+.PP
+\fBAktualisierung\fR
+.RS 4
+Aktualisiert die Datei
+/boot/grub/grub\&.cfg
+(Bootmen\(:u) anhand der Konfigurationsdatei
+/etc/default/grub
+.RE
+.PP
+\fBInstallation\fR
+.RS 4
+Nach einer Auswahl wohin
+\fBgrub2\fR
+installiert werden soll (\fBMBR\fR
+oder
+\fBBootsektor\fR
+einer Partition), wird dieser dorthin installiert\&. Es k\(:onnen mehrere Zieorte ausgew\(:ahlt werden\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/default/grub
+.RS 4
+Konfiguration Datei f\(:ur
+\fBgrub2\fR\&. Siehe
+\fBinfo grub\fR
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBgrub-install\fR(8),
+\fBgrub-mkpasswd-pbkdf2\fR(8),
+\fBgrub-reboot\fR(8),
+\fBgrub-set-default\fR(8),
+\fBupdate-grub\fR(8)
+.SH "AUTHOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.RS 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011 Kai Wilke
+.br

@@ -1,0 +1,6 @@
+haupt_mneue;Init-Script "" Standard-Runlevel "$INITTAB" beenden ""
+runlev_menue;"$RunLevel" "Start-Nr $SNR" "" "Stop-Nr $KNR" "" speichern "" zurueck ""
+runlevel_nr;1 "" 2 "" 3 "" 4 "" 5 ""
+no_runlev_links;Es sind keine Runlevel Links vorhanden.
+start_nummer;Geben Sie hier bitte die Startnummer ein (01-99).
+stop_nummer;Geben Sie hier bitte die Stopnummer ein (01-99).

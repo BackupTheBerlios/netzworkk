@@ -1,0 +1,43 @@
+# kwtools-net-firewall/boot german Translation.
+# Copyright (C) 2008
+# This file is distributed under the same license as the kwtools-net-firewall package.
+# Kai Wilke <kiste@netzworkk.de>, 2008.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: kwtools-net-firewall-0.7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-03-20 00:06+0100\n"
+"PO-Revision-Date: 2008-03-20 00:24+200\n"
+"Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-firewall.templates:1001
+msgid "Should kwfirewall be started when booting?"
+msgstr "Soll kwfirewall beim booten gestartet werden?"
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-firewall.templates:1001
+msgid ""
+"If enabled, each time your machine starts, the kwfirewall will be started."
+msgstr ""
+"Falls Sie das aktivieren, wird bei jedem Start des Rechners kwfirewall gestartet. "
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-firewall.templates:1001
+msgid ""
+"Otherwise, if you have a dynamic connections the firewall is started when "
+"connection is established and stopped when connection is cancelled. This is "
+"done per pppd Daemon."
+msgstr ""
+"Andernfalls, wenn Sie eine dynamische Verbindung benutzen, wird die Firewall "
+"beim Aufbau der Verbindung gestartet und beim beenden wieder gestoppt. Dies "
+"erledigt der pppd Daemon."

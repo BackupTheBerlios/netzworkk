@@ -1,0 +1,6 @@
+# Funktion no_termin_msg{{{
+no_termin_msg() {
+	MSG=$(gettext 'Es sind keine Termine vorhanden.')
+	msgbox "$gv_Attention" "$MSG"
+}
+#}}}

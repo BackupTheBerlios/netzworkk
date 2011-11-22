@@ -1,0 +1,36 @@
+# Funktion Postfix Variable{{{
+#
+# schaut, ob die übergebenen Werte belegt sind und prüft,
+# dass der eigene Wert (AUSWAHL) nicht drin vorkommt.
+# Dann zur Auswahl anbieten.
+#
+# usage: postfix_variable "$Variable" "$AUSWAHL"
+#
+postfix_variable() {
+	unset -- WERT Var_T
+	local Anz
+	integer Anz
+	Anz=1
+	postconf | awk -F' ' /$1/'{print $1,$3}' | while read a b ; do
+		if [ "$b" -a $a != $AUSWAHL -a $a != proxy_read_maps ] ; then
+			Var_T[Anz]="$a \"\""
+			(( Anz++ ))
+		fi
+	done
+	#
+	POSTFIX_VAR_MSG=$(gettext 'Waehlen Sie Bitte eine postfix Variable aus.')
+	menubox "$gv_Configuration" "$POSTFIX_VAR_MSG" "$Var_T"
+	#
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help var_table_help
+				menubox "$gv_Configuration" "$POSTFIX_VAR_MSG" "$Var_T"
+				;;
+			*)	# Wert übernehmen
+				WERT=$gv_Auswahl
+				break
+				;;
+		esac
+	done
+}
+#}}}

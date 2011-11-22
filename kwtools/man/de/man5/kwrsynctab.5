@@ -1,0 +1,92 @@
+.\"     Title: KWRSYNCTAB
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 06/27/2008
+.\"    Manual: 
+.\"    Source: Version 0.0.6
+.\"
+.TH "KWRSYNCTAB" "5" "06/27/2008" "Version 0.0.6" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwrsynctab \- Konfigurations Datei f\(:ur kwrsync und kwrsync_cron.
+.SH "BESCHREIBUNG"
+.PP
+In der Datei
+\fI~/\&.kwtools/kwrsynctab\fR
+stehen alle Parameter damit
+\fBkwrsync\fR
+und
+\fBkwrsync_cron\fR
+Verzeichnisse mit verschiedenen Rechnern synchronisieren kann\&. Beginnt eine Zeile mit
+\(lq#\(rq
+oder ist leer wird dies als Kommentar interpretiert\&.
+.PP
+Die Datei besitzt folgendes Format:
+.PP
+\fB<Sourceverz\&.>\fR\:<TAB>\:\fB<Remoteverz\&.>\fR\:<TAB>\:\fB<Remote_shell>\fR\:<TAB>\:\fB<Zielrechner>\fR\:<TAB>\:\fB<Ausschluss>\fR
+.SH "FORMAT"
+.PP
+\fBTAB\fR
+.RS 4
+Tabulator zwischen den Eintr\(:agen\&.
+.RE
+.PP
+\fBSourceverz\&.\fR
+.RS 4
+Verzeichnis welches syncronisiert werden soll (voller Pfad)\&.
+.RE
+.PP
+\fBRemoteverz\&.\fR
+.RS 4
+In welches entfernte Verzeichnis soll syncronisiert werden (voller Pfad)\&. Kann lokal wie remote sein\&. Bei remote m\(:ussen Sie auch den Zielrechner angeben\&.
+.RE
+.PP
+\fBZielrechner\fR
+.RS 4
+Eingabe der IP\-Nummern oder Namen der Zielrechner\&. Name geht nur wenn der Rechner auch bekannt ist (z\&.B\&.
+\fIDNS\fR)\&. Die Erreichbarkeit wird nach der Eingabe gepr\(:uft\&.
+.RE
+.PP
+\fBRemote_shell\fR
+.RS 4
+Auswahl einer der installierten remote Shells (Bsp\&.:
+\fBssh\fR)\&.
+.RE
+.PP
+\fBAusschluss\fR
+.RS 4
+Welche Dateien/Verzeichnisse sollen von der Synchronisation ausgenommen werden\&. Diese m\(:ussen relativ zum Pfad des
+\fBSourceverz\&.\fR
+liegen\&. Bei einem
+\fBSourceverz\&.\fR
+von
+\fI/home/user/foo\fR
+ist dann der Ausschluss einer Datei z\&. B\&.
+\fIfoo/bar\fR\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwrsynctab\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwrsync\fR
+F\(:ur weitere Details siehe
+\fBkwrsync\fR(1)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwrsync\fR(1),
+\fBkwrsync_cron\fR(1),
+\fBrsync\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

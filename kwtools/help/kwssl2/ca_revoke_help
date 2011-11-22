@@ -1,0 +1,16 @@
+# ca_revoke_help fuer kwssl2{{{
+TITLE="${lv_CA_Revoke}::${gv_Help}"
+MSG=$(gettext 'Password: Geben Sie das Passwort der CA oder des Zertifikates ein.
+
+Grund: Waehlen Sie einen Grund fuer das Widerrufen des Zertifikates
+\taus. Ist optional.
+
+unspecified - unspezifiert
+keyCompromise - Schluessel kompromitiert
+CaCompromise - CA kompromitiert
+affiliationChanged - Zugehoerigkeit geaendert
+superseded - ersetzt
+cessationOfOperation - Aufgabenende
+CertificatHold - Zertifikat enthalten
+')
+#}}}

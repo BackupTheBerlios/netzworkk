@@ -1,0 +1,101 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke <kiste@netzworkk.de> 12.10.2008
+#
+# Script: kwbackup_cron, sichert Systemverzeichnisse und Verzeichnisse
+# Ihrer Wahl nach bestimmten Zeiten.
+#
+# Version: 0.1.0
+
+trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+Kwbackup_Fpath=${PREFIX}/share/kwtools/functions/kwbackup
+if [ -z ${(M)${FPATH}##*${Kwbackup_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+#
+# script_init enthält die globalen Scripteinstellungen und lädt
+# diese automatisch.
+#
+autoload -U script_init
+# Scriptinitialisierung
+script_init -o
+
+# Wenn es eine KONFIGURATIONSRC Datei gibt einlesen.
+read_file kwbackuprc
+
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+#
+#
+if [ "$BACKUP_PATH" ] ; then
+	Backup_Dir="${BACKUP_PATH}/`hostname`"
+	if [ ! -d ${Backup_Dir}/{sys,dirs} ]; then
+		mkdir -p ${Backup_Dir}/{sys,dirs} &>/dev/null
+		if [ "$?" != 0 ] ; then
+			MSG=$(gettext 'Kann Backup-Verzeichnisse nicht erstellen.')
+			> ${gv_WorkDir}/kwbackup_cron <<< "$MSG"
+			mail -s "kwbackup_cron Error" $USER < "${gv_WorkDir}/kwbackup_cron"
+			exit 1
+		fi
+	fi
+else
+	MSG=$(gettext 'Sie muessen erst ein Verzeichnis angeben, wo die Backups gesichert werden sollen (~/.kwtools/kwbackuprc).')
+	> ${gv_WorkDir}/kwbackup_cron <<< "$MSG"
+	mail -s "kwbackup_cron Error" $USER < "${gv_WorkDir}/kwbackup_cron"
+	exit 1
+fi
+#
+if [ "$MOUNT_PATH" ] ; then
+	if [ ${(M)$(< /proc/mounts)##$MOUNT_PATH}  ] ; then
+		MOUNT=yes
+	else
+		MOUNT=no
+		mount $MOUNT_PATH
+		if [ "$?" != 0 ] ; then
+			MSG=$(gettext 'Kann Backup-Verzeichnis nicht einbinden.')
+			> ${gv_WorkDir}/kwbackup_cron <<< "$MSG"
+			mail -s "kwbackup_cron Error" $USER < "${gv_WorkDir}/kwbackup_cron"
+			exit 1
+		fi
+	fi
+fi
+#
+# Variablen
+Date="`date +%d.%m.%Y`"
+autoload -U kwbackup_dirs kwbackup_sys
+kwbackup_dirs
+kwbackup_sys
+# umounten des Backup-Verzeichnis
+if [ "$MOUNT_PATH" ] ; then
+	umount $MOUNT_PATH
+	if [ "$?" != 0 ] ; then
+		MSG=$(gettext 'Kann Backup-Verzeichnis nicht ausbinden.')
+		> ${gv_WorkDir}/kwbackup_cron <<< "$MSG"
+		mail -s "kwbackup_cron Error" $USER < "${gv_WorkDir}/kwbackup_cron"
+		exit 1
+	fi
+fi
+#
+exit 0

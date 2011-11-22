@@ -1,0 +1,267 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke <kiste@netzworkk.de> 04.07.2011
+#
+# Script: kwpwsafe, Frontend zur Verwaltung der Passwoerter mit dem Programm
+#         pwsafe.
+#
+# Version: 0.0.5
+
+# Ausführen von Befehlen auf bestimmte Signale.
+# Notiz. Immer den Namen verwenden, da es auf einigen OS
+# eine andere Numerierung geben kann.
+#
+trap 'setterm -inversescreen off ; setterm -reset ; unset -- DB_PASS ;
+rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+# script_init enthält die globalen Scripteinstellungen und lädt
+# diese automatisch.
+#
+autoload -U script_init
+
+# Scriptinitialisierung
+script_init
+
+# Pruefen ob pwsafe und expect installiert sind.
+prog_check pwsafe expect
+if [ -n "$NO_PROGS" ] ; then
+	exit 0
+fi
+
+#
+# Wenn es eine Konf.-Datei gibt einlesen.
+#
+read_file kwpwsaferc
+if [[ -z $PASSWD_LENGTH ]] ; then
+	PASSWD_LENGTH="8"
+fi
+
+# Variablen
+# $gv_HomePath, da man auch mal mit sudo arbeitet.
+DEFAULT_PWSAFECF="${gv_HomePath}/.pwsafe.dat"
+LOCAL_PWSAFE_PATH="${gv_HomePath}/.pwsafe"
+create_file -d "$LOCAL_PWSAFE_PATH"
+#
+lv_Db=$(gettext 'Datenbank')
+lv_Create_Db=$(gettext 'Datenbank erstellen')
+lv_Change_Pw_Db=$(gettext 'Passwort aendern')
+lv_Open_Db=$(gettext 'Datenbank oeffnen')
+lv_Password=$(gettext 'Passwort')
+lv_Manage_Db=$(gettext 'Datenbank verwalten')
+DB_MSG=$(gettext 'Waehlen Sie eine Datenbank aus.')
+INCORRECT_PW_MSG=$(gettext 'Sie haben das falsche Passwort eingegeben.')
+
+# Funktion (del_expect), schreddert die temporaere Datei expect# {{{
+#
+del_expect() {
+	shred -uz ${gv_WorkDir}/expect &>/dev/null
+}
+## }}}
+# Funktion (list_db), listet alle vorhandenen Datenbanken auf.# {{{
+#
+list_db() {
+	unset -- DB_FILES DB_FILES_M DB_FILES_DEL_M
+	for i in ${DEFAULT_PWSAFECF}(.N) ${LOCAL_PWSAFE_PATH}/*.dat*~*~(.N) ; {
+		DB_FILES+=($i \"\")
+		if [[ $i = $DEFAULT_PWSAFE_FILE ]] ; then
+			DB_FILES_M+=($i \"\" on)
+		else
+			DB_FILES_M+=($i \"\" off)
+		fi
+		DB_FILES_DEL_M+=($i \"\" off)
+	}
+}
+## }}}
+# Funktion (no_db_msg), Nachricht das keine DAtenbank vorhanden ist.# {{{
+no_db_msg() {
+	MSG=$(gettext 'Es sind keine Datenbanken vorhanden. Sie muessen erst eine erstellen.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
+# Funktion (pass_input), Passwort Eingabe fuer die pwsafe Datenbank# {{{
+#
+# usage: pass_input DB_FILE
+# DB_FILE - Datenbank Datei
+#
+pass_input() {
+	if [ "$#" = 1 ] ; then
+		DB_FILE="$1"
+		PASSWD_MSG=$(gettext 'Geben Sie das Passwort fuer die Datenbank $DB_FILE ein.')
+		# Passwortlaenge min. 1 Zeichen, da pwsafe, auf der Konsole,
+		# keine Laenge vorschreibt.
+		password "$gv_Passwd_TITLE" "$PASSWD_MSG" 1
+		if [ -n "$PASSPHRASE" ] ; then
+			# Passwort pruefen
+			if echo "$PASSPHRASE" | pwsafe -f $DB_FILE >/dev/null ; then
+				DB_PASS="$PASSPHRASE"
+				unset -- PASSPHRASE
+			else
+				unset -- PASSPHRASE
+				msgbox "$gv_Info" "$INCORRECT_PW_MSG"
+			fi
+		fi
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+# Funktion (read_pwsafe_data), Daten Liste einlesen# {{{
+#
+# usage: read_pwsafe_data DB_FILE LIST
+# DB_FILE - Datenbank Datei
+# LIST - Ein Eintrag der ausgewaehlt werden soll
+#
+read_pwsafe_data() {
+	rm -f $gv_LogFile &>/dev/null
+	unset -- PW_USER PW_PASSWD PW_NOTES PW_GROUP PW_NAME
+	local Group Name PWSAFECF
+	if [ "${#argv}" = 2 ] ; then
+		if [ -f "$1" ] ; then
+			# IFS Backup und auf Tab stellen
+			IFSBAK="$IFS"
+			IFS=$'\t'
+			PWSAFECF="$1"
+			Group="${2%.*}"
+			Name="${2##*.}"
+			echo "$DB_PASS" | pwsafe --exportdb -f "$PWSAFECF" >/dev/null | \
+			grep "$Group" | grep "$Name" | \
+			while read uuid group name login passwd notes ; do
+				PW_GROUP="${group//\"/}"
+				PW_NAME="${name//\"/}"
+				PW_USER="${login//\"/}"
+				PW_PASSWD="${passwd//\"/}"
+				PW_NOTES="${${${notes//\012/\\012}//\015/}//\"/}"
+			done
+			IFS="$IFSBAK"
+		else
+			no_file_msg
+		fi
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+# Funktion (read_pwsafe_entry), Daten Liste einlesen# {{{
+#
+# usage: read_pwsafe_entry DB_FILE
+# DB_FILE - Datenbank Datei
+#
+read_pwsafe_entry() {
+	unset -- Pw_Entry PW_ENTRY PW_ENTRY_M PW_GROUPS PW_GROUPS_E
+	if [ "${#argv}" = 1 ] ; then
+		if [ -f "$1" ] ; then
+			PWSAFECF="$1"
+			echo "$DB_PASS" | pwsafe --list -f "$PWSAFECF" | \
+				while read Pw_Entry ; do
+					case "$Pw_Entry" in
+						*[^:]*)
+							PW_ENTRY+=(\"$Pw_Entry\" \"\")
+							PW_ENTRY_M+=(\"$Pw_Entry\" \"\" off)
+							if [ -z ${${(ws: :)${(M)${PW_GROUPS}##${Pw_Entry%.*}}}[1]} ] ; then
+								PW_GROUPS_E+=(${Pw_Entry%.*} \"\")
+							fi
+							PW_GROUPS+=($Pw_Entry)
+							;;
+					esac
+				done
+		else
+			no_file_msg
+		fi
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+# Funktion (select_db), Datenbank auswaehlen# {{{
+#
+select_db() {
+	list_db
+	if [ -n "${DB_FILES_M[1]}" ] ; then
+		DB_MENU=($DB_FILES_M)
+		radiolist "$gv_Mainmenu" "$DB_MSG" "$DB_MENU"
+		while [ -n "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help kwpwsafe_list_db_help
+					radiolist "$gv_Mainmenu" "$DB_MSG" "$DB_MENU"
+					;;
+				*)	# Auswahl uebernehmen
+					DB_FILE="$gv_Auswahl"
+					pass_input "$DB_FILE"
+					break
+					;;
+			esac
+		done
+	else
+		no_db_msg
+	fi
+}
+## }}}
+# Funktion (main_menu)# {{{
+#
+main_menu() {
+    MAIN_MENU=($gv_Configuration \"\" \"$lv_Open_Db\" \"\"
+   	\"$lv_Manage_Db\" \"\" 	$gv_Exit \"\")
+	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+}
+## }}}
+
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+
+main_menu
+while [ "$gv_Auswahl" ] ; do
+	case $gv_Auswahl in
+		HELP*)
+    	    # Hilfe Messagebox
+			script_help help
+			main_menu
+			;;
+		$gv_Configuration)
+    	    # Default Configuration# {{{
+			autoload -U kwpwsafe_conf kwpwsafe_config
+			kwpwsafe_conf
+			## }}}
+			main_menu
+			;;
+		$lv_Manage_Db)
+			# Datenbank verwalten.# {{{
+			autoload -U kwpwsafe_manage_db
+			kwpwsafe_manage_db
+			## }}}
+			main_menu
+			;;
+		$lv_Open_Db)
+			# DB auswaehlen, Daten abfragen, ... und bearbeiten# {{{
+			autoload -U kwpwsafe_open_db
+			kwpwsafe_open_db
+			# Passwort und Datenbank Datei Variablen loeschen
+			unset -- DB_PASS DB_FILE
+			## }}}
+			main_menu
+			;;
+		$gv_Exit)	break
+			;;
+	esac
+done	
+#
+exit 0

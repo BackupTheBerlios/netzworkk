@@ -1,0 +1,11 @@
+kwssl::Schluessel kopieren::Hilfe
+
+Hier koennen Sie die einzelnen Server/Dienste auswaehlen, wohin die
+Schluessel kopiert werden sollen. Alle Schluessel werden mit
+Paketnamen versehen (Bsp. newcert.pem -> cyrus-imap_cert.pem) und
+in /etc/ssl/certs beziehungsweise in /etc/ssl/private kopiert.
+Passen Sie also dementsprechend die Konfiguration der einzelnen
+Server an.
+
+NOTIZ: Zur Zeit stehen nur courier, cyrus, postfix, sendmail und
+        stunnel zur Auswahl, falls Sie installiert sind.

@@ -1,0 +1,19 @@
+kwparted::Partitionierung::Bearbeitung::Hilfe
+
+Groesse: Groesse der Partition, in MByte, eingeben.
+
+Dateisystem_Type: Auswahl des Filesystem Typs, fat32,ntfs=Windows,
+        ext2,ext3,reiserfs,reiser4,xfs=Unixartige Betriebssysteme,
+        oder linux-swap=Swap-Partition. ext3, reiser4 und xfs sind
+        noch nicht implementiert.
+
+Partitions_Type: Partitionstype auswaehlen (primaere, erweiterte
+        oder logische Partition). Nach einer "erweiterten Partition"
+        kann man keine weitere "erweiterte Partition" anlegen.
+        Patitionstabelle hat folgendes Format:
+        - 4 mal primaere Partitionen und nichts weiter
+        - <= 3 primaere Partitionen und 1 erweiterte Partition.
+        - in der erweiterten Partition koennen Sie weitere logische
+          Partitionen anlegen.
+
+erstellen: Erzeugen der Partition.

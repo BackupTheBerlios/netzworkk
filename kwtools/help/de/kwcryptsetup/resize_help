@@ -1,0 +1,10 @@
+kwcryptsetup::Management::Groesse::Hilfe
+
+Vergroessern oder Verkleinern von ein oder mehreren verschluesselten
+Laufwerken, mit LUKS Erweiterung. Dabei werden die Eintraege der
+Konfigurationsdatei /etc/crypttab benutzt, um die Laufwerke heraus
+zubekommen.
+
+NOTIZ: Zur Zeit geht nur die Veraenderung der Groesse von
+        verschluesselten Laufwerken mit LUKS Erweiterung.
+

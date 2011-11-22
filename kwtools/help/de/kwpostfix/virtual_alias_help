@@ -1,0 +1,36 @@
+kwpostfix::Tabellen::virtual_alias
+
+Hier kann man den Empfaenger Adressen einen Alias geben, an dem
+dann die Mail gesendet wird.
+
+Tabellen:
+virtual_alias_maps
+
+Format:
+# definiert Domain als virtuaelle Domain, fuer die Poatfix
+# zustaendig ist und mails annimmt - mehr aber auch nicht,
+# regelt also keine Weiterleitung.
+domain.de          anything
+# genau diese Mailadresse
+user@domain.de     otheruser@domain.de, otheruser1@domain.de
+# alle Mailadressen dieser Domain (catch-all) - sofern diese nicht
+# durch user@domain.de bereits erfasst wurden.
+@domain.de         otheruser@domain.de
+# diesen Usernamen in allen Domains in $myorigin, $mydestination
+# oder IP-Nummer aus $inet_interfaces; Achtung: Das gilt nicht fuer
+# alle Domains aus der virtual_alias_maps
+user               otheruser@domain.de
+
+NOTIZ: Das "anything" steht fuer die Konformitaet der Tabelle.
+
+Virtual_Domain: Eingabe einer Domain fuer die Postfix Mail annehmen
+        soll.
+
+Adresse: Eingabe eines lokalen oder virtuellen Empfaenger deren
+        Mail umgeleitet werden soll. Dies koennen auch Domains
+        sein. (Bsp. user@domain.de, @domain.de).
+
+Empfaenger: Eingabe von Empfaengern, getrennt durch 1 Komma und 1
+        Leerzeichen. Dies koennen auch ein externe Empfaenger sein.
+        (Bsp. user@domain.de, user1@domain.de)
+

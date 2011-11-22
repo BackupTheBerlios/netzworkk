@@ -1,0 +1,35 @@
+kwadmin::Konfiguration::Hilfe
+
+Hier kann man Pfade und Sprache einstellen, die von allen kwtools
+Scripts benutzt werden.
+
+Hilfe Verzeichnis: Nur bis zum Hilfeverzeichnis einstellen, nicht
+        die Sprachverzeichnisse miteinbeziehen. Die Funktion
+        script_help findet sonst nicht die richtige Hilfedatei und
+        gibt eine Meldung heraus.
+
+Kwtools Verzeichnis: Wo liegen die kwtools Scripts. Standart ist
+        /usr/lib/kwtools. Auch hier gilt dasselbe wie oben, nicht
+        die Unterverz. net, utils, etc. miteinbeziehen.
+
+Sprache: Hier kann man die Sprache auswaehlen. Wenn Sie die Sprache
+        aendern muessen Sie kwadmin neu starten damit die Sprache
+        uebernommen wird. Zur Zeit ist in den meisten Scripten nur
+        deutsch verfuegbar. Englisch ist in Arbeit.
+
+Paketmanagement: Hier kann man das Distribution spezifische 
+        Paketmanagement auswaehlen. Ist wichtig damit die kwtools den
+        Distributions spezifischen Paketmanager benutzen, um zu
+        pruefen, welche Module installiert wurden. Nur diese werden
+        dann auch zur Auswahl angeboten. Dies wird bereits bei der
+        Installation durchgefuehrt.
+
+Editor: Mit diesem Eintrag haben Sie die Auswahl wie Sie Dateien
+        bearbeiten. Sie koennen hier einen Editor Ihrer Wahl
+        einstellen. Zum Beispiel /usr/bin/vim, emacs, joe, dialog,
+        .... Der Wert dialog ist eine Ausnahme. Ist dieser Wert
+        eingetragen oder leer wird die Dialogbox editbox verwendet.
+
+Pager: Eingabe eines Pagers mit vollen Pfad oder auch ohne, wenn
+        dieser in ihrem Pfad liegt. Es wird ueberprueft ob dieser
+        ausfuehrbar ist.

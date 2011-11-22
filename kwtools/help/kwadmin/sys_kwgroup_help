@@ -1,0 +1,4 @@
+# sys_kwgroup_help fuer kwadmin{{{
+MSG=$(gettext 'kwgroup: Mit kwgroup koennen Sie Gruppen anlegen, veraendern und
+\tloeschen.')
+#}}}

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+SBIN_PATH=/usr/sbin
+
+rm -f ${SBIN_PATH}/kwfirewall >/dev/null 2>&1
+rm -rf ${DIR}/kwfirewall* ${DIR%/*/*}/doc/kwtools-net-firewall >/dev/null 2>&1
+exit 0
+

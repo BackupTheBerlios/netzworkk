@@ -1,0 +1,59 @@
+kwpostfix::Konfiguration::lmtp::Hilfe
+
+lmtp_cache_connection: Soll die LMTP-Verbindung offen gehalten
+        werden, um diese fuer mehrere Mails nacheinander zu nutzen
+        (ja/nein).
+
+lmtp_connect_timeout: Timeout fuer den Aufbau der Verbindung. Wenn
+        die Zahl 0 ist wird der Standardwert fuer TCP/IP Verbindungen
+        aus dem Kernel genommen.
+
+lmtp_data_done_timeout: Timeout nach erfolgter Übertragung der Mail
+        per LMTP.
+
+lmtp_data_init_timeout: Timeout nach dem LMTP Kommando DATA.
+
+lmtp_data_xfer_timeout: Timeout waehrend der Übertragung einer Mail
+        an einen LMTP Server.
+
+lmtp_destination_concurrency_limit: Maximale Anzahl gleichzeitiger
+        Verbindungen per LMTP zu einem Rechner.
+
+lmtp_destination_recipient_limit: Maximalzahl der Empfaenger in
+        einer Mail. Groessere Empfaengerlisten werden auf mehrere
+        Mails aufgeteilt.
+
+lmtp_lhlo_timeout: Timeout nach dem LMTP Kommando LHLO.
+
+lmtp_mail_timeout: Timeout nach dem LMTP Kommando MAIL FROM:
+
+lmtp_quit_timeout: Timeout nach dem LMTP Kommando QUIT.
+
+lmtp_rcpt_timeout: Timeout nach dem LMTP Kommando RCPT TO:
+
+lmtp_rset_timeout: Timeout nach dem LMTP Kommando RSET.
+
+lmtp_sasl_auth_enable: Soll SMTP-Auth beim Versand ueber LMTP
+        aktiviert werden (ja/nein)?
+
+lmtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern fuer
+        authentifizierte Verbindungen.
+
+lmtp_sasl_security_options: zu benutzende Authentifizierungs-
+        moeglichkeiten bei LMTP Verbindungen (noplaintext,
+        noanonymous ...).
+
+lmtp_send_xforward_command: Soll ein XFORWARD Befehl an den LMTP
+        Server gesendet werden, falls der LMTP LHLO dies
+        unterstuetzt (ja/nein)?
+
+lmtp_skip_quit_response: Soll die LMTP Sitzung nach dem Quit, ohne
+        auf eine Antwort des LMTP Servers abzuwarten, beendet werden
+        (ja/nein)?
+
+lmtp_tcp_port: TCP Port, auf dem der LMTP Server angesprochen wird
+        (24).
+
+lmtp_xforward_timeout: Timeout fuer den LMTP clienten beim senden
+        eines XFORWARD Befehls und dessen Antwort.
+

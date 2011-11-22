@@ -1,0 +1,517 @@
+# Funktion für die Restrictions{{{
+#
+# allen smtpd_*_restriction stehen unterschiedliche und gleiche Restrictions
+# zur Verfügung. Diese werden in den jeweiligen Variablen in der Funktion
+# search_restrict festgehalten.
+#
+# usage: restrictions smtpd_*_restrictions.
+#
+restrictions() {
+	unset -- WERT
+	local Anz Anz1 Nr Nr1
+	integer Anz Anz1 Nr Nr1
+	#
+	# Funktion restrictions_auswahl{{{
+	#
+	restrictions_auswahl() {
+		Array=($1)
+		RESTRICT_TITLE=$(gettext 'Konfiguration::Restrictions')
+		RESTRICT_MSG=$(gettext 'Waehlen Sie Ihre Restrictions aus.')
+		checklist "$RESTRICT_TITLE" "$RESTRICT_MSG" "$Array"
+		#
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help restrictions_help
+					checklist "$RESTRICT_TITLE" "$RESTRICT_MSG" "$Array"
+					;;
+				*)	# Wert übernehmen und zur weiteren Bearbeitung in restrictions eintragen
+					rm -rf "${gv_WorkDir}/restrictions" &>/dev/null
+					for i in $gv_Auswahl ; {
+						if [ -f "${gv_WorkDir}/restrictions" ] ; then
+							>> "${gv_WorkDir}/restrictions" <<< "$i"
+						else
+							> "${gv_WorkDir}/restrictions" <<< "$i"
+						fi
+					}
+					break
+					;;
+			esac
+		done
+	}
+	#}}}
+# Funktion vorhandene Restrictions herausfinden{{{
+#
+search_restrict() {
+	# Verfügbare Restrictions{{{
+	R0="check_client_access \"\" off"
+	R1="check_helo_access \"\" off"
+	R2="check_helo_mx_access \"\" off"
+	R3="check_helo_ns_access \"\" off"
+	R4="check_recipient_access \"\" off"
+	R5="check_recipient_mx_access \"\" off"
+	R6="check_recipient_ns_access \"\" off"
+	R7="check_sender_access \"\" off"
+	R8="check_sender_mx_access \"\" off"
+	R9="check_sender_ns_access \"\" off"
+	R10="defer \"\" off"
+	R11="defer_if_permit \"\" off"
+	R12="defer_if_reject \"\" off"
+	R13="permit \"\" off"
+	R14="permit_auth_destination \"\" off"
+	R15="permit_mx_backup \"\" off"
+	R16="permit_mynetworks \"\" on"
+	#R17="permit_naked_ip_addresse \"\" off"
+	R18="permit_sasl_authenticated \"\" off"
+	R19="permit_tls_all_clientcerts \"\" off"
+	R20="permit_tls_clientcerts \"\" off"
+	R21="reject \"\" off"
+	R22="reject_auth_destination \"\" off"
+	R23="reject_authenticated_sender_login_mismatch \"\" off"
+	R24="reject_invalid_hostname \"\" off"
+	R25="reject_multi_recipient_bounce \"\" off"
+	R26="reject_non_fqdn_hostname \"\" off"
+	R27="reject_non_fqdn_recipient \"\" off"
+	R28="reject_non_fqdn_sender \"\" off"
+	R29="reject_rbl_client \"\" off"
+	R30="reject_rhsbl_client \"\" off"
+	R31="reject_rhsbl_recipient \"\" off"
+	R32="reject_rhsbl_sender \"\" off"
+	R33="reject_sender_login_mismatch \"\" off"
+	R34="reject_unknown_client \"\" off"
+	R35="reject_unauth_destination \"\" on"
+	R36="reject_unauth_pipelining \"\" on"
+	R37="reject_unauthenticated_sender_login_mismatch \"\" off"
+	R38="reject_unknown_client \"\" off"
+	R39="reject_unknown_hostname \"\" off"
+	R40="reject_unknown_recipient_domain \"\" off"
+	R41="reject_unknown_sender_domain \"\" off"
+	R42="reject_unlisted_sender \"\" off"
+	R43="reject_unverified_sender \"\" off"
+	R44="warn_if_reject \"\" off"
+	#}}}
+	# on/off{{{
+	postconf -h $RESTRICT | tr ',' '\n' | tr ' ' '\n' | \
+	while read a ; do
+		case ${a%% *} in
+			${R0%% *})	R0="${R0%% *} \"\" on"
+				continue
+				;;
+			${R1%% *})	R1="${R1%% *} \"\" on"
+				continue
+				;;
+			${R2%% *})	R2="${R2%% *} \"\" on"
+				continue
+				;;
+			${R3%% *})
+				R3="${R3%% *} \"\" on"
+				continue
+				;;
+			${R4%% *})	R4="${R4%% *} \"\" on"
+				continue
+				;;
+			${R5%% *})	R5="${R5%% *} \"\" on"
+				continue
+				;;
+			${R6%% *})	R6="${R6%% *} \"\" on"
+				continue
+				;;
+			${R7%% *})	R7="${R7%% *} \"\" on"
+				continue
+				;;
+			${R8%% *})	R8="${R8%% *} \"\" on"
+				continue
+				;;
+			${R9%% *})	R9="${R9%% *} \"\" on"
+				continue
+				;;
+			${R10%% *})	R10="${R10%% *} \"\" on"
+				continue
+				;;
+			${R11%% *})	R11="${R11%% *} \"\" on"
+				continue
+				;;
+			${R12%% *})	R12="${R12%% *} \"\" on"
+				continue
+				;;
+			${R13%% *})	R13="${R13%% *} \"\" on"
+				continue
+				;;
+			${R14%% *})
+				R14="${R14%% *} \"\" on"
+				continue
+				;;
+			${R15%% *})	R15="${R15%% *} \"\" on"
+				continue
+				;;
+			${R16%% *})	R16="${R16%% *} \"\" on"
+				continue
+				;;
+			${R17%% *})	R17="${R17%% *} \"\" on"
+				continue
+				;;
+			${R18%% *})	R18="${R18%% *} \"\" on"
+				continue
+				;;
+			${R19%% *})	R19="${R19%% *} \"\" on"
+				continue
+				;;
+			${R20%% *})	R20="${R20%% *} \"\" on"
+				continue
+				;;
+			${R21%% *})	R21="${R21%% *} \"\" on"
+				continue
+				;;
+			${R22%% *})	R22="${R22%% *} \"\" on"
+				continue
+				;;
+			${R23%% *})	R23="${R23%% *} \"\" on"
+				continue
+				;;
+			${R24%% *})	R24="${R24%% *} \"\" on"
+				continue
+				;;
+			${R25%% *})	R25="${R25%% *} \"\" on"
+				continue
+				;;
+			${R26%% *})	R26="${R26%% *} \"\" on"
+				continue
+				;;
+			${R27%% *})	R27="${R27%% *} \"\" on"
+				continue
+				;;
+			${R28%% *})	R28="${R28%% *} \"\" on"
+				continue
+				;;
+			${R29%% *})	R29="${R29%% *} \"\" on"
+				continue
+				;;
+			${R30%% *})	R30="${R30%% *} \"\" on"
+				continue
+				;;
+			${R31%% *})	R31="${R31%% *} \"\" on"
+				continue
+				;;
+			${R32%% *})	R32="${R32%% *} \"\" on"
+				continue
+				;;
+			${R33%% *})	R33="${R33%% *} \"\" on"
+				continue
+				;;
+			${R34%% *})	R34="${R34%% *} \"\" on"
+				continue
+				;;
+			${R35%% *})	R35="${R35%% *} \"\" on"
+				continue
+				;;
+			${R36%% *})	R36="${R36%% *} \"\" on"
+				continue
+				;;
+			${R37%% *})	R37="${R37%% *} \"\" on"
+				continue
+				;;
+			${R38%% *})	R38="${R38%% *} \"\" on"
+				continue
+				;;
+			${R39%% *})	R39="${R39%% *} \"\" on"
+				continue
+				;;
+			${R40%% *})	R40="${R40%% *} \"\" on"
+				continue
+				;;
+			${R41%% *})	R41="${R41%% *} \"\" on"
+				continue
+				;;
+			${R42%% *})	R42="${R42%% *} \"\" on"
+				continue
+				;;
+			${R43%% *})	R43="${R43%% *} \"\" on"
+				continue
+				;;
+			${R44%% *})	R44="${R44%% *} \"\" on"
+				continue
+				;;
+		esac
+	done
+	#}}}
+	R_CLIENT="$R36 $R44 $R0 $R37 $R18 $R14 $R19 $R20 $R16 $R29 $R30 $R21 $R13 $R10"
+	R_DATA="$R36 $R44 $R0 $R37 $R18 $R14 $R19 $R20 $R16 $R29 $R30 $R21 $R13 $R10"
+	R_ETRN="$R36 $R44 $R0 $R37 $R18 $R14 $R19 $R20 $R16 $R29 $R30 $R21 $R13 $R10"
+	R_HELO="$R36 $R44 $R0 $R18 $R14 $R19 $R20 $R1 $R2 $R3 $R38
+		$R37 $R26 $R24 $R16 $R29 $R30 $R21 $R13 $R10"
+	R_SENDER="$R36 $R44 $R7 $R8 $R9 $R0 $R18 $R14 $R19 $R20 $R1 $R2 $R3 $R40 $R38
+		$R37 $R28 $R26 $R24 $R16 $R29 $R30 $R32 $R21 $R13 $R10"
+	R_RECIPIENT="$R36 $R44 $R7 $R8 $R9 $R4 $R5 $R6 $R0 $R18 $R14 $R19 $R20 $R1 $R2 $R3
+		$R40 $R39 $R38 $R34	$R28 $R27 $R26 $R24 $R16 $R15 $R29 $R30 $R31 $R32
+		$R35 $R21 $R13 $R10"
+}
+#}}}
+# Bei manchen restrictions müssen extra Einstellungen{{{
+# gemacht.
+#
+extra_conf_restrictions() {
+while read a ; do
+	case $a in
+		check_client_access) # Eingabe der Tabelle der Clients
+			tab_support_wahl "$a"
+			sed -e "s#^check_client_access.*#check_client_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_helo_access) # Eingabe der Tabelle der Clients
+			tab_support_wahl "$a"
+			sed -e "s#^check_helo_access.*#check_helo_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_helo_mx_access) # Eingabe der Tabelle der Clients
+			tab_support_wahl "$a"
+			sed -e "s#^check_helo_mx_access.*#check_helo_mx_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_helo_ns_access) # Eingabe der Tabelle der Clients
+			tab_support_wahl "$a"
+			sed -e "s#^check_helo_ns_access.*#check_helo_ns_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_recipient_access) # Eingabe der Tabelle der Empfänger
+			tab_support_wahl "$a"
+			sed -e "s#^check_recipient_access.*#check_recipient_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_recipient_mx_access) # Eingabe der Tabelle der Empfänger
+			tab_support_wahl "$a"
+			sed -e "s#^check_recipient_mx_access.*#check_recipient_mx_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_recipient_ns_access) # Eingabe der Tabelle der Empfänger
+			tab_support_wahl "$a"
+			sed -e "s#^check_recipient_ns_access.*#check_recipient_ns_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_sender_access) # Eingabe der Tabelle der Sender
+			tab_support_wahl "$a"
+			sed -e "s#^check_sender_access.*#check_sender_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_sender_mx_access) # Eingabe der Tabelle der Sender
+			tab_support_wahl "$a"
+			sed -e "s#^check_sender_mx_access.*#check_sender_mx_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		check_sender_ns_access) # Eingabe der Tabelle der Sender
+			tab_support_wahl "$a"
+			sed -e "s#^check_sender_ns_access.*#check_sender_ns_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+			;;
+		permit_mx_backup)
+			# Nachricht das man permit_mx_backup_networks in /etc/main.cf
+			# belegen kann.
+			MSG=$(gettext 'Bei permit_mx_backup kann optional die Restriction permit_mx_backup_networks belegt werden (Hauptkonfiguration).')
+			msgbox "$gv_Info" "$MSG"
+			;;
+		reject_rbl_*|reject_rshbl_*)
+			# Liste von RBL (Realtime Blackhole Lists) domains{{{
+			#
+			RBL_MSG=$(gettext 'Geben Sie bitte ein oder mehrere RBL-Domains, getrennt durch ein Leerzeichen, ein (Bsp. relays.ordb.org, list.dsbl.org)')
+			inputbox "$gv_Configuration" "$RBL_MSG" "$RBL"
+			#
+			# Prüfen, ob alle Adressen getrennt durch ein Komma
+			# sind.
+			#
+			Rbl_Name="$a"
+			if [ "$gv_Auswahl" ] ; then
+				unset -- RBL
+				Anz=0
+				for i in $gv_Auswahl ; {
+					case $i in
+						[a-z,A-Z,0-9]*[a-z,A-Z,0-9-_.]*.[a-z]*)
+							(( Anz++ ))
+							RBL[Anz]="$i"
+							;;
+						*)	
+							no_input_msg
+							break
+							;;
+					esac
+				}
+			else
+				unset -- RBL
+				no_input_msg
+			fi
+			#
+			# Gibts es RBL (Realtime Blackhole Lists) domains, werden sie hier
+			# korrect in die Restrictions eingetragen
+			#
+			if [ -n "$RBL" ] ; then
+				Nr=${$(grep -n $Rbl_Name ${gv_WorkDir}/restrictions)%:*}
+				(( Nr1=Nr+1 ))
+				sed -n -e "${Nr1},\$p" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions1
+				sed -e "${Nr},\$d" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
+				for i in $RBL ; {
+					>> ${gv_WorkDir}/restrictions$$ <<< "$Rbl_Name $i"
+				}
+				< ${gv_WorkDir}/restrictions1 >> ${gv_WorkDir}/restrictions$$
+				mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+				rm ${gv_WorkDir}/restrictions1 &>/dev/null
+			fi
+			#}}}
+			;;
+	esac
+done < "${gv_WorkDir}/restrictions"
+}
+#}}}
+# Funktion restrictions_to_maincf{{{
+#
+restrictions_to_maincf() {
+	Anz=1
+	Anz1=$(wc -l < ${gv_WorkDir}/restrictions)
+	if [ "$Anz" -lt "$Anz1" ] ; then
+		# Wert der 1. Zeile herausfinden
+		WERT="$(sed -n -e "${Anz}p" ${gv_WorkDir}/restrictions)"
+		# 1. Zeile loeschen und den Wert in den Restrictions einfuegen
+		sed -e "${Anz}d" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions1
+		postconf -e $RESTRICT="${WERT},"
+		# Zeilennummer der Restrictions in main.cf herausfinden
+		LINE=${${(s,:,)$(grep -n "^$RESTRICT" $MAIN_CF)}[1]}
+		(( LINE=LINE+1 ))
+		# Alle Zeilen ab der Restrictions, in der main.cf kopieren und
+		# dann loeschen.
+		sed -n -e "${LINE},\$p"  $MAIN_CF >${gv_WorkDir}/maincf$$
+		sed -e "${LINE},\$d"  $MAIN_CF >$MAIN_CF$$
+		# Die restlichen Restrictions, mit Komma, einfuegen, ausser
+		# die letzte.
+		while read a ; do
+			(( Anz++ ))
+			if [ "$Anz" -lt "$Anz1" ] ; then
+				>> $MAIN_CF$$ <<< "		${a},"
+			else
+				>> $MAIN_CF$$ <<< "		${a}"
+			fi
+		done < ${gv_WorkDir}/restrictions1
+		# Alles wieder zusammenbauen
+		mv $MAIN_CF$$ $MAIN_CF
+		< ${gv_WorkDir}/maincf$$ >> $MAIN_CF
+	else
+		WERT=$(< ${gv_WorkDir}/restrictions) 
+		postconf -e $RESTRICT="$WERT"
+	fi
+}
+#}}}
+	RESTRICT="$1"
+	case "$RESTRICT" in
+		smtpd_cl*)
+			# smtpd_client_restrictions{{{
+			#
+			unset -- R_CLIENT
+			search_restrict
+			restrictions_auswahl "$R_CLIENT"
+			if [ -f "${gv_WorkDir}/restrictions" ] ; then
+				extra_conf_restrictions
+				# Restrictions in die Konfiguration schreiben
+				restrictions_to_maincf
+				WERT="`print $(postconf -h $RESTRICT) | sed -e 's#,##g'`"
+				smtpd_client_restrictions="$WERT"
+			else
+				no_input_msg
+				smtpd_client_restrictions=""
+				postconf -e smtpd_client_restrictions=""
+			fi
+			#}}}
+			;;
+		smtpd_da*)
+			# smtpd_data_restrictions{{{
+			#
+			unset -- R_DATA
+			search_restrict
+			restrictions_auswahl "$R_DATA"
+			if [ -f "${gv_WorkDir}/restrictions" ] ; then
+				extra_conf_restrictions
+				# Restrictions in die Konfiguration schreiben
+				restrictions_to_maincf
+				WERT="`print $(postconf -h $RESTRICT) | sed -e 's#,##g'`"
+				smtpd_data_restrictions="$WERT"
+			else
+				no_input_msg
+				smtpd_data_restrictions=""
+				postconf -e smtpd_data_restrictions=""
+			fi
+			#}}}
+			;;
+		smtpd_et*)
+			# smtpd_etrn_restrictions{{{
+			#
+			unset -- R_ETRN
+			search_restrict
+			restrictions_auswahl "$R_ETRN"
+			if [ -f "${gv_WorkDir}/restrictions" ] ; then
+				extra_conf_restrictions
+				# Restrictions in die Konfiguration schreiben
+				restrictions_to_maincf
+				WERT="`print $(postconf -h $RESTRICT) | sed -e 's#,##g'`"
+				smtpd_etrn_restrictions="$WERT"
+			else
+				no_input_msg
+				smtpd_etrn_restrictions=""
+				postconf -e smtpd_etrn_restrictions=""
+			fi
+			#}}}
+			;;
+		smtpd_he*)
+			# smtpd_helo_restrictions{{{
+			#
+			unset -- R_HELO
+			search_restrict
+			restrictions_auswahl "$R_HELO"
+			if [ -f "${gv_WorkDir}/restrictions" ] ; then
+				extra_conf_restrictions
+				# Restrictions in die Konfiguration schreiben
+				restrictions_to_maincf
+				WERT="`print $(postconf -h $RESTRICT) | sed -e 's#,##g'`"
+				smtpd_helo_restrictions="$WERT"
+			else
+				no_input_msg
+				smtpd_helo_restrictions=""
+				postconf -e smtpd_helo_restrictions=""
+			fi
+			#}}}
+			;;
+		smtpd_se*)
+			# smtpd_sender_restrictions{{{
+			#
+			unset -- R_SENDER
+			search_restrict
+			restrictions_auswahl "$R_SENDER"
+			if [ -f "${gv_WorkDir}/restrictions" ] ; then
+				extra_conf_restrictions
+				# Restrictions in die Konfiguration schreiben
+				restrictions_to_maincf
+				WERT="`print $(postconf -h $RESTRICT) | sed -e 's#,##g'`"
+				smtpd_sender_restrictions="${WERT}"
+			else
+				no_input_msg
+				smtpd_sender_restrictions=""
+				postconf -e smtpd_sender_restrictions=""
+			fi
+			#}}}
+			;;
+		smtpd_re*)
+			# smtpd_recipient_restrictions{{{
+			#
+			unset -- R_RECIPIENT
+			search_restrict
+			restrictions_auswahl "$R_RECIPIENT"
+			if [ -f "${gv_WorkDir}/restrictions" ] ; then
+				extra_conf_restrictions
+				# Restrictions in die Konfiguration schreiben
+				restrictions_to_maincf
+				WERT="`print $(postconf -h $RESTRICT) | sed -e 's#,##g'`"
+				smtpd_recipient_restrictions="$WERT"
+			else
+				no_input_msg
+				smtpd_recipient_restrictions=""
+				postconf -e smtpd_recipient_restrictions=""
+			fi
+			#}}}
+			;;
+	esac
+	rm -rf ${gv_WorkDir}/restrictions* &>/dev/null
+}
+#}}}

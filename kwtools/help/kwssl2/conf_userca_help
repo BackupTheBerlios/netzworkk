@@ -1,0 +1,8 @@
+# conf_userca_help fuer kwssl2{{{
+MSG=$(gettext 'BenutzerName: Geben Sie den Namen des Benutzers ein, fuer den
+\tdieses Zertifikat gelten soll. Dieser Name wird auch zur Benennung der
+\tZertifikatsdateien benutzt.
+
+SubCA Passwort: Geben Sie das Passwort fuer diese SubCA ein.
+')
+#}}}

@@ -1,0 +1,37 @@
+kwpostfix::Tabellen::*access
+
+NOTIZ: Lesen Sie dazu bitte die Datei
+        /usr/share/doc/postfix-doc/examples/access.gz
+
+Tabellen:
+*access
+		
+Adresse: Dies koennen User, IP-Adressen/-Netze, etc. sein.
+# alle so beginnenden IP-Nummern
+192.168.0.
+# alle Adressen beliebiger Domains mit diesem Nutzernamen
+User@
+# diese spezielle IP-Adresse (Netzmasken koennen nicht eingegeben
+werden).
+192.168.0.1
+# alle Subdomains dieser Domain, nicht aber domain.de selbst. Dies
+# koennen Sie auch ueber den Parameter
+# parent_domain_matches_subdomains in der Hauptkonfiguration
+# einstellen.
+.domain.de
+# dieser spezielle Rechner
+host.domain.de
+# eine bestimmte Mailadresse.
+user@domain.de
+
+NOTIZ: Beim Tabellenformat "cidr" koennen Sie auch Netzmasken
+        eingeben.
+192.168.0.0/24
+
+Action: Dies sind Aktionen die auf eine bestimmte Adresse
+        reagieren. Es stehen folgende zur Auswahl, OK, all-numeric,
+        DISCARD, DUNNO, HOLD, REJECT, 4/5xx. Die 4/5xx sind Fehler-
+        codes in Zahlen.
+
+Text: Text der auf eine Aktion zurueckgesendet werden soll.
+

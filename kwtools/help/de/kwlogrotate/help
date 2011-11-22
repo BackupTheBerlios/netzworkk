@@ -1,0 +1,11 @@
+kwlogrotate::Hilfe
+
+Hier koennen Sie bequem ihre Logdateien verwalten, anlegen und
+loeschen. Es werden nur die Dateien im Verzeichnis (meist)
+/etc/logrotate.d/ benutzt oder angelegt. 
+
+NOTIZ: Eine Konfiguration der Hauptkonfigurationsdatei ist noch
+       nicht vorhanden. Dieses Script schreibt die Logdatei jedesmal
+       neu, heisst, da kwlogrotate nicht alles unterstuetzt, werden
+       komplexere Logdateien eventuell ein paar Optionen, nach dem
+       speichern vermissen.

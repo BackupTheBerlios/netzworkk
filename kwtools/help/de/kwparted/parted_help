@@ -1,0 +1,14 @@
+kwparted::Partitionierung::Hilfe
+
+Laufwerks-Info: Zeigt den Hersteller/Modell und die Groesse der
+        Festplatte an.
+
+Partitionen: Zu bearbeitende Partitionen (leer/angelegte) werden
+        zur Auswahl angeboten. Man kann dann entweder eine
+        erstellen, loeschen, vergroessern, verkleinern, kopieren
+        oder das Flag veraendern.
+
+Notiz: Bei bestehenden Partitionen kann man nicht den Dateisystem-
+        typ aendern. Formatierung der angelegten Partitionen
+        entfaellt. Sollten Sie dies trotzdem tun kann parted diese
+        nicht mehr vergroessern oder verkleinern.

@@ -1,0 +1,24 @@
+kwfilm2film::Hilfe
+
+kwfilm2film kann Filme in verschiedenene Film Formate konvertieren
+oder auch nur Bilder extrahieren. Es benutzt dazu die programme
+transcode und mplex.
+
+Konfiguration: Hier kann man alle Standard Werte veraendern.
+
+NOTIZ: Achten Sie darauf das Sie die richtigen Im/Export Module
+        eingestellt haben. Es gibt bei vielen Konvertierungen noch
+		keine automatische Auswahl der Module. 
+
+Dateiinfo: Hier kann man sich Informationen ueber die ausgewaehlte
+        Datei anschauen. So koennen Sie besser die Import Module
+        auswaehlen.
+
+Video's konvertieren: Konvertiert Videos in andere Video Formate.
+
+Video-CD: Ruft das Script kwvcdburn, zum erstellen und brennen von
+        Video-CD's auf.
+
+Video-DVD: Ruft das Script kwvdvdburn, zum erstellen und brennen von
+        Video-DVD's auf.
+

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+EXEC=/usr/lib/kwtools/sys
+SBIN_PATH=/usr/sbin
+
+cd $SBIN_PATH
+if [ -L kwquota ] ; then
+	rm kwquota &>/dev/null
+	ln -sf ${EXEC}/kwquota ${SBIN_PATH}
+else
+	ln -sf ${EXEC}/kwquota ${SBIN_PATH}
+fi
+
+echo ""
+echo "Compile functions from kwtools-scripts"
+echo ""
+/bin/zsh -fc 'setopt extendedglob ; for i in /usr/share/kwtools/functions/kwquota ; do
+	zcompile -U -M $i.zwc $i/*~*.zwc(^/) ; chmod 644 $i.zwc ; done'	
+exit 0

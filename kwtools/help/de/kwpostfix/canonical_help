@@ -1,0 +1,21 @@
+kwpostfix::Tabellen::*canonical*
+
+Hier kann man Mailadressen, domains und lokale user accounts
+eigeben, deren Empfaenger- und Absenderadressen im SMTP-Envelope
+und Mailheader geaendert werden sollen. Und natuerlich in welche 
+Adresse Sie umgewandelt werden soll.
+
+Tabellen:
+canonical_maps siehe oben
+sender_canonical_maps wandelt nur Absenderadressen
+recipient_canonical_maps wandelt nur Empfaengeradressen
+
+Form:
+# wandelt lokalen Nutzeraccount
+user                    anderer-user@domain.de
+# wandelt pauschal alle Adressen mit dieser domain
+@user.domain.de         user@domain.de
+@testsrv.domain.de      @domain.de
+# wandelt pauschal diese auch externe
+user@domain.de          anderer-user@domain.de
+

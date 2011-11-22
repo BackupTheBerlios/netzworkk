@@ -1,0 +1,4 @@
+# sys_kwlosetup_help fuer kwadmin{{{
+MSG=$(gettext 'kwlosetup: Mit diesem Script koennen Sie verschluesselte Container
+\t(Datei mit Dateisystem) und Laufwerke erstellen.')
+#}}}

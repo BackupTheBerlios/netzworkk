@@ -1,0 +1,20 @@
+kwbackup::Konfiguration::Hilfe
+
+Backup_verzeichnis: Verzeichnis in dem die Backups angelegt werden.
+
+Mount_verzeichnis: Hier wird das Verzeichnis ausgewaehlt, welches
+        ins Dateisystem vorher eingebunden werden muss, wo sich das
+        Backup Verzeichnis befindet. Es muss bereits in der 
+        /etc/fstab konfiguriert sein.
+
+Verzeichnisse: Hier geben Sie Verzeichnisse mit kompletter Pfadangabe
+        an, von denen Backups erstellt werden sollen. Lassen Sie
+        zwischen den Verzeichnissen 1 Leerzeichen (Beipiel.:
+        /home/user/Mail /home/user/daten).
+
+crontab: Das Script kwbackup_cron in die crontab Tabelle des Users
+        einfuegen oder loeschen. Dieses Script fuehrt kwbackup_cron aus
+        und schickt bei Fehlern eine Mail.
+
+NOTIZ: Achten Sie darauf das Sie Schreib/Lesezugriff auf die 
+        Verzeichnisse haben. Sonst gibt es Fehlermeldungen.

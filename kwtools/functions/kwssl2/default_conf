@@ -1,0 +1,108 @@
+# Funktion (default_conf)# {{{
+#
+# usage: default_conf
+#
+default_conf() {
+	# Funktion (default_conf_menu)# {{{
+	#
+	default_conf_menu() {
+		DEFAULT_CONF_MENU=(\"$lv_Ca_Certs\" \"\"
+		\"$lv_Server_Ca\" \"\" \"$lv_User_Ca\" \"\"
+		$lv_Revokes \"\" $gv_Back \"\")
+		#
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$DEFAULT_CONF_TITLE" "$gv_Menupoint" "$DEFAULT_CONF_MENU"
+		else
+			menubox "$DEFAULT_CONF_TITLE" "$gv_Menupoint" "$DEFAULT_CONF_MENU"
+		fi
+	}
+	# }}}
+	#
+	default_conf_menu
+	while [ "$gv_Auswahl" ] ; do
+		case $gv_Auswahl in
+			HELP*)
+	    	    # Hilfe Messagebox
+				script_help default_conf_help
+				default_conf_menu
+				;;
+			"$lv_Ca_Certs")
+				# normale CA Zertifikate konfigurieren
+				CONF_SECTION=v3_ca
+				read_openssl_conf
+				ca_certs_conf -n
+				default_conf_menu $lv_Ca_Certs
+				;;
+			"$lv_Server_Ca")
+				# Server Zertifikate konfigurieren
+				CONF_SECTION=server_cert
+				read_openssl_conf
+				ca_certs_conf -s
+				default_conf_menu $lv_Server_Ca
+				;;
+			"$lv_User_Ca")
+				# Benutzer Zertifikate konfigurieren
+				CONF_SECTION=client_cert
+				read_openssl_conf
+				ca_certs_conf -u
+				default_conf_menu $lv_User_Ca
+				;;
+			$lv_Revokes)
+				# Tage der Gueltigkeit der Widerrufslisten eingeben# {{{
+				# Funktion (default_revokes_menu)# {{{
+				#
+				default_revokes_menu() {
+					DEFAULT_REVOKE_MENU=(\"$lv_Revoke_Days\" \"$DEFAULT_REVOKE_DAYS\"
+					$gv_Create \"\" $gv_Back \"\")
+					menubox "$DEFAULT_CONF_TITLE" "$gv_Menupoint" "$DEFAULT_REVOKE_MENU"
+				}
+				# }}}
+				CONF_SECTION=v3_ca
+				read_openssl_conf
+				default_revokes_menu
+				while [ "$gv_Auswahl" ] ; do
+					case $gv_Auswahl in
+						HELP*)
+				    	    # Hilfe Messagebox
+							script_help default_conf_help
+							default_revokes_menu
+							;;
+						"$lv_Revoke_Days")
+							# Tage eingeben# {{{
+							CONF_REVOKE_MSG=$(gettext 'Geben Sie die Tage der Gueltigkeit von Widerrufslisten ein.')
+							number_input "$lv_Revokes" "$CONF_REVOKE_MSG" "$DEFAULT_REVOKE_DAYS"
+							if [ -n "$NUMBER" ] ; then
+								DEFAULT_REVOKE_DAYS="$NUMBER"
+							else
+								DEFAULT_REVOKE_DAYS=30
+							fi
+							## }}}
+							default_revokes_menu $lv_Revoke_Days
+							;;
+						$gv_Create)
+							# erstellen# {{{
+							if [ -n "$DEFAULT_REVOKE_DAYS" ] ; then
+								sed -e "s#default_crl_days =.*#default_crl_days = $DEFAULT_REVOKE_DAYS#" $KWSSL2RC > ${gv_WorkDir}/conf_crl
+								mv ${gv_WorkDir}/conf_crl $KWSSL2RC
+								break
+							else
+								MSG=$(gettext 'Sie muessen erst den Menuepunkt $lv_Revoke_Days mit einem Wert belegen.')
+								msgbox "$gv_Info" "$MSG"
+								default_revokes_menu $lv_Revoke_Days
+							fi
+							## }}}
+							;;
+						$gv_Back)
+							break
+							;;
+					esac
+				done
+				## }}}
+				default_conf_menu $lv_Revokes
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+## }}}

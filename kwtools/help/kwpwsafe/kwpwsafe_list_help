@@ -1,0 +1,5 @@
+# kwpwsafe_list_help# {{{
+TITLE="$gv_Help"
+MSG=$(gettext 'Hier koennen Sie einen Eintrag auswaehlen um den Benutzernamen
+und das dazugehoerige Passwort ansehen zu koennen.')
+#}}}

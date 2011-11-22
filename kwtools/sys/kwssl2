@@ -1,0 +1,203 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke <kiste@netzworkk.de> 01.09.2011
+#
+# Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
+# Certrifikate, signiert....
+#
+# Version: 0.0.1
+#
+
+# Ausführen von Befehlen auf bestimmte Signale.
+# Notiz. Immer den Namen verwenden, da es auf einigen OS
+# eine andere Numerierung geben kann.
+#
+trap 'setterm -inversescreen off ; setterm -reset ;
+rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+# script_init enthält die globalen Scripteinstellungen und lädt
+# diese automatisch.
+#
+autoload -U script_init
+
+# Scriptinitialisierung
+script_init
+
+# auf Programme pruefen
+prog_check openssl
+if [ -z "$PROGS" ] ; then
+	exit 0
+fi
+
+# Variablen belegen# {{{
+UNSET=(CA_NAME COMMONNAME COUNTRYCODE ROOTCAPASSWORD PASSWORD COUNTRY LOCATION
+	ORGANISATION ORGANISATIONUNIT MAIL VALIDITY KEYLENGTH DIGEST gv_Pass
+	SUBCAPASSWORD FILENAME SUBDIR USERNAME)
+#
+KWSSL_DIR="${gv_HomePath}/.kwtools/kwssl2"
+KWSSL2RC_NAME=kwssl2rc
+DISPLAY_FILE="${gv_WorkDir}/display"
+
+# gettext
+lv_RootCa=$(gettext 'RootCA')
+lv_SubCa=$(gettext 'SubCA')
+lv_CA_Import=$(gettext 'CA importieren')
+lv_CA_Export=$(gettext 'CA exportieren')
+lv_CA_Revoke=$(gettext 'CA uengueltig')
+lv_SubCA_Create=$(gettext 'Zertifikat erstellen')
+lv_CA=$(gettext 'CA')
+lv_Cert=$(gettext 'Zertifikat')
+lv_YesValidity=$(gettext 'gueltig')
+lv_NoValidity=$(gettext 'ungueltig')
+lv_Open=$(gettext 'oeffnen')
+#
+lv_Ssl_Name=$(gettext 'Name')
+lv_Ssl_ServerName=$(gettext 'Servername')
+lv_Ssl_UserName=$(gettext 'Benutzername')
+lv_Ssl_CommonName=$(gettext 'allgemeiner Name')
+lv_Ssl_Land_Code=$(gettext 'Land')
+lv_Ssl_RootCA_Password=$(gettext 'RootCA Passwort')
+lv_Ssl_SubCA_Password=$(gettext 'SubCA Passwort')
+lv_Ssl_Password=$(gettext 'Passwort eingeben')
+lv_Ssl_Password_Generate=$(gettext 'Passwort generieren')
+lv_Ssl_Bundesstaat=$(gettext 'Bundesstaat')
+lv_Ssl_Location=$(gettext 'Standort')
+lv_Ssl_Organisation=$(gettext 'Organisation')
+lv_Ssl_Organisation_Unit=$(gettext 'Organisationseinheit')
+lv_Ssl_Email=$(gettext 'Mail')
+lv_Ssl_Validity=$(gettext 'Gueltigkeit')
+lv_Ssl_Key_length=$(gettext 'Schluessellaenge')
+lv_Ssl_Digest=$(gettext 'Digest')
+lv_Ssl_Subdir_Name=$(gettext 'CA Name')
+## }}}
+# Funktion (create_pki), Verzeichnisstruktur erstellen# {{{
+#
+create_pki() {
+	if [[ ${#argv} == 1 ]] ; then
+		unset -- Dir
+		local Dir
+		Dir="$1"
+		if [ ! -d ${KWSSL_DIR}/${Dir} ] ; then
+	        mkdir -p ${KWSSL_DIR}/${Dir}/{newcerts,certs,crl,private} &>/dev/null
+			cd $KWSSL_DIR
+	        touch ./${Dir}/{index.txt,serial,crlnumber} &>/dev/null
+	        echo "01" > ./${Dir}/{serial,crlnumber} &>/dev/null
+			# Zufallszahlen generieren
+			cat /dev/urandom | \
+			uuencode -m bla | \
+			head -19 | \
+			sed "s/begin.*//g" | \
+			tail -18 | xargs | \
+			sed "s/ //g" > ${Dir}/private/.rand &>/dev/null
+			chmod 770 ${Dir}/private/.rand &>/dev/null
+			# allgemeine Konfigurationsdatei erstellen
+			KWSSL2RC="${Dir}/${KWSSL2RC_NAME}"
+			kwssl_config
+		else
+			# allgemeine Konfigurationsdatei erstellen, falls nicht vorhanden.
+			if [ ! -f "$KWSSL2RC" ] ; then
+				KWSSL2RC="${Dir}/${KWSSL2RC_NAME}"
+				kwssl_config
+			fi
+		fi
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+
+
+# Nachdem das Script initialisiert wurde, kann man die anderen
+# benötigten Funktionen laden. Die Funktion sys_conf wird bereits
+# von der Funktion script_init ausgefuehrt.
+autoload -U kwssl_ca kwssl_config
+
+# Wenn es eine KONFIGURATIONSRC Datei gibt einlesen.
+# read_file -f $KWSSL2RC
+#####################################
+
+# Funktion main_menu# {{{
+#
+main_menu() {
+	MAIN_MENU=($lv_RootCa \"\" $lv_SubCa \"\"
+	$gv_Exit \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$gv_Create" "$gv_Menupoint" "$MAIN_MENU"
+	else
+		menubox "$gv_Create" "$gv_Menupoint" "$MAIN_MENU"
+	fi
+}
+## }}}
+# Funktion (no_ca_msg)# {{{
+#
+# usage: no_ca_msg CA-Name
+no_ca_msg() {
+	if [[ ${#argv} == 1 ]] ; then
+		local Ca
+		unset -- Ca
+		Ca="$1"
+		MSG=$(gettext 'Es ist keine $Ca vorhanden. Sie muessen erst eine erstellen.')
+		msgbox "$gv_Info" "$MSG"
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+
+# PKI fuer die RootCA erstellen, fals nicht schon vorhanden.
+create_pki RootCA
+
+main_menu
+while [ "$gv_Auswahl" ] ; do
+	case $gv_Auswahl in
+		HELP*)
+    	    # Hilfe Messagebox
+			script_help help
+			main_menu
+			;;
+		$lv_RootCa)
+			# RootCA# {{{
+			kwssl_ca -r
+			unset -- $UNSET
+			## }}}
+			main_menu $lv_RootCa
+			;;
+		$lv_SubCa)
+			# SubCA, z. B. fuer Server# {{{
+			# pruefen ob die RootCA schon existiert
+			if [ -f ${KWSSL_DIR}/RootCA/cacert.pem ] ; then
+				kwssl_ca -s
+			else
+				no_ca_msg RootCA
+			fi
+			## }}}
+			main_menu $lv_ServerCa
+			;;
+		$gv_Exit)	break
+			;;
+	esac
+done	
+#
+exit 0

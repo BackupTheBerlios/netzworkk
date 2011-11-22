@@ -1,0 +1,4 @@
+haupt_menue;Konfiguration "" Audio "" Copy-CD "" Daten "" Iso "" Photo "" Video-CD-DVD "" loeschen/formatieren "" beenden ""
+cd_dvd_conf_menue;Medium "$MEDIUM" CD-Groesse "$CD_SIZE" Speed "$write_speed" DVD-Groesse "$DVD_SIZE" DVD-Speed "$DVD_SPEED" Brenner "$write_device" Leselaufwerk "$read_device" Source-Treiber "$CD_SOURCE_DRIVER" Treiber "$CD_WRITE_DRIVER" speichern "" zurueck ""
+medium_menue;CD "" DVD "" zurueck ""
+cdrw_del;minimal "" ganz ""

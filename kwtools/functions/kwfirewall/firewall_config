@@ -1,0 +1,98 @@
+# Funktion firewall_config, schreibt die Konfiguration.{{{
+{
+#
+if [ ! -d "${ETC_PATH}" ] ; then
+	create_file -d ${ETC_PATH}
+fi	
+#
+> ${ETC_PATH}/firewall.cf <<< "# Beginn ${ETC_PATH}/firewall.cf
+#
+# Alle Ports, Module muessen getrennt durch ein Leerzeichen
+# aufgelistet werden. Bei den *_DEV Eintragungen geht nur ein
+# Interface und bei den Ports kann man auch den Namen anstelle
+# der Portnummer nehmen.
+#
+# ip(6)tables Programm
+IPTABLES=\"$IPTABLES\"
+# Modules_list
+MODULES=\"$MODULES\"
+# Forward aktivieren (yes/no)?
+FORWARD=\"$FORWARD\"
+# Masquerading aktivieren (yes/no)?
+MASQUERADE=\"$MASQUERADE\"
+# Interface zur DMZ (eth1).
+DMZ_DEV=\"$DMZ_DEV\"
+# Interface zum	Internet (ppp0).
+INT_DEV=\"$INT_DEV\"
+# Interface zum LAN (eth2)
+LAN_DEV=\"$LAN_DEV\"
+# Netzmaske der DMZ (192.168.1.0/24)
+DMZ=\"$DMZ\"
+# Netzmaske des LAN (192.168.0.0/24)
+LAN=\"$LAN\"
+# Ports von FW to DMZ (ssh)
+TCP_FW_TO_DMZ=\"$TCP_FW_TO_DMZ\"
+# Ports von FW to DMZ
+UDP_FW_TO_DMZ=\"$UDP_FW_TO_DMZ\" 
+# Ports von FW to INT (ssh)
+TCP_FW_TO_INT=\"$TCP_FW_TO_INT\" 
+# Ports von FW to INT
+UDP_FW_TO_INT=\"$UDP_FW_TO_INT\" 
+# Ports von FW to LAN (ssh)
+TCP_FW_TO_LAN=\"$TCP_FW_TO_LAN\" 
+# Ports von FW to LAN
+UDP_FW_TO_LAN=\"$UDP_FW_TO_LAN\" 
+# Ports von DMZ to FW (ssh)
+TCP_DMZ_TO_FW=\"$TCP_DMZ_TO_FW\" 
+# Ports von DMZ to FW
+UDP_DMZ_TO_FW=\"$UDP_DMZ_TO_FW\" 
+# Ports von LAN to FW (ssh)
+TCP_LAN_TO_FW=\"$TCP_LAN_TO_FW\" 
+# Ports von LAN to FW
+UDP_LAN_TO_FW=\"$UDP_LAN_TO_FW\" 
+# Ports von INT to FW (ssh)
+TCP_INT_TO_FW=\"$TCP_INT_TO_FW\" 
+# Ports von INT to FW
+UDP_INT_TO_FW=\"$UDP_INT_TO_FW\" 
+# Ports von INT to LAN
+TCP_INT_TO_LAN=\"$TCP_INT_TO_LAN\" 
+# Ports von INT to LAN
+UDP_INT_TO_LAN=\"$UDP_INT_TO_LAN\" 
+# Ports von LAN to INT (domain pop3 pop3s imap ssh ...)
+TCP_LAN_TO_INT=\"$TCP_LAN_TO_INT\" 
+# Ports von LAN to INT
+UDP_LAN_TO_INT=\"$UDP_LAN_TO_INT\" 
+# Ports von INT to DMZ
+TCP_INT_TO_DMZ=\"$TCP_INT_TO_DMZ\" 
+# Ports von INT to DMZ
+UDP_INT_TO_DMZ=\"$UDP_INT_TO_DMZ\" 
+# Ports von DMZ to INT
+TCP_DMZ_TO_INT=\"$TCP_DMZ_TO_INT\" 
+# Ports von DMZ to INT
+UDP_DMZ_TO_INT=\"$UDP_DMZ_TO_INT\" 
+# Ports von LAN to DMZ
+TCP_LAN_TO_DMZ=\"$TCP_LAN_TO_DMZ\" 
+# Ports von LAN to DMZ
+UDP_LAN_TO_DMZ=\"$UDP_LAN_TO_DMZ\" 
+# Ports von DMZ to LAN
+TCP_DMZ_TO_LAN=\"$TCP_DMZ_TO_LAN\" 
+# Ports von DMZ to LAN
+UDP_DMZ_TO_LAN=\"$UDP_DMZ_TO_LAN\" 
+# DMZ-Host:Ports vom Internet to DMZ. Hier duerfen nur die
+# Nummern der TCP Ports benutzt werden (Bsp. Host:80; 80=www).
+TCP_INT_TO_DMZ_NAT=\"$TCP_INT_TO_DMZ_NAT\"
+# DMZ-Host:Ports vom Internet to DMZ. Hier duerfen nur die
+# Nummern der UDP Ports benutzt werden (Bsp. Host:80; 80=www).
+UDP_INT_TO_DMZ_NAT=\"$UDP_INT_TO_DMZ_NAT\"
+# LAN-Host:Ports vom Internet to DMZ. Hier gilt das gleiche, wie
+# bei TCP_INT_TO_DMZ_NAT.
+TCP_INT_TO_LAN_NAT=\"$TCP_INT_TO_LAN_NAT\"
+# LAN-Host:Ports vom Internet to DMZ. Hier gilt das gleiche, wie
+# bei UDP_INT_TO_DMZ_NAT.
+UDP_INT_TO_LAN_NAT=\"$UDP_INT_TO_LAN_NAT\"
+
+# End ${ETC_PATH}/firewall.cf" 
+
+read_file -f ${ETC_PATH}/firewall.cf
+}
+#}}}

@@ -1,0 +1,43 @@
+openmosix::Parameter::Hilfe
+
+Hier kann man die Parameter einstellen die beim Starten
+von OpenMosix ausgefuehrt werden sollen. 
+
+Damit die DFSA LINKS auch korrekt eingetragen werden, muss die 
+VARIABLE MFS_START auf yes gesetzt sein. Das MFS 
+(Mosix filesystem) muss natuerlich auch in der /etc/fstab stehen.
+
+AUTODISC: 0=autodiscovery-daemon nicht starten, 1=autodiscovery-
+        daemon starten.
+
+AUTODISCIF: Auf welchem Device soll der autodiscovery-daemon
+            lauschen (eth0, eth1....)?
+
+OVERHEAD: Hier ist noch nichts zum einstellen.
+
+MFSCOSTS: Hier ist noch nichts zum einstellen.
+
+ID: Welche Nummer im Cluster hat diese Node? OpenMosix Cluster
+    zaehlen aufwaerts, so das, wenn der Master 192.168.0.1 ist
+    und die Node 192.168.0.5, die ID 5 ist.
+
+MOSGATES: Maximale Anzahl der Gateways zwischen den Noden.
+
+SPEED: Geschwindigkeit dieser Node eingeben (10000).
+
+MIGRATE: Duerfen Prozesse zu anderen Noden migrieren (ja/nein)
+
+BLOCK: Duerfen entfernte Prozesse angenommen werden (ja/nein)
+
+MFS: Wird localhost Zugriff auf das eigene MFS erlaubt (ja/nein)
+
+MFS_START: Mosixfilesystem beim Systemstart mit einbinden (ja/nein)?
+           Dies ist noetig damit dfsalinks genutzt werden koennen.
+ 
+DFSA_START: Sollen die DFSA Links schon beim starten von OpenMosix
+            in /proc/hpc/admin/dfsalinks eingetragen werden
+            (ja/nein)? Dazu muss die Variable MFS_START auf yes stehen.
+
+DFSA_LINKS: Die Links getrennt durch ein leerzeichen eintragen.
+            Wichtig ist das diese links schon vorher bestehen.
+            Wird sich aber in einer der naechsten Releases aendern.

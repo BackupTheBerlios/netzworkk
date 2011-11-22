@@ -1,0 +1,381 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-04 01:08+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../utils/kwssl2:59
+msgid "RootCA"
+msgstr ""
+
+#: ../../utils/kwssl2:60
+msgid "SubCA"
+msgstr ""
+
+#: ../../utils/kwssl2:61
+msgid "CA importieren"
+msgstr ""
+
+#: ../../utils/kwssl2:62
+msgid "CA exportieren"
+msgstr ""
+
+#: ../../utils/kwssl2:63
+msgid "CA uengueltig"
+msgstr ""
+
+#: ../../utils/kwssl2:64
+msgid "Zertifikat erstellen"
+msgstr ""
+
+#: ../../utils/kwssl2:65
+msgid "CA"
+msgstr ""
+
+#: ../../utils/kwssl2:66
+msgid "Zertifikat"
+msgstr ""
+
+#: ../../utils/kwssl2:67
+msgid "gueltig"
+msgstr ""
+
+#: ../../utils/kwssl2:68
+msgid "ungueltig"
+msgstr ""
+
+#: ../../utils/kwssl2:69
+msgid "oeffnen"
+msgstr ""
+
+#: ../../utils/kwssl2:71
+msgid "Name"
+msgstr ""
+
+#: ../../utils/kwssl2:72
+msgid "Servername"
+msgstr ""
+
+#: ../../utils/kwssl2:73
+msgid "Benutzername"
+msgstr ""
+
+#: ../../utils/kwssl2:74
+msgid "allgemeiner Name"
+msgstr ""
+
+#: ../../utils/kwssl2:75
+msgid "Land"
+msgstr ""
+
+#: ../../utils/kwssl2:76
+msgid "RootCA Passwort"
+msgstr ""
+
+#: ../../utils/kwssl2:77
+msgid "SubCA Passwort"
+msgstr ""
+
+#: ../../utils/kwssl2:78
+msgid "Passwort eingeben"
+msgstr ""
+
+#: ../../utils/kwssl2:79
+msgid "Passwort generieren"
+msgstr ""
+
+#: ../../utils/kwssl2:80
+msgid "Bundesstaat"
+msgstr ""
+
+#: ../../utils/kwssl2:81
+msgid "Standort"
+msgstr ""
+
+#: ../../utils/kwssl2:82
+msgid "Organisation"
+msgstr ""
+
+#: ../../utils/kwssl2:83
+msgid "Organisationseinheit"
+msgstr ""
+
+#: ../../utils/kwssl2:84
+msgid "Mail"
+msgstr ""
+
+#: ../../utils/kwssl2:85
+msgid "Gueltigkeit"
+msgstr ""
+
+#: ../../utils/kwssl2:86
+msgid "Schluessellaenge"
+msgstr ""
+
+#: ../../utils/kwssl2:87
+msgid "Digest"
+msgstr ""
+
+#: ../../utils/kwssl2:88
+msgid "CA Name"
+msgstr ""
+
+#: ../../utils/kwssl2:156
+#, sh-format
+msgid "Es ist keine $Ca vorhanden. Sie muessen erst eine erstellen."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:202
+msgid "Es sind keine CAs bzw. Zertifikate vorhanden."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:208
+msgid "Es sind keine gueltigen CAs bzw. Zertifikate vorhanden."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:214
+msgid "Es sind keine ungueltigen CAs bzw. Zertifikate vorhanden."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:220
+msgid "Es ist keine SubCA geoeffnet."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:240 ../../functions/kwssl2/kwssl_ca:256
+msgid "erstelle CA"
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:278
+#, sh-format
+msgid "erstelle $lv_Cert"
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:359
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, $lv_Ssl_Password "
+"und $lv_Ssl_Land_Code mit Werten belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:411
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, $lv_Ssl_Password, "
+"$lv_Ssl_RootCA_Password und $lv_Ssl_Land_Code mit Werten belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:464
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $lv_Ssl_Name, $lv_Ssl_CommonName, "
+"$lv_Ssl_SubCA_Password und $lv_Ssl_Land_Code mit Werten belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:482
+#, sh-format
+msgid "Geben Sie die Passphrase fuer die $SUBDIR ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:494
+#, sh-format
+msgid "Geben Sie die Passphrase fuer die SubCA $SUBDIR ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:506
+msgid "Geben Sie den Namen fuer den Server ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:518
+msgid "Geben Sie einen Benutzernamen ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:531
+msgid "Geben Sie den Namen fuer die lokale Speicherung ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:542
+#, sh-format
+msgid "Dieses Zertifikat ($gv_Auswahl) ist schon vorhanden."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:554
+#, sh-format
+msgid "Diese SubCA ($gv_Auswahl) ist schon vorhanden."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:576
+msgid "Geben Sie den allgemeinen Namen fuer die CA ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:588
+msgid "Geben Sie den Laendercode (2 Buchstaben, z. B. DE) ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:601
+#, sh-format
+msgid ""
+"Geben Sie bitte die Passphrase fuer die CA ein (mindestens $PASSWD_LENGTH "
+"Zeichen lang) und wiederholen diese im Feld darunter."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:626
+msgid "Geben Sie den Bundesstaat oder die Provinz ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:638
+msgid "Geben Sie den Standort (z. B. Stadt) ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:650
+msgid "Geben Sie ihre Organisation (z. B. Firma) ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:662
+msgid "Geben Sie ihre Organisationeinheit (z. B. Arbeit) ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:674
+msgid "Geben Sie eine Mail Adresse ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:687
+msgid "Geben Sie die Gueltigkeit des Schluessels in Tagen ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:916
+#, sh-format
+msgid ""
+"Diese CA ($SUBDIR) ist schon vorhanden. Soll sie neu erstellt werden (ja/"
+"nein)?"
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:1048
+msgid "Geben Sie bitte das Password fuer dieses Zertifikat ein."
+msgstr ""
+
+#: ../../functions/kwssl2/kwssl_ca:1062
+msgid "Sie muessen ein Passwort eingeben."
+msgstr ""
+
+#: ../../help/kwssl2/conf_ca_help:3
+msgid ""
+"CA Name: Name der SubCA und kann man nicht aendern.\n"
+"\n"
+"Name: Eingabe des Namens des Zertifikats. Dient zur Benennung der\n"
+"\\tZertifikats Datei.\n"
+"\n"
+"RootCA Passwort: Geben Sie das Passwort fuer die RootCA ein.\n"
+"\n"
+"NOTIZ: Wird nur angezeigt wenn eine \"SubCA\" erstellt wird.\n"
+"\n"
+"SubCA Passwort: Geben Sie das Passwort fuer die SubCA ein.\n"
+"\n"
+"NOTIZ: Wird nur angezeigt wenn ein \"SubCA Zertifikat\" erstellt wird.\n"
+"\n"
+"allgemeiner Name: Geben Sie einen allgemeinen Namen ein (z. B.\n"
+"\\tIhren Namen).\n"
+"\n"
+"NOTIZ: Denken Sie daran das einige Server nur \"allgemeiner Name\"\n"
+"\\tgleich servername.example.de fuer das Zertifikat verstehen, aber\n"
+"\\tnicht wenn Ihr Name dort steht.\n"
+"\n"
+"\\tDesweiteren benoetigen Server Zertifikate nicht unbedingt ein\n"
+"\\tPasswort, da man dieses bei jedem Start des Servers eingeben\n"
+"\\tmuesste.\n"
+"\n"
+"Land: Geben Sie einen 2-stelligen Laendercode ein\n"
+"\\t(z.B. DE = Deutschland).\n"
+"\n"
+"Passwort eingeben: Geben Sie ein Passwort fuer dieses Zertifikat\n"
+"\\tein oder lassen eins generieren.\n"
+"\n"
+"Passwort generieren: Hier kann man ein Passwort generieren lassen.\n"
+"\n"
+"Bundesstaat: Geben Sie einen Bundesstaat ein.\n"
+"\n"
+"Standort: Geben Sie eine Stadt ein.\n"
+"\n"
+"Organisation: Geben sie eine Organisation ein.\n"
+"\n"
+"Organisationseinheit: Geben sie eine Organisationeinheit ein (z. B.\n"
+"\\tSystem).\n"
+"\n"
+"Mail: Geben Sie eine Mailadresse an.\n"
+"\n"
+"Gueltigkeit: Geben Sie die Gueltigkeit des Zertifikats in Tagen\n"
+"\\tein. Standard ist 3650 Tage = 10 Jahre.\n"
+"\n"
+"Schluessellaenge: Waehlen Sie die Schluessellaenge aus. Zur Auswahl\n"
+"\\tstehen 1024, 2048 und 4096 Bit. Standard ist 4096 Bit.\n"
+"\n"
+"Digest: Waehlen Sie den Digest aus. Zur Auswahl stehen SHA-1, MD2,\n"
+"\\tMDC2, MD4, MD5 und RIPEMD-160. Standard ist SHA-1.\n"
+msgstr ""
+
+#: ../../help/kwssl2/help:3
+msgid ""
+"Mit kwssl2 koennen Sie x509 und S/MIME Zertifikate fuer Server und\n"
+"Clients erzeugen und verwalten. Sie koennen zwischen RSA und DSA,\n"
+"mit verschiedenen Digest Algorithmen, Schluesseln auswaehlen.\n"
+"\n"
+"RootCA: Verwaltet die Root Certifications Authority (CA).\n"
+"\\tDiese muss vor allen anderen CAs erstellt werden.\n"
+"\n"
+"SubCA: Verwaltet die SubCas Certifications Authorities (CA).\n"
+"\\tMan kann verschiedene SubCas erstellen und darin Zertifikate\n"
+"\\terstellen, importieren, exportieren, ....\n"
+msgstr ""
+
+#: ../../help/kwssl2/main_ca_help:3
+msgid ""
+"oeffnen: Oeffnen einer vorhandenen SubCa. Wird benoetigt um\n"
+"\\tsich Zertifikate der SubCA anzuschauen bzw. diese SubCA weiter zu\n"
+"\\tverwalten.\n"
+"\n"
+"NOTIZ: Diesen Menuepunkt gibt es nur bei SubCAs angezeigt und Sie\n"
+"\\tmuessen erst eine SubCA anlegen oder oeffnen, bevor Sie weitere\n"
+"\\tSchritte unternehmen koennen.\n"
+"\n"
+"Konfiguration: Verwaltung der Konfigurationsdatei der CAs.\n"
+"\n"
+"Ansicht: Anzeige von ein oder mehreren Zertifikaten einer CA.\n"
+"\\tDies koennen die Zertifikate der \"RootCA\" oder dessen SubCAs\n"
+"\\tsein.\n"
+"\n"
+"anlegen: Erstellt eine CA. Entweder eine \"RootCA\" oder eine\n"
+"\\t\"SubCA\". Die \"RootCA\" muessen Sie als erstes erstellen. In allen\n"
+"\\terstellten SubCAs kann man Zertifikate erstellen und verwalten.\n"
+"\n"
+"NOTIZ: SubCAs - diese werden mit der Passphrase der \"RootCA\"\n"
+"\\tunterschrieben und signiert.\n"
+"\n"
+"Zertifikat erstellen: Erstellt Zertifikate fuer die jeweilige SubCA.\n"
+"\n"
+"NOTIZ: Diesen Menuepunkt gibt es nur bei SubCAs.\n"
+"\n"
+"NOTIZ: Zertifikate fuer Server - denken Sie daran das einige Server\n"
+"\\tnur den \"allgemeiner Name: servername.example.de\" im Zertifikat\n"
+"\\tverstehen, aber nicht wenn Ihr Name dort steht.\n"
+"\n"
+"CA importieren: Importiert Zertifikate in die jeweilige CA.\n"
+"\n"
+"CA exportieren: Exportiert Zertifikate der jeweiligen CA in\n"
+"\\tverschiedene Formate (PEM, DER, TXT und PKCS#12).\n"
+"\n"
+"CA ungueltig: Erklaert Zertifikate fuer ungueltig.\n"
+"\n"
+"loeschen: Loescht ein oder mehrere ungueltige Zertifikate.\n"
+msgstr ""

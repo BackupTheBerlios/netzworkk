@@ -1,0 +1,5 @@
+kwraid::Status::RAID Auswahl::Hilfe
+
+Hier kann man eine oder mehrere RAID Arrays zur Statusanzeige
+auswaehlen. Dazu zaehlen auch Arrays die in anderen Arrays
+vorkommen (Bsp.: RAID10).

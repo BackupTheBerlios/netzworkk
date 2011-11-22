@@ -1,0 +1,20 @@
+# conf_help fuer kwrsync{{{
+TITLE="${gv_Configuration}::${gv_Help}"
+MSG=$(gettext 'Zielrechner: Eingabe der IP-Nummern oder Namen der Zielrechner. Name
+\tgeht nur wenn dieser Rechner auch bekannt ist (z.B. DNS).
+
+Remote_shell: Welche Shell soll fuer die Uebertragung genutzt
+\twerden. Zur Auswahl stehen rsh und ssh, falls sie
+\tinstalliert sind. Die ssh besitzt eine Kompression und
+\tuebertraegt alles verschluesselt.
+
+Bandbreite: Geben Sie hier ein Limit fuer die Bandbreite, in
+\tKbyte/s, bei der Uebertragung ein (256=256Kb/s).
+
+Home_Sync_Cron: Soll das Homeverzeichnis auch per Cron
+\tsynchronisiert werden (ja/nein)?
+
+crontab: Das Script kwrsync_cron in die crontab Tabelle des Users
+\teinfuegen oder loeschen. kwrsync_cron fuehrt rsync aus und
+\tschickt bei Fehlern eine Mail.')
+#}}}

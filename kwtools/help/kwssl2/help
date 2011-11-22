@@ -1,0 +1,14 @@
+# help fuer kwssl2{{{
+TITLE="$gv_Help"
+MSG=$(gettext 'Mit kwssl2 koennen Sie x509 und S/MIME Zertifikate fuer Server und
+Clients erzeugen und verwalten. Sie koennen zwischen RSA und DSA,
+mit verschiedenen Digest Algorithmen, Schluesseln auswaehlen.
+
+RootCA: Verwaltet die Root Certifications Authority (CA).
+\tDiese muss vor allen anderen CAs erstellt werden.
+
+SubCA: Verwaltet die SubCas Certifications Authorities (CA).
+\tMan kann verschiedene SubCas erstellen und darin Zertifikate
+\terstellen, importieren, exportieren, ....
+')
+#}}}

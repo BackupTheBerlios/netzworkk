@@ -1,0 +1,14 @@
+kwfirewall::start_stop_reload::Hilfe
+
+start: Startet die Firewall, falls sie noch nicht laeuft. Ansonsten
+        wird man darauf aufmerksam gemacht das man den Menuepunkt
+        stop benutzen soll.
+
+stop: Stopt die Firewall, falls sie schon laeuft. Ansonsten wird
+        man darauf aufmerksam gemacht das man den Menuepunkt start
+        benutzen soll.
+
+reload: Liest die Firewall Konfiguration neu ein, falls die
+        Firewall schon laeuft. Ansonsten wird man darauf aufmerksam
+        gemacht das man den Menuepunkt start benutzen soll.
+

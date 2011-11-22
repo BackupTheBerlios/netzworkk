@@ -1,0 +1,18 @@
+kwrsync::Konfiguration:Hilfe
+
+Zielrechner: Eingabe der IP-Nummern oder Namen der Zielrechner. Name
+        geht nur wenn dieser Rechner auch bekannt ist (z.B. DNS).
+        Die Erreichbarkeit wird nach der Eingabe geprueft.
+
+Remote_shell: Auswahl der installierten remote Shells (z.B. ssh).
+
+Bandbreite: Geben Sie hier ein Limit fuer die Bandbreite, in
+        Kbyte/s, bei der Uebertragung ein (256=256Kb/s).
+
+Home_Sync_Cron: Soll das Homeverzeichnis auch per Cron
+        synchronisiert werden (ja/nein)?
+
+crontab: Das Script kwrsync_cron in die crontab Tabelle des Users
+        einfuegen oder loeschen. kwrsync_cron fuehrt rsync aus und
+        schickt bei Fehlern eine Mail.
+

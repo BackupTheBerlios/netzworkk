@@ -1,0 +1,934 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke <kiste@netzworkk.de> 12.05.2011
+#
+# Script: kwcryptsetup, Erstellung und Bearbeitung von verschluesselten
+# Devices mittels cryptsetup.
+#
+# Version: 0.1.4
+
+# Ausführen von Befehlen auf bestimmte Signale.
+# Notiz. Immer den Namen verwenden, da es auf einigen OS
+# eine andere Numerierung geben kann.
+#
+trap 'setterm -inversescreen off ; setterm -reset ;
+rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+#
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+# script_init enthält die globalen Scripteinstellungen und lädt
+# diese automatisch.
+#
+autoload -U script_init
+
+# Scriptinitialisierung
+script_init
+
+root_check
+
+# Variablen
+SINGLE_BLOCK_DEVICE_MSG=$(gettext 'Waehlen Sie ein Laufwerk aus.')
+MULTI_BLOCK_DEVICE_MSG=$(gettext 'Waehlen Sie ein oder mehrere Laufwerke aus.')
+CRYPT_PREFIX="kwcryptsetup"
+TABFILE="/etc/crypttab"
+MAPPER="/dev/mapper"
+OPENSSL="`which openssl`"
+GNUPG="`which gpg`"
+
+prog_check cryptsetup dmsetup losetup
+if [ ! -z "$NO_PROGS" ] ; then
+	exit 0
+fi
+
+# Loop Support des Kernels ueberpruefen
+kernel_release
+# Funktion (no_loop_support_msg), Nachricht das der Kernel kein# {{{
+# Support fuer das loopback Device bietet.
+#
+no_loop_support_msg() {
+	MSG=$(gettext 'Das Module loop konnte nicht geladen werden. Wahrscheinlich besitzt Ihr Kernel kein loopback Device Support. Das Script beendet sich jetzt.')
+	msgbox "$gv_Attention" "$MSG"
+}
+## }}}
+if [ -z ${(M)${(f)"$(< /proc/devices)"}##[[:space:]]*loop*} ] ; then
+	load_module loop || \
+	no_loop_support_msg
+	exit 0
+fi
+
+# Falls noch nicht geladen oder als Builtin im Kernel,
+# das Modul dm-crypt laden
+load_module dm-crypt
+
+# Nachdem das Script initialisiert wurde, kann man die anderen
+# benötigten Funktionen laden.
+autoload -U choice_key_file decrypt no_luks_cryptdev_msg
+
+# Wenn es die oder eine von den Konfigurationsdateien kwcryptsetuprc
+# und cryptdisks gibt einlesen.
+#
+read_file kwcryptsetuprc
+if [ -f /etc/default/cryptdisks ] ; then
+	source /etc/default/cryptdisks
+fi
+#
+if [ "$gv_K_Minor" = 6 -a "$gv_K_S_Minor" -gt 10 ] ; then
+	CIPHER="aes-cbc-essiv:sha256"
+else
+	CIPHER="aes-plain"
+fi
+
+# translation Variablen
+lv_Management=$(gettext 'Management')
+lv_Drive=$(gettext 'Laufwerke')
+
+# Funktion main_menu# {{{
+lv_Container=$(gettext 'Container')
+lv_Drives=$(gettext 'Laufwerke')
+lv_Key=$(gettext 'Schluessel')
+lv_Luks=$(gettext 'LUKS')
+lv_Partition=$(gettext 'Partition')
+lv_Swap=$(gettext 'Swap')
+lv_Start=$(gettext 'start')
+lv_State=$(gettext 'Status')
+lv_Stop=$(gettext 'stop')
+#
+MAIN_MENU=($gv_Configuration \"\" $lv_State \"\" $lv_Luks \"\"
+$lv_Drives \"\" $lv_Key \"\" $lv_Start \"\" $lv_Stop \"\" $gv_Exit \"\")
+main_menu() {
+	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+}
+## }}}
+# Funktion (no_block_device), Nachricht das es kein Block# {{{
+# Geraet ist
+#
+no_block_device() {
+	MSG=$(gettext '$dst ist kein block Geraet.')
+	msgbox "$gv_Attention" "$MSG"
+}
+## }}}
+# Funktion parse_opts# {{{
+parse_opts() {
+	DST="$1"
+	#
+    CHECK=""
+    CHECKARGS=""
+    GPG=""
+    HASH=""
+    KEYSCRIPT=""
+	KEY_FILE=""
+	KEY_SIZE=""
+	LOUD=""
+    TMPFS=""
+    MAKESWAP=""
+	NOAUTO=""
+	NOEARLY=""
+	OFFSET=""
+	PARAMS=""
+    PRECHECK=""
+    USELUKS=""
+	READONLY=""
+    SKIP=""
+    SSL=""
+    TIMEOUT="5"
+    TRIES="3"
+	VERIFY=""
+	#
+	Opt="`print ${${(s: :)${(M)"${(f)$(< $TABFILE)}"##${DST}[[:space:]]*}}[4]}`"
+	if [ -n "$Opt" ] ; then
+		while test "x$Opt" != "x" ; do
+        	ARG="${Opt/,*/}"
+        	Opt="${Opt##${ARG}}"
+			Opt=${Opt##,}
+        	PARAM="${ARG/=*/}"
+			#
+	        case "$ARG" in
+	          *=*)
+	            PARAM="${ARG/=*/}"
+	            VALUE="${ARG##$PARAM=}"
+	            ;;
+	          *)
+	            PARAM="$ARG"
+	            VALUE=""
+	            ;;
+	        esac
+			#
+			case "$PARAM" in
+				check)
+					if [ -z "$VALUE" ] ; then
+						CHECK="${CRYPTDISKS_CHECK}"
+					else
+						CHECK="$VALUE"
+					fi
+					if [ "$CHECK" -a -x /lib/cryptsetup/checks/${CHECK} ]; then
+						CHECK="/lib/cryptsetup/checks/${CHECK}"
+					else
+						MSG=$(gettext 'check $CHECK ist kein ausfuehrbares Script, wird ignoriert.')
+						CHECK=""
+					fi
+					;;
+				checkargs)
+					if [ -n "$VALUE" ] ; then
+						CHECKARGS="$VALUE"
+					fi
+					;;
+				cipher)
+		            if [ -z "$VALUE" ] ; then
+						MSG=$(gettext '$DST: Es ist kein Wert fuer die Option "cipher" vorhanden, wird ignoriert.')
+						msgbox "$gv_Info" "$MSG"
+					else
+						CIPHER="$VALUE"
+						PARAMS="$PARAMS -c $VALUE"
+		            fi
+					;;
+				gpg)	GPG="yes"
+					;;
+				hash)
+					if [ -z "$VALUE" ] ; then
+						MSG=$(gettext '$DST: Es ist kein Wert fuer die Option "hash" vorhanden, wird ignoriert.')
+						msgbox "$gv_Info" "$MSG"
+					else
+						HASH="$VALUE"
+						PARAMS="$PARAMS -h $VALUE"
+            		fi
+					;;
+				keyscript)
+		            if [ -z "$VALUE" ] ; then
+						MSG=$(gettext '$DST: Es ist kein Wert fuer die Option "keyscript" vorhanden, wird ignoriert.')
+						msgbox "$gv_Info" "$MSG"
+					else
+		            	KEYSCRIPT="$VALUE"
+		            fi
+					;;
+				loud)	LOUD="yes"
+					;;
+				luks)	USELUKS="yes"
+					;;
+				noauto)
+					if [ -n "$VALUE" ]; then
+						NOAUTO="yes"
+					else
+						NOAUTO="no"
+					fi
+					;;
+				noearly)
+					if [ -n "$VALUE" ]; then
+						NOEARLY="yes"
+					else
+						NOEARLY="no"
+					fi
+					;;
+				offset)
+            		if [[ -z "$VALUE" || "$VALUE" != <->* ]] ; then
+						MSG=$(gettext '$DST: Es ist kein Wert fuer die Option "offset" vorhanden, wird ignoriert.')
+					else
+						OFFSET="$VALUE"
+            			PARAMS="$PARAMS -o $VALUE"
+           			fi
+           			;;
+				precheck)
+					if [ -z "$VALUE" ] ; then
+						PRECHECK="${CRYPTDISKS_PRECHECK}"
+					else
+						PRECHECK="$VALUE"
+					fi
+					if [ "$PRECHECK" -a -x /lib/cryptsetup/checks/${PRECHECK} ]; then
+						PRECHECK="/lib/cryptsetup/checks/${PRECHECK}"
+					else
+						MSG=$(gettext 'precheck $PRECHECK ist kein ausfuehrbares Script, wird ignoriert.')
+					fi
+					;;	
+				readonly)
+					PARAMS="$PARAMS -r"
+					READONLY=readonly
+					;;
+				size)
+            		if [[ "$VALUE" != <->* ]] ; then
+						MSG=$(gettext '$DST: Dieser Wert ($VALUE) fuer "size" ist inkorrekt, wird ignoriert.')
+						msgbox "$gv_Info" "$MSG"
+					else
+						KEY_SIZE="$VALUE"
+						PARAMS="$PARAMS -s $VALUE"
+           			fi
+					;;
+				skip)
+            		if [[ "$VALUE" != <->* ]] ; then
+						MSG=$(gettext '$DST: Es ist kein Wert fuer die Option "skip" vorhanden, wird ignoriert.')
+					else
+						SKIP="$VALUE"
+            			PARAMS="$PARAMS -p $VALUE"
+           			fi
+					;;
+				ssl)	SSL="yes"
+					;;
+				swap)
+					MAKESWAP=yes
+					;;
+				timeout)
+					if [ -z "$VALUE" ] ; then
+						TIMEOUT="${CRYPTDISKS_TIMEOUT}"
+		            else
+						TIMEOUT="$VALUE"
+		            fi
+		            case "$TIMEOUT" in
+		              [0-9]*)
+		            	PARAMS="$PARAMS --timeout=$TIMEOUT"
+						;;
+		              *)
+						MSG=$(gettext 'Die Option TIMEOUT ($TIMEOUT) ist falsch gesetzt - wird auf 5 gesetzt.')
+						msgbox "$gv_Info" "$MSG"
+						TIMEOUT="5"
+						;;
+		            esac
+					;;
+				tmp)
+					if [ -z "$VALUE" ] ; then
+            			TMPFS="ext2"
+					else
+            			TMPFS="$VALUE"
+					fi
+            		;;
+				tries)
+					if [ -n "$VALUE" ] ; then
+						TRIES="$VALUE"
+		            fi
+		            case "$TRIES" in
+		              [1-9]*)
+						;;
+		              *)
+						MSG=$(gettext '$DST: Die Option TRIES ($TRIES) ist falsch gesetzt - wird auf 3 gesetzt.')
+						msgbox "$gv_Info" "$MSG"
+						TRIES="3"
+						;;
+		            esac
+					PARAMS="$PARAMS --tries=$TRIES"
+					;;
+				verify)
+					VERIFY=yes
+					PARAMS="$PARAMS -y"
+					;;
+			esac
+		done
+	fi
+	#
+	if [ "$SSL" != "" -a "$GPG" != "" ]; then
+		MSG=$(gettext '$DST: Die Optionen ssl und gpg sind nicht zusammen erlaubt, wird ignoriert.')
+		msgbox "$gv_Info" "$MSG"
+    fi
+}
+## }}}
+# Funktion parse_key# {{{
+parse_key() {
+	DEVICE="$1"
+	KEY_FILE=${${${(s: :)${(M)"${(f)$(< $TABFILE)}"##${DEVICE}[[:space:]]*}}[3]}%% *}
+}
+## }}}
+# Funktion cryptdisk_stop# {{{
+#
+# usage: cryptdisk_stop [ -c ] "$DST"
+#
+# -c  - soeben erstelltes verschluesseltes Laufwerk beenden
+# DST - verschluesseltes Laufwerk
+#
+cryptdisk_stop() {
+	unset -- OpenCount
+	local OpenCount
+	if [ "$#" -gt 1 -a "$1" = "-c" ] ; then
+		dst="$2"
+		if test -b ${MAPPER}/${dst} ; then
+			OpenCount=$(dmsetup info -c --noheadings -o open $dst 2>/dev/null)
+			if (( $OpenCount == 0 )) ; then
+				loop_close ${MAPPER}/${dst}
+			else
+				# Laufwerk ist in Benutzung und muss erst ausgebunden (umounted)
+				# werden.
+				#
+				# Funktion mount_check dient zum ausbinden des Laufwerks.
+				mount_check -u ${MAPPER}/${dst}
+				if [ "$U_MOUNT" = yes ] ; then
+					loop_close ${MAPPER}/${dst}
+				fi
+			fi
+		fi
+	else
+		dst="$1"
+		dmsetup mknodes
+		print ${(M)"${(f)$(< $TABFILE)}"##(s#)${dst}[[:space:]]*} | while read dst src key opt ; do
+			if [ -b "${MAPPER}/${dst}" ] ; then
+				OpenCount=$(dmsetup info -c --noheadings -o open $dst 2>/dev/null)
+				if (( $OpenCount == 0 )) ; then
+					loop_close ${MAPPER}/${dst}
+				else
+					# Laufwerk ist in Benutzung und muss erst ausgebunden (umounted)
+					# werden.
+					#
+					# Funktion mount_check dient zum ausbinden des Laufwerks.
+					mount_check -u ${MAPPER}/${dst}
+					if [ "$U_MOUNT" = yes ] ; then
+						loop_close ${MAPPER}/${dst}
+					fi
+				fi
+			else
+				MSG=$(gettext 'Das Laufwerk $dst wurde schon gestoppt.')
+				msgbox "$gv_Info" "$MSG"
+			fi
+		done
+	fi
+}
+## }}}
+# Funktion cryptdisk_start# {{{
+#
+# usage: cryptdisk_start [ -r ] "$DST"
+# -r  - resize
+# DST - Ziellaufwerk
+#
+cryptdisk_start() {
+	unset -- Resize_Opt Dst
+	#
+	if [[ ${#argv} == 2 ]] && [[ $1 == -r ]] ; then
+		Resize_Opt="$1"
+		Dst="$2"
+	elif [[ -n $1 ]] ; then
+		Dst="$1"
+	else
+		no_para_msg $0
+		return 1
+	fi
+	#
+	unset -- dst src key opt
+	#
+	dmsetup mknodes
+	# externes Medium einbinden (Schluessel)
+	if [ -n "$MOUNT_PATH" ] ; then
+		mount_fs
+	fi
+	print ${(M)"${(f)$(< $TABFILE)}"##(s#)${Dst}[[:space:]]*} | while read dst src key opt ; do
+		if [ ! -b ${MAPPER}/${dst} ] ; then
+			if [ -n "$src" -o -n "$key" -o -n "$opt" ] ; then
+				# Make sure source device exists
+				if [ -r "$src" ] ; then
+					parse_opts $dst
+					if [ "$MAKESWAP" != yes ] ; then
+						check_key
+					fi
+					# loopback Device falls nötig.
+					if [ -f "$src" ] ; then
+						lo_setup
+						if [ -n "$gv_Loop_Dev" ] ; then
+							losetup $gv_Loop_Dev $src || return 1
+							src=$gv_Loop_Dev
+						else
+							return 1
+						fi
+					fi
+					# Luks Erweiterung benutzen?
+					if [ "$USELUKS" = "yes" ] ; then
+						cryptdisk_luks
+					else
+						cryptdisk_noluks
+					fi
+					if [ $? -ne 0 ]; then
+						# Loop Device entfernen
+						MSG=$(gettext 'Die Aktivierung von $dst ist fehlgeschlagen.')
+						msgbox "$gv_Attention" "$MSG"
+						if ! lo_setup -r "$gv_Loop_Dev" ; then
+							return 1
+						fi
+					else
+						cryptdisk_swap $dst
+						cryptdisk_tmp $dst
+					fi
+					# Passphrase loeschen, falls nicht schon vorher geschehen
+					# durch die Funktionen cryptdisk_(no)luks.
+					unset -- PASSPHRASE
+					#
+					clean_keys
+				else
+					MSG=$(gettext 'Das Quell Laufwerk ($src) ist nicht vorhanden.')
+					msgbox "$gv_Attention" "$MSG"
+				fi
+			else
+				MSG=$(gettext 'Es sind nicht alle Felder in der Datei $TABFILE belegt.')
+				msgbox "$gv_Attention" "$MSG"
+			fi
+		else
+			MSG=$(gettext 'Das Ziellaufwerk ($dst) laeuft bereits.')
+			msgbox "$gv_Attention" "$MSG"
+		fi
+		#
+		if [ "$Resize_Opt" = -r ] ; then
+			cryptsetup --verbose resize "$dst"
+		fi
+	done
+	# Externes Medium ausbinden (Bsp. Schluessel auf USB)
+	umount_fs
+	return 0
+}
+## }}}
+# Funktion cryptdisk_close# {{{
+# pruefen ob es eine Luks Erweiterung gibt, ansonsten einfach nur entfernen.
+cryptdisk_close() {
+	dst="$1"
+	opt=${${${(s: :)${(M)"${(f)$(< $TABFILE)}"##${dst}[[:space:]]*}}[4]}%% *}
+	if [ -z ${(M)${opt}##*luks*} ] ; then
+		cryptsetup remove "$dst" || return 1
+	else
+		if [ -z "$src" ] ; then
+			src=${${${(s: :)${(M)"${(f)$(< $TABFILE)}"##${dst}[[:space:]]*}}[2]}%% *}
+		fi
+		if ! cryptsetup isLuks $src &>/dev/null ; then
+			# benutze Container, ansonsten Block Devices.
+			if [ -f "$src" ] ; then
+				cryptsetup remove "$dst" || return 1
+			else
+				cryptsetup luksClose "$dst" || return 1
+			fi
+		else
+			cryptsetup luksClose "$dst" || return 1
+		fi
+	fi
+}
+## }}}
+# Funktion no_cryptdev_msg# {{{
+no_cryptdev_msg() {
+	MSG=$(gettext 'Es ist kein verschluesseltes Laufwerk vorhanden.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
+# Funktion check_key# {{{
+#
+check_key() {
+	if [ ! -z "$key"  ] && [ "$key" != "none" ] ; then
+		INTERACTIVE="no"
+		if [ -e "$key" ] ; then
+			MODE=${${${(s: :)$(ls -l $key)}[1]}[1,9]}
+			OWNER=${${(s: :)$(ls -l $key)}[3]}
+			#
+			# luks requires a persistent key, /dev/*random is not supported
+			if [ "$USELUKS" = "yes" ] && [ "$key" != "${key%random}" ]; then
+				MSG=$(gettext 'LUKS arbeitet nicht mit zufaelligen Daten als Schluessel.')
+				msgbox "$gv_Attention" "$MSG"
+				return 1
+			fi
+			if [ "$key" = "${key%random}" ] && [ "$MODE" != "-r--------" ]; then
+				MSG=$(gettext 'Unsicherer Modus fuer den Schluessel $key.')
+				msgbox "$gv_Attention" "$MSG"
+				# don't break here for now
+				# return 1
+			fi
+			if [ "$OWNER" != root ] ; then
+				MSG=$(gettext 'Unsicherer Eigentuemer fuer den Schluessel $key.')
+				msgbox "$gv_Attention" "$MSG"
+				# don't break here for now
+				# return 1
+			fi
+		else
+			MSG=$(gettext 'Es wurde die Schluesseldatei fuer $dst nicht gefunden.')
+			msgbox "$gv_Attention" "$MSG"
+		fi
+		# Entschluesselung
+		if [ "$SSL" = "yes" ] ; then
+			if [ -x "$OPENSSL" ] ; then
+				decrypt -s $key && key=$gv_TmpKey
+			else
+				no_prog_exec_msg openssl
+			fi
+		elif [ "$GPG" = "yes" ]; then
+			if [ -x "$GNUPG" ]; then
+				decrypt -g $key && key=$gv_TmpKey
+			else
+				no_prog_exec_msg gnupg
+			fi
+		fi
+	else
+		INTERACTIVE="yes"
+	fi
+	return 0
+}
+## }}}
+# Funktion clean_keys# {{{
+clean_keys() {
+	if [ "$gv_TmpKey" -a -f "$gv_TmpKey" ] ; then
+		shred -uz $gv_TmpKey && gv_TmpKey=""
+	fi
+}
+## }}}
+# Funktion cryptdisk_luks# {{{
+cryptdisk_luks() {
+	if ! cryptsetup isLuks $src &>/dev/null ; then
+		MSG=$(gettext '$src ist keine LUKS Partition.')
+		msgbox "$gv_Attention" "$MSG"
+		return 1
+	fi
+
+	if [ "x$KEYSCRIPT" != "x" ] ; then
+		lv_Params=($PARAMS --key-file=-)
+		$KEYSCRIPT $key <&1 | cryptsetup ${=lv_Params} luksOpen $src $dst || return 1
+	else
+		if [ "$INTERACTIVE" != "yes" ] ; then
+			lv_Params=($PARAMS --key-file=$key)
+			cryptsetup ${=lv_Params} luksOpen $src $dst <&1 || return 1
+		else
+			# passwordbox
+			PASSWD_START_MSG=$(gettext 'Geben Sie einen vorhandenen Schluessel fuer das Laufwerk "$dst" ein.')
+			password "$gv_Passwd_TITLE" "$PASSWD_START_MSG"
+			if [ -n "$PASSPHRASE" ] ; then
+				#cryptsetup $PARAMS luksOpen $src $dst <&1
+				# Option -y verify-password streichen, wird nicht bei einer Password
+				# Eingabe benötigt.
+				lv_Params=(${PARAMS//-y/})
+				echo $PASSPHRASE | cryptsetup ${=lv_Params} luksOpen $src $dst || return 1
+			else
+				no_input_msg
+				return 1
+			fi
+		fi
+	fi
+
+	if [ -n "$CHECK" ] && ! $CHECK $MAPPER/$dst $CHECKARGS ; then
+		MSG=$(gettext 'Die Ueberpruefung von ${MAPPER}/${dst} ist fehlgeschlagen. Das verschluesselte Geraet $dst wird entfernt.')
+		msgbox "$gv_Attention" "$MSG"
+		cryptsetup luksClose $dst
+		return 1
+	fi
+	return 0
+}
+## }}}
+# Funktion cryptdisk_noluks# {{{
+cryptdisk_noluks() {	
+	# blkid Version herausfinden, ob un_blkid oder un_vol_id benutzt
+	# werden soll
+	blkid_version
+	if [ -z "$PRECHECK" -a -x /lib/cryptsetup/checks/${gv_UnVol_Id} ] ; then
+		PRECHECK="/lib/cryptsetup/checks/${gv_UnVol_Id}"
+		if ! ($PRECHECK $src swap 2>/dev/null) && \
+				[ "$MAKESWAP" != "yes" ] && \
+				! /lib/cryptsetup/checks/${gv_Vol_Id} $src swap >/dev/null ; then
+			MSG=$(gettext 'Die Vorueberpruefung von $src ist fehlgeschlagen.')
+			msgbox "$gv_Attention" "$MSG"
+			return 1
+		fi
+	fi
+
+	if [ -n "$KEYSCRIPT" ] ; then
+		lv_Params=($PARAMS --key-file=-)
+		$KEYSCRIPT $key <&1 | cryptsetup ${=lv_Params} create $dst $src || return 1
+	else
+		if [ "$INTERACTIVE" != "yes" ] ; then
+			lv_Params=($PARAMS --key-file=$key)
+			cryptsetup ${=lv_Params} create $dst $src <&1 || return 1
+		else
+			# passwordbox
+			PASSWD_START_MSG=$(gettext 'Geben Sie einen Schluessel fuer das Laufwerk "$dst" ein.')
+			password "$gv_Passwd_TITLE" "$PASSWD_START_MSG"
+			if [ -n "$PASSPHRASE" ] ; then
+				# cryptsetup $PARAMS luksOpen $src $dst <&1
+				# Option -y verify-password streichen, wird nicht bei einer Password
+				# Eingabe benötigt.
+				lv_Params=(${PARAMS//-y/})
+				echo $PASSPHRASE | cryptsetup ${=lv_Params} create $dst $src || return 1
+			else
+				no_input_msg
+				return 1
+			fi
+		fi
+	fi
+
+	if [ -n "$CHECK" ] && ! $CHECK $MAPPER/$dst $CHECKARGS; then
+		MSG=$(gettext 'Die Ueberpruefung von ${MAPPER}/${dst} ist fehlgeschlagen. Vielleicht ist das Passwort falsch. Das verschluesselte Geraet $dst wird entfernt.')
+		msgbox "$gv_Attention" "$MSG"
+		cryptsetup remove $dst
+		return 1
+	fi
+
+	return 0
+}
+## }}}
+# Funktion cryptdisk_swap# {{{
+cryptdisk_swap() {
+	if [ "$#" = 1 ] ; then
+		dst="$1"
+		if [[ $MAKESWAP == yes ]] ; then
+			if [[ -b ${MAPPER}/${dst} ]] ; then
+				# vorhandenes Laufwerk umounten.
+				mount_check -a "${MAPPER}/${dst}"
+				if [[ $U_MOUNT != no ]] ; then
+					# Swap Signatur erstellen und einbinden
+					mkswap "${MAPPER}/${dst}" &>/dev/null
+					# Swap mounten
+					mount_check -s "${MAPPER}/${dst}"
+				fi
+			else
+				no_block_device
+				return 1
+			fi
+		fi
+	else
+		no_para_msg $0
+		return 1
+	fi
+	return 0
+}
+## }}}
+# Funktion cryptdisk_tmp# {{{
+cryptdisk_tmp() {
+	if [ "$#" = 1 ] ; then
+		dst="$1"
+		if [[ -n $TMPFS ]] ; then
+			if [[ -b ${MAPPER}/${dst} ]] ; then
+				mkfs -t $TMPFS -q "${MAPPER}/${dst}" &>/dev/null || return 1
+				mount -t $TMPFS "${MAPPER}/${dst}" /tmp || return 1
+				chmod 1777 /tmp
+				umount /tmp
+			else
+				no_block_device
+				return 1
+			fi
+		fi
+	else
+		no_para_msg $0
+		return 1
+	fi
+	return 0
+}
+## }}}
+# Funktion mount_fs# {{{
+mount_fs() {
+	for mp in $MOUNT_PATH ; {
+		mount_check -m $mp
+	}
+}
+## }}}
+# Funktion umount_fs# {{{
+umount_fs() {
+	for mp in $MOUNT_PATH ; {
+		mount_check -u $mp
+	}
+}
+## }}}
+# Funktion check_batch_mode, unterstuetzt cryptsetup den batch-mode?# {{{
+# Nur wichtig für luksFormat.
+#
+check_batch_mode() {
+	cryptsetup --batch-mode --help &>/dev/null
+	if [ "$?" = 0 ] ; then
+		BATCH_MODE="--batch-mode"
+	else
+		unset -- BATCH_MODE
+	fi
+}
+## }}}
+# Funktion (loop_close); loop Device ausbinden# {{{
+#
+# usage: loop_close DEVICE
+#
+loop_close() {
+	if [[ $# == 1 ]] ; then
+		unset -- DmDev SrcMajor SrcMinor
+		local DmDev SrcMajor SrcMinor
+		DmDev="$1"
+		SrcMajor=$(dmsetup deps "$DmDev" 2>/dev/null | sed -e 's/^.*(\([0-9]*\), [0-9]*)$/\1/g'|| true)
+		SrcMinor=$(dmsetup deps "$DmDev" 2>/dev/null | sed -e 's/^.*([0-9]*, \([0-9]*\))$/\1/g'|| true)
+		# Cryptsetup Devices schliessen
+		cryptdisk_close ${DmDev##*/}
+		if [ $? = 0  ] ; then
+			# evtl. Loop Device schliessen
+			if [[ $SrcMajor == 7 ]] ; then
+				if ! lo_setup -r "/dev/loop${SrcMinor}" ; then
+					return 1
+				fi
+			fi
+		else
+			MSG=$(gettext 'Das verschluesselte Laufwerk $DmDev konnte nicht ausgebunden werden.')
+			msgbox "$gv_Attention" "$MSG"
+			return 1
+		fi
+	else
+		no_para_msg $0
+		return 1
+	fi
+	return 0
+}
+## }}}
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+#
+hw_conf
+fs_conf
+os_check
+# RAIDTAB bestimmen
+if_conf_file "$OS" raid
+lvm_version -q
+check_batch_mode
+main_menu
+while [ "$gv_Auswahl" ] ; do
+	case $gv_Auswahl in
+		HELP*)
+    	    # Hilfe
+			script_help help
+			main_menu
+			;;
+		$gv_Configuration)
+			# Konfiguration
+			autoload -U kwcryptsetup_conf
+			kwcryptsetup_conf
+			main_menu
+			;;
+		$lv_State)
+			# Status von verschluesselten Laufwerken anzeigen (/etc/crypttab)# {{{
+			search_cryptdev
+			# zur Auswahl anbieten
+			if [ -n "$MAP_DEV_M" ] ; then
+				STATE_TITLE="$lv_State"
+				MAP_DEV_MENU=($MAP_DEV_M)
+				checklist "$STATE_TITLE" "$MULTI_BLOCK_DEVICE_MSG" "$MAP_DEV_MENU"
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help state_help
+							checklist "$STATE_TITLE" "$MULTI_BLOCK_DEVICE_MSG" "$MAP_DEV_MENU"
+							;;
+						*)	# Auswahl anzeigen
+							rm -f ${gv_WorkDir}/dmstate &>/dev/null
+		 					for i in ${=gv_Auswahl} ; {
+								if [ -f "${gv_WorkDir}/dmstate" ] ; then
+									cryptsetup status $i 2>/dev/null >>${gv_WorkDir}/dmstate
+									print "" >>${gv_WorkDir}/dmstate
+								else
+									cryptsetup status $i 2>/dev/null >${gv_WorkDir}/dmstate
+									print "" >>${gv_WorkDir}/dmstate
+								fi
+							}
+							#
+							if [ -f ${gv_WorkDir}/dmstate -a "`wc -l < ${gv_WorkDir}/dmstate`" -gt 0 ] ; then
+								view_file ${gv_WorkDir}/dmstate
+							else
+								MSG=$(gettext 'Es ist kein Status Eintrag vorhanden. Ueberpruefen Sie ihre Konfiguration (/etc/crypttab)!')
+								msgbox "$gv_Attention" "$MSG"
+							fi
+							break
+							;;
+					esac
+				done
+			else
+				no_cryptdev_msg
+			fi
+			## }}}
+			main_menu
+			;;
+		$lv_Luks)
+			# Lukserweiterung behandeln# {{{
+			autoload -U luks_extension
+			search_cryptdev -l
+			# zur Auswahl anbieten
+			if [ -n "$MAP_DEV_M" ] ; then
+				luks_extension
+			else
+				no_luks_cryptdev_msg
+			fi
+			## }}}
+			main_menu
+			;;
+		$lv_Drives)
+			# verschluesselte Laufwerke managen.
+			autoload -U manage_cryptdisk
+			manage_cryptdisk
+			main_menu
+			;;
+		$lv_Key)
+			autoload -U manage_keys
+			manage_keys
+			main_menu
+			;;
+		$lv_Start)
+			# Laufwerke starten# {{{
+			search_cryptdev
+			if [ -n "$MAP_DEV_M" ] ; then
+				search_cryptdev -s
+				if [ -n "$MAP_DEV_M" ] ; then
+					START_TITLE="$lv_Start"
+					MAP_DEV_MENU=($MAP_DEV_M)
+					START_MSG=$(gettext 'Waehlen Sie ein oder mehrere Laufwerke aus, die Sie starten wollen.')
+					checklist "$START_TITLE" "$START_MSG" "$MAP_DEV_MENU"
+					while [ -n "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help start_help
+								checklist "$START_TITLE" "$START_MSG" "$MAP_DEV_MENU"
+								;;
+							*)	# Auswahl stoppen
+								for i in ${=gv_Auswahl} ; {
+									cryptdisk_start "$i"
+								}
+								break
+								;;
+						esac
+					done
+				else
+					MSG=$(gettext 'Es sind alle verschluesselten Laufwerke aktiv.')
+					msgbox "$gv_Info" "$MSG"
+				fi
+			else
+				no_cryptdev_msg
+			fi
+			## }}}
+			main_menu
+			;;
+		$lv_Stop)
+			# Laufwerke stoppen, die aktiv gekennzeichnet sind # {{{
+			search_cryptdev
+			if [ -n "$MAP_DEV_M" ] ; then
+				search_cryptdev -a
+				if [ -n "$MAP_DEV_M" ] ; then
+					STOP_TITLE="$lv_Stop"
+					MAP_DEV_MENU=($MAP_DEV_M)
+					STOP_MSG=$(gettext 'Waehlen Sie ein oder mehrere Laufwerke aus, die Sie stoppen wollen. Diese werden dann aus dem Dateisystem ausgebunden und gestoppt.')
+					checklist "$STOP_TITLE" "$STOP_MSG" "$MAP_DEV_MENU"
+					while [ -n "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help stop_help
+								checklist "$STOP_TITLE" "$STOP_MSG" "$MAP_DEV_MENU"
+								;;
+							*)	# Auswahl stoppen
+								for i in ${=gv_Auswahl} ; {
+									cryptdisk_stop "$i"
+								}
+								break
+								;;
+						esac
+					done
+				else
+					MSG=$(gettext 'Es sind keine aktiven verschluesselten Laufwerke vorhanden.')
+					msgbox "$gv_Info" "$MSG"
+				fi
+			else
+				no_cryptdev_msg
+			fi
+			## }}}
+			main_menu
+			;;
+		$gv_Exit)	break
+			;;
+	esac
+done	
+#
+# umounten der Mount-Verzeichnisse falls nicht schon getan.
+umount_fs
+exit 0

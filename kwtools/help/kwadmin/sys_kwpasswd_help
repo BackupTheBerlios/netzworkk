@@ -1,0 +1,4 @@
+# sys_kwpasswd_help fuer kwadmin{{{
+MSG=$(gettext 'kwpasswd: Frontend zur Passwortaenderung. Unterstuetzt zur Zeit
+\tnur die Programme \"passwd\" und \"yppasswd\" (NIS).')
+#}}}

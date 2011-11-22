@@ -1,0 +1,13 @@
+kwlvm::Hilfe
+
+Mit kwlvm koennen Sie Physikalische Volumes, Volume Groups und
+logische Volumes erstellen, sich anzeigen lassen, vergroessern,
+verkleinern, zusammenfuegen, splitten, verschieben, und loeschen.
+
+PV: Physikalische Volumes, das koennen Festplattenpartitionen sein.
+
+VG: Volume Groups sind virtuelle Festplatten, die eine oder 
+    mehrere PV's zusammen fassen koennen.
+
+LV: Logische Volumes sind virtuelle Partitionen, auf welchen
+    dann Dateisysteme angelegt werden koennen.

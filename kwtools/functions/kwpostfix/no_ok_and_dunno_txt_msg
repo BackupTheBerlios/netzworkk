@@ -1,0 +1,7 @@
+# Funktion no_ok_and_dunno_txt_msg# {{{
+# usage: no_ok_and_dunno_txt_msg
+no_ok_and_dunno_txt_msg() {
+	MSG=$(gettext 'Bei der Aktion (OK oder DUNNO) kann man keinen Antworttext vergeben.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}

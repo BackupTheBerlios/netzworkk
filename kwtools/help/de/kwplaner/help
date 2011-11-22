@@ -1,0 +1,28 @@
+kwplaner::Hilfe
+
+kwplaner vereinigt verschiedene Scripts fuer Ihre Terminverwaltung.
+
+Konfiguration: Konfiguration von gcal und calendar.
+
+kwholiday: Hier kann man sich die Feiertage anschauen, entsprechend
+        seinem Bundesland. Alle Tage die mit einem + in der 2.
+        Spalte beginnen sind reale Feiertage im konfigurierten
+        Bundesland.
+
+kwtex-cal: kann einen Jahreskalender mit Bildern erzeugen und auch
+        ausdrucken. Die Bilder (jpeg) kann man im Verzeichnis
+        ~/.kwtools/kwplaner ablegen. Es muessen 13 Stueck sein, 12
+        Monate+1 Deckblatt. Die Numerierung faengt bei 0 an (0-12)
+        Beispiel: 0.jpg - 12.jpg. 0.jpg ist das Deckblatt, der Rest
+        wird normal hochgezaehlt, also 1.jpg ist Januar, u.s.w..
+        Die Bilder werden automatisch in die richtige Groesse
+        konvertiert.
+
+        NOTIZ: Es werden nur die konfigurierten Feiertage gedruckt.
+               Ist kein Bundesland konfiguriert kommt automatisch
+               Hamburg (BRD) zum Zuge.
+
+termin: ist ein client-script, mit deren Hilfe man seine Termine
+        verwalten kann. Termine werden per mail gemeldet. Geben Sie
+        also immer Ihre Mailadresse, in der Konfiguration, an.
+

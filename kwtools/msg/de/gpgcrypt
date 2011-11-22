@@ -1,0 +1,21 @@
+haupt_menue;Konfiguration "" Schluessel_Management "" signieren "" verschluesseln "" signieren/verschl. "" entschluesseln "" beenden ""
+key_manage_import_menue;Hilfe "" Server "" Datei "" zurueck ""
+konf_menue;Standard_Schluessel_ID_lang "$TRUSTED_KEY" --------------------------- "" Schluessel_Server "$KEY_SERV_ALL" Standard_Schluessel_ID "$DEFAULT_KEY" speichern "" zurueck ""
+keyserv_menue;Protokoll "$PROTOCOL" Schluessel_Server "$KEY_SERV" Port "$PORT" speichern "" zurueck ""
+key_manage_menue;Ansicht "" aktualisieren "" erzeugen "" export "" import "" signieren "" ungueltig "" upload "" loeschen "" zurueck ""
+create_key;Sie haben noch keinen Schluessel erzeugt. Dies wird jetzt getan. Machen Sie in der Zeit etwas auf dem PC damit der Schluessel ordentlich verschluesselt wird.
+ex_key;Es ist schon ein privater Schluessel vorhanden. Soll ein neuer erzeugt werden?
+export_key;Geben Sie bitte einen Dateinamen fuer diesen oeffentlichen Schluessel ein. Dieser liegt dann in der Datei ~/.gnupg/Dateiname_pub.txt.
+import_key_server;Geben Sie bitte ein oder mehrere Schluessel ID's, durch ein Leerzeichen getrennt, ein (XXXXXX YYYYYY).
+key_serv;Geben Sie hier bitte einen Schluesselserver ein (wwwkeys.de.pgp.net).
+key_serv_port;Geben Sie bitte den Port fuer den Schluesselserver ein.
+mantra;Geben Sie ihren Mantra ein.
+no_file;Es sind keine un/verschluesselten Dateien vorhanden.
+no_gpg_file;Es sind keine Dateien zum bearbeiten mittels gpg vorhanden. Entweder sind schon alle bearbeitet worden oder es sind gar keine Dateien vorhanden.
+no_gpg_key;Es sind keine Schluessel vorhanden.
+no_key_serv;Sie muessen erst einen Schluesselserver einstellen.
+no_pub_key;Es wurde kein oeffentlicher Schluessel fuer den User "$USER" gefunden. Vielleicht eine falsche Konfiguration des eigenen Schluessels. Lesen Sie Bitte die Hilfe.
+revoke_key;Geben Sie bitte einen Dateinamen fuer ihr Ungueltigkeits Zertifikat ein. Diese Datei heiﬂt dann ~/.gnupg/Dateiname_revoke.txt.
+verfallen;verfallen am 
+verfall_time;verfaellt am 
+no_verfall;verfaellt nicht 

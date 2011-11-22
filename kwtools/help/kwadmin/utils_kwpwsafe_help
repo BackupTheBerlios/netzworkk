@@ -1,0 +1,4 @@
+# utils_kwpwsafe_help fuer kwadmin{{{
+MSG=$(gettext 'kwpwsafe: Mit diesem Script koennen Sie Ihre Passwoerter
+\tverwalten.')
+#}}}

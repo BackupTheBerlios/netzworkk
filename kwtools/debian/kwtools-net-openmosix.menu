@@ -1,0 +1,6 @@
+?package(kwtools-net-openmosix):\
+	needs="text"\
+	section="Applications/Network/File Transfer"\
+	hints="Scripts"\
+	title="openmosix"\
+	command="/usr/lib/kwtools/net/openmosix"

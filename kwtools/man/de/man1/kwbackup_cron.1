@@ -1,0 +1,61 @@
+.\"     Title: KWBACKUP_CRON
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2008
+.\"    Manual: Handbuch f\(:ur kwbackup_cron
+.\"    Source: Version 0.0.9
+.\"
+.TH "KWBACKUP_CRON" "1" "07/04/2008" "Version 0.0.9" "Handbuch f\(:ur kwbackup_cron"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwbackup_cron \- Crontab Script f\(:ur das Script kwbackup.
+.SH "SYNTAX"
+.HP 14
+\fBkwbackup_cron\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBkwbackup_cron\fR
+liest die Datei
+\fI~/\&.kwtools/kwbackuprc\fR
+ein und wird vom
+\fBCron\fR
+Daemon ausgef\(:uhrt\&. Bei Fehlern wird eine Mail an
+\(lqroot\(rq
+oder dem Benutzer verschickt, der sich
+\fBkwbackup\fR
+daf\(:ur konfiguriert hat\&. Dabei werden die Daten von
+\fBtar\fR
+archiviert und von
+\fBbzip2\fR
+komprimiert\&.
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwbackuprc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwbackup\fR
+und
+\fBkwbackup_cron\fR\&. F\(:ur weitere Details siehe
+\fBkwbackuprc\fR(5)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBbzip2\fR(1),
+\fBcron\fR(8),
+\fBcrontab\fR(1),
+\fBcrontab\fR(5),
+\fBkwbackup\fR(1),
+\fBkwbackuprc\fR(5),
+\fBtar\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

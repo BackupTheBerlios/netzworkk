@@ -1,0 +1,8 @@
+# transport_help fuer kwpostfix{{{
+TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
+MSG=$(gettext 'fifo: Benannte Weiterleitung.
+
+inet: Inet Socket.
+
+unix: Unix Domain')
+#}}}

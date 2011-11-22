@@ -1,0 +1,142 @@
+audio_burn;ogg "" mp3 "" wav "" zurueck ""
+cd_size;650 Mbyte 680 Mbyte 700 Mbyte 800 Mbyte
+chmod_conf_menue;Mode "$MOD" User "$U" Gruppe "$G" speichern "" zurueck ""
+cron_menue;Programm "$Prog_Wahl" ------------ "" Ausfuehrung "$EXEC" speichern "" loeschen "" zurueck ""
+driver_menue;cdd2600 "" generic-mmc "" generic-mmc-raw "" plextor "" plextor-scan "" ricoh-mp6200 "" sony-cdu-920 "" sony-cdu-948 "" taiyo-yuden "" teac-cdr55 "" toshiba "" yamaha-cdr10x ""
+dvd_size;4,7 "" 9,4 "" 15,9 ""
+#
+all_pv_in_vg;Es sind schon alle PVs fuer VGs vergeben.
+access;Rechte
+audio_cd;Brenne Audio-CD
+byte;Geben Sie hier bitte eine Zahl, in Byte ein (Bsp. 51200) ein.
+cdrw;Soll die CD-R(W) wirklich geloescht werden? Alle Daten gehen dabei verloren. Fortfahren (yes/no)?
+centos;Sie benoetigen eine CentOS 4.0 oder hoeher um mit diesem Modul arbeiten zu koennen.
+chmod;Geben Sie bitte die Rechte der Datei ein.	(1=ausfuehren , 2=schreiben, 4=lesen) Man kann diese Zahlen unterschiedlich zusammenrechnen (0640).
+check_input_all;Sie muessen erst alle Menuepunkte auswaehlen und mit Werten belegen.
+clocktime;Stellen Sie bitte ihre Zeit ein und bestaetigen Sie dies.
+compress;Kompression
+count;Anzahl
+create_dir;Das Verzeichnis "$DIR" ist nicht vorhanden. Soll es angelegt werden?
+create_isofs;Erstelle iso9660 Dateisystem.
+data_cd;Brenne Daten-CD.
+data_dvd;Brenne Daten-DVD.
+date;Stellen Sie bitte ihr Datum ein und bestaetigen Sie dies.
+day;Geben Sie hier bitte eine Zahl, in Tagen (Bsp. 5) ein.
+debian;Sie benoetigen ein Debian 3.0 oder hoeher um mit diesem Modul arbeiten zu koennen.
+del_file_msg;Soll(en) die (Original) Datei(en) geloescht werden (yes/no)?
+dev_leave_out;$PART_DEV wird ausgelassen.
+dir_or_file;Verzeichnis "" Dateien ""
+diff_passwd;Die Passworteingaben waren unterschiedlich.
+disk_info;Modell: $DISK_MODELL\nGroesse: $DISK_SIZE Mb
+dvd;Soll die DVD-+R(W) wirklich geloescht werden? Alle Daten gehen dabei verloren. Fortfahren (yes/no)?
+empty_passwd;Die Variable (PASSPHRASE) ist leer.
+file_name_txt;Geben sie hier bitte einen neuen Namen für die Datei ein.
+format;Soll das Laufwerk ($PART_DEV) wirklich formatiert werden? Alle Daten gehen dabei verloren. Fortfahren (yes/no)?
+fs_nomount;$MOUNTPOINT wird nicht aus dem Verzeichnisbaum ausgebunden, da es vom Betriebssystem benoetigt wird.
+id_range;Die User oder Gruppen ID muss innerhalb 0 und 65535 liegen.
+integer;Geben Sie hier bitte eine Zahl (Bsp. 3) ein.
+iso_info;Jetzt wird das Iso Image erstellt und danach gebrannt. Dies kann etwas dauern.
+ist_mount;$PART_DEV ist ins Dateisystem eingebunden. Es muss erst entfernt werden. Soll dies jetzt geschehen (yes/no)?
+logfile;Logdatei
+lv;Alle Daten gehen auf diesen Logischen Volumes verloren. Fortfahren (yes/no)?
+mail;Mail
+mail_adr;Geben Sie bitte eine mail Adresse an, an dem die Action gemailt werden soll (name@domain.de).
+menuepunkt;Waehlen sie bitte einen Menuepunkt aus.
+menu;Menue
+mis_octal_mask;Sie haben eine falsche Anzahl an Zeichen eingegeben. Sie muessen 4 oder 3 Integer Zahlen in Reihenfolge eingeben die die Rechte definieren (man 1 chmod).
+monat;Geben Sie hier bitte eine Zahl, in Monaten (Bsp. 1) ein.
+monthly;monatlich
+name;Name
+noch_nichts;Hier ist noch nichts ($INFO_MSG).
+no_access_dev;Das Device wird gerade benutzt. Versuchen Sie es spaeter nochmal.
+no_access_host;Es ist kein Rechner in diesem Netzwerk ($H_IP) bekannt/erreichbar.
+no_auswahl_msg;Sie muessen auch etwas ordentliches eingeben oder auswaehlen, ausser Sie wollten den Vorgang abbrechen.
+no_cal_msg;Sie muessen erst mindestens 1 Kalender vorher auswaehlen. Tun Sie dies Bitte in der Konfiguration von planer.
+no_cd;Es ist kein CD-+R(W)/DVD+-R(W)/DVD-RAM Laufwerk vorhanden.
+no_cdrdao;Das Programm cdrdao ist nicht auffindbar/ausfuehrbar.
+no_create_dir;Sie haben keine Rechte das Verzeichnis ${DIR%/} anzulegen.
+no_compress;keine_Kompression ""
+no_dev_cd;Es ist kein CD-+R(W)/DVD+-R(W)/DVD-RAM Laufwerk vorhanden, oder sie haben keine Rechte auf das Laufwerk.
+no_dir_msg;$DIR ist kein Verzeichnis.
+no_dirs;Es sind keine Verzeichnisse vorhanden.
+no_disk;Es sind keine Festplatten vorhanden.
+no_duplicate_dir;Das Verzeichnis ($VERZ), darf in diesem Fall nicht doppelt vergeben werden.
+no_dvd_ifo;Es gibt keine Inhalts Tabelle fuer diese DVD oder Sie sind im falschen Verzeichnis ($VERZ). Benutzen Sie vdvdburn um die Inhalts Tabelle zu erstellen.
+no_editor;Sie muessen die Variable EDITOR, mit einem Editor ihrer Wahl belegen (EDITOR=vim).
+no_empty_medium;Sie muessen einen leeren Rohling einlegen oder den vorhanden erst loeschen/formatieren.
+no_exec;Kann das Script/Programm nicht finden. Stellen Sie sicher das es installiert ist.
+no_exec_raidmonitor;Kann das Script raidmonitor nicht finden. Stellen Sie sicher das es im PATH von ../../sbin oder ../../bin liegt.
+no_exec_cdrdao;Entweder ist cdrdao nicht setuid root oder Sie haben kein CD/DVD Laufwerk.
+no_exec_prog;Sie duerfen $PROG nicht ausfuehren. Lesen sie bitte man (1) $PROG.
+no_eintrag_msg;Es ist kein Eintrag vorhanden.
+no_fdisk_prog; Es wurde keins der Programme, kwparted, cfdisk oder fdisk gefunden.
+no_file;Es sind keine ($WAS) Dateien vorhanden.
+no_file_access;Sie duerfen auf dem Device/Datei ($SYS_DEV) nicht lesen/schreiben. Sie muessen die Rechte auf Lesen/Schreiben setzen, beziehungsweise der richtigen Gruppe angehoeren.
+no_file_msg;Kann das Device oder die Datei ($SYS_DEV) nicht finden. Ist das richtige Kernel Treiber Modul geladen? Oder existiert diese Datei nicht?
+no_find_prog;Das Programm ($Prog) ist nicht auffindbar/ausfuehrbar.
+no_floppy;Es ist keine Diskette im Laufwerk. Schieben sie bitte eine rein und druecken OK.
+no_format_prog;Sie haben keine Formatierungs Werkzeuge installiert.
+no_fs_type;Es konnte kein Dateisystemtyp festgestellt werden. Lesen Sie bitte die Hilfe.
+no_fsresize_support;Dieses Dateisystem ($FS) wird noch nicht unterstuetzt.
+no_group_file;Es ist keine /etc/group Datei vorhanden.
+no_help;Hier ist noch keine Hilfe verfuegbar.
+no_host_domain;Dieser Rechner oder Domain ($Z_HOST) ist nicht bekannt/erreichbar.
+no_host;Dieser Rechner ($IP_Adr) ist nicht bekannt/erreichbar.
+no_ip;Diese IP ($H_IP) ist nicht bekannt/erreichbar.
+no_ip_adr;Diese IP ($H_IP) kann man nicht vergeben. Die letzte Zahl muss zwischen 1 bis 254 liegen.
+no_linux_part;Es sind keine Partitionen Linux vorhanden.
+no_lv;Es sind keine Logischen Volumes vorhanden.
+no_lvmiopversion;Es konnte die LVM Version nicht festgestellt werden.
+no_medium;Sie haben kein Medium in der Konfiguration angegeben. Tun Sie dies bitte.
+no_mount;$PART_DEV konnte nicht ins Dateisystem eingebunden werden.
+no_net;Dies ist ($H_IP) kein Netz.
+no_netcard;Es ist keine Netzwerkkarte vorhanden.
+no_integer_msg;Sie muessen eine Integer Zahl (Ganzzahl) eingeben (1, 2, ...).
+no_os_msg;Kann leider nicht die Distribution und Versionsnummer feststellen.
+no_package_manage;Sie haben das Paketmanagement ihres Systems nicht angegeben. Tun Sie dies bitte in der Datei $CONF_FILE.
+no_part;Es sind keine Partitionen vorhanden. Sie muessen erst Ihre Festplatten partitionieren.
+no_para;Sie haben zu wenige oder nicht genuegend Parameter der Funktion $FUNC uebergeben.
+no_passwd_file;Es ist keine /etc/passwd Datei vorhanden.
+no_pv_part;Es sind keine Partitionen, vom Typ 8e (LVM) vorhanden.
+no_raid_arrays;Es sind keine RAID Arrays vorhanden.
+no_raid_pack;Es kann kein SW Raid Programm gefunden werden.
+no_raid_part;Es sind keine Partitionen, vom Typ fd (RAID) vorhanden.
+no_remote_shell;Es ist keine Remote Shell installiert ($PATH?).
+no_root;Fuer diese Konfiguration muessen Sie sich als root einloggen.
+no_rw_device;Fuer Copy-CD muessen Sie schon ein Lese- und Schreiblaufwerk haben.
+no_select_time;Sie muessen erst die Ausfuehrungszeit angeben.
+no_sudo;Kann das Programm sudo nicht finden. Stellen Sie sicher das es installiert ist, sonst kann der User $USER_RUN nicht kwrsync_backup_cron ausfuehren.
+no_swap_part;Es ist kein Swap Device vorhanden. Sie muessen erst eins erstellen.
+no_umount;$PART_DEV konnte nicht aus dem Dateisystem entfernt werden.
+no_xfs_small;Das xfs Dateisystem kann man nicht verkleinern.
+only_audio_cd;Beim Audio-CD brennen brauchen Sie keine DVD, als Medium angeben/benutzen. Aendern Sie dies bitte in der ~/kwtools/cd_dvdrc.
+only_one_instance;Scripte mit root Rechten duerfen nur in einer Instanz laufen. Das Script beendet sich jetzt.
+over_size_cd_dvd;Die Groesse der Auswahl (${DATA_SIZE}Mb) ueberschreitet die Groesse (${MEDIUM_SIZE}Mb) der CD-R(W)/DVD-+R(W).
+over_size;Die angegebene Groesse ueberschreitet den verfuegbaren Platz. Geben Sie bitte eine andere Groesse an.
+program;Programm
+proxy;Tragen Sie bitte ihren Proxy ein (protokoll://host:port).
+pv_create;Jetzt wird auf allen ausgewaehlten, fuer LVM nutzbaren Geraeten, Physikalische Volumes erzeugt.\n$NO_PV_DEV\n\nFortfahren (yes/no)?
+raid;Jetzt wird das Array $RAIDDEV erzeugt. Alle Daten gehen auf diesem RAID Array verloren. Fortfahren (yes/no)?
+redhat;Sie benoetigen eine RedHat 9.0 oder hoeher um mit diesem Modul arbeiten zu koennen.
+rotate;Rotierzeit
+root;Fuer diese Aktion benoetigen Sie root Rechte. In den Administrator Modus wechseln (yes/no)?
+script;Script
+second;Sekunde
+seconds;Sekunden
+sekunde;Geben Sie hier bitte eine Zahl, in Sekunden (Bsp. 300) ein.
+select_dir;Waehlen sie bitte das Verzeichnis aus.
+size;Groesse
+stunden;Geben Sie hier bitte eine Zahl, in Stunden (Bsp. 4) ein.
+suse;Sie benoetigen eine SuSE 8.0 oder hoeher um mit diesem Modul arbeiten zu koennen.
+daily;taeglich
+vg;Alle Daten gehen auf diesen Volume Groups verloren. Fortfahren (yes/no)?
+video_cd;Brenne Video-CD.
+video_dvd;Brenne Video-DVD.
+week;Geben Sie hier bitte eine Zahl, in Wochen (Bsp. 3) ein.
+weekly;woechentlich
+write_speed;Geben Sie bitte die Geschwindigkeit an (0-32). Standart ist 4-fache Geschwindigkeit bei CD-R(W), 1-fache bei DVD-+R(W).
+year;Geben Sie bitte das Jahr an.
+# Sprache
+deutsch;deutsch
+englisch;englisch
+#

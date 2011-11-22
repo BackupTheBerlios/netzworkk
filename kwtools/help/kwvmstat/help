@@ -1,0 +1,20 @@
+# help fuer kwvmstat{{{
+TITLE="$gv_Help"
+MSG=$(gettext 'Mit kwvmstat koennen Sie sich einige Informationen
+ueber ihren virtuellen Speicher anzeigen lassen.
+Es wird das Programm vmstat dafuer genutzt.
+
+Konfiguration: von Verzoegerung, Anzahl und Speichereinheit fuer die
+Anzeige.
+
+a - Anzeige von in/aktivem Speicher.
+d - Statistik ueber Festplatten.
+D - Anzeige der Festplattentabelle
+f - Nummer der forks seit boot.
+m - Anzeige slabinfo.
+p - Statistik ueber Partitionen. Benoetigt "root" Rechte.
+s - Anzeige von verschiedenen Speicher Statistiken.
+
+NOTIZ: Option "p" wird nur angezeigt wenn man als "root" kwvmstat
+aufruft.')
+#}}}

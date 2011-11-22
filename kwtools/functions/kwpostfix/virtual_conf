@@ -1,0 +1,187 @@
+# virtual Parameter einstellen{{{
+#
+postconf -c $MAIL_CONFIG | grep '^virtual_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+read_file -f ${gv_WorkDir}/postfix$$
+rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+#
+# Funktion conf_virtual_menue{{{
+VIRTUAL_TITLE=$(gettext 'Konfiguration::virtual')
+conf_virtual_menue() {
+VIRTUAL_MENU=(virtual_alias_domains \"\$virtual_alias_domains\"
+virtual_alias_expansion_limit \"\$virtual_alias_expansion_limit\"
+virtual_alias_maps \"\$virtual_alias_maps\"
+virtual_alias_recursion_limit \"\$virtual_alias_recursion_limit\"
+virtual_destination_concurrency_limit \"\$virtual_destination_concurrency_limit\"
+virtual_destination_recipient_limit \"\$virtual_destination_recipient_limit\"
+virtual_gid_maps \"\$virtual_gid_maps\"
+virtual_mailbox_base \"\$virtual_mailbox_base\"
+virtual_mailbox_domains \"\$virtual_mailbox_domains\"
+virtual_mailbox_limit \"$virtual_mailbox_limit\"
+virtual_mailbox_lock \"$virtual_mailbox_lock\"
+virtual_mailbox_maps \"\$virtual_mailbox_maps\"
+virtual_minimum_uid \"\$virtual_minimum_uid\"
+virtual_transport \"\$virtual_transport\"
+virtual_uid_maps \"\$virtual_uid_maps\"
+postfix \"reload\"
+$gv_Back \"\")
+menubox "$VIRTUAL_TITLE" "$gv_Menupoint" "$VIRTUAL_MENU"
+}
+#}}}
+conf_virtual_menue
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help virtual_help
+			conf_virtual_menue
+			;;
+		virtual_alias_d*)
+			# Virtual Alias Domains{{{
+			tab_support_wahl "$gv_Auswahl"
+			virtual_alias_domains="$MAPS"
+			postconf -e virtual_alias_domains="$MAPS"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_alias_e*)
+			# Virtual Alias expansion limit{{{
+			number_input -i "$virtual_alias_expansion_limit"
+			if [ "$NUMBER" ] ; then
+				virtual_alias_expansion_limit="$NUMBER"
+				postconf -e virtual_alias_expansion_limit="$NUMBER"
+			fi
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_alias_m*)
+			# Virtual Alias Maps{{{
+			tab_support_wahl "$gv_Auswahl"
+			virtual_alias_maps="$MAPS"
+			postconf -e virtual_alias_maps="$MAPS"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_alias_r*)
+			# Virtual Alias expansion limit{{{
+			number_input -i "$virtual_alias_recursion_limit"
+			if [ "$NUMBER" ] ; then
+				virtual_alias_recursion_limit="$NUMBER"
+				postconf -e virtual_alias_recursion_limit="$NUMBER"
+			fi
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_destination_c*)
+			# Maximalanzahl gleichzeitiger Verbindungen zu einem Ziel{{{
+			number_input -i "$virtual_destination_concurrency_limit"
+			if [ "$NUMBER" ] ; then
+				virtual_destination_concurrency_limit="$NUMBER"
+				postconf -e virtual_destination_concurrency_limit="$NUMBER"
+			fi
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_destination_r*)
+			# Maximalanzahl der Empfänger in einer einzigen Mails{{{
+			# Grösser Empfängerlisten werden in mehrere Mails aufgeteilt
+			number_input -i "$virtual_destination_recipient_limit"
+			if [ "$NUMBER" ] ; then
+				virtual_destination_recipient_limit="$NUMBER"
+				postconf -e virtual_destination_recipient_limit="$NUMBER"
+			fi
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_g*)
+			# Virtual GID Maps{{{
+			tab_support_wahl "$gv_Auswahl"
+			virtual_gid_maps="$MAPS"
+			postconf -e virtual_gid_maps="$MAPS"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_mailbox_b*)
+			# Pfad der jeder Virtual Mailbox vorangestellt wird{{{
+			dselect "$virtual_mailbox_base"
+			if [ "$VERZ" ] ; then
+				dselect_check -c "$VERZ"
+				if [ "$VERZ" ] ; then
+					virtual_mailbox_base="${VERZ%/}"
+					postconf -e virtual_mailbox_base="${VERZ%/}"
+				fi
+			else
+				virtual_mailbox_base=""
+				postconf -e virtual_mailbox_base=""
+			fi
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_mailbox_d*)
+			# Virtual Mailbox Domains{{{
+			tab_support_wahl "$gv_Auswahl"
+			virtual_mailbox_domains="${MAPS}"
+			postconf -e virtual_mailbox_domains="${MAPS}"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_mailbox_li*)
+			# Max. Groesse eines Virtual Mailbox User Postfaches{{{
+			number_input -b "$virtual_mailbox_limit"
+			if [ "$NUMBER" ] ; then
+				virtual_mailbox_limit="$NUMBER"
+				postconf -e virtual_mailbox_limit="$NUMBER"
+			fi
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_mailbox_lo*)
+			# Lock Art auswaehlen{{{
+			lock_art "$virtual_mailbox_lock"
+			virtual_mailbox_lock="$WERT"
+			postconf -e virtual_mailbox_lock="$WERT"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_mailbox_m*)
+			# Virtual Mailbox Maps{{{
+			tab_support_wahl "$gv_Auswahl"
+			virtual_mailbox_maps="$MAPS"
+			postconf -e virtual_mailbox_maps="$MAPS"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_mi*)
+			# Virtual Minimum user_id{{{
+			user_id
+			if [ -z "$WERT" ] ; then
+				WERT=100
+			fi
+			#
+			virtual_minimum_uid="$WERT"
+			postconf -e virtual_minimum_uid="$WERT"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_t*)
+			# Virtual Transport Metode{{{
+			tab_support_wahl "$gv_Auswahl"
+			virtual_transport="$MAPS"
+			postconf -e virtual_transport="$MAPS"
+			#}}}
+			conf_virtual_menue
+			;;
+		virtual_u*)
+			# Zuordnung von uid zu Mailadressen{{{
+			tab_support_wahl "$gv_Auswahl"
+			virtual_uid_maps="$MAPS"
+			postconf -e virtual_uid_maps="$MAPS"
+			#}}}
+			conf_virtual_menue
+			;;
+		p*)	#
+			postfix_start_reload
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+#}}}

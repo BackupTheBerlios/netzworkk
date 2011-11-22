@@ -1,0 +1,21 @@
+kwdjbdns::Administration::axfrdns::Hilfe
+
+IP: Hier kann man die IP Adresse eingeben, fuer die der Zonentransfer
+        erlaubt oder verboten ist.
+	
+Rechnername: Hier kann man den Rechnernamen zur IP Adresse zuordnen,
+        fuer die der Zonentransfer erlaubt oder verboten ist. Der 
+        Rechnername wird automatisch mit dem Domainnamen ergaenzt,
+        falls dieser in der /etc/hosts eingetragen ist oder per DNS
+        verfuegbar ist.
+			 
+Netzwerk: Hier kann man Netzwerke eingeben fuer die der Zonentransfer
+        erlaubt oder verboten ist. Werden Netzwerke eingegeben,
+        werden die IP und der Rechnername automatisch geloescht, da
+        Sie in diesem Fall nicht benoetigt werden.
+		  
+Rechte: Hier kann man zwischen allow und deny auswaehlen.
+
+AXFR: Bei ja wird ein AXFR="host.domain.de/3.2.1.in-addr.arpa" an 
+        die IP/Rechnername angehaengt. Das funktioniert nur mit IP und
+        Rechnernamen.

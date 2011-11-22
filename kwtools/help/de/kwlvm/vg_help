@@ -1,0 +1,28 @@
+kwlvm::Volume Groups::Hilfe
+
+Ansicht: Waehlen Sie eine oder mehrere Volume Groups aus und
+        druecken ENTER, dann erscheinen genaue Daten zu den
+        VG's.
+
+Erstellung: Hier kann man eine VG erstellen. Dabei kann man
+        auch mehrere PV's einer VG zuordnen. Bei lvm2 kann man auch
+        den Metadatentype einstellen (1 = lvm1, 2 = lvm2) sowie die
+        PE Groesse der PV.
+
+Backup: Hier koennen Sie die Metadaten der VG sichern, zurueck er-
+        erstellen und natuerlich auch alte Backup's loeschen.
+
+konvertieren: Hier kann man den Metadatentype des LVM (1 oder 2)
+        von einem zum anderen konvertieren. Besonders hilfreich
+        beim Umstieg von LVM1 zu LVM2. Dies wird nur angezeigt,
+        wenn LVM2 installiert ist.
+
+teilen: Teilen einer VG in 2. Dabei muessen die LVs in der
+        urspruenglichen VG deaktiviert sein.
+
+verbinden: Verbinden von 2 VG's zu einer. Dabei muss die VG die zu
+        der anderen VG verbunden werden soll deaktiviert sein.
+
+umbennen: Umbenennen einer VG.
+
+loeschen: Loeschen einer oder mehrerer leerer VGs.

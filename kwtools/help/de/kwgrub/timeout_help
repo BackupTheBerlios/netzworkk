@@ -1,0 +1,4 @@
+kwadmin::Konfiguration::Timeout::Hilfe
+
+Hier waehlt man den Timeout in Sekunden aus. Nach dieser Zeit wird
+der als "default" gekennzeichnete Eintrag gebootet.

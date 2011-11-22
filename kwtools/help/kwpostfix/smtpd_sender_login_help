@@ -1,0 +1,21 @@
+# smtpd_sender_login_help fuer kwpostfix{{{
+TITLE=$(gettext 'Tabellen::smtpd_sender_login::Hilfe')
+MSG=$(gettext 'Lookup Tabbelle mit den SASL Login Namen, die Besitzer der Sender
+(MAIL FROM) Adresse sind.
+
+Tabellen:
+smtpd_sender_login_maps
+
+Form:
+# hoechste Prioritaet
+user@domain.de\t:
+# Dieser Lookup geht nur wenn die Domain auf eins der Muster, in
+# den Parametern von, $myorigin, $mydestination, $inet_interfaces
+# oder $proxy_interfaces passt.
+user\t\t:
+# kleinste Prioritaet
+@domain.de\t:
+
+NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
+\tTabellen.')
+#}}}

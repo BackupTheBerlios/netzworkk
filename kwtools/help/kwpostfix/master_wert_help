@@ -1,0 +1,7 @@
+# master_wert_help fuer kwpostfix{{{
+TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
+MSG=$(gettext '-: Heisst das der Standard aus der globalen Konfiguration main.cf
+\tbenutzt wird.
+
+n: Heisst Nein.')
+#}}}

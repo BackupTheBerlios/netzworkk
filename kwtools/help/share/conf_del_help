@@ -1,0 +1,5 @@
+# conf_del_help {{{
+TITLE="${gv_Delete}::${gv_Help}"
+MSG=$(gettext 'Hier kann man ein oder mehrere Eintraege aus der ${gv_Configuration}
+zum loeschen auswaehlen.')
+#}}}

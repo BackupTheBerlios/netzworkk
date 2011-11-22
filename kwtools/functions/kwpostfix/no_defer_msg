@@ -1,0 +1,7 @@
+# Funktion no_defer_msg{{{
+# usage: no_defer_msg
+no_defer_msg() {
+	MSG=$(gettext 'Die Mailqueue defer muss eine Hashstruktur besitzen, sonst leidet die Performance.')
+	msgbox "$gv_Info" "$MSG"
+}
+#}}}

@@ -1,0 +1,73 @@
+.\"     Title: KWCAMERA
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2008
+.\"    Manual: Benutzerhandbuch f\(:ur kwcamera
+.\"    Source: Version 0.0.3
+.\"
+.TH "KWCAMERA" "1" "07/04/2008" "Version 0.0.3" "Benutzerhandbuch f\(:ur kwcamera"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwcamera \- ein Zshell Frontend f\(:ur das Programm gphoto(2).
+.SH "SYNTAX"
+.HP 9
+\fBkwcamera\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwcamera\fR
+kann man seine Digital Kamera bedienen\&. Jedenfalls soweit es die Treiber von
+\fBgphoto(2)\fR
+zulassen\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration von Port, Kamera Modell, Basis Download Verzeichnis\&.
+.RE
+.PP
+\fBDownload\fR
+.RS 4
+Vorschau und Download von Bilder und Thumbnails, von der Kamera\&. Die Vorschau wird mittels dem Programm
+\fBzgv\fR
+angezeigt\&.
+.sp
+\fBNotiz:\fR
+\fBzgv\fR
+kann keine Bilder remote anzeigen\&. Diese werden immer am entfernten Rechner angezeigt\&.
+.RE
+.PP
+\fBl\(:oschen\fR
+.RS 4
+L\(:oschen aller Bilder und Thumbnails, auf der Kamera\&.
+.RE
+.PP
+\fBKamera_Einstellung\fR
+.RS 4
+Hier kann man Bildqualit\(:at, Uhrzeit, etc\&. der Digital Kamera einstellen\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwcamerarc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwcamera\fR\&. F\(:ur weitere Details siehe
+\fBkwcamerarc\fR(5)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBgphoto(2)\fR(1),
+\fBkwcamerarc\fR(5),
+\fBzgv\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

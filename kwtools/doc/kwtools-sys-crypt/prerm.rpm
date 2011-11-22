@@ -1,0 +1,12 @@
+#!/bin/sh
+
+DIR=/usr/share/kwtools/functions
+SBIN_PATH=/usr/sbin
+BIN_PATH=/usr/bin
+
+rm -f ${BIN_PATH}/kwcrypt ${SBIN_PATH}/kwlosetup \
+	${SBIN_PATH}/kwecryptfs ${SBIN_PATH}/kwcryptsetup &>/dev/null
+rm -rf ${DIR}/kwcrypt* ${DIR}/kwecryptfs ${DIR}/kwlosetup \ 
+	${DIR%/*/*}/doc/kwtools-sys-crypt &>/dev/null
+exit 0
+

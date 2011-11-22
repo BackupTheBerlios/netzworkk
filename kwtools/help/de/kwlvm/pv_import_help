@@ -1,0 +1,7 @@
+kwlvm::Physikalische Volumes::hinzufuegen::Hilfe
+
+Die hier aufgefuehrten Physikalischen Volumes kann man der 
+ausgewaehlten Volume Group hinzufuegen.
+
+NOTIZ: Es werden nur inaktive, nicht zu einer VG gehoerende
+       leere PV's angezeigt.

@@ -1,0 +1,4 @@
+# graphic_kwcamera_help fuer kwadmin{{{
+MSG=$(gettext 'kwcamera: speichert, loescht Bilder und Thumbnails, von
+\tDigitalkameras, und konfiguriert diese Kamera.')
+#}}}

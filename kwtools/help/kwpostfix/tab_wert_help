@@ -1,0 +1,5 @@
+# tab_wert_help fuer kwpostfix{{{
+TITLE=$(gettext 'Tabellen::Werte::Hilfe')
+MSG=$(gettext 'Hier koennen Sie vorhandene Konfigurationen zur Bearbeitung
+auswaehlen.')
+#}}}

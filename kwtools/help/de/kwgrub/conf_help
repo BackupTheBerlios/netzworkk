@@ -1,0 +1,28 @@
+kwgrub::Konfiguration::Hilfe
+
+Menue anzeigen: Soll das Menue zur Auswahl der Boot Einstellungen
+        angezeigt werden (ja/nein)?
+
+Passwort: Hier kann man ein Passwort eingeben, welches im MD5 Format
+        verschluesselt wird. Dies dient dazu, das nur der 
+        Administrator, die Booteinstellungen beim booten aendern
+        kann. Unter dem Menuepunkt Bootkonfiguration kann man
+        zusaetzlich die Option "lock", fuer den jeweiligen
+        Menueeintrag aktivieren. Dann muss der Benutzer immer ein
+        Password.
+
+Splash: "splashimage" ist eigentlich kein eigener grub Befehl. Man
+        kann hier aber ein Splashimage auswaehlen, welches dann als
+        Hintergrundbild fuer das Menue dient. Es muss ein Bild im
+        XPM Format sein. Naeheres dazu auf der Seite:
+        http://ruslug.rutgers.edu/~mcgrof/grub-images/
+
+Standard Boot: Welche Boot Konfiguration soll standardmaessig
+        genommen werden. 0 ist hier die 1., 1 die 2. etc.. Die
+        Option in der Konfiguration heisst default.
+
+Tastatur: Welche Tastatur Einstellung soll genommen werden. Es gehen
+        deutsch und englisch.
+
+Timeout: Nach wieviel Sekunden soll grub, die Standard Boot
+        Konfiguration starten.

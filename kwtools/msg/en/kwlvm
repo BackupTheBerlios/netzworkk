@@ -1,0 +1,31 @@
+haupt_menue;Physikalische_Volumes "" Volume_Groups "" Logische_Volumes "" beenden ""
+lv_menue;Anzeige "" "Erstellung" "" vergroessern "" verkleinern "" umbenennen "" loeschen "" zurueck ""
+lvm_type_menue;1 "" 2 ""
+lv_create_menue;"Volume_Group" "$VG_AUSWAHL" "LV_Name" "$LV_NAME" Groesse "$SIZE" "LV_erzeugen" "" zurueck ""
+pv_menue;Anzeige "" Erstellung "" "entfernen von PVs aus einer VG" "" "hinzufuegen von PVs zu einer VG" "" zurueck ""
+vg_menue;Anzeige "" Erstellung "" Backup "" teilen "" verbinden "" umbenennen "" loeschen "" zurueck ""
+vg_bak_menue;Sicherung_erstellen "" Sicherung_zurueck "" Sicherung_loeschen "" zurueck ""
+vg_merge_menue;VG "$S_VG" "neue VG" "$Z_VG" verbinden "" zurueck ""
+vg_split_menue;VG "$S_VG" "neue VG" "$Z_VG" PV "$PV_AUSWAHL" teilen "" $ZURUECK ""
+vg_create_menue;PV "$PV_AUSWAHL" VG_Name "$VG_NAME" LVM_Type "$LVM_TYPE" VG_erzeugen "" zurueck ""
+all_pv_vg;Es sind alle PV's einer VG zugeordnet.
+check_vg_lv_size;Sie muessen erst VG Name, LV Name und die Groesse einstellen.
+check_vg;Bevor Sie eine VG erzeugen koennen muessen Sie erst die Menuepunkte PV und VG Name belegen.
+lv_name;Geben Sie bitte hier den Namen ihrer neuen LV, ohne Leerzeichen, ein.
+lv_size;Geben Sie bitte hier die Groesse ihrer neuen LV, in Megabyte, ein (3000 = ca. 3Gb). Es sind noch "$VG_SIZE" Mb frei.
+lv_size_big;Geben Sie bitte hier die Groesse in Megabyte ein, um die ihr LV vergroessert werden soll (3000 = ca. 3Gb). Es sind noch "$VG_SIZE" Mb frei.
+lv_size_small;Geben Sie bitte hier die Groesse in Megabyte ein, um die ihr LV verkleinert werden soll (3000 = ca. 3Gb). Diese LV besitzt insgesamt "$LV_SIZE" Mb.
+new_vg_name;Geben Sie hier bitte einen neuen Namen fuer die VG $O_VG, ohne Leerzeichen, ein.
+new_lv_name;Geben Sie hier bitte einen neuen Namen fuer das LV $O_LV, ohne Leerzeichen, ein.
+no_all_pv_del;Sie koennen nicht alle Physikalischen Volumes einer Volume Group loeschen.
+no_pv;Es sind keine Physikalischen Volumes vorhanden.
+no_vg;Es sind keine Volume Groups vorhanden. Sie muessen erst Volume Groups erzeugen und dann darauf, logische Volumes.
+no_lvm1_type;Bei LVM1 kann man keinen Metadatentype angeben.
+no_pv_to_create;Es sind schon alle LVM-Partitionen zu PV's kreiert worden.
+no_select_vg;Sie muessen erst eine VG auswaehlen.
+no_select_vg_pvs;Sie muessen erst eine VG, eine neue VG und ein oder mehrere PVs auswaehlen.
+no_select_vgs;Sie muessen erst eine VG und eine neue VG auswaehlen.
+one_pv;In dieser VG sind zu wenige PV's vorhanden, um eine zu loeschen oder um diese VG zu splitten.
+select_pv_del;Jetzt werden alle ausgewaehlten Physikalischen Volumes entfernt. $gv_Auswahl\n\n Fortfahren (yes/no)?
+select_pv_add;Jetzt werden alle ausgewaehlten Physikalischen Volumes $AUSWAHL\n zur VG $gv_Auswahl hinzugefuegt.\n\n Fortfahren (yes/no)?
+vg_name;Geben Sie bitte hier den Namen ihrer neuen VG, ohne Leerzeichen, ein.

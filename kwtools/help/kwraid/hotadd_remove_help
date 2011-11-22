@@ -1,0 +1,5 @@
+# hotadd_remove_help fuer kwraid{{{
+TITLE="${lv_Raid_Hot_Ar}::${gv_Help}"
+MSG=$(gettext 'Hier waehlt man ein RAID Array aus, welches man dann bearbeiten
+kann (Laufwerkswechsel, Partitionierung).')
+#}}}

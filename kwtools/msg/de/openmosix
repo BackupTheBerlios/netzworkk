@@ -1,0 +1,27 @@
+haupt_menue;Konfiguration "" Parameter "" Status "" beenden ""
+mosix_conf_menue;Bereichsnr "$M_Nr" IP "$M_IP" Anzahl "$NR" Master "$MASTER" Node_Nr "$N_Nr" speichern "" zurueck ""
+mosix_conf_aendern_menue;Ansicht "" anlegen "" veraendern "" loeschen "" zurueck ""
+para_conf_menue;AUTODISC "$AUTODISC" AUTODISCIF "$AUTODISCIF" OVERHEAD "$OVERHEAD" MFSCOSTS "$MFSCOSTS" ID "$MYOMID" MOSGATES "$MOSGATES" SPEED "$NODESPEED" MIGRATE "$MIGRATE" BLOCK "$BLOCK" MFS "$MFS" MFS_START "$MFS_START" DFSA_START "$DFSA_START" DFSA_LINKS "$DFSA_LINKS" speichern "" zurueck ""
+status_menue;Normal_Monitor "" Cluster_Last_und_tote_Noden "" zurueck ""
+#
+anz_gate;Geben Sie bitte die maximale Anzahl der Gateways zwischen den Node's ein (siehe man 1 setpe).
+anz_host;Geben Sie bitte die Anzahl der Rehner im Cluster an.
+block;Sollen Gastprozesse angenommen werden (yes/no)?
+cluster_range;Geben Sie bitte die Nummer dieses Clusterbereichs an (z.B. 1).
+dfsa_init;Sollen die DFSA Links beim starten von OpenMosix eingetragen werden (yes/no)?
+dfsa_links;Geben Sie hier bitte ihre dfsalinks, getrennt durch ein Leerzeichen ein.
+id_node;Geben Sie bitte die ID diser Node ein (Zahl).
+ip_master;Geben Sie bitte die IP des Masters ein (z.B. 192.168.0.1).
+ist_master;Dieser Rechner ist der Master und braucht deswegen keine Node Nummer.
+master_node;Ist dieser Rechner die Master-Node?
+mfs;Zugriff auf das Rechnereigene MFS erlauben (yes/no)?
+migrate;Duerfen Prozesse migrieren (yes/no)?
+mount;Sollen die MFS's beim Start von OpenMosix gemountet werden (yes/no)?
+node_number;Geben Sie bitte die Node Nummer an die dieser Rechner im Cluster hat.
+no_conf;Ueberpruefen Sie bitte ihre Konfiguration, da sie nicht korrekt ist.
+no_conf_map;Sie muessen erst eine Konfiguration anlegen. Waehlen Sie bitte erst den Menuepunkt OpenMosix Konfiguration/Parameter aus.
+no_hpc_procdir;Kann kein /proc/hpc Verzeichnis finden. Pruefen Sie, ob Im Kernel OpenMosix aktiviert ist?
+no_links;$i ist kein Link. Dieser Eintrag wird nicht gespeichert
+speed;Geben Sie bitte die Geschwindigkeit dieser Node ein (siehe man mosctl).
+zahl0;Die Zahl muss >0 sein.
+zahl1;Die Zahl muss >1 sein.

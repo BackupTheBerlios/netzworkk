@@ -1,0 +1,6 @@
+haupt_menue;anlegen "" aendern "" loeschen "" beenden ""
+konf_menue;Gruppe "$NGROUP" Gruppen_ID "$NGROUP_ID" speichern "" zurueck ""
+group_name;Geben Sie hier bitte einen Gruppen Namen ein. Es duerfen keine Sonderzeichen benutzt werden.
+group_id;Geben Sie bitte hier die Gruppen ID Nummer ein. Diese muss Integer sein.
+ex_group_id;Diese Gruppen_ID ($NUMBER) ist schon vorhanden. Nehmen Sie bitte eine andere.
+check_group;Die Gruppen_ID oder Gruppe ist nicht belegt. Geben Sie bitte dort gueltige Werte ein.

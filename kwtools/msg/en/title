@@ -1,0 +1,290 @@
+# allgemein
+chmod;Rechte
+compress;Kompression
+conf_part;Konfiguration::Partitionsauswahl
+config_cd;Konfiguration::Laufwerke
+cron_time;crontab::Konfiguration::Ausfuehrungszeit
+del_file;Dateien loeschen
+selection;Auswahl
+dir_auswahl;Verzeichnisauswahl
+file_auswahl;Dateiauswahl
+feiertag;Feiertagskalender
+format;Formatierung
+integer_conf;Konfiguration::Zahlen
+install;Installation
+konfiguration;Konfiguration
+konf_cd_size;Konfiguration::CD-R/CD-RW::Groesse
+konf_dvd_size;Konfiguration::DVD-+R/DVD-+RW::Groesse
+konf_driver;Konfiguration::Treiber
+mail;Mail
+name;Name
+passwd_input;Passwort::eingeben
+print;Drucken
+proxy;Konfiguration::Proxy-Einstellung
+read_device;Konfiguration::Leselaufwerk
+shell_sel;Konfiguration::Shell_auswaehlen
+ssh;Konfiguration::ssh
+title_cron;crontab::Hauptmenue
+title_haupt;Hauptmenue
+title_info;Info:
+title_achtung;Achtung:
+video_create;Video-DVD::Erstellung
+write_speed;Konfiguration::Brenngeschwindigkeit
+# cdrip
+v_name;video
+# camera
+camera_conf_port;Konfiguration::Port
+camera_conf_model;Konfiguration::Modell
+camera_download_praefix;Download::Praefix
+# djbdns
+djbdns_tinydns_conf;Konfiguration::tinydns
+djbdns_dnscache;Konfiguration::dnscache
+djbdns_domain;Konfiguration::Domain
+djbdns_rbldns;Konfiguration::rbldns
+djbdns_walldns;Konfiguration::walldns
+djbdns_serv_del;Konfiguration::loeschen
+djbdns_admin_dnscache;Administration::dnscache
+djbdns_admin_tinydns;Administration::tinydns
+djbdns_admin_tinydns_del;Administration::tinydns::loeschen
+djbdns_admin_tinydns_mail;Administration::tinydns::Mailserver
+djbdns_admin_tinydns_dns;Administration::tinydns::Nameserver
+djbdns_admin_tinydns_host;Administration::tinydns::Rechner
+djbdns_admin_axfrdns;Administration::axfrdns
+djbdns_admin_axfrdns_access;Administration::axfrdns::Rechte
+djbdns_admin_axfrdns_net;Administration::axfrdns::Netzwerk
+djbdns_admin_axfrdns_host;Administration::axfrdns::Rechnername
+djbdns_admin_axfrdns_ip;Administration::axfrdns::IP-Adresse
+djbdns_admin_axfrdns_del;Administration::axfrdns::loeschen
+djbdns_admin_axfrdns_var;Administration::axfrdns::AXFR_Variable
+djbdns_admin_axfrdns_input;Administration::axfrdns::Eingabe
+djbdns_admin_axfrdns_conf_anzeige;Administration::axfrdns::Konfigurationsanzeige
+djbdns_admin_rbldns;Administration::rbldns
+djbdns_admin_rbldns_conf;Administration::rbldns::Konfigurationsanzeige
+djbdns_admin_rbldns_input;Administration::rbldns::Eingabe
+djbdns_admin_rbldns_del;Administration::axfrdns::loeschen
+# film2film Titels
+film2film_convert;Videos::konvertieren
+film2film_file_size;Konfiguration::Datei Groesse
+film2film_audio_bitrate;Konfiguration::Audio_Bitrate
+film2film_audio_export_module;Konfiguration::Audio_Export_Module
+film2film_buffer;Konfiguration::Buffergroesse
+film2film_sample_rate;Konfiguration::Sample_Rate
+film2film_video_export_module;Konfiguration::Video_Export_Module
+film2film_video_type;Konfiguration::Video_Type
+film2film_tv_format;Konfiguration::Aufloesung
+# gpgcrypt
+gpgcrypt_passwd;Passwort
+gpgcrypt_key_manage;Schluessel_Management
+gpgcrypt_key_manage_export;Schluessel_Management::export
+gpgcrypt_key_manage_import;Schluessel_Management::import
+gpgcrypt_key_manage_sign;Schluessel_Management::signieren
+gpgcrypt_key_manage_remove;Schluessel_Management::loeschen
+gpgcrypt_key_manage_revoke;Schluessel_Management::ungueltig
+gpgcrypt_konf_keyserv;Konfiguration::Schluesselserver
+gpgcrypt_konf_default_key_id;Konfiguration::Standard_Schluessel_ID
+# kwadmin
+kwadmin_graphic;Grafik
+kwadmin_konf_lang;Sprache
+kwadmin_konf_package;Konfiguration::Paketsystem
+kwadmin_multi;Multimedia
+kwadmin_net;Netzwerk
+kwadmin_sys;System
+kwadmin_utils;Dienstprogramme
+# kwbackup
+kwbackup_dirs;Konfiguration::Verzeichnisse
+# kwfirewall
+kwfirewall_init;start_stop_reload
+kwfirewall_view;Ansicht
+kwfirewall_conf;Konfiguration
+kwfirewall_conf_forward;Konfiguration::Forwarding
+kwfirewall_conf_masquerade;Konfiguration::Masquerading
+kwfirewall_conf_dmz_if;Konfiguration::DMZ_interface
+kwfirewall_conf_int_if;Konfiguration::INT_interface
+kwfirewall_conf_lan_if;Konfiguration::LAN_interface
+kwfirewall_conf_netmask_dmz;Konfiguration::DMZ_Netzmaske
+kwfirewall_conf_netmask_lan;Konfiguration::LAN_Netzmaske
+kwfirewall_conf_tcp_fw_to_dmz;Konfiguration::TCP_FW_TO_DMZ
+kwfirewall_conf_udp_fw_to_dmz;Konfiguration::UDP_FW_TO_DMZ
+kwfirewall_conf_tcp_fw_to_int;Konfiguration::TCP_FW_TO_INT
+kwfirewall_conf_udp_fw_to_int;Konfiguration::UDP_FW_TO_INT
+kwfirewall_conf_tcp_fw_to_lan;Konfiguration::TCP_FW_TO_LAN
+kwfirewall_conf_udp_fw_to_lan;Konfiguration::UDP_FW_TO_LAN
+kwfirewall_conf_tcp_dmz_to_fw;Konfiguration::TCP_DMZ_TO_FW
+kwfirewall_conf_udp_dmz_to_fw;Konfiguration::UDP_DMZ_TO_FW
+kwfirewall_conf_tcp_lan_to_fw;Konfiguration::TCP_LAN_TO_FW
+kwfirewall_conf_udp_lan_to_fw;Konfiguration::UDP_LAN_TO_FW
+kwfirewall_conf_tcp_int_to_fw;Konfiguration::TCP_INT_TO_FW
+kwfirewall_conf_udp_int_to_fw;Konfiguration::UDP_INT_TO_FW
+kwfirewall_conf_tcp_int_to_lan;Konfiguration::TCP_INT_TO_LAN
+kwfirewall_conf_udp_int_to_lan;Konfiguration::UDP_INT_TO_LAN
+kwfirewall_conf_tcp_lan_to_int;Konfiguration::TCP_LAN_TO_INT
+kwfirewall_conf_udp_lan_to_int;Konfiguration::UDP_LAN_TO_INT
+kwfirewall_conf_tcp_int_to_dmz;Konfiguration::TCP_INT_TO_DMZ
+kwfirewall_conf_udp_int_to_dmz;Konfiguration::UDP_INT_TO_DMZ
+kwfirewall_conf_tcp_dmz_to_int;Konfiguration::TCP_DMZ_TO_INT
+kwfirewall_conf_udp_dmz_to_int;Konfiguration::UDP_DMZ_TO_INT
+kwfirewall_conf_tcp_lan_to_dmz;Konfiguration::TCP_LAN_TO_DMZ
+kwfirewall_conf_udp_lan_to_dmz;Konfiguration::UDP_LAN_TO_DMZ
+kwfirewall_conf_tcp_dmz_to_lan;Konfiguration::TCP_DMZ_TO_LAN
+kwfirewall_conf_udp_dmz_to_lan;Konfiguration::UDP_DMZ_TO_LAN
+kwfirewall_conf_int_prerouting_to_dmz;Konfiguration::DMZ_PREROUTING_HOSTS
+kwfirewall_conf_int_prerouting_to_lan;Konfiguration::LAN_PREROUTING_HOSTS
+# kwgroup
+kwgroup_group;Gruppe
+kwgroup_group_add;Konfiguration::Gruppe
+kwgroup_group_del;Gruppe::loeschen
+kwgroup_group_id;Konfiguration::Gruppen_ID
+# kwgrub
+kwgrub_install;Installation::MBR_Floppy_Part
+kwgrub_default_boot;Konfiguration::Standard_Boot
+kwgrub_tast;Konfiguration::Tastatur
+kwgrub_timeout;Konfiguration::Timeout
+kwgrub_boot_conf;Boot_Konfiguration
+kwgrub_boot_conf_name;Boot_Konfiguration::Name
+kwgrub_boot_conf_append;Boot_Konfiguration::Append
+kwgrub_boot_conf_makeactive;Boot_Konfiguration::Makeactive
+# kwlogrotate
+kwlogrotate_logfile;Logdatei
+kwlogrotate_conf_anzahl;Konfiguration::Anzahl
+kwlogrotate_conf_name;Konfiguration::Name
+kwlogrotate_conf_rotate;Konfiguration::Rotierzeit
+kwlogrotate_conf_size;Konfiguration::Groesse
+kwlogrotate_conf_script;Konfiguration::Script
+# kwlvm
+kwlvm_lv;Logische_Volumes
+kwlvm_lv_anzeige;Logische_Volumes::Anzeige
+kwlvm_lv_create;Logische Volumes::Erstellung
+kwlvm_lv_vg;Logische Volumes::Volume_Group_Auswahl
+kwlvm_lv_name;Logische Volumes::LV Name
+kwlvm_lv_size;Logische_Volumes::Groesse
+kwlvm_lv_bigger;Logische Volumes::vergroessern
+kwlvm_lv_smaller;Logische Volumes::verkleinern
+kwlvm_lv_change;Logische Volumes::umbenennen
+kwlvm_lv_del;Logische Volumes::loeschen
+kwlvm_pv;Physikalische Volumes
+kwlvm_pv_anzeige;Physikalische Volumes::Anzeige
+kwlvm_pv_create;Physikalische Volumes::erstellen
+kwlvm_pv_del;Physikalische Volumes::loeschen
+kwlvm_pv_add;Physikalische Volumes::hinzufuegen
+kwlvm_vg;Volume_Groups
+kwlvm_vg_del;Volume_Groups::loeschen
+kwlvm_vg_bak;Volume_Groups::Backup
+kwlvm_lvm_type;Volume_Groups::Backup::LVM_Type
+kwlvm_vg_change;Volume_Groups::umbenennen
+kwlvm_vg_merge;Volume_Groups::verbinden
+kwlvm_vg_name;Volume_Groups::VG_Name
+kwlvm_vg_split;Volume_Groups::teilen
+kwlvm_vg_verbinden;Volume_Groups::verbinden
+kwlvm_vg_pv;Volume Groups::Physikalische_Volumes
+# kwnetconf
+kwnetconf_gate;Konfiguration::Gateway
+kwnetconf_ip;Konfiguration::IP_Adresse
+# kwparted
+kwparted_part;Partitionierung 
+kwparted_part_type;Partitions-Type
+kwparted_disk_info;Festpatteninformation
+kwparted_create;Partition::anlegen
+kwparted_part_size;Partitions_Groesse
+# kwpostfix
+kwpostfix_conf;Konfiguration
+kwpostfix_conf_default;Konfiguration::Standard
+kwpostfix_conf_error;Konfiguration::Fehler_codes
+kwpostfix_conf_haupt;Konfiguration::Haupt
+kwpostfix_conf_mail;Konfiguration::Mail
+kwpostfix_conf_q;Konfiguration::queue/qmail
+kwpostfix_conf_smtp;Konfiguration::smtp
+kwpostfix_conf_smtpd;Konfiguration::smtpd
+kwpostfix_conf_tbtype;Konfiguration::Tabellentype::$AUSWAHL
+kwpostfix_conf_tbtype_proxymap;Konfiguration::Tabellentype::proxymap
+kwpostfix_conf_tls;Konfiguration::TLS
+kwpostfix_conf_ldap;Konfiguration::LDAP_Tabelle
+kwpostfix_conf_lmtp;Konfiguration::LMTP
+kwpostfix_conf_pgsql;Konfiguration::Postgresql_Tabelle
+kwpostfix_conf_mysql;Konfiguration::Mysql_Tabelle
+kwpostfix_conf_virtuell;Konfiguration::virtuell
+kwpostfix_conf_master;Konfiguration::master.cf
+kwpostfix_conf_restrictions;Konfiguration::Restrictions
+kwpostfix_tab;Tabellen
+kwpostfix_tab_name;Tabellen::${TAB}
+kwpostfix_tabelle;Tabellen::${TAB}
+# kwrecord
+kwrecord_del;CD-RW::loeschen
+kwrecord_konf_medium;Konfiguration::Medium
+# kwssl
+kwssl_create_ca;CA_anlegen
+kwssl_key_copy;Schluessel_kopieren
+kwssl_time;Konfiguration::Gueltigkeit
+# kwuser
+kwuser_comment;Konfiguration::Kommentar
+kwuser_groups;Konfiguration::Gruppen
+kwuser_group;Konfiguration::Gruppe
+kwuser_user;Konfiguration::User
+kwuser_user_del;User::loeschen
+kwuser_user_id_change;Konfiguration::User_ID
+# openmosix Titels
+openmosix_para;Konfiguration::Parameter
+openmosix_autodisc;Konfiguration::Parameter::Discovery_Daemon
+openmosix_autodisc_dev;Konfiguration::Parameter::Discovery_Daemon::Device
+openmosix_mosix_conf_ip;Konfiguration::IP
+openmosix_mosix_conf_h_anz;Konfiguration::Rechneranzahl
+openmosix_mosix_conf_master;Konfiguration::Master
+openmosix_mosix_conf_nnr;Konfiguration::Node-Nr
+openmosix_para_conf;Konfiguration::Parameter::MYOMID
+openmosix_para_conf_mosgate;Konfiguration::Parameter::MOSGATE
+openmosix_para_conf_speed;Konfiguration::Parameter::SPEED
+openmosix_para_conf_migrate;Konfiguration::Parameter::MIGRATE
+openmosix_para_conf_block;Konfiguration::Parameter::BLOCK
+openmosix_para_conf_mfs;Konfiguration::Parameter::MFS
+openmosix_para_conf_dfsa_start;Konfiguration::Parameter::MFS_START
+openmosix_para_conf_dfsa_links;Konfiguration::Parameter::DFSA_LINKS
+# planer
+planer_conf_state;Konfiguration::Staat/Bundesland
+planer_conf_cal;Konfiguration::Kalender
+#proxy
+proxy_http;http_proxy
+proxy_ftp;ftp_proxy
+# raid
+raid_change_disk;Partitionswechsel::raiddev
+raid_change_part_sel;Partitionswechsel::Partitionsauswahl"
+raid_conf;Erstellung
+raid_chunksize;Erstellung::chunk-size
+raid_persistentsuperblock;Erstellung::persistent-superblock
+raid_parity;Erstellung::parity-algorithm
+raid_raiddev;Erstellung::raiddev
+raid_raidlevel;Erstellung::raid-level
+raid_nrraidisk;Erstellung::nr-raid-disk
+raid_nrsparedisk;Erstellung::nr-spare-disk
+raid_raiddisk;Erstellung::raiddisk
+raid_raidstat;Status::RAID_Auswahl
+# remotesync
+remotesync_remote_dir;Konfiguration::Remoteverzeichnis
+remotesync_remote_host;Konfiguration::Zielrechner
+# runlevconf
+runlevconf_default_runlevel;Standard-Runlevel
+runlevconf_konf;Runlevelkonfiguration
+runlevconf_konf_prog;Runlevelkonfiguration::${Init_Script}
+runlevconf_startnr;Runlevelkonfiguration::${Init_Script}::Startnummer
+runlevconf_stopnr;Runlevelkonfiguration::${Init_Script}::Stopnummer
+# snd2sndfm
+snd2sndfm_decod;dekodieren
+snd2sndfm_encod;enkodieren
+# termin
+termin_anzeige;Anzeige
+termin_input;Eingabe
+termin_input_date;Eingabe::Datum
+termin_input_uhr;Eingabe::Uhrzeit
+termin_input_text;Eingabe::Text
+termin_time;Zeitraum
+# uhr
+uhr_timeserver_change;Zeitserver
+uhr_conf_std;Konfiguration::Uhr::Stunde
+uhr_conf_min;Konfiguration::Uhr::Minute
+uhr_conf_day;Konfiguration::Datum::Tag
+uhr_conf_mon;Konfiguration::Datum::Monat
+uhr_conf_year;Konfiguration::Datum::Jahr
+uhr_clock;Konfiguration::Uhr
+uhr_date;Konfiguration::Datum
+# vcdburn
+vcdburn_conf_vcd_type;Konfiguration::VCD-Type
+# vdvdburn
+vdvdburn_conf;Konfiguration

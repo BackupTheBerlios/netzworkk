@@ -1,0 +1,73 @@
+# Funktion decrypt# {{{
+decrypt() {
+	if [ "$#" -eq 2 ] ; then
+		Opt="$1"
+		CryptFile="$2"
+		#
+		# Function to decrypt the key which are encrypted with openssl, gnupg.
+		# See /usr/share/doc/cryptsetup/examples/gen-ssl-key to create a key with openssl.
+		#
+		Orig_Umask=`umask`
+		pushd $gv_WorkDir
+		umask 077
+		popd
+		local Tries MaxTries
+		MaxTries=3
+		Tries=1
+		gv_TmpKey=`mktemp ${gv_WorkDir}/encrypt_key_XXXXXX`
+		# Schluesseldatei entschluesseln
+		PASSWD_MSG=$(gettext 'Geben Sie das Passwort fuer die Schluesseldatei $CryptFile ein.')
+		#
+		case "$Opt" in
+			-g)	
+				# GPG Entschluessellung# {{{
+				password "$gv_Passwd_TITLE" "$PASSWD_MSG"
+				while [ $Tries -lt $MaxTries ]; do
+					if print "$PASSPHRASE" | $GNUPG -q --batch --homedir ${gv_HomePath}/.gnupg --passphrase-fd 0 -d $CryptFile > $gv_TmpKey ; then
+						unset -- PASSPHRASE
+						break
+					else
+						shred -uz $gv_TmpKey &>/dev/null
+						password "$gv_Passwd_TITLE" "$PASSWD_MSG"
+					fi
+					(( Tries++ ))
+				done
+				## }}}
+				;;
+			-s)	
+				# SSL Entschluessellung# {{{
+				password "$gv_Passwd_TITLE" "$PASSWD_MSG"
+				while [ $Tries -lt $MaxTries ]; do
+					if $OPENSSL enc -aes-256-cbc -d -salt -in $CryptFile -out $gv_TmpKey -k $PASSPHRASE &>/dev/null ; then
+						unset -- PASSPHRASE
+						break
+					else
+						schred -uz $gv_TmpKey &>/dev/null
+						password "$gv_Passwd_TITLE" "$PASSWD_MSG"
+					fi
+					(( Tries++ ))
+				done
+				## }}}
+				;;
+			*)
+				no_para_msg "$0"
+				break
+				;;
+		esac
+		#
+		if [ $Tries -eq $MaxTries ]; then
+			MSG=$(gettext 'Maximale Nummer an Versuchen ausgefuehrt.')
+			msgbox "$gv_Attention" "$MSG"
+			shred -uz $gv_TmpKey &>/dev/null
+			unset -- PASSPHRASE
+			umask $Orig_Umask
+			break
+		fi
+		unset -- PASSPHRASE
+		umask $Orig_Umask
+	else
+		no_para_msg "$0"
+		break
+	fi
+}
+## }}}

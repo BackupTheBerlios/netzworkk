@@ -1,0 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-09-02 08:16+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../kwrsync_backup_cron:74
+#, sh-format
+msgid "Es gibt keine Konfigurationsdatei auf Rechner dem $HostName."
+msgstr ""
+
+#: ../../kwrsync_backup_cron:96
+msgid ""
+"Sie muessen erst ein Verzeichnis angeben, wo die Backups gesichert\n"
+"werden sollen (/etc/kwtools/kwrsync_backup.cf)."
+msgstr ""
+
+#: ../../kwrsync_backup_cron:109
+msgid "Kann Backup-Verzeichnis nicht einbinden."
+msgstr ""
+
+#: ../../kwrsync_backup_cron:123
+msgid "Es ist nicht mehr genug Platz vorhanden."
+msgstr ""
+
+#: ../../kwrsync_backup_cron:139
+msgid "Kann Backup-Verzeichnis nicht ausbinden."
+msgstr ""

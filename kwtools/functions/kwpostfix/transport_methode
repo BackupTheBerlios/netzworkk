@@ -1,0 +1,42 @@
+# Funktion transport_methode{{{
+#
+# usage: transport_methode
+#
+transport_methode() {
+	unset -- WERT MB_TRANS_MENU
+	local Anz
+	integer Anz
+	Anz=0
+	for i in `awk '(/^[^# ][^-]/){print $1}' $MASTER_CF | sort` ; {
+		# Duplikate herausfiltern.
+		if [ -z ${(M)${MB_TRANS_MENU}##${i#*:}} ] ; then
+			(( Anz++ ))
+			MB_TRANS_MENU[Anz]="${i#*:} \"\""
+		fi
+	}
+	#
+	if [ -n "${MB_TRANS_MENU[1]}" ] ; then
+		MB_TRANS_MSG=$(gettext 'Waehlen Sie eine Transport Methode aus.')
+		menubox "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+		#
+		if [ -z "$gv_Auswahl" ] ; then
+			WERT=""
+		fi
+		#
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help mailbox_transport_help
+					menubox "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+					;;
+				*)	# uebernehmen
+					WERT="$gv_Auswahl"
+					break
+					;;
+			esac
+		done
+	else
+		MSG=$(gettext 'Es sind keine Transport Methoden, in $MASTER_CF, definiert.')
+		msgbox "$gv_Attention" "$MSG"
+	fi
+}
+#}}}

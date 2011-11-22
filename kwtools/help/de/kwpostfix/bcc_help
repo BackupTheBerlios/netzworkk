@@ -1,0 +1,16 @@
+kwpostfix::Tabellen::bcc
+
+Hier kann man die Mailadresse einstellen, welche eine Bcc Mail bei
+einem dementsprechenden Sender oder Empfaenger bekommt.
+
+Tabelle:
+recipient_bcc_maps
+sender_bcc_maps
+
+Form:
+alle Mails dieser Domain werden an otheruser@domain.de geschickt.
+@domain.de            otheruser@domain.de
+nur Mails dieses Users wird an otheruser@domain.de geschickt.
+user@domain.de        otheruser@domain.de
+user                  otheruser@domain.de
+

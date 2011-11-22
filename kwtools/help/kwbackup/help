@@ -1,0 +1,23 @@
+# help fuer kwbackup{{{
+TITLE="$gv_Help"
+MSG=$(gettext ' Mit kwbackup koennen Sie das Betriebssystem und angegebene
+Verzeichnisse sichern. Dies koennen Sie entweder manuell oder per
+crontab Eintrag. Dabei werden die Sicherungen nach bestimmten
+Zeiten ganz gesichert oder nur die veraenderten und neu angelegten
+Dateien und Verzeichnisse.
+
+Konfiguration: Konfiguration des Backup-Verzeichnis, Mount-
+\tVerzeichnis und der zu sichernden Verzeichnissen.
+
+Backup: Backup der zu sichernden Verzeichnissen starten. Sind die
+\tSicherungen aelter als 30 Tage wird ein komplettes Backup
+\tgemacht, ansonsten nur die Dateien der letzten 7 Tage.
+
+System_Backup: Sicherung der System-Verzeichnisse, ausser des /home
+\tVerzeichnisses. Sind die Sicherungen aelter als 60 Tage
+\twird ein komplettes Backup gemacht, ansonsten nur die
+\tDateien der letzten 7 Tage.
+
+NOTIZ: System_Backup wird nur angezeigt wenn Sie als root eingeloggt
+\tsind.')
+#}}}

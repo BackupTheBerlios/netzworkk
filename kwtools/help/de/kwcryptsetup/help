@@ -1,0 +1,37 @@
+kwcryptsetup::Hilfe
+
+Mit kwcryptsetup koennen Sie Dateien oder Block Devices
+(Bsp. Partitionen) verschluesseln. Dafuer werden die Programme
+cryptsetup, dmsetup, losetup benutzt. 
+
+NOTIZ: Um mehr als 8 Loop Devices benutzen zu koennen muessen Sie
+        dem Kernel den Parameter max_loop=Anzahl (<=255) uebergeben.
+        Das taetigen Sie am besten in der Konfiguration Ihres
+        Bootloaders.
+
+Konfiguration: Konfiguration von kwcryptsetup. Standard Parameter
+        zum erstellen von verschluesselten Laufwerken.
+
+Status: Status der verschluesselten Laufwerken anzeigen. Es werden
+        die Daten der /etc/crypttab benutzt, um das Laufwerk heraus
+        zubekommen.
+
+LUKS: Hier koennen Sie Schluessel addieren, loeschen oder sich den
+        Dump von verschluesselten Laufwerken mit LUKS Erweiterung
+        anschauen.
+
+Laufwerke: Hier koennen Sie verschluesselten Laufwerke anlegen,
+        veraendern oder loeschen.
+
+Schluessel: Hier koennen Sie einen Schluessel erstellen. Sie
+        koennen diesen auch gleichzeitig mit gnupg oder openssl ver-
+        schluesseln, falls installiert.
+
+start: Starten von ein oder mehreren verschluesselten Laufwerke. Es
+        werden die Daten der /etc/crypttab benutzt, um das Laufwerk
+        heraus zu bekommen.
+
+stop: Stoppen von ein oder mehreren verschluesselten Laufwerke. Es
+        werden die Daten der /etc/crypttab benutzt, um das Laufwerk
+        heraus zu bekommen.
+

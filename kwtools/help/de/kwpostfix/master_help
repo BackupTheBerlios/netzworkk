@@ -1,0 +1,15 @@
+kwpostfix::Steuerdatei::Hilfe
+
+Hier koennen Sie die Steuerdatei master.cf von Postfix
+konfigurieren.
+
+Ansicht: Hier kann man seine Konfiguration ansehen.
+
+anlegen: Neuen Prozess hinzufuegen.
+
+veraendern: Vorhandenen Prozess aendern.
+
+loeschen: Vorhandenen Prozess loeschen
+
+Postfix reload: Postfix mitteilen das es seine Konfiguration neu
+         einlesen soll.

@@ -1,0 +1,107 @@
+# Funktion (manage_export_most), managed das exportieren ins# {{{
+# DER,TAR,TXT,ZIP Format.
+#
+manage_export_most() {
+	#
+	if [[ ${#argv} == 2 ]] && [ -f ${KWSSL_DIR}/${SUBDIR}/${1} ] ; then
+		# Export Dateiname und FORMAT erst einmal festlegen
+		export_filename_format "$1" "$2"
+		# Funktion (export_most_menu)# {{{
+		#
+		export_most_menu() {
+			EXPORT_MOST_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
+			$gv_Create \"\" $gv_Back \"\")
+			#
+			menubox "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MOST_MENU"
+		}
+		## }}}
+		export_most_menu
+		while [ "$gv_Auswahl" ] ; do
+			case $gv_Auswahl in
+				HELP*)
+		    	    # Hilfe Messagebox
+					script_help export_ca_help
+					export_most_menu
+					;;
+				"$lv_ExportFilename")
+					# Dateiname fuer den Export eingeben# {{{
+					export_filename $FORMAT
+					## }}}
+					export_most_menu
+					;;
+				$gv_Create)
+					# exportieren# {{{
+					cd $KWSSL_DIR
+					#
+					case "$FORMAT" in
+						der)
+							# DER Format# {{{
+							if [ "$ExportName" = cacert ] ; then
+								openssl x509 -in ${SUBDIR}/cacert.pem -outform DER -out "$Export_FileName" || prog_failure
+							else
+								openssl x509 -in ${SUBDIR}/${ExportName}.cert.pem -outform DER -out "$Export_FileName" || prog_failure
+							fi
+							## }}}
+							;;
+						tar)
+							# TAR Export# {{{
+							# ertsmal ./tmp loeschen
+							rm -rf tmp &>/dev/null
+							# ./tmp erstellen
+							create_file -d tmp
+							cp -au ${SUBDIR}/crt/${ExportName}.crt ./tmp/${ExportName}.cert.pem
+							cp -au ${SUBDIR}/private/${ExportName}.key ./tmp/${ExportName}.key.pem
+							cp -au ${SUBDIR}/${ExportName}.cachain.pem ./tmp
+							# Tar-Archiv erstellen
+							cd /
+							tar -cvf "$Export_FileName" ${KWSSL_DIR#/}/tmp 2>/dev/null || prog_failure
+							## }}}
+							;;
+						txt)
+							# TXT Export# {{{
+							cd "$SUBDIR"
+							if [ "$SUBDIR" = RootCA ] ; then
+								openssl x509 -in cacert.pem -text > ${gv_WorkDir}/rootca_export
+								ZNr=${${(ws,:,)${$(grep -n 'BEGIN CERTIFICATE' ${gv_WorkDir}/rootca_export)}}[1]}
+								sed -e "${ZNr},\$d" ${gv_WorkDir}/rootca_export > "$Export_FileName" &>/dev/null
+								rm -f ${gv_WorkDir}/rootca_export &>/dev/null
+							else
+								if [ "$ExportName" = cacert ] ; then
+									ZNr=${${(ws,:,)${$(grep -n 'BEGIN CERTIFICATE' ./cacert.pem)}}[1]}
+									sed -e "${ZNr},\$d" ./cacert.pem > "$Export_FileName" &>/dev/null
+								else
+									ZNr=${${(ws,:,)${$(grep -n 'BEGIN CERTIFICATE' ./${ExportName}.cert.pem)}}[1]}
+									sed -e "${ZNr},\$d" ./${ExportName}.cert.pem > "$Export_FileName" &>/dev/null
+								fi
+							fi
+							## }}}
+							;;
+						zip)
+							# ZIP Export# {{{
+							# ertsmal ./tmp loeschen
+							rm -rf tmp &>/dev/null
+							# ./tmp erstellen
+							create_file -d tmp
+							cp -au ${SUBDIR}/crt/${ExportName}.crt ./tmp/${ExportName}.cert.pem
+							cp -au ${SUBDIR}/private/${ExportName}.key ./tmp/${ExportName}.key.pem
+							cp -au ${SUBDIR}/${ExportName}.cachain.pem ./tmp
+							# Tar-Archiv erstellen
+							cd ./tmp
+							zip -9v "$Export_FileName" * 2>/dev/null || prog_failure
+							## }}}
+							;;
+					esac
+					## }}}
+					break
+					;;
+				$gv_Back)
+					# Abbrechen
+					break
+					;;
+			esac
+		done
+	else
+		no_para_msg $0
+	fi
+}
+# }}}

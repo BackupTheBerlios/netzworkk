@@ -1,0 +1,148 @@
+#!/bin/zsh
+#
+# kwrsync_backup_cron
+#
+# Developed by Kai Wilke <kiste@netzworkk.de>
+# Copyright (c) 2002-2011 Netzworkk
+# Licensed under terms of GNU General Public License.
+# All rights reserved.
+#
+# Description: kwrsync_backup_cron, make a snapshot from servern and localhost
+# per crontab.
+#
+# Version: 0.0.9
+#
+# Changelog:
+# 2011-06-03 - checked.
+# 2009-06-22 - correct $fpath.
+# 2008-10-12 - correct the syntax.
+# 2008-01-26 - new Variables KWRSYNC_CF.
+# 2007-09-14 - system functions changed
+# 2007-08-06 - Support for new functions
+# 2007-04-02 - Support for hostname in error mail
+# 2007-01-30 - gv_WorkDirGlobal rename to gv_WorkDir
+# 2007-01-11 - sys_logger support
+# 2006-05-15 - locale support
+# 2006-03-18 - Bug in kwrsync_backup_exec gefixt
+# 2005-11-26 - created
+#
+
+trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+# Verzeichniss in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+Kwrsync_Backup_Fpath=${PREFIX}/share/kwtools/functions/kwrsync_backup
+if [ -z ${(M)${FPATH}##*${Kwrsync_Backup_Fpath}*} ] ; then
+	FPATH=${Kwrsync_Backup_Fpath}:${FPATH}
+fi
+
+# script_init enthält die globalen Scripteinstellungen und lädt
+# diese automatisch.
+#
+autoload -U script_init
+# Scriptinitialisierung
+script_init -o
+
+# Nachdem das Script initialiiert wurde, kann man die anderen
+# benötigten Funktionen laden.
+autoload -U kwrsync_backup_exec kwrsync_backup_rotate
+
+HostName="`hostname`"
+#
+# Wenn es eine KONFIGURATIONSRC Datei gibt einlesen.
+#
+KWRSYNC_CF=${ETC_PATH}/kwrsync_backup.cf
+EXCLUDE_FILE="${ETC_PATH}/kwrsync_backup-excludes"
+
+if [ -f $KWRSYNC_CF ] ; then
+	source $KWRSYNC_CF
+else
+	MSG=$(gettext 'Es gibt keine Konfigurationsdatei auf Rechner dem $HostName.')
+	> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
+$MSG"
+	mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+	exit 1
+fi
+
+if [ -z "$BW_LIMIT" ] ; then
+	BW_LIMIT=0
+fi
+if [ -z "$SERVER" ] ; then
+	SERVER=localhost
+fi
+
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+#
+# Ist kein Backupverzeichnis angegeben, kommt eine Fehlermeldung
+if [ -z "$BACKUP_PATH" ] ; then
+	MSG=$(gettext 'Sie muessen erst ein Verzeichnis angeben, wo die Backups gesichert
+werden sollen (/etc/kwtools/kwrsync_backup.cf).')
+	> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
+$MSG"
+	mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+	exit 1
+fi
+
+# mounten des Backup-Verzeichnis
+if [ "$MOUNT_PATH" ] ; then
+	if [ -z ${(M)$(< /proc/mounts)##$MOUNT_PATH} ] ; then
+		mount $MOUNT_PATH
+		if [ "$?" != 0 ] ; then
+		MSG=$(gettext 'Kann Backup-Verzeichnis nicht einbinden.')
+			> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
+$MSG"
+			mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+			exit 1
+		fi
+	fi
+fi
+
+# Pruefe auf freien Plattenplatz
+if [ "$CHECK_HDMINFREE" = yes ] ; then
+	Kb_Is_Free=${${(s: :)${(M)${(f)"$(df $MOUNT_PATH)"}##*%}%\%}[9]}
+	Inode_Is_Free=${${(s: :)${(M)${(f)"$(df -i $MOUNT_PATH)"}##*%}%\%}[9]}
+	if [ "$Kb_Is_Free" -ge "$HDMINFREE" -o "$Inode_Is_Free" -ge "$HDMINFREE" ] ; then
+		MSG=$(gettext 'Es ist nicht mehr genug Platz vorhanden.')
+		> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
+$MSG"
+		mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+	else
+		kwrsync_backup_exec
+		kwrsync_backup_rotate
+	fi
+else
+	kwrsync_backup_exec
+	kwrsync_backup_rotate
+fi
+# umounten des Backup-Verzeichnis
+if [ "$MOUNT_PATH" ] ; then
+	umount $MOUNT_PATH
+	if [ "$?" != 0 ] ; then
+		MSG=$(gettext 'Kann Backup-Verzeichnis nicht ausbinden.')
+		> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
+$MSG"
+		mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+		exit 1
+	fi
+fi
+
+exit 0

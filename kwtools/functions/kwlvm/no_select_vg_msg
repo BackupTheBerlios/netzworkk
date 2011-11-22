@@ -1,0 +1,8 @@
+# Funktion keine VG ausgewaehlt# {{{
+#
+# usage: no_select_vg_msg
+no_select_vg_msg() {
+	MSG=$(gettext 'Sie muessen erst eine VG auswaehlen.')
+	msgbox "$gv_Attention" "$MSG"
+}
+## }}}

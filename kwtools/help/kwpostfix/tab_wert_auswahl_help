@@ -1,0 +1,14 @@
+# tab_wert_auswahl_help fuer kwpostfix{{{
+TITLE=$(gettext 'Tabellen::Werte::Auswahl::Hilfe')
+MSG=$(gettext 'Auswahl auf welche Weise Sie diesen Wert konfigurieren wollen.
+
+Eingabe: Alle Eingaben muessen manuell eingegeben werden.
+
+Namensuebernahme: Zuerst waehlen Sie einen Tabellentyp aus.
+\tDanach wird der Name des Konfigurations Parameter angehaengt.
+\tBsp.: Tabellentype hash und Konfigurations Parameter
+\tvirtual_uid_maps = hash:${MAIL_CONFIG}/virtual_mailbox_maps
+
+Variablenauswahl: Eine Variable, als Wert, aus vorhandenen
+\tVariablen auswaehlen.')
+#}}}

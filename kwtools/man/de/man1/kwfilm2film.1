@@ -1,0 +1,80 @@
+.\"     Title: KWFILM2FILM
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2008
+.\"    Manual: Handbuch f\(:ur kwfilm2film
+.\"    Source: Version 0.0.2
+.\"
+.TH "KWFILM2FILM" "1" "07/04/2008" "Version 0.0.2" "Handbuch f\(:ur kwfilm2film"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwfilm2film \- ein Zshell Script um Filme zu konvertieren.
+.SH "SYNTAX"
+.HP 12
+\fBkwfilm2film\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBkwfilm2film\fR
+kann Filme in verschiedenene Film Formate konvertieren oder auch nur Bilder extrahieren\&. Es benutzt dazu die Programme
+\fBtranscode\fR
+und
+\fBmplex\fR\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Hier kann man alle Standard Werte ver\(:andern\&. Achten Sie darauf das Sie die richtigen Im/Export Module eingestellt haben\&. Es gibt bei vielen Konvertierungen noch keine automatische Auswahl der Module\&.
+.RE
+.PP
+\fBDateiinfo\fR
+.RS 4
+Hier kann man sich Informationen \(:uber die ausgew\(:ahlte Datei anschauen\&. So k\(:onnen Sie besser die Import Module ausw\(:ahlen\&.
+.RE
+.PP
+\fBVideos\fR
+.RS 4
+Konvertiert Videos in andere Video Formate\&. Es sind einige Konvertierungen voreingestellt\&. Bei vielen kommt das Export Modul
+\fBmpeg2enc\fR
+zum Einsatz, da
+\fBmpeg2\fR
+veraltet ist\&. Bei diesem Men\(:upunkt kann man auch einfach nur Filme multiplexen\&. Dabei f\(:ugt man die seperaten Audio und Video Streams zusammen zu einer Datei\&.
+.RE
+.PP
+\fBVideo\-CD\fR
+.RS 4
+Ruft das Script
+\fBkwvcdburn\fR, zum erstellen und brennen von Video\-CDs auf\&.
+.RE
+.PP
+\fBVideo\-DVD\fR
+.RS 4
+Ruft das Script
+\fBkwvdvdburn\fR, zum erstellen und brennen von Video\-DVDs auf\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwfilm2filmrc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwfilm2film\fR\&. F\(:ur weitere Details siehe
+\fBkwfilm2filmrc\fR(5)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwfilm2filmrc\fR(5),
+\fBkwvcdburn\fR(1),
+\fBkwvdvdburn\fR(1),
+\fBmplex\fR(1),
+\fBtranscode\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

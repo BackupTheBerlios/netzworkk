@@ -1,0 +1,102 @@
+kwfirewall::Konfiguration::Hilfe
+
+NOTIZ: Bei der Einstellung der Ports ist es egal ob www oder 80
+        eingetragen werden. Die meisten Ports kann man in der
+        Datei /etc/services nachschlagen. Nur bei der Einstellung
+        der Prerouting Host:Portzahl Regeln muessen Sie fuer die
+        Portzahl die dementsprechende Nummer fuer den Dienst ein-
+        geben (Bsp. www=80). Siehe auch man 5 firewall.cf.
+		
+Programm: Einstellung des Pfads+Programmname von ip(6)tables
+        (Bsp. /sbin/ip(6)tables).
+
+Module: Hier kann man die Netfilter-Module auswaehlen die, beim
+        Start der Firewall geladen, werden sollen.
+
+Forward: Forwarding einstellen (ja/nein)? Schalten Sie dies ab, wenn
+        dies ein Einzelrechner ist.
+
+Masquerading: Masquerading einstellen (ja/nein)? Schalten Sie dies
+        ab, wenn dies ein Einzelrechner ist.
+
+DMZ_DEV: Netzwerk Interface zur Demilitarisierten ZONE (DMZ). Benutzen
+        Sie dieses Device nur, wenn dieser Rechner mit ihrer DMZ
+        verbunden ist.
+
+INT_DEV: Netzwerk Interface zum Internet. Muss man selber ein-
+        tragen, da das Interfaces ja noch down sein kann. Bei
+        einem (DSL)Modem ist das pppn und bei ISDN ipppn. Das "n"
+        steht fuer eine Zahl (Bsp. ppp0). Es kann nat. auch eth0
+        sein;-).
+
+NOTIZ: Wenn dies ein Einzel-Rechner ist, muss dieses Interface fuer
+        die Firewall genutzt werden.
+
+LAN_DEV: Netzwerk Interface zum Local Area Network (LAN). Benutzen
+        Sie dieses Device nur, wenn dieser Rechner mit ihrem LAN
+        verbunden ist.
+
+DMZ: Netzwerkmaske fuer die DMZ (Bsp. 192.168.1.0/24).
+
+LAN: Netzwerkmaske fuer das LAN (Bsp. 192.168.2.0/24).
+
+TCP_FW_TO_DMZ: TCP-Ports von diesem Rechner zur DMZ.
+
+UDP_FW_TO_DMZ: UDP-Ports von diesem Rechner zur DMZ.
+
+TCP_FW_TO_INT: TCP-Ports von diesem Rechner zum Internet.
+
+UDP_FW_TO_INT: UDP-Ports von diesem Rechner zum Internet.
+
+TCP_FW_TO_LAN: TCP-Ports von diesem Rechner zum LAN.
+
+UDP_FW_TO_LAN: UDP-Ports von diesem Rechner zum LAN.
+
+TCP_DMZ_TO_FW: TCP-Ports von der DMZ zu diesem Rechner.
+
+UDP_DMZ_TO_FW: UDP-Ports von der DMZ zu diesem Rechner.
+
+TCP_LAN_TO_FW: TCP-Ports vom LAN zu diesem Rechner.
+
+UDP_LAN_TO_FW: UDP-Ports vom LAN zu diesem Rechner.
+
+TCP_INT_TO_FW: TCP-Ports vom Internet zu diesem Rechner.
+
+UDP_INT_TO_FW: UDP-Ports vom Internet zu diesem Rechner.
+
+TCP_INT_TO_LAN: TCP-Ports vom Internet zum LAN.
+
+UDP_INT_TO_LAN: UDP-Ports vom Internet zum LAN.
+
+TCP_LAN_TO_INT: TCP-Ports vom LAN zum Internet.
+
+UDP_LAN_TO_INT: UDP-Ports vom LAN zum Internet.
+
+TCP_INT_TO_DMZ: TCP-Ports vom Internet zur DMZ.
+
+UDP_INT_TO_DMZ: UDP-Ports vom Internet zur DMZ.
+
+TCP_DMZ_TO_INT: TCP-Ports von der DMZ zum Internet.
+
+UDP_DMZ_TO_INT: UDP-Ports von der DMZ zum Internet.
+
+TCP_LAN_TO_DMZ: TCP-Ports vom LAN zur DMZ.
+
+UDP_LAN_TO_DMZ: UDP-Ports vom LAN zur DMZ.
+
+TCP_DMZ_TO_LAN: TCP-Ports von der DMZ zum LAN.
+
+UDP_DMZ_TO_LAN: UDP-Ports von der DMZ zum LAN.
+
+TCP_INT_TO_DMZ_NAT: Umleitungen der Anfragen vom Internet zu
+        einem Rechner der DMZ (Bsp. 192.168.1.2:80).
+
+UDP_INT_TO_DMZ_NAT: Umleitungen der Anfragen vom Internet zu
+        einem Rechner der DMZ (Bsp. 192.168.1.2:80).
+		
+TCP_INT_TO_LAN_NAT: Umleitungen der Anfragen vom Internet zu
+        einem Rechner des LAN's (Bsp. 192.168.1.2:53).
+
+UDP_INT_TO_LAN_NAT: Umleitungen der Anfragen vom Internet zu
+        einem Rechner des LAN's (Bsp. 192.168.1.2:53).
+

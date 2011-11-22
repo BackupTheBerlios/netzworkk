@@ -1,0 +1,9 @@
+kwlvm::Volume Groups::Backup::Hilfe
+
+Sicherung_erstellen: Sichert die Metadaten der VG.
+
+Sicherung_zurueck: Gesicherte Metadaten von VG's wieder zurueck
+        sichern. Dies koennen auch Sicherungen auf anderen, als den
+        voreingestellten Pfaden sein.
+
+Sicherung_loeschen: Gespeicherte Sicherungen loeschen

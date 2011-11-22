@@ -1,0 +1,4 @@
+# utils_kwssl2_help fuer kwadmin{{{
+MSG=$(gettext 'kwssl2: Mit diesem Script koennen Sie SSL Zertifikate erstellen,
+\tsignieren etc.')
+#}}}

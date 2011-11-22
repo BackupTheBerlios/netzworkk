@@ -1,0 +1,6 @@
+# help fuer kwnetconf{{{
+TITLE="$gv_Help"
+MSG=$(gettext 'kwnetconf ist ein Frontend fuer verschiedene Scripte die die
+Konfiguration des Netzwerks betreffen.
+')
+#}}}

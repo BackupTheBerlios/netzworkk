@@ -1,0 +1,62 @@
+.\"     Title: KWRSYNC_CRON
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2008
+.\"    Manual: Handbuch f\(:ur kwrsync_cron
+.\"    Source: Version 0.0.3
+.\"
+.TH "KWRSYNC_CRON" "1" "07/04/2008" "Version 0.0.3" "Handbuch f\(:ur kwrsync_cron"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwrsync_cron \- Crontab Script f\(:ur das Script kwrsync
+.SH "SYNTAX"
+.HP 13
+\fBkwrsync_cron\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBkwrsync_cron\fR
+liest die Dateien
+\fI~/kwtools/kwrsyncrc\fR
+und
+\fI~/kwtools/kwrsynctab\fR
+ein und wird vom
+\fBCron\fR
+Daemon ausgef\(:uhrt\&. Bei Fehlern wird eine Mail an
+\(lqroot\(rq
+verschickt\&.
+.SH "DATEIEN"
+.PP
+\fI~/\&.kwtools/kwrsyncrc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwrsync\fR
+F\(:ur weitere Details siehe
+\fBkwrsyncrc\fR(5)\&.
+.RE
+.PP
+\fI~/\&.kwtools/kwrsynctab\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur die Synchronistaion der konfigurierten Verzeichnisse\&. F\(:ur weitere Details siehe
+\fBkwrsynctab\fR(5)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBcron\fR(8),
+\fBcrontab\fR(1),
+\fBcrontab\fR(5),
+\fBkwrsync\fR(1),
+\fBkwrsyncrc\fR(5),
+\fBkwrsynctab\fR(5),
+\fBrsync\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

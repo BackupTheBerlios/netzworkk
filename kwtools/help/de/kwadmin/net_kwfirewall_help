@@ -1,0 +1,3 @@
+kwfirewall: Mit diesem Script kann man die Firewall, mittels
+        ip(6)tables, konfigurieren, verwalten, etc..
+

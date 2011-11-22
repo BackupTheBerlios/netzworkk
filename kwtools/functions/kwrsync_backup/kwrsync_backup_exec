@@ -1,0 +1,111 @@
+# Funktion, kwrsync_backup_exec - Backup ausfuehren{{{
+#
+# usage: kwrsync_backup_exec
+#
+kwrsync_backup_exec() {
+	LOG_START_MSG=$(gettext 'Starte rsync Backup von $S ...')
+	LOG_ERR_MSG=$(gettext 'Fatal: rsync Backup ($S) mit Fehlern beendet!')
+	LOG_FINISH_MSG=$(gettext 'Beende rsync Backup von $S ...')
+	ERROR_MSG=$(gettext 'kwrsync_backup_cron: Backup Fehler')
+	FINISH_MSG=$(gettext 'kwrsync_backup_cron: Backup beendet')
+	# Funktion, backup_exec_cron - Backup ausfuehren per cron{{{
+	# Los geht`s: rsync zieht ein Vollbackup
+	backup_exec_cron() {
+		# Logging beginnen.
+		sys_logger -n syslog "$gv_ScriptName" "$LOG_START_MSG"
+		if [ "`hostname`" = "$S" -o "$S" = localhost ] ; then
+			PROG_OPT="-avHAX --numeric-ids --delete --delete-excluded --exclude-from="$EXCLUDE_FILE" --bwlimit=$BW_LIMIT / ${BACKUP_PATH}/${S}/snapshot.0"
+		else
+			if [ -n "$USER_RUN" ] ; then
+				PROG_OPT="-avHAX --numeric-ids $RSH_OPT --delete --delete-excluded --exclude-from="$EXCLUDE_FILE" --bwlimit=$BW_LIMIT ${USER_RUN}@${S}:/ ${BACKUP_PATH}/${S}/snapshot.0"
+			else	
+				PROG_OPT="-avHAX --numeric-ids $RSH_OPT --delete --delete-excluded --exclude-from="$EXCLUDE_FILE" --bwlimit=$BW_LIMIT ${S}:/ ${BACKUP_PATH}/${S}/snapshot.0"
+			fi
+		fi
+		rsync ${=PROG_OPT} | tee ${BACKUP_PATH}/${S}-log
+		# Rueckgabewert pruefen.
+		# 0 = fehlerfrei, 
+		# 24 ist harmlos; tritt auf, wenn waehrend der Laufzeit
+		# von rsync noch (/tmp?) Dateien veraendert oder geloescht wurden.
+		# Alles andere ist fatal -- siehe man (1) rsync
+		if ! [ $? = 24 -o $? = 0 ] ; then
+			sys_logger -r syslog "$gv_ScriptName" "$LOG_ERR_MSG"
+			Not_Net=$(gettext 'kein Netz?')
+			> "${gv_WorkDir}/error" <<< "${S}:
+			$Not_Net"
+			mail -s "$ERROR_MSG" root < "${gv_WorkDir}/error"
+		else
+			# Verzeichnis anfassen, um Backup-Datum zu speichern
+			touch ${BACKUP_PATH}/${S}/snapshot.0
+			# Fertig!
+			sys_logger -n syslog "$gv_ScriptName" "$LOG_FINISH_MSG"
+			# Sicher ist sicher...
+			sync
+			# logDatei verschicken
+			print ${S}: > "${gv_WorkDir}/finish"
+			< ${BACKUP_PATH}/${S}-log >> "${gv_WorkDir}/finish"
+			mail -s "$FINISH_MSG" root < "${gv_WorkDir}/finish"
+		fi
+	}
+	#}}}
+	# Funktion, backup_exec - Backup ausfuehren{{{
+	# Los geht`s: rsync zieht ein Vollbackup
+	backup_exec() {
+		# Logging beginnen.
+		sys_logger -n syslog "$gv_ScriptName" "$LOG_START_MSG"
+		#
+		if [ "`hostname`" = "$S" -o "$S" = localhost ] ; then
+			PROG_OPT="-avHAX --numeric-ids --delete --delete-excluded --exclude-from="$EXCLUDE_FILE" --bwlimit=$BW_LIMIT / ${BACKUP_PATH}/${S}/snapshot.0"
+		else
+			if [ -n "$USER_RUN" ] ; then
+				PROG_OPT="-avHAX --numeric-ids $RSH_OPT --delete --delete-excluded --exclude-from="$EXCLUDE_FILE" --bwlimit=$BW_LIMIT ${USER_RUN}@${S}:/ ${BACKUP_PATH}/${S}/snapshot.0"
+			else
+				PROG_OPT="-avHAX --numeric-ids $RSH_OPT --delete --delete-excluded --exclude-from="$EXCLUDE_FILE" --bwlimit=$BW_LIMIT ${S}:/ ${BACKUP_PATH}/${S}/snapshot.0"
+			fi
+		fi
+		# ausfuehren
+		P_TITLE=$(gettext 'Backupausfuehrung')
+		P_MSG="$LOG_START_MSG (${S}-log)"
+		(rsync ${=PROG_OPT} 2>/dev/null | tee ${BACKUP_PATH}/${S}-log || \ 
+			sys_logger -r syslog "$gv_ScriptName" "$LOG_ERR_MSG") | \
+			progressbox "$P_TITLE" "$P_MSG"
+		# Verzeichnis anfassen, um Backup-Datum zu speichern
+		touch "${BACKUP_PATH}/${S}/snapshot.0"
+		# Fertig!
+		sys_logger -n syslog "$gv_ScriptName" "$LOG_FINISH_MSG"
+		# Sicher ist sicher...
+		sync
+	}
+	#}}}
+	# remote-shell Optionen belegen
+	case "$RSYNC_RSH" in
+		[rs]sh)
+			RSH_OPT="-ze $RSYNC_RSH"
+			;;
+		*)
+			# Nur Kompression einschalten
+			RSH_OPT="-z"
+			;;
+	esac
+	# Ggf. Verzeichnis anlegen
+	if [ -n "$gv_Terminal" ] ; then
+		for S in ${=SERVER} ; {
+			if [ ! -d ${BACKUP_PATH}/${S}/snapshot.0 ] ; then
+				create_file -d ${BACKUP_PATH}/${S}/snapshot.0
+				backup_exec
+			else
+				backup_exec
+			fi
+		}
+	else
+		for S in ${=SERVER} ; {
+			if [ ! -d ${BACKUP_PATH}/${S}/snapshot.0 ] ; then
+				mkdir -p ${BACKUP_PATH}/${S}/snapshot.0
+				backup_exec_cron
+			else
+				backup_exec_cron
+			fi
+		}
+	fi
+}
+#}}}

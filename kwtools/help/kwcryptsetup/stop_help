@@ -1,0 +1,6 @@
+# stop_help fuer kwcryptsetup{{{
+TITLE="${lv_Stop}::${gv_Help}"
+MSG=$(gettext 'Stoppen von ein oder mehreren verschluesselten Laufwerken. Dabei
+werden die Eintraege der Konfigurationsdatei /etc/crypttab nicht geloescht.')
+}
+#}}}

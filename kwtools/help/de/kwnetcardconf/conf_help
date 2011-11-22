@@ -1,0 +1,30 @@
+kwnetcardconf::Konfiguration::Hilfe
+
+IP: Hier gibt man die IP Adresse dieser Netzwerkkarte ein.
+
+Boot: Soll das Interface beim Systemstart aktiviert werden
+        (ja/nein)?
+
+Broadcast: Eingabe der Broadcast Adresse (Bsp. 255.255.255.0).
+        Ist optional.
+
+Netmask: Eingabe der Netzmaske (Bsp. 192.168.0.255). Ist optional.
+
+Gateway: Hier gibt man die IP Adresse des Gateway ein. Es wird
+        geschaut, ob dieser Rechner erreichbar ist. Wenn ihr Netz
+        einen Gateway besitzt, dieser aber auf ping Pakete nicht
+        antworten darf, dann muessen Sie diesen von Hand eintragen.
+        Bei Debian + kwtools-net ist das die Datei
+        /etc/network/interfaces. 
+
+Nameserver: Eingabe von bis zu 3 Nameservern.
+        (Bsp. T-online.de - 194.25.2.129).
+
+NOTIZ: Die Nameserver werden aus der Datei /etc/resolv.conf
+        gelesen. Man muss sie also meist nur einmal eingeben.
+
+loeschen: Loeschen der manuellen Konfiguration.
+
+NOTIZ: Alle Eingaben erfolgen im ipv4 Format (192.168.0.1). Ipv6
+        kann ich leider nicht testen.
+        Zur Zeit gehen nur die OS's Debian, CentOS, Fedora und SuSE.

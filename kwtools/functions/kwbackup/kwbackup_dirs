@@ -1,0 +1,76 @@
+# Alle Dateien in $Dirs sichern, wenn die Backups aelter als 14 Tage{{{
+# sind. Ansonsten nur die Dateien gesichert, wenn sie aelter als 1 Tag
+# sind.
+#
+kwbackup_dirs() {
+	Tar_Opt="--ignore-failed-read"
+	pushd ${BACKUP_PATH}/dirs
+	for i in $DIRS ; {
+		Bzip_File="`ls ${${i//\//_}#_}*.bz2`"
+		Tar_File_New="${${i//\//_}#_}-${Date}.tar"
+		# Nummerierung
+		ANZ=0
+		while test -e ${Tar_File_New}.bz2 ; do
+			Tar_File_New=${Tar_File_New/-*.tar/-${Date}-${ANZ}.tar}
+			(( ANZ++ ))
+		done
+		#
+		if test ! -e ${Tar_File_New}.bz2 ; then
+			# Gibt es schon Backups, wird nach welchen die aelter als 30 Tage sind gesucht.
+			# Sind welche vorhanden wird ein komplettes Backup gemacht und alle Dateien
+			# in $Bzip_File geloescht.
+			if [ "$Bzip_File" ] ; then
+				ANZ=1
+				for B in $Bzip_File ; {
+					Fund="`find . -type f -mtime +30 -name $B`"
+					if [ -n "$Fund" ] ; then
+						Last_Backup[ANZ]="$Fund"
+						(( ANZ++ ))
+					fi
+				}
+				if [ "$Last_Backup" ] ; then
+					# Beim ausfuehren von kwbackup_cron ueber "cron" gibts keine Terminal Ausgabe.
+					# Das wird hier geprueft.
+					if [ "$gv_Terminal" ] ; then
+						prog_exec -p tar "-cPvf $Tar_File_New $Tar_Opt $i" | \
+							progressbox "$ACTION_TITLE" "$DIR_MSG" || (print ; prog_failure)
+						prog_exec -i bzip2 "-v $Tar_File_New"
+					else
+						tar -cPvf $Tar_File_New "$Tar_Opt" $i
+						bzip2 -v $Tar_File_New
+					fi
+					# loeschen der alten Backups, auch *.tar Dateien falls es einen Abbruch gab.
+					setopt globsubst
+					print ${Bzip_File//\.bz2/*} | xargs rm -f &>/dev/null
+					unsetopt globsubst
+				else
+					# Dateien der letzten 7 Tage, die veraendert wurden, finden und sichern.
+					if [ "$gv_Terminal" ] ; then
+						prog_exec -p find "$i -type f -ctime -7 -exec tar -uPvf $Tar_File_New $Tar_Opt {} \;" | \
+							progressbox "$ACTION_TITLE" "$DIR_LAST_MSG" || (print ; prog_failure)
+						prog_exec -i bzip2 "-v $Tar_File_New"
+					else
+						find $i -type f -ctime -7 -exec tar -uPvf $Tar_File_New "$Tar_Opt" {} \;
+						bzip2 -v $Tar_File_New
+					fi
+				fi
+			else
+				# Beim ausfuehren von kwbackup_cron ueber "cron" gibts keine Terminal Ausgabe.
+				# Das wird hier geprueft.
+				# vollstaendiges Backup.
+				if [ "$gv_Terminal" ] ; then
+					prog_exec -p tar "-cPvf $Tar_File_New $Tar_Opt $i" | \
+						progressbox "$ACTION_TITLE" "$DIR_MSG" || (print ; prog_failure)
+					prog_exec -i bzip2 "-v $Tar_File_New"
+				else
+					tar -cPvf $Tar_File_New "$Tar_Opt" $i
+					bzip2 -v $Tar_File_New
+				fi
+			fi
+		else
+			file_existed_msg "${Tar_File_New}.bz2"
+		fi
+	}
+	popd
+}
+#}}}

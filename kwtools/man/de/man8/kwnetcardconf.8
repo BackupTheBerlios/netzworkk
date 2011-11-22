@@ -1,0 +1,84 @@
+.\"     Title: KWNETCRADCONF
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/25/2008
+.\"    Manual: Benutzerhandbuch f\(:ur kwnetcardconf
+.\"    Source: Version 0.1.9
+.\"
+.TH "KWNETCRADCONF" "8" "07/25/2008" "Version 0.1.9" "Benutzerhandbuch f\(:ur kwnetcard"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwnetcardconf \- ein Zshell Script zur Netzwerk Interface Konfiguration
+.SH "SYNTAX"
+.HP 14
+\fBkwnetcardconf\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwnetcardconf\fR
+k\(:onnen Sie Ihre Netzwerkkarten konfigurieren\&. Dies kann man entweder \(:uber
+\fBdhcp\fR
+oder
+\fBmanuell\fR\&. Es werden alle vorhandenen Karten aufgelistet\&. Dies sind WLan\-, (Gigabyte)Ethernet\-, Firewire\- und Tokenringkarten\&.
+.SH "OPTIONEN"
+.PP
+\fBeth,tr,wlan\fR
+.RS 4
+Auswahl der Karte\&. Darauf folgt ein Men\(:u zur Konfiguration\&. Die Konfiguration erfolgt entweder \(:uber
+\fBdhcp\fR
+oder
+\fBmanuell\fR\&. Die Auswahl hat folgendes Format: Interface_Kartentyp_Hardwareadresse_Treiber\&.
+\fBdhcp\fR
+steht nur zur Verf\(:ugung wenn
+\fBdhclient\fR
+installiert ist\&. Ansonsten wird gleich die manuelle Konfiguration angezeigt\&. Dort kann man dann die IP Adresse, Boot Option, Broadcast, Netmaske, Gateway und Nameserver eintragen\&.
+.sp
+Bis auf die IP Adresse sind alle Eingaben optional\&. Die Nameserver werden aus der Datei
+\fI/etc/resolv\&.conf\fR
+gelesen und m\(:ussen meist nicht ge\(:andert werden\&. Alle Eingaben erfolgen im
+\fBipv4\fR
+Format\&. Leider gehen
+\fBipv6\fR
+Adressen noch nicht, da keine Testm\(:oglichkeit\&.
+.RE
+.SH "NOTIZ"
+.PP
+Bei SuSE wird
+\(lq\fByast2\fR \fBlan\fR\(rq
+benutzt\&. Tokenring Karten konnte ich noch nicht testen, da keine Karten\&.
+.SH "DATEIEN"
+.PP
+\fI/etc/network/interfaces\fR, Debian
+.RS 4
+Netzwerk Konfiguration Datei f\(:ur Debian\&. Siehe
+\fBinterfaces\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.PP
+\fI/etc/sysconfig/networking/devices/ifcfg\-eth*\fR, CentOS, Fedora
+.RS 4
+Netzwerk Konfiguration Datei f\(:ur Fedora und CentOS\&.
+.RE
+.PP
+\fI/etc/sysconfig/networking/ifcfg\-eth*\fR, (Open)SuSE
+.RS 4
+Netzwerk Konfiguration Datei f\(:ur (Open)SuSE\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBdhclient\fR(8),
+\fBinterfaces\fR(5),
+\fBkwnetconf\fR(8),
+\fBresolv.conf\fR(5)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

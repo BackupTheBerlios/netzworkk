@@ -1,0 +1,22 @@
+# Ist das Verzeichnis /etc/${DNS} vorhanden, wird {{{
+# gefragt ob dieser Service neu erstellt werden soll.
+#
+# usage: dns_check
+#
+dns_check() {
+	if [[ -h ${SERVICE_DIR}/${DNS} ]] ; then
+		unset -- Dir
+		local Dir
+		MSG=$(gettext 'Es ist schon ein $DNS eingerichtet worden. Soll er erneut eingerichtet werden?')
+		yesno "$gv_Attention" "$MSG"
+		if [ "$?" = 0 ] ; then
+			Dir=$(readlink -f ${SERVICE_DIR}/${DNS})
+			svc -dx $Dir &>/dev/null
+			rm -rf $Dir &>/dev/null
+			rm ${SERVICE_DIR}/${DNS} &>/dev/null
+		else
+			break
+		fi
+	fi
+}
+#}}}

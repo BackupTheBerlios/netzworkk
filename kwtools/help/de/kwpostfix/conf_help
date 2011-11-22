@@ -1,0 +1,30 @@
+kwpostfix::Konfiguration::Hilfe
+
+Hier kann man fast alle Konfigurationsmoeglichkeiten einstellen.
+Dies geschieht nach folgenden Muster. Alle Variablen die am Anfang
+mit default, mail, lmtp, q, smtp, smtpd, tls oder virtual anfangen
+sind in die folgenden Menuepunkte unterteilt. Ausnahme stellt haupt
+dar. Dort ist alles wozu kein eigener Menuepunkt sich gelohnt hat.
+
+Haupt: Einstellung der am haeufigsten gebrauchten Variablen. 
+
+Standard: Standard Einstellungen fuer alle Module konfigurieren. Diese
+        koennen aber von anderen Einstellungen ueberschrieben werden.
+
+Fehlercodes: Hier koennen Sie alle moeglichen Fehlercodes, die Postfix
+        unterstuetzt, einstellen.
+
+Mail: Einstellungen fuer mail und mailboxen.
+
+LMTP: Einstellungen fuer lmtp (Local Mail Transport Protokoll).
+
+Queue: Einstellungen fuer den qmqpd (Queue Manager Qumail Protokoll
+       Daemon), der Queue und des qmgr (Queue Managers).
+
+SMTP: Einstellungen fuer ausgehende mail.
+
+SMTPD: Einstellungen fuer eingehende mail.
+
+TLS: Standard Einstellungen rund um SSL/TLS.
+
+Virtual: Einstellungen fuer die Transport Methode virtual.

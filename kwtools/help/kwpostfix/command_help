@@ -1,0 +1,4 @@
+# command_help fuer kwpostfix{{{
+TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
+MSG=$(gettext 'Auswahl eines Postfix eigenen Daemons.')
+#}}}

@@ -1,0 +1,26 @@
+# conf_help fuer kwvcdburn{{{
+TITLE="${gv_Configuration}::${gv_Help}"
+MSG=$(gettext 'Mount Verz.: Mount Verzeichnis waehlen das eventuell vorher
+\teingebunden werden muss. Dieses muss in der /etc/fstab bekannt sein und
+\tSie muessen auch dementsprechende Rechte besitzen.
+
+Verz.: Waehlen Sie ein Standardverzeichnis, in welchen ihre Film 
+\tOrdner liegen. Ansonsten wird das Home Verzeichnis genommen.
+
+Video_Typ: Hier sollten Sie ihr Video CD Format waehlen, falls Sie 
+\tnicht SVCD (Standard) benutzen wollen. Es stehen vcd1 
+\tvcd2, svcd und hqvcd zur Verfuegung.
+
+Bildformat: Waehlen Sie das Bildformat aus. Zur Verfuegung stehen
+\t1=1:1, 2=4:3, 3=16:9 und 4=2.21:1. Standard ist 2.
+
+Groesse: Geben Sie die Groesse des Bildes, in KByte, ein. Standard
+\tist 200.
+
+Framerate: Auswahl der Framerate. Zur Auswahl stehen 25 (PAL/EU)
+\tund 30000 (NTSC/amerikanischer Kontinent). Standard ist 25.
+
+Framegroesse: Auswahl oder Eingabe der Groesse fuer die Frames.
+\tZur Auswahl stehen MONOCHROM, VCD, SVCD und DVD. Standard ist
+\t480x576 (PAL/SVCD.')
+#}}}

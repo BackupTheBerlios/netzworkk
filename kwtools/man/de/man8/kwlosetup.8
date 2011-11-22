@@ -1,0 +1,80 @@
+.\"     Title: KWLOSETUP
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 06/12/2008
+.\"    Manual: Benutzerhandbuch f\(:ur kwlosetup
+.\"    Source: Version 0.1.7
+.\"
+.TH "KWLOSETUP" "8" "06/12/2008" "Version 0.1.7" "Benutzerhandbuch f\(:ur kwlosetup"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwlosetup \- ein Zshell Frontend f\(:ur losetup (loop-aes)
+.SH "SYNTAX"
+.HP 10
+\fBkwlosetup\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwlosetup\fR
+k\(:onnen Sie Dateien oder Block Devices (Bsp\&. Partitionen) verschl\(:usseln\&. Zum ordentlichen verschl\(:usseln m\(:ussen Sie das normale Kernel Modul loop\&.(o,ko) tauschen\&. Die meisten Distributionen bieten ein vorkompiliertes Modul an\&. Bei Debian heissen diese loop\-aes\-Kernelversionsnummer (\fIloop\fR) und loop\-aes\-ciphers\-Kernelversionsnummer (\fIloop_blowfish\fR,
+\fIloop_serpent\fR,
+\fIloop_twofish\fR)\&. Die aktuellen Sourcen dazu finden Sie unter folgender Adresse:
+.sp
+.RS 4
+.nf
+http://loop\-aes\&.sourceforge\&.net/
+.fi
+.RE
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration von
+\fBkwlosetup\fR\&. Die meisten Optionen dienen zur verschl\(:usselten Container Erstellung\&. Die Optionen
+\fBMulti_Key\fR
+und
+\fBVerschl\(:ussellung\fR
+sind f\(:ur alle Aktivit\(:aten von
+\fBkwlosetup\fR
+zust\(:andig\&.
+.RE
+.PP
+\fBContainer\fR
+.RS 4
+Einen Container (Datei mit Dateisystem) verschl\(:usseln\&.
+.RE
+.PP
+\fBPartition\fR
+.RS 4
+Ganze Partitionen, LVM\-Laufwerke, RAID\-Laufwerke verschl\(:usseln\&.
+.RE
+.PP
+\fBSwap\fR
+.RS 4
+Swap Partitionen verschl\(:usseln\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwlosetuprc\fR
+.RS 4
+Konfiguration Datei f\(:ur
+\fBkwlosetup\fR\&. Siehe
+\fBkwlosetuprc\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwlosetuprc\fR(5),
+\fBlosetup\fR(8)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Kai Wilke
+.br

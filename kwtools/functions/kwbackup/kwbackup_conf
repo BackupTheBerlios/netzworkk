@@ -1,0 +1,112 @@
+# Funktion kwbackup_conf{{{
+#
+# konfiguriert die Konfigurationsdatei für kwbackup. Benoetigt
+# die Funktion kwbackup_config
+#
+# usage: kwbackup_conf
+#
+kwbackup_conf() {
+	lv_Back_Dir=$(gettext 'Backup_Verzeichnis')
+	lv_Mount_Dir=$(gettext 'Mount_Verzeichnis')
+	lv_Dirs=$(gettext 'Verzeichnisse')
+	lv_Crontab=$(gettext 'crontab')
+	# Funktion conf_menue{{{
+	conf_menue() {
+		MENU=($lv_Back_Dir \"$BACKUP_PATH\" $lv_Mount_Dir \"$MOUNT_PATH\"
+		$lv_Dirs \"$DIRS\" $lv_Crontab \"\" $gv_Save \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$MENU"
+		else
+			menubox "$gv_Configuration" "$gv_Menupoint" "$MENU"
+		fi
+	}
+	#}}}
+	#
+	conf_menue
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)
+				script_help conf_help
+				conf_menue
+				;;
+			$lv_Back_Dir)
+				# Wo sollen die Backups angelegt werden{{{
+				dselect "$BACKUP_PATH"
+				if [ "$VERZ" ] ; then
+					dselect_check -c "$VERZ"
+					if [ "$VERZ" ] ; then
+						user_device_check "$VERZ" AIE
+						BACKUP_PATH="$VERZ"
+					else
+						unset -- BACKUP_PATH
+					fi
+				else
+					unset -- BACKUP_PATH
+				fi
+				#}}}
+				conf_menue $lv_Back_Dir
+				;;
+			$lv_Mount_Dir)
+				# Mount Verzeichnis auswaehlen{{{
+				dselect "$MOUNT_PATH"
+				if [ "$VERZ" ] ; then
+					dselect_check "$VERZ"
+					if [ "$VERZ" ] ; then
+						user_device_check "$VERZ" AE
+						MOUNT_PATH="$VERZ"
+						mount_check -m "$MOUNT_PATH"
+						if [ "$MOUNT" = no ] ; then
+							MOUNT_PATH=""
+						fi
+					else
+						unset -- MOUNT_PATH
+					fi
+				else
+					unset -- MOUNT_PATH
+				fi
+				#}}}
+				conf_menue $lv_Mount_Dir
+				;;
+			$lv_Dirs)
+				# Verzeichnisse zum sichern auswaehlen{{{
+				TITLE=(${gv_Configuration}::${lv_Dirs})
+				MSG=$(gettext 'Geben Sie hier die Verzeichnisse an die gesichert werden sollen (getrennt durch 1 Leerzeichen).')
+				inputbox "$TITLE" "$MSG" "$DIRS"
+				if [ "$gv_Auswahl" ] ; then
+					unset -- DIRS
+					ANZ=1
+					for i in $gv_Auswahl ; {
+						dselect_check $i
+						if [ "$VERZ" ] ; then
+							DIRS[ANZ]="$VERZ"
+							(( ANZ++ ))
+						fi
+					}
+				else
+					unset -- DIRS
+				fi
+				#}}}
+				conf_menue $lv_Dirs
+				;;
+			$lv_Crontab)
+				# kwbackup_cron in den crontabelle des users einstellen.
+				crontbconf kwbackup_cron
+				conf_menue $lv_Crontab
+				;;
+			$gv_Save)
+				# Konfigurationsdatei schreiben{{{
+				if [ "$BACKUP_PATH" ] ; then
+					kwbackup_config
+					break
+				else
+					check_backup_path_msg
+					conf_menue
+				fi
+				#}}}
+				;;
+			$gv_Back) break
+				;;
+		esac
+	done	
+}
+#}}}

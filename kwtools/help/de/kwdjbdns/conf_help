@@ -1,0 +1,37 @@
+kwdjbdns::Konfiguration::Hilfe
+
+Hier kann man die einzelnen DNS Server einrichten.
+
+dnscache: Ein DNS Cache daemon. Geben Sie bitte die IP von 
+        localhost (127.0.0.1) ein und tragen Sie diese in
+        /etc/resolv.conf ein.
+
+tinydns: Ein eigenstaendiger DNS Server. Geben Sie hier die
+        IP des Rechners an (192.168.0.1) auf dem tinydns laeuft.
+
+axfrdns: Dies ist ein Zone Transfer Service. Dieser muss laufen,
+        wenn tinydns eingerichtet wurde und ein dnscache den Cache
+        des tinydns nutzen darf, genauso wie das ucspi-tcp
+        Paket installiert sein muss.
+        Hier muessen Sie nichts eingeben. Wichtig ist das tinydns
+        laeuft.
+
+rbldns: rbldns ist ein IP-address-listing DNS Server. Er akzeptiert
+        wiederholende DNS-Fragen von Rechnern aus dem Internet, die
+        ueber verschiedenartige IP-Adressen fragen. Er versorgt Sie
+        mit Antworten, die zeigen, ob die Adressen auf einer
+        oertlich konfigurierten Liste, wie RBL oder DUL sind.
+		
+        Hier geben Sie bitte die domain, die verwaltet werden soll,
+        ein und die IP von ihrem Rechner.
+
+walldns: walldns ist ein reverse DNS wall Server. Er akzeptiert 
+        wiederholende DNS-Fragen fuer in-addr.arpa Domains von 
+        Rechnern aus dem Internet, und liefert allgemeine 
+        (generische) Antworten, die vermeiden, lokale Rechner 
+        Information zu offenbaren. 
+        Zum Beispiel, versorgt walldns einen PTR-record fuer 
+        4.3.2.1.in-addr.arpa und zeigt 4.3.2.1.in-addr.arpa, 
+        als den Namen von IP 1.2.3.4 an, und ein passender A record
+        zeigt 1.2.3.4 als die IP Adresse von 4.3.2.1.in-addr.arpa.
+        Geben Sie hier die IP ihres Rechners an. 

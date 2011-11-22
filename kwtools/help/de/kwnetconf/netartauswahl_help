@@ -1,0 +1,11 @@
+kwnetconf::Konfigurationsart::Hilfe
+
+Hier koennen Sie zwischen dhcp und manueller Konfiguration waehlen.
+Die Auswahl ueber dhcp erscheint nur wenn dhclient installiert ist.
+
+dhcp: Hierbei fragt der dhclient einen dhcp Server im Netz nach 
+        allen Konfigurationsparametern, wie IP-Adresse oder Gateway.
+
+manuell: Hier muss man von Hand die IP-Adresse dieser Karte und
+        die des Gateways eingeben. Die Eingabe des Gateway ist
+        optional.

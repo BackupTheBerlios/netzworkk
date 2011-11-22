@@ -1,0 +1,21 @@
+# conf_help fuer kwbackup{{{
+TITLE="${gv_Configuration::${gv_Help}"
+MSG=$(gettext 'Backup_verzeichnis: Verzeichnis in dem die Backups angelegt werden.
+
+Mount_verzeichnis: Hier wird das Verzeichnis ausgewaehlt, welches
+\tins Dateisystem vorher eingebunden werden muss, wo sich das
+\tBackup Verzeichnis befindet. Es muss bereits in der 
+\t/etc/fstab konfiguriert sein.
+
+Verzeichnisse: Hier geben Sie Verzeichnisse mit kompletter Pfadangabe
+\tan, von denen Backups erstellt werden sollen. Lassen Sie
+\tzwischen den Verzeichnissen 1 Leerzeichen (Beipiel.:
+\t/home/user/Mail /home/user/daten).
+
+crontab: Das Script kwbackup_cron in die crontab Tabelle des Users
+\teinfuegen oder loeschen. Dieses Script fuehrt kwbackup_cron aus
+\tund schickt bei Fehlern eine Mail.
+
+NOTIZ: Achten Sie darauf das Sie Schreib/Lesezugriff auf die 
+\tVerzeichnisse haben. Sonst gibt es Fehlermeldungen.')
+#}}}

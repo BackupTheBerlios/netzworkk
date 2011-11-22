@@ -1,0 +1,91 @@
+.\"     Title: KWSSL
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 02/04/2010
+.\"    Manual: Benutzerhandbuch f\(:ur kwssl
+.\"    Source: Version 0.2.9
+.\"
+.TH "KWSSL" "8" "02/04/2010" "Version 0.2.9" "Benutzerhandbuch f\(:ur kwssl"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwssl \- ein Zshell Script zur Zertifikats Verwaltung.
+.SH "SYNTAX"
+.HP 6
+\fBkwssl\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwssl\fR
+k\(:onnen Sie
+\fBopenssl\fR
+Schl\(:usselpaare erzeugen\&. Als 1\&. CA_Anlegen (CA = Certificate Authority), wenn nicht vorhanden\&. Ab dann k\(:onnen Sie neue private Schluessel erzeugen, unterschreiben, entschl\(:usseln und \(:uberpr\(:ufen\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Hier k\(:onnen Sie die G\(:ultigkeitsdauer und den
+\fBopenssl\fR
+Pfad einstellen\&.
+.RE
+.PP
+\fBCA_anlegen\fR
+.RS 4
+CA_anlegen: Legt eine Certification Authority, mit Passphrase an\&. Braucht man normalerweise nur einmal\&.
+.RE
+.PP
+\fBPrivaten_Schluessel_anlegen\fR
+.RS 4
+Legt einen privaten Schluessel, mit Passphrase an\&.
+.sp
+\fBNotiz:\fR
+Nehmen Sie nicht die gleiche Passphrase, wie beim erstellen der CA\&.
+.RE
+.PP
+\fBPrivaten_Schluessel_unterschreiben\fR
+.RS 4
+Unterschreibt/signiert den erzeugten privaten Schl\(:ussel\&.
+.sp
+\fBNotiz:\fR
+Hier wird die Passphrase der CA verlangt\&. Desweiteren wird eine Datenbank verwaltet, so das Sie drauf achten sollten nicht dauernd den selben privaten Schl\(:ussel zu erzeugen, unterschreiben und zu signieren\&.
+.RE
+.PP
+\fBPrivaten_Schluessel_entschluesseln\fR
+.RS 4
+Privaten Schl\(:ussel entschl\(:usseln, da sonst kein Mail\- oder Webserver starten kann\&. Die Schl\(:ussel werden mit den Dateirechten 0400 gesch\(:utzt\&.
+.sp
+\fBNOTIZ:\fR
+Hier wird die Passphrase des privaten Schl\(:ussel verlangt\&.
+.RE
+.PP
+\fBCA_ueberpruefen\fR
+.RS 4
+Hier wird die Signierung von der Datei
+\fInewcert\&.pem\fR
+\(:uberpr\(:uft\&.
+.RE
+.SH "DATEIEN"
+.PP
+\fI~/\&.kwtools/kwsslrc\fR
+.RS 4
+Konfigurations Datei f\(:ur
+\fBkwssl\fR
+mit Standard Werten\&. Siehe
+\fBkwsslrc\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwsslrc\fR(5),
+\fBopenssl\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2010 Kai Wilke
+.br

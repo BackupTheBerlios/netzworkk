@@ -1,0 +1,4 @@
+kwvmstat: Zeigt die augenblickliche Auslastung des Systems und 
+        benutzt vmstat dafuer. Nach 10 Wiederholungen (30 sec.) 
+        beendet sich die Anzeige.
+

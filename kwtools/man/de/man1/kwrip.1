@@ -1,0 +1,76 @@
+.\"     Title: KWRIP
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 07/04/2010
+.\"    Manual: Benutzerhandbuch f\(:ur kwrip
+.\"    Source: Version 0.0.8
+.\"
+.TH "KWRIP" "1" "21/09/2010" "Version 0.0.8" "Benutzerhandbuch f\(:ur kwrip"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwrip \- ein Zshell Script zum CDs rippen.
+.SH "SYNTAX"
+.HP 6
+\fBkwrip\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwrip\fR
+k\(:onnen Sie Audio\- und Video\-CDs rippen\&. Ein Basis Verzeichnis kann man in der Konfiguration einstellen\&. Dadurch hat man nicht soviel Arbeit beim einstellen des Verzeichnisses in das die Filme oder Musik gerippt werden sollen\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Konfiguration von
+\fBkwrip\fR, wie Audio Optionen zum rippen, Audio Verzeichnis, Leselaufwerk, Mountverzeichnis, Encoder Programm, Encoder Optionen, Proxy, CDDB\-Server, \&.\&.\&.\&. Proxy ist optional\&. Sie k\(:onnen diesen auch systemweit konfigurieren\&. Achten Sie darauf das ihre eventuelle Proxy\-Konfiguration stimmt und eingelesen wird\&. Unter Debian ist das die Variable
+\(lq\fBhttp_proxy\fR\(rq\&. Diese k\(:onnen Sie auch mit dem Script
+\fBkwproxy\fR
+(kwtools\-net) einstellen\&.
+.RE
+.PP
+\fBAudio\fR
+.RS 4
+Audio\-CD rippen\&. Gibt es Daten zu Artist und Album werden die Dateien umbenannt, ansonsten heissen die Tracks:
+\fIPFAD_zu_Audio/unknown/unknown/track01\&.cdda\&.wav\fR, \&.\&.\&.\&.
+.RE
+.PP
+\fBVideo-CD\fR
+.RS 4
+Video\-CD rippen\&. Dazu k\(:onnen Sie einen Filmnamen vergeben, ansonsten heissen die Filme
+\fIno_name\-Nr\&.mpg\fR\&. Nr ist eine Zahl ab 1 aufw\(:arts, falls mehrere Filme auf der
+\fICD\fR
+sind\&.
+.RE
+.SH "DATEI"
+.PP
+\fI~/\&.kwtools/kwriprc\fR
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwrip\fR\&. F\(:ur weitere Details siehe
+\fBkwriprc\fR(5)\&.
+.RE
+.SH "BUGS"
+.PP
+\fBkwrip\fR
+kann keine Video\-CDs rippen die mit einigen Windows Programmen erstellt worden sind\&. H\(:angt vom Programm ab\&.
+.SH "SIEHE AUCH"
+.PP
+\fBcddbcmd\fR(1),
+\fBcd_discid\fR(1),
+\fBcdparanoia\fR(1),
+\fBkwriprc\fR(5),
+\fBlame\fR(1),
+\fBoggenc\fR(1),
+\fBvcdxrip\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2010 Kai Wilke
+.br

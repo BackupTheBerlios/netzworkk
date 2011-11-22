@@ -1,0 +1,15 @@
+# kwpwsafe_open_db_help# {{{
+TITLE="${lv_Db}::${gv_Help}"
+MSG=$(gettext 'Ansicht: Anzeige des Benutzernames, dem dazugehoerigen Passwort
+\tund der Notizen.
+
+anlegen: Einen Eintrag fuer die Datenbank erstellen. Beim anlegen
+\tkoennen Sie eine Gruppe auswaehlen oder erstellen, um die Eintraege
+\tzu unterteilen.
+\tZum Beispiel: Gruppe=haushalt und Name=test -> haushalt.test
+
+aendern: Einen Eintrag aus der Datenbank aendern.
+
+loeschen: Ein oder mehrere Eintraege aus der Datenbank loeschen.
+')
+#}}}

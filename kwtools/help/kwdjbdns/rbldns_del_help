@@ -1,0 +1,4 @@
+# rbldns_del_help fuer kwdjbdns{{{
+TITLE=$(gettext 'Administration::rbldns::loeschen')
+MSG=$(gettext 'Hier kann man alle ausgewaehlten Datensaetze loeschen.')
+#}}}

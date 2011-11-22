@@ -1,0 +1,25 @@
+# tls_help fuer kwpostfix{{{
+TITLE=$(gettext 'Konfiguration::tls::Hilfe')
+MSG=$(gettext 'PRNG = Pseudo Random Number Generator
+
+tls_daemon_random_bytes: Wieviel Bytes sollen jedesmal eingelesen
+\twerden (32)?
+
+tls_random_bytes: Wieviel Bytes sollen jedesmal eingelesen werden
+\t(32)?
+
+tls_random_exchange_name: Wenn dies aktiviert wird, erstellt der
+\ttlsmgr die Datei /var/cache/prng_exch und erneuert Sie von
+\tZeit zu Zeit.
+
+tls_random_prng_update_period: Nach welcher Zeit soll prng_exch neu
+\tgeneriert werden (60s).
+
+tls_random_reseed_period: Nach welcher Zeit sollen die Werte neu
+\termittelt werden (3600s).
+
+tls_random_source: Hier kann man zwischen den Devices /dev/random
+\tund /dev/urandom waehlen. Ueber dieses Device werden der
+\ttls_random_exchange_name beim Start und waehrend der Laufzeit
+\tgeneriert.')
+#}}}

@@ -1,0 +1,120 @@
+.\"     Title: KWPARTED
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 01/22/2010
+.\"    Manual: Benutzerhandbuch f\(:ur kwparted
+.\"    Source: Version 0.2.11
+.\"
+.TH "KWPARTED" "8" "01/22/2010" "Version 0.2.11" "Benutzerhandbuch f\(:ur kwparted"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwparted \- ein Zshell Frontend fuer parted
+.SH "SYNTAX"
+.HP 9
+\fBkwparted\fR
+.SH "BESCHREIBUNG"
+.PP
+Mit
+\fBkwparted\fR
+k\(:onnen Sie Ihre Partitionen verwalten\&. Dazu geh\(:oren anlegen, l\(:oschen, vergr\(:ossern, verkleinern, kopieren und Flags \(:andern\&. Es werden noch nicht alle Dateisysteme von
+\fBparted\fR
+und
+\fBkwparted\fR
+unterst\(:utzt\&. Schauen Sie dazu auf folgende Website:
+.sp
+.RS 4
+.nf
+http://www\&.gnu\&.org/software/parted/parted\&.html
+.fi
+.RE
+.sp
+oder in
+\fBkwparted\fR
+\->
+\fBStatus\fR\&. Das vergr\(:ossern und verkleinern der Partitionen muss das Dateisystem auch unterst\(:utzen\&. So unterst\(:utzt das
+\fIXFS\fR
+Dateisystem keine Verkleinerung\&. Lesen Sie dazu die Dokumentation zu Ihrem Dateisystem\&.
+.PP
+\fBkwparted\fR
+unterst\(:utzt auch noch nicht alle Dateisysteme, die der Kernel unterst\(:utzt\&. Zur Zeit gehen nur die Dateisysteme
+\fIlinux\-swap\fR,
+\fIetx2/3\fR,
+\fIfat16/fat32\fR,
+\fIhfs\fR,
+\fIhfs+\fR,
+\fIjfs\fR,
+\fIntfs\fR,
+\fIreiserfs\fR,
+\fIreiser4\fR,
+\fIufs\fR
+und
+\fIxfs\fR
+und dann auch nur wenn die dementsprechenden Dateisystem Werkzeuge oder Bibliotheken installiert sind\&.
+.SH "OPTIONEN"
+.PP
+\fBStatus\fR
+.RS 4
+Anzeige wie welche Dateisysteme von
+\fBkwparted\fR
+wie unterst\(:utzt werden\&.
+.RE
+.PP
+\fBPartitionstabelle\fR
+.RS 4
+Hier kann man die Partitionstabelle aller oder einzelner Festplatten sichern, zur\(:uck sichern und l\(:oschen\&. Die Partitionstabelle wird mit den Parametern Byte und compact gespeichert\&. Die Werte werden in den Dateien \- bei
+\fIdevfs\fR
+in die Datei
+\fI/boot/dev_ide_\&.\&.\&._disc\-parttab\-DATUM\&.txt\fR, ansonsten in
+\fI/boot/[sh]d[a\-z]\&.parttab\-DATUM\&.txt\fR\&. Ein Abbild des
+\fIMBR\fR
+wird in der Datei
+\fI/boot/DISKNAME\-DATUM\&.mbr\fR
+gespeichert\&.
+.RE
+.PP
+\fB/dev/*\fR
+.RS 4
+Vorhandene Festplatten werden zur weiteren Bearbeitung angeboten (Patitionierung,\&.\&.\&.)\&.
+.RE
+.PP
+\fBlvm\fR
+.RS 4
+Wenn das Programm
+\fBkwlvm\fR
+(Paket kwtools\-sys\-lvm) installiert ist kann man von
+\fBkwparted\fR
+aus auch gleich Logische Volumes anlegen, etc\&. (manpage
+\fBkwlvm\fR(8))\&. Dazu muss vorher mindestens eine Partition mit dem Flag
+\fI\(lqlvm\(rq\fR
+oder ein RAID Array angelegt/vorhanden sein\&.
+.RE
+.PP
+\fBraid\fR
+.RS 4
+Wenn das Programm
+\fBkwraid\fR
+(Paket kwtools\-sys\-raid) installiert ist kann man von
+\fBkwparted\fR
+aus auch gleich RAID Arrays anlegen, etc\&. (manpage
+\fBkwraid\fR(8))\&. Dazu muss vorher mindestens eine Partition mit dem Flag
+\fI\(lqraid\(rq\fR
+oder ein RAID Array angelegt/vorhanden sein\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBkwlvm\fR(8),
+\fBkwraid\fR(8),
+\fBparted\fR(8),
+\fBpartprobe\fR(8)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2010 Kai Wilke
+.br

@@ -1,0 +1,82 @@
+kwcryptsetup::Konfiguration::Hilfe
+
+Im diesem Konfigurationsmenue koennen Sie Standard-Einstellungen
+taetigen.
+
+Ausrichtung: Geben Sie ein vielfaches von 512 Byte Sektoren ein
+        (8 = 4096 Byte). Das dient fuer die "stripe" Option auf
+        RAID Laufwerken oder Logischen Volumes (LVM). Lesen Sie
+        dazu man 8 mkfs.xfs.
+
+Groesse: Geben Sie die Groesse des Containers ein. Standard Block-
+        groesse ist 1 KiloByte. Die Groesse der zu
+        erstellenden verschluesselten Datei (Container) muss 
+        groesser als 2 MByte sein (LUKS-Header). Sie koennen als
+        Masseinheit folgende Zeichen benutzen, k|K-KiloByte,
+        m|M-MegaByte,g|G-GigaByte, t|T-TerraByte oder p|P-Petabyte.
+
+gnupg: Soll gnupg zum entschluesseln der Schluesseldatei verwendet
+        werden (ja/nein)? Geht nicht zusammen mit der Option
+        "ssl".
+
+Hash: Auswahl des Hashwertes der fuer die Passphrase verwendet werden
+        soll (Standard ist ripemd160)?
+
+Luks verwenden: Soll standardmaessig die Luks Erweiterung, zur
+        Verschluesselung des Laufwerks, benutzt werden (ja/nein)?
+
+Mountverz.: Mountverzeichnis auswaehlen. Dieses Verzeichnis muss
+        schon verher existieren und sollte in der Datei /etc/fstab
+        konfiguriert sein. Dieses dient zum einbinden von externen
+        Laufwerken, die die externe Schluesseldatei enthalten.
+
+nur lesen: Soll das Laufwerk im Nur Lesemodus erstellt werden
+        (ja/nein)? Kann man z.B. nutzen um eine verschluesselte
+        CD/DVD zu erstellen.
+
+Passwort ueberpruefen: Soll die Passwort-Eingabe nochmal ueberprueft
+        werden (ja/nein)?
+
+Passwort-Zeit: Geben Sie die Zeit, in Mikrosekunden, fuer den
+        Passwort Prozess, ein (Standard ist 1).
+
+Schluesseldatei: Waehlen Sie hier die Datei aus, die den Schluessel
+        enthaelt. Wenn Sie keine Datei auswaehlen wird "none"
+        genommen und Sie muessen die Passphrase interactiv ueber-
+        geben.
+
+NOTIZ: Bei Verwendung der LUKS Erweiterung koennen Sie bis zu 8 
+        Passphrasen in der Schluesseldatei verwenden. Soll beim Login
+        das Laufwerk automatisch aktiviert werden, muss die
+        Passphrase gleich dem Login Passwort des Benutzers sein, und
+        Sie benoetigen dazu pam-mount. Schauen Sie nach dem
+        richtigen Paketnamen in Ihrer Distribution nach.
+        Wenn Sie bei diesem Szenario das Login Passwort aendern
+        muessen Sie auch die Passphrase des Laufwerks aendern.
+
+Schluesselgroesse: Waehlen Sie bitte die Schluesselgroesse aus
+        (Standard ist 256 Bit)!
+
+ssl: Soll openssl zum entschluesseln der Schluesseldatei verwendet
+        werden (ja/nein)? Geht nicht zusammen mit der Option
+        "gnupg".
+
+swap: Soll ein verschluesseltes Swap-laufwerk erstellt werden
+        (ja/nein)?
+
+NOTIZ: Suspend-to-RAM und Suspend-to-Disk funtionieren mit einer
+        verschluesselten SWAP-Partition noch nicht. Die Community
+        arbeitet jedoch an diesem Problem.
+
+temporaer: Soll ein verschluesseltes temporaeres Laufwerk erstellt
+        werden (ja/nein)? Dient unter anderem zum testen.
+
+Timeout: Geben Sie den Timeout, in Sekunden, fuer die Passwort-
+        Abfrage ein (Standard ist 5).
+
+Warnung: Soll beim starten des Laufwerks eine Warnung ausgegeben
+        werden, wenn dieses nicht existiert (ja/nein)?
+
+Wiederholungen: Geben Sie ein, wie oft die Passphrasenabfrage
+        versucht werden soll zu wiederholen (Standard ist 3).
+

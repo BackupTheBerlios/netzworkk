@@ -1,0 +1,31 @@
+kwdjbdns::Konfiguration::axfrdns::Hilfe
+
+Konfiguraionsanzeige: Zeigt alle Eintraege in /etc/axfrdns/tcp.
+         Mit der Taste q beendet sich die Anzeige, mit den Pfeil-
+         tasten kann man scrollen.
+
+Eingabe: Eingabe fuer welche Rechner/Netzwerke der Zonen Transfer der
+        DNS Eintraege erlaubt oder verboten ist.
+        Beispiele:
+        joe@127.0.0.1:first
+        18.23.0.32:second
+        :third
+        127.:fourth
+        -----
+        Ist die remote IP 192.168.0.1, nimmt der tcpserver die 
+        third Regel.
+        Ist die remote IP 18.23.0.32, nimmt der tcpserver die
+        second Regel dran.
+        Ist die remote IP 127.0.0.1 und remote Rechner ist bill,
+        nimmt der tcpserver die fourth Regel.
+        Ist die IP 192.168.0.1 und remote Rechner ist joe,
+        nimmt der tcpserver die first Regel.
+
+        Fuer first, second, third und fourth werden die Eintraege
+        deny oder allow vorgenommen.
+
+Daten loeschen: Hier koennen Sie ihre Eintraege wieder loeschen.
+
+Datenbank neu erstellen: Erstellt eine neue Datenbank fuer den 
+        axfrdns, die vom tcpserver gelesen wird, 
+        um die Zugriffsrechte zu bestimmen.

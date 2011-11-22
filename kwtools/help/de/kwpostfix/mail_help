@@ -1,0 +1,29 @@
+kwpostfix::Konfiguration::mail::Hilfe
+
+mail_name: Name fuer den SMTP-Begruessungsbanner
+
+mail_owner: Userkennung von Postfix
+
+mail_release_date: Datum der Postfix-Version
+
+mail_spool_directory: Pfad u'zum Mail spool Verzeichnis
+
+mail_version: Postfix-Version, Wird selbstaendig erkannt, ausser
+        bei einer Tar-Archiv Installation.
+
+mailbox_command: Programm zum schreiben der Mails in die lokalen
+        Postfaecher (default: local)
+
+mailbox_command_maps: Tabelle, um einzelnen Adressen ein anderes
+        mailbox_command zuweisen zu koennen.
+
+mailbox_delivery_lock: Art des lockens bei lokaler Zustellung in
+        die Postfaecher.
+
+mailbox_size_limit: Maximale Groesse eines einzelnen Postfaches,
+        danach wird gebounct.
+
+mailbox_transport: optionale Transportmethode, bevor eine Mail in
+        die Postfaecher einsortiert werden soll.
+
+mailq_path: Pfad zum Programm mailq

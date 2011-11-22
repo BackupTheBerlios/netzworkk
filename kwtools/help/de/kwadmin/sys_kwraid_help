@@ -1,0 +1,6 @@
+kwraid: Zeigt den Status der Arrays an und kann einen Eintrag in den 
+        crontab Tabellen erzeugen, um permanent die ARRAYS zu
+        ueberwachen. Bei Fehlern wird eine mail geschickt.
+        Es koennen RAID Arrays angelegt werden, Partitionen (hotplug)
+        aus bestehenden Arrays entfernen und hinzufuegen.
+

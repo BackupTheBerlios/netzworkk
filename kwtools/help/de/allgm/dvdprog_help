@@ -1,0 +1,5 @@
+kwrecord::Konfiguration::DVD-Brennprogramm::Hilfe
+
+Hier kann man ein DVD-Brennprogramm auswaehlen. Zur Zeit steht nur
+growisofs zur Verfuegung. Das Programm wird nur angezeigt, wenn es
+ausfuehrbar ist.

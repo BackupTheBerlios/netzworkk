@@ -1,0 +1,81 @@
+.\"     Title: KWNARCCONF
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 08/27/2009
+.\"    Manual: Benutzerhandbuch kwnarcconf
+.\"    Source: Version 0.1.10
+.\"
+.TH "KWNARCCONF" "8" "08/27/2009" "Version 0.1.10" "Benutzerhandbuch kwnarcconf"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+kwnarcconf \- Konfigurations Frontend f\(:ur das Script kwnarc
+.SH "SYNTAX"
+.HP 11
+\fBkwnarcconf\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBkwnarcconf\fR
+ist ein Konfigurations Frontend f\(:ur das Script
+\fBkwnarc\fR
+\- kwtools Netfilter Automatic Rule Configurator\&. Es kann dialogbasiert
+\fBkwnarc\fR
+konfigurieren\&. Netfilter ist Ihre Firewall, die man mit
+\fBiptables\fR, seit Kernel >=2\&.4, konfiguriert\&.
+.SH "OPTIONEN"
+.PP
+\fBKonfiguration\fR
+.RS 4
+Die Konfiguration der Firewall ist in die Bereiche Hauptkonfiguration, Logkonfiguration, Portweiterleitung und Zusatzkonfiguration unterteilt\&. F\(:ur die Bearbeitung der Zusatzkonfiguration kann man die Variable
+\(lq\fBEDITOR\fR\(rq
+in der Datei
+\fI/etc/kwtools/main\&.cf\fR, mit einem Editor Ihrer Wahl belegen\&. Ansonsten wird die Dialogbox
+\(lq\fBeditbox\fR\(rq
+verwendet\&. (Bsp\&.:
+\fBEDITOR\fR=\fI/usr/bin/vim\fR)\&.
+.RE
+.PP
+\fBRestart\fR
+.RS 4
+Neustart der Firewall \- neu einlesen der Konfiguration\&.
+.RE
+.PP
+\fBStatus\fR
+.RS 4
+Anzeige der bestehenden Firewall Regeln\&.
+.RE
+.PP
+\fBVerbindungen\fR
+.RS 4
+Anzeige der bestehenden Verbindungen\&.
+.RE
+.PP
+\fBRegelketten\fR
+.RS 4
+Anzeige des Namen von bestehenden Regelketten\&.
+.RE
+.SH "DATEI"
+.PP
+\fI/etc/kwtools/kwnarc\&.conf\fR
+.RS 4
+Haupt Konfiguration Datei f\(:ur
+\fBkwnarc\fR\&. Siehe
+\fBkwnarc.conf\fR(5)
+f\(:ur weitere Details\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBiptables\fR(8),
+\fBkwnarc\fR(8),
+\fBkwnarc.conf\fR(5)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.sp -1n
+.IP "" 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2009 Kai Wilke
+.br

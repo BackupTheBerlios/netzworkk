@@ -1,0 +1,6 @@
+# kwmutt_serv_dccd_help fuer kwmutt{{{
+TITLE=$(gettext 'Server::Hilfe')
+MSG=$(gettext 'Hier koennen Sie Ihre Postfaecher verwalten. Sie koennen Server
+ansehen, anlegen, aendern und loeschen.
+')
+#}}}

@@ -1,0 +1,6 @@
+kwcryptsetup::start:Hilfe
+
+Starten von ein oder mehreren verschluesselten Laufwerken. Dabei
+werden die Eintraege der Konfigurationsdatei /etc/crypttab berueck-
+sichtigt.
+

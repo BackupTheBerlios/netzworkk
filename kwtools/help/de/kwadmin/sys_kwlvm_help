@@ -1,0 +1,4 @@
+kwlvm: Kann Logische Volumes, Volume Groups und Physikalische Volumes
+        anzeigen, kreieren, loeschen, verkleinern und vergoessern.
+        Dieses Script kann mit lvm1 und lvm2 umgehen.
+

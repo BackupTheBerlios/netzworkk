@@ -1,0 +1,43 @@
+#!/bin/sh
+
+EXEC=/usr/lib/kwtools
+KWCRYPT_PATH=/usr/lib/kwtools/sys
+SBIN_PATH=/usr/sbin
+BIN_PATH=/usr/bin
+
+cd $SBIN_PATH
+if [ -L kwlosetup ] ; then
+	rm kwlosetup &>/dev/null
+	ln -sf ${EXEC}/kwlosetup ${SBIN_PATH}
+else
+	ln -sf ${EXEC}/kwlosetup ${SBIN_PATH}
+fi
+if [ -L kwcryptsetup ] ; then
+	rm kwcryptsetup &>/dev/null
+	ln -sf ${EXEC}/kwcryptsetup ${SBIN_PATH}
+else
+	ln -sf ${EXEC}/kwcryptsetup ${SBIN_PATH}
+fi
+if [ -L kwecryptfs ] ; then
+	rm kwecryptfs &>/dev/null
+	ln -sf ${EXEC}/kwecryptfs ${SBIN_PATH}
+else
+	ln -sf ${EXEC}/kwecryptfs ${SBIN_PATH}
+fi
+
+cd $BIN_PATH
+if [ -L kwcrypt ] ; then
+	rm kwcrypt &>/dev/null
+	ln -sf ${KWCRYPT_PATH}/kwcrypt ${BIN_PATH}
+else
+	ln -sf ${KWCRYPT_PATH}/kwcrypt ${BIN_PATH}
+fi
+
+echo ""
+echo "Compile functions from kwtools-scripts"
+echo ""
+/bin/zsh -fc 'setopt extendedglob ; DIR=/usr/share/kwtools/functions ; \
+	for i in ${DIR}/kwcrypt ${DIR}/kwcryptsetup ${DIR}/kwecryptfs ${DIR}/kwlosetup ; do
+	zcompile -U -M $i.zwc $i/*~*.zwc(^/) ; chmod 644 $i.zwc ; done'	
+
+exit 0

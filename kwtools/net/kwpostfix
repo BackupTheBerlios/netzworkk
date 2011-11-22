@@ -1,0 +1,854 @@
+#!/bin/zsh
+#
+# Autor: Kai Wilke <kiste@netzworkk.de> 29.03.2011
+#
+# Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
+# Version: 0.1.14
+
+trap 'setterm -inversescreen off ; setterm -reset ;
+rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
+
+gv_ScriptName=${0##*/}
+
+#
+# Verzeichnis in denen nach Funktionen gesucht wird
+#
+if [ -f /usr/local/share/kwtools/functions/sys/script_init ] ; then
+	PREFIX=/usr/local
+else
+	PREFIX=/usr
+fi
+Script_init_Fpath="${PREFIX}/share/kwtools/functions/sys"
+export TEXTDOMAINDIR="${PREFIX}/share/locale"
+export TEXTDOMAIN="$gv_ScriptName"
+
+if [ -z ${(M)${FPATH}##*${Script_init_Fpath}*} ] ; then
+	FPATH=${Script_init_Fpath}:${FPATH}
+fi
+
+# script_init enthält die globalen Scripteinstellungen und lädt
+# diese automatisch.
+#
+autoload -U script_init
+
+# Scriptinitialisierung
+script_init
+
+# Pruefen ob postfix installiert ist.
+prog_check postconf
+if [ -z "$PROGS" ] ; then
+	exit 0
+fi
+
+# auf Root pruefen.
+root_check
+
+# Nachdem das Script initialiiert wurde, kann man die anderen
+# benötigten Funktionen laden.
+autoload -U transport_methode
+
+# Variablen
+
+MAIL_CONFIG="`postconf -h config_directory &>/dev/null`"
+if [ -z "$MAIL_CONFIG" ] ; then
+	MAIL_CONFIG="/etc/postfix"
+fi
+
+MASTER_CF="${MAIL_CONFIG}/master.cf"
+MAIN_CF="${MAIL_CONFIG}/main.cf"
+if [ ! -f "$MAIN_CF" ] ; then
+	create_file "$MAIN_CF"
+fi
+# Port als integer deklarieren
+integer PORT
+#
+# Funktion user_id auswaehlen{{{
+#
+user_id() {
+unset -- WERT USER_ID_MENU USER_ID_MSG
+local USER_ID_MENU
+user_group_check -p
+if (( $? == 0 )) ; then
+	USER_ID_MENU=($U_U_ID_ARRAY)
+	USER_ID_MSG=$(gettext 'Waehlen Sie eine Benutzer ID aus.')
+	menubox "$gv_Configuration" "$USER_ID_MSG" "$USER_ID_MENU"
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			Help|Hilfe)	script_help share/user_id_help
+				menubox "$gv_Configuration" "$USER_ID_MSG" "$USER_ID_MENU"
+				;;
+			*)	# uebernehmen
+				WERT="$gv_Auswahl"
+				break
+				;;
+		esac
+	done
+fi
+}
+#}}}
+# Funktion group_id auswaehlen{{{
+#
+group_id() {
+unset -- WERT GROUP_ID_MENU GROUP_ID_MSG
+local GROUP_ID_MENU
+user_group_check -g
+#
+if (( $? == 0 )) ; then
+	GROUP_ID_MENU=($U_G_ID_ARRAY)
+	GROUP_ID_MSG=$(gettext 'Waehlen Sie eine Gruppen ID aus.')
+	menubox "$gv_Configuration" "$GROUP_ID_MSG" "$GROUP_ID_MENU"
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			Help|Hilfe)	script_help share/group_id_help
+				menubox "$gv_Configuration" "$GROUP_ID_MSG" "$GROUP_ID_MENU"
+				;;
+			*)	# uebernehmen
+				WERT="$gv_Auswahl"
+				break
+				;;
+		esac
+	done
+fi
+}
+#}}}
+# Funktion unterstützte Tabellenformate{{{
+# diese werden unterschiedlich in Variablen gespeichert,
+# da nicht jede Tabelle mit jeden Type zurecht kommt.
+#
+tab_support() {
+	unset -- TABS TABS_A TABS_C TABS_M TABS_R TB_Format
+	for i in `print ${(uo)$(postconf -m)}` ; {
+		TABS+=($i)
+		case $i in
+			btree|cdb|dbm|hash|ldap|mysql|nis|pgsql|sdbm)
+				# Hashbasierte Tabellen und Datenbanken.
+				TABS_A+=($i \"\")
+				TABS_C+=($i \"\")
+				TABS_M+=($i \"\")
+				;;
+			cidr)
+				# hier duerfen cidr Tabellen benutzt werden (man 5 cidr_table).
+				TABS_C+=($i \"\")
+				;;
+			pcre|regexp)
+				# hier kommen RAs drin vor (man 5 {pcre,regexp}_table).
+				TABS_C+=($i \"\")
+				TABS_R+=($i \"\")
+				TABS_M+=($i \"\")
+				;;
+			proxy)
+				# proxy wird ueberall gespeichert (man 8 proxymap).
+				TABS_A+=($i \"\")
+				TABS_C+=($i \"\")
+				TABS_M+=($i \"\")
+				TABS_R+=($i \"\")
+				;;
+			tcp)	# garnichts machen
+				;;
+			*)	# der Rest
+				TABS_M+=($i \"\")
+				;;
+		esac
+	}
+	if [ "$TABS" ] ; then
+		TB_Format="(${TABS// /|})"
+	fi
+}
+#}}}
+# Funktion postfix_no_start_msg), Nachricht das postfix {{{
+# nicht richtig gestartet werden konnte, etc.
+#
+postfix_no_start_msg() {
+	MSG=$(gettext 'Postfix konnte seine Konfiguration nicht neu einlesen beziehungsweise nicht neu gestartet werden. Berichtigen Sie bitte den Fehler in Ihrer Konfiguration.')
+	msgbox "$gv_Attention" "$MSG"
+}
+#}}}
+# Funktion (postfix_start_reload), postfix reloaden oder starten{{{
+postfix_start_reload() {
+	if test ${(M)$(ps ax)##*postfix/master} ; then
+		postfix reload &>/dev/null || postfix_no_start_msg
+	else
+		postfix start &>/dev/null || postfix_no_start_msg
+	fi
+}
+#}}}
+# Funktion haupt_menue{{{
+MAIN_MENU=$(gettext 'Quickly-Konfiguration "" Konfiguration "" Tabellen "" Steuerdatei "" Aufraeumen "" $gv_Exit ""')
+haupt_menue() {
+	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+}
+#}}}
+##################################################################
+#
+# Hauptprogramm
+#
+##################################################################
+#
+net_conf
+haupt_menue
+while [ "$gv_Auswahl" ] ; do
+	case $gv_Auswahl in
+		HELP*)
+    	    # Hilfe Messagebox
+			script_help help
+			haupt_menue
+			;;
+		Q*)
+			# schnelle Konfiguration
+			os_check
+			if_conf_prog "$OS" mail
+			haupt_menue
+			;;
+		[CK]onfiguration)
+			# Konfiguration von main.cf{{{
+			#
+			autoload -U default_conf haupt_conf konf_menue lmtp_conf lock_art mail_conf \
+				postfix_variable q_conf tls_conf smtp_conf smtpd_conf \
+				tab_support_wahl virtual_conf
+			#
+			# Funktion (verp_delimiter), um die Trennzeichen einzustellen.# {{{
+			#
+			# usage: verp_delimiter "$VERP_DELIMETER"
+			#
+			verp_delimiter() {
+				if [ $# = 1 ] ; then
+					unset -- Value VERP_MENU Delimeter_Plus Delimeter_Gleich Delimeter_Minus
+					typeset -a Value
+					local Value Delimeter_Plus Delimeter_Gleich Delimeter_Minus
+					Value="$1"
+					for v in + = - ; {
+						if [ $v = + ] ; then
+							if [ ! -z ${(M)${Value}##*${v}*} ] ; then
+								Delimeter_Plus="$v \"\" on"
+							else
+								Delimeter_Plus="$v \"\" off"
+							fi
+						fi
+						if [ $v = = ] ; then
+							if [ ! -z ${(M)${Value}##*${v}*} ] ; then
+								Delimeter_Gleich="$v \"\" on"
+							else
+								Delimeter_Gleich="$v \"\" off"
+							fi
+						fi
+						if [ $v = - ] ; then
+							if [ ! -z ${(M)${Value}##*${v}*} ] ; then
+								Delimeter_Minus="$v \"\" on"
+							else
+								Delimeter_Minus="$v \"\" off"
+							fi
+						fi
+					}
+					VERP_MENU="$Delimeter_Plus $Delimeter_Gleich $Delimeter_Minus"
+				else
+					no_para_msg $0
+				fi
+			}
+		## }}}
+			# Funktion tls schlüssel Dateien Auswahl{{{
+			tls_file_auswahl() {
+				unset -- WERT TLS_FILE_MENU
+				local TLS_FILE_MENU
+				dselect "$MAIL_CONFIG"
+				if [ "$VERZ" ] ; then
+					dselect_check "$VERZ"
+					if [ "$VERZ" ] ; then
+						cd "$VERZ"
+						FORMAT="ASCII"
+						file_filter "$FORMAT" "$SUFFIX"
+						#
+						if [ "$DF_ARRAY_M" ] ; then
+							TLS_FILE_MENU=($DF_ARRAY_M)
+							menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
+							#
+							#
+							if [ -n "$gv_Auswahl" ] ; then
+								while [ "$gv_Auswahl" ] ; do
+									case "$gv_Auswahl" in
+										HELP*)	script_help cert_help
+											menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
+											;;
+										*)	WERT="${VERZ}/${gv_Auswahl}"
+											break
+											;;
+									esac
+								done
+							else
+								WERT=""
+							fi
+						else
+							no_file_msg "$FORMAT"
+						fi
+					fi
+				else
+					no_input_msg
+				fi
+			}
+			#}}}
+			# Funktion ja_nein_tausch{{{
+			ja_nein_tausch() {
+			yesno "$1" "$2"
+			if [ $? = 0 ] ; then
+				WERT=yes
+			else
+				WERT=no
+			fi
+			}
+			#}}}
+			# Funktion, welche Mechanismen sind bei Mails erlaubt{{{
+			mail_mechanism() {
+			unset -- WERT
+			U_OPT=k
+			MECHANISM=(noactive \"\" off noanonymous \"\" off nodictionary \"\" off noplaintext \"\" off mutual_auth \"\" off)
+			checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+			#
+			while [ "$gv_Auswahl" ] ; do
+				case "$gv_Auswahl" in
+					HELP*)	script_help security_options_help
+						U_OPT=k
+						checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+						;;
+					*)	# übernehmen
+						WERT="$gv_Auswahl"
+						break
+						;;
+				esac
+			done
+			}
+			#}}}
+			# User auswählen{{{
+			user_auswahl() {
+			unset -- WERT USER_CHOICE_MENU
+			local USER_CHOICE_MENU
+			user_group_check -p
+			#
+			if (( $? == 0 )) ; then
+				USER_CHOICE_MENU=($U_G_ARRAY)
+				USER_CHOICE_MSG=$(gettext 'Waehlen Sie einen Benutzer aus.')
+				menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+				if [ -n "$gv_Auswahl" ] ; then
+					while [ "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help share/user_help
+								menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+								;;
+							*)	# übernehmen
+								WERT="$gv_Auswahl"
+								break
+								;;
+						esac
+					done
+				else
+					WERT=""
+				fi
+			fi
+			}
+			#}}}
+			# Loglevel auswählen{{{
+			loglevel() {
+			unset -- WERT
+			LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
+			LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
+			menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
+			if [ -n "$gv_Auswahl" ] ; then
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help loglevel_help
+							menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
+							;;
+						*)	WERT="$gv_Auswahl"
+							break
+							;;
+					esac
+				done
+			else
+				gv_Auswahl=0
+			fi
+			}
+			#}}}
+			# Funktion konf_menue{{{
+			CONF_MENU=$(gettext 'Haupt "" Standard "" Fehlercodes "" Mail "" LMTP "" Queue "" SMTP "" SMTPD "" TLS "" Virtual "" $gv_Back ""')
+			konf_menue() {
+				menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+			}
+			#}}}
+			tab_support
+			konf_menue
+			while [ "$gv_Auswahl" ] ; do
+				case "$gv_Auswahl" in
+					HELP*) script_help conf_help
+						konf_menue
+						;;
+					Haupt|Main)
+						# Hauptkonfiguration
+						haupt_conf
+						konf_menue
+						;;
+					Sta*|Def*)
+						# Default Einstellungen
+						default_conf
+						konf_menue
+						;;
+					Fehler*|Error*)
+						# Fehlercodes
+						autoload -U error_codes_conf
+						error_codes_conf
+						konf_menue
+						;;
+					LMTP)
+						# lmtp Einstellungen
+						lmtp_conf
+						konf_menue
+						;;
+					Mail)	
+						# Mail und Mailbox Einstellungen
+						mail_conf
+						konf_menue
+						;;
+					Queue)
+						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
+						q_conf
+						konf_menue
+						;;
+					SMTP)
+						# smtp Einstellungen
+						smtp_conf
+						konf_menue
+						;;
+					SMTPD)
+						# smtpd Einstellungen
+						smtpd_conf
+						konf_menue
+						;;
+					TLS)
+						# TLS Einstellungen
+						tls_conf
+						konf_menue
+						;;
+					Virtual)
+						# VIRTUAL Einstellungen
+						virtual_conf
+						konf_menue
+						;;
+					$gv_Back)	break
+						;;
+				esac
+			done
+			#}}}
+			haupt_menue
+			;;
+		Tab*)
+			# Tabellen bearbeiten{{{
+			autoload -U access_table alias_table bcc_table canonical_table \
+				flags_choice kwpostfix_action ldap_db \
+				local_recipient_table mynetworks_table relay_domains_table \
+				relay_recipient_table regexp_table relocated_table smtpd_sender_login_table \
+				sql_db transport_table virtual_alias_table virtual_alias_mb_domains_table \
+				virtual_id_table virtual_mailbox_table db_new_reread
+			#
+			TABLE_ENTRY_MSG=$(gettext 'Waehlen Sie einen Tabelleneintrag aus.')
+			# Funktion tab_change{{{
+			#
+			# Die Variablen TAB_HELP HASH_TAB WAS_IST FILE TAB muessen belegt sein
+			#
+			# usage: tab_change
+			tab_change() {
+				case "$WAS_IST" in
+					mysql)
+						TAB_HELP="sql_help"
+						autoload -U password password_display different_passwd sql_config
+						sql_db $WAS_IST $FILE
+						;;
+					pgsql)
+						TAB_HELP="sql_help"
+						autoload -U password password_display different_passwd sql_config
+						sql_db $WAS_IST $FILE
+						;;
+					btree|dbm|hash|proxy|sdbm)
+						"$HASH_TAB" "$FILE"
+						;;
+					cidr)
+						# cidr wird nur auf die Access Tabelle angewandt.
+						"$HASH_TAB" -c "$FILE"
+						;;
+					ldap)
+						#ldap_table
+						TAB_HELP="ldap_help"
+						autoload -U password password_display different_passwd ldap_config
+						ldap_db $WAS_IST $FILE
+						;;
+					pcre|regexp)
+						case "$TAB" in
+							*alias*)
+								######################################################
+								# TODO:
+								# alias Tabellen haben noch keine Unterstuetzung fuer
+								# regulaere Ausdruecke
+								######################################################
+								MSG=$(gettext 'Das Tabellen-Format ($WAS_IST) wird noch nicht, fuer diese Tabelle, von kwpostfix unterstuetzt.')
+								msgbox "$gv_Attention" "$MSG"
+								;;
+							*)
+								TAB_HELP="regexp_help"
+								regexp_table "$FILE"
+								;;
+						esac
+						;;
+					*)	hier_ist_noch_nichts $WAS_IST
+						;;
+				esac
+			}
+			#}}}
+			# Funktion Tabellen Ansicht{{{
+			tab_ansicht() {
+				awk '(!/^#/){print}' $FILE >${gv_LogFile}$$
+				if [ `wc -l <${gv_LogFile}$$` = 0 ] ; then
+					rm -f ${gv_LogFile}$$ &>/dev/null
+					no_entry_msg
+				else
+					view_file ${gv_LogFile}$$
+					rm -f ${gv_LogFile}$$ &>/dev/null
+				fi
+			}
+			#}}}
+			# Funktion tab_search{{{
+			# sucht nach vorhandenen Werten für die Lookup Tabellen.
+			#
+			tab_search() {
+				unset -- TABLE TAB_IND Wert
+				local Anz
+				integer Anz
+				Anz=0
+				for i in alias_maps body_checks canonical_maps fast_flush_domains \
+					header_checks lmtp_sasl_password_maps local_recipient_maps \
+					mailbox_command_maps mynetworks \
+					mime_header_checks nested_header_checks recipient_bcc_maps \
+					recipient_canonical_maps relay_clientcerts relay_domains \
+					relocated_maps sender_bcc_maps sender_canonical_maps \
+					smtp_sasl_password_maps \
+					smtpd_client_restrictions smtpd_data_restrictions \
+					smtpd_etrn_restrictions smtpd_helo_restrictions \
+					smtpd_sender_login_maps \
+					smtpd_sender_restrictions smtpd_recipient_restrictions \
+					transport_maps virtual_alias_domains \
+					virtual_alias_maps virtual_gid_maps virtual_mailbox_domains \
+					virtual_mailbox_maps virtual_uid_maps \
+					virtual_transport ; {
+					# Der in main.cf angegeben Tabellen
+					setopt localoptions globsubst
+					print -l ${(M)$(postconf -h -c $MAIL_CONFIG ${i})##*${TB_Format}*} | \
+					while read a ; do
+						Tab_Format=${${a%:*}#*:}
+						Wert=${a##*:}
+						if [ "$Wert" -a "$Tab_Format" ] ; then
+							case "$Tab_Format" in
+								environ|nis|static|tcp|unix)
+									;;
+								*)
+									# Tabellen
+									case "$Wert" in
+										\"\$* | \$*) ;;
+										*)
+											if [ -z ${(M)${TABLE}##${Wert##*/}} ] ; then
+												create_file "$Wert"
+												(( Anz++ ))
+												TABLE[Anz]="${${Wert##*/}%,} \"\""
+												TAB_IND[Anz]="${Tab_Format}:${Wert%,}"
+											fi
+											;;
+									esac
+									;;
+							esac
+						fi
+					done
+				}
+			}
+			#}}}
+			# Funktion tab_menue{{{
+			tab_menue() {
+				unset -- FILE HASH_TAB TAB_HELP WAS_IST
+				if [ "$TABLE" ] ; then
+					TAB_TITLE=$(gettext 'Tabellen')
+					TAB_MSG=$(gettext 'Waehlen Sie eine Tabelle zur Bearbeitung aus.')
+					TAB_MENU=($TABLE $gv_Back \"\")
+					menubox "$TAB_TITLE" "$TAB_MSG" "$TAB_MENU"
+				else
+					MSG=$(gettext 'Es sind keine Tabellen vorhanden. Sie muessen erst welche erstellen.')
+					msgbox "$gv_Attention" "$MSG"
+					unset -- gv_Auswahl
+				fi
+			}
+			#}}}
+			# Funktion tabellen_menue{{{
+			TABLE_TITLE=$(gettext 'Tabellen::${TAB}')
+			TABLE_MENU=$(gettext '$gv_Display "" $gv_Create "" $gv_Change "" $gv_Delete "" Datenbank "neu erzeugen/postfix reload" $gv_Back ""')
+			tabellen_menue() {
+				menubox "$TABLE_TITLE" "$gv_Menupoint" "$TABLE_MENU"
+			}
+			#}}}
+			# Funktion Schlüssel/Wert Auswahl{{{
+			key_value() {
+				unset -- AUSWAHL AUSWAHL_MULTI
+				local Anz
+				integer Anz
+				Anz=0
+				awk '(!/^#/){print}' $1 | sed -e 's#\"#\\\"#g ; s#\\\.#\\\\\\.#g ; 
+					s#\\\s#\\\\\\s#g' | \
+				while read ALL ; do
+					if [ "$ALL" ] ; then
+						(( Anz++ ))
+						AUSWAHL_E[Anz]="${ALL%%/[ixm]*}/"
+						AUSWAHL[Anz]="${(qq)ALL} \"\""
+						AUSWAHL_MULTI[Anz]="${(qq)ALL} \"\" off"
+					fi
+				done
+			}
+			#}}}
+			#
+			tab_support
+			tab_search
+			tab_menue
+			##################################
+			# TODO:
+			# Neue maps sind hinzugekommen und
+			# muessen noch angelegt werden,
+			# oder nicht?
+			##################################
+			while [ "$gv_Auswahl" ] ; do
+				case "$gv_Auswahl" in
+					HELP*)	script_help tab_help
+						tab_menue
+						;;
+					*access*)
+						# Tabelle, defeniert selektive Zugriffsrechte zum{{{
+						# Einliefern von Mails, basierend auf Absender, Empfänger
+						# oder Hostnamen
+						#
+						TAB_HELP="access_help"
+						HASH_TAB="access_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*virtual_alias_domains* | *virtual_mailbox_domains*)
+						# Tabelle, fuer welche Domains Postfix Mailadressen aliasen{{{
+						# soll.
+						#
+						TAB_HELP="virtual_alias_mb_domains_help"
+						HASH_TAB="virtual_alias_mb_domains_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*virtual_alias_maps*)
+						# Tabelle zum umschreiben/weiterleiten von Mailadressen, auch unter{{{
+						# Berücksichtigung der domain.
+						#
+						TAB_HELP="virtual_alias_help"
+						HASH_TAB="virtual_alias_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*alias*)
+						# Tabelle für die Zuweisung von lokalen Mails an andere Empfänger{{{
+						#
+						TAB_HELP="alias_help"
+						HASH_TAB="alias_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*[rs]*_bcc*)
+						# Tabelle, wer soll eine Bcc Mail erhalten{{{
+						#
+						TAB_HELP="bcc_help"
+						HASH_TAB="bcc_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*checks*)
+						# Tabelle für die Filterung des Bodies/Headers.{{{
+						# hier kommt "[(fr)]" zum Einsatz das sonst bei header_checks
+						# auch mime_header_checks gefunden wird.
+						#
+						TAB_HELP="regexp_help"
+						WAS_IST=${${(M)${TAB_IND}[(fr)*${gv_Auswahl}]}%:*}
+						FILE=${${(M)${TAB_IND}[(fr)*${gv_Auswahl}]}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*canonical*)
+						# Tabelle zum umwandeln von Empfänger- und Absenderadressen{{{
+						# im SMTP_Enveloper und Mailheader
+						#
+						TAB_HELP="canonical_help"
+						HASH_TAB="canonical_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*local_recipient*)
+						# Tabelle fuer lokale Empfaenger{{{
+						#
+						TAB_HELP="local_recipient_help"
+						HASH_TAB="local_recipient_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*mynetworks*)
+						# Tabelle, IP-Adressen und IP-Bereiche die relayen dürfen.{{{
+						#
+						TAB_HELP="mynetworks_help"
+						HASH_TAB="mynetworks_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*relay_domains*)
+						# Tabelle, Domains für die bzw. von denen postfix relayed{{{
+						#
+						TAB_HELP="relay_domains_help"
+						HASH_TAB="relay_domains_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*relay_recipient*)
+						# Tabelle, fuer die Mailadressen zur Annahme aus Internet/Netzen{{{
+						#
+						TAB_HELP="relay_recipient_help"
+						HASH_TAB="relay_recipient_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*relocated*)
+						# Tabelle für Empfänger verzogen{{{
+						#
+						TAB_HELP="relocated_help"
+						HASH_TAB="relocated_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*smtpd_sender_login*)
+						# Tabelle für SASL Login Benutzernamen{{{
+						#
+						TAB_HELP="smtpd_sender_login_help"
+						HASH_TAB="local_recipient_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*transport*)
+						# transport Tabelle, für die Regelung der Transportmethode{{{
+						# von domains, mailadressen
+						#
+						TAB_HELP="transport_help"
+						HASH_TAB="transport_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*virtual_mailbox_maps*)
+						# Tabelle fuer die Mailboxen relativ zu dem Parameter{{{
+						# virtual_mailbox_base = PATH
+						#
+						TAB_HELP="virtual_mailbox_help"
+						HASH_TAB="virtual_mailbox_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					*virtual_[gu]id_maps*)
+						# Tabelle, fuer die Zuordnung von mailboxen zu UID oder GID{{{
+						#
+						TAB_HELP="virtual_id_help"
+						HASH_TAB="virtual_id_table"
+						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
+						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						TAB="$gv_Auswahl"
+						tab_change
+						tab_menue
+						#}}}
+						;;
+					$gv_Back)
+						unset -- TABLE
+						break
+						;;
+					*)	
+						hier_ist_noch_nichts $gv_Auswahl
+						tab_menue
+						;;
+				esac
+			done
+			#}}}
+			haupt_menue
+			;;
+		Steuerdatei|Taxfile)
+			# Konfiguration der master.cf
+			autoload -U master_conf
+			master_conf
+			haupt_menue
+			;;
+		Aufraeumen|Clear)
+			# loeschen uebrig gebliebener Temporaerer Dateien
+			postsuper -p
+			# fuehrt einen Check und eine eventuelle Reperatur der Queue-Struktur
+			# durch, wird beim zurueckspielen von Backups benoetigt.
+			postsuper -s
+			haupt_menue
+			;;
+		$gv_Exit)	break
+			;;
+	esac
+done	
+#
+exit 0
