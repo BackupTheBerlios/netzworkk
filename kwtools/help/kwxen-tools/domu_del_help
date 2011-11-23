@@ -1,5 +1,0 @@
-# domu_del_help fuer kwxen-tools{{{
-TITLE=$(gettext 'Konfiguration::loeschen::Hilfe')
-MSG=$(gettext 'Loeschen von ein oder mehreren Laufwerken. Dabei wird auch die
-Konfigurationsdatei in /etc/xen geloescht.')
-#}}}

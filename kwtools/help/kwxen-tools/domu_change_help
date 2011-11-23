@@ -1,4 +1,0 @@
-# domu_change_help fuer kwxen-tools{{{
-TITLE=$(gettext 'Konfiguration::aendern::Hilfe')
-MSG=$(gettext 'Waehlen Sie eine DomU zur Veraenderung aus.')
-#}}}

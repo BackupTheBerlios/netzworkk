@@ -1,6 +1,0 @@
-# Funktion no_vm_msg, kein VM vorhanden# {{{
-no_vm_msg() {
-	MSG=$(gettext 'Es sind keine virtuellen Maschinen vorhanden.')
-	msgbox "$gv_Attention" "$MSG"
-}
-## }}}
