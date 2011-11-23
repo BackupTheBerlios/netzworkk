@@ -7,104 +7,15 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2005-11-05">
+        <meta name="date" content="2011-09-04">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
+	<meta name="Robots" content="index,follow">
+	<link rel="icon" href="../../../images/favicon.ico" type="image/ico">
         <LINK href="../../../css/style.css" type=text/css rel=stylesheet>
-        <SCRIPT language=JavaScript>
-<!--
-function IJ_swapImgRestore() { //v3.0
-  var i,x,a=document.IJ_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-
-function IJ_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.IJ_p) d.IJ_p=new Array();
-    var i,j=d.IJ_p.length,a=IJ_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.IJ_p[j]=new Image; d.IJ_p[j++].src=a[i];}}
-}
-
-function IJ_findObj(n, d) { //v4.0
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=IJ_findObj(n,d.layers[i].document);
-  if(!x && document.getElementById) x=document.getElementById(n); return x;
-}
-
-function IJ_swapImage() { //v3.0
-  var i,j=0,x,a=IJ_swapImage.arguments; document.IJ_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=IJ_findObj(a[i]))!=null){document.IJ_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-
-function IJ_nbGroup(event, grpName) { //v3.0
-  var i,img,nbArr,args=IJ_nbGroup.arguments;
-  if (event == "init" && args.length > 2) {
-    if ((img = IJ_findObj(args[2])) != null && !img.IJ_init) {
-      img.IJ_init = true; img.IJ_up = args[3]; img.IJ_dn = img.src;
-      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
-      nbArr[nbArr.length] = img;
-      for (i=4; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-        if (!img.IJ_up) img.IJ_up = img.src;
-        img.src = img.IJ_dn = args[i+1];
-        nbArr[nbArr.length] = img;
-    } }
-  } else if (event == "over") {
-    document.IJ_nbOver = nbArr = new Array();
-    for (i=1; i < args.length-1; i+=3) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = (img.IJ_dn && args[i+2]) ? args[i+2] : args[i+1];
-      nbArr[nbArr.length] = img;
-    }
-  } else if (event == "out" ) {
-    for (i=0; i < document.IJ_nbOver.length; i++) {
-      img = document.IJ_nbOver[i]; img.src = (img.IJ_dn) ? img.IJ_dn : img.IJ_up; }
-  } else if (event == "down") {
-    if ((nbArr = document[grpName]) != null)
-      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.IJ_up; img.IJ_dn = 0; }
-    document[grpName] = nbArr = new Array();
-    for (i=2; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = img.IJ_dn = args[i+1];
-      nbArr[nbArr.length] = img;
-  } }
-}
-//-->
-</SCRIPT>
 </HEAD>
-<BODY onLoad="IJ_preloadImages('../../../images/trans.gif','../../../images/arrow.gif','../../../images/buttons/standort.gif','../../../images/buttons/mail_gen.gif','../../../images/arraw_r.gif','../../../images/arraw_h.gif','../../../images/arraw_l.gif','../../../images/buttons/berlios.jpg',')">
-<TABLE width="100%" border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top width=150>
-      <TABLE width="100%" border=0>
-        <TBODY>
-                <TR>
-                        <TD colSpan=2 height=10></TD>
-                </TR>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="../../../index.html">Home</a></td>
-                </tr>
-                        <td colspan=2 id="sub-1"><a href="../../../doku/index.html">Dokumentation</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../../images/trans.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../../doku/devel/index.html">Entwicklung</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../../images/arrow.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../../doku/kwtools/index.html">kwtools</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/netzworkk" target="_blank">CVS</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="../../../ftp.html" target="_blank">FTP</a></td>
-                </tr>
-        </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top>
-      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<BODY>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
         <TBODY>
                 <TR>
                         <TD width="2%" height=15></TD>
@@ -113,97 +24,182 @@ function IJ_nbGroup(event, grpName) { //v3.0
                 </TR>
                 <tr>
                         <td></td>
-                        <td vAlign=top><center><a href="../../../doku/kwtools/sys/kwssl.html" target="_top"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+                        <td vAlign=top><center><a href="../../../doku/kwtools/sys/kwrunlevconf.html" target="Context"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
                                 <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys.html" target="_top"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
-                                <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys/raid.html" target="_top"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center><br><hr><br></td>
+                                <a href="../../../doku/kwtools/sys.html" target="Context"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a></center><br><hr><br></td>
                         <td></td>
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h2><a name=kwuser>1.5.9. kwuser</a></h2>
-                                <p>Legt User an, loescht und veraendert vorhandene User.</p>
+                        <td vAlign=top><h2><a name=kwuser>kwuser</a></h2>
+                                <p>kwuser erstellt, l&ouml;scht und ver&auml;ndert Benutzer. Beim
+				anlegen eines Benutzers muss man ein Passwort vergeben. Wenn man einige
+				Einstellungen eines Benutzers &auml;ndert braucht man dies nicht tun.</p>
 
-                                <p><b>Notiz:</b> Benoetigt root Rechte.</p></td>
+				<p>Die Option -m ist ein Sonderfall mit der Sie viele Benutzer gleichzeitig anlegen 
+				k&ouml;nnen. Es erscheint dann eine etwas andere Men&uuml;auswahl mit den
+				zus&auml;tzlichen Punkten Prefix, Prefix_Homeverz. und Anzahl. Die Benutzer
+				werden dann mit der Kombination aus Prefix+Anzahl erstellt.</p>
+
+				<p><font color="Red"><b>Notiz:</b> Die Passw&ouml;rter stehen 
+				danach in der Datei /root/passwd-prefix.txt. Die 
+				Passw&ouml;rter werden mittels der Ger&auml;tedatei 
+				/dev/urandom und dem Programm uuencode gebildet.
+				Diese Datei sollten Sie ordentlich sichern!<br>
+				Die Datei hat das Format &quot;User Passwort&quot;.<br>
+				Auch sollten Sie bei der Erstellung von mehr als 10000 
+				Benutzern lieber eine 
+				Datenbank benutzen. Die Geschwindigkeit ist dann 
+				besser.</font></p>
+
+                                <p><b>Notiz:</b> Ben&ouml;tigt root Rechte.</p></td>
                         <td></td>
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><br><hr><br><center><a href="../../../doku/kwtools/sys/kwssl.html" target="_top"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwuser.html#conf">1
+			Konfiguration</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwuser.html#normal">2
+			Men&uuml;punkte zum anlegen von Benutzern</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwuser.html#muser">3
+			Men&uuml;punkte beim Start von kwuser mit der Option -m</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=conf>1 Konfiguration</a></h3>
+				<p>Hier k&ouml;nnen Sie die Werte konfigurieren die beim
+				anlegen von Benutzern angewendet werden sollen.</p>
+				<p><b>Gruppe:</b> Gruppe des Benutzers bestimmen.</p>
+				<p><b>Gruppen:</b> Gruppen einstellen zu welchen der
+				Benutzer geh&ouml;ren soll. Wird keine eingestellt wird,
+				kommt die Gruppe users zum Zuge (Standard).</p>
+				<p><b>Shell:</b> Eine der installierten Shells, als Standard,
+				zum erstellen von Benutzer Accounts ausw&auml;hlen.</p>
+				<p><b>Passwortl&auml;nge:</b> Eingabe einer Passwortl&auml;nge
+				die beim generieren eines Passwortes benutzt werden soll. Wird
+				nichts angegeben wird eine L&auml;nge von 8 Zeichen benutzt.</p>
+				<p><b>Verschl&uuml;sselung:</b> Auswahl der 
+				Verschl&uuml;sselungs-Methode, die beim erstellen eines 
+				Benutzern Accounts, zum erstellen eines Passworts benutzt 
+				werden soll.</p>
+				<p>Zur Auswahl stehen Blowfish, DES, SHA256, SHA512 und MD5.
+				Je nachdem welche unterst&uuml;tzte Distribution benutzt wird.
+				DES ist Standard unter Debian.</p>
+				<p><b>Erstlogin:</b> Zu Einstellungen (Passwort&auml;nderung) 
+				beim 1. Login auffordern (yes/no)? Standard ist "yes". Bei "no" 
+				werden die einschl&auml;gigen Dateien f&uuml;r "GNOME", KDE", 
+				"Bash" und "Zsh" gel&ouml;scht. Mehr wird zur Zeit noch nicht 	
+				unterst&uuml;tzt.</p>
+				<p>Notiz: Ben&ouml;tigt das Paket "kwtools-sys-kwpasswd", 
+				ausser Sie benutzen die Sourcen.</p>
+				<p><b>umask:</b> Die "umask" legt fest, welche Rechte eine neu 
+				angelegte Datei/Verzeichnis bekommt oder, besser gesagt,
+				nicht bekommt. Falls Sie die "umask"-Regel auch an anderer
+				Stelle, wie ~/.profile angegeben haben gilt diese nur f&uuml;r
+				die Dateien/Verzeichnisse die beim erstellen des 
+				Home-Verzeichnisses angelegt werden.</p>
+				<p>Quota Einstellungen zum anlegen von Benutzern.
+				Quota bedeutet Plattenplatzbeschr&auml;nkung.
+				Quota wird nur angelegt wenn das Home Verzeichnis
+				des Benutzers auch auf einer eigenen Partition mit
+				Quota Unterst&uuml;tzung liegt (Bsp.: /home/user =
+				/home Quota Laufwerk).</p>
+				<p><b>Block_Hardlimit:</b> Gr&ouml;sse des Block
+				Hardlimits. Als Masseinheit stehen
+				k,K,Kb,KB,m,M,Mb,MB,g,G,Gb,GB,.... zur Verf&uuml;gung.</p>
+				<p><b>Block_Softlimit:</b> Gr&ouml;sse des Block Softlimits.
+				Siehe Block_Hardlimit.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=normal>2 Men&uuml;punkte
+				zum anlegen von Benutzern</a></h3>
+                                <p><b>Benutzer:</b> W&auml;hlen Sie einen vorhandene Gruppe aus oder geben
+				einen neuen Gruppen Namen ein.</p>
+				<p><b>Benutzer_ID:</b> Hier kann man eine Benutzer ID eingeben oder eine vorhandene
+				ver&auml;ndern. Es wird gepr&uuml;ft, ob Sie schon existiert.</p>
+				<p><b>Gruppe:</b> Gruppe des Benutzers bestimmen.</p>
+				<p><b>Gruppen:</b> Gruppen einstellen zu welchen der Benutzer geh&ouml;ren soll. 
+				Wird keiner eingestellt wird, kommt die Gruppe "users" zum Zuge (Standard).</p>
+				<p><b>Kommentar:</b> Kommentar eingeben, wie zum Beispiel den vollen Namen 
+				(optional).</p>
+				<p><b>Shell:</b> Eine der installierten Shell f&uuml;r den Benutzer ausw&auml;hlen.</p>
+				<p><b>Home:</b> Home Verzeichnis des Benutzers einstellen. Standard ist 
+				/home/Benutzername.</p>
+				<p><b>Passwort:</b> Passwort f&uuml;r den Benutzer eingeben 
+				oder &auml;ndern (ein Muss, wenn es eine Login Shell gibt).
+				Es m&uuml;ssen mindestens 6 Zeichen sein.</p>
+				<p><b>Passwort generieren:</b> Hier k&ouml;nnen Sie ein 
+				Passwort f&uuml;r den zu erstellenden Benutzer generieren.</p>
+				<p><b>Verfallsdatum:</b> Geben Sie das Datum ein bis zu dem dieses Benutzerfach,
+				ohne Passwort &Auml;nderung, bestehen soll (z.B. 60 - 60 Tage).</p>
+				<p><b>inaktiv nach Verfallsdatum:</b> Geben Sie hier eine Zahl, in Tagen ein,
+				nachdem das Benutzerfach eng&uuml;ltig gesperrt werden soll. Die Zahl richtet
+				sich nach dem Verfallsdatum. 0 ist gleich unbegrenzt.</p>
+				<p><b></b></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=muser>3 Men&uuml;punkte beim Start
+			 von kwuser mit der Option -m</a></h3>
+                                <p><b>Prefix:</b> W&auml;hlen Sie einen vorhandene Gruppe aus 
+				oder geben einen neuen Gruppen Namen ein.</p>
+				<p><b>Prefix_Homeverz.:</b> Verzeichnis unter dem die Benutzer erstellt werden 
+				sollen.</p>
+				<p><b>Anzahl:</b> Anzahl der Benutzer die angelegt werden soll.</p>
+				<p><b>Gruppe:</b> Gruppe der Benutzer bestimmen.</p>
+				<p><b>Gruppen:</b> Gruppen einstellen zu welchen die Benutzer geh&ouml;ren sollen. 
+				Wird keine eingestellt wird, kommt die Gruppe "users" zum Zuge (Standard).</p>
+				<p><b>Kommentar:</b> Kommentar eingeben, wie zum Beispiel Sch&uuml;ler Klasse3b 
+				(optional).</p>
+				<p><b>Shell:</b> Eine der installierten Shell f&uuml;r die Benutzer ausw&auml;hlen.</p>
+				<p><b>Verfallsdatum:</b> Geben Sie das Datum ein bis zu dem diese Benutzerf&auml;cher,
+				ohne Passwort &Auml;nderung, bestehen sollen (z.B. 60 - 60 Tage).</p>
+				<p><b>inaktiv nach Verfallsdatum:</b> Geben Sie hier eine Zahl, in Tagen ein,
+				nachdem die Benutzerf&auml;cher eng&uuml;ltig gesperrt werden sollen. Die Zahl richtet
+				sich nach dem Verfallsdatum. 0 ist gleich unbegrenzt.</p>
+				<p><b></b></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br><center><a href="../../../doku/kwtools/sys/kwrunlevconf.html" target="Context"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
                                 <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys.html" target="_top"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
-                                <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys/raid.html" target="_top"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center></td>
+                                <a href="../../../doku/kwtools/sys.html" target="Context"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a></center></td>
                         <td></td>
                 </tr>
         </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top width=150>
-      <table cellspacing=0 cellpadding=0 width=150 border=0>
-        <tbody>
-                <tr>
-                        <td colspan=3><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75><a href="mailto:kiste@netzworkk.de"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.netzworkk.de"><img height=28 alt=Homepage... src="../../../images/buttons/standort.gif" width=34 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle><b>Mail</b></td>
-                        <td id=main-2 align=middle><b>Homepage</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.berlios.de"><img height=15 alt=Berlioskontakt... src="../../../images/buttons/berlios.jpg" width=34 border=0></a></td>
-                        <td id=main-2 align=middle width=75><img height=28 src="../../../images/trans.gif" width=34 border=0></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle><b>Berlios</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="75" height="15"></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="3"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td colspan=3 align=middle><h3>Mailinglists</h3></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75 colspan=2><a href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools" target="_blank"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-kwtools</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75 colspan=2><a target=_blank href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-linuxrc</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-        </tbody>
-      </table>
-    </TD>
-  </TR></TBODY></TABLE></BODY></HTML>
+</TABLE>
+</BODY>
+</HTML>

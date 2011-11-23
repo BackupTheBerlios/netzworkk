@@ -1,242 +1,106 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
-<HEAD><TITLE>Berlios:Projekt:netzworkk:Doku:kwtools</TITLE>
+<html>
+<head><title>Berlios:Projekt:netzworkk:Scripts</title>
         <meta name="generator" content="quanta">
-        <meta name="keywords" lang="en" content="Linux, linux, Netzworkk, kwtools">
+        <meta name="keywords" lang="en" content="kwtools, netzworkk, Linux, linux, Netzworkk">
         <meta name="description" lang="en" content="">
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2005-10-20">
+        <meta name="date" content="2010-11-04">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
-        <LINK href="../../css/style.css" type=text/css rel=stylesheet>
-        <SCRIPT language=JavaScript>
-<!--
-function IJ_swapImgRestore() { //v3.0
-  var i,x,a=document.IJ_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-
-function IJ_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.IJ_p) d.IJ_p=new Array();
-    var i,j=d.IJ_p.length,a=IJ_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.IJ_p[j]=new Image; d.IJ_p[j++].src=a[i];}}
-}
-
-function IJ_findObj(n, d) { //v4.0
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=IJ_findObj(n,d.layers[i].document);
-  if(!x && document.getElementById) x=document.getElementById(n); return x;
-}
-
-function IJ_swapImage() { //v3.0
-  var i,j=0,x,a=IJ_swapImage.arguments; document.IJ_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=IJ_findObj(a[i]))!=null){document.IJ_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-
-function IJ_nbGroup(event, grpName) { //v3.0
-  var i,img,nbArr,args=IJ_nbGroup.arguments;
-  if (event == "init" && args.length > 2) {
-    if ((img = IJ_findObj(args[2])) != null && !img.IJ_init) {
-      img.IJ_init = true; img.IJ_up = args[3]; img.IJ_dn = img.src;
-      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
-      nbArr[nbArr.length] = img;
-      for (i=4; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-        if (!img.IJ_up) img.IJ_up = img.src;
-        img.src = img.IJ_dn = args[i+1];
-        nbArr[nbArr.length] = img;
-    } }
-  } else if (event == "over") {
-    document.IJ_nbOver = nbArr = new Array();
-    for (i=1; i < args.length-1; i+=3) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = (img.IJ_dn && args[i+2]) ? args[i+2] : args[i+1];
-      nbArr[nbArr.length] = img;
-    }
-  } else if (event == "out" ) {
-    for (i=0; i < document.IJ_nbOver.length; i++) {
-      img = document.IJ_nbOver[i]; img.src = (img.IJ_dn) ? img.IJ_dn : img.IJ_up; }
-  } else if (event == "down") {
-    if ((nbArr = document[grpName]) != null)
-      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.IJ_up; img.IJ_dn = 0; }
-    document[grpName] = nbArr = new Array();
-    for (i=2; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = img.IJ_dn = args[i+1];
-      nbArr[nbArr.length] = img;
-  } }
-}
-//-->
-</SCRIPT>
-</HEAD>
-<BODY onLoad="IJ_preloadImages('../../images/trans.gif','../../images/arrow.gif','../../images/buttons/standort.gif','../../images/buttons/mail_gen.gif','../../images/arraw_r.gif','../../images/arraw_h.gif','../../images/buttons/berlios.jpg',')">
-<TABLE width="100%" border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top width=150>
-      <TABLE width="100%" border=0>
-        <TBODY>
-                <TR>
-                        <TD colSpan=2 height=10></TD>
-                </TR>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="../../index.html">Home</a></td>
-                </tr>
-                        <td colspan=2 id="sub-1"><a href="../../doku/index.html">Dokumentation</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../images/trans.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../doku/devel/index.html">Entwicklung</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../images/arrow.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../doku/kwtools/index.html">kwtools</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/netzworkk" target="_blank">CVS</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="../../ftp.html" target="_blank">FTP</a></td>
-                </tr>
-        </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top>
-      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
-        <TBODY>
-                <TR>
-                        <TD width="2%" height=15></TD>
-                        <TD width="96%"></TD>
-                        <TD width="2%"></TD>
-                </TR>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><h1>kwtools - Eine Zsh Scriptsammlung die mittels dialog, mit und ohne grafischen Oberflaeche den Arbeitsablauf erleichtert.</h1><br></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><h3>Unterstuetzte Distriebutionen und Live-CD's</h3>
-				<p>Grml ist eine Debian-basierte Live-CD fuer Systemadministratoren, CentOS ist 
-				RedHat-basiert, der Rest wie gehabt.</p>
-				<p><a href="http://www.centos.org" target="_blank">CentOS</a> >=4.0<br>
-				<a href="http://www.debian.org" target="_blank">Debian</a> >=3.0<br>
-				<a href="http://www.grml.org" target="_blank">GRML</a> >=0.5<br>
-				<a href="http://www.redhat.org" target="_blank">RedHat</a> >=9.0<br>
-				<a href="http://www.suse.de" target="_blank">SuSE</a> >=8.0</p></td>
-        		<td></td>
-                </tr>
-                <tr>
-                        <td vAlign=top colspan="3"><br></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><h3>Dokumentation</h3>
-				<p><a href="../../doku/kwtools/kwadmin.html#kwadmin">1. kwadmin</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/utils.html#utils">1.1. Dienstprogramme</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/graphic.html#graphic">1.2. Grafik-Programme</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/multi.html#multi">1.3. Multimedia-Programme</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/net.html#net">1.4. Netzwerk-Programme</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys.html#sys">1.5. System-Programme</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td vAlign=top colspan="3"><br></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><br><hr><br><center><a href="../../doku/kwtools/kwadmin.html" target="_top"><img src="../../images/arraw_r.gif" width=21 height=18 border=0></a></center></td>
-                        <td></td>
-                </tr>
-        </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top width=150>
-      <table cellspacing=0 cellpadding=0 width=150 border=0>
+	<meta name="Robots" content="index,follow">
+	<link rel="icon" href="../../images/favicon.ico" type="image/ico">
+        <link href="../../css/style.css" type=text/css rel=stylesheet>
+</head>
+<body>
+<table cellSpacing=0 cellPadding=0 width="100%" border=0>
         <tbody>
                 <tr>
-                        <td colspan=3><img src="../../images/trans.gif" width="1" height="15"></td>
+                        <td width="2%" height=15></td>
+                        <td width="96%"></td>
+                        <td width="2%"></td>
                 </tr>
                 <tr>
-                        <td id=main-2 colspan=3><img src="../../images/trans.gif" width="1" height="8"></td>
+                        <td></td>
+                        <td vAlign=top><h1>kwtools - Eine Zsh Scriptsammlung die mittels dialog, mit und ohne 
+			grafische Oberfl&auml;che den Arbeitsablauf erleichtert.</h1><br></td>
+                        <td></td>
                 </tr>
                 <tr>
-                        <td id=main-2 align=middle width=75><a href="mailto:kiste@netzworkk.de"><img height=32 alt=Mailkontakt... src="../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.netzworkk.de"><img height=28 alt=Homepage... src="../../images/buttons/standort.gif" width=34 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
+                        <td></td>
+                        <td vAlign=top><p><b>Notiz:</b> Die Funktionen der kwtools Release 0.8.1 sind &quot;Work in Process&quot;.</p>
                 </tr>
                 <tr>
-                        <td id=main-2 align=middle><b>Mail</b></td>
-                        <td id=main-2 align=middle><b>Homepage</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
+                        <td vAlign=top colspan="3"><hr></td>
                 </tr>
                 <tr>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.berlios.de"><img height=15 alt=Berlioskontakt... src="../../images/buttons/berlios.jpg" width=34 border=0></a></td>
-                        <td id=main-2 align=middle width=75><img height=28 src="../../images/trans.gif" width=34 border=0></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
+                        <td></td>
+                        <td vAlign=top><h3>Unterst&uuml;tzte Distributionen und Live-CD's</h3>
+				<p>Grml ist eine Debian-basierte Live-CD fuer Systemadministratoren, CentOS und Fedora
+				sind RedHat-basiert, der Rest wie gehabt.</p>
+				<p><a href="http://www.centos.org" target="_blank">CentOS</a> &gt;&#061;5.0<br>
+				<a href="http://www.debian.org" target="_blank">Debian</a> &gt;&#061;5.0<br>
+				<a href="http://www.grml.org" target="_blank">GRML</a> &gt;&#061;1.0<br>
+				<a href="http://www.redhat.com/fedora/" target="_blank">Fedora</a> &gt;&#061;12<br>
+				<a href="http://de.opensuse.org/Willkommen_auf_openSUSE.org" target="_blank">OpenSuSE</a> &gt;&#061;11.0</p></td>
+                        <td></td>
                 </tr>
                 <tr>
-                        <td id=main-2 align=middle><b>Berlios</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="75" height="15"></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
+                        <td vAlign=top colspan="3"><hr></td>
                 </tr>
                 <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="3"></td>
+                        <td></td>
+                        <td vAlign=top><h3>Dokumentation</h3></td>
+                        <td></td>
                 </tr>
                 <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="8"></td>
+                        <td></td>
+                        <td vAlign=top><p><a href="../../doku/kwtools/kwtools-doc.tar.bz2">kwtools, html (tar.bz2)</a><br>
+			<a href="../../doku/kwtools/kwtools-doc.tar.gz">kwtools, html (tar.gz)</a></p><br></td>
+                        <td></td>
                 </tr>
+		<tr>
+                        <td></td>
+			<td>
+				<table cellSpacing=0 cellPadding=2 width="100%" border=0>
+					<tbody>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/kwadmin.html#kwadmin" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/kwadmin.html#kwadmin" target="_self">kwadmin</a></p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/kwadmin.html#utils" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/utils.html#utils" target="_self">Dienstprogramme</a></p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/kwadmin.html#graphic" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/graphic.html#graphic" target="_self">Grafik-Programme</a></p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/kwadmin.html#multi" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/multi.html#multi" target="_self">Multimedia-Programme</a></p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/kwadmin.html#net" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/net.html#net" target="_self">Netzwerk-Programme</a></p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/kwadmin.html#sys" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys.html#sys" target="_self">System-Programme</a></p></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+                        <td></td>
+		</tr>
                 <tr>
-                        <td colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td colspan=3 align=middle><h3>Mailinglists</h3></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3><img src="../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-						<td id=main-2 align=middle width=75 colspan=2><a href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools" target="_blank"><img height=32 alt=Mailkontakt... src="../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-kwtools</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75 colspan=2><a target=_blank href="http://lists.berlios.de/mailman/listinfo/netzworkk-linuxrc"><img height=32 alt=Mailkontakt... src="../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-linuxrc</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="8"></td>
+                        <td></td>
+                        <td vAlign=top><br><hr><br><center><a href="../../doku/kwtools/kwadmin.html" target="Context"><img src="../../images/arraw_r.gif" width=21 height=18 border=0></a></center></td>
+                        <td></td>
                 </tr>
         </tbody>
-      </table>
-    </TD>
-  </TR></TBODY></TABLE></BODY></HTML>
+</table>
+</body>
+</html>

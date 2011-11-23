@@ -1,330 +1,41 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
-<HEAD><TITLE>Berlios:Projekt:netzworkk:Doku:kwtools</TITLE>
+<!DOCTYPE html PUBLIC "-//W3C//Dtd html 4.01 Transitional//EN">
+<html>
+<head><title>Berlios:Projekt:netzworkk:Doku:kwtools</title>
         <meta name="generator" content="quanta">
         <meta name="keywords" lang="en" content="Linux, linux, Netzworkk, kwtools, System, Dokumentation">
         <meta name="description" lang="en" content="">
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2005-11-05">
+        <meta name="date" content="2011-09-04">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
-        <LINK href="../../css/style.css" type=text/css rel=stylesheet>
-        <SCRIPT language=JavaScript>
-<!--
-function IJ_swapImgRestore() { //v3.0
-  var i,x,a=document.IJ_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-
-function IJ_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.IJ_p) d.IJ_p=new Array();
-    var i,j=d.IJ_p.length,a=IJ_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.IJ_p[j]=new Image; d.IJ_p[j++].src=a[i];}}
-}
-
-function IJ_findObj(n, d) { //v4.0
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=IJ_findObj(n,d.layers[i].document);
-  if(!x && document.getElementById) x=document.getElementById(n); return x;
-}
-
-function IJ_swapImage() { //v3.0
-  var i,j=0,x,a=IJ_swapImage.arguments; document.IJ_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=IJ_findObj(a[i]))!=null){document.IJ_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-
-function IJ_nbGroup(event, grpName) { //v3.0
-  var i,img,nbArr,args=IJ_nbGroup.arguments;
-  if (event == "init" && args.length > 2) {
-    if ((img = IJ_findObj(args[2])) != null && !img.IJ_init) {
-      img.IJ_init = true; img.IJ_up = args[3]; img.IJ_dn = img.src;
-      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
-      nbArr[nbArr.length] = img;
-      for (i=4; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-        if (!img.IJ_up) img.IJ_up = img.src;
-        img.src = img.IJ_dn = args[i+1];
-        nbArr[nbArr.length] = img;
-    } }
-  } else if (event == "over") {
-    document.IJ_nbOver = nbArr = new Array();
-    for (i=1; i < args.length-1; i+=3) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = (img.IJ_dn && args[i+2]) ? args[i+2] : args[i+1];
-      nbArr[nbArr.length] = img;
-    }
-  } else if (event == "out" ) {
-    for (i=0; i < document.IJ_nbOver.length; i++) {
-      img = document.IJ_nbOver[i]; img.src = (img.IJ_dn) ? img.IJ_dn : img.IJ_up; }
-  } else if (event == "down") {
-    if ((nbArr = document[grpName]) != null)
-      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.IJ_up; img.IJ_dn = 0; }
-    document[grpName] = nbArr = new Array();
-    for (i=2; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = img.IJ_dn = args[i+1];
-      nbArr[nbArr.length] = img;
-  } }
-}
-//-->
-</SCRIPT>
-</HEAD>
-<BODY onLoad="IJ_preloadImages('../../images/trans.gif','../../images/arrow.gif','../../images/buttons/standort.gif','../../images/buttons/mail_gen.gif','../../images/arraw_r.gif','../../images/arraw_h.gif','../../images/arraw_l.gif','../../images/buttons/berlios.jpg',')">
-<TABLE width="100%" border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top width=150>
-      <TABLE width="100%" border=0>
-        <TBODY>
-                <TR>
-                        <TD colSpan=2 height=10></TD>
-                </TR>
+	<meta name="Robots" content="index,follow">
+	<link rel="icon" href="../../images/favicon.ico" type="image/ico">
+        <link href="../../css/style.css" type=text/css rel=stylesheet>
+</head>
+<body>
+<table cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <tbody>
                 <tr>
-                        <td colspan=2 id="sub-1"><a href="../../index.html">Home</a></td>
+                        <td width="2%" height=15></td>
+                        <td width="96%"></td>
+                        <td width="2%"></td>
                 </tr>
-                        <td colspan=2 id="sub-1"><a href="../../doku/index.html">Dokumentation</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../images/trans.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../doku/devel/index.html">Entwicklung</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../images/arrow.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../doku/kwtools/index.html">kwtools</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/netzworkk" target="_blank">CVS</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="../../ftp.html" target="_blank">FTP</a></td>
-                </tr>
-        </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top>
-      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
-        <TBODY>
-                <TR>
-                        <TD width="2%" height=15></TD>
-                        <TD width="96%"></TD>
-                        <TD width="2%"></TD>
-                </TR>
                 <tr>
                         <td></td>
-                        <td vAlign=top><center><a href="../../doku/kwtools/net.html" target="_top"><img src="../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+                        <td vAlign=top><center><a href="../../doku/kwtools/net.html" target="Context"><img src="../../images/arraw_l.gif" width="20" height="20" border="0"></a>
                                 <img src="../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../doku/kwtools/index.html" target="_top"><img src="../../images/arraw_h.gif" width="20" height="20" border="0"></a><img src="../../images/trans.gif" width="20" height="20" border="0"></center><br><hr><br></td>
+                                <a href="../../doku/kwtools/index.html" target="Context"><img src="../../images/arraw_h.gif" width="20" height="20" border="0"></a><img src="../../images/trans.gif" width="20" height="20" border="0"></center><br><hr><br></td>
                         <td></td>
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h2><a name=sys>1.5. System-Programme</a></h2>
-                                <p>Alle hier vorgestellten Scripte benoetigen Root Rechte.
+                        <td vAlign=top><h2><a name=sys>System-Programme</a></h2>
+                                <p>Alle hier vorgestellten Scripte ben&ouml;tigen meist Root Rechte.
 				Mit diesen Scripten kann man weitgehend sein System konfigurieren.
 				Wenn nicht selbsgeschriebene Scripte zum Einsatz kommen wird dieses 
-				erwaehnt.</p><br></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys.html#hilfe">1.5.0 Hilfe</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwgroup.html#kwgroup">1.5.1. kwgroup</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwgrub.html#kwgrub">1.5.2. kwgrub</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwgrub.html#boot-conf">1.5.2.0 
-			Boot-Konfiguration</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwgrub.html#conf">1.5.2.1 Konfiguration</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwgrub.html#install">1.5.2.2 Installation</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwlogrotate.html#kwlogrotate">1.5.3. kwlogrotate</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlogrotate.html#conf">1.5.3.0 Konfiguration</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwlosetup.html#kwlosetup">1.5.4. kwlosetup</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlosetup.html#conf">1.5.4.0 Konfiguration</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlosetup.html#container">1.5.4.1 Container</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlosetup.html#partition">1.5.4.2 Partition</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlosetup.html#swap">1.5.4.3 Swap</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwlvm.html#kwlvm">1.5.5. kwlvm</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlvm.html#pv">1.5.5.0 Physikalische Volumes</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlvm.html#vg">1.5.5.1 Volume Groups</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwlvm.html#lv">1.5.5.2 Logische Volumes</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwnetconf.html#kwnetconf">1.5.6. kwnetconf</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwparted.html#kwparted">1.5.7. kwparted</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwparted.html#backup">1.5.7.0 Backup</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwparted.html#disks">1.5.7.1 Festplatten</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwparted.html#lvm">1.5.7.2 lvm</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/kwssl.html#kwssl">1.5.8. kwssl</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwssl.html#konf">1.5.8.0 Konfiguration</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/kwssl.html#ca_create">1.5.8.1 CA anlegen</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a 
-			href="../../doku/kwtools/sys/kwssl.html#create_priv_key">1.5.8.2 Privaten Schluessel anlegen</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a 
-			href="../../doku/kwtools/sys/kwssl.html#sign_priv_key">1.5.8.3 Privaten Schluessel 
-			unterschreiben</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a 
-			href="../../doku/kwtools/sys/kwssl.html#decrypt_priv_key">1.5.8.4 Privaten SChluessel 
-			entschluesseln</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a 
-			href="../../doku/kwtools/sys/kwssl.html#ca_test">1.5.8.5 CA ueberpruefen</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a 
-			href="../../doku/kwtools/sys/kwssl.html#copy_key">1.5.8.6 Schluessel zum Dienst 
-			kopieren</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a 
-			href="../../doku/kwtools/sys/kwuser.html#kwuser">1.5.9. kwuser</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/raid.html#raid">1.5.10. raid</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/raid.html#create">1.5.10.0 Erstellung</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/raid.html#monitor">1.5.10.1 Monitor</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/raid.html#part_change">1.5.10.2 Partitionswechsel</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="15" height="1"><a href="../../doku/kwtools/sys/raid.html#status">1.5.10.3 Status</a></p></td>
-                        <td></td>
-                </tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/runlevconf.html#runlevconf">1.5.11. runlevconf</a></p></td>
-                        <td></td>
-                </tr>
-                <tr>
-                        <td></td>
-                        <td vAlign=top><p><img src="../../images/trans.gif" width="0" height="1"><a href="../../doku/kwtools/sys/uhr.html#uhr">1.5.12. uhr</a></p></td>
+				erw&auml;hnt.</p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -332,102 +43,136 @@ function IJ_nbGroup(event, grpName) { //v3.0
                         <td vAlign=top><br><hr><br></td>
                         <td></td>
                 </tr>
-                <tr>
+		<tr>
                         <td></td>
-                        <div align="left"></div><td vAlign=top><h4><a name=hilfe>1.5.0 Hilfe</a></h4>
-                                <p>Hier koennen Sie einzelne Programme/Scripte aufrufen, die Ihnen die
-				Arbeit mit mit ihrem System erleichtern koennen.</p>
-				<p>kwgroup: Anlegen, aendern und loeschen von Gruppen.</p>
-				<p>kwgrub: Bootloader installieren, etc ....</p>
-				<p>kwlogrotate: Einstellung der Rotation und Archivierung von Logdateien.</p>
-				<p>kwlosetup: Erstellung von verschluesselten Containern und Partitionen</p>
-				<p>kwlvm: Anzeige, Erstellung, Loeschen, ..., von PV's, VG's und LV's.</p>
-				<p>kwnetconf: Konfiguration vorhandener Netzwerkkarten.</p>
-				<p>kwparted: Ein Frontend fuer parted, einem Partitionierungstool.</p>
-				<p>kwssl: Certifications erzeugen, signieren, etc..</p>
-				<p>kwuser: Anlegen, aendern und loeschen von Usern.</p>
-				<p>raid: Erstellung und Kontrolle von Software RAID Arrays.</p>
-				<p>runlevconf: Zum Einstellen der Runlevel, fuer die einzelnen
-        			Start-Scripts.</p>
-				<p>uhr: Zum Einstellen/Anschauen der Uhrzeit und des Datums.</p>
-				</td>
+			<td>
+				<table cellSpacing=0 cellPadding=2 width="100%" border=0>
+					<tbody>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwauth.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwauth.html#kwauth">kwauth</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Mit diesem Script kann man die Methode zur Authentifizierung des Systems einstellen.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwclock.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwclock.html#kwclock">kwclock</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Zum Einstellen/Anschauen der Uhrzeit und des Datums.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwcrypt.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwcrypt.html#kwcrypt">kwcrypt</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Ein Wrapper f&uuml;r kwcryptsetup 
+							kwecryptfs und die kwlosetup.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwfuse.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwfuse.html#kwfuse">kwfuse</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Konfigurations Frontend f&uuml;r 
+							FUSE (filesystem in userspace).</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwgroup.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwgroup.html#kwgroup">kwgroup</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Anlegen, &auml;ndern und 
+							l&ouml;schen von Gruppen.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwgrub.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwgrub.html#kwgrub">kwgrub</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Bootloader grub installieren, 
+							etc. ...</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwgrub2.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwgrub2.html#kwgrub2">kwgrub2</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Bootloader grub2 installieren, 
+							etc. ...</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwlogrotate.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwlogrotate.html#kwlogrotate">kwlogrotate</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Einstellung der Rotation und 	
+							Archivierung von Logdateien.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwlvm.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwlvm.html#kwlvm">kwlvm</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Anzeige, Erstellung, L&ouml;schen, 
+							..., von PV's, VG's und LV's.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwnetconf.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwnetconf.html#kwnetconf">kwnetconf</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Konfiguration vorhandener 
+							Netzwerkkarten.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwparted.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwparted.html#kwparted">kwparted</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Ein Frontend f&uuml;r parted, einem 
+							Partitionierungstool.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwpasswd.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwpasswd.html#kwpasswd">kwpasswd</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Mit diesem Script kann man Benutzer 
+							Passw&ouml;rter &auml;ndern (NIS und passwd).</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwquota.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwquota.html#kwquota">kwquota</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Ein Frontend f&uuml;r quota, einer 
+							Software zur Platzbeschr&auml;nkung.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwraid.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwraid.html#raid">kwraid</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Erstellung und Kontrolle von 
+							Software RAID Arrays.</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwrunlevconf.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwrunlevconf.html#kwrunlevconf">kwrunlevconf</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>Zum Einstellen der Runlevel, 
+							f&uuml;r die einzelnen Start-Scripts (sysv-rc und 
+							file-rc).</p></td>
+						</tr>
+						<tr>
+							<td width="20" height=20 vAlign=top><p><a href="../../info/kwtools_screenshots/sys_kwuser.html" target="_self"><img src="../../images/frame_image.png" width="17" height="18" align="top" border="0"></a></p></td>
+							<td valign="top"><p><a href="../../doku/kwtools/sys/kwuser.html#kwuser">kwuser</a></p></td>
+							<td width="" vAlign="top">-</td>
+							<td width="" vAlign="top"><p>anlegen, &auml;ndern und 
+							l&ouml;schen von Benutzern.</p></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
                         <td></td>
-                </tr>
+		</tr>
                 <tr>
                         <td></td>
                         <td vAlign=top><br><hr><br><center>
-			<a href="../../doku/kwtools/net.html" target="_top"><img src="../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+			<a href="../../doku/kwtools/net.html" target="Context"><img src="../../images/arraw_l.gif" width="20" height="20" border="0"></a>
                         <img src="../../images/trans.gif" width="15" height="8" border="0">
-                        <a href="../../doku/kwtools/index.html" target="_top"><img src="../../images/arraw_h.gif" width="20" height="20" border="0"></a></center></td>
+                        <a href="../../doku/kwtools/index.html" target="Context"><img src="../../images/arraw_h.gif" width="20" height="20" border="0"></a></center></td>
                         <td></td>
                 </tr>
-        </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top width=150>
-      <table cellspacing=0 cellpadding=0 width=150 border=0>
-        <tbody>
-                <tr>
-                        <td colspan=3><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3><img src="../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75><a href="mailto:kiste@netzworkk.de"><img height=32 alt=Mailkontakt... src="../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.netzworkk.de"><img height=28 alt=Homepage... src="../../images/buttons/standort.gif" width=34 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle><b>Mail</b></td>
-                        <td id=main-2 align=middle><b>Homepage</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.berlios.de"><img height=15 alt=Berlioskontakt... src="../../images/buttons/berlios.jpg" width=34 border=0></a></td>
-                        <td id=main-2 align=middle width=75><img height=28 src="../../images/trans.gif" width=34 border=0></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle><b>Berlios</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="75" height="15"></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="3"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td colspan=3 align=middle><h3>Mailinglists</h3></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3><img src="../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75 colspan=2><a href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools" target="_blank"><img height=32 alt=Mailkontakt... src="../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-kwtools</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75 colspan=2><a target=_blank href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools"><img height=32 alt=Mailkontakt... src="../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-linuxrc</b></td>
-                        <td id=main-2 align=middle><img src="../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../images/trans.gif" width="1" height="8"></td>
-                </tr>
         </tbody>
-      </table>
-    </TD>
-  </TR></TBODY></TABLE></BODY></HTML>
+</table>
+</body>
+</html>

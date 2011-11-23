@@ -7,104 +7,15 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2005-11-05">
+        <meta name="date" content="2010-03-11">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
+	<meta name="Robots" content="index,follow">
+	<link rel="icon" href="../../../images/favicon.ico" type="image/ico">
         <LINK href="../../../css/style.css" type=text/css rel=stylesheet>
-        <SCRIPT language=JavaScript>
-<!--
-function IJ_swapImgRestore() { //v3.0
-  var i,x,a=document.IJ_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-
-function IJ_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.IJ_p) d.IJ_p=new Array();
-    var i,j=d.IJ_p.length,a=IJ_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.IJ_p[j]=new Image; d.IJ_p[j++].src=a[i];}}
-}
-
-function IJ_findObj(n, d) { //v4.0
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=IJ_findObj(n,d.layers[i].document);
-  if(!x && document.getElementById) x=document.getElementById(n); return x;
-}
-
-function IJ_swapImage() { //v3.0
-  var i,j=0,x,a=IJ_swapImage.arguments; document.IJ_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=IJ_findObj(a[i]))!=null){document.IJ_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-
-function IJ_nbGroup(event, grpName) { //v3.0
-  var i,img,nbArr,args=IJ_nbGroup.arguments;
-  if (event == "init" && args.length > 2) {
-    if ((img = IJ_findObj(args[2])) != null && !img.IJ_init) {
-      img.IJ_init = true; img.IJ_up = args[3]; img.IJ_dn = img.src;
-      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
-      nbArr[nbArr.length] = img;
-      for (i=4; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-        if (!img.IJ_up) img.IJ_up = img.src;
-        img.src = img.IJ_dn = args[i+1];
-        nbArr[nbArr.length] = img;
-    } }
-  } else if (event == "over") {
-    document.IJ_nbOver = nbArr = new Array();
-    for (i=1; i < args.length-1; i+=3) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = (img.IJ_dn && args[i+2]) ? args[i+2] : args[i+1];
-      nbArr[nbArr.length] = img;
-    }
-  } else if (event == "out" ) {
-    for (i=0; i < document.IJ_nbOver.length; i++) {
-      img = document.IJ_nbOver[i]; img.src = (img.IJ_dn) ? img.IJ_dn : img.IJ_up; }
-  } else if (event == "down") {
-    if ((nbArr = document[grpName]) != null)
-      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.IJ_up; img.IJ_dn = 0; }
-    document[grpName] = nbArr = new Array();
-    for (i=2; i < args.length-1; i+=2) if ((img = IJ_findObj(args[i])) != null) {
-      if (!img.IJ_up) img.IJ_up = img.src;
-      img.src = img.IJ_dn = args[i+1];
-      nbArr[nbArr.length] = img;
-  } }
-}
-//-->
-</SCRIPT>
 </HEAD>
-<BODY onLoad="IJ_preloadImages('../../../images/trans.gif','../../../images/arrow.gif','../../../images/buttons/standort.gif','../../../images/buttons/mail_gen.gif','../../../images/arraw_r.gif','../../../images/arraw_h.gif','../../../images/arraw_l.gif','../../../images/buttons/berlios.jpg',')">
-<TABLE width="100%" border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top width=150>
-      <TABLE width="100%" border=0>
-        <TBODY>
-                <TR>
-                        <TD colSpan=2 height=10></TD>
-                </TR>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="../../../index.html">Home</a></td>
-                </tr>
-                        <td colspan=2 id="sub-1"><a href="../../../doku/index.html">Dokumentation</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../../images/trans.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../../doku/devel/index.html">Entwicklung</a></td>
-                </tr>
-                <tr>
-                        <td><img src="../../../images/arrow.gif" width="20" height="10" border="0"></td>
-                        <td id="sub-2"><a href="../../../doku/kwtools/index.html">kwtools</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/netzworkk" target="_blank">CVS</a></td>
-                </tr>
-                <tr>
-                        <td colspan=2 id="sub-1"><a href="../../../ftp.html" target="_blank">FTP</a></td>
-                </tr>
-        </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top>
-      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<BODY>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
         <TBODY>
                 <TR>
                         <TD width="2%" height=15></TD>
@@ -113,21 +24,20 @@ function IJ_nbGroup(event, grpName) { //v3.0
                 </TR>
                 <tr>
                         <td></td>
-                        <td vAlign=top><center><a href="../../../doku/kwtools/sys/kwnetconf.html" target="_top"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+                        <td vAlign=top><center><a href="../../../doku/kwtools/sys/kwnetconf.html" target="Context"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
                                 <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys.html" target="_top"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
+                                <a href="../../../doku/kwtools/sys.html" target="Context"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
                                 <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys/kwssl.html" target="_top"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center><br><hr><br></td>
+                                <a href="../../../doku/kwtools/sys/kwpasswd.html" target="Context"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center><br><hr><br></td>
                         <td></td>
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h2><a name=kwparted>1.5.7. kwparted</a></h2>
-                                <p>kwparted ist ein frontend fuer parted, einem Partitionierungstool.
-				Es kann Partitionen anlegen, vergroessern, verkleinern, loeschen und Flags 
-				anlegen/aendern.</p>
+                        <td vAlign=top><h2><a name=kwparted>kwparted</a></h2>
+                                <p>kwparted ist ein frontend f&uuml;r parted, einem Partitionierungstool.
+				Es kann Partitionen anlegen, vergr&ouml;ssern, verkleinern, l&ouml;schen, etc..</p>
 
-                                <p><b>Notiz:</b> Benoetigt root Rechte.</p></td>
+                                <p><b>Notiz:</b> Ben&ouml;tigt root Rechte.</p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -137,12 +47,27 @@ function IJ_nbGroup(event, grpName) { //v3.0
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h4><a name=backup></a>1.5.7.0 Backup</a></h4>
-				<p>Backup: Hier wird die Partitionstabelle aller Festplatten gesichert.
-        			Bei devfs in /boot/dev_ide_..._disc-parttab-DATUM.txt
-        			ansonsten in /boot/[sh]d[a-z].parttab-DATUM.txt. Ein Abbild,
-        			des MBR wird in der Datei DISKNAME-DATUM.mbr (s.o.) ge-
-        			speichert.</p></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwparted.html#status">1 Status</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwparted.html#parttab">2 Partitionstabelle</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwparted.html#disks">3 Festplatten</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwparted.html#lvm">4 lvm</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwparted.html#raid">5 raid</a></p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -152,17 +77,214 @@ function IJ_nbGroup(event, grpName) { //v3.0
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h4><a name=disks></a>1.5.7.1 Festplatten</a></h4>
+                        <td vAlign=top><h3><a name=status></a>1 Status</a></h3>
+				<p>Anzeige welches Dateisystem wie weit von kwparted unterst&uuml;tzt wird.</p>
+				<p><table cellSpacing=2 cellPadding=0 width="100%" border=1>
+					<tr>
+						<td align="center">Dateisystem</td>
+						<td align="center">erkennen</td>
+						<td align="center">erstellen</td>
+						<td align="center">kopieren</td>
+						<td align="center">vergr&ouml;ssern</td>
+						<td align="center">verkleinern</td>
+						<td align="center">l&ouml;schen</td>
+						<td align="center">Flags</td>
+						<td align="center">check</td>
+					</tr>
+					<tr>
+						<td align="left">linux-swap</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">ext2</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">ext3</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">fat16</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">fat32</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">hfs</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">hfs+</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">jfs</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">ntfs</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">reiserfs</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">reiser4</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">ufs</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+					<tr>
+						<td align="left">xfs</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">-</td>
+						<td align="center">-</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+						<td align="center">*</td>
+					</tr>
+				</p></table>
+				<p>Je nach dem wie die Partitionstabelle aussieht werden die entsprechenden
+				Punkte zur Auswahl angeboten.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=parttab></a>2 Partitionstabelle</a></h3>
+				<p>Hier kann man die Partitionstabellen aller oder einzelner Festplatten
+				sichern, zur&uuml;ck sichern oder l&ouml;schen. Die Partitionstabelle wird mit den 
+				Parametern Byte und compact (bessere lesbare Ansicht) gespeichert. Die Werte
+				werden in den Dateien - bei devfs in /boot/dev_ide_..._disc-parttab-DATUM.txt, 
+				ansonsten in /boot/[sh]d[a-z].parttab-DATUM.txt - gespeichert. Ein Abbild, des
+				MBR wird in der Datei /boot/DISKNAME-DATUM.mbr (s.o.) gespeichert.</p>			
+				<p><b>Partitionstabelle anlegen:</b> Anlegen oder &auml;ndern des
+				Partitionstabellen Typs. Es stehen bsd, dvh, gpt, loop, mac, msdos, pc98 und sun
+				zur Verf&uuml;gung.<br><br>
+				<b>NOTIZ:</b> kwparted unterst&uuml;tzt zur Zeit nur den Partitionstabellen Typ msdos
+				korrekt.</p>			
+				<p><b>Partitionstabelle l&ouml;schen:</b> L&ouml;scht je nach Partitionstabellen
+				Typ ein vielfaches von 512Bytes am Anfang der ausgew&auml;hlten Festplatte.
+				Festplatte(n). Also Partitionstabelle und den Bootsektor.</p>			
+				<p><b>Sicherung anlegen:</b> Zur Auswahl steht die Sicherung der
+				Partitionstabellen aller Festplatten oder nur einzelner. Dabei
+				werden 2 Dateien angelegt. Einmal die Partitionstabelle (Textdatei), in Form von
+				compact und Bytes und eine Datei mit dem MBR (512Byte).</p>			
+				<b><b>Sicherung zur&uuml;ck: <font color="Red">Sicherung zur&uuml;ck geht noch 
+				nicht.</font></b></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=disks></a>3 Festplatten</a></h3>
 				<p>Hier werden alle gefundenen Festplatten aufgelistet, die man bearbeiten 
-				kann. Die Namenskonvention koennte je nach Konfiguration anders aussehen.
+				kann. Die Namenskonvention k&ouml;nnte je nach Konfiguration anders aussehen.
 				Beim devfs ist dies /dev/ide/.../disc und ohne ist dies 
 				/dev/[hs]d[a-z].</p>
-				<p>Wenn man eine Festplatte ausgwaehlt hat, kann man deren Partitionen 
-				loeschen, Partitionen anlegen, vergroessern, verkleinern und deren Flags 
-				aendern.</p>
-				<p><b>Notiz:</b> Nach dem anlegen von Partitionen braucht man diese nicht zu 
-				formatieren, falls man den Dateisystemtyp mit angegeben hat, sonst
-				kann parted diese nicht vergroessern bzw. verkleinern.</p></td>
+				<p>Wenn man eine Festplatte ausgw&auml;hlt hat, kann man deren Partitionen 
+				l&ouml;schen, &auml;ndern, vergr&ouml;ssern, verkleinern, pr&uuml;fen,
+				kopieren und Flags &auml;ndern. Die Auswahl der Men&uuml;punkte die angeboten werden 
+				h&auml;ngen vom Dateisystem ab (s. Status Tabelle).</p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -172,88 +294,35 @@ function IJ_nbGroup(event, grpName) { //v3.0
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h4><a name=lvm></a>1.5.7.2 lvm</a></h4>
+                        <td vAlign=top><h3><a name=lvm></a>4 lvm</a></h3>
 				<p>Falls kwtools-sys-lvm installiert ist, kann man kwlvm auch
-			        von hier starten. Bei kwlvm muessen die Partitionen vorher
-       				mit dem Flag "lvm" versehen werden.</p></td>
+			        von hier starten. Bei kwlvm m&uuml;ssen die Partitionen vorher
+       				mit dem Flag &quot;lvm&quot; versehen werden (siehe man 8 kwparted).</p></td>
                         <td></td>
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><br><hr><br><center><a href="../../../doku/kwtools/sys/kwnetconf.html" target="_top"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=raid></a>5 raid</a></h3>
+				<p>Falls kwtools-sys-raid installiert ist, kann man das Script kwraid auch
+			        von hier starten. Bei raid m&uuml;ssen die Partitionen vorher
+       				mit dem Flag &quot;raid&quot; versehen werden (siehe man 8 kwparted).</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br><center><a href="../../../doku/kwtools/sys/kwnetconf.html" target="Context"><img src="../../../images/arraw_l.gif" width="20" height="20" border="0"></a>
                                 <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys.html" target="_top"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
+                                <a href="../../../doku/kwtools/sys.html" target="Context"><img src="../../../images/arraw_h.gif" width="20" height="20" border="0"></a>
                                 <img src="../../../images/trans.gif" width="15" height="8" border="0">
-                                <a href="../../../doku/kwtools/sys/kwssl.html" target="_top"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center></td>
+                                <a href="../../../doku/kwtools/sys/kwpasswd.html" target="Context"><img src="../../../images/arraw_r.gif" width=21 height=18 border=0></a></center></td>
                         <td></td>
                 </tr>
         </TBODY>
-      </TABLE>
-    </TD>
-    <TD vAlign=top width=150>
-      <table cellspacing=0 cellpadding=0 width=150 border=0>
-        <tbody>
-                <tr>
-                        <td colspan=3><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75><a href="mailto:kiste@netzworkk.de"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.netzworkk.de"><img height=28 alt=Homepage... src="../../../images/buttons/standort.gif" width=34 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle><b>Mail</b></td>
-                        <td id=main-2 align=middle><b>Homepage</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75><a target=_blank href="http://www.berlios.de"><img height=15 alt=Berlioskontakt... src="../../../images/buttons/berlios.jpg" width=34 border=0></a></td>
-                        <td id=main-2 align=middle width=75><img height=28 src="../../../images/trans.gif" width=34 border=0></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle><b>Berlios</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="75" height="15"></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="3"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td colspan=3 align=middle><h3>Mailinglists</h3></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75 colspan=2><a href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools" target="_blank"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-kwtools</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle width=75 colspan=2><a target=_blank href="http://lists.berlios.de/mailman/listinfo/netzworkk-kwtools"><img height=32 alt=Mailkontakt... src="../../../images/buttons/mail_gen.gif" width=32 border=0></a></td>
-                        <td id=main-2 align=middle>&nbsp;</td>
-                </tr>
-                <tr>
-                        <td id=main-2 align=middle colspan=2><b>netzworkk-linuxrc</b></td>
-                        <td id=main-2 align=middle><img src="../../../images/trans.gif" width="1" height="15"></td>
-                </tr>
-                <tr>
-                        <td id=main-2 colspan=3 align=middle><img src="../../../images/trans.gif" width="1" height="8"></td>
-                </tr>
-        </tbody>
-      </table>
-    </TD>
-  </TR></TBODY></TABLE></BODY></HTML>
+</table>
+</BODY>
+</HTML>
