@@ -1,0 +1,89 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This is the debhelper compatibility version to use.
+# >=3 create conffiles automatically
+#export DH_COMPAT=5
+
+# Name our packages
+package-kwdjbdns=kwdjbdns-update
+etc_path=/etc
+doc_path=/usr/share/doc
+man_path=/usr/share/man
+sbin_path=/usr/sbin
+lintian_path=/usr/share/lintian/overrides
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# Add here commands to configure the package.
+
+	touch configure-stamp
+
+
+build: build-stamp
+
+build-stamp: configure-stamp 
+	dh_testdir
+
+	# Add here commands to compile the package.
+	#/usr/bin/docbook-to-man debian/kwtools.sgml > kwtools.1
+
+	touch build-stamp
+
+clean:
+	debconf-updatepo
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+
+	# Add here commands to clean up after the build process.
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into debian/kwtools-*.
+	
+	# kwdjbdns-update
+	cp -a etc/kwdjbdns_update.cf \
+		$(CURDIR)/debian/$(package-kwdjbdns)/$(etc_path)
+	cp -a usr/sbin/kwdjbdns_update \
+		$(CURDIR)/debian/$(package-kwdjbdns)/$(sbin_path)
+	cp -a man/de/man1/kwdjbdns_update.1 $(CURDIR)/debian/$(package-kwdjbdns)$(man_path)/de/man1
+	cp -a man/de/man5/kwdjbdns_update.cf.5 $(CURDIR)/debian/$(package-kwdjbdns)$(man_path)/de/man5
+	cp -a debian/kwdjbdns-update.overrides.lintian \
+		$(CURDIR)/debian/$(package-kwdjbdns)$(lintian_path)/kwdjbdns-update
+
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+	dh_installdocs
+	dh_installchangelogs
+	dh_installinit -n --name=kwdjbdns_update
+	dh_installman
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

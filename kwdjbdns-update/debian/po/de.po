@@ -1,0 +1,117 @@
+# kwdjbdns-update german Translation.
+# Copyright (C) 2010
+# This file is distributed under the same license as
+# the kwdjbdns-update packages.
+# Kai Wilke <kiste@netzworkk.de>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: kwtools-0.1.0\n"
+"Report-Msgid-Bugs-To: kiste@netzworkk.de\n"
+"POT-Creation-Date: 2010-04-13 18:09+0200\n"
+"PO-Revision-Date: 2010-04-13 18:12+0200\n"
+"Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:1001
+msgid "DNS domain:"
+msgstr "DNS domain:"
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:1001
+msgid ""
+"Please enter the DNS domain to manage from kwdjbdns_update. This is very "
+"important to create the Makefile."
+msgstr ""
+"Bitte geben Sie die DNS domain die von kwdjbdns_update verwaltet werden"
+"soll. Dies ist sehr wichtig zum erstellen des Makefile."
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:1001
+msgid "Else to use output from \"hostname -d\"."
+msgstr "Andernfalls wird der Output von \"hostname -d\" benutzt."
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:2001
+#, fuzzy
+msgid "dhcpd.leases file:"
+msgstr "dhcpd.leases Datei:"
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:2001
+msgid "Please enter the path to dhcpd.leases file from your dhcp3-server."
+msgstr "Geben Sie den Pfad zur Datei dhcpd.lease, Ihres dhcp3-servers, ein."
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:3001
+#, fuzzy
+msgid "tinydns root directory:"
+msgstr "tinydns root Verzeichnis:"
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:3001
+#, fuzzy
+msgid "Please enter the path to tinydns root directory."
+msgstr "Geben Sie den Pfad zum tindyns Root Verzeichnis ein."
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:3001
+msgid "tinydns must before to configured correctly."
+msgstr "tinydns muss vorher bereits konfiguriert sein."
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:4001
+msgid "Intervall:"
+msgstr "Intervall"
+
+#. Type: string
+#. Description
+#: ../kwdjbdns-update.templates:4001
+msgid "Please enter the intervall in seconds to check the dhcpd.leases file."
+msgstr ""
+"Geben Sie den Intervall in Sekunden ein, in der die dhcpd.leases Datei "
+"ueberprueft werden soll."
+
+#. Type: boolean
+#. Description
+#: ../kwdjbdns-update.templates:5001
+msgid "Should debug to on (yes/no)?"
+msgstr "Sollen ausfuehrlichere Nachrichten eingeschaltet werden (ja/nein)?"
+
+#. Type: boolean
+#. Description
+#: ../kwdjbdns-update.templates:5001
+msgid "Default is no."
+msgstr "Standard ist nein."
+
+#. Type: boolean
+#. Description
+#: ../kwdjbdns-update.templates:6001
+#, fuzzy
+msgid "Should kwdjbdns_update be started when booting?"
+msgstr "Soll kwdjbdns_update beim booten gestartet werden?"
+
+#. Type: boolean
+#. Description
+#: ../kwdjbdns-update.templates:6001
+#, fuzzy
+msgid ""
+"If enabled, each time your machine starts, the kwdjbdns_update script (dhcp-"
+"to-tindns) will be started."
+msgstr ""
+"Falls Sie das aktivieren, wird bei jedem Start des Rechners kwdjbdns_update "
+"(dhcp-to-tinydns) gestartet."

@@ -1,0 +1,66 @@
+#! /bin/sh
+#
+# Copyright (c) 2010 Netzworkk, Germany.
+#
+# Author: Kai Wilke <kiste@netzworkk.de>
+#
+# /etc/init.d/kwdjbdns_update
+#
+#   and its symbolic link
+#
+# /usr/sbin/rckwdjbdns_update
+#
+#
+### BEGIN INIT INFO
+# Provides:          kwdjbdns_update
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Should-Start:      $syslog
+# Should-Stop:       $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts/stops/... dhcp-to-dns update daemon
+# Description:       starts/stops/reloads the DHCP update daemon
+#                    for tinydns
+### END INIT INFO
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/sbin
+RETVAL=0
+
+prog=kwdjbdns_update
+PIDFILE="/var/run/kwdjbdns_update.pid"
+
+usage() {
+	echo "Usage: $0 {start|stop|reload|force-reload|restart}"
+	RETVAL=1
+}
+
+case "$1" in
+    start)
+		$prog &
+		if [ "$?" = 0 ] ; then
+			RETVAL=$?
+		else
+			if [ -f "$PIDFILE" ] ; then
+				kill `cat $PIDFILE`
+				rm $PIDFILE >/dev/null 2>&1
+			fi
+			RETVAL=1
+		fi
+        ;;
+    stop)
+		if [ -f "$PIDFILE" ] ; then
+			kill `cat $PIDFILE` ; RETVAL=$?
+			rm $PIDFILE >/dev/null 2>&1
+		else
+			RETVAL=0
+		fi
+        ;;
+    restart|reload|force-reload)
+        $0 stop
+		$0 start
+        ;;
+    *)	usage ; RETVAL=2
+		;;
+esac
+exit $RETVAL

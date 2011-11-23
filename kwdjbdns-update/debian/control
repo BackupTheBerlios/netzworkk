@@ -1,0 +1,25 @@
+Source: kwdjbdns-update
+Section: net
+Priority: optional
+Maintainer: Kai Wilke <kiste@netzworkk.de>
+Build-Depends: debhelper (>> 3.0.0)
+Standards-Version: 3.8.1
+
+Package: kwdjbdns-update
+Section: net
+Architecture: all
+Priority: optional
+Depends: debconf, djbdns (>= 1.0), dhcp3-server, libappconfig-perl, perl
+Suggests: kwtools-net-djbdns
+Description: Network script kwdjbdns_update
+ kwdjbdns_updates is a perl script dhcpd-to-tinydns update daemon.
+ .
+ kwdjbdns_update: This script reads a dhcpd.leases file and
+ dynamically updates tinydns with hostname and ip information.
+ .
+ It assumes that your DHCP server recieves hostnames from the
+ clients, and that your clients offer their hostnames to the server.
+ Some versions of Linux DHCP clients don't do that. This used ISC's
+ DHCPD, found at http://www.isc.org - though others may work just
+ fine.
+

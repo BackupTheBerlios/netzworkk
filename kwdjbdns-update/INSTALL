@@ -1,0 +1,59 @@
+					INSTALL (12.04.2010)
+
+1. Allgemein
+2. Was wird vor der Installation benötigt.
+3. Installation
+4. Pakete 
+5. Deinstallation
+
+1. Allgemein
+---------------------------------------------------------------------------
+   Das Paket kwdjbdns-update unterliegt der GPL Lizenz, siehe copyright
+   Datei.
+
+2. Was wird vor der Installation benötigt.
+---------------------------------------------------------------------------
+   Um die Sourcen zu installieren benötigen sie folgende 
+   Programme: perl, libappconfig-perl
+
+   Kontrollieren sie ob dieses Paket installiert ist.
+   dpkg -s perl libappconfig-perl
+
+   Bei RPM-basierten Distributionen könnte der Paketname
+   abweichen.
+
+3. Installation
+---------------------------------------------------------------------------
+   Als erstes sollten Sie das alte Paket mit dem alten
+   uninstall Script entfernen.
+
+   Wenn alles passt können sie ./install ausführen.
+   
+   ./install
+
+   Die Installation klappt auch, wenn das obige Paket nicht
+   installiert ist.
+   
+4. Paket
+---------------------------------------------------------------------------
+   Es gibt DEB Pakete.
+   stable:
+   URL: ftp://ftp.berlios.de/pub/netzworkk/scripts/kwdjbdns-update/Debian/stable
+   URL: ftp://msx.mamemu.de/pub/kwdjbdns-update/Debian/stable
+
+   DEB Pakete kann man sich installieren mit einem Eintrag in 
+   /etc/apt/sources.list.
+   deb ftp://ftp.berlios.de/pub/netzworkk/scripts/kwdjbdns-update/Debian/stable ./
+   deb-src ftp://ftp.berlios.de/pub/netzworkk/scripts/kwdjbdns-update/Debian/stable ./
+   oder
+   deb ftp://msx.mamemu.de/pub/kwdjbdns-update/Debian/stable ./
+   deb-src ftp://msx.mamemu.de/pub/kwdjbdns-update/Debian/stable ./
+
+
+5. Deinstallation
+---------------------------------------------------------------------------
+   Fuehren Sie einfach das Script "uninstall" aus, welches den
+   Sourcen beiliegt. Wenn Sie die Sourcen benutzen, deinstallieren Sie immer
+   zuerst mit dem alten "uninstall" Script die kwdjbdns-update Dateien.
+   Manches aendert sich einfach zu schnell.
+

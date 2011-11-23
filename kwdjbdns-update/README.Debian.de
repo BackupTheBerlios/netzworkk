@@ -1,0 +1,33 @@
+kwtools-vimskel for Linux
+-----------------
+
+1. Installation
+2. Notizen
+3. Pakete
+4. Dokumentation
+
+1. Installation
+-----------------------------------------------------------------------
+Ausführliche Beschreibung steht in der Datei INSTALL. Diese ist nur
+vorhanden, wenn Sie die Sourcen benutzen.
+
+2. Notizen
+-----------------------------------------------------------------------
+Keine.
+
+3. Pakete
+-----------------------------------------------------------------------
+Es sind folgende Debian Pakete vorhanden und liegen unter.:
+URL: ftp://ftp.berlios.de/pub/netzworkk/scripts/kwdjbdns-update/Debian/stable
+oder
+URL: ftp://msx.mamemu.de/pub/kwdjbdns-update/Debian/stable
+
+kwdjbdns-update: ein DHCP-TO-TINYDNS daemon.
+
+4. Dokumentation
+-----------------------------------------------------------------------
+Dies sind die Beispiel Konfigurationsdateien fuer den Editor vim.
+http://netzworkk.berlios.de/doku/kwdjbdns-update/index.html
+http://www.netzworkk.de/doku/kwdjbdns-update/index.html
+
+ -- Kai Wilke <kiste@netzworkk.de>, Mon, 12 April 2010 21:19:27 +0100

@@ -1,0 +1,81 @@
+#! /bin/sh
+#
+# Copyright (c) 2010 Netzworkk, Germany.
+#
+# Author: Kai Wilke <kiste@netzworkk.de>
+#
+# /etc/init.d/kwdjbdns_update
+#
+#   and its symbolic link
+#
+# /usr/sbin/rckwdjbdns_update
+#
+#
+### BEGIN INIT INFO
+# Provides:          kwdjbdns_update
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Should-Start:      $syslog
+# Should-Stop:       $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts/stops/... dhcp-to-dns update daemon
+# Description:       starts/stops/reloads the DHCP update daemon
+#                    for tinydns
+### END INIT INFO
+
+kwdjbdns_update_BIN=/usr/sbin/kwdjbdns_update
+PIDFILE="/var/run/kwdjbdns_update.pid"
+
+test -x $kwdjbdns_update_BIN || exit 5
+
+. /etc/rc.status
+
+# Reset status of this service
+rc_reset
+
+# Return values acc. to LSB for all commands but status:
+# 0	  - success
+# 1       - generic or unspecified error
+# 2       - invalid or excess argument(s)
+# 3       - unimplemented feature (e.g. "reload")
+# 4       - user had insufficient privileges
+# 5       - program is not installed
+# 6       - program is not configured
+# 7       - program is not running
+# 8--199  - reserved (8--99 LSB, 100--149 distrib, 150--199 appl)
+# 
+# Note that starting an already running service, stopping
+# or restarting a not-running service as well as the restart
+# with force-reload (in case signaling is not supported) are
+# considered a success.
+
+case "$1" in
+    start)
+		$kwdjbdns_update_BIN &
+		if [ "$?" != 0 ] ; then
+			if [ -f "$PIDFILE" ] ; then
+				kill `cat $PIDFILE`
+				rm $PIDFILE >/dev/null 2>&1
+			fi
+		fi
+		# Remember status and be verbose
+		rc_status -v
+        ;;
+    stop)
+		if [ -f "$PIDFILE" ] ; then
+			kill `cat $PIDFILE` && rm $PIDFILE >/dev/null 2>&1
+			# Remember status and be verbose
+		fi
+		rc_status -v
+        ;;
+    restart|reload|force-reload)
+        $0 stop
+		$0 start
+		rc_status
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|reload|force-reload|restart}"
+        exit 1
+esac
+rc_exit

@@ -1,0 +1,33 @@
+kwtools-vimskel for Linux
+-----------------
+
+1. Installation
+2. Notes
+3. Packages
+4. Dokumentation
+
+1. Installation
+-----------------------------------------------------------------------
+A detailed description can be found in the INSTALL file, which is only
+available if you use the "sources".
+
+2. Notes
+-----------------------------------------------------------------------
+None
+
+3. Packages
+-----------------------------------------------------------------------
+Following Debian-Packages are available and can be found under: 
+URL: ftp://ftp.berlios.de/pub/netzworkk/scripts/kwdjbdns-update/Debian/stable
+or
+URL: ftp://msx.mamemu.de/pub/kwdjbdns-update/Debian/stable
+
+kwdjbdns-update: a DHCP-TO-TINYDNS Daemon.
+
+4. Dokumentation
+-----------------------------------------------------------------------
+The documentation can be found on the following servers:
+http://netzworkk.berlios.de/doku/kwdjbdns-update/index.html
+http://www.netzworkk.de/doku/kwdjbdns-update/index.html
+
+ -- Kai Wilke <kiste@netzworkk.de>, Mon, 12 April 2010 21:19:27 +0100

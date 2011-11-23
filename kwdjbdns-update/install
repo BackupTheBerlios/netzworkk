@@ -1,0 +1,118 @@
+#!/bin/zsh
+# Autor: Kai Wilke <kiste@netzworkk.de> 13.04.2010
+#
+# Script: install, installiert die Dateien des Paketes kwdjbdns-update,
+# ein dhcp-to-tinydns update daemon.
+#
+# Version: 0.0.1
+#
+setopt shwordsplit extendedglob
+
+# Prüfung
+if [ "`id -u`" != 0 ] ; then
+	echo ""
+	echo "Please become root before running install."
+	echo ""
+	exit 1
+fi
+
+INSTALL="`which install`"
+if [[ ! -x $INSTALL ]] ; then
+	echo ""
+	echo "Please install \"install\" or \"coreutils\""
+	echo "before running install."
+	echo ""
+	exit 1
+fi
+
+#
+# Variablen belegen
+#
+PACKAGE=kwdjbdns-update
+PREFIX=/usr
+ETC_PATH=/etc
+INIT_PATH=/etc/init.d
+DOC_PATH="${PREFIX}/share/doc"
+SBIN_PATH="${PREFIX}/sbin"
+MAN_PATH="${PREFIX}/share/man"
+LINTIAN_PATH="${PREFIX}/share/lintian/overrides"
+# install Optionen
+INSTALL_DIR_OPT=" -d -m 0755 -o root -g root"
+INSTALL_EXEC_OPT="-m 0755 -o root -g root"
+INSTALL_FILE_OPT="-m 0644 -o root -g root"
+
+#
+# Falls nicht vorhanden, Verzeichnisse erstellen
+#
+if [ ! -d "${ETC_PATH}/init.d" ] ; then
+	$INSTALL $INSTALL_DIR_OPT $ETC_PATH
+fi
+# Manpages
+for i in {1..8} ; {
+	if [ ! -d "${MAN_PATH}/de/man${i}" ] ; then
+		$INSTALL $INSTALL_DIR_OPT ${MAN_PATH}/de/man${i}
+	fi
+	if [ ! -d "${MAN_PATH}/man${i}" ] ; then
+		$INSTALL $INSTALL_DIR_OPT ${MAN_PATH}/man${i}
+	fi
+}
+
+if [ ! -d "${DOC_PATH}/${PACKAGE}" ] ; then
+	$INSTALL $INSTALL_DIR_OPT ${DOC_PATH}/${PACKAGE}
+fi
+if [ ! -d "$LINTIAN_PATH" ] ; then
+	$INSTALL $INSTALL_DIR_OPT $LINTIAN_PATH
+fi
+if [ ! -d "$SBIN_PATH" ] ; then
+	$INSTALL $INSTALL_DIR_OPT $SBIN_PATH
+fi
+#
+# Alle Dateien kopieren
+#
+echo ""
+echo "copy all files."
+echo ""
+sleep 2
+if [ "$OSTYPE" = linux -o "$OSTYPE" = linux-gnu ] ; then
+	CP_OPT="-av"
+else
+	CP_OPT="-Rp"
+fi
+
+# Konfiguration installieren
+$INSTALL $INSTALL_FILE_OPT ./etc/kdjbdns_update.cf $ETC_PATH
+
+# Perl-script installieren
+$INSTALL $INSTALL_EXEC_OPT ./usr/sbin/kwdjbdns_update $SBIN_PATH
+
+# kwdjbdns_update Init Script kopieren
+if [ -e /etc/debian_version ] ; then
+	if [ -e ./etc/init.d/kwdjbdns_update.debian ] ; then
+		$INSTALL $INSTALL_EXEC_OPT ./etc/init.d/kwdjbdns_update.debian ${INITD_PATH}/kwdjbdns_update
+		ln -sf /etc/init.d/kwdjbdns_update ${SBIN_PATH}/rckwdjbdns_update
+	fi
+elif [ -e /etc/SuSE-release ] ; then
+	if [ -e ./etc/init.d/kwdjbdns_update.suse ] ; then
+		$INSTALL $INSTALL_EXEC_OPT ./etc/init.d/kwdjbdns_update.suse ${INITD_PATH}/kwdjbdns_update
+		ln -sf /etc/init.d/kwdjbdns_update ${SBIN_PATH}/rckwdjbdns_update
+	fi
+else 
+	# Rest ist RedHat basiert (CentOS und Fedora)
+	if [ -e ./etc/init.d/kwdjbdns_update.rh ] ; then
+		$INSTALL $INSTALL_EXEC_OPT ./etc/init.d/kwdjbdns_update.rh ${INITD_PATH}/kwdjbdns_update
+		ln -sf /etc/init.d/kwdjbdns_update ${SBIN_PATH}/rckwdjbdns_update
+	fi
+fi
+
+# Lintian Datei installieren
+$INSTALL $INSTALL_FILE_OPT ./debian/*.lintian $LINTIAN_PATH
+
+# Dokumentation installieren
+$INSTALL $INSTALL_FILE_OPT ./{README.Debian,README.Debian.de,copyright,changelog.txt} ${DOC_PATH}/${PACKAGE}
+$INSTALL $INSTALL_FILE_OPT ./{AUTHORS,TODO,INSTALL,changelog,Release} ${DOC_PATH}/${PACKAGE}
+
+# Manpages installieren
+$INSTALL $INSTALL_FILE_OPT ./man/de/man5/* ${MAN_PATH}/de/man5
+$INSTALL $INSTALL_FILE_OPT ./man/de/man1/* ${MAN_PATH}/de/man1
+
+exit 0

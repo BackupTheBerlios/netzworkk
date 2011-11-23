@@ -1,0 +1,2 @@
+kwdjbdns-update: binary-without-english-manpage usr/sbin/kwdjbdns_update
+kwdjbdns-update: binary-without-english-manpage etc/kwdjbdns_update.cf

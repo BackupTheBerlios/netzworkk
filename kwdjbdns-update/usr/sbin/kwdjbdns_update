@@ -1,0 +1,293 @@
+#!/usr/bin/perl -w
+#
+##########################################################################
+#
+# Filename:     kwdjbdns_update
+# Description:  Dynamic DNS-DHCP update script
+# Renamed:      March 30, 2010
+# Last Updated: March 31, 2010
+#
+# New Authors:  Kai Wilke <kiste@netzworkk.de>
+#               David Haller <dnh@opensuse.org>
+#
+# once
+#
+# Filename:     djb_update.pl
+# Description:  Dynamic DNS-DHCP update script
+# Created:      November 10, 1998
+# Last Updated: December 05, 2002
+#
+# Last Author:  Michael Stella
+# Email:        kazin-dhcpdns at my domain - this should be easy
+# HomePage:     http://www.thismetalsky.org/magic/projects/dhcp_dns.html
+#
+###########################################################################
+#
+#  This code is Copyright (c) 2010 by GPL
+#
+#  This code is Copyright (c) 1998-2002 by Michael Stella
+#
+###########################################################################
+#
+# This script reads a dhcpd.leases file and dynamically updates tinydns with
+# hostname and ip information.  
+#
+# It assumes that your DHCP server recieves hostnames from the
+# clients, and that your clients offer their hostnames to the server.
+# Some versions of Linux DHCP clients don't do that.  I use ISC's
+# DHCPD, found at http://www.isc.org - though others may work just
+# fine.
+#
+# As of version 1.0 you MUST use djbdns.  
+#
+###########################################################################
+#
+# 11/23/1998 - fixed the rarp stuff
+# 02/23/1999 - added support for multiple subnets
+# 02/24/1999 - improved lease file processing
+# 04/15/1999 - switched to dynamic DNS update - BIND 8 dynamic capabilities
+# 04/18/1999 - improved handling of client hostnames, to catch dumb user
+# 				problems improved error handling Thanks to Wayne Roberts
+# 				<wroberts1@cx983858-b.orng1.occa.home.com>
+# 04/20/1999 - bugfix, error messages now show up correctly.
+# 08/24/1999 - switched to using logger for logging to system log files
+#              Thanks to Michael Matsumura <michael@limit.org>
+# 08/27/1999 - Actually figured out how to update the reverse-lookup zones,
+#              Thanks again to Michael Matsumura.
+# 02/13/2001 - Ditched BIND, moved to djbdns
+# 05/25/2001 - Thanks to Nate Keegan <nate.keegan@cityofprescott.net> - 
+# 		       apparently I didn't think to allow configuring the dnscache
+# 		       path in the makefile.  That's been fixed.
+# 12/05/2002 - Thanks to Ryan VanderBijl <rvbijl-dhcpdns@vanderbijlfamily.com>
+#              for noticing that we should make sure that an entry doesn't
+#              exist in the static file! 
+#              And thanks for writing his own changelog entry to MY code,
+#              praising himself.  :)
+# 30/03/2010 - read the variables from conf file.
+# 30/03/2010 - use AppConfig to read config file and options.
+# 31/03/2010 - Syslog is on ( tail -f /var/log/syslog).
+#
+###########################################################################
+
+use strict;
+use warnings;
+$|=1;
+use AppConfig qw(:argcount :expand);
+
+###########################################################################
+### Globals - you can change these as needed
+my $conf_file = "/etc/kwdjbdns_update.cf";
+
+### reads the configuration file & makes a hash of what's in there.
+my %defconfig = (
+	'domain_name' => { DEFAULT => 'localdomain',
+		ALIAS => "n",
+		ARGCOUNT => ARGCOUNT_ONE,
+		EXPAND => EXPAND_NONE
+		},
+	'lease_file' => { DEFAULT => '/var/lib/dhcp3/dhcpd.leases',
+		ALIAS => "l",
+		ARGCOUNT => ARGCOUNT_ONE,
+		EXPAND => EXPAND_NONE
+		},
+	'tinydnspath' => { DEFAULT => '/etc/tinydns',
+		ALIAS => "t",
+		ARGCOUNT => ARGCOUNT_ONE,
+		EXPAND => EXPAND_NONE
+		},
+	'dhcp_dnsfile' => { DEFAULT => '$tinydnspath/root/dhcp.$domain_name',
+		ALIAS => "f",
+		ARGCOUNT => ARGCOUNT_ONE,
+		EXPAND => EXPAND_VAR
+		},
+	'static_dnsfile' => { DEFAULT => '$tinydnspath/root/static.$domain_name',
+		ALIAS => "s",
+		ARGCOUNT => ARGCOUNT_ONE,
+		EXPAND => EXPAND_VAR
+		},
+	'update_freq' => {  DEFAULT => 30,
+		ALIAS => "u",
+		ARGCOUNT => ARGCOUNT_ONE,
+		EXPAND => EXPAND_NONE
+		},
+	'debug' => { DEFAULT => 0,
+		ALIAS => "d",
+		EXPAND => EXPAND_NONE
+		},
+);
+
+my $config   = AppConfig->new({ CASE => 1 });
+map { $config->{STATE}->define($_, $defconfig{$_}); } keys %defconfig;
+$config->file($conf_file);
+$config->getopt(\@ARGV);
+my %conf = $config->varlist(".");
+
+# zur Kontrolle den Hash ausgeben
+# use Data::Dumper;
+
+###########################################################################
+### Don't mess with anything below unless you REALLY need to modify the
+### code.  And if you do, please let me know, I'm always interested in
+### in improving this program.
+
+# Make a pid file
+open(PIDF,'>', "/var/run/kwdjbdns_update.pid") or die "$!\n";
+print PIDF "$$\n";
+close(PIDF) or die "$!\n";
+
+my $logstr;
+
+# last modified time
+my $modtime = 0;
+
+use vars qw (%db %static);
+
+my $version = "1.1.1";
+
+###########################################################################
+# Main Loop
+while (1) {
+
+  # check the file's last updated time, if it's been changed, update
+  # the DNS and save the modified time.  This will ALWAYS run once - on
+  # startup, since $modtime starts at zero.
+
+  my @stats = stat ($conf{lease_file});
+  if (defined($stats[9]) && $stats[9] > $modtime) {
+
+	# clear the old hash
+	undef %db;
+
+	`logger -t kwdjbdns_update info dhcpd.leases changed - updating DNS`;
+	#printf STDERR "dhcpd.leases changed - updating DNS\n";
+	$modtime = $stats[9];
+
+        ## if error reading static dns file, dont do any update
+        next unless (&read_static_dns);  
+
+        &read_lease_file;
+        &update_dns;
+  } 
+
+  # wait till next check time
+  sleep $conf{update_freq};
+
+} # end main
+###########################################################################
+
+
+## read in the static file,  return 1 if we couldn't
+sub read_static_dns {
+    %static = (); ## clear the list
+    unless (open(DNSFILE, $conf{static_dnsfile})) {
+			`logger -t kwdjbdns_update error Can't open static DNS file: won't generate dns from dhcp`;
+            exit 1;
+            #print STDERR "Can't open static DNS file: won't generate dns from dhcp\n";
+			#return 0;
+    }
+    while(defined($_ = <DNSFILE>)) {
+            chop;
+            next if /^\s*#/ || /^\s*$/;  # skip comments/blanks
+            s/^.(([^:]+):([^:]+)):?.*$/$1/;
+            $static{lc $2} = $3;
+    }
+    close(DNSFILE);
+    return 1;
+}
+
+### write out the tinydns import file
+sub update_dns {
+	my ($ip, $hostname);
+
+	unless (open(DNSFILE, ">", $conf{dhcp_dnsfile})) {
+		############################
+		# TODO: "logger" gibt keine Einträge aus
+		# Sieht aus wie als wenn das
+	    # garnicht nötig ist, da die Datei auf jedenfall
+		# erstellt wird, falls sie deklariert ist.
+		############################
+		`logger -t kwdjbdns_update error Can't open dhcp DNS file`;
+		#print STDERR "Can't open dhcp DNS file: $!\n";
+		return;
+	}
+
+	while (($hostname,$ip) = each (%db)) {
+		# in the future, set this to the end of the lease time, 
+		# i.e. do some math on that.
+		print DNSFILE "=$hostname.$conf{domain_name}:$ip:300\n";
+	}
+	close DNSFILE;
+
+    `make -C "$conf{tinydnspath}/root/" > /dev/null`;
+}
+
+
+### reads the lease file & makes a hash of what's in there.
+sub read_lease_file {
+
+  unless (open(LEASEFILE,$conf{lease_file})) {
+	`logger -t kwdjbdns_update error Can't open dhcpd lease file`;
+	exit 1;
+	#print STDERR "Can't open dhcpd lease file\n";
+	#return;
+  }
+
+  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
+  my $curdate = sprintf "%04d%02d%02d%02d%02d%02d",
+  		($year+1900),($mon+1),$mday,$hour,$min,$sec;
+
+  ## Loop here, reading from LEASEFILE
+  while (<LEASEFILE>) {
+	my ($ip, $hostname, $mac, $enddate,$endtime);
+
+	if (/^\s*lease/i) {
+		
+	  # find ip address
+	  $_ =~ /^\s*lease\s+(\S+)/;
+	  $ip = $1;
+	  
+	  # do the rest of the block - we're interested in hostname,
+	  # mac address, and the lease time
+	  while ($_ !~ /^}/) {
+	    $_ = <LEASEFILE>;
+		# find hostname
+		if ($_ =~ /^\s*client/i) {
+		  #chomp $_;
+		  #chop $_;
+		  $_ =~ /\"(.*)\"/;
+		  $hostname = $1;
+		  
+		  # change spaces to dash, remove dots - microsoft
+		  # really needs to not do this crap
+		  $hostname =~ s/\s+/-/g;
+		  $hostname =~ s/\.//g;
+		}
+		# get the lease end date
+		elsif ($_ =~ /^\s*ends/i) {
+			$_ =~ m/^\s*ends\s+\d\s+([^;]+);/;
+			$enddate = $1;
+			$enddate =~ s|[/: ]||g;
+		}
+	  }
+	  # lowercase it - stupid dhcp clients
+	  $hostname = lc $hostname;  
+
+	  $conf{debug} and print STDERR "$hostname $ip $enddate $curdate\n";
+	  
+          ## if the hostname is defined in the static list, skip it
+          if (exists $static{"$hostname.$conf{domain_name}"}) {
+			  `logger -t kwdjbdns_update info Skipping $hostname.$conf{domain_name} dhcp dns entry: static entry with same name exists.`;
+			  #print STDERR "Skipping $hostname.$conf{domain_name} dhcp dns " .
+			  #             "entry: static entry with same name exists\n";
+              next;
+          }
+
+	  # Store hostname/ip in hash - this way we can do easy dupe checking
+	  if (($hostname ne "") and ($enddate > $curdate)) {
+              $db{$hostname} = $ip;
+	  }
+	}
+  }
+  close LEASEFILE;
+}
+

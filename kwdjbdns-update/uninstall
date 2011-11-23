@@ -1,0 +1,43 @@
+#!/bin/zsh
+# Autor: Kai Wilke <kiste@netzworkk.de> 13.04.2010
+#
+# Script: uninstall, deinstalliert alle Dateien vom Paket
+#         kwdjbdns-update
+#
+# Version: 0.0.1
+#
+setopt shwordsplit extendedglob
+setopt nonomatch
+
+if [ "`id -u`" != 0 ] ; then
+	echo ""
+	echo "Please become root before running uninstall"
+	echo ""
+	exit 1
+fi
+
+# Variablen initiieren
+ETC_DIR="/etc"
+SBIN_DIR="/usr/sbin"
+
+# Konf.-Dateien loeschen
+rm -f ${ETC_DIR}/kwdjbdns_update.cf &>/dev/null
+
+# Init-script loeschen
+rm -f ${ETC_DIR}/init.d/kwdjbdns_update &>/dev/null
+
+# Perl-sript loeschen
+rm -f ${SBIN_DIR}/kwdjbdns_update &>/dev/null
+rm -f ${SBIN_DIR}/rckwdjbdns_update &>/dev/null
+
+# Doc Dateien loeschen
+rm -f /usr/share/doc/kwdjbdns-update &>/dev/null
+
+# Manpages Dateien loeschen
+rm -f /usr/share/man/de/man1/kwdjbdns_update &>/dev/null
+rm -f /usr/share/man/de/man5/kwdjbdns_update.cf &>/dev/null
+
+# lintian Datei loeschen
+rm -f /usr/share/lintian/overrides/kwdjbdns-update* &>/dev/null
+
+exit 0

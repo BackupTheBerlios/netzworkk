@@ -1,0 +1,111 @@
+'\" t
+.\"     Title: KWDJBDNS_UPDATE.CF
+.\"    Author: Kai Wilke <kiste@netzworkk.de>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: 04/13/2010
+.\"    Manual: Dateiformat
+.\"    Source: Version 0.1.0
+.\"  Language: English
+.\"
+.TH "KWDJBDNS_UPDATE\&.CF" "5" "04/13/2010" "Version 0.1.0" "Dateiformat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kwdjbdns_update.cf \- Konfigurations Datei f\(:ur kwdjbdns_update\&.
+.SH "BESCHREIBUNG"
+.PP
+Beim Start von
+\fBkwdjbdns_update\fR
+wird die Datei
+/etc/kwdjbdns_update\&.cf
+eingelesen\&. Sie beinhaltet die Variablen die von
+\fBkwdjbdns_update\fR
+ben\(:otigt werden\&. Beginnt eine Zeile mit
+\(lq#\(rq
+oder ist leer wird dies als Kommentar interpretiert\&.
+.PP
+Notiz: Diese Datei wird von
+\fBdebconf\fR
+verwaltet und sollte deshalb nicht manuell bearbeitet werden\&.
+.SH "OPTIONEN"
+.PP
+\fBdomain_name\fR
+.RS 4
+Beinhaltet den Domainnamen der vom tinydns\-server verwaltet wird und sollte deshalb identisch mit ihm sein\&.
+.RE
+.PP
+\fBlease_file\fR
+.RS 4
+Beinhaltet den Pfad zur dhcpd\&.leases Datei des dhcp3\-servers\&. Diese Datei wird auf Ver\(:anderungen \(:uberwacht um eventuell die Datenbank des tinydns\-servers up zu daten\&. Standard ist
+/var/lib/dhcp3/dhcpd\&.leases\&.
+.RE
+.PP
+\fBtinydnspath\fR
+.RS 4
+Beinhaltet das Root\-Verzeichnis des tinydns\-servers\&. Standard ist
+/etc/tinydns\&.
+.RE
+.PP
+\fBdhcp_dnsfile\fR
+.RS 4
+Beinhaltet den Dateinamen und den Pfad der f\(:ur die dynamische DNS\-Datenbank verwendet werden soll\&.
+.RE
+.PP
+\fBstatic_dnsfile\fR
+.RS 4
+Beinhaltet den Dateinamen und den Pfad zur statischen DNS\-Datenbank\&.
+.RE
+.PP
+\fBupdate_freq\fR
+.RS 4
+\fBupdate_freq\fR
+beinhaltet den Intervall, in Sekunden, mit der
+\fBkwdjbdns_update\fR
+die
+dhcpd\&.leases
+neu \(:uberpr\(:ufen soll\&. Standard ist 30\&.
+.RE
+.PP
+\fBdebug\fR
+.RS 4
+Beinhaltet eine Integerzahl f\(:ur ausf\(:uhrlichere Systemeldungen\&. 0 bedeutet normaler Meldungen und gr\(:osser 0 etwas mehr Meldungen\&.
+.RE
+.SH "DATEI"
+.PP
+/etc/kwdjbdns_update\&.cf
+.RS 4
+Dies ist die Konfigurations Datei f\(:ur
+\fBkwdjbdns_update\fR\&. F\(:ur weitere Details siehe
+\fBkwdjbdns_update\fR(1)\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBdebconf\fR(1),
+\fBkwdjbdns_update\fR(1)
+.SH "AUTOR"
+.PP
+\fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
+.RS 4
+Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010 Kai Wilke
+.br

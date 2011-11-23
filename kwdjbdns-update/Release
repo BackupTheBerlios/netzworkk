@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+kwdjbdns-update 0.1.0 Release Notes for Debian Sid (unstable).
+-------------------------------------------------------------------------------
+
+Kai Wilke <kiste@netzworkk.de>
+
+Diese Release wurde auf Debian/Sid erzeugt.
+
+Benutzte Programme:
+dhcp3-server, djbdns (>=1.0), perl, libappconfig-perl

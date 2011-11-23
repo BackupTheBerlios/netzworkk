@@ -1,0 +1,6 @@
+kwdjbdns-update (0.1.0-1) unstable; urgency=low
+  * benutzt AppConfig zum einlesen der config Datei.
+  * Syslog ist an (tail -f /var/log/syslog).
+
+ -- Kai Wilke <kiste@netzworkk.de>  Tue, 13 Apr 2010 15:11:37 +0100
+
