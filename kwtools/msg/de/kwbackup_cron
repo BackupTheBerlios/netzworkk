@@ -1,4 +1,0 @@
-no_backup_dir;Kann Backup-Verzeichnisse nicht erstellen.
-no_backup_path;Sie muessen erst ein Verzeichnis angeben, wo die Backups gesichert werden sollen (~/.kwtools/kwbackuprc).
-no_mount;Kann Backup-Verzeichnis nicht mounten.
-no_umount;Kann Backup-Verzeichnis nicht umounten.

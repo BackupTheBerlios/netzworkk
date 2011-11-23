@@ -1,8 +1,0 @@
-haupt_menue;Konfiguration "" Download "" loeschen "" Kamera_Einstellung "" beenden ""
-conf_menue;Verzeichnis "$IMAGE_DIR" Port "$CAMERA_PORT" Modell "$CAMERA_MODELL" speichern "" zurueck ""
-download;Download
-praefix;Geben Sie bitte einen Praefix ein.
-ex_praefix;Dieser Praefix existiert schon.
-no_image;Es sind keine Bilder vorhanden.
-no_camera;Keine Kamera angeschlossen?
-no_config;Sie muessen erst ihre Kamera konfigurieren.

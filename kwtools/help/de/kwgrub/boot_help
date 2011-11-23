@@ -1,6 +1,0 @@
-kwgrub::Konfiguration::Standard_Boot::Hilfe
-
-Standard_Boot: Welche Boot Konfiguration soll standardmaessig
-        genommen werden. 0 ist hier die 1., 1 die 2. etc.
-        Es werden nur die vorhandenen aufgelistet oder gleich
-        mit 0 belegt.

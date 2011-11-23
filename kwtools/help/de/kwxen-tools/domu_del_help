@@ -1,4 +1,0 @@
-kwxen-tools::Konfiguration::loeschen::Hilfe
-
-Loeschen von ein oder mehreren Laufwerken. Dabei wird auch die
-Konfigurationsdatei in /etc/xen geloescht.

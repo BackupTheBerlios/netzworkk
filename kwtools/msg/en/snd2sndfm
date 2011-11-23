@@ -1,4 +1,0 @@
-haupt_menue;Konfiguration "" Decodierung "" Encodierung "" brennen "" beenden ""
-snd_conf_menue;Mountverz. "$MOUNT_PATH" Verzeichnis "$SND_DIR" speichern "" zurueck ""
-audio_burn;ogg "" mp3 "" wav "" zurueck ""
-no_en_dec_prog;Es ist kein Encodierungs- oder Decodierungsprogramm installiert.

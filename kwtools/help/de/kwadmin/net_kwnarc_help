@@ -1,5 +1,0 @@
-kwnarc: Mit diesem Script kann man die Firewall (Netfilter), mittels
-        iptables, konfigurieren, verwalten, etc.... kwnarc ist ein
-        Frontend fuer das Script "narc" - Netfilter Autommatic Rules
-        Configurator.
-

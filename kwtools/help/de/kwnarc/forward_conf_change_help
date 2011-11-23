@@ -1,5 +1,0 @@
-kwnarc::Konfiguration::Weiterleitung::aendern::Hilfe
-
-Hier koennen Sie vorhandene Regeln aendern. Nach der Auswahl wird
-die Funktion forward_eingabe aufgerufen.
-

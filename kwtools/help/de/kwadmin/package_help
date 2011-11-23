@@ -1,6 +1,0 @@
-kwadmin::Konfiguration::Paketsystem::Hilfe
-
-Hier koennen Sie Ihr Paketmanagementsystem auswaehlen..
-dpkg - Debian, grml,...
-rpm - OpenSuSE, CentOS,...
-tar - Sourcen

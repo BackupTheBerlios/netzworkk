@@ -1,6 +1,0 @@
-kwgpgcrypt::Schluessel_Management::Import::Hilfe
-
-Server: Importieren der Schluessel von einem Schluesselserver. Sie
-        muessen dazu die Schluessel-ID's angeben.
-
-Datei: Importieren der Schluessel aus einer Datei.

@@ -1,8 +1,0 @@
-kwfirewall::Hilfe
-
-Ansicht: Hier kann sich alle Regelketten (chains) anschauen.
-
-Konfiguration: Konfiguration der Firewallregeln.
-
-Firewall: Hier kann man die Firewall starten, stoppen oder die
-        Konfiguration neu einlesen.

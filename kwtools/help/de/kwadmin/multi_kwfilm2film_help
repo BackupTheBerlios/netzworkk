@@ -1,4 +1,0 @@
-kwfilm2film: Konvertiert Viedeo Filme in andere Formate. Es benutzt
-        dazu transcode und mplex. Man kann aus diesem Script auch
-        kwvcdburn aufrufen um Video-CD's zu erstellen.
-

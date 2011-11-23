@@ -1,9 +1,0 @@
-kwgrub::Installation::MBR_Floppy_Part::Hilfe
-
-Hier kann man zwischen der Installation, in den MBR einer Festplatte,
-auf eine Diskette oder in den Bootsector einer Partition, auswaehlen.
-
-Syntax Linux:
-1. Floppy Laufwerk ist (fd0)
-1. Festplatte ist (hd0)
-1. Partition auf der 1. Festplatte ist (hd0,0)

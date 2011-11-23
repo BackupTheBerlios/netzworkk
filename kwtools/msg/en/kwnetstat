@@ -1,2 +1,0 @@
-options_menue;a alles off e Zusatzinfos off i "Tabelle aller Netzwerkverbindugen" off l "lauschende Ports" off n "Anzeige numerischer Werte" off o "Timer bestehender Verbindungen" off p "PID und programmname" off r Routingtabelle off s Statistik off t "nur bestehende tcp Verbindungen" off u "nur bestehende udp Verbindungen" off w "nur Raw verbindungen" off x "nur unix domain sockets" off
-no_option;Diese Optionen funktionieren nicht zusammen.

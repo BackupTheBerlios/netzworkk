@@ -1,5 +1,0 @@
-kwlvm::Volume Groups::Loeschen::Hilfe
-
-Waehlen Sie eine oder mehrere Volume Groups aus und druecken
-ENTER, dann werden diese VG's geloescht, vorrausgesetzt es 
-sind dort keine Logischen Volumes mehr vorhanden.

@@ -1,3 +1,0 @@
-kwtools-net-openmosix: binary-without-english-manpage usr/sbin/openmosix
-kwtools-net-openmosix: wrong-path-for-interpreter #!/bin/zsh != /usr/bin/zsh (./usr/lib/kwtools/net/openmosix)
-kwtools-net-openmosix: missing-dep-for-interpreter zsh => zsh | zsh-beta (./usr/lib/kwtools/net/openmosix)

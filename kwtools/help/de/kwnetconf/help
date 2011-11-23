@@ -1,8 +1,0 @@
-kwnetconf::Hilfe
-
-kwnetconf ist ein Frontend fuer verschiedene Scripte die die
-Konfiguration des Netzwerks betreffen.
-
-Mit der Option "check" wird nur der Status des Netzwerks geprueft.
-Sind die Interfaces "online" bricht das Script ab, ansonsten startet
-die Auswahl der Konfigurationsprogramme.

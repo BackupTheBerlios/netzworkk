@@ -1,6 +1,0 @@
-kwgrub::kwgrub_boot_conf::Hilfe
-
-Hier kann man die Boot Eintraege der Konfigurationsdatei
-vom Bootloader grub ansehen, anlegen, aendern oder loeschen.
-/boot/grub/menu.lst ist meist die Konfigurationsdatei.
-

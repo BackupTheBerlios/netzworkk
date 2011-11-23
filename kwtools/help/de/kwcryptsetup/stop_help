@@ -1,6 +1,0 @@
-kwcryptsetup::stop::Hilfe
-
-Stoppen von ein oder mehreren verschluesselten Laufwerken. Dabei
-werden die Eintraege der Konfigurationsdatei /etc/crypttab nicht
-geloescht.
-

@@ -1,5 +1,0 @@
-kwlvm::Volumes Groups::LVM Type::Hilfe
-
-Bestimmt welcher LVM Type benutzt werden soll.
-1 = LVM1
-2 = LVM2

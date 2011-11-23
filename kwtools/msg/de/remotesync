@@ -1,9 +1,0 @@
-haupt_menue;Konfiguration "" Homesync "" Synchronisation "" beenden ""
-konf_menue;Sourceverz. "$S_VERZ" Remoteverz. "$R_VERZ" Zielrechner "$Z_HOST" Remote_shell "$RSYNC_RSH" crontab "bearbeiten (dialog)" speichern "" zurueck ""
-no_ziel_host_rshell;Sie muessen erst den Ziel Rechner und die remote Shell konfigurieren, um Ihr Homeverzeichnis zu syncronisieren.
-no_remotesync_conf; Sie haben remotesync nicht genuegend konfiguriert, um eine Synchronisation durch zu fuehren. Lesen Sie bitte die Hilfe.
-remote_dir;Geben Sie bitte das Zielverzeichnis ein.
-remote_host;Geben Sie bitte den Namen oder IP des Zielrechners ein.
-homesync;Syncronisiere das Home Verzeichnis mit dem Rechner $Z_HOST.
-localsync;Syncronisiere das Verzeichnis $S_VERZ mit dem Verzeichnis $R_VERZ.
-remotesync;Syncronisiere das Verzeichnis $S_VERZ mit ${Z_HOST}:${R_VERZ}.

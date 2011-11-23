@@ -1,8 +1,0 @@
-kwnarc::Konfiguration::Hauptkonfiguration::Ingress_Filter
-
-Anschalten der "soucre-address" Bestaetigung.
-
-1: simple
-
-2: komplett nach RFC1812 section 5.3.8
-   Siehe auch unter http://andrew2.andrew.cmu.edu/rfc/rfc1812.html

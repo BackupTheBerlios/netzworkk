@@ -1,5 +1,0 @@
-kwgrub: Mit kwgrub koennen Sie ihren Bootloader installieren, auch in
-        verschiedene Festplatten MBR's, in der Konfigurationsdatei 
-        menu.lst Einstellungen vornehmen, so wie anlegen und loeschen 
-        von verschiedenen Boot Einstellungen.
-

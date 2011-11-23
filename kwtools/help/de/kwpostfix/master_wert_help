@@ -1,6 +1,0 @@
-kwpostfix::Steuerdatei::Konfiguration::Hilfe
-
--: Heisst das der Standard aus der globalen Konfiguration main.cf
-   benutzt wird.
-
-n: Heisst Nein.

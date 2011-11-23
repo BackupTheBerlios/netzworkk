@@ -1,9 +1,0 @@
-kwgroup::Konfiguration::Hilfe
-
-Gruppe: Entweder man legt hier eine neue Gruppe an oder aendert die
-        ausgewaehlten Gruppe.  
-
-Gruppe_ID: Gruppen_ID der Gruppe bestimmen. Es sind nur Integer 
-        Zahlen erlaubt.
-
-speichern: Gruppe anlegen oder veraendern.

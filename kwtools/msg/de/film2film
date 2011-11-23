@@ -1,4 +1,0 @@
-convert_video_menue;Multiplexing "" MPEG "" "MPEG --> DVD" "" "MPEG --> MPEG1" "" "MPEG --> MPEG2" "" "MPEG --> SVCD" "" "MPEG --> VCD" "" AVI "" "AVI --> DVD" "" "AVI --> MPEG1" "" "AVI --> MPEG2" "" "AVI --> SVCD" "" "AVI --> VCD" "" zurueck ""
-haupt_menue;Konfiguration "" Dateiinfo "" Videos konvertieren Video-CD "" Video-DVD "" beenden ""
-konf_menue;Audio_Bitrate "$BITR" Audio_Export_Modul "$AUDIO_EXPORT_MODUL" Audio_Import_Modul "$AUDIO_IMPORT_MODUL" Aufloesung "$TV_FORMAT" Buffergroesse "$BUFFER_SIZE" Datei_Groesse "$FILE_SIZE" Mount_Verz "$MOUNT_PATH" Verzeichnis "$FILM_PATH" Sampler_Rate "$SAMPLE" Video_Export_Modul "$VIDEO_EXPORT_MODUL" Video_Import_Modul "$VIDEO_IMPORT_MODUL" Video_Type "$VIDEO_TYPE" speichern "" zurueck ""
-no_video_import;Sie haben noch kein Video Import Modul angegeben. Konfigurieren Sie dies erst.

@@ -1,8 +1,0 @@
-kwssl::Konfiguration::Hilfe
-
-openssl_Pfad: Legen Sie hier den Standard Pfad zum Misc Verzeichnis
-        Ihrer openssl Installation fest. Bei Debian ist dies
-        /usr/lib/ssl/misc.
-
-Gueltigkeit: Legen Sie hier in Tagen fest, wie lange die CA
-        gueltig sein soll.
