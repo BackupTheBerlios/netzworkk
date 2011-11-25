@@ -24,8 +24,8 @@ ca_certs_import() {
 		\"$lv_Index_File\" \"$INDEX_FILE\"
 		\"$lv_Certs_Dir\" \"$CERTS_DIR\"
 		$gv_Create \"\" $gv_Back \"\")
-		if [[ ${#argv} == 2 ]] ; then
-			menubox -d "$2" "$IMPORT_TITLE" "$gv_Menupoint" "$IMPORT_MENU"
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$IMPORT_TITLE" "$gv_Menupoint" "$IMPORT_MENU"
 		else
 			menubox "$IMPORT_TITLE" "$gv_Menupoint" "$IMPORT_MENU"
 		fi
@@ -39,9 +39,9 @@ ca_certs_import() {
 				import_menu
 				;;
 			"$lv_Ssl_Priv_Pass")
-				# Password des privaten Schlüssel eingeben# {{{
-				PRIV_PASS_MSG=$(gettext 'Geben Sie das Passwort des privaten Schlüssels ein.')
-				password "$lv_Ssl_Priv_Pass" "$PRIV_PASS_MSG" 1
+				# Password des privaten Schluessel eingeben# {{{
+				PRIV_PASS_MSG=$(gettext 'Geben Sie das Passwort des privaten Schluessels ein.')
+				password "$lv_Ssl_Priv_Pass" "$PRIV_PASS_MSG" "$PASSWD_LENGTH"
 				if [ -n "$PASSPHRASE" ] ; then
 					password_display "$PASSPHRASE"
 					if [ -n "$gv_Star_Passphrase" ] ; then
@@ -116,23 +116,58 @@ set +x
 				import_menu $lv_CA_Password
 				;;
 			"$lv_Ca_Cert")
-				# CA Zertifikat auswaehlen
-				#
+				# CA Zertifikat auswaehlen# {{{
+				FORMAT="SSLCACERT"
+				SUFFIX=".pem"
+				file_choice "$CERTS_DIR" only "$CACERT_FILE"
+				if [ -n "$WERT" ] ; then
+					CACERT_FILE="${VERZ}/${gv_Auswahl}"
+				else
+					unset -- CACERT_FILE
+				fi
+				## }}}
 				import_menu $lv_Ca_Cert
 				;;
 			"$lv_Priv_Key")
-				# privaten Schluessel auswaehlen
-				#
+				# privaten Schluessel auswaehlen# {{{
+				FORMAT="SSLPRIVKEY"
+				SUFFIX=".pem .key"
+				file_choice "$CERTS_DIR" only "$PRIV_KEY"
+				if [ -n "$WERT" ] ; then
+					PRIV_KEY="${VERZ}/${gv_Auswahl}"
+				else
+					unset -- PRIV_KEY
+				fi
+				## }}}
 				import_menu $lv_Priv_Key
 				;;
 			"$lv_Index_File")
-				# index.txt Datei auswaehlen
-				#
+				# index.txt Datei auswaehlen# {{{
+				FORMAT="text"
+				SUFFIX=".txt"
+				file_choice "$CERTS_DIR" only "$INDEX_FILE"
+				if [ -n "$WERT" ] ; then
+					INDEX_FILE="${VERZ}/${gv_Auswahl}"
+				else
+					unset -- INDEX_FILE
+				fi
+				## }}}
 				import_menu $lv_Index_File
 				;;
 			"$lv_Certs_Dir")
-				# Verzeichnis mit Zertifikaten auswaehlen
-				#
+				# Verzeichnis mit Zertifikaten auswaehlen# {{{
+				dselect "$CERTS_DIR"
+				if [ -n "$VERZ" ] ; then
+					dselect_check "$VERZ"
+					if [ -n "$VERZ" ] ; then
+						CERTS_DIR="$VERZ"
+					else
+						unset -- CERTS_DIR
+					fi
+				else
+					unset -- CERTS_DIR
+				fi
+				## }}}
 				import_menu $lv_Certs_Dir
 				;;
 			$gv_Create)
@@ -140,17 +175,36 @@ set +x
 				###################################
 				# TODO:
 				# hier gehts weiter
+				# CACERT_FILE nach BasicConstraits durchsuchen
+				# Dateien ins richtige Format bringen (der->pem) ?
+				#
 				###################################
-				if [ -n "$PRIV_PASSWORD" -a -n "$NEW_CA_NAME" -a -n "$CA_NEW_PASSWD" ] ; then
+				set -x
+				if [[ -n $PRIV_PASSWORD ]] && \
+					[[ -n $NEW_CA_NAME ]] && \
+					[[ -n $CA_NEW_PASSWD ]] && \
+					[[ -n $CACERT_FILE ]] && \
+					[[ -n $PRIV_KEY ]] ; then
+					# openssl
+					# create_file -d "$CA_NAME"
+				set +x
+					unset -- PRIVPASSWD PRIV_PASSWORD CA_NEW_PASSWD
 					break
 				else
-					MSG=$(gettext '')
+				set +x
+					############################################
+					# TODO:
+					# So in Ordnung? check
+					############################################
+					MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $lv_Ssl_Priv_Pass, $lv_Ssl_Name, $lv_Ssl_Password, $lv_Ca_Cert, $lv_Priv_Key mit Werten belegen.')
 					msgbox "$gv_Info" "$MSG"
 					import_menu
 				fi
+				set +x
 				## }}}
 				;;
 			$gv_Back)	# abbrechen
+				unset -- PRIVPASSWD PRIV_PASSWORD CA_NEW_PASSWD
 				break
 				;;
 		esac

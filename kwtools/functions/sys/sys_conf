@@ -172,7 +172,7 @@ sys_conf() {
 		fi
 	}
 	#}}}
-	# Funktion (fselect), Verzeichnis auswaehlen{{{
+	# Funktion (fselect), Verzeichnis/Datei auswaehlen{{{
 	#
 	# usage: fselect [ "/Pfad/Datei" | nichts ]
 	# Bei nichts wird das HOME verzeichnis genommen.
@@ -490,7 +490,7 @@ sys_conf() {
 						Opt_Anz="2"
 						Title="$1"
 						Msg="$2"
-						MinChar=6
+						MinChar="$3"
 					fi
 					;;
 				2)
@@ -962,10 +962,12 @@ sys_conf() {
 				fi
 			else
 				# Hilfe der Scripts.
-				for i in ${HELP_PATH}/${gv_ScriptName}/${@}(N) ; {
-					. $i
-					>> "${gv_WorkDir}/help$$" <<< "`print $MSG`
+				for i in ${=1} ; {
+					for f in ${HELP_PATH}/${gv_ScriptName}/${i}(N) ; {
+						. $f
+						>> "${gv_WorkDir}/help$$" <<< "`print $MSG`
 "
+					}
 				}
 				if [ "`wc -l < ${gv_WorkDir}/help$$`" -gt 1 ] ; then
 					textbox "$TITLE" "${gv_WorkDir}/help$$"
@@ -2969,6 +2971,10 @@ $TIME test -x $Prog_Wahl_X && $Sudo $Prog_Wahl_X"
 						MSG=$(gettext '$DIR ist kein Verzeichnis.')
 						msgbox "$gv_Attention" "$MSG"
 						unset -- VERZ
+					elif [ ! -r "$DIR" ] ; then
+						MSG=$(gettext 'Sie haben keine Leserechte fuer das Verzeichnis $DIR.')
+						msgbox "$gv_Attention" "$MSG"
+						unset -- VERZ
 					else
 						VERZ="$DIR"
 					fi
@@ -3218,9 +3224,6 @@ file_choice() {
 					#############################################
 					no_file_msg "$FORMAT"
 				fi
-			else
-				no_dir_msg "$VERZ"
-				unset -- WERT
 			fi
 		else
 			no_input_msg
@@ -3278,6 +3281,8 @@ file_choice() {
 					ogg "Ogg data, Vorbis audio*"
 					pls "PLS playlist text*"
 					png "PNG image*"
+					sslprivkey "PEM * private key"
+					sslcacert "PEM certificate"
 					tar "POSIX tar archive*"
 					text "*text"
 					tif "TIFF image data*"
@@ -3347,6 +3352,14 @@ file_choice() {
 						PLS)
 							# Playlist Dateien
 							Filetype=(pls)
+							;;
+						SSLCACERT)
+							# openssl erzeugtes Zertifikat oder CA
+							Filetype=(sslcacert)
+							;;
+						SSLPRIVKEY)
+							# openssl erzeugter privater Schluessel
+							Filetype=(sslprivkey)
 							;;
 						TAR)
 							# Tar Archiv Dateien
@@ -3666,9 +3679,9 @@ file_choice() {
 		#
 		gen_key_menu() {
 			lv_Charlength=$(gettext 'Zeichenlaenge')
-			lv_Input=$(gettext 'Eingabe')
-			GEN_KEY_MENU=($lv_Input \"$INPUT\" $lv_Charlength \"${CHAR:-8}\" $gv_Create \"\" $gv_Back \"\")
-			menubox "$" "$gv_Menupoint" "$GEN_KEY_MENU"
+			GEN_KEY_MENU=($gv_Input \"$INPUT\" $lv_Charlength \"${CHAR:-8}\"
+			$gv_Create \"\" $gv_Back \"\")
+			menubox "$lv_Charlength" "$gv_Menupoint" "$GEN_KEY_MENU"
 		}
 		#}}}
 		gen_key_menu
@@ -3677,9 +3690,9 @@ file_choice() {
 				HELP*)	script_help gen_key_help
 					gen_key_menu
 					;;
-				$lv_Input)
+				$gv_Input)
 					# Wort zur Erstellung eines Passworts eingeben{{{
-					inputbox "$lv_Input" "$PASSWD_MSG" "$INPUT"
+					inputbox "$gv_Input" "$PASSWD_MSG" "$INPUT"
 					if [ -n "$gv_Auswahl" ] ; then
 						INPUT="$gv_Auswahl"
 					else
@@ -3708,7 +3721,7 @@ file_choice() {
 						unset -- INPUT
 						break
 					else
-						MSG=$(gettext 'Sie muessen erst die Menuepunkte $lv_Input und $lv_Charlength mit Werten belegen.')
+						MSG=$(gettext 'Sie muessen erst die Menuepunkte $gv_Input und $lv_Charlength mit Werten belegen.')
 						msgbox "$gv_Attention" "$MSG"
 						gen_key_menu
 					fi
@@ -3776,7 +3789,7 @@ file_choice() {
 	#
 	# benoetigt die Function os_check
 	#
-	# usage: if_conf_file "$OS" (auth|grub2|init|initrc|initrd|net|nisclient|ntp|proxy|raid|ssl)
+	# usage: if_conf_file "$OS" (auth|grub2|init|initrc|initrd|net|nisclient|ntp|proxy|raid)
 	#
 	if_conf_file() {
 		if [ "$#" -ge 2 ] ; then
@@ -4043,13 +4056,6 @@ file_choice() {
 							# RAID Einstellungen
 							RAIDTAB=/etc/mdadm/mdadm.conf
 							;;
-						ssl)
-							# zu ueberpruefende Pakete und Pfade# {{{
-							ETC_SSL=/etc/ssl
-							SSL_PATH="/usr/lib/ssl/misc"
-							KWSSL_PACKAGES="cyrus21-imapd cyrus21-pop3d cyrus-imapd-2.2 cyrus-pop3d-2.2 courier-imap-ssl courier-pop-ssl kolab-cyrus-imapd kolab-cyrus-pop3d postfix sendmail stunnel"
-							## }}}
-							;;
 					esac
 					#}}}
 					;;
@@ -4110,12 +4116,6 @@ file_choice() {
 								RAIDTAB=/etc/mdadm.conf
 							fi
 							## }}}
-							;;
-						ssl)
-							# zu ueberpruefende Pakete und Pfade
-							ETC_SSL=/etc/ssl
-							SSL_PATH="/usr/share/ssl/misc"
-							KWSSL_PACKAGES="courier-imap cyrus-imapd postfix sendmail stunnel"
 							;;
 					esac
 					#}}}
@@ -4180,12 +4180,6 @@ file_choice() {
 							# RAID Einstellungen
 							RAIDTAB=/etc/mdadm.conf
 							;;
-						ssl)
-							# zu ueberpruefende Pakete und Pfade
-							ETC_SSL=/etc/ssl
-							SSL_PATH="/usr/lib/ssl/misc"
-							KWSSL_PACKAGES="courier-imap cyrus-imapd postfix sendmail stunnel"
-							;;
 					esac
 					#}}}
 					;;
@@ -4242,12 +4236,6 @@ file_choice() {
 						raid)
 							# RAID Einstellungen
 							RAIDTAB=/etc/mdadm.conf
-							;;
-						ssl)
-							# zu ueberpruefende Pakete und Pfade
-							ETC_SSL=/etc/pki/tls
-							SSL_PATH="/etc/pki/tls/misc"
-							KWSSL_PACKAGES="courier-imap cyrus-imapd postfix sendmail stunnel"
 							;;
 					esac
 					#}}}
