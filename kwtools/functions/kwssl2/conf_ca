@@ -9,37 +9,8 @@ conf_ca() {
 	local Opt
 	Opt="$1"
 	KEYLENGTH="4096"
+	VALIDITY=${VALIDITY:-3650}
 	#
-	# Funktion (check_helpfile), prueft welche Hilfe Datei angezeigt# {{{
-	# werden soll, etc..
-	#
-	check_helpfile() {
-		case "$Opt" in
-			-c)
-				# Einstellungen fuer die Erstellung von Benutzer/Server Zertifikaten
-				# und Anzeigen bzw. der Hilfedateien.
-				CA_TITLE=$(gettext 'erstelle $lv_Cert')
-				TITLE="${CA_TITLE}::${gv_Help}"
-				if [[ $CONF_SECTION == server_cert ]] ; then
-					Ssl_ServerUserName="$lv_Ssl_ServerName"
-					HELPFILE="conf_serverca_help conf_defaultca_help"
-				else
-					Ssl_ServerUserName="$lv_Ssl_UserName"
-					HELPFILE="conf_userca_help conf_defaultca_help"
-				fi
-				# 
-				;;
-			-r)
-				CA_TITLE=$(gettext 'erstelle RootCA')
-				HELPFILE="conf_rootca_help conf_defaultca_help"
-				;;
-			-s)
-				CA_TITLE=$(gettext 'erstelle SubCA')
-				HELPFILE="conf_subca_help conf_defaultca_help"
-				;;
-		esac
-	}
-	## }}}
 	# Funktion (conf_ca_menu)# {{{
 	#
 	conf_ca_menu() {
@@ -107,6 +78,66 @@ conf_ca() {
 			*)
 				no_para_msg $0
 				break
+				;;
+		esac
+	}
+	## }}}
+	# Funktion (check_alg), prueft den Algotrithmus# {{{
+	#########################################
+	# TODO:
+	# openssl Befehl mittels dsaparam Datei
+	#########################################
+	#
+	check_alg() {
+		if [[ $ALG == DSA ]] ; then
+			DsaParam=dsaparam
+			Gen_Alg=gendsa
+			
+		else
+			Gen_Alg=genrsa
+			unset -- DsaParam
+		fi
+	}
+	## }}}
+	# Funktion (validity_input), Gueltigkeitseingabe# {{{
+	#
+	validity_input() {
+		VALIDITY_MSG=$(gettext 'Geben Sie die Gueltigkeit des Zertifikats in Tagen ein.')
+		number_input "$lv_Ssl_Validity" "$VALIDITY_MSG" "$VALIDITY"
+		if [ -n "$NUMBER" ] ; then
+			VALIDITY="$NUMBER"
+		else
+			VALIDITY="3650"
+		fi
+	}
+	## }}}
+	# Funktion (convert_digest), Digest umwandeln# {{{
+	convert_digest() {
+		unset -- Digest lv_Digest
+		case "$DIGEST" in
+			SHA-1)
+				Digest=sha1
+				lv_Digest=(-sha1)
+				;;
+			MD2)
+				Digest=md2
+				lv_Digest=(-md2)
+				;;
+			MDC2)
+				Digest=mdc2
+				lv_Digest=(-mdc2)
+				;;
+			MD4)
+				Digest=md4
+				lv_Digest=(-md4)
+				;;
+			MD5)
+				Digest=md5
+				lv_Digest=(-md5)
+				;;
+			RIPEMD-160)
+				Digest=ripemd160
+				lv_Digest=(-ripemd160)
 				;;
 		esac
 	}
@@ -322,7 +353,7 @@ conf_ca() {
 		## }}}
 	}
 	## }}}
-	check_helpfile
+	check_helpfile "$Opt"
 	conf_ca_menu $Opt
 	while [ "$gv_Auswahl" ] ; do
 		case $gv_Auswahl in

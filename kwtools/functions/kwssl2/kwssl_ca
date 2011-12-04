@@ -2,15 +2,12 @@
 #
 # usage: kwssl_ca [ -r | -s ]
 # -r - RootCA
-# -s - SubCA
+# -s - SubCA/Server-, Benutzer Zertifikate
 #
 kwssl_ca() {
 	unset -- $UNSET
 	local Opt
 	Opt="$1"
-	# Funktion mail_address laden
-	autoload -U net_conf ca_certs_conf
-	net_conf
 	#
 	case "$Opt" in
 		-r)	SUBDIR=RootCA
@@ -88,54 +85,6 @@ kwssl_ca() {
 	# wenn keine Passphrase manuell eingegeben wurde.
 	PASSWD_LENGTH="${PASSWD_LENGTH:-10}"
 	#
-	## }}}
-	# Funktion (convert_digest), Digest umwandeln# {{{
-	convert_digest() {
-		unset -- Digest lv_Digest
-		case "$DIGEST" in
-			SHA-1)
-				Digest=sha1
-				lv_Digest=(-sha1)
-				;;
-			MD2)
-				Digest=md2
-				lv_Digest=(-md2)
-				;;
-			MDC2)
-				Digest=mdc2
-				lv_Digest=(-mdc2)
-				;;
-			MD4)
-				Digest=md4
-				lv_Digest=(-md4)
-				;;
-			MD5)
-				Digest=md5
-				lv_Digest=(-md5)
-				;;
-			RIPEMD-160)
-				Digest=ripemd160
-				lv_Digest=(-ripemd160)
-				;;
-		esac
-	}
-	## }}}
-	# Funktion (check_alg), prueft den Algotrithmus# {{{
-	#########################################
-	# TODO:
-	# openssl Befehl mittels dsaparam Datei
-	#########################################
-	#
-	check_alg() {
-		if [[ $ALG == DSA ]] ; then
-			DsaParam=dsaparam
-			Gen_Alg=gendsa
-			
-		else
-			Gen_Alg=genrsa
-			unset -- DsaParam
-		fi
-	}
 	## }}}
 	# Funktion (fingerprint)# {{{
 	#
@@ -397,18 +346,6 @@ kwssl_ca() {
 		msgbox "$gv_Info" "$MSG"
 	}
 	## }}}
-	# Funktion (validity_input), Gueltigkeitseingabe# {{{
-	#
-	validity_input() {
-		VALIDITY_MSG=$(gettext 'Geben Sie die Gueltigkeit des Zertifikats in Tagen ein.')
-		number_input "$lv_Ssl_Validity" "$VALIDITY_MSG" "$VALIDITY"
-		if [ -n "$NUMBER" ] ; then
-			VALIDITY="$NUMBER"
-		else
-			VALIDITY="3650"
-		fi
-	}
-	## }}}
 	# Funktion (keylength_input), eingabe der Schluessellaenge (numbits)# {{{
 	#
 	# usage: keylength_input
@@ -619,8 +556,6 @@ kwssl_ca() {
 				;;
 			$gv_Create)
 				# CAs erstellen# {{{
-				autoload -U conf_ca
-				#
 				if [[ $SUBDIR == RootCA ]] ; then
 					if [ -f ${KWSSL_DIR}/${SUBDIR}/cacert.pem ] ; then
 						# Falls die CA schon existiert nachfragen, ob
