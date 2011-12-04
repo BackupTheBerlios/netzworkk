@@ -1,4 +1,5 @@
 # conf_subca_help fuer kwssl2{{{
+TITLE="${CA_TITLE}::${gv_Help}"
 MSG=$(gettext 'CA Name: Name der SubCA und kann man nicht aendern. Dient nur zur
 \tAnzeige.
 

@@ -1,4 +1,5 @@
 # conf_rootca_help fuer kwssl2{{{
+TITLE="${CA_TITLE}::${gv_Help}"
 MSG=$(gettext 'CA Name: Name ist gleich RootCA und kann nicht geaendern werden.
 \tDies dient nur zur Anzeige des Namens (RootCA).
 

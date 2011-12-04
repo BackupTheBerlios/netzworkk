@@ -1,4 +1,5 @@
 # conf_serverca_help fuer kwssl2{{{
+TITLE="${CA_TITLE}::${gv_Help}"
 MSG=$(gettext 'Servername: Geben Sie den Namen des Servers ein, fuer das dieses
 \tZertifikat gelten soll. Dieser Name wird auch zur Benennung der
 \tZertifikatsdateien benutzt.
