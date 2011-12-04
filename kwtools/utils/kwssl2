@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 18.11.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 04.12.2011
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # Certrifikate, signiert....
@@ -93,7 +93,69 @@ lv_Ssl_Digest=$(gettext 'Digest')
 lv_Ssl_Alg=$(gettext 'Algotrithmus')
 lv_Ssl_Subdir_Name=$(gettext 'CA Name')
 ## }}}
+
+
+# Nachdem das Script initialisiert wurde, kann man die anderen
+# benötigten Funktionen laden. Die Funktion sys_conf wird bereits
+# von der Funktion script_init ausgefuehrt.
+autoload -U kwssl_ca kwssl_config net_conf ca_certs_conf
+net_conf
+
+# Funktion main_menu# {{{
+#
+main_menu() {
+	MAIN_MENU=($lv_RootCa \"\" $lv_SubCa \"\"
+	$gv_Exit \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	else
+		menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	fi
+}
+## }}}
+# Funktion (check_helpfile), prueft welche Hilfe Datei angezeigt# {{{
+# werden soll, etc..
+#
+# usage: check_helpfile [ -c | -r | -s ]
+#
+# -c - Benutzer/Server Zertifikate
+# -r - RootCA
+# -s - SubCA
+#
+check_helpfile() {
+	unset -- H_Opt
+	local H_Opt="$1"
+	case "$H_Opt" in
+		-c)
+			# Einstellungen fuer die Erstellung von Benutzer/Server Zertifikaten
+			# und Anzeigen bzw. der Hilfedateien.
+			CA_TITLE=$(gettext 'erstelle $lv_Cert')
+			TITLE="${CA_TITLE}::${gv_Help}"
+			if [[ $CONF_SECTION == server_cert ]] ; then
+				Ssl_ServerUserName="$lv_Ssl_ServerName"
+				HELPFILE="conf_serverca_help conf_defaultca_help"
+			else
+				Ssl_ServerUserName="$lv_Ssl_UserName"
+				HELPFILE="conf_userca_help conf_defaultca_help"
+			fi
+			# 
+			;;
+		-r)
+			# RootCA
+			CA_TITLE=$(gettext 'erstelle RootCA')
+			HELPFILE="conf_rootca_help conf_defaultca_help"
+			;;
+		-s)
+			# SubCA
+			CA_TITLE=$(gettext 'erstelle SubCA')
+			HELPFILE="conf_subca_help conf_defaultca_help"
+			;;
+	esac
+}
+## }}}
 # Funktion (create_pki), Verzeichnisstruktur erstellen# {{{
+#
+# usage: create_pki CA-NAME (DIRNAME)
 #
 create_pki() {
 	if [[ ${#argv} == 1 ]] ; then
@@ -101,6 +163,7 @@ create_pki() {
 		DIR="$1"
 		if [ ! -d ${KWSSL_DIR}/${DIR} ] ; then
 	        mkdir -p ${KWSSL_DIR}/${DIR}/{newcerts,certs,crl,private,req} &>/dev/null
+	        chmod 700 ${KWSSL_DIR}/${DIR}/{newcerts,certs,crl,private,req} &>/dev/null
 			cd $KWSSL_DIR
 	        touch ./${DIR}/{index.txt,serial,crlnumber} &>/dev/null
 	        echo "01" > ./${DIR}/{serial,crlnumber} &>/dev/null
@@ -115,36 +178,39 @@ create_pki() {
 			# allgemeine Konfigurationsdatei erstellen
 			KWSSL2RC="${KWSSL_DIR}/${DIR}/${KWSSL2RC_NAME}"
 			kwssl_config
+			# RootCA erstellen
+			if [[ $DIR == RootCA ]] ; then
+				SUBDIR=RootCA
+				check_helpfile -r
+				conf_ca -r
+			fi
 		else
 			# allgemeine Konfigurationsdatei erstellen, falls nicht vorhanden.
 			if [ ! -f "${KWSSL_DIR}/${DIR}/${KWSSL2RC_NAME}" ] ; then
 				KWSSL2RC="${KWSSL_DIR}/${DIR}/${KWSSL2RC_NAME}"
 				kwssl_config
+				# RootCA erstellen, falls nicht vorhanden
+				if [[ $DIR == RootCA ]] ; then
+					SUBDIR=RootCA
+					check_helpfile -r
+					if [ ! -f ${KWSSL_DIR}/${DIR}/cacert.pem ] ; then
+						conf_ca -r
+					fi
+				fi
 			else
+				# RootCA erstellen, falls nicht vorhanden
+				if [[ $DIR == RootCA ]] ; then
+					SUBDIR=RootCA
+					check_helpfile -r
+					if [ ! -f ${KWSSL_DIR}/${DIR}/cacert.pem ] ; then
+						conf_ca -r
+					fi
+				fi
 				KWSSL2RC="${KWSSL_DIR}/${DIR}/${KWSSL2RC_NAME}"
 			fi
 		fi
 	else
 		no_para_msg $0
-	fi
-}
-## }}}
-
-
-# Nachdem das Script initialisiert wurde, kann man die anderen
-# benötigten Funktionen laden. Die Funktion sys_conf wird bereits
-# von der Funktion script_init ausgefuehrt.
-autoload -U kwssl_ca kwssl_config
-
-# Funktion main_menu# {{{
-#
-main_menu() {
-	MAIN_MENU=($lv_RootCa \"\" $lv_SubCa \"\"
-	$gv_Exit \"\")
-	if [[ ${#argv} == 1 ]] ; then
-		menubox -d "$1" "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
-	else
-		menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
 	fi
 }
 ## }}}
@@ -455,7 +521,8 @@ read_openssl_conf() {
 #
 ##################################################################
 
-# PKI fuer die RootCA erstellen, fals nicht schon vorhanden.
+# PKI fuer die RootCA erstellen, falls nicht schon vorhanden.
+autoload -U conf_ca
 create_pki RootCA
 
 main_menu
