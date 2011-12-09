@@ -1,9 +1,9 @@
 # Funktion (conf_ca), erstellt neue CAs und Zertifikate# {{{
 #
-# usage: conf_ca [ -c | -r | -s ]
+# usage: conf_ca [ -c | -ca | -subca ]
 # -c - Benutzer/Server Zertifikate
-# -r - RootCA
-# -s - SubCA
+# -ca - RootCA
+# -subca - SubCA
 #
 conf_ca() {
 	local Opt
@@ -15,9 +15,10 @@ conf_ca() {
 	#
 	conf_ca_menu() {
 		case $Opt in
-			-r)
-				# RootCA erstellen# {{{
-				CA_MENU=(\"$lv_Ssl_Subdir_Name\" \"$SUBDIR\" --------- \"\"
+			-ca)
+				# CA erstellen# {{{
+				CA_TITLE=$(gettext 'erstelle CA')
+				CA_MENU=($lv_Ssl_Name \"$CA_NAME\"
 				\"$lv_Ssl_CommonName\" \"$COMMONNAME\"
                 $lv_Ssl_Land_Code \"$COUNTRYCODE\" \"$lv_Ssl_Password\" \"$PASSWORD\"
                 \"$lv_Ssl_Password_Generate\" \"\" $lv_Ssl_Bundesstaat \"$COUNTRY\"
@@ -32,7 +33,7 @@ conf_ca() {
 				fi
 				## }}}
 				;;
-			-s)
+			-subca)
 				# SubCA erstellen# {{{
 				CA_MENU=(\"$lv_Ssl_Subdir_Name\" \"$SUBDIR\"
 				--------- \"\" $lv_Ssl_Name \"$CA_NAME\"
@@ -400,20 +401,18 @@ conf_ca() {
 				;;
 			$lv_Ssl_Name)
 				# Name der CA eingeben# {{{
-				if [ "$SUBDIR" != RootCA ] ; then
-					inputbox "$lv_Ssl_Name" "$SAVE_MSG" "$CA_NAME"
-					if [ -n "$gv_Auswahl" ] ; then
-						if [ ! -d "${KWSSL_DIR}/${gv_Auswahl}" ] ; then
-							# dementsprechende Variablen fuer die SubCA belegen
-							CA_NAME="$gv_Auswahl"
-							SUBDIR="$gv_Auswahl"
-						else
-							unset -- CA_NAME SUBDIR
-							subca_existed_msg
-						fi
+				inputbox "$lv_Ssl_Name" "$SAVE_MSG" "$CA_NAME"
+				if [ -n "$gv_Auswahl" ] ; then
+					if [ ! -d "${KWSSL_DIR}/${gv_Auswahl}" ] ; then
+						# dementsprechende Variablen fuer die CA belegen
+						CA_NAME="$gv_Auswahl"
+						SUBDIR="$gv_Auswahl"
 					else
-						unset -- CA_NAME
+						unset -- CA_NAME SUBDIR
+						subca_existed_msg
 					fi
+				else
+					unset -- CA_NAME
 				fi
 				## }}}
 				conf_ca_menu $Opt $lv_Ssl_Name
