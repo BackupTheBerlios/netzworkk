@@ -1,11 +1,11 @@
 # Funktion (ca_certs_conf), Einstellungen fuer CA Zertifikate# {{{
 #
-# usage: ca_certs_conf [ -n | -r ]
+# usage: ca_certs_conf [ -n | -r | -s | -u ]
 #
 # -n - normal
-# -r - RootCA/SubCA erstellen
-# -s - Server Zertifikate konfigurioen
-# -u - User Zertifikate konfigurioen
+# -r - CA/SubCA erstellen
+# -s - Server Zertifikate konfigurieren
+# -u - User Zertifikate konfigurieren
 #
 ca_certs_conf() {
 	if [[ ${#argv} == 1 ]] ; then
@@ -896,7 +896,7 @@ ca_certs_conf() {
 									awk '/\[/{if(/'"$Sect"'/){found=1}else{found=0}}
 										{if(!found){print}}
 										END{print "\n'"[ $Sect ]"'" ; \
-										{print "dir = '"${KWSSL_DIR}/${SUBDIR}"'"} ; \
+										{print "dir = '"${KWSSL_DIR}/${CA_OPEN_NAME}"'"} ; \
 										{print "certs = '"\$dir/certs"'"} ; \
 										{print "crl_dir = '"\$dir/crl"'"} ; \
 										{print "database = '"\$dir/index.txt"'"} ; \

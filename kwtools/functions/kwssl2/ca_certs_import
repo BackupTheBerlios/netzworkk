@@ -12,7 +12,7 @@ ca_certs_import() {
 	## }}}
 	# Funktion (import_menu)# {{{
 	#
-	IMPORT_TITLE="${SUBDIR}::${lv_CA}::${lv_CA_Import}"
+	IMPORT_TITLE="${CA_OPEN_NAME}::${lv_CA}::${lv_CA_Import}"
 	#
 	import_menu() {
 		IMPORT_MENU=(\"$lv_Ssl_Priv_Pass\" \"$PRIV_PASSWORD\"

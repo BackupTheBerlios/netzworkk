@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 09.12.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 10.12.2011
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # Certrifikate, signiert....
@@ -81,7 +81,7 @@ lv_Ssl_ServerName=$(gettext 'Servername')
 lv_Ssl_UserName=$(gettext 'Benutzername')
 lv_Ssl_CommonName=$(gettext 'allgemeiner Name')
 lv_Ssl_Land_Code=$(gettext 'Land')
-lv_Ssl_RootCA_Password=$(gettext 'RootCA Passwort')
+lv_Ssl_RootCA_Password=$(gettext 'CA Passwort')
 lv_Ssl_SubCA_Password=$(gettext 'SubCA Passwort')
 lv_Ssl_Password=$(gettext 'Passwort eingeben')
 lv_Ssl_Password_Generate=$(gettext 'Passwort generieren')
@@ -94,7 +94,6 @@ lv_Ssl_Validity=$(gettext 'Gueltigkeit')
 lv_Ssl_Key_length=$(gettext 'Schluessellaenge')
 lv_Ssl_Digest=$(gettext 'Digest')
 lv_Ssl_Alg=$(gettext 'Algotrithmus')
-lv_Ssl_Subdir_Name=$(gettext 'CA Name')
 ## }}}
 # Variablen, Einstellungen# {{{
 DEFAULT_CONF_TITLE="$gv_Configuration"
@@ -210,6 +209,46 @@ create_pki() {
 	fi
 }
 ## }}}
+# Funktion (check_helpfile), prueft welche Hilfe Datei angezeigt# {{{
+# werden soll, etc..
+#
+# usage: check_helpfile [ -c | -ca | -subca ]
+#
+# -c - Benutzer/Server Zertifikate
+# -ca - CA
+# -subca - SubCA
+#
+check_helpfile() {
+	unset -- H_Opt
+	local H_Opt="$1"
+	case "$H_Opt" in
+		-ca)
+			# CA
+			CA_TITLE=$(gettext 'erstelle CA')
+			HELPFILE="conf_rootca_help conf_defaultca_help"
+			;;
+		-subca)
+			# SubCA
+			CA_TITLE=$(gettext 'erstelle SubCA')
+			HELPFILE="conf_subca_help conf_defaultca_help"
+			;;
+		-c)
+			# Einstellungen fuer die Erstellung von Benutzer/Server Zertifikaten
+			# und Anzeigen bzw. der Hilfedateien.
+			CA_TITLE=$(gettext 'erstelle $lv_Cert')
+			TITLE="${CA_TITLE}::${gv_Help}"
+			if [[ $CONF_SECTION == server_cert ]] ; then
+				Ssl_ServerUserName="$lv_Ssl_ServerName"
+				HELPFILE="conf_serverca_help conf_defaultca_help"
+			else
+				Ssl_ServerUserName="$lv_Ssl_UserName"
+				HELPFILE="conf_userca_help conf_defaultca_help"
+			fi
+			# 
+			;;
+	esac
+}
+## }}}
 # Funktion (search_ca), sucht nach vorhandenen CAs.# {{{
 #
 # usage: search_ca
@@ -239,22 +278,33 @@ search_cert() {
 	while read Val b Serial d Subject ; do
 		case "$Opt" in
 			-u)
-				(( Anz++ ))
+				# ungueltige Certificates herrausfinden
 				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem"
-				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
-				CERTS_CN+=($COMMONNAME)
-				CERTS_NON_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
+				case "$lv_Validity" in
+					$lv_NoValidity|$lv_RevokeValidity)
+						(( Anz++ ))
+						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
+						CERTS_CN+=($COMMONNAME)
+						CERTS_NON_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
+						;;
+				esac
 				;;
 			-v)
-				(( Anz++ ))
+				# gueltige Certificates herrausfinden
 				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem"
-				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
-				CERTS_CN+=($COMMONNAME)
-				CERTS_VAL_M+=(\"$Anz \"$COMMONNAME $lv_Validity\" off)
+				case "$lv_Validity" in
+					$lv_YesValidity)
+						(( Anz++ ))
+						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
+						CERTS_CN+=($COMMONNAME)
+						CERTS_VAL_M+=(\"$Anz \"$COMMONNAME $lv_Validity\" off)
+						;;
+				esac
 				;;
 			*)
-				(( Anz++ ))
+				# alle ((un)gueltige) Certificates herrausfinden
 				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem"
+				(( Anz++ ))
 				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
 				CERTS_CN+=($COMMONNAME)
 				CERTS_ALL_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
@@ -286,9 +336,6 @@ ca_open() {
 			*)
 				# Auswahl uebernehmen
 				CA_OPEN_NAME="$gv_Auswahl"
-				##########################
-				# TODO: SUBDIR loeschen?
-				SUBDIR="$gv_Auswahl"
 				KWSSL2RC="${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME}"
 				#
 				integer SERIAL
@@ -870,53 +917,6 @@ no_cas_nonvalid_msg() {
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
-
-# Funktion (check_helpfile), prueft welche Hilfe Datei angezeigt# {{{
-# werden soll, etc..
-#
-# usage: check_helpfile [ -c | -ca | -subca ]
-#
-# -c - Benutzer/Server Zertifikate
-# -ca - CA
-# -subca - SubCA
-#
-check_helpfile() {
-	unset -- H_Opt
-	local H_Opt="$1"
-	case "$H_Opt" in
-		-ca)
-			# CA
-			CA_TITLE=$(gettext 'erstelle CA')
-			HELPFILE="conf_rootca_help conf_defaultca_help"
-			;;
-		-subca)
-			# SubCA
-			CA_TITLE=$(gettext 'erstelle SubCA')
-			HELPFILE="conf_subca_help conf_defaultca_help"
-			;;
-		-c)
-			# Einstellungen fuer die Erstellung von Benutzer/Server Zertifikaten
-			# und Anzeigen bzw. der Hilfedateien.
-			CA_TITLE=$(gettext 'erstelle $lv_Cert')
-			TITLE="${CA_TITLE}::${gv_Help}"
-			if [[ $CONF_SECTION == server_cert ]] ; then
-				Ssl_ServerUserName="$lv_Ssl_ServerName"
-				HELPFILE="conf_serverca_help conf_defaultca_help"
-			else
-				Ssl_ServerUserName="$lv_Ssl_UserName"
-				HELPFILE="conf_userca_help conf_defaultca_help"
-			fi
-			# 
-			;;
-	esac
-}
-## }}}
-# Funktion (no_cas_msg)# {{{
-no_cas_msg() {
-	MSG=$(gettext 'Es sind keine CAs bzw. Zertifikate vorhanden.')
-	msgbox "$gv_Info" "$MSG"
-}
-## }}}
 # Funktion (subca_existed_msg), Nachricht das diese SubCA schon existiert# {{{
 #
 subca_existed_msg() {
@@ -968,25 +968,6 @@ while [ "$gv_Auswahl" ] ; do
 			#openssl pkcs12 -info -nokeys -in $i \
 			#	-passin pass:${PASSWORD} | less
 			###########################################	
-#			if [ -n "$CA_OPEN_NAME" -a "$CA_OPEN_NAME" = RootCA ] ; then
-#				cd ${KWSSL_DIR}/${CA_OPEN_NAME}
-#				# RootCA# {{{
-#				if [ -f cacert.pem ] ; then
-#					# alte Datei loeschen
-#					rm -f $DISPLAY_FILE &>/dev/null
-#					# Anzeige Datei füllen
-#					echo "################################" >> $DISPLAY_FILE
-#					echo "$CA_OPEN_NAME" >> $DISPLAY_FILE
-#					echo "################################" >> $DISPLAY_FILE
-#					fingerprint cacert.pem $DISPLAY_FILE
-#					echo "" >> $DISPLAY_FILE
-#					openssl x509 -in cacert.pem -text >> $DISPLAY_FILE
-#					echo "" >> $DISPLAY_FILE
-#					view_file $DISPLAY_FILE
-#				else
-#					no_ca_msg RootCA
-#				fi
-#				## }}}
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				# Funktion (cert_choice_menu)# {{{
 				CERT_TITLE="${CA_OPEN_NAME}::${lv_CA}::${gv_Display}"
@@ -1004,7 +985,7 @@ while [ "$gv_Auswahl" ] ; do
 						case $gv_Auswahl in
 							HELP*)
 					    	    # Hilfe Messagebox
-								script_help main_ca_help
+								script_help main_help
 								cert_choice_menu
 								;;
 							*)
@@ -1129,17 +1110,12 @@ while [ "$gv_Auswahl" ] ; do
 				# Funktion (check_ca_filenames)# {{{
 				check_ca_filenames() {
 					unset -- CACERT CAKEY
-					if [[ $CA_OPEN_NAME == RootCA ]] ; then
-						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/private/cakey.pem"
+					if [ "$ExportName" = cacert ] ; then
+						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/cakey.pem"
 						CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
 					else
-						if [ "$ExportName" = cacert ] ; then
-							CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/private/cakey.pem"
-							CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-						else
-							CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/private/${ExportName}.key"
-							CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/${ExportName}.cert.pem"
-						fi
+						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/private/${ExportName}.key"
+						CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/${ExportName}.cert.pem"
 					fi
 				}
 				## }}}
@@ -1369,7 +1345,10 @@ while [ "$gv_Auswahl" ] ; do
 											# Ist REVOKE_FILE gleich einer SubCA
 											# (cacert.pem) muessen die Schluessel von
 											# RootCA genommen werden.
-											if [[ $REVOKE_FILE == cacert.pem ]] ; then
+											##############################################
+											# TODO: RootCA
+											##############################################
+											if [[ $MAIN_MENU_OPT == -subca ]] ; then
 												if [ -n "$PASSPHRASE" ] ; then
 													openssl ca -config ${KWSSL_DIR}/RootCA/${KWSSL2RC_NAME} \
 														-batch -name ca_ca \
@@ -1525,7 +1504,7 @@ while [ "$gv_Auswahl" ] ; do
 							case "$gv_Auswahl" in
 								HELP*)
 						    	    # Hilfe Messagebox
-									script_help main_ca_help
+									script_help main_help
 									del_cert_choice_menu
 									;;
 								*)
@@ -1539,8 +1518,8 @@ while [ "$gv_Auswahl" ] ; do
 										else
 											rm -rfv ./${CA_OPEN_NAME}/${File}.* \
 											./${CA_OPEN_NAME}/req/${File}.* \
-											./${CA_OPEN_NAME}/crt/${File}.* \
 											./${CA_OPEN_NAME}/${File}.* \
+											./${CA_OPEN_NAME}/certs/${File}.* \
 											./${CA_OPEN_NAME}/private/${File}.* >&/dev/null
 										fi
 									}

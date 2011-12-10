@@ -3,7 +3,7 @@
 #
 manage_export_pem() {
 	#
-	if [[ ${#argv} == 2 ]] && [ -f ${KWSSL_DIR}/${SUBDIR}/${1} ] ; then
+	if [[ ${#argv} == 2 ]] && [[ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/${1} ]] ; then
 		# Export Dateiname und FORMAT erst einmal festlegen
 		export_filename_format "$1" "$2"
 		#
@@ -68,7 +68,7 @@ manage_export_pem() {
 					;;
 				$gv_Create)
 					# exportieren# {{{
-					cd ${KWSSL_DIR}/${SUBDIR}
+					cd ${KWSSL_DIR}/${CA_OPEN_NAME}
 					check_ca_filenames
 					# Fingerprint und Schluessel mit hinzufuegen
 					if [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
