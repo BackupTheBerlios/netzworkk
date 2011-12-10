@@ -4,11 +4,50 @@ MSG=$(gettext 'Mit kwssl2 koennen Sie x509 und S/MIME Zertifikate fuer Server un
 Clients erzeugen und verwalten. Sie koennen zwischen RSA und DSA,
 mit verschiedenen Digest Algorithmen, Schluesseln auswaehlen.
 
-RootCA: Verwaltet die Root Certifications Authority (CA).
-\tDiese muss vor allen anderen CAs erstellt werden.
+oeffnen: Oeffnen einer vorhandenen SubCa. Wird benoetigt um
+\tsich Zertifikate der SubCA anzuschauen bzw. diese SubCA weiter zu
+\tverwalten.
 
-SubCA: Verwaltet die SubCas Certifications Authorities (CA).
-\tMan kann verschiedene SubCas erstellen und darin Zertifikate
-\terstellen, importieren, exportieren, ....
+NOTIZ: Diesen Menuepunkt gibt es nur bei SubCAs angezeigt und Sie
+\tmuessen erst eine SubCA anlegen oder oeffnen, bevor Sie weitere
+\tSchritte unternehmen koennen.
+
+Konfiguration: Verwaltung der Konfigurationsdatei der CAs.
+
+Ansicht: Anzeige von ein oder mehreren Zertifikaten einer CA.
+\tDies koennen die Zertifikate einer CA oder dessen SubCAs
+\tsein.
+
+CA erstellen: Erstellt eine CA.
+
+SubCA erstellen: Erstellt eine SubCA.
+
+NOTIZ: SubCAs - diese werden mit der Passphrase der gerade
+\tgeoeffneten CA unterschrieben und signiert.
+
+Server Zertifikat: Erstellt ein Server Zertifikat fuer die
+\tjeweilige SubCA.
+
+Benutzer Zertifikat: Erstellt ein Benutzer Zertifikat fuer die
+\tjeweilige SubCA.
+
+NOTIZ: Diese Menuepunkte gibt es nur bei SubCAs.
+
+NOTIZ: Zertifikate fuer Server - denken Sie daran das einige Server
+\tnur den "allgemeiner Name: servername.example.de" im Zertifikat
+\tverstehen, aber nicht wenn Ihr Name dort steht.
+
+CA importieren: Importiert Zertifikate in die jeweilige CA.
+
+CA exportieren: Exportiert Zertifikate der jeweiligen CA in
+\tverschiedene Formate (PEM, DER, TXT und PKCS#12).
+
+CA ungueltig: Erklaert Zertifikate fuer ungueltig.
+
+Diffie Hellman: Erstellt eine Diffie Hellman Datei. Zur Auswahl
+\tstehen die Schluessellaengen 512, 1024, 2048 und 4096 Bit. Der
+\tDateiname ist zum Beispiel dh1024.pem.
+
+loeschen: Loescht ein oder mehrere ungueltige Zertifikate.
 ')
 #}}}
