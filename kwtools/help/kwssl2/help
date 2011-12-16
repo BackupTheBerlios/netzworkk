@@ -45,7 +45,7 @@ CA exportieren: Exportiert Zertifikate der jeweiligen CA in
 CA ungueltig: Erklaert Zertifikate fuer ungueltig.
 
 Diffie Hellman: Erstellt eine Diffie Hellman Datei. Zur Auswahl
-\tstehen die Schluessellaengen 512, 1024, 2048 und 4096 Bit. Der
+\tstehen die Schluessellaengen 1024, 2048 und 4096 Bit. Der
 \tDateiname ist zum Beispiel dh1024.pem.
 
 loeschen: Loescht ein oder mehrere ungueltige Zertifikate.

@@ -896,7 +896,7 @@ ca_certs_conf() {
 									awk '/\[/{if(/'"$Sect"'/){found=1}else{found=0}}
 										{if(!found){print}}
 										END{print "\n'"[ $Sect ]"'" ; \
-										{print "dir = '"${KWSSL_DIR}/${CA_OPEN_NAME}"'"} ; \
+										{print "dir = '"${KWSSL2RC%/*}"'"} ; \
 										{print "certs = '"\$dir/certs"'"} ; \
 										{print "crl_dir = '"\$dir/crl"'"} ; \
 										{print "database = '"\$dir/index.txt"'"} ; \
@@ -905,8 +905,8 @@ ca_certs_conf() {
 										{print "serial = '"\$dir/serial"'"} ; \
 										{print "crl = '"\$dir/crl/crl.pem"'"} ; \
 										{print "crlnumber = '"\$dir/crlnumber"'"} ; \
-										{print "private_key = '"\$dir/private/cakey.pem"'"} ; \
-										{print "RANDFILE = '"\$dir/private/.rand"'"} ; \
+										{print "private_key = '"\$dir/cacert.key"'"} ; \
+										{print "RANDFILE = '"\$dir/.rand"'"} ; \
 										{print "x509_extension = '"$CONF_SECTION"'"} ; \
 										if("'"$VALIDITY"'"!=""){print "default_days = '"$VALIDITY"'"} ; \
 										if("'"$DEFAULT_REVOKE_DAYS"'"!=""){print "default_crl_days = '"$DEFAULT_REVOKE_DAYS"'"} ; \

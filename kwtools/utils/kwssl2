@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 10.12.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.12.2011
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # Certrifikate, signiert....
@@ -64,12 +64,13 @@ lv_Server_Ca=$(gettext 'Server Zertifikate')
 lv_User_Ca=$(gettext 'Benutzer Zertifikate')
 lv_CA_Import=$(gettext 'CA importieren')
 lv_CA_Export=$(gettext 'CA exportieren')
+lv_Export=$(gettext 'exportieren')
 lv_CA_Password=$(gettext 'neues CA Passwort')
-lv_CA_Revoke=$(gettext 'CA ungueltig')
+lv_CA_Revoke=$(gettext 'CA widerrufen')
 lv_Dh_File=$(gettext 'Diffie Hellman')
 lv_UserCA_Create=$(gettext 'Benutzer Zertifikat erstellen')
 lv_ServerCA_Create=$(gettext 'Server Zertifikat erstellen')
-lv_Cert=$(gettext 'Zertifikat')
+lv_Cert=$(gettext 'Zertifikate')
 lv_ExportFilename=$(gettext 'Export Dateiname')
 lv_YesValidity=$(gettext 'gueltig')
 lv_NoValidity=$(gettext 'ungueltig')
@@ -181,8 +182,8 @@ create_pki() {
 		unset -- DIR
 		DIR="$1"
 		if [ ! -d ${KWSSL_DIR}/${DIR} ] ; then
-	        mkdir -p ${KWSSL_DIR}/${DIR}/{newcerts,certs,crl,private,req} &>/dev/null
-	        chmod 700 ${KWSSL_DIR}/${DIR}/{newcerts,certs,crl,private,req} &>/dev/null
+	        mkdir -p ${KWSSL_DIR}/${DIR}/{newcerts,certs,crl,keys,req} &>/dev/null
+	        chmod 700 ${KWSSL_DIR}/${DIR}/{newcerts,certs,crl,keys,req} &>/dev/null
 			cd $KWSSL_DIR
 	        touch ./${DIR}/{index.txt,serial,crlnumber} &>/dev/null
 	        echo "01" > ./${DIR}/{serial,crlnumber} &>/dev/null
@@ -192,8 +193,8 @@ create_pki() {
 			head -19 | \
 			sed "s/begin.*//g" | \
 			tail -18 | xargs | \
-			sed "s/ //g" > ${DIR}/private/.rand &>/dev/null
-			chmod 770 ${DIR}/private/.rand &>/dev/null
+			sed "s/ //g" > ${DIR}/.rand &>/dev/null
+			chmod 770 ${DIR}/.rand &>/dev/null
 			# allgemeine Konfigurationsdatei erstellen
 			KWSSL2RC="${KWSSL_DIR}/${DIR}/${KWSSL2RC_NAME}"
 			kwssl_config
@@ -279,11 +280,11 @@ search_cert() {
 		case "$Opt" in
 			-u)
 				# ungueltige Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem"
+				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem"
 				case "$lv_Validity" in
 					$lv_NoValidity|$lv_RevokeValidity)
 						(( Anz++ ))
-						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
+						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem)
 						CERTS_CN+=($COMMONNAME)
 						CERTS_NON_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
 						;;
@@ -291,21 +292,21 @@ search_cert() {
 				;;
 			-v)
 				# gueltige Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem"
+				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem"
 				case "$lv_Validity" in
 					$lv_YesValidity)
 						(( Anz++ ))
-						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
+						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem)
 						CERTS_CN+=($COMMONNAME)
-						CERTS_VAL_M+=(\"$Anz \"$COMMONNAME $lv_Validity\" off)
+						CERTS_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
 						;;
 				esac
 				;;
 			*)
 				# alle ((un)gueltige) Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem"
+				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem"
 				(( Anz++ ))
-				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${Serial}.pem)
+				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem)
 				CERTS_CN+=($COMMONNAME)
 				CERTS_ALL_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
 				;;
@@ -326,6 +327,7 @@ ca_open() {
 		menubox "$CA_OPEN_TITLE" "$gv_Menupoint" "$CA_OPEN_MENU"
 	}
 	## }}}
+	search_ca
 	ca_open_menu
 	while [ -n "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
@@ -360,6 +362,7 @@ main_menu() {
     		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
 			$gv_Display \"\" \"$lv_CA_Create\" \"\"
 			\"$lv_SubCA_Create\" \"\"
+			\"$lv_Cert\" \"\"
 			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
 			\"$lv_Dh_File\" \"\"
 			$gv_Delete \"\" $gv_Exit \"\")
@@ -368,8 +371,7 @@ main_menu() {
     		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
 			$gv_Display \"\" \"$lv_CA_Create\" \"\"
 			\"$lv_SubCA_Create\" \"\"
-			\"$lv_ServerCA_Create\" \"\"
-			\"$lv_UserCA_Create\" \"\"
+			\"$lv_Cert\" \"\"
 			\"$lv_CA_Import\" \"\"
 			\"$lv_CA_Export\" \"\" \"$lv_CA_Revoke\" \"\"
 			\"$lv_Dh_File\" \"\"
@@ -905,6 +907,12 @@ no_ca_msg() {
 	fi
 }
 ## }}}
+# Funktion (no_cas_msg)# {{{
+no_cas_msg() {
+	MSG=$(gettext 'Es sind keine CAs bzw. Zertifikate vorhanden.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
 # Funktion (no_cas_valid_msg)# {{{
 no_cas_valid_msg() {
 	MSG=$(gettext 'Es sind keine gueltigen CAs bzw. Zertifikate vorhanden.')
@@ -969,52 +977,22 @@ while [ "$gv_Auswahl" ] ; do
 			#	-passin pass:${PASSWORD} | less
 			###########################################	
 			if [ -n "$CA_OPEN_NAME" ] ; then
-				# Funktion (cert_choice_menu)# {{{
-				CERT_TITLE="${CA_OPEN_NAME}::${lv_CA}::${gv_Display}"
-				#
-				cert_choice_menu() {
-					CERT_MENU=($CERTS_ALL_VAL_M)
-					checklist "$CERT_TITLE" "$gv_Menupoint" "$CERT_MENU"
-				}
-				## }}}
-				#
-				search_cert
-				if [ -n "${CERTS_ALL_VAL_M[1]}" ] ; then
-					cert_choice_menu
-					while [ "$gv_Auswahl" ] ; do
-						case $gv_Auswahl in
-							HELP*)
-					    	    # Hilfe Messagebox
-								script_help main_help
-								cert_choice_menu
-								;;
-							*)
-								# Auswahl anzeigen
-								# alte Datei loeschen
-								rm -f $DISPLAY_FILE &>/dev/null
-								# Anzeige Datei fuellen
-								for i in ${=gv_Auswahl} ; {
-									CN_CERT_FILE="${CERTS_FILE[i]}"
-									CN_NAME="${CERTS_CN[i]}"
-									echo "################################" >> $DISPLAY_FILE
-									echo "$CN_NAME" >> $DISPLAY_FILE
-									echo "################################" >> $DISPLAY_FILE
-									fingerprint "$CN_CERT_FILE" $DISPLAY_FILE
-									echo "" >> $DISPLAY_FILE
-									openssl x509 -in "$CN_CERT_FILE" -text >> $DISPLAY_FILE
-									echo "" >> $DISPLAY_FILE
-
-									# Anzeige
-									#openssl pkcs12 -info -nokeys -in $i \
-									#	-passin pass:${PASSWORD} | less
-								}
-								view_file $DISPLAY_FILE
-								break
-								;;
-						esac
-					done
+				if [ -f "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem" ] ; then
+					CN_CERT_FILE="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
+					CN_NAME="$CA_OPEN_NAME"
+					# alte Datei loeschen
+					rm -f $DISPLAY_FILE &>/dev/null
+					# Anzeige Datei fuellen
+					echo "################################" >> $DISPLAY_FILE
+					echo "$CN_NAME" >> $DISPLAY_FILE
+					echo "################################" >> $DISPLAY_FILE
+					fingerprint "$CN_CERT_FILE" $DISPLAY_FILE
+					echo "" >> $DISPLAY_FILE
+					openssl x509 -in "$CN_CERT_FILE" -text >> $DISPLAY_FILE
+					echo "" >> $DISPLAY_FILE
+					view_file $DISPLAY_FILE
 				else
-					no_cas_msg
+					no_ca_msg $CA_OPEN_NAME
 				fi
 			else
 				no_open_ca_msg
@@ -1034,34 +1012,132 @@ while [ "$gv_Auswahl" ] ; do
 			## }}}
 			main_menu $lv_SubCA_Create
 			;;
-		$lv_ServerCA_Create|$lv_UserCA_Create)
-			# Server Zertifikate erstellen# {{{
+		$lv_Cert)
+			# Zertifikate verwalten bearbeiten.# {{{
 			if [ -n "$CA_OPEN_NAME" ] ; then
-				Menu_Opt="$gv_Auswahl"
-				# pruefen ob die $CA_OPEN_NAME (CA) schon existiert
-				if [ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem ] ; then
-					# Daten der SubCA einlesen.
-					read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-					# einige Variablen loeschen
-					unset -- SUBCAPASSWORD PASSWORD CAPASSWD COMMONNAME
-					if [[ $Menu_Opt == $lv_ServerCA_Create ]] ; then
-						# openssl.cnf Section auswaehlen
-						CONF_SECTION=server_cert
-						CONF_SECT=server_ca
+				# Funktion (cert_menu)# {{{
+				#
+				CERT_TITLE="${CA_OPEN_NAME}::${lv_Cert}"
+				cert_menu() {
+		    		CERT_MENU=($gv_Display \"\"
+					\"$lv_ServerCA_Create\" \"\"
+					\"$lv_UserCA_Create\" \"\"
+					\"$lv_Export\" \"\" \"$lv_RevokeValidity\" \"\"
+					$gv_Delete \"\" $gv_Back \"\")
+					#
+					if [[ ${#argv} == 1 ]] ; then
+						menubox -d "$1" "$CERT_TITLE" "$gv_Menupoint" "$CERT_MENU"
 					else
-						CONF_SECTION=client_cert
-						CONF_SECT=client_ca
+						menubox "$CERT_TITLE" "$gv_Menupoint" "$CERT_MENU"
 					fi
-					# Zertifikate konfigurieren, ... und erstellen.
-					conf_ca -c
-				else
-					no_ca_msg $CA_OPEN_NAME
-				fi
+				}
+				# }}}
+				cert_menu
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)
+							script_help cert_help
+							cert_menu
+							;;
+						$gv_Display)
+							# Zertifikate anschauen# {{{
+							# Funktion (cert_choice_menu)# {{{
+							CERT_TITLE="${CA_OPEN_NAME}::${gv_Display}"
+							#
+							cert_choice_menu() {
+								CERT_MENU=($CERTS_ALL_VAL_M)
+								checklist "$CERT_TITLE" "$gv_Menupoint" "$CERT_MENU"
+							}
+							## }}}
+							# alle Zertifikate herraussuchen, ob gueltig oder nicht.
+							search_cert
+							if [ -n "${CERTS_ALL_VAL_M[1]}" ] ; then
+								cert_choice_menu
+								while [ "$gv_Auswahl" ] ; do
+									case $gv_Auswahl in
+										HELP*)
+								    	    # Hilfe Messagebox
+											script_help cert_help
+											cert_choice_menu
+											;;
+										*)
+											# Auswahl anzeigen
+											# alte Datei loeschen
+											rm -f $DISPLAY_FILE &>/dev/null
+											# Anzeige Datei fuellen
+											for i in ${=gv_Auswahl} ; {
+												CN_CERT_FILE="${CERTS_FILE[i]}"
+												CN_NAME="${CERTS_CN[i]}"
+												echo "################################" >> $DISPLAY_FILE
+												echo "$CN_NAME" >> $DISPLAY_FILE
+												echo "################################" >> $DISPLAY_FILE
+												fingerprint "$CN_CERT_FILE" $DISPLAY_FILE
+												echo "" >> $DISPLAY_FILE
+												openssl x509 -in "$CN_CERT_FILE" -text >> $DISPLAY_FILE
+												echo "" >> $DISPLAY_FILE
+											}
+											view_file $DISPLAY_FILE
+											break
+											;;
+									esac
+								done
+							else
+								no_cas_msg
+							fi
+							## }}}
+							cert_menu $gv_Display
+							;;
+						$lv_ServerCA_Create|$lv_UserCA_Create)
+							# Server Zertifikate erstellen# {{{
+							if [ -n "$CA_OPEN_NAME" ] ; then
+								Menu_Opt="$gv_Auswahl"
+								# pruefen ob die $CA_OPEN_NAME (CA) schon existiert
+								if [ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem ] ; then
+									# Daten der SubCA einlesen.
+									read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
+									# einige Variablen loeschen
+									unset -- SUBCAPASSWORD PASSWORD CAPASSWD COMMONNAME
+									if [[ $Menu_Opt == $lv_ServerCA_Create ]] ; then
+										# openssl.cnf Section auswaehlen
+										CONF_SECTION=server_cert
+										CONF_SECT=server_ca
+									else
+										CONF_SECTION=client_cert
+										CONF_SECT=client_ca
+									fi
+									# Zertifikate konfigurieren, ... und erstellen.
+									conf_ca -c
+								else
+									no_ca_msg $CA_OPEN_NAME
+								fi
+							else
+								no_open_ca_msg
+							fi
+							## }}}
+							cert_menu $Menu_Opt
+							;;
+						$lv_Export)
+							# Zertifikate exportieren
+							cert_menu $lv_Export
+							;;
+						$lv_RevokeValidity)
+							# Zertifikate fuer ungueltig erklaeren
+							cert_menu $lv_RevokeValidity
+							;;
+						$gv_Delete)
+							# Zertifikate loeschen
+							cert_menu $gv_Delete
+							;;
+						$gv_Back)
+							break
+							;;
+					esac
+				done
 			else
 				no_open_ca_msg
 			fi
 			## }}}
-			main_menu $Menu_Opt
+			main_menu $lv_Cert
 			;;
 		$lv_CA_Import)
 			# CA importieren# {{{
@@ -1073,7 +1149,7 @@ while [ "$gv_Auswahl" ] ; do
 		$lv_CA_Export)
 			# CA exportieren# {{{
 			if [ -n "$CA_OPEN_NAME" ] ; then
-				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA}::${lv_CA_Export}"
+				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Export}"
 				# Funktion (export_filename_format), bestimmt den Dateinamen# {{{
 				# der ZielDatei.
 				#
@@ -1111,10 +1187,10 @@ while [ "$gv_Auswahl" ] ; do
 				check_ca_filenames() {
 					unset -- CACERT CAKEY
 					if [ "$ExportName" = cacert ] ; then
-						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/cakey.pem"
+						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.key"
 						CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
 					else
-						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/private/${ExportName}.key"
+						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/keys/${ExportName}.key"
 						CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/${ExportName}.cert.pem"
 					fi
 				}
@@ -1252,7 +1328,7 @@ while [ "$gv_Auswahl" ] ; do
 			# Zertifikate einer CA für ungueltig erklaeren# {{{
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				GROUND=${GROUND:-unspecified}
-				CERT_REVOKE_TITLE="${CA_OPEN_NAME}::${lv_CA}::${lv_CA_Revoke}"
+				CERT_REVOKE_TITLE="${CA_OPEN_NAME}::${lv_CA_Revoke}"
 				# Funktion (cert_revoke_menu)# {{{
 				cert_revoke_menu() {
 					CERT_MENU=($CERTS_VAL_M)
@@ -1486,7 +1562,7 @@ while [ "$gv_Auswahl" ] ; do
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				unset -- $UNSET
 				# Funktion (del_cert_choice_menu)# {{{
-				CERT_TITLE="${CA_OPEN_NAME}::${lv_CA}::${gv_Delete}"
+				CERT_TITLE="${CA_OPEN_NAME}::${gv_Delete}"
 				del_cert_choice_menu() {
 					DEL_CERT_MENU=($CERTS_NON_VAL_M)
 					checklist "$CERT_TITLE" "$gv_Menupoint" "$DEL_CERT_MENU"
@@ -1520,7 +1596,7 @@ while [ "$gv_Auswahl" ] ; do
 											./${CA_OPEN_NAME}/req/${File}.* \
 											./${CA_OPEN_NAME}/${File}.* \
 											./${CA_OPEN_NAME}/certs/${File}.* \
-											./${CA_OPEN_NAME}/private/${File}.* >&/dev/null
+											./${CA_OPEN_NAME}/keys/${File}.* >&/dev/null
 										fi
 									}
 									## }}}

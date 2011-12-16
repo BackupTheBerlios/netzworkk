@@ -162,34 +162,38 @@ conf_ca() {
 				# Grundkonfiguration erstellen
 				ca_certs_conf -r
 				# privater Schluessel
-				openssl genrsa -aes256 -rand ${CA_NAME}/private/.rand \
-					-out ${CA_NAME}/cakey.pem \
+				openssl genrsa -aes256 -rand ${CA_NAME}/.rand \
+					-out ${CA_NAME}/cacert.key \
 					-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
 				# Rechte einstellen
-				chmod 400 ./${CA_NAME}/cakey.pem
+				chmod 400 ./${CA_NAME}/cacert.key
 				# privater Schluessel
 				openssl req -new -keyform PEM -outform PEM \
 					-config $KWSSL2RC -x509 $lv_Digest -days $VALIDITY \
-					-key ${CA_NAME}/cakey.pem \
+					-key ${CA_NAME}/cacert.key \
 					-out ${CA_NAME}/cacert.pem \
 					-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
 					-batch -passin pass:${CAPASSWD} || prog_failure
 				# Rechte einstellen
 				chmod 444 ${CA_NAME}/cacert.pem
 				# Zertifikat in die CA integrieren
-				cd ${KWSSL_DIR}/${CA_NAME}
+#				cd ${KWSSL_DIR}/${CA_NAME}
 #				cp -a cacert.pem certs/${CREATE_NR}.pem
 #				cd ./certs
 #				ln -sf ${CREATE_NR}.pem `openssl x509 -hash -noout -in ${CREATE_NR}.pem`.0
-				cd $KWSSL_DIR
+#				cd $KWSSL_DIR
 				# CRL erstellen
 				openssl ca -config $KWSSL2RC -name ca_ca \
 					-gencrl -out ${CA_NAME}/crl.pem \
 					-batch -passin pass:${CAPASSWD} || prog_failure
-				#
+				# Options Variable fuers Hauptmenue festlegen.
+				# Wird benoetigt falls es noch keine CA gibt, um
+				# nach deren Erstellung das richtige Menue aufzurufen..
+				MAIN_MENU_OPT="-ca"
+				# Variable der ab jetzt geoeffneten CA belegen.
 				CA_OPEN_NAME="$CA_NAME"
 				# Passphrasen loeschen
-				unset -- CAPASSWD PASSWORD
+				unset -- CAPASSWD PASSWORD CA_NAME
 				break
 			else
 				MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, $lv_Ssl_Land_Code, $lv_Ssl_Name, $lv_Ssl_Password und $lv_Ssl_Email mit Werten belegen.')
@@ -223,36 +227,39 @@ conf_ca() {
 				##################################
 				check_alg
 				# privater Schluessel
-				openssl $Gen_Alg -aes256 -rand ${CA_NAME}/private/.rand \
-					-out ${CA_NAME}/cakey.pem \
+				openssl $Gen_Alg -aes256 -rand ${CA_NAME}/.rand \
+					-out ${CA_NAME}/cacert.key \
 					-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
 				# Rechte einstellen
-				chmod 400 ${CA_NAME}/cakey.pem
+				chmod 400 ${CA_NAME}/cacert.key
 				# privater Schluessel
 				openssl req -new -keyform PEM -outform PEM \
 					-config $KWSSL2RC \
-					$lv_Digest -days $VALIDITY \
-					-key ${CA_NAME}/private/cakey.pem \
-					-out ${CA_NAME}/req/cacert.req \
+					-key ${CA_NAME}/cacert.key \
+					-out ${CA_NAME}/cacert.req \
 					-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-					-batch -passin pass:${CAPASSWD} || prog_failure
+					-batch -passin pass:${CAPASSWD} $lv_Digest || prog_failure
 				# Rechte einstellen
-				chmod 444 ${CA_NAME}/req/cacert.req
+				chmod 444 ${CA_NAME}/cacert.req
 				# privaten Schluessel mit RootCA signieren
 				openssl ca -batch -notext -config ${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
-					-name ca_ca -in ${CA_NAME}/req/cacert.req \
+					-name ca_ca -in ${CA_NAME}/cacert.req \
+					-days $VALIDITY \
+					-preserveDN \
 					-extensions v3_ca \
+					-keyfile ${CA_OPEN_NAME}/cacert.key \
+					-cert ${CA_OPEN_NAME}/cacert.pem \
 					-out ${CA_NAME}/cacert.pem \
+					-outdir ${CA_OPEN_NAME}/newcerts \
 					-passin pass:${ROOTCAPASSWD} || prog_failure
 				# Rechte einstellen
 				chmod 444 ${CA_NAME}/cacert.pem
 				chmod 444 ${CA_OPEN_NAME}/newcerts/${NR}.pem
+				# req file nach CA/req verschieben
+				mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${CA_NAME}.pem
 				# Zertifikat in die CA integrieren
-				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${NR}.pem
-				cd ${CA_OPEN_NAME}/certs
-				ln -sf ${NR}.pem `openssl x509 -hash -noout -in ${NR}.pem`.0
+				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${CA_NAME}.pem
 				# CRL erstellen
-				cd ${KWSSL_DIR}
 				openssl ca -config $KWSSL2RC -name ca_ca -gencrl \
 					-out ${CA_NAME}/crl.pem \
 					-batch -passin pass:${CAPASSWD} || prog_failure
@@ -261,7 +268,7 @@ conf_ca() {
 				#
 				CA_OPEN_NAME="$CA_NAME"
 				# Passphrasen loeschen
-				unset -- ROOTCAPASSWD CAPASSWD PASSWORD
+				unset -- ROOTCAPASSWD CAPASSWD PASSWORD CA_NAME
 				break
 			else
 				MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $lv_Ssl_Name, $lv_Ssl_RootCA_Password, $lv_Ssl_CommonName, $lv_Ssl_Land_Code, $lv_Ssl_Password und $lv_Ssl_Email mit Werten belegen.')
@@ -294,52 +301,49 @@ conf_ca() {
 					create_file -d ../tmp
 					# -----BEGIN DSA PARAMETERS-----
 					openssl dsaparam \
-						-out ../tmp/${COMMONNAME1}.pem\
-						-rand private/.rand $KEYLENGTH || prog_failure
+						-out ../tmp/${COMMONNAME1}.dsaparam \
+						-rand ./.rand $KEYLENGTH || prog_failure
 					# -----BEGIN DSA PRIVATE KEY-----
-					openssl $Gen_Alg -aes256 -out private/${COMMONNAME1}.key \
-						-rand private/.rand -passout pass:$CAPASSWD || prog_failure
+					openssl $Gen_Alg -aes256 -out keys/${COMMONNAME1}.pem \
+						-rand ./.rand -passout pass:$CAPASSWD \
+						../tmp/${COMMONNAME1}.dsaparam || prog_failure
 					# Rechte einstellen
-					chmod 400 private/${COMMONNAME1}.key
+					chmod 400 ./${COMMONNAME1}.pem
 					openssl req -new -keyform PEM -outform PEM \
 						-config $KWSSL2RC \
-						$lv_Digest -days $VALIDITY \
-						-key private/${COMMONNAME1}.key \
-						-out req/${COMMONNAME1}.req \
+						-key keys/${COMMONNAME1}.pem \
+						-out req/${COMMONNAME1}.pem \
 						-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-						-passin pass:${CAPASSWD} || prog_failure
+						-passin pass:${CAPASSWD} $lv_Digest || prog_failure
 				else
 					# -----BEGIN RSA PRIVATE KEY-----
-					openssl $Gen_Alg -aes256 -out private/${COMMONNAME1}.key \
-						-rand private/.rand \
+					openssl $Gen_Alg -aes256 -out keys/${COMMONNAME1}.pem \
+						-rand ./.rand \
 						-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
 					# Rechte einstellen
-					chmod 400 private/${COMMONNAME1}.key
+					chmod 400 keys/${COMMONNAME1}.pem
 					openssl req -new -keyform PEM -outform PEM \
 						-config $KWSSL2RC \
-						$lv_Digest -days $VALIDITY \
-						-key private/${COMMONNAME1}.key \
-						-out req/${COMMONNAME1}.req \
+						-key keys/${COMMONNAME1}.pem \
+						-out req/${COMMONNAME1}.pem \
 						-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-						-passin pass:${CAPASSWD} || prog_failure
+						-passin pass:${CAPASSWD} $lv_Digest || prog_failure
 				fi
 				## }}}
 				# Rechte einstellen
-				chmod 444 req/${COMMONNAME1}.req
+				chmod 444 req/${COMMONNAME1}.pem
 				# privaten Schluessel mit SubCA signieren
 				openssl ca -batch -notext -config $KWSSL2RC \
-					-name $CONF_SECT -in req/${COMMONNAME1}.req \
-					-preserveDN \
+					-name $CONF_SECT -in req/${COMMONNAME1}.pem \
+					-days $VALIDITY \
+					-preserveDN -md ${lv_Digest#-} \
 					-out ${COMMONNAME1}.cert.pem \
 					-passin pass:${SUBCAPASSWD} || prog_failure
 				# Rechte einstellen
 				chmod 444 ${COMMONNAME1}.cert.pem
 				chmod 444 newcerts/${NR}.pem
-				cp -a newcerts/${NR}.pem certs
-				cd certs
-				ln -s ${NR}.pem `openssl x509 -hash -noout -in ${NR}.pem`.0``
-				# CRL erstellen
-				cd ${KWSSL_DIR}/${CA_OPEN_NAME}
+				cp -a newcerts/${NR}.pem certs/${COMMONNAME1}.pem
+				# cachain.pem Datei erstellen.
 				cat cachain.pem ${COMMONNAME1}.cert.pem > ${COMMONNAME1}.cachain.pem
 				# Passphrasen loeschen
 				unset -- CAPASSWD SUBCAPASSWD COMMONNAME PASSWORD
@@ -467,11 +471,14 @@ conf_ca() {
 				# Land (2 Buchstaben Code) eingeben# {{{
 				COUNTRYCODE_MSG=$(gettext 'Geben Sie den Laendercode (2 Buchstaben, z. B. DE) ein.')
 				inputbox "$lv_Ssl_Land_Code" "$COUNTRYCODE_MSG" "$COUNTRYCODE"
-				if [[ -n $gv_Auswahl ]] && [[ ${#gv_Auswahl} == 2 ]] ; then
-					COUNTRYCODE="$gv_Auswahl"
-				else
-					no_input_msg
-				fi
+				case "$gv_Auswahl" in
+					[A-Z][A-Z])
+						COUNTRYCODE="$gv_Auswahl"
+						;;
+					*)
+						no_input_msg
+						;;
+				esac
 				## }}}
 				conf_ca_menu $Opt $lv_Ssl_Land_Code
 				;;
