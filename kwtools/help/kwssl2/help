@@ -4,13 +4,9 @@ MSG=$(gettext 'Mit kwssl2 koennen Sie x509 und S/MIME Zertifikate fuer Server un
 Clients erzeugen und verwalten. Sie koennen zwischen RSA und DSA,
 mit verschiedenen Digest Algorithmen, Schluesseln auswaehlen.
 
-oeffnen: Oeffnen einer vorhandenen SubCa. Wird benoetigt um
-\tsich Zertifikate der SubCA anzuschauen bzw. diese SubCA weiter zu
+oeffnen: Oeffnen einer vorhandenen Ca. Wird benoetigt um
+\tsich Zertifikate der CA anzuschauen bzw. diese CA weiter zu
 \tverwalten.
-
-NOTIZ: Diesen Menuepunkt gibt es nur bei SubCAs angezeigt und Sie
-\tmuessen erst eine SubCA anlegen oder oeffnen, bevor Sie weitere
-\tSchritte unternehmen koennen.
 
 Konfiguration: Verwaltung der Konfigurationsdatei der CAs.
 
@@ -26,16 +22,14 @@ NOTIZ: SubCAs - diese werden mit der Passphrase der gerade
 \tgeoeffneten CA unterschrieben und signiert.
 
 Server Zertifikat: Erstellt ein Server Zertifikat fuer die
-\tjeweilige SubCA.
+\tjeweilige CA.
 
 Benutzer Zertifikat: Erstellt ein Benutzer Zertifikat fuer die
-\tjeweilige SubCA.
-
-NOTIZ: Diese Menuepunkte gibt es nur bei SubCAs.
+\tjeweilige CA.
 
 NOTIZ: Zertifikate fuer Server - denken Sie daran das einige Server
-\tnur den "allgemeiner Name: servername.example.de" im Zertifikat
-\tverstehen, aber nicht wenn Ihr Name dort steht.
+\tnur den Wert "allgemeiner Name: servername.example.de" im
+\tZertifikat verstehen, aber nicht wenn Ihr Name dort steht.
 
 CA importieren: Importiert Zertifikate in die jeweilige CA.
 

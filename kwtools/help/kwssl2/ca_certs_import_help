@@ -10,12 +10,17 @@ neues CA Passwort: Eingabe eines neuen Passwortes und dessen
 
 Passwort generieren: Ein neues CA Passwort generieren.
 
-CA Zertifikat:
+CA Zertifikat: Waehlen Sie die richtige CA Datei aus.
 
-privater CA Schluessel:
+privater CA Schluessel: Waehlen Sie die zur CA dazugehoerige
+\tSchluessel Datei aus.
 
-openssl index Datei:
+openssl index Datei: Waehlen Sie die zur CA dazugehoerige
+\tindex.txt Datei aus.
 
-Verzeichnis mit Zertifikaten:
+
+Verzeichnis mit Zertifikaten: Waehlen Sie das CA Basis-Verzeichnis
+\taus.
+
 ')
 #}}}

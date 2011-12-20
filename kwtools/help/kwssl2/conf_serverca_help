@@ -6,12 +6,9 @@ MSG=$(gettext 'Servername: Geben Sie den Namen des Servers ein, fuer das dieses
 
 NOTIZ: Denken Sie daran das einige Server nur "Servername"
 \tgleich servername.example.de fuer das Zertifikat akzeptieren, aber
-\tnicht wenn Ihr Name oder was anderes da steht.
+\tnicht wenn Ihr Name oder was anderes da steht. Lesen Sie dazu die
+\tDokumentation zu Ihrem Server Programm.
 
-\tDesweiteren benoetigen Server Zertifikate nicht unbedingt ein
-\tPasswort, da man dieses bei jedem Start des Servers eingeben
-\tmuesste.
-
-SubCA Passwort: Geben Sie das Passwort fuer diese SubCA ein.
+CA Passwort: Geben Sie das Passwort fuer die CA ein.
 ')
 #}}}
