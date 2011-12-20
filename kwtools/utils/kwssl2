@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.12.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 20.12.2011
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # Certrifikate, signiert....
@@ -47,9 +47,9 @@ if [ -z "$PROGS" ] ; then
 fi
 
 # Variablen belegen# {{{
-UNSET=(CA_NAME COMMONNAME COUNTRYCODE ROOTCAPASSWORD PASSWORD COUNTRY LOCATION
+UNSET=(CA_NAME COMMONNAME COUNTRYCODE PASSWORD COUNTRY LOCATION
 	ORGANISATION ORGANISATIONUNIT MAIL VALIDITY KEYLENGTH DIGEST gv_Pass
-	SUBCAPASSWORD FILENAME CAPASSWD)
+	FILENAME CA_CAPASSWD)
 #
 KWSSL_DIR="${gv_HomePath}/.kwtools/kwssl2"
 KWSSL2RC_NAME=kwssl2rc
@@ -82,8 +82,7 @@ lv_Ssl_ServerName=$(gettext 'Servername')
 lv_Ssl_UserName=$(gettext 'Benutzername')
 lv_Ssl_CommonName=$(gettext 'allgemeiner Name')
 lv_Ssl_Land_Code=$(gettext 'Land')
-lv_Ssl_RootCA_Password=$(gettext 'CA Passwort')
-lv_Ssl_SubCA_Password=$(gettext 'SubCA Passwort')
+lv_Ssl_CA_Password=$(gettext 'CA Passwort')
 lv_Ssl_Password=$(gettext 'Passwort eingeben')
 lv_Ssl_Password_Generate=$(gettext 'Passwort generieren')
 lv_Ssl_Bundesstaat=$(gettext 'Bundesstaat')
@@ -340,14 +339,15 @@ ca_open() {
 				CA_OPEN_NAME="$gv_Auswahl"
 				KWSSL2RC="${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME}"
 				#
-				integer SERIAL
-				Tmp=$(openssl x509 -in ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem -noout -serial)
-				SERIAL="${Tmp#*=}"
-				if [ "$SERIAL" -gt 0 ] ; then
-					MAIN_MENU_OPT="-subca"
-				else
-					MAIN_MENU_OPT="-ca"
-				fi
+				SERIAL=${${(ws:=:)$(openssl x509 -in ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem -noout -serial)}[2]}
+				case "$SERIAL" in
+					[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]*)
+						MAIN_MENU_OPT="-ca"
+						;;
+					*)
+						MAIN_MENU_OPT="-subca"
+						;;
+				esac
 				break
 				;;
 		esac
@@ -378,7 +378,7 @@ main_menu() {
 			$gv_Delete \"\" $gv_Exit \"\")
 			;;
 		*)
-    		MAIN_MENU=($lv_Open \"\" \"$lv_CA_Create\" \"\"
+    		MAIN_MENU=(\"$lv_CA_Create\" \"\"
 			\"$lv_CA_Import\" \"\"
 			$gv_Exit \"\")
 			;;
@@ -925,10 +925,10 @@ no_cas_nonvalid_msg() {
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
-# Funktion (subca_existed_msg), Nachricht das diese SubCA schon existiert# {{{
+# Funktion (ca_existed_msg), Nachricht das diese CA schon existiert# {{{
 #
-subca_existed_msg() {
-	MSG=$(gettext 'Diese SubCA ($gv_Auswahl) ist schon vorhanden.')
+ca_existed_msg() {
+	MSG=$(gettext 'Diese CA ($gv_Auswahl) ist schon vorhanden.')
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
