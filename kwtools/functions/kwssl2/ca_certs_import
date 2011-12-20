@@ -74,7 +74,7 @@ set -x
 					else
 						unset -- NEW_CA_NAME
 set +x
-						subca_existed_msg
+						ca_existed_msg
 					fi
 				else
 					unset -- NEW_CA_NAME
