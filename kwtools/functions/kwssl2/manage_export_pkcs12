@@ -3,7 +3,7 @@
 #
 manage_export_pkcs12() {
 	#
-	if [[ ${#argv} == 2 ]] && [[ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/${1} ]] ; then
+	if [[ ${#argv} == 2 ]] && [[ -f $1 ]] ; then
 		#
 		UNSET_EXPORT=(EXPORTKEYPASS KEYPASS DISPLAYNAME YESNO_PASS PKCS_VALUE)
 		unset -- $UNSET_EXPORT
@@ -139,10 +139,10 @@ manage_export_pkcs12() {
 					check_pkcs12_structure() {
 						unset -- CACERT CAKEY
 						if [[ $PKCS_VALUE == $gv_Yes ]] ; then
-							if [ "$ExportName" = cacert ] ; then
+							if [[ $ExportName == cacert.pem ]] ; then
 								PROG_OPT+=(-certfile ${KWSSL_DIR}/${CA_OPEN_NAME}/cachain.pem)
 							else
-								PROG_OPT+=(-certfile ${KWSSL_DIR}/${CA_OPEN_NAME}/${ExportName}.cachain.pem)
+								PROG_OPT+=(-certfile ${KWSSL_DIR}/${CA_OPEN_NAME}/${ExportName%.pem}.cachain.pem)
 							fi
 						fi
 					}

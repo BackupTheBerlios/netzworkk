@@ -11,8 +11,7 @@ conf_ca() {
 	if [ -n "$CA_OPEN_NAME" ] ; then
 		# Daten der (Sub)CA einlesen.
 		read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-		#
-		unset -- COMMONNAME
+		unset -- COMMONNAME CA_NAME CA_CAPASSWORD
 	fi
 	# Variablen
 	KEYLENGTH="4096"

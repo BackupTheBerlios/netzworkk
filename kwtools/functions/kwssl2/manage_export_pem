@@ -3,7 +3,7 @@
 #
 manage_export_pem() {
 	#
-	if [[ ${#argv} == 2 ]] && [[ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/${1} ]] ; then
+	if [[ ${#argv} == 2 ]] && [[ -f $1 ]] ; then
 		# Export Dateiname und FORMAT erst einmal festlegen
 		export_filename_format "$1" "$2"
 		#
