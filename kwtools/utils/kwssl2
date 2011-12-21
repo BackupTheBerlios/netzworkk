@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 20.12.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 21.12.2011
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # Certrifikate, signiert....
@@ -358,23 +358,13 @@ ca_open() {
 #
 main_menu() {
 	case $MAIN_MENU_OPT in
-		-ca)
+		-ca|-subca)
     		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
 			$gv_Display \"\" \"$lv_CA_Create\" \"\"
 			\"$lv_SubCA_Create\" \"\"
 			\"$lv_Cert\" \"\"
 			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
-			\"$lv_Dh_File\" \"\"
-			$gv_Delete \"\" $gv_Exit \"\")
-			;;
-		-subca)
-    		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
-			$gv_Display \"\" \"$lv_CA_Create\" \"\"
-			\"$lv_SubCA_Create\" \"\"
-			\"$lv_Cert\" \"\"
-			\"$lv_CA_Import\" \"\"
-			\"$lv_CA_Export\" \"\" \"$lv_CA_Revoke\" \"\"
-			\"$lv_Dh_File\" \"\"
+			\"$lv_CA_Revoke\" \"\" \"$lv_Dh_File\" \"\"
 			$gv_Delete \"\" $gv_Exit \"\")
 			;;
 		*)
@@ -397,6 +387,28 @@ main_menu() {
 	fi
 }
 # }}}
+# Funktion (find_need_files), findet anhand# {{{
+# der ../newcerts/Nummer.pem die ../certs/Name.pem
+# Datei, die ja den Namen enthaelt
+#
+# usage: find_need_files FILE
+#
+find_need_files() {
+	if [[ ${#argv} == 1 ]] ; then
+		unset -- Found_File
+		File="$1"
+		Dir="${KWSSL_DIR}/${CA_OPEN_NAME}/certs"
+		for i in ${Dir}/*(.N) ; {
+			if diff -q $i $File >/dev/null ; then
+				Found_File="$i"
+				break
+			fi
+		}
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
 # Funktion (fingerprint)# {{{
 #
 fingerprint() {
@@ -932,6 +944,12 @@ ca_existed_msg() {
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
+# Funktion (no_need_file_msg)# {{{
+no_need_file_msg() {
+	MSG=$(gettext 'Es wurde keine CA oder Zertifikat Datei gefunden.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
 
 ##################################################################
 #
@@ -1014,6 +1032,9 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_Cert)
 			# Zertifikate verwalten bearbeiten.# {{{
+			#################################################
+			# TODO: noch nicht fertig
+			#################################################
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				# Funktion (cert_menu)# {{{
 				#
@@ -1042,7 +1063,7 @@ while [ "$gv_Auswahl" ] ; do
 						$gv_Display)
 							# Zertifikate anschauen# {{{
 							# Funktion (cert_choice_menu)# {{{
-							CERT_TITLE="${CA_OPEN_NAME}::${gv_Display}"
+							CERT_TITLE="${lv_Cert}::${gv_Display}"
 							#
 							cert_choice_menu() {
 								CERT_MENU=($CERTS_ALL_VAL_M)
@@ -1117,15 +1138,54 @@ while [ "$gv_Auswahl" ] ; do
 							cert_menu $Menu_Opt
 							;;
 						$lv_Export)
-							# Zertifikate exportieren
+							# Zertifikate exportieren# {{{
+							autoload -U export_files
+							CERT_EXPORT_TITLE="${lv_Cert}::${lv_Export}"
+							#
+							# Funktion (cert_choice_menu)# {{{
+							cert_choice_menu() {
+								CERT_EXPORT_MENU=($CERTS_VAL_M)
+								radiolist "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$CERT_EXPORT_MENU"
+							}
+							## }}}
+							search_cert -v
+							if [[ -n ${CERTS_VAL_M[1]} ]] ; then
+								cert_choice_menu
+								while [ "$gv_Auswahl" ] ; do
+									case $gv_Auswahl in
+										HELP*)
+								    	    # Hilfe Messagebox
+											script_help export_ca_help
+											cert_choice_menu
+											;;
+										*)
+											# Auswahl der Export Formate,
+											# Daten der CA einlesen etc.
+											Ex_File="${CERTS_FILE[gv_Auswahl]}"
+											find_need_files "$Ex_File"
+											if [[ -n $Found_File ]] ; then
+												export_files "$Found_File"
+											else
+												no_need_file_msg
+											fi
+											break
+											;;
+									esac
+								done
+							else
+								no_cas_valid_msg
+							fi
+							## }}}
 							cert_menu $lv_Export
 							;;
 						$lv_RevokeValidity)
 							# Zertifikate fuer ungueltig erklaeren
+							hier_ist_noch_nichts $lv_RevokeValidity
 							cert_menu $lv_RevokeValidity
 							;;
 						$gv_Delete)
 							# Zertifikate loeschen
+							hier_ist_noch_nichts $gv_Delete
 							cert_menu $gv_Delete
 							;;
 						$gv_Back)
@@ -1148,176 +1208,11 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_CA_Export)
 			# CA exportieren# {{{
+			autoload -U export_files
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Export}"
-				# Funktion (export_filename_format), bestimmt den Dateinamen# {{{
-				# der ZielDatei.
-				#
-				# usage: export_filename_format FILE FORMAT
-				# FORMAT - der, pem, pkcs#12, tar, txt, zip
-				#
-				export_filename_format() {
-					if [[ ${#argv} == 2 ]] ; then
-						unset -- FORMAT
-						if [ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/${1} ] ; then
-							if [[ $1 == cacert.pem ]] ; then
-								ExportName="${1%.*}"
-							else
-								ExportName="${1%.cert.*}"
-							fi
-							case "$2" in
-								der|pem|p12|tar|txt|zip)
-									FORMAT="$2"
-									;;
-								*)
-									;;
-							esac
-							if [ "$ExportName" = cacert ] ; then
-								Export_FileName="${HOME}/${CA_OPEN_NAME}-cert.${FORMAT}"
-							else	
-								Export_FileName="${HOME}/${MAIL}-cert.${FORMAT}"
-							fi
-						fi
-					else
-						no_para_msg $0
-					fi
-				}
-				## }}}
-				# Funktion (check_ca_filenames)# {{{
-				check_ca_filenames() {
-					unset -- CACERT CAKEY
-					if [ "$ExportName" = cacert ] ; then
-						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.key"
-						CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-					else
-						CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/keys/${ExportName}.key"
-						CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/${ExportName}.cert.pem"
-					fi
-				}
-				## }}}
-				# Funktion (export_filename), Export Dateinamen eingeben# {{{
-				#
-				# usage: export_filename [ der | pem | p12 | tar | txt | zip ]
-				#
-				export_filename() {
-					unset -- SUFFIX
-					local SUFFIX
-					if [[ ${#argv} == 1 ]] ; then
-						SUFFIX="$1"
-					fi
-					#
-					EXPORT_FILENAME_MSG=$(gettext 'Geben Sie den Export Dateinamen mit SUFFIX $SUFFIX ein.')
-					inputbox "$lv_ExportFilename" "$EXPORT_FILENAME_MSG" "$Export_FileName"
-					if [ -n "$gv_Auswahl" ] ; then
-						Export_FileName="$gv_Auswahl"
-					else
-						if [ "$ExportName" = cacert ] ; then
-							Export_FileName="${HOME}/${CA_OPEN_NAME}-cert.${SUFFIX}"
-						else	
-							Export_FileName="${HOME}/${MAIL}-cert.${SUFFIX}"
-						fi
-					fi
-				}
-				## }}}
-				# Funktion (cert_choice_menu)# {{{
-				cert_choice_menu() {
-					CERT_EXPORT_MENU=($CERTS_VAL_M)
-					radiolist "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$CERT_EXPORT_MENU"
-				}
-				## }}}
-				# Funktion (export_menu)# {{{
-				export_menu() {
-					if [[ $Export_File == cacert.pem ]] ; then
-						EXPORT_MENU=(PEM \"\" on DER \"\" off TXT \"\" off)
-					else
-						EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
-						TAR \"\" off TXT \"\" off ZIP \"\" off)
-					fi
-					#
-					radiolist "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
-				}
-				## }}}
-				search_cert -v
-				if [[ -n ${CERTS_VAL_M[1]} ]] ; then
-					cert_choice_menu
-					while [ "$gv_Auswahl" ] ; do
-						case $gv_Auswahl in
-							HELP*)
-					    	    # Hilfe Messagebox
-								script_help export_ca_help
-								cert_choice_menu
-								;;
-							*)
-								# Auswahl der Export Formate,
-								# Daten der CA einlesen etc.
-								Export_File="$gv_Auswahl"
-								export_menu
-								while [ "$gv_Auswahl" ] ; do
-									case $gv_Auswahl in
-										HELP*)
-								    	    # Hilfe Messagebox
-											script_help export_ca_help
-											export_menu
-											;;
-										DER)
-											# Zertifikat nach DER exportieren
-											#
-											# Funktion manage_export_most
-											autoload -U manage_export_most
-											manage_export_most "$Export_File" der
-											break 2
-											;;
-										PEM)
-											# Zertifikat nach PEM exportieren
-											#
-											# Funktion manage_export_pem
-											autoload -U manage_export_pem
-											manage_export_pem "$Export_File" pem
-											break 2
-											;;
-										PKCS*)
-											# Zertifikat nach PKCS#12 exportieren
-											#
-											# Funktion manage_export_pkcs12
-											autoload -U manage_export_pkcs12
-											manage_export_pkcs12 "$Export_File" p12
-											break 2
-											;;
-										TAR)
-											# Zertifikat nach TAR exportieren
-											#
-											# Funktion manage_export_most
-											autoload -U manage_export_most
-											manage_export_most "$Export_File" tar
-											break 2
-											;;
-										TXT)
-											# Zertifikat nach TXT exportieren
-											#
-											# Funktion manage_export_most
-											autoload -U manage_export_most
-											manage_export_most "$Export_File" txt
-											break 2
-											;;
-										ZIP)
-											# Zertifikat nach ZIP exportieren
-											#
-											# Funktion manage_export_most
-											autoload -U manage_export_most
-											manage_export_most "$Export_File" zip
-											break 2
-											;;
-										*)
-											break 2
-											;;
-									esac
-								done
-								;;
-						esac
-					done
-				else
-					no_cas_valid_msg
-				fi
+				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
+				export_files "$Ex_File"
 			else
 				no_open_ca_msg
 			fi
@@ -1369,7 +1264,9 @@ while [ "$gv_Auswahl" ] ; do
 								;;
 							*)
 								# Revoke Menue
-								REVOKE_FILE="$gv_Auswahl"
+								set -x
+								REVOKE_FILE="${CERTS_FILE[gv_Auswahl]}"
+								set +x
 								conf_revoke_menu
 								while [ "$gv_Auswahl" ] ; do
 									case $gv_Auswahl in
@@ -1426,11 +1323,11 @@ while [ "$gv_Auswahl" ] ; do
 											##############################################
 											if [[ $MAIN_MENU_OPT == -subca ]] ; then
 												if [ -n "$PASSPHRASE" ] ; then
-													openssl ca -config ${KWSSL_DIR}/RootCA/${KWSSL2RC_NAME} \
+													openssl ca -config ${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
 														-batch -name ca_ca \
 														-revoke $REVOKE_FILE \
 														-passin pass:${PASSPHRASE} || prog_failure
-													openssl ca -config ${KWSSL_DIR}/RootCA/${KWSSL2RC_NAME} \
+													openssl ca -config ${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
 														-batch -name ca_ca \
 														-gencrl -out crl/crl.pem \
 														-passin pass:${PASSPHRASE} || prog_failure
