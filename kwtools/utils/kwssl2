@@ -1370,7 +1370,7 @@ while [ "$gv_Auswahl" ] ; do
 				no_open_ca_msg
 			fi
 			## }}}
-			main_menu $lv_CA_Export
+			main_menu $lv_CA_CRL_Export
 			;;
 		$lv_Dh_File)
 			# Diffie Hellman Parameter Datei erzeugen# {{{
