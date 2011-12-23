@@ -248,13 +248,10 @@ conf_ca() {
 				chmod 444 ${CA_NAME}/cacert.pem
 				chmod 444 ${CA_OPEN_NAME}/newcerts/${NR}.pem
 				# req file nach CA/req verschieben
-#				mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${CA_NAME}.pem
 				mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem
 				# Zertifikat in die CA integrieren
-#				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${CA_NAME}.pem
 				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${GEN_NAME}.pem
 				# keyfile in die CA integrieren
-#				cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${CA_NAME}.pem
 				cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
 				# CRL erstellen
 				openssl ca -config $KWSSL2RC -name ca_ca -gencrl \
