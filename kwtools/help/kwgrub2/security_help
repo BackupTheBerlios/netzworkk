@@ -1,4 +1,4 @@
-# conf_help fuer kwgrub2{{{
+# security_help fuer kwgrub2{{{
 TITLE="${lv_Security}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie einige Einstellungen fuer den Passwortschutz
 von "grub2" taetigen. Beachten Sie das diese Einstellungen in der Datei

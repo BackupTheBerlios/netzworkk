@@ -39,7 +39,8 @@ Standard Schalter: Einige Laptop Hersteller vergeben ihren Geraeten
 \t"versteckter Timeout Schalter" und "BIOS Adress Schalter" und
 \tanschliessendem speichern werden die richtigen Variablen in der
 \tDatei $GRUB_DEFAULT_CONFFILE gesetzt. 
-Die Werte von "Timeout Schalter", "Standard Schalter" und
+
+NOTIZ: Die Werte von "Timeout Schalter", "Standard Schalter" und
 \t"versteckter Timeout Schalter" werden anstelle der Werte von
 \t"Standard Boot Eintrag", "Timeout" und "versteckter Timeout"
 \tbenutzt, falls so ein spezial Schalter getaetigt wird.
