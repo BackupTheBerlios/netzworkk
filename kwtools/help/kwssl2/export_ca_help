@@ -1,27 +1,13 @@
 # export_ca_help fuer kwssl2{{{
-TITLE="${lv_CA_Export}::${gv_Help}"
-MSG=$(gettext 'Mit kwssl2 koennen Sie x509 Zertifikate in verschiedene Formate
-exportieren.
+TITLE="${CA_OPEN_NAME}::${lv_CA_Export}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie CAs in verschiedene Formate exportieren.
 
-DER: Exportiert die CA oder das Zertifikat in das DER Format.
+DER: Exportiert eine CA in das DER Format.
 
-PEM: Exportiert die CA oder das Zertifikat in das PEM Format.
+PEM: Exportiert eine CA in das PEM Format.
 
-PKCS#12: Exportiert die CA oder das Zertifikat in das PKCS#12
-\tFormat.
-
-TAR: Erstellt ein Tar-Archiv aus den Dateien die den Schluessel,
-\tdas Zertifikat und die Zertifikat-Struktur enthalten.
-\t*.cachain.pem
-\t*.cert.pem
-\t*.key.pem
-
-TXT: Exportiert die CA oder das Zertifikat in das TXT Format. Der
+TXT: Exportiert die CA in das TXT Format. Der
 \tAbschnitt "----- BEGIN CERTIFICATE-----" bis
 \t"----- END CERTIFICATE-----" wird nicht exportiert.
-
-ZIP: Erstellt ein ZIP-Archiv aus den Dateien die den Schluessel,
-\tdas Zertifikat und die Zertifikat-Struktur enthalten. Siehe auch
-\tTAR Export Format.
 ')
 #}}}

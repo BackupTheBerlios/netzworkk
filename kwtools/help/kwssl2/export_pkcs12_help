@@ -1,0 +1,20 @@
+# export_pkcs12_help fuer kwssl2{{{
+TITLE="${lv_Export}::${gv_Help}"
+MSG=$(gettext 'Export Dateiname: Geben Sie einen Dateinamen, mit vollem Pfad,
+\tfuer den Export ein. Standard ist ~/Mailadresse-cert.p12.
+
+Mit/Ohne Passwort: Auswahl ob ein Passwort fuer den Export benutzt
+\twerden soll (ja/nein). Bei ja muessen Sie auch den Menuepunkt
+\t\"Export Passwort\" mit einem Wert  belegen.
+
+Schluessel Passwort: Geben Sie das Passwort fuer den Schluessel ein.
+
+Export Passwort: Geben Sie ein Passwort fuer den Export ein. 
+\twerden soll (ja/nein).
+
+Anzeigename: Geben Sie einen Namen fuer die Anzeige ein.
+
+PKCS#12 Struktur: Auswahl ob die PKCS#12 Struktur hinzugefuegt
+\twerden soll (ja/nein).
+')
+#}}}

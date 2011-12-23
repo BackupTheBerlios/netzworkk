@@ -10,9 +10,7 @@ oeffnen: Oeffnen einer vorhandenen Ca. Wird benoetigt um
 
 Konfiguration: Verwaltung der Konfigurationsdatei der CAs.
 
-Ansicht: Anzeige von ein oder mehreren Zertifikaten einer CA.
-\tDies koennen die Zertifikate einer CA oder dessen SubCAs
-\tsein.
+Ansicht: Anzeige der geoeffneten CA.
 
 CA erstellen: Erstellt eine CA.
 
@@ -21,27 +19,20 @@ SubCA erstellen: Erstellt eine SubCA.
 NOTIZ: SubCAs - diese werden mit der Passphrase der gerade
 \tgeoeffneten CA unterschrieben und signiert.
 
-Server Zertifikat: Erstellt ein Server Zertifikat fuer die
-\tjeweilige CA.
+Zertifikate: Verwalten der Zertifikate.
 
-Benutzer Zertifikat: Erstellt ein Benutzer Zertifikat fuer die
-\tjeweilige CA.
+CA importieren: Importiert eine CA.
 
-NOTIZ: Zertifikate fuer Server - denken Sie daran das einige Server
-\tnur den Wert "allgemeiner Name: servername.example.de" im
-\tZertifikat verstehen, aber nicht wenn Ihr Name dort steht.
+CA exportieren: Exportiert die geoeffnete CA in verschiedene
+\tFormate (PEM, DER, und TXT).
 
-CA importieren: Importiert Zertifikate in die jeweilige CA.
-
-CA exportieren: Exportiert Zertifikate der jeweiligen CA in
-\tverschiedene Formate (PEM, DER, TXT und PKCS#12).
-
-CA ungueltig: Erklaert Zertifikate fuer ungueltig.
+Widerrufsliste exportieren: Exportiert die Widerrufsliste der
+\tgeoeffneten CA in verschiedene Formate (PEM, DER, und TXT).
 
 Diffie Hellman: Erstellt eine Diffie Hellman Datei. Zur Auswahl
 \tstehen die Schluessellaengen 1024, 2048 und 4096 Bit. Der
 \tDateiname ist zum Beispiel dh1024.pem.
 
-loeschen: Loescht ein oder mehrere ungueltige Zertifikate.
+CA loeschen: Loescht ein oder mehrere CAs.
 ')
 #}}}
