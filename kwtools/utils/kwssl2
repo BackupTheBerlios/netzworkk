@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 21.12.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 23.12.2011
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # Certrifikate, signiert....
@@ -49,7 +49,7 @@ fi
 # Variablen belegen# {{{
 UNSET=(CA_NAME COMMONNAME COUNTRYCODE PASSWORD COUNTRY LOCATION
 	ORGANISATION ORGANISATIONUNIT MAIL VALIDITY KEYLENGTH DIGEST gv_Pass
-	FILENAME CA_CAPASSWD)
+	FILENAME CA_CAPASSWD CA_CAPASSWORD)
 #
 KWSSL_DIR="${gv_HomePath}/.kwtools/kwssl2"
 KWSSL2RC_NAME=kwssl2rc
@@ -59,14 +59,15 @@ DISPLAY_FILE="${gv_WorkDir}/display"
 lv_CA=$(gettext 'CA')
 lv_SubCa=$(gettext 'SubCA')
 lv_CA_Create=$(gettext 'CA erstellen')
+lv_CA_Import=$(gettext 'CA importieren')
+lv_CA_Export=$(gettext 'CA exportieren')
+lv_CA_CRL_Export=$(gettext 'Widerrufsliste exportieren')
+lv_CA_Delete=$(gettext 'CA loeschen')
 lv_SubCA_Create=$(gettext 'SubCA erstellen')
 lv_Server_Ca=$(gettext 'Server Zertifikate')
 lv_User_Ca=$(gettext 'Benutzer Zertifikate')
-lv_CA_Import=$(gettext 'CA importieren')
-lv_CA_Export=$(gettext 'CA exportieren')
 lv_Export=$(gettext 'exportieren')
 lv_CA_Password=$(gettext 'neues CA Passwort')
-lv_CA_Revoke=$(gettext 'CA widerrufen')
 lv_Dh_File=$(gettext 'Diffie Hellman')
 lv_UserCA_Create=$(gettext 'Benutzer Zertifikat erstellen')
 lv_ServerCA_Create=$(gettext 'Server Zertifikat erstellen')
@@ -94,13 +95,13 @@ lv_Ssl_Validity=$(gettext 'Gueltigkeit')
 lv_Ssl_Key_length=$(gettext 'Schluessellaenge')
 lv_Ssl_Digest=$(gettext 'Digest')
 lv_Ssl_Alg=$(gettext 'Algotrithmus')
+lv_Ssl_PreserveDN=$(gettext 'preserveDN')
 ## }}}
 # Variablen, Einstellungen# {{{
 DEFAULT_CONF_TITLE="$gv_Configuration"
 DEFAULT_URL_MSG=$(gettext 'URL Eingabe')
 lv_Ca_Certs=$(gettext 'CA Zertifikate')
 lv_Revokes=$(gettext 'Widerrufslisten')
-lv_Revoke_Days=$(gettext 'Standardtage')
 lv_Filename=$(gettext 'Dateiname')
 #
 lv_SubjectAlternateName=$(gettext 'Subject Alternative Name')
@@ -142,6 +143,7 @@ lv_CertSign_CrlSign_Ca=$(gettext 'Zertifikate signieren, CRL signieren')
 lv_DigitalSign=$(gettext 'Digitale Signatur')
 lv_Encrypt=$(gettext 'Verschluesselung')
 lv_Encrypt_DigitalSign=$(gettext 'Verschluesselung, Digitale Signatur')
+lv_Ground=$(gettext 'Grund')
 lv_User_ObjectSign=$(gettext 'Object Signieren')
 lv_User_Smime=$(gettext 'Email S/MIME')
 lv_User_Usr_Smime=$(gettext 'SSL Benutzer, Email S/MIME')
@@ -249,15 +251,30 @@ check_helpfile() {
 	esac
 }
 ## }}}
+# Funktion (check_default_revoke_days), prueft die Gueltigkeit der Widerrufsliste# {{{
+#
+# usage:  check_default_revoke_days CONF_SECTION
+#
+check_default_revoke_days() {
+	if [[ ${#argv} == 1 ]] ; then
+		DEFAULT_REVOKE_DAYS="`awk -F '= ' '/\[/{if(/'"$1"'/){found=1}else{found=0}}
+			/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
+			END{print DEFAULT_REVOKE_DAYS}' $KWSSL2RC`"
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
 # Funktion (search_ca), sucht nach vorhandenen CAs.# {{{
 #
 # usage: search_ca
 #
 search_ca() {
-	unset -- CA_DIRS
+	unset -- CA_DIRS CA_DIRS_M
 	for i in ${KWSSL_DIR}/*(/N) ; {
 		if [ -f ${i}/cacert.pem ] ; then
 			CA_DIRS+=( ${i##*/} \"\" )
+			CA_DIRS_M+=( ${i##*/} \"\" off)
 		fi
 	}
 }
@@ -276,14 +293,21 @@ search_cert() {
 	# un/gueltige/alle Zertifikate finden
 	Anz=0
 	while read Val b Serial d Subject ; do
+		# herrausfinden der Serial Nummer
+		case $Val in
+			R)	SerialNr=$d
+				;;
+			V)	SerialNr="$Serial"
+				;;
+		esac
 		case "$Opt" in
 			-u)
 				# ungueltige Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem"
+				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem"
 				case "$lv_Validity" in
 					$lv_NoValidity|$lv_RevokeValidity)
 						(( Anz++ ))
-						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem)
+						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem)
 						CERTS_CN+=($COMMONNAME)
 						CERTS_NON_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
 						;;
@@ -291,11 +315,11 @@ search_cert() {
 				;;
 			-v)
 				# gueltige Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem"
+				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem"
 				case "$lv_Validity" in
 					$lv_YesValidity)
 						(( Anz++ ))
-						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem)
+						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem)
 						CERTS_CN+=($COMMONNAME)
 						CERTS_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
 						;;
@@ -303,9 +327,9 @@ search_cert() {
 				;;
 			*)
 				# alle ((un)gueltige) Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem"
+				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem"
 				(( Anz++ ))
-				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${Serial}.pem)
+				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem)
 				CERTS_CN+=($COMMONNAME)
 				CERTS_ALL_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
 				;;
@@ -364,13 +388,18 @@ main_menu() {
 			\"$lv_SubCA_Create\" \"\"
 			\"$lv_Cert\" \"\"
 			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
-			\"$lv_CA_Revoke\" \"\" \"$lv_Dh_File\" \"\"
-			$gv_Delete \"\" $gv_Exit \"\")
+			\"$lv_CA_CRL_Export\" \"\" \"$lv_Dh_File\" \"\"
+			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
+			;;
+		-n)	# new
+    		MAIN_MENU=(\"$lv_Open\" \"\" \"$lv_CA_Create\" \"\"
+			\"$lv_CA_Import\" \"\"
+			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
 			;;
 		*)
     		MAIN_MENU=(\"$lv_CA_Create\" \"\"
 			\"$lv_CA_Import\" \"\"
-			$gv_Exit \"\")
+			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
 			;;
 	esac
 	#
@@ -424,6 +453,12 @@ fingerprint() {
 	fi
 }
 ## }}}
+# Funktion (gen_name), generiert den Dateinamen fuer Zertifikate,# {{{
+# Schluessel und fuer Anforderungen.
+gen_name() {
+	GEN_NAME="`print ${COMMONNAME}${MAIL}${ORGANISATIONUNIT}${ORGANISATION}${LOCATION}${COUNTRY}${COUNTRYCODE} | openssl base64 | tr -d '\n'`"
+}
+## }}}
 # Funktion (keylength_input), eingabe der Schluessellaenge (numbits)# {{{
 #
 # usage: keylength_input
@@ -452,6 +487,49 @@ keylength_input() {
 				;;
 		esac
 	done
+}
+## }}}
+# Funktion (ca_passwd_input), CA Passwort Eingabe# {{{
+#
+ca_passwd_input() {
+	CA_PASS_MSG=$(gettext 'Geben Sie die Passphrase fuer die CA ein.')
+	password "$lv_Ssl_CA_Password" "$CA_PASS_MSG" "$PASSWD_LENGTH"
+	if [ -n "$PASSPHRASE" ] ; then
+		password_display "$PASSPHRASE"
+		if [ -n "$gv_Star_Passphrase" ] ; then
+			CA_CAPASSWORD="$gv_Star_Passphrase"
+			CA_CAPASSWD="$PASSPHRASE"
+			unset -- PASSPHRASE
+		else
+			unset -- CA_CAPASSWD PASSPHRASE
+		fi
+	else
+		unset -- CA_CAPASSWD PASSPHRASE
+	fi
+}
+## }}}
+# Funktion (validity_input), Gueltigkeitseingabe# {{{
+#
+validity_input() {
+	VALIDITY_MSG=$(gettext 'Geben Sie die Gueltigkeit des Zertifikats in Tagen ein.')
+	number_input "$lv_Ssl_Validity" "$VALIDITY_MSG" "$VALIDITY"
+	if [ -n "$NUMBER" ] ; then
+		VALIDITY="$NUMBER"
+	else
+		VALIDITY="3650"
+	fi
+}
+## }}}
+# Funktion (revoke_days_input), Gueltigkeitseingabe der CRLs# {{{
+#
+revoke_days_input() {
+	CONF_REVOKE_MSG=$(gettext 'Geben Sie die Tage der Gueltigkeit von Widerrufslisten ein.')
+	number_input "$lv_Revokes" "$CONF_REVOKE_MSG" "$DEFAULT_REVOKE_DAYS"
+	if [ -n "$NUMBER" ] ; then
+		DEFAULT_REVOKE_DAYS="$NUMBER"
+	else
+		DEFAULT_REVOKE_DAYS=30
+	fi
 }
 ## }}}
 # Funktion (read_ca_data), einlesen der CA Daten# {{{
@@ -535,6 +613,9 @@ read_ca_data() {
 					# Datum - un/gueltig# {{{
 					# CA_OPEN_NAME/index.txt kontrollieren/vergleichen, wegen
 					# gueltig und ungueltig.
+					#
+					# Variable CHECK_VALUE ist fuer die Funktion check_datetime
+					CHECK_VALUE="$a"
 					# Funktion (check_datetime), gueltig/ungueltig anhand# {{{
 					# der Zeitdaten herausfinden
 					#
@@ -570,14 +651,6 @@ read_ca_data() {
 						done
 					}
 					## }}}
-					######################################
-					# TODO:
-					# hier gehts weiter
-					# herausfinden welche index.txt Datei zur Kontrolle
-					# benutzt werden soll.
-					######################################
-					# Variable CHECK_VALUE ist fuer die Funktion check_datetime
-					CHECK_VALUE="$a"
 					#
 					INDEX_FILE="${KWSSL_DIR}/${CA_OPEN_NAME}/index.txt"
 					if [ -s "$INDEX_FILE" ] ; then
@@ -988,12 +1061,6 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$gv_Display)
 			# CA anschauen# {{{
-			###########################################	
-			# TODO:
-			# Anzeige
-			#openssl pkcs12 -info -nokeys -in $i \
-			#	-passin pass:${PASSWORD} | less
-			###########################################	
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				if [ -f "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem" ] ; then
 					CN_CERT_FILE="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
@@ -1032,9 +1099,6 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_Cert)
 			# Zertifikate verwalten bearbeiten.# {{{
-			#################################################
-			# TODO: noch nicht fertig
-			#################################################
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				# Funktion (cert_menu)# {{{
 				#
@@ -1151,11 +1215,11 @@ while [ "$gv_Auswahl" ] ; do
 							search_cert -v
 							if [[ -n ${CERTS_VAL_M[1]} ]] ; then
 								cert_choice_menu
-								while [ "$gv_Auswahl" ] ; do
+								while [ -n "$gv_Auswahl" ] ; do
 									case $gv_Auswahl in
 										HELP*)
 								    	    # Hilfe Messagebox
-											script_help export_ca_help
+											script_help export_cert_help
 											cert_choice_menu
 											;;
 										*)
@@ -1164,7 +1228,7 @@ while [ "$gv_Auswahl" ] ; do
 											Ex_File="${CERTS_FILE[gv_Auswahl]}"
 											find_need_files "$Ex_File"
 											if [[ -n $Found_File ]] ; then
-												export_files "$Found_File"
+												export_files "$Found_File" "export_cert_help"
 											else
 												no_need_file_msg
 											fi
@@ -1179,13 +1243,88 @@ while [ "$gv_Auswahl" ] ; do
 							cert_menu $lv_Export
 							;;
 						$lv_RevokeValidity)
-							# Zertifikate fuer ungueltig erklaeren
-							hier_ist_noch_nichts $lv_RevokeValidity
+							# Zertifikate fuer ungueltig erklaeren #{{{
+							autoload -U revoke_files
+							CERT_REVOKE_TITLE="${lv_Cert}::${lv_RevokeValidity}"
+							#
+							# Funktion (cert_revoke_menu)# {{{
+							cert_revoke_menu() {
+								CERT_REVOKE_MENU=($CERTS_VAL_M)
+								radiolist "$CERT_REVOKE_TITLE" "$gv_Menupoint" "$CERT_REVOKE_MENU"
+							}
+							## }}}
+							search_cert -v
+							if [[ -n ${CERTS_VAL_M[1]} ]] ; then
+								cert_revoke_menu
+								while [ -n "$gv_Auswahl" ] ; do
+									case $gv_Auswahl in
+										HELP*)
+								    	    # Hilfe Messagebox
+											script_help ca_revoke_help
+											cert_revoke_menu
+											;;
+										*)
+											# Auswahl der Export Formate,
+											# Daten der CA einlesen etc.
+											Ex_File="${CERTS_FILE[gv_Auswahl]}"
+											find_need_files "$Ex_File"
+											if [[ -n $Found_File ]] ; then
+												revoke_files "$Found_File"
+											else
+												no_need_file_msg
+											fi
+											break
+											;;
+									esac
+								done
+							else
+								no_cas_valid_msg
+							fi
+							## }}}
 							cert_menu $lv_RevokeValidity
 							;;
 						$gv_Delete)
-							# Zertifikate loeschen
-							hier_ist_noch_nichts $gv_Delete
+							# Zertifikate loeschen# {{{
+							unset -- $UNSET
+							# Funktion (del_cert_choice_menu)# {{{
+							CERT_DEL_TITLE="${lv_Cert}::${gv_Delete}"
+							del_cert_choice_menu() {
+								CERT_DEL_MENU=($CERTS_NON_VAL_M)
+								checklist "$CERT_TITLE" "$gv_Menupoint" "$CERT_DEL_MENU"
+							}
+							## }}}
+							search_cert -u
+							if [ -n "${CERTS_NON_VAL_M[1]}" ] ; then
+								del_cert_choice_menu
+								while [ "$gv_Auswahl" ] ; do
+									case "$gv_Auswahl" in
+										HELP*)
+								    	    # Hilfe Messagebox
+											script_help cert_del_help
+											del_cert_choice_menu
+											;;
+										*)
+											# Auswahl uebernehmen# {{{
+											cd $KWSSL_DIR
+											for i in ${=gv_Auswahl} ; {
+												find_need_files "${CERTS_FILE[i]}"
+												if [[ -n $Found_File ]] ; then
+													FileName=${${Found_File##*/}%.pem}
+													rm -rf ./${CA_OPEN_NAME}/certs/${FileName}.* \
+													./${CA_OPEN_NAME}/keys/${FileName}.* \
+													./${CA_OPEN_NAME}/req/${FileName}.* \
+													./${CA_OPEN_NAME}/${FileName}.cachain.* &>/dev/null
+												fi
+											}
+											## }}}
+											break
+											;;
+									esac
+								done
+							else
+								no_cas_nonvalid_msg
+							fi
+							## }}}
 							cert_menu $gv_Delete
 							;;
 						$gv_Back)
@@ -1201,185 +1340,40 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_CA_Import)
 			# CA importieren# {{{
-			autoload -U ca_certs_import
-			ca_certs_import
+#			autoload -U ca_certs_import
+#			ca_certs_import
+			hier_ist_noch_nichts $lv_CA_Import
 			## }}}
 			main_menu $lv_CA_Import
 			;;
 		$lv_CA_Export)
 			# CA exportieren# {{{
-			autoload -U export_files
 			if [ -n "$CA_OPEN_NAME" ] ; then
+				autoload -U export_files
 				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Export}"
 				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-				export_files "$Ex_File"
+				export_files "$Ex_File" "export_ca_help"
 			else
 				no_open_ca_msg
 			fi
 			## }}}
 			main_menu $lv_CA_Export
 			;;
-		$lv_CA_Revoke)
-			# Zertifikate einer CA für ungueltig erklaeren# {{{
+		$lv_CA_CRL_Export)
+			# Widerrufsliste der CA exportieren# {{{
 			if [ -n "$CA_OPEN_NAME" ] ; then
-				GROUND=${GROUND:-unspecified}
-				CERT_REVOKE_TITLE="${CA_OPEN_NAME}::${lv_CA_Revoke}"
-				# Funktion (cert_revoke_menu)# {{{
-				cert_revoke_menu() {
-					CERT_MENU=($CERTS_VAL_M)
-					radiolist "$CERT_REVOKE_TITLE" "$gv_Menupoint" "$CERT_MENU"
-				}
-				## }}}
-				# Funktion (ground_revoke_menu)# {{{
-				#
-				ground_revoke_menu() {
-					GROUND_REVOKE_MENU=(unspecified \"\" on
-					KeyCompromise \"\" off
-					CaCompromise \"\" off
-					AffiliationChanged \"\" off 
-					Superseded \"\" off CessationOfOperation \"\" off
-					CertificatHold \"\" off)
-					radiolist "$CERT_REVOKE_TITLE" "$gv_Menupoint" "$GROUND_REVOKE_MENU"
-				}
-				## }}}
-				# Funktion (conf_revoke_menu)# {{{
-				#
-				lv_Ground=$(gettext 'Grund')
-				#
-				conf_revoke_menu() {
-					CONF_REVOKE_MENU=(\"$lv_Ssl_Password\" \"$CA_PASS\"
-					$lv_Ground \"$GROUND\" $gv_Save \"\" $gv_Back \"\")
-					menubox "$CERT_REVOKE_TITLE" "$gv_Menupoint" "$CONF_REVOKE_MENU"
-				}
-				## }}}
-				search_cert -v
-				if [ -n "${CERTS_VAL_M[1]}" ] ; then
-					cert_revoke_menu
-					while [ "$gv_Auswahl" ] ; do
-						case $gv_Auswahl in
-							HELP*)
-					    	    # Hilfe Messagebox
-								script_help ca_revoke_help
-								cert_revoke_menu
-								;;
-							*)
-								# Revoke Menue
-								set -x
-								REVOKE_FILE="${CERTS_FILE[gv_Auswahl]}"
-								set +x
-								conf_revoke_menu
-								while [ "$gv_Auswahl" ] ; do
-									case $gv_Auswahl in
-										HELP*)
-								    	    # Hilfe Messagebox
-											script_help ca_revoke_help
-											conf_revoke_menu
-											;;
-										"$lv_Ssl_Password")
-											# Passwort fuer das Zertifikat eingeben# {{{
-											CERT_REVOKE_MSG=$(gettext 'Geben Sie bitte das Password fuer dieses Zertifikat ein.')
-											password "$CERT_REVOKE_TITLE" "$CERT_REVOKE_MSG"
-											if [ -n "$PASSPHRASE" ] ; then
-												password_display "$PASSPHRASE"
-												if [ -n "$gv_Star_Passphrase" ] ; then
-													CA_PASS="$gv_Star_Passphrase"
-												else
-													unset -- CA_PASS PASSPHRASE
-												fi
-											else
-												unset -- CA_PASS PASSPHRASE
-											fi
-											## }}}
-											conf_revoke_menu $lv_Ssl_Password
-											;;
-										$lv_Ground)
-											# Grund angeben/auswaehlen# {{{
-											ground_revoke_menu
-											while [ -n "$gv_Auswahl" ] ; do
-												case $gv_Auswahl in
-													HELP*)
-											    	    # Hilfe Messagebox
-														script_help ca_revoke_help
-														ground_revoke_menu
-														;;
-													*)
-														# Auswahl uebernehmen
-														GROUND="$gv_Auswahl"
-														break
-														;;
-												esac
-											done
-											## }}}
-											conf_revoke_menu $lv_Ground
-											;;
-										$gv_Save)
-											# CAs und Zertifikate widerrufen# {{{
-											cd ${KWSSL_DIR}/${CA_OPEN_NAME}
-											# Ist REVOKE_FILE gleich einer SubCA
-											# (cacert.pem) muessen die Schluessel von
-											# RootCA genommen werden.
-											##############################################
-											# TODO: RootCA
-											##############################################
-											if [[ $MAIN_MENU_OPT == -subca ]] ; then
-												if [ -n "$PASSPHRASE" ] ; then
-													openssl ca -config ${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
-														-batch -name ca_ca \
-														-revoke $REVOKE_FILE \
-														-passin pass:${PASSPHRASE} || prog_failure
-													openssl ca -config ${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
-														-batch -name ca_ca \
-														-gencrl -out crl/crl.pem \
-														-passin pass:${PASSPHRASE} || prog_failure
-													#
-													unset -- PASSPHRASE CA_PASS
-												else
-													MSG=$(gettext 'Sie muessen ein Passwort eingeben.')
-													msgbox "$gv_Info" "$MSG"
-												fi
-
-											else
-												openssl ca -config $KWSSL2RC \
-													-batch \
-													-revoke $REVOKE_FILE \
-													-passin pass:${PASSPHRASE} || prog_failure
-													#-batch -name $CONF_SECT \
-												openssl ca -config $KWSSL2RC \
-													-batch \
-													-gencrl -out crl/crl.pem \
-													-passin pass:${PASSPHRASE} || prog_failure
-												#
-												unset -- PASSPHRASE CA_PASS
-											fi
-											## }}}
-											break
-											;;
-										$gv_Back)
-											break
-											;;
-									esac
-								done
-								#
-								break
-								;;
-						esac
-					done
-				else
-					no_cas_valid_msg
-				fi
+				autoload -U export_files
+				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_CRL_Export}"
+				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/crl/crl.pem"
+				export_files "$Ex_File" "export_crl_help"
 			else
 				no_open_ca_msg
 			fi
 			## }}}
-			main_menu $lv_CA_Revoke
+			main_menu $lv_CA_Export
 			;;
 		$lv_Dh_File)
 			# Diffie Hellman Parameter Datei erzeugen# {{{
-			########################################
-			# TODO:
-			# Datei erzeugen oder in Zertifikat
-			# hinzufuegen?
-			########################################
 			# Funktion (dh_menu)# {{{
 			#
 			KEYLENGTH="1024"
@@ -1454,63 +1448,40 @@ while [ "$gv_Auswahl" ] ; do
 			## }}}
 			main_menu $lv_Dh_File
 			;;
-		$gv_Delete)
+		$lv_CA_Delete)
 			# CAs loeschen# {{{
-			if [ -n "$CA_OPEN_NAME" ] ; then
-				unset -- $UNSET
-				# Funktion (del_cert_choice_menu)# {{{
-				CERT_TITLE="${CA_OPEN_NAME}::${gv_Delete}"
-				del_cert_choice_menu() {
-					DEL_CERT_MENU=($CERTS_NON_VAL_M)
-					checklist "$CERT_TITLE" "$gv_Menupoint" "$DEL_CERT_MENU"
+			search_ca
+			if [ -n "${CA_DIRS_M[1]}" ] ; then
+				# Funktion (del_ca_choice_menu)# {{{
+				CA_DEL_TITLE="${lv_CA_Delete}"
+				del_ca_choice_menu() {
+					CA_DEL_MENU=($CA_DIRS_M)
+					checklist "$CA_DEL_TITLE" "$gv_Menupoint" "$CA_DEL_MENU"
 				}
 				## }}}
-				# nach $KWSSL_DIR wechseln
-				if [[ $CA_OPEN_NAME == RootCA ]] ; then
-					# komplette kwssl2 PKI Struktur loeschen
-					rm -rfv ${KWSSL_DIR}/* >&/dev/null
-				else
-					search_cert -u
-					if [ -n "${CERTS_NON_VAL_M[1]}" ] ; then
-						del_cert_choice_menu
-						while [ "$gv_Auswahl" ] ; do
-							case "$gv_Auswahl" in
-								HELP*)
-						    	    # Hilfe Messagebox
-									script_help main_help
-									del_cert_choice_menu
-									;;
-								*)
-									# Auswahl uebernehmen# {{{
-									cd $KWSSL_DIR
-									for i in ${=gv_Auswahl} ; {
-										local File
-										File="${i%%.*}"
-										if [[ $File == cacert ]] ; then
-											rm -rfv ./${CA_OPEN_NAME} >&/dev/null
-										else
-											rm -rfv ./${CA_OPEN_NAME}/${File}.* \
-											./${CA_OPEN_NAME}/req/${File}.* \
-											./${CA_OPEN_NAME}/${File}.* \
-											./${CA_OPEN_NAME}/certs/${File}.* \
-											./${CA_OPEN_NAME}/keys/${File}.* >&/dev/null
-										fi
-									}
-									## }}}
-									unset -- File
-									break
-									;;
-							esac
-						done
-					else
-						no_cas_nonvalid_msg
-					fi
-				fi
+				del_ca_choice_menu
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help ca_del_help
+							del_ca_choice_menu
+							;;
+						*)
+							# Auswahl uebernehmen und
+							# komplette CA loeschen
+							for i in ${=gv_Auswahl} ; {
+								rm -rfv ${KWSSL_DIR}/${i} &>/dev/null
+							}
+							#
+							MAIN_MENU_OPT="-n"
+							break
+							;;
+					esac
+				done
 			else
-				no_open_ca_msg
+				no_ca_msg
 			fi
 			## }}}
-			main_menu $gv_Delete
+			main_menu
 			;;
 		$gv_Exit)	break
 			;;
