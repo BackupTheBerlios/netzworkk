@@ -509,9 +509,9 @@ ca_certs_conf() {
 					NSCOMMENT_MSG=$(gettext 'Geben Sie einen Netscape Kommentar ein.')
 					inputbox "$lv_NsComment" "$NSCOMMENT_MSG" "$NSCOMMENT"
 					if [ -n "$gv_Auswahl" ] ; then
-						NSCOMMENT="$gv_Auswahl"
+						NSCOMMENT="\\\"$gv_Auswahl\\\""
 					else
-						NSCOMMENT="kwssl2 Generated Certificate"
+						NSCOMMENT="\\\"kwssl2 Generated Certificate\\\""
 					fi
 					## }}}
 					default_cacerts_menu $lv_NsComment
