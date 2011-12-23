@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwssl-0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 01:10+0200\n"
-"PO-Revision-Date: 2011-09-04 01:15+0200\n"
+"POT-Creation-Date: 2011-12-23 04:12+0100\n"
+"PO-Revision-Date: 2011-12-23 04:11+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -18,256 +18,811 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../utils/kwssl2:59
-msgid "RootCA"
-msgstr "RootCA"
+msgid "CA"
+msgstr "CA"
 
 #: ../../utils/kwssl2:60
 msgid "SubCA"
 msgstr "SubCA"
 
 #: ../../utils/kwssl2:61
+#, fuzzy
+msgid "CA erstellen"
+msgstr "create CA"
+
+#: ../../utils/kwssl2:62
 msgid "CA importieren"
 msgstr "import CA"
 
-#: ../../utils/kwssl2:62
+#: ../../utils/kwssl2:63
 msgid "CA exportieren"
 msgstr "export CA"
 
-#: ../../utils/kwssl2:63
-msgid "CA uengueltig"
-msgstr "CA revoke"
-
 #: ../../utils/kwssl2:64
-msgid "Zertifikat erstellen"
-msgstr "create CA"
+#, fuzzy
+msgid "Widerrufsliste exportieren"
+msgstr "export Revokelist"
 
 #: ../../utils/kwssl2:65
-msgid "CA"
-msgstr "CA"
+msgid "CA loeschen"
+msgstr "delete CA"
 
 #: ../../utils/kwssl2:66
-msgid "Zertifikat"
-msgstr "Certificate"
+#, fuzzy
+msgid "SubCA erstellen"
+msgstr "create SubCA"
 
 #: ../../utils/kwssl2:67
-msgid "gueltig"
-msgstr ""
+#, fuzzy
+msgid "Server Zertifikate"
+msgstr "Server Certificate"
 
 #: ../../utils/kwssl2:68
-msgid "ungueltig"
-msgstr ""
+#, fuzzy
+msgid "Benutzer Zertifikate"
+msgstr "User Certificate"
 
 #: ../../utils/kwssl2:69
+#, fuzzy
+msgid "exportieren"
+msgstr "export"
+
+#: ../../utils/kwssl2:70
+#, fuzzy
+msgid "neues CA Passwort"
+msgstr "new CA Password"
+
+#: ../../utils/kwssl2:71
+msgid "Diffie Hellman"
+msgstr "Diffie Hellman"
+
+#: ../../utils/kwssl2:72
+#, fuzzy
+msgid "Benutzer Zertifikat erstellen"
+msgstr "create User Certificate"
+
+#: ../../utils/kwssl2:73
+#, fuzzy
+msgid "Server Zertifikat erstellen"
+msgstr "create Server Certificate"
+
+#: ../../utils/kwssl2:74
+#, fuzzy
+msgid "Zertifikate"
+msgstr "Certificate"
+
+#: ../../utils/kwssl2:75 ../../functions/kwssl2/manage_export_pkcs12:16
+msgid "Export Dateiname"
+msgstr "export Filename"
+
+#: ../../utils/kwssl2:76
+msgid "gueltig"
+msgstr "valid"
+
+#: ../../utils/kwssl2:77
+msgid "ungueltig"
+msgstr "invalid"
+
+#: ../../utils/kwssl2:78
+msgid "widerrufen"
+msgstr "revoke"
+
+#: ../../utils/kwssl2:79
 msgid "oeffnen"
 msgstr "open"
 
-#: ../../utils/kwssl2:71
+#: ../../utils/kwssl2:81
 msgid "Name"
 msgstr "Name"
 
-#: ../../utils/kwssl2:72
+#: ../../utils/kwssl2:82
 msgid "Servername"
-msgstr ""
+msgstr "Servername"
 
-#: ../../utils/kwssl2:73
+#: ../../utils/kwssl2:83
 msgid "Benutzername"
-msgstr ""
+msgstr "Username"
 
-#: ../../utils/kwssl2:74
+#: ../../utils/kwssl2:84
 msgid "allgemeiner Name"
-msgstr "Common Nmae"
+msgstr "Common Name"
 
-#: ../../utils/kwssl2:75
+#: ../../utils/kwssl2:85
 msgid "Land"
 msgstr "Country"
 
-#: ../../utils/kwssl2:76
-msgid "RootCA Passwort"
-msgstr "RootCA Password"
+#: ../../utils/kwssl2:86
+#, fuzzy
+msgid "CA Passwort"
+msgstr "CA Password"
 
-#: ../../utils/kwssl2:77
-msgid "SubCA Passwort"
-msgstr "SubCA Password"
-
-#: ../../utils/kwssl2:78
+#: ../../utils/kwssl2:87
 msgid "Passwort eingeben"
 msgstr ""
 
-#: ../../utils/kwssl2:79
+#: ../../utils/kwssl2:88
 msgid "Passwort generieren"
-msgstr "generate password"
+msgstr "generate Password"
 
-#: ../../utils/kwssl2:80
+#: ../../utils/kwssl2:89
 msgid "Bundesstaat"
-msgstr ""
+msgstr "Country"
 
-#: ../../utils/kwssl2:81
+#: ../../utils/kwssl2:90
 msgid "Standort"
 msgstr "Location"
 
-#: ../../utils/kwssl2:82
+#: ../../utils/kwssl2:91
 msgid "Organisation"
 msgstr "Organisation"
 
-#: ../../utils/kwssl2:83
+#: ../../utils/kwssl2:92
 msgid "Organisationseinheit"
 msgstr "Organisationunit"
 
-#: ../../utils/kwssl2:84
+#: ../../utils/kwssl2:93
 msgid "Mail"
 msgstr "Mail"
 
-#: ../../utils/kwssl2:85
+#: ../../utils/kwssl2:94
 msgid "Gueltigkeit"
 msgstr "Validity"
 
-#: ../../utils/kwssl2:86
+#: ../../utils/kwssl2:95
 msgid "Schluessellaenge"
-msgstr ""
+msgstr "Keylength"
 
-#: ../../utils/kwssl2:87
+#: ../../utils/kwssl2:96
 msgid "Digest"
 msgstr "Digest"
 
-#: ../../utils/kwssl2:88
-msgid "CA Name"
-msgstr "CA Name"
+#: ../../utils/kwssl2:97
+msgid "Algotrithmus"
+msgstr "Algotrithmn"
 
-#: ../../utils/kwssl2:156
+#: ../../utils/kwssl2:98
+msgid "preserveDN"
+msgstr "preserveDN"
+
+#: ../../utils/kwssl2:102
+msgid "URL Eingabe"
+msgstr ""
+
+#: ../../utils/kwssl2:103
+#, fuzzy
+msgid "CA Zertifikate"
+msgstr "CA Certificate"
+
+#: ../../utils/kwssl2:104
+msgid "Widerrufslisten"
+msgstr "Revokelists"
+
+#: ../../utils/kwssl2:105
+msgid "Dateiname"
+msgstr "Filename"
+
+#: ../../utils/kwssl2:107
+msgid "Subject Alternative Name"
+msgstr "Subject Alternative Name"
+
+#: ../../utils/kwssl2:108
+#, fuzzy
+msgid "Netscape Zertifikatstyp"
+msgstr "Netscape Certificatetyp"
+
+#: ../../utils/kwssl2:109
+msgid "Netscape SSL Servername"
+msgstr "Netscape SSL Servername"
+
+#: ../../utils/kwssl2:110
+msgid "Schluesselverwendung"
+msgstr ""
+
+#: ../../utils/kwssl2:111
+msgid "erweiterte Schluesselverwendung"
+msgstr ""
+
+#: ../../utils/kwssl2:112
+msgid "kritisch oder nicht"
+msgstr ""
+
+#: ../../utils/kwssl2:113
+msgid "Netscape Widerrufs URL"
+msgstr ""
+
+#: ../../utils/kwssl2:114
+msgid "Netscape Erneuerungs URL"
+msgstr ""
+
+#: ../../utils/kwssl2:115
+msgid "Netscape CA Widerrufs URL"
+msgstr ""
+
+#: ../../utils/kwssl2:116
+msgid "Netscape Kommentar"
+msgstr "Netscape Comment"
+
+#: ../../utils/kwssl2:117
+msgid "crlDistributionPoints"
+msgstr "crlDistributionPoints"
+
+#: ../../utils/kwssl2:118
+msgid "authorityKeyIdentifier"
+msgstr "authorityKeyIdentifier"
+
+#: ../../utils/kwssl2:119
+msgid "issuerAltName"
+msgstr "issuerAltName"
+
+#: ../../utils/kwssl2:120
+msgid "nsBaseUrl"
+msgstr "nsBaseUrl"
+
+#: ../../utils/kwssl2:121
+msgid "nsPolicyUrl"
+msgstr "nsPolicyUrl"
+
+#: ../../utils/kwssl2:122
+msgid "nsCaPolicyUrl"
+msgstr "nsCaPolicyUrl"
+
+#: ../../utils/kwssl2:123 ../../utils/kwssl2:152
+msgid "basicConstraints"
+msgstr "basicConstraints"
+
+#: ../../utils/kwssl2:125
+msgid "Kopiere Email"
+msgstr "Copy Email"
+
+#: ../../utils/kwssl2:126
+msgid "Frage Benutzer"
+msgstr ""
+
+#: ../../utils/kwssl2:127
+msgid "kritisch"
+msgstr "critical"
+
+#: ../../utils/kwssl2:128
+msgid "unkritisch"
+msgstr "uncritical"
+
+#: ../../utils/kwssl2:129
+msgid "SSL CA"
+msgstr "SSL CA"
+
+#: ../../utils/kwssl2:130
+msgid "SSL Server"
+msgstr "SSL Server"
+
+#: ../../utils/kwssl2:131
+msgid "SSL Client"
+msgstr "SSL Client"
+
+#: ../../utils/kwssl2:132
+msgid "SSL Benutzer"
+msgstr "SSL User"
+
+#: ../../utils/kwssl2:133
+msgid "SSL Server, SSL Client"
+msgstr "SSL Server, SSL Client"
+
+#: ../../utils/kwssl2:134
+msgid "S/MIME CA"
+msgstr "S/MIME CA"
+
+#: ../../utils/kwssl2:135
+msgid "Object Signierende CA"
+msgstr "Object Sign CA"
+
+#: ../../utils/kwssl2:136
+msgid "SSL CA, S/MIME CA"
+msgstr "SSL CA, S/MIME CA"
+
+#: ../../utils/kwssl2:137
+msgid "SSL CA, Object Signierende CA"
+msgstr "SSL CA, Object Sign CA"
+
+#: ../../utils/kwssl2:138
+msgid "S/MIME, Object Signierende CA"
+msgstr "S/MIME, Object Sign CA"
+
+#: ../../utils/kwssl2:139
+msgid "SSL CA, S/MIME CA, Objekt Signierende CA"
+msgstr "SSL CA, S/MIME CA, Objekt Sign CA"
+
+#: ../../utils/kwssl2:140
+#, fuzzy
+msgid "Zertifikate signieren"
+msgstr "Sign Certificate"
+
+#: ../../utils/kwssl2:141
+msgid "CRL signieren"
+msgstr "Sign CRL"
+
+#: ../../utils/kwssl2:142
+#, fuzzy
+msgid "Zertifikate signieren, CRL signieren"
+msgstr "Sign Certificate, Sign CRL"
+
+#: ../../utils/kwssl2:143
+msgid "Digitale Signatur"
+msgstr "Digital Signature"
+
+#: ../../utils/kwssl2:144
+msgid "Verschluesselung"
+msgstr "Encryption"
+
+#: ../../utils/kwssl2:145
+msgid "Verschluesselung, Digitale Signatur"
+msgstr "Encryption, Digital Signature"
+
+#: ../../utils/kwssl2:146
+msgid "Grund"
+msgstr "Ground"
+
+#: ../../utils/kwssl2:147
+msgid "Object Signieren"
+msgstr "Object Sign"
+
+#: ../../utils/kwssl2:148
+msgid "Email S/MIME"
+msgstr "Email S/MIME"
+
+#: ../../utils/kwssl2:149
+msgid "SSL Benutzer, Email S/MIME"
+msgstr "SSL User, Email S/MIME"
+
+#: ../../utils/kwssl2:150
+msgid "SSL Benutzer, Object Signieren"
+msgstr "SSL User, Object Sign"
+
+#: ../../utils/kwssl2:151
+msgid "SSL Benutzer, Email, Object Signieren"
+msgstr "SSL User, Email, Object Sign"
+
+#: ../../utils/kwssl2:154
+msgid "Geben Sie den Namen fuer die lokale Speicherung ein."
+msgstr ""
+
+#: ../../utils/kwssl2:229
+msgid "erstelle CA"
+msgstr "create CA"
+
+#: ../../utils/kwssl2:234
+msgid "erstelle SubCA"
+msgstr "create SubCA"
+
+#: ../../utils/kwssl2:240
+#, sh-format
+msgid "erstelle $lv_Cert"
+msgstr "create $lv_Cert"
+
+#: ../../utils/kwssl2:495
+msgid "Geben Sie die Passphrase fuer die CA ein."
+msgstr ""
+
+#: ../../utils/kwssl2:514
+msgid "Geben Sie die Gueltigkeit des Zertifikats in Tagen ein."
+msgstr ""
+
+#: ../../utils/kwssl2:526
+msgid "Geben Sie die Tage der Gueltigkeit von Widerrufslisten ein."
+msgstr ""
+
+#: ../../utils/kwssl2:976
+msgid "Es ist keine CA geoeffnet."
+msgstr ""
+
+#: ../../utils/kwssl2:988
 #, sh-format
 msgid "Es ist keine $Ca vorhanden. Sie muessen erst eine erstellen."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:202
+#: ../../utils/kwssl2:997
 msgid "Es sind keine CAs bzw. Zertifikate vorhanden."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:208
+#: ../../utils/kwssl2:1003
 msgid "Es sind keine gueltigen CAs bzw. Zertifikate vorhanden."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:214
+#: ../../utils/kwssl2:1009
 msgid "Es sind keine ungueltigen CAs bzw. Zertifikate vorhanden."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:220
-msgid "Es ist keine SubCA geoeffnet."
-msgstr ""
-
-#: ../../functions/kwssl2/kwssl_ca:240 ../../functions/kwssl2/kwssl_ca:256
-msgid "erstelle CA"
-msgstr ""
-
-#: ../../functions/kwssl2/kwssl_ca:278
+#: ../../utils/kwssl2:1016
 #, sh-format
-msgid "erstelle $lv_Cert"
+msgid "Diese CA ($gv_Auswahl) ist schon vorhanden."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:359
-#, sh-format
-msgid ""
-"Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, $lv_Ssl_Password "
-"und $lv_Ssl_Land_Code mit Werten belegen."
+#: ../../utils/kwssl2:1022
+msgid "Es wurde keine CA oder Zertifikat Datei gefunden."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:411
+#: ../../utils/kwssl2:1406
+msgid "Geben Sie den Dateinamen ein."
+msgstr ""
+
+#: ../../utils/kwssl2:1428
 #, sh-format
 msgid ""
-"Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, $lv_Ssl_Password, "
-"$lv_Ssl_RootCA_Password und $lv_Ssl_Land_Code mit Werten belegen."
+"Die Datei \"$DH_FILENAME\" ist schon vorhanden.\\n\\nSoll sie ueberschrieben "
+"werden ($gv_Yes/$gv_No)?"
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:464
+#: ../../utils/kwssl2:1438
 #, sh-format
 msgid ""
-"Sie muessen mindestens die Menuepunkte $lv_Ssl_Name, $lv_Ssl_CommonName, "
-"$lv_Ssl_SubCA_Password und $lv_Ssl_Land_Code mit Werten belegen."
+"Sie muessen mindestens den Menupunkt $lv_Filename mit einem Wert belegen."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:482
+#: ../../functions/kwssl2/ca_certs_conf:30
+msgid ""
+"Diese Optionen werden fuer die Erstellung dieser CA und fuer die Erstellung "
+"aller SubCAs an Openssl weitergeleitet."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:55
+msgid ""
+"Diese Optionen werden fuer die Erstellung von CAs und fuer die Erstellung "
+"aller SubCAs an Openssl weitergeleitet."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:79
+msgid ""
+"Diese Optionen werden fuer die Erstellung von Server Zertifikaten eingesetzt."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:107
+msgid ""
+"Diese Optionen werden fuer die Erstellung von Benutzer Zertifikaten "
+"eingesetzt."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:172
+msgid "Geben Sie einen Namen ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:229
 #, sh-format
-msgid "Geben Sie die Passphrase fuer die $SUBDIR ein."
+msgid "Geben Sie einen Wert fuer $lv_NsCertType ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:494
+#: ../../functions/kwssl2/ca_certs_conf:277
 #, sh-format
-msgid "Geben Sie die Passphrase fuer die SubCA $SUBDIR ein."
+msgid "Geben Sie einen Wert fuer $lv_KeyUsage ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:506
-msgid "Geben Sie den Namen fuer den Server ein."
-msgstr ""
-
-#: ../../functions/kwssl2/kwssl_ca:518
-msgid "Geben Sie einen Benutzernamen ein."
-msgstr ""
-
-#: ../../functions/kwssl2/kwssl_ca:531
-msgid "Geben Sie den Namen fuer die lokale Speicherung ein."
-msgstr ""
-
-#: ../../functions/kwssl2/kwssl_ca:542
+#: ../../functions/kwssl2/ca_certs_conf:315
 #, sh-format
-msgid "Dieses Zertifikat ($gv_Auswahl) ist schon vorhanden."
+msgid "Geben Sie einen Wert fuer $lv_EKeyUsage ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:554
+#: ../../functions/kwssl2/ca_certs_conf:509
+msgid "Geben Sie einen Netscape Kommentar ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:521
+msgid "Waehlen Sie einen Wert fuer nsSsLServerName aus."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:540
 #, sh-format
-msgid "Diese SubCA ($gv_Auswahl) ist schon vorhanden."
+msgid "Geben Sie einen Wert fuer $lv_Ns_Ssl_ServerName ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:576
+#: ../../functions/kwssl2/ca_certs_conf:559
+msgid "Geben Sie einen Wert fuer crlDistributionPoints ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:571
+msgid "Geben Sie einen Wert fuer authorityKeyIdentifier ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:583
+msgid "Geben Sie einen Wert fuer basicConstraints ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:595
+msgid "Geben Sie einen Wert fuer issuerAltName ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:607
+msgid "Geben Sie eine URL fuer nsBaseUrl ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:625
+msgid "Geben Sie eine URL fuer nsPolicyUrl ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_conf:643
+msgid "Geben Sie eine URL fuer nsCaPolicyUrl ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:7
+msgid "privater Schluessel (Passwort)"
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:8
+#, fuzzy
+msgid "CA Zertifikat"
+msgstr "CA Certificate"
+
+#: ../../functions/kwssl2/ca_certs_import:9
+msgid "privater CA Schluessel"
+msgstr "private CA Key"
+
+#: ../../functions/kwssl2/ca_certs_import:10
+msgid "openssl index Datei"
+msgstr "openssl index file"
+
+#: ../../functions/kwssl2/ca_certs_import:11
+msgid "Verzeichnis mit Zertifikaten"
+msgstr "Directory with Certificates"
+
+#: ../../functions/kwssl2/ca_certs_import:43
+msgid "Geben Sie das Passwort des privaten Schluessels ein."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:88
+#, sh-format
+msgid ""
+"Geben Sie bitte eine neue Passphrase fuer die CA ein (mindestens "
+"$PASSWD_LENGTH Zeichen lang) die importiert werden soll und wiederholen "
+"diese im Feld darunter."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:199
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $lv_Ssl_Priv_Pass, $lv_Ssl_Name, "
+"$lv_Ssl_Password, $lv_Ca_Cert, $lv_Priv_Key mit Werten belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:192
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, "
+"$lv_Ssl_Land_Code, $lv_Ssl_Password, $lv_Ssl_Name und $lv_Ssl_Email mit "
+"Werten belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:268
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $lv_Ssl_Name, $lv_Ssl_CA_Password, "
+"$lv_Ssl_CommonName, $lv_Ssl_Password, $lv_Ssl_Land_Code und $lv_Ssl_Email "
+"mit Werten belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:346
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $Ssl_ServerUserName, "
+"$lv_Ssl_CA_Password, $lv_Ssl_Password, $lv_Ssl_Land_Code und $lv_Ssl_Email "
+"mit Werten belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:387
 msgid "Geben Sie den allgemeinen Namen fuer die CA ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:588
+#: ../../functions/kwssl2/conf_ca:399
+msgid "Geben Sie den Namen fuer den Server ein."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:406
+#, sh-format
+msgid "Dieser Servername ($gv_Auswahl) ist schon vorhanden."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:417
+msgid "Geben Sie einen Benutzernamen ein."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:424
+#, sh-format
+msgid "Dieser Benutzername ($gv_Auswahl) ist schon vorhanden."
+msgstr ""
+
+#: ../../functions/kwssl2/conf_ca:435
 msgid "Geben Sie den Laendercode (2 Buchstaben, z. B. DE) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:601
+#: ../../functions/kwssl2/conf_ca:450
 #, sh-format
 msgid ""
-"Geben Sie bitte die Passphrase fuer die CA ein (mindestens $PASSWD_LENGTH "
-"Zeichen lang) und wiederholen diese im Feld darunter."
+"Geben Sie bitte eine Passphrase fuer das Zertifikat oder CA ein (mindestens "
+"$PASSWD_LENGTH Zeichen lang) und wiederholen diese im Feld darunter."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:626
+#: ../../functions/kwssl2/conf_ca:482
 msgid "Geben Sie den Bundesstaat oder die Provinz ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:638
+#: ../../functions/kwssl2/conf_ca:494
 msgid "Geben Sie den Standort (z. B. Stadt) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:650
+#: ../../functions/kwssl2/conf_ca:506
 msgid "Geben Sie ihre Organisation (z. B. Firma) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:662
+#: ../../functions/kwssl2/conf_ca:518
 msgid "Geben Sie ihre Organisationeinheit (z. B. Arbeit) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:674
+#: ../../functions/kwssl2/conf_ca:530
 msgid "Geben Sie eine Mail Adresse ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:687
-msgid "Geben Sie die Gueltigkeit des Schluessels in Tagen ein."
+#: ../../functions/kwssl2/conf_ca:609
+#, sh-format
+msgid "eMail Adresse zu Subject DN hinzufuegen (${gv_Yes}/${gv_No})?"
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:916
+#: ../../functions/kwssl2/default_conf:83
+#, sh-format
+msgid "Sie muessen erst den Menuepunkt $lv_Revoke_Days mit einem Wert belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/export_files:65
+#, sh-format
+msgid "Geben Sie den Export Dateinamen mit SUFFIX $SUFFIX ein."
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pem:13
+msgid "Schluessel hinzufuegen"
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pem:14
+msgid "Fingerabdruck hinzufuegen"
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pem:64
+msgid "Schluessel hinzufuegen (ja/nein)."
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pem:76
+msgid "Fingerabdruck hinzufuegen (ja/nein)."
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pkcs12:17
+#, fuzzy
+msgid "Schluessel Passwort"
+msgstr "Key Password"
+
+#: ../../functions/kwssl2/manage_export_pkcs12:18
+#, fuzzy
+msgid "Export Passwort"
+msgstr "Export Password"
+
+#: ../../functions/kwssl2/manage_export_pkcs12:19
+msgid "Anzeigename"
+msgstr "Displayname"
+
+#: ../../functions/kwssl2/manage_export_pkcs12:20
+#, fuzzy
+msgid "Mit/Ohne Passwort"
+msgstr "With/without Password"
+
+#: ../../functions/kwssl2/manage_export_pkcs12:21
+msgid "PKCS#12 Struktur"
+msgstr "PKCS#12 Structure"
+
+#: ../../functions/kwssl2/manage_export_pkcs12:67
+msgid ""
+"Mit oder ohne Passwort exportieren (ja/nein)? Standard ist ja - mit Passwort."
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pkcs12:79
+msgid "Geben Sie das Schluessel Passwort ein."
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pkcs12:91
+msgid "Geben Sie das Export Passwort ein."
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pkcs12:103
+msgid "Geben Sie den Anzeigenamen ein."
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pkcs12:115
+msgid ""
+"Soll das Zertifikat in die PKCS#12 Struktur hinzugefuegt werden (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwssl2/manage_export_pkcs12:169
 #, sh-format
 msgid ""
-"Diese CA ($SUBDIR) ist schon vorhanden. Soll sie neu erstellt werden (ja/"
-"nein)?"
+"Sie muessen auch die Menuepunkte $lv_KeyPass und $lv_ExportPass mit Werten "
+"belegen."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:1048
+#: ../../functions/kwssl2/manage_export_pkcs12:193
+#, sh-format
+msgid "Sie muessen auch den Menuepunkt $lv_KeyPass mit einem Wert belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/revoke_files:43
 msgid "Geben Sie bitte das Password fuer dieses Zertifikat ein."
 msgstr ""
 
-#: ../../functions/kwssl2/kwssl_ca:1062
+#: ../../functions/kwssl2/revoke_files:94
 msgid "Sie muessen ein Passwort eingeben."
+msgstr ""
+
+#: ../../help/kwssl2/ca_certs_import_help:3
+msgid ""
+"privater Schluessel (Passwort): Eingabe des Passwortes fuer den\n"
+"\\tprivaten Schluessel. Ist wichtig fuer das importieren.\n"
+"\n"
+"Name: Eingabe des Namens fuer die lokale Speicherung.\n"
+"\n"
+"neues CA Passwort: Eingabe eines neuen Passwortes und dessen\n"
+"\\tBestaetigung\n"
+"\n"
+"Passwort generieren: Ein neues CA Passwort generieren.\n"
+"\n"
+"CA Zertifikat: Waehlen Sie die richtige CA Datei aus.\n"
+"\n"
+"privater CA Schluessel: Waehlen Sie die zur CA dazugehoerige\n"
+"\\tSchluessel Datei aus.\n"
+"\n"
+"openssl index Datei: Waehlen Sie die zur CA dazugehoerige\n"
+"\\tindex.txt Datei aus.\n"
+"\n"
+"\n"
+"Verzeichnis mit Zertifikaten: Waehlen Sie das CA Basis-Verzeichnis\n"
+"\\taus.\n"
+"\n"
+msgstr ""
+
+#: ../../help/kwssl2/ca_del_help:3
+msgid "Hier koennen Sie ein oder mehrere CAs loeschen."
+msgstr ""
+
+#: ../../help/kwssl2/ca_revoke_help:3
+msgid ""
+"Mit kwssl2 koennen Sie Zertifikate widerrufen bezehungsweise\n"
+"fuer ungueltig erklaeren.\n"
+"\n"
+"Password: Geben Sie das Passwort der CA oder SubCA ein.\n"
+"\n"
+"Grund: Waehlen Sie einen Grund fuer das Widerrufen des Zertifikates\n"
+"\\taus. Ist optional.\n"
+"\n"
+"unspecified - unspezifiert\n"
+"keyCompromise - Schluessel kompromitiert\n"
+"CaCompromise - CA kompromitiert\n"
+"affiliationChanged - Zugehoerigkeit geaendert\n"
+"superseded - ersetzt\n"
+"cessationOfOperation - Aufgabenende\n"
+"CertificatHold - Zertifikat enthalten\n"
+msgstr ""
+
+#: ../../help/kwssl2/cert_del_help:3
+msgid "Hier koennen Sie ein oder mehrere Zertifikate loeschen."
+msgstr ""
+
+#: ../../help/kwssl2/cert_help:3
+msgid ""
+"Ansicht: Anzeige von ein oder mehreren Zertifikaten einer CA.\n"
+"\\tDies koennen die Zertifikate einer CA oder dessen SubCAs\n"
+"\\tsein.\n"
+"\n"
+"Server Zertifikat: Erstellt ein Server Zertifikat fuer die\n"
+"\\tjeweilige CA.\n"
+"\n"
+"Benutzer Zertifikat: Erstellt ein Benutzer Zertifikat fuer die\n"
+"\\tjeweilige CA.\n"
+"\n"
+"exportieren: Exportiert Zertifikate der jeweiligen CA in\n"
+"\\tverschiedene Formate (PEM, DER, TXT, PKCS#12 und ZIP).\n"
+"\n"
+"widerrufen: Erklaert Zertifikate fuer ungueltig.\n"
+"\n"
+"loeschen: Loescht ein oder mehrere ungueltige Zertifikate.\n"
 msgstr ""
 
 #: ../../help/kwssl2/conf_ca_help:3
@@ -325,57 +880,216 @@ msgid ""
 "\\tMDC2, MD4, MD5 und RIPEMD-160. Standard ist SHA-1.\n"
 msgstr ""
 
+#: ../../help/kwssl2/conf_defaultca_help:2
+msgid ""
+"Land: Geben Sie einen 2-stelligen Laendercode ein\n"
+"\\t(z.B. DE = Deutschland).\n"
+"\n"
+"Passwort eingeben: Geben Sie ein Passwort fuer diese(s)\n"
+"\\tCA/Zertifikat ein oder lassen eins generieren.\n"
+"\n"
+"Passwort generieren: Hier kann man ein Passwort generieren lassen.\n"
+"\n"
+"Bundesstaat: Geben Sie einen Bundesstaat ein.\n"
+"\n"
+"Standort: Geben Sie eine Stadt ein.\n"
+"\n"
+"Organisation: Geben sie eine Organisation ein.\n"
+"\n"
+"Organisationseinheit: Geben sie eine Organisationeinheit ein (z. B.\n"
+"\\tSystem).\n"
+"\n"
+"Mail: Geben Sie eine Mailadresse an.\n"
+"\n"
+"Gueltigkeit: Geben Sie die Gueltigkeit des Zertifikats in Tagen\n"
+"\\tein. Standard ist 3650 Tage = 10 Jahre.\n"
+"\n"
+"Schluessellaenge: Waehlen Sie die Schluessellaenge aus. Zur Auswahl\n"
+"\\tstehen 1024, 2048 und 4096 Bit. Standard ist 4096 Bit.\n"
+"\n"
+"Digest: Waehlen Sie den Digest aus. Zur Auswahl stehen SHA-1, MD2,\n"
+"\\tMDC2, MD4, MD5 und RIPEMD-160. Standard ist SHA-1.\n"
+msgstr ""
+
+#: ../../help/kwssl2/conf_rootca_help:3
+msgid ""
+"Name: Eingabe des Namens dieser CA. Dient zur Benennung der\n"
+"\\tCA Verzeichnisstruktur beim abspeichern.\n"
+"\n"
+"allgemeiner Name: Geben Sie einen allgemeinen Namen ein (z. B.\n"
+"\\tIhren Namen).\n"
+msgstr ""
+
+#: ../../help/kwssl2/conf_serverca_help:3
+msgid ""
+"Servername: Geben Sie den Namen des Servers ein, fuer das dieses\n"
+"\\tZertifikat gelten soll. Dieser Name wird auch zur Benennung der\n"
+"\\tZertifikatsdateien benutzt.\n"
+"\n"
+"NOTIZ: Denken Sie daran das einige Server nur \"Servername\"\n"
+"\\tgleich servername.example.de fuer das Zertifikat akzeptieren, aber\n"
+"\\tnicht wenn Ihr Name oder was anderes da steht. Lesen Sie dazu die\n"
+"\\tDokumentation zu Ihrem Server Programm.\n"
+"\n"
+"CA Passwort: Geben Sie das Passwort fuer die CA ein.\n"
+msgstr ""
+
+#: ../../help/kwssl2/conf_subca_help:3
+msgid ""
+"Name: Eingabe des Namens dieser CA. Dient zur Benennung der\n"
+"\\tCA Verzeichnisstruktur beim abspeichern.\n"
+"\n"
+"CA Passwort: Geben Sie das Passwort fuer die CA ein.\n"
+"\n"
+"allgemeiner Name: Geben Sie einen allgemeinen Namen ein (z. B.\n"
+"\\tIhren Namen).\n"
+msgstr ""
+
+#: ../../help/kwssl2/conf_userca_help:3
+msgid ""
+"BenutzerName: Geben Sie den Namen des Benutzers ein, fuer den\n"
+"\\tdieses Zertifikat gelten soll. Dieser Name wird auch zur Benennung der\n"
+"\\tZertifikatsdateien benutzt.\n"
+"\n"
+"CA Passwort: Geben Sie das Passwort fuer die CA ein.\n"
+msgstr ""
+
+#: ../../help/kwssl2/default_conf_help:3
+msgid ""
+"Konfiguration der kwssl2rc fuer die einzelnen Sektionen, wie\n"
+"CA Zertifikate, Server Zertifikate, Benutzer Zertifikate und der\n"
+"Widerrufslisten.\n"
+msgstr ""
+
+#: ../../help/kwssl2/dh_help:2
+msgid ""
+"Hier kann man eine Diffie-Hellman Datei erzeugen.\n"
+"\n"
+"Dateiname: Eingabe des Dateinamens. Standard ist ~/dh1024.pem.\n"
+"\n"
+"Schluessellaenge: Waehlen Sie die Schluessellaenge aus. Zur Auswahl\n"
+"\\tstehen 1024, 2048 und 4096 Bit. Standard ist 1024 Bit.\n"
+msgstr ""
+
+#: ../../help/kwssl2/export_ca_help:3
+msgid ""
+"Hier koennen Sie CAs in verschiedene Formate exportieren.\n"
+"\n"
+"DER: Exportiert eine CA in das DER Format.\n"
+"\n"
+"PEM: Exportiert eine CA in das PEM Format.\n"
+"\n"
+"TXT: Exportiert die CA in das TXT Format. Der\n"
+"\\tAbschnitt \"----- BEGIN CERTIFICATE-----\" bis\n"
+"\\t\"----- END CERTIFICATE-----\" wird nicht exportiert.\n"
+msgstr ""
+
+#: ../../help/kwssl2/export_cert_help:3
+msgid ""
+"Hier koennen Sie Zertifikate in verschiedene Formate exportieren.\n"
+"\n"
+"DER: Exportiert ein Zertifikat in das DER Format.\n"
+"\n"
+"PEM: Exportiert ein Zertifikat in das PEM Format.\n"
+"\n"
+"PKCS#12: Exportiert ein Zertifikat in das PKCS#12 Format.\n"
+"\n"
+"TAR: Erstellt ein Tar-Archiv aus den Dateien die den Schluessel,\n"
+"\\tdas Zertifikat und die Zertifikatskette enthalten.\n"
+"\\tcachain.pem\n"
+"\\tcert.pem\n"
+"\\tkey.pem\n"
+"\n"
+"TXT: Exportiert ein Zertifikat in das TXT Format. Der\n"
+"\\tAbschnitt \"----- BEGIN CERTIFICATE-----\" bis\n"
+"\\t\"----- END CERTIFICATE-----\" wird nicht exportiert.\n"
+"\n"
+"ZIP: Erstellt ein ZIP-Archiv aus den Dateien die den Schluessel,\n"
+"\\tdas Zertifikat und die Zertifikatskette enthalten. Siehe auch\n"
+"\\tTAR Export Format.\n"
+msgstr ""
+
+#: ../../help/kwssl2/export_crl_help:3
+msgid ""
+"Hier koennen Sie die Widerrufsliste der CA in verschiedene\n"
+"Formate exportieren.\n"
+"\n"
+"DER: Exportiert die Widerrufsliste in das DER Format.\n"
+"\n"
+"PEM: Exportiert die Widerrufsliste in das PEM Format.\n"
+"\n"
+"TXT: Exportiert die Widerrufsliste in das TXT Format. Der\n"
+"\\tAbschnitt \"----- BEGIN X509 CRL-----\" bis\n"
+"\\t\"----- END X509 CRL-----\" wird nicht exportiert.\n"
+msgstr ""
+
+#: ../../help/kwssl2/export_pem_help:3
+msgid ""
+"Export Dateiname: Geben Sie einen Dateinamen, mit vollem Pfad,\n"
+"\\tfuer den Export ein. Standard ist ~/Mailadresse-cert.pem oder bei\n"
+"\\tCAs CAName-cert.pem.\n"
+"\n"
+"Schluessel hinzufuegen: Auswahl ob der Schluessel hinzugefuegt\n"
+"\\twerden soll (ja/nein).\n"
+"\n"
+"Fingerabdruck hinzufuegen: Auswahl ob der Fingerabdruck hinzugefuegt\n"
+"\\twerden soll (ja/nein).\n"
+msgstr ""
+
+#: ../../help/kwssl2/export_pkcs12_help:3
+msgid ""
+"Export Dateiname: Geben Sie einen Dateinamen, mit vollem Pfad,\n"
+"\\tfuer den Export ein. Standard ist ~/Mailadresse-cert.p12.\n"
+"\n"
+"Mit/Ohne Passwort: Auswahl ob ein Passwort fuer den Export benutzt\n"
+"\\twerden soll (ja/nein). Bei ja muessen Sie auch den Menuepunkt\n"
+"\\t\\\"Export Passwort\\\" mit einem Wert  belegen.\n"
+"\n"
+"Schluessel Passwort: Geben Sie das Passwort fuer den Schluessel ein.\n"
+"\n"
+"Export Passwort: Geben Sie ein Passwort fuer den Export ein. \n"
+"\\twerden soll (ja/nein).\n"
+"\n"
+"Anzeigename: Geben Sie einen Namen fuer die Anzeige ein.\n"
+"\n"
+"PKCS#12 Struktur: Auswahl ob die PKCS#12 Struktur hinzugefuegt\n"
+"\\twerden soll (ja/nein).\n"
+msgstr ""
+
 #: ../../help/kwssl2/help:3
 msgid ""
 "Mit kwssl2 koennen Sie x509 und S/MIME Zertifikate fuer Server und\n"
 "Clients erzeugen und verwalten. Sie koennen zwischen RSA und DSA,\n"
 "mit verschiedenen Digest Algorithmen, Schluesseln auswaehlen.\n"
 "\n"
-"RootCA: Verwaltet die Root Certifications Authority (CA).\n"
-"\\tDiese muss vor allen anderen CAs erstellt werden.\n"
-"\n"
-"SubCA: Verwaltet die SubCas Certifications Authorities (CA).\n"
-"\\tMan kann verschiedene SubCas erstellen und darin Zertifikate\n"
-"\\terstellen, importieren, exportieren, ....\n"
-msgstr ""
-
-#: ../../help/kwssl2/main_ca_help:3
-msgid ""
-"oeffnen: Oeffnen einer vorhandenen SubCa. Wird benoetigt um\n"
-"\\tsich Zertifikate der SubCA anzuschauen bzw. diese SubCA weiter zu\n"
+"oeffnen: Oeffnen einer vorhandenen Ca. Wird benoetigt um\n"
+"\\tsich Zertifikate der CA anzuschauen bzw. diese CA weiter zu\n"
 "\\tverwalten.\n"
-"\n"
-"NOTIZ: Diesen Menuepunkt gibt es nur bei SubCAs angezeigt und Sie\n"
-"\\tmuessen erst eine SubCA anlegen oder oeffnen, bevor Sie weitere\n"
-"\\tSchritte unternehmen koennen.\n"
 "\n"
 "Konfiguration: Verwaltung der Konfigurationsdatei der CAs.\n"
 "\n"
-"Ansicht: Anzeige von ein oder mehreren Zertifikaten einer CA.\n"
-"\\tDies koennen die Zertifikate der \"RootCA\" oder dessen SubCAs\n"
-"\\tsein.\n"
+"Ansicht: Anzeige der geoeffneten CA.\n"
 "\n"
-"anlegen: Erstellt eine CA. Entweder eine \"RootCA\" oder eine\n"
-"\\t\"SubCA\". Die \"RootCA\" muessen Sie als erstes erstellen. In allen\n"
-"\\terstellten SubCAs kann man Zertifikate erstellen und verwalten.\n"
+"CA erstellen: Erstellt eine CA.\n"
 "\n"
-"NOTIZ: SubCAs - diese werden mit der Passphrase der \"RootCA\"\n"
-"\\tunterschrieben und signiert.\n"
+"SubCA erstellen: Erstellt eine SubCA.\n"
 "\n"
-"Zertifikat erstellen: Erstellt Zertifikate fuer die jeweilige SubCA.\n"
+"NOTIZ: SubCAs - diese werden mit der Passphrase der gerade\n"
+"\\tgeoeffneten CA unterschrieben und signiert.\n"
 "\n"
-"NOTIZ: Diesen Menuepunkt gibt es nur bei SubCAs.\n"
+"Zertifikate: Verwalten der Zertifikate.\n"
 "\n"
-"NOTIZ: Zertifikate fuer Server - denken Sie daran das einige Server\n"
-"\\tnur den \"allgemeiner Name: servername.example.de\" im Zertifikat\n"
-"\\tverstehen, aber nicht wenn Ihr Name dort steht.\n"
+"CA importieren: Importiert eine CA.\n"
 "\n"
-"CA importieren: Importiert Zertifikate in die jeweilige CA.\n"
+"CA exportieren: Exportiert die geoeffnete CA in verschiedene\n"
+"\\tFormate (PEM, DER, und TXT).\n"
 "\n"
-"CA exportieren: Exportiert Zertifikate der jeweiligen CA in\n"
-"\\tverschiedene Formate (PEM, DER, TXT und PKCS#12).\n"
+"Widerrufsliste exportieren: Exportiert die Widerrufsliste der\n"
+"\\tgeoeffneten CA in verschiedene Formate (PEM, DER, und TXT).\n"
 "\n"
-"CA ungueltig: Erklaert Zertifikate fuer ungueltig.\n"
+"Diffie Hellman: Erstellt eine Diffie Hellman Datei. Zur Auswahl\n"
+"\\tstehen die Schluessellaengen 1024, 2048 und 4096 Bit. Der\n"
+"\\tDateiname ist zum Beispiel dh1024.pem.\n"
 "\n"
-"loeschen: Loescht ein oder mehrere ungueltige Zertifikate.\n"
+"CA loeschen: Loescht ein oder mehrere CAs.\n"
 msgstr ""

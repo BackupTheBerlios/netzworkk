@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 01:08+0200\n"
+"POT-Creation-Date: 2011-12-23 04:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,6 +189,18 @@ msgid ""
 "wenigen Teilen vorhanden, oder in Arbeit."
 msgstr ""
 
+#: ../../help/kwadmin/kw_package_help:2
+msgid "Konfiguration::Paketsystem::Hilfe"
+msgstr ""
+
+#: ../../help/kwadmin/kw_package_help:3
+msgid ""
+"Hier koennen Sie Ihr Paketmanagementsystem auswaehlen.\n"
+"dpkg - Debian, grml,...\n"
+"rpm - OpenSuSE, CentOS,...\n"
+"tar - Sourcen"
+msgstr ""
+
 #: ../../help/kwadmin/multi_help:3
 msgid ""
 "Hier koennen Sie einzelne Programme/Scripte aufrufen, die Ihnen die\n"
@@ -196,6 +208,13 @@ msgid ""
 "\n"
 "Dies sind Scripte, die Dialog basiert, alle Optionen und Parameter\n"
 "den Programmen uebergeben."
+msgstr ""
+
+#: ../../help/kwadmin/multi_kwfilm2film_help:2
+msgid ""
+"kwfilm2film: Konvertiert Viedeo Filme in andere Formate. Es benutzt\n"
+"\\tdazu transcode und mplex. Man kann aus diesem Script auch\n"
+"\\tkwvcdburn aufrufen um Video-CDs zu erstellen."
 msgstr ""
 
 #: ../../help/kwadmin/multi_kwrecord_help:2
@@ -220,6 +239,15 @@ msgstr ""
 msgid ""
 "kwvcdburn: Hiermit kann man MPEG Dateien in Video-CD Dateien\n"
 "\\tkonvertieren und brennen."
+msgstr ""
+
+#: ../../help/kwadmin/multi_kwvdvdburn_help:2
+msgid ""
+"kwvdvdburn: Hiermit kann man MPEG Video Stream Dateien in Viedeo\n"
+"\\tDVD Dateien konvertieren und brennen. Die Video DVD\n"
+"\\tVerzeichnisstruktur wird dabei angelegt. Die MPEG Video\n"
+"\\tStream Dateien kann man mit kwfilm2film, zum Beispiel\n"
+"\\tanlegen."
 msgstr ""
 
 #: ../../help/kwadmin/multi_kwxmms2d_help:2
@@ -406,6 +434,12 @@ msgstr ""
 msgid ""
 "kwrunlevconf: Zum Einstellen der Runlevel, fuer die einzelnen \n"
 "\\tInit-Scripts."
+msgstr ""
+
+#: ../../help/kwadmin/sys_kwssl_help:2
+msgid ""
+"kwssl: Mit diesem Script koennen Sie SSL Certrifikate erstellen,\n"
+"\\tsignieren etc."
 msgstr ""
 
 #: ../../help/kwadmin/sys_kwuser_help:2
