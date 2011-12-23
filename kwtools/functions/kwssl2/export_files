@@ -1,4 +1,4 @@
-# Funktion (export_files), exportiert Ca- und Zertifikats-Dateien# {{{
+# Funktion (export_files), exportiert CA- und Zertifikats-Dateien# {{{
 #
 # benoetigt die Variablen CERT_EXPORT_TITLE und Export_File
 #
@@ -6,9 +6,14 @@
 # FILE - CA/Zertifikat Datei (voller Pfad)
 #
 export_files() {
-	if [[ ${#argv} == 1 ]] ; then
+	if [[ ${#argv} == 2 ]] ; then
 		unset -- Export_File
 		Export_File="$1"
+		CERTHELPFILE="$2"
+		#
+		check_default_revoke_days ca_ca
+		DEFAULT_REVOKE_DAYS=${DEFAULT_REVOKE_DAYS:-30}
+		#
 		# Funktion (export_filename_format), bestimmt den Dateinamen# {{{
 		# der ZielDatei.
 		#
@@ -27,11 +32,17 @@ export_files() {
 						*)
 							;;
 					esac
-					if [[ $ExportName == cacert.pem ]] ; then
-						Export_FileName="${HOME}/${CA_OPEN_NAME}-cert.${FORMAT}"
-					else	
-						Export_FileName="${HOME}/${MAIL}-cert.${FORMAT}"
-					fi
+					case $ExportName in
+						cacert.pem)
+							Export_FileName="${HOME}/${CA_OPEN_NAME}-cert.${FORMAT}"
+							;;
+						crl.pem)
+							Export_FileName="${HOME}/${CA_OPEN_NAME}-crl.${FORMAT}"
+							;;
+						*)
+							Export_FileName="${HOME}/${MAIL}-cert.${FORMAT}"
+							;;
+					esac
 				fi
 			else
 				no_para_msg $0
@@ -60,12 +71,15 @@ export_files() {
 		## }}}
 		# Funktion (export_menu)# {{{
 		export_menu() {
-			if [[ ${Export_File##*/} == cacert.pem ]] ; then
-				EXPORT_MENU=(PEM \"\" on DER \"\" off TXT \"\" off)
-			else
-				EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
-				TAR \"\" off TXT \"\" off ZIP \"\" off)
-			fi
+			case ${Export_File##*/} in
+				cacert.pem|crl.pem)
+					EXPORT_MENU=(PEM \"\" on DER \"\" off TXT \"\" off)
+					;;
+				*)
+					EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
+					TAR \"\" off TXT \"\" off ZIP \"\" off)
+					;;
+			esac
 			#
 			radiolist "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
 		}
@@ -87,7 +101,7 @@ export_files() {
 			case $gv_Auswahl in
 				HELP*)
 		    	    # Hilfe Messagebox
-					script_help export_ca_help
+					script_help "$CERTHELPFILE"
 					export_menu
 					;;
 				DER)

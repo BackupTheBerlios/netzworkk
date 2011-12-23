@@ -4,15 +4,27 @@
 manage_export_most() {
 	#
 	if [[ ${#argv} == 2 ]] && [[ -f $1 ]] ; then
+		unset -- CA_CAPASSWORD
 		# Export Dateiname und FORMAT erst einmal festlegen
 		export_filename_format "$1" "$2"
 		# Funktion (export_most_menu)# {{{
 		#
 		export_most_menu() {
-			EXPORT_MOST_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
-			$gv_Create \"\" $gv_Back \"\")
+			if [[ $ExportName == crl.pem ]] ; then
+				EXPORT_MOST_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
+				\"$lv_Ssl_CA_Password\" \"$CA_CAPASSWORD\"
+				$lv_Ssl_Validity \"$DEFAULT_REVOKE_DAYS\"
+				$gv_Create \"\" $gv_Back \"\")
+			else
+				EXPORT_MOST_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
+				$gv_Create \"\" $gv_Back \"\")
+			fi
 			#
-			menubox "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MOST_MENU"
+			if [[ ${#argv} == 1 ]] ; then
+				menubox -d "$1" "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MOST_MENU"
+			else
+				menubox "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MOST_MENU"
+			fi
 		}
 		## }}}
 		export_most_menu
@@ -20,14 +32,24 @@ manage_export_most() {
 			case $gv_Auswahl in
 				HELP*)
 		    	    # Hilfe Messagebox
-					script_help export_ca_help
+					script_help export_cert_help
 					export_most_menu
 					;;
 				"$lv_ExportFilename")
 					# Dateiname fuer den Export eingeben# {{{
 					export_filename $FORMAT
 					## }}}
-					export_most_menu
+					export_most_menu $lv_ExportFilename
+					;;
+				$lv_Ssl_CA_Password)
+					# CA Passwort eingeben
+					ca_passwd_input
+					export_most_menu $lv_Ssl_CA_Password
+					;;
+				$lv_Ssl_Validity)
+					# Gueltigkeitseingabe
+					revoke_days_input
+					export_most_menu $lv_Ssl_Validity
 					;;
 				$gv_Create)
 					# exportieren# {{{
@@ -36,8 +58,30 @@ manage_export_most() {
 					case "$FORMAT" in
 						der)
 							# DER Format# {{{
-							if [ "$ExportName" = cacert.pem ] ; then
+							if [[ $ExportName == cacert.pem ]] ; then
 								openssl x509 -in ${CA_OPEN_NAME}/cacert.pem -outform DER -out "$Export_FileName" || prog_failure
+							elif [[ $ExportName == crl.pem ]] ; then
+								if [[ -n $Export_FileName ]] && \
+									[[ -n $CA_CAPASSWD ]] && \
+									[[ -n $DEFAULT_REVOKE_DAYS ]] ; then
+									# ertsmal ./tmp loeschen
+									rm -rf tmp &>/dev/null
+									# ./tmp erstellen
+									create_file -d tmp
+									#
+									openssl ca -gencrl -config $KWSSL2RC \
+										-out ./tmp/${ExportName} \
+										-passin pass:${CA_CAPASSWD} \
+										-crldays $DEFAULT_REVOKE_DAYS || prog_failure
+									openssl crl -in ./tmp/${ExportName} \
+										-outform DER -out "$Export_FileName" || prog_failure
+									#
+									unset -- CA_CAPASSWD CA_CAPASSWORD
+									break
+								else
+									failed_entry_msg
+									export_most_menu
+								fi
 							else
 								openssl x509 -in ${CA_OPEN_NAME}/certs/${ExportName} -outform DER -out "$Export_FileName" || prog_failure
 							fi
@@ -49,20 +93,45 @@ manage_export_most() {
 							rm -rf tmp &>/dev/null
 							# ./tmp erstellen
 							create_file -d tmp
-							cp -au ${CA_OPEN_NAME}/certs/${ExportName} ./tmp
-							cp -au ${CA_OPEN_NAME}/keys/${ExportName} ./tmp
-							cp -au ${CA_OPEN_NAME}/${ExportName%.pem}.cachain.pem ./tmp
+echo $COMMONNAME
+							cp -au ${CA_OPEN_NAME}/certs/${ExportName} ./tmp/cert.pem
+							cp -au ${CA_OPEN_NAME}/keys/${ExportName} ./tmp/key.pem
+							cp -au ${CA_OPEN_NAME}/${ExportName%.pem}.cachain.pem ./tmp/cachain.pem
 							# Tar-Archiv erstellen
 							cd /
 							tar -cvf "$Export_FileName" ${KWSSL_DIR#/}/tmp 2>/dev/null || prog_failure
+							break
 							## }}}
 							;;
 						txt)
 							# TXT Export# {{{
-							if [ "$ExportName" = cacert.pem ] ; then
+							if [[ $ExportName == cacert.pem ]] ; then
 								openssl x509 -in ${CA_OPEN_NAME}/${ExportName} -text -noout > "$Export_FileName" || prog_failure
+								break
+							elif [[ $ExportName == crl.pem ]] ; then
+								if [[ -n $Export_FileName ]] && \
+									[[ -n $CA_CAPASSWD ]] && \
+									[[ -n $DEFAULT_REVOKE_DAYS ]] ; then
+									# ertsmal ./tmp loeschen
+									rm -rf tmp &>/dev/null
+									# ./tmp erstellen
+									create_file -d tmp
+									#
+									openssl ca -gencrl -config $KWSSL2RC \
+										-out ./tmp/${ExportName} \
+										-passin pass:${CA_CAPASSWD} \
+										-crldays $DEFAULT_REVOKE_DAYS || prog_failure
+									openssl crl -in ./tmp/${ExportName} \
+										-text -noout > "$Export_FileName" || prog_failure
+									unset -- CA_CAPASSWD CA_CAPASSWORD
+									break
+								else
+									failed_entry_msg
+									export_most_menu
+								fi
 							else
 								openssl x509 -in ${CA_OPEN_NAME}/certs/${ExportName} -text -noout > "$Export_FileName" || prog_failure
+								break
 							fi
 							## }}}
 							;;
@@ -72,17 +141,17 @@ manage_export_most() {
 							rm -rf tmp &>/dev/null
 							# ./tmp erstellen
 							create_file -d tmp
-							cp -au ${CA_OPEN_NAME}/certs/${ExportName} ./tmp
-							cp -au ${CA_OPEN_NAME}/keys/${ExportName} ./tmp
-							cp -au ${CA_OPEN_NAME}/${ExportName%.pem}.cachain.pem ./tmp
+							cp -au ${CA_OPEN_NAME}/certs/${ExportName} ./tmp/cert.pem
+							cp -au ${CA_OPEN_NAME}/keys/${ExportName} ./tmp/key.pem
+							cp -au ${CA_OPEN_NAME}/${ExportName%.pem}.cachain.pem ./tmp/cachain.pem
 							# Tar-Archiv erstellen
 							cd ./tmp
 							zip -9v "$Export_FileName" * 2>/dev/null || prog_failure
+							break
 							## }}}
 							;;
 					esac
 					## }}}
-					break
 					;;
 				$gv_Back)
 					# Abbrechen

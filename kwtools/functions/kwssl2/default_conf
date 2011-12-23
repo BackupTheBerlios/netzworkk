@@ -49,16 +49,17 @@ default_conf() {
 				;;
 			$lv_Revokes)
 				# Tage der Gueltigkeit der Widerrufslisten eingeben# {{{
+				# bisher nur fuer alle CAs (ca_ca, server_ca,...)
+				check_default_revoke_days ca_ca
+				DEFAULT_REVOKE_DAYS=${DEFAULT_REVOKE_DAYS:-30}
 				# Funktion (default_revokes_menu)# {{{
 				#
 				default_revokes_menu() {
-					DEFAULT_REVOKE_MENU=(\"$lv_Revoke_Days\" \"$DEFAULT_REVOKE_DAYS\"
+					DEFAULT_REVOKE_MENU=(\"$lv_Ssl_Validity\" \"$DEFAULT_REVOKE_DAYS\"
 					$gv_Create \"\" $gv_Back \"\")
 					menubox "$DEFAULT_CONF_TITLE" "$gv_Menupoint" "$DEFAULT_REVOKE_MENU"
 				}
 				# }}}
-				CONF_SECTION=v3_ca
-				read_openssl_conf
 				default_revokes_menu
 				while [ "$gv_Auswahl" ] ; do
 					case $gv_Auswahl in
@@ -67,16 +68,9 @@ default_conf() {
 							script_help default_conf_help
 							default_revokes_menu
 							;;
-						"$lv_Revoke_Days")
-							# Tage eingeben# {{{
-							CONF_REVOKE_MSG=$(gettext 'Geben Sie die Tage der Gueltigkeit von Widerrufslisten ein.')
-							number_input "$lv_Revokes" "$CONF_REVOKE_MSG" "$DEFAULT_REVOKE_DAYS"
-							if [ -n "$NUMBER" ] ; then
-								DEFAULT_REVOKE_DAYS="$NUMBER"
-							else
-								DEFAULT_REVOKE_DAYS=30
-							fi
-							## }}}
+						$lv_Ssl_Validity)
+							# Gueltigkeit in Tage eingeben
+							revoke_days_input
 							default_revokes_menu $lv_Revoke_Days
 							;;
 						$gv_Create)

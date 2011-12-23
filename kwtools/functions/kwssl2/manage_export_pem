@@ -16,10 +16,17 @@ manage_export_pem() {
 		FINGERPRINT_VALUE="$gv_No"
 		#
 		export_pem_menu() {
-			EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
-			\"$lv_KeyAdd\" \"$KEY_VALUE\"
-			\"$lv_Fingerprint_Add\" \"$FINGERPRINT_VALUE\"
-			$gv_Create \"\" $gv_Back \"\")
+			if [[ $ExportName == crl.pem ]] ; then
+				EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
+				\"$lv_Ssl_CA_Password\" \"$CA_CAPASSWORD\"
+				$lv_Ssl_Validity \"$DEFAULT_REVOKE_DAYS\"
+				$gv_Create \"\" $gv_Back \"\")
+			else
+				EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
+				\"$lv_KeyAdd\" \"$KEY_VALUE\"
+				\"$lv_Fingerprint_Add\" \"$FINGERPRINT_VALUE\"
+				$gv_Create \"\" $gv_Back \"\")
+			fi
 			#
 			if [[ ${#argv} == 1 ]] ; then
 				menubox -d "$1" "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_PEM_MENU"
@@ -41,6 +48,16 @@ manage_export_pem() {
 					export_filename $FORMAT
 					## }}}
 					export_pem_menu $lv_ExportFilename
+					;;
+				$lv_Ssl_CA_Password)
+					# CA Passwort eingeben
+					ca_passwd_input
+					export_most_menu $lv_Ssl_CA_Password
+					;;
+				$lv_Ssl_Validity)
+					# Gueltigkeitseingabe
+					revoke_days_input
+					export_most_menu $lv_Ssl_Validity
 					;;
 				"$lv_KeyAdd")
 					# Schluessel hinzufuegen (yes/no)# {{{
@@ -68,29 +85,54 @@ manage_export_pem() {
 					;;
 				$gv_Create)
 					# exportieren# {{{
-					cd ${KWSSL_DIR}/${CA_OPEN_NAME}
-					check_ca_filenames
-					# Fingerprint und Schluessel mit hinzufuegen
-					if [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
-						fingerprint "$CACERT" "$Export_FileName"
-						< $CACERT >> "$Export_FileName" &>/dev/null
-						echo "" >> "$Export_FileName" &>/dev/null
-						< $CAKEY >> "$Export_FileName" &>/dev/null
-					# Schluessel mit hinzufuegen
-					elif [ "$FINGERPRINT_VALUE" = "$gv_No" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
-						< $CACERT > "$Export_FileName" &>/dev/null
-						echo "" >> "$Export_FileName" &>/dev/null
-						< $CAKEY >> "$Export_FileName" &>/dev/null
-					# Fingerprint mit hinzufuegen
-					elif [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_No" ] ; then
-						fingerprint "$CACERT" "$Export_FileName"
-						< $CACERT >> "$Export_FileName" &>/dev/null
-					# nur Zertifikat hinzufuegen
+					if [[ $ExportName == crl.pem ]] ; then
+						cd $KWSSL_DIR
+						if [[ -n $Export_FileName ]] && \
+							[[ -n $CA_CAPASSWD ]] && \
+							[[ -n $DEFAULT_REVOKE_DAYS ]] ; then
+							# ertsmal ./tmp loeschen
+							rm -rf tmp &>/dev/null
+							# ./tmp erstellen
+							create_file -d tmp
+							#
+							openssl ca -gencrl -config $KWSSL2RC \
+								-out ./tmp/${ExportName} \
+								-passin pass:${CA_CAPASSWD} \
+								-crldays $DEFAULT_REVOKE_DAYS || prog_failure
+							openssl crl -in ./tmp/${ExportName} \
+								-outform PEM -out "$Export_FileName" || prog_failure
+							#
+							unset -- CA_CAPASSWD CA_CAPASSWORD
+							break
+						else
+							failed_entry_msg
+							export_most_menu
+						fi
 					else
-						< $CACERT > "$Export_FileName" &>/dev/null
+						cd ${KWSSL_DIR}/${CA_OPEN_NAME}
+						check_ca_filenames
+						# Fingerprint und Schluessel mit hinzufuegen
+						if [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
+							fingerprint "$CACERT" "$Export_FileName"
+							< $CACERT >> "$Export_FileName" &>/dev/null
+							echo "" >> "$Export_FileName" &>/dev/null
+							< $CAKEY >> "$Export_FileName" &>/dev/null
+						# Schluessel mit hinzufuegen
+						elif [ "$FINGERPRINT_VALUE" = "$gv_No" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
+							< $CACERT > "$Export_FileName" &>/dev/null
+							echo "" >> "$Export_FileName" &>/dev/null
+							< $CAKEY >> "$Export_FileName" &>/dev/null
+						# Fingerprint mit hinzufuegen
+						elif [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_No" ] ; then
+							fingerprint "$CACERT" "$Export_FileName"
+							< $CACERT >> "$Export_FileName" &>/dev/null
+						# nur Zertifikat hinzufuegen
+						else
+							< $CACERT > "$Export_FileName" &>/dev/null
+						fi
+						break
 					fi
 					## }}}
-					break
 					;;
 				$gv_Back)
 					# Abbrechen

@@ -885,9 +885,7 @@ ca_certs_conf() {
 								ca_ca|server_ca|client_ca)
 									# CA Sektion schreiben# {{{
 									# default_crl_days herausfinden
-									DEFAULT_REVOKE_DAYS="`awk -F '= ' '/\[/{if(/'"$Sect"'/){found=1}else{found=0}}
-									/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
-									END{print DEFAULT_REVOKE_DAYS}' $KWSSL2RC`"
+									check_default_revoke_days "$Sect"
 									# Variablen belegen falls leer
 									VALIDITY="${VALIDITY:-365}"
 									DEFAULT_REVOKE_DAYS="${DEFAULT_REVOKE_DAYS:-30}"

@@ -16,6 +16,7 @@ conf_ca() {
 	# Variablen
 	KEYLENGTH="4096"
 	VALIDITY=${VALIDITY:-3650}
+	PRESERVEDN=${PRESERVEDN:-$gv_Yes}
 	#
 	# Funktion (conf_ca_menu)# {{{
 	#
@@ -48,7 +49,8 @@ conf_ca() {
                 $lv_Ssl_Location \"$LOCATION\" $lv_Ssl_Organisation \"$ORGANISATION\"
                 $lv_Ssl_Organisation_Unit \"$ORGANISATIONUNIT\" $lv_Ssl_Email \"$MAIL\"
                 $lv_Ssl_Validity \"$VALIDITY\" $lv_Ssl_Key_length \"$KEYLENGTH\"
-                $lv_Ssl_Digest \"$DIGEST\" $gv_Create \"\" $gv_Back \"\")
+                $lv_Ssl_Digest \"$DIGEST\" \"$lv_Ssl_PreserveDN\" \"$PRESERVEDN\"
+				$gv_Create \"\" $gv_Back \"\")
 				if [[ ${#argv} == 2 ]] ; then
 					menubox -d "$2" "$CA_TITLE" "$gv_Menupoint" "$CA_MENU"
 				else
@@ -67,7 +69,8 @@ conf_ca() {
                 $lv_Ssl_Organisation_Unit \"$ORGANISATIONUNIT\" $lv_Ssl_Email \"$MAIL\"
 				$lv_Ssl_Validity \"$VALIDITY\" 
                 $lv_Ssl_Key_length \"$KEYLENGTH\" $lv_Ssl_Digest \"$DIGEST\"
-				$lv_Ssl_Alg \"$ALG\" $gv_Create \"\" $gv_Back \"\")
+				$lv_Ssl_Alg \"$ALG\" \"$lv_Ssl_PreserveDN\" \"$PRESERVEDN\"
+				$gv_Create \"\" $gv_Back \"\")
 				if [[ ${#argv} == 2 ]] ; then
 					menubox -d "$2" "$CA_TITLE" "$gv_Menupoint" "$CA_MENU"
 				else
@@ -83,10 +86,6 @@ conf_ca() {
 	}
 	## }}}
 	# Funktion (check_alg), prueft den Algotrithmus# {{{
-	#########################################
-	# TODO:
-	# openssl Befehl mittels dsaparam Datei
-	#########################################
 	#
 	check_alg() {
 		if [[ $ALG == DSA ]] ; then
@@ -99,15 +98,13 @@ conf_ca() {
 		fi
 	}
 	## }}}
-	# Funktion (validity_input), Gueltigkeitseingabe# {{{
+	# Funktion (check_preservedn), prueft ob email zu Subject DN hinzugefuegt werden soll# {{{
 	#
-	validity_input() {
-		VALIDITY_MSG=$(gettext 'Geben Sie die Gueltigkeit des Zertifikats in Tagen ein.')
-		number_input "$lv_Ssl_Validity" "$VALIDITY_MSG" "$VALIDITY"
-		if [ -n "$NUMBER" ] ; then
-			VALIDITY="$NUMBER"
+	check_preservedn() {
+		if [[ $PRESERVEDN == $gv_Yes ]] ; then
+			PRESERVEDN_YES="-preserveDN"
 		else
-			VALIDITY="3650"
+			unset -- PRESERVEDN_YES
 		fi
 	}
 	## }}}
@@ -180,7 +177,7 @@ conf_ca() {
 				chmod 444 ${CA_NAME}/cacert.pem
 				# CRL erstellen
 				openssl ca -config $KWSSL2RC -name ca_ca \
-					-gencrl -out ${CA_NAME}/crl.pem \
+					-gencrl -out ${CA_NAME}/crl/crl.pem \
 					-batch -passin pass:${CAPASSWD} || prog_failure
 				# Options Variable fuers Hauptmenue festlegen.
 				# Wird benoetigt falls es noch keine CA gibt, um
@@ -213,10 +210,15 @@ conf_ca() {
 				# Grundkonfiguration einlesen
 				CONF_SECTION=v3_ca
 				read_openssl_conf
+				# Dateinamen aus den Werten vom Subject erstellen
+				# Basis: CN EMAIL OU O L ST C
+				gen_name
 				# Grundkonfiguration erstellen
 				ca_certs_conf -r
 				# Algorithmus pruefen
 				check_alg
+				# preserveDN pruefen
+				check_preservedn
 				# privater Schluessel
 				openssl $Gen_Alg -aes256 -rand ${CA_NAME}/.rand \
 					-out ${CA_NAME}/cacert.key \
@@ -235,8 +237,7 @@ conf_ca() {
 				# privaten Schluessel mit RootCA signieren
 				openssl ca -batch -notext -config ${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
 					-name ca_ca -in ${CA_NAME}/cacert.req \
-					-days $VALIDITY \
-					-preserveDN \
+					-days $VALIDITY $PRESERVEDN_YES \
 					-extensions v3_ca \
 					-keyfile ${CA_OPEN_NAME}/cacert.key \
 					-cert ${CA_OPEN_NAME}/cacert.pem \
@@ -247,14 +248,17 @@ conf_ca() {
 				chmod 444 ${CA_NAME}/cacert.pem
 				chmod 444 ${CA_OPEN_NAME}/newcerts/${NR}.pem
 				# req file nach CA/req verschieben
-				mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${CA_NAME}.pem
+#				mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${CA_NAME}.pem
+				mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem
 				# Zertifikat in die CA integrieren
-				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${CA_NAME}.pem
+#				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${CA_NAME}.pem
+				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${GEN_NAME}.pem
 				# keyfile in die CA integrieren
-				cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${CA_NAME}.pem
+#				cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${CA_NAME}.pem
+				cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
 				# CRL erstellen
 				openssl ca -config $KWSSL2RC -name ca_ca -gencrl \
-					-out ${CA_NAME}/crl.pem \
+					-out ${CA_NAME}/crl/crl.pem \
 					-batch -passin pass:${CAPASSWD} || prog_failure
 				# cachain.pem Datei erstellen.
 				cat ${CA_OPEN_NAME}/cacert.pem ${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
@@ -270,10 +274,6 @@ conf_ca() {
 			fi
 		## }}}
 		# Benutzer/Server Zertifikate erstellen# {{{
-		############################################################
-		# TODO:
-		# -preserveDN ins Menue
-		############################################################
 		elif [[ $Opt == -c ]] ; then
 			if [[ -n $COMMONNAME ]] && [[ -n $CA_CAPASSWD ]] && \
 				[[ -n $MAIL ]] && [[ -n $CAPASSWD ]] && \
@@ -286,6 +286,9 @@ conf_ca() {
 				cd ${KWSSL_DIR}/${CA_OPEN_NAME}
 				# aktuelle Serial Nr. herausbekommen
 				NR=$(< serial)
+				# Dateinamen aus den Werten vom Subject erstellen
+				# Basis: CN EMAIL OU O L ST C
+				gen_name
 				# DSA oder RSA# {{{
 				# Algorithmus pruefen
 				check_alg
@@ -293,50 +296,52 @@ conf_ca() {
 					create_file -d ../tmp
 					# -----BEGIN DSA PARAMETERS-----
 					openssl dsaparam \
-						-out ../tmp/${COMMONNAME1}.dsaparam \
+						-out ../tmp/${GEN_NAME}.dsaparam \
 						-rand ./.rand $KEYLENGTH || prog_failure
 					# -----BEGIN DSA PRIVATE KEY-----
-					openssl $Gen_Alg -aes256 -out keys/${COMMONNAME1}.pem \
+					openssl $Gen_Alg -aes256 -out keys/${GEN_NAME}.pem \
 						-rand ./.rand -passout pass:$CAPASSWD \
-						../tmp/${COMMONNAME1}.dsaparam || prog_failure
+						../tmp/${GEN_NAME}.dsaparam || prog_failure
 					# Rechte einstellen
-					chmod 400 ./${COMMONNAME1}.pem
+					chmod 400 ./${GEN_NAME}.pem
 					openssl req -new -keyform PEM -outform PEM \
 						-config $KWSSL2RC \
-						-key keys/${COMMONNAME1}.pem \
-						-out req/${COMMONNAME1}.pem \
+						-key keys/${GEN_NAME}.pem \
+						-out req/${GEN_NAME}.pem \
 						-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
 						-passin pass:${CAPASSWD} $lv_Digest || prog_failure
 				else
 					# -----BEGIN RSA PRIVATE KEY-----
-					openssl $Gen_Alg -aes256 -out keys/${COMMONNAME1}.pem \
+					openssl $Gen_Alg -aes256 -out keys/${GEN_NAME}.pem \
 						-rand ./.rand \
 						-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
 					# Rechte einstellen
-					chmod 400 keys/${COMMONNAME1}.pem
+					chmod 400 keys/${GEN_NAME}.pem
 					openssl req -new -keyform PEM -outform PEM \
 						-config $KWSSL2RC \
-						-key keys/${COMMONNAME1}.pem \
-						-out req/${COMMONNAME1}.pem \
+						-key keys/${GEN_NAME}.pem \
+						-out req/${GEN_NAME}.pem \
 						-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
 						-passin pass:${CAPASSWD} $lv_Digest || prog_failure
 				fi
 				## }}}
+				# preserveDN pruefen
+				check_preservedn
 				# Rechte einstellen
-				chmod 444 req/${COMMONNAME1}.pem
+				chmod 444 req/${GEN_NAME}.pem
 				# privaten Schluessel mit SubCA signieren
 				openssl ca -batch -notext -config $KWSSL2RC \
-					-name $CONF_SECT -in req/${COMMONNAME1}.pem \
-					-days $VALIDITY \
-					-preserveDN -md ${lv_Digest#-} \
-					-out certs/${COMMONNAME1}.pem \
+					-name $CONF_SECT -in req/${GEN_NAME}.pem \
+					-days $VALIDITY $PRESERVEDN_YES \
+					-md ${lv_Digest#-} \
+					-out certs/${GEN_NAME}.pem \
 					-outdir newcerts \
 					-passin pass:${CA_CAPASSWD} || prog_failure
 				# Rechte einstellen
-				chmod 444 certs${COMMONNAME1}.pem
+				chmod 444 certs/${GEN_NAME}.pem
 				chmod 444 newcerts/${NR}.pem
 				# cachain.pem Datei erstellen.
-				cat cachain.pem certs/${COMMONNAME1}.pem > ${COMMONNAME1}.cachain.pem
+				cat cachain.pem certs/${GEN_NAME}.pem > ${GEN_NAME}.cachain.pem
 				# Passphrasen loeschen
 				unset -- CAPASSWD CA_CAPASSWD COMMONNAME PASSWORD
 				break
@@ -359,21 +364,8 @@ conf_ca() {
 				conf_ca_menu $Opt
 				;;
 			"$lv_Ssl_CA_Password")
-				# RootCA Password Eingabe# {{{
-				CA_PASS_MSG=$(gettext 'Geben Sie die Passphrase fuer die CA ein.')
-				password "$lv_Ssl_CA_Password" "$CA_PASS_MSG" "$PASSWD_LENGTH"
-				if [ -n "$PASSPHRASE" ] ; then
-					password_display "$PASSPHRASE"
-					if [ -n "$gv_Star_Passphrase" ] ; then
-						CA_CAPASSWORD="$gv_Star_Passphrase"
-						CA_CAPASSWD="$PASSPHRASE"
-					else
-						unset -- CA_CAPASSWD PASSPHRASE
-					fi
-				else
-					unset -- CA_CAPASSWD PASSPHRASE
-				fi
-				## }}}
+				# RootCA Password Eingabe
+				ca_passwd_input
 				conf_ca_menu $Opt $lv_Ssl_CA_Password
 				;;
 			$lv_Ssl_Name)
@@ -614,6 +606,18 @@ conf_ca() {
 				done
 				## }}}
 				conf_ca_menu $Opt $lv_Ssl_Alg
+				;;
+			$lv_Ssl_PreserveDN)
+				# eMail zSubject DN hinzufuegen?# {{{
+				PRESERVEDN_MSG=$(gettext 'eMail Adresse zu Subject DN hinzufuegen (${gv_Yes}/${gv_No})?')
+				yesno "$CA_TITLE" "$PRESERVEDN_MSG"
+				if [ "$?" = 0 ] ; then
+					PRESERVEDN="$gv_Yes"
+				else
+					PRESERVEDN="$gv_No"
+				fi
+				## }}}
+				conf_ca_menu $Opt $lv_Ssl_PreserveDN
 				;;
 			$gv_Create)
 				# CAs, Zertifikate erstellen und konfigurieren# {{{
