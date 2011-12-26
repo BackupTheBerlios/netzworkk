@@ -21,7 +21,7 @@
    genisoimage-1.1.8i, gnupg, gphoto2, grub | grub-legacy | grub-pc, hwinfo, iptables,
    mjpegtools (>= 1.6.0), lame, less, libpam-runtime >=1.0.1-6, logrotate,
    loop-aes-utils >=2.12b, lvm10, lvm2, mdadm, mutt,
-   muttprint, nis, ntfsprogs, openssl, parted >=1.7.1-3, postfix >=2.3,
+   muttprint, nis, ntfsprogs, openssl (>= 1.0.0), parted >=1.7.1-3, postfix >=2.3,
    pwsafe, quota >=3.15, rsync, ssh, sudo, sysv-rc, tar,
    texlive-latex-base, texlive-latex-extra,
    ucspi-tcp-0.88, udev, vcdimager, vorbis-tools >=1.0, wireless-tools,
