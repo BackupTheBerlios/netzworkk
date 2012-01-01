@@ -14,7 +14,8 @@ hw_conf() {
 	{
 		local Anz Dev Desc
 		kernel_release
-		if [ -x "`which hwinfo`" -a "$gv_K_Minor" = 6 ] ; then
+		if [[ -x "`which hwinfo`" ]] && \
+			[[ ${gv_K_Release%%-*} > 2.6.0 ]] ; then
 			# ${gv_WorkDir}/cdrom neu erstellen falls die Datei nicht vorhanden ist.
 			if [ ! -f ${gv_WorkDir}/cdrom ] ; then
 				hwinfo --short --cdrom > ${gv_WorkDir}/cdrom
@@ -139,7 +140,8 @@ hw_conf() {
 		kernel_release
 		local Anz Anz1 Block Cyl_Bytes
 		typeset -ax DISK_DEV DISK_DEV_E DISK_DEV_M DISK_DEV_CAP DISK_CYL_BYTES
-		if [ -x "`which hwinfo`" -a "$gv_K_Minor" = 6 ] ; then
+		if [[ -x "`which hwinfo`" ]] && \
+			[[ ${gv_K_Release%%-*} > 2.6.0 ]] ; then
 			# ${gv_WorkDir}/disk neu erstellen falls die Datei nicht vorhanden ist.
 			if [ ! -f ${gv_WorkDir}/disk ] ; then
 				hwinfo --short --disk > ${gv_WorkDir}/disk
@@ -433,14 +435,18 @@ lv_free_size() {
 			#
 			# LVM Module je nach Kernelversion laden.
 			#
-			case "$gv_K_Minor" in
-				6)	load_module dm-mod	;;
-				4)	load_module lvm-mod	;;
-				*)
-					# Kernel Release wird nicht unterstuetzt.
-					no_lvm_release
-					;;
-			esac
+			if [[ $gv_K_Major == 3 ]] ; then
+				load_module dm-mod
+			else
+				case "$gv_K_Minor" in
+					6)	load_module dm-mod	;;
+					4)	load_module lvm-mod	;;
+					*)
+						# Kernel Release wird nicht unterstuetzt.
+						no_lvm_release
+						;;
+				esac
+			fi
 			#
 			# alle vorhandenen VG activieren
 			#

@@ -4567,21 +4567,27 @@ kernel_choice() {
 		#
 		gv_K_Release="`uname -r`"
 		print ${(s:.:)${gv_K_Release}} | while read a b c d ; do
-			gv_K_Major="$a"
-			case "$b" in
-				[56])
-					gv_K_Major="$a"
-					gv_K_Minor=6
-					gv_K_S_Minor="${c%%-*}"
-					gv_K_Suffix=".ko"
-					;;
-				[34])
-					gv_K_Major="$a"
-					gv_K_Minor=4
-					gv_K_S_Minor="${c%%-*}"
-					gv_K_Suffix=".o"
-					;;
-			esac
+			if [[ $a == 3 ]] ; then
+				gv_K_Major="$a"
+				gv_K_Minor="$b"
+				gv_K_S_Minor="${c%%-*}"
+				gv_K_Suffix=".ko"
+			else
+				case "$b" in
+					[56])
+						gv_K_Major="$a"
+						gv_K_Minor=6
+						gv_K_S_Minor="${c%%-*}"
+						gv_K_Suffix=".ko"
+						;;
+					[34])
+						gv_K_Major="$a"
+						gv_K_Minor=4
+						gv_K_S_Minor="${c%%-*}"
+						gv_K_Suffix=".o"
+						;;
+				esac
+			fi
 		done
 	}
 	#}}}
