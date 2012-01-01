@@ -1,9 +1,0 @@
-#!/bin/sh
-
-DIR=/usr/share/kwtools/functions
-SBIN_PATH=/usr/sbin
-
-rm -f ${SBIN_PATH}/kwfuse &>/dev/null
-rm -rf ${DIR}/kwfuse* ${DIR%/*/*}/doc/kwtools-sys-fuse &>/dev/null
-exit 0
-

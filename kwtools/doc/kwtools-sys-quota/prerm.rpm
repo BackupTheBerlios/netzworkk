@@ -1,9 +1,0 @@
-#!/bin/sh
-
-DIR=/usr/share/kwtools/functions
-SBIN_PATH=/usr/sbin
-
-rm -f ${SBIN_PATH}/kwquota &>/dev/null
-rm -rf ${DIR}/kwquota* ${DIR%/*/*}/doc/kwtools-sys-quota &>/dev/null
-exit 0
-

@@ -1,8 +1,0 @@
-#!/bin/sh
-
-DIR=/usr/share/kwtools/functions
-
-cd $DIR
-rm -rf sys &>/dev/null
-rm -rf ${DIR%/*/*}/doc/kwtools-common &>/dev/null
-exit 0
