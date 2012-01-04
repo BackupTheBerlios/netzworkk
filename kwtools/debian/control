@@ -168,7 +168,7 @@ Package: kwtools-sys
 Section: admin
 Priority: optional
 Architecture: all
-Depends: ethtool, kwtools-common (>= 0.8.3-3), libpam-runtime (>=1.0.1-6), logrotate, sysv-rc | file-rc
+Depends: ethtool, kwtools-common (>= 0.8.3-3), libpam-runtime (>=1.0.1-6), logrotate, sysv-rc (>= 2.88)| file-rc
 Suggests: kwtools-bin, dhcp-client (>=2.0) | dhcp3-client, isdnutils-base, ntpdate | ntp, pppoeconf, sudo, wvdial
 Description: System scripts
  Includes several scripts for system administration.
