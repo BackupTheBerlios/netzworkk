@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 14.08.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 10.01.2012
 #
 # Script: kwxmms2d, ein Script um den xmms2d Daemon
 # zu managen.
 #
-# Version: 0.0.2
+# Version: 0.0.3
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -86,7 +86,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_Server_Start)
 			# lokalen Server starten# {{{
-			ps uxU $USER | grep xmms2d | grep -v grep >${gv_WorkDir}/ps
+			ps uxU $USER | grep xmms2d | egrep -v 'grep|kwxmms2d' >${gv_WorkDir}/ps
 			if [ "`wc -l < ${gv_WorkDir}/ps`" = 0 ] ; then
 				PROG_OPT=" -q -c ~/.config/xmms2/xmms2.conf &"
 				eval xmms2d "${=PROG_OPT}" 1>/dev/null || prog_failure
@@ -99,7 +99,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_Server_Stop)
 			# lokale(n) Server stoppen# {{{
-			ps uxU $USER | grep xmms2d | grep -v grep >${gv_WorkDir}/ps
+			ps uxU $USER | grep xmms2d | egrep -v 'grep|kwxmms2d' >${gv_WorkDir}/ps
 			if [ "`wc -l < ${gv_WorkDir}/ps`" != 0 ] ; then
 				while read User Ps_Id Rest ; do
 					kill "$Ps_Id"
