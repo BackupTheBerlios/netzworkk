@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 07.01.2012
 #
-# Script: vcdburn, kreiert und brennt (S)VCD Filme
-# Version: 0.0.7
+# Script: kwvcdburn, kreiert und brennt (S)VCD Filme
+# Version: 0.0.8
 #
 
 trap 'setterm -inversescreen off ; setterm -reset ;
@@ -121,7 +121,7 @@ while [ "$gv_Auswahl" ] ; do
 			U_OPT=no
 			file_choice "$FILM_DIR" multi
 			#
-			if [ "$WERT" ] ; then
+			if [ "${WERT[1]}" ] ; then
 				VIDEO_TITLE=($lv_Video_Cd)
 				#
 				# Programm vcdimager ausfuehren.
@@ -147,12 +147,12 @@ while [ "$gv_Auswahl" ] ; do
 							no_input_msg
 						fi
 					else
-						# alle Dateien einzeln umwandeln, mit oder ohne Progressbox.
+						# alle Dateien einzeln umwandeln.
 						Anz=1
 						CREATE_MSG=$(gettext 'Erzeuge Video-CD: ${file% }.')
 						while read file ; do
 							$PROG -t $VCD_TYPE -c ${file%.*}.cue -b ${file%.*}.bin --volume-count=$V_Anz --volume-number=$Anz ${file% } | \
-							progressbox "$VIDEO_TITLE" "$CREATE_MSG" || prog_failure
+								progressbox "$VIDEO_TITLE" "$CREATE_MSG" || prog_failure
 							(( Anz++ ))
 						done <$gv_LogFile$$
 					fi
@@ -194,14 +194,24 @@ while [ "$gv_Auswahl" ] ; do
 					esac
 					# einzelne JPEG Dateien umwandeln.
 					Anz=0
-					for a in $File ; {
+					for a in ${=File} ; {
 						if [ -n "`print ${(M)${(f)"$(file -b "$a")"}##*(image data)*}`" ] ; then
-							jpeg2yuv "-f $FRAME_RATE -j $a -I p -n 1 | \
-							yuvscaler -O $FRAME_SIZE | \
-							mpeg2enc -a $IMAGE_FORMAT -T $SIZE -n p -f 7 -o ${a%.*}.${VCD_SUFFIX}"
-							mplex "-f 7 -o ${a%.*}.mpg ${a%.*}.${VCD_SUFFIX}"
-							(( Anz++ ))
-							VALUE[Anz]="${a%.*}.mpg"
+							# erst pruefen ob die Bildhoehe ein vielfaches von 16 ist.
+							# Wenn nicht abbrechen.
+							if jpeg2yuv -f $FRAME_RATE -j $a &>/dev/null ; then
+								jpeg2yuv -f $FRAME_RATE -j $a -I p -n -1 | \
+								yuvscaler -O $FRAME_SIZE | \
+								mpeg2enc -a $IMAGE_FORMAT -T $SIZE -n p \
+								-f 7 -o ${a%.*}.${VCD_SUFFIX}
+								# mplexen der Dateien zur mpg Datei
+								mplex -f 7 -o ${a%.*}.mpg ${a%.*}.${VCD_SUFFIX} || prog_failure
+								(( Anz++ ))
+								VALUE[Anz]="${a%.*}.mpg"
+							else
+								MSG=$(gettext 'Die Bildhoehe ist kein mehrfaches von 16. Sie muessen das Bild neu skalieren.')
+								msgbox "$gv_Info" "$MSG"
+								break 2
+							fi
 						fi
 					}
 					#
@@ -223,10 +233,10 @@ while [ "$gv_Auswahl" ] ; do
 			## }}}
 			# Funktion photo_choice_menu, komplettes Verzeichnis oder einzeln# {{{
 			#
-			PHOTO_TITLE=($lv_Photo_Cd)
-			PHOTO_CHOICE_MENU=($lv_Choice \"\" $lv_Complete \"\" $gv_Back \"\")
 			lv_Choice=$(gettext 'Auswahl')
 			lv_Complete=$(gettext 'komplett')
+			PHOTO_TITLE=($lv_Photo_Cd)
+			PHOTO_CHOICE_MENU=($lv_Choice \"\" $lv_Complete \"\" $gv_Back \"\")
 			photo_choice_menu() {
 				menubox "$PHOTO_TITLE" "$gv_Menupoint" "$PHOTO_CHOICE_MENU"
 			}
@@ -241,10 +251,8 @@ while [ "$gv_Auswahl" ] ; do
 						FORMAT="IMAGE"
 						file_choice "$PHOTO_DIR" multi
 						# Einzelne Dateien umwandeln
-						if [ "$WERT" ] ; then
+						if [ "${WERT[1]}" ] ; then
 							multiplex_image "$WERT"
-						else
-							no_input_msg
 						fi
 						photo_choice_menu
 						;;
@@ -257,8 +265,6 @@ while [ "$gv_Auswahl" ] ; do
 								cd "$VERZ"
 								multiplex_image "`print *(.)`"
 							fi
-						else
-							no_input_msg
 						fi
 						photo_choice_menu
 						;;
