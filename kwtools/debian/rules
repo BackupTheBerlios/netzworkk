@@ -264,7 +264,7 @@ install: build
 #		 help/kwadmin/sys_kwu*_help help/kwadmin/sys_kwwv*_help \
 #		help/kwadmin/sys_kwrunlevconf_help help/kwadmin/sys_kwclock_help \
 #		$(CURDIR)/debian/$(package-sys)$(kwhelp_path)
-	cp -a functions/kwauth functions/kwnetcardconf \
+	cp -a functions/kwauth functions/kwclock functions/kwnetcardconf \
 		functions/kwlogrotate \
 		functions/kwwvdialconf functions/kwrunlevconf functions/kwuser \
 		$(CURDIR)/debian/$(package-sys)$(share_path)
