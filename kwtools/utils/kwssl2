@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 23.12.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 15.01.2012
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # Certrifikate, signiert....
@@ -541,9 +541,14 @@ read_ca_data() {
 		unset -- SEARCH_INDEX_TXT
 		local DataFile File Tmp
 		File="$1"
-		DataFile="${1##*/}.data"
+		DataFile="${File##*/}.data"
+		if [ "`file -b $File`" = "PEM certificate" ] ; then
+			PROG_OPT="-inform PEM"
+		else
+			PROG_OPT="-inform DER"
+		fi
 		# Tmp-Datei anlegen und Variablen mit eingelesenen Werten belegen
-		openssl x509 -inform PEM -in $File \
+		openssl x509 ${=PROG_OPT} -in $File \
 		   -issuer -subject -enddate -noout \
 			> ${gv_WorkDir}/${DataFile}
 		#
@@ -674,7 +679,7 @@ read_ca_data() {
 			esac
 		done < ${gv_WorkDir}/${DataFile}
 		# Verschluesselung herausfinden# {{{
-		Tmp=${${(ws,: ,)${(M)${(f)"$(openssl x509 -inform PEM -in $File -text)"}##*Public Key Algorithm*}}[2]}
+		Tmp=${${(ws,: ,)${(M)${(f)"$(openssl x509 ${=PROG_OPT} -in $File -text)"}##*Public Key Algorithm*}}[2]}
 		if [[ $Tmp == rsaEncryption ]] ; then
 			ALG=RSA
 		else
@@ -1340,9 +1345,8 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_CA_Import)
 			# CA importieren# {{{
-#			autoload -U ca_certs_import
-#			ca_certs_import
-			hier_ist_noch_nichts $lv_CA_Import
+			autoload -U ca_certs_import
+			ca_certs_import
 			## }}}
 			main_menu $lv_CA_Import
 			;;

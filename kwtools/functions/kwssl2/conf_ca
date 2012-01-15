@@ -225,7 +225,7 @@ conf_ca() {
 					-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
 				# Rechte einstellen
 				chmod 400 ${CA_NAME}/cacert.key
-				# privater Schluessel
+				# Certificate Request
 				openssl req -new -keyform PEM -outform PEM \
 					-config $KWSSL2RC \
 					-key ${CA_NAME}/cacert.key \
@@ -301,6 +301,7 @@ conf_ca() {
 						../tmp/${GEN_NAME}.dsaparam || prog_failure
 					# Rechte einstellen
 					chmod 400 ./${GEN_NAME}.pem
+					# Certificate Request
 					openssl req -new -keyform PEM -outform PEM \
 						-config $KWSSL2RC \
 						-key keys/${GEN_NAME}.pem \
@@ -314,6 +315,7 @@ conf_ca() {
 						-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
 					# Rechte einstellen
 					chmod 400 keys/${GEN_NAME}.pem
+					# Certificate Request
 					openssl req -new -keyform PEM -outform PEM \
 						-config $KWSSL2RC \
 						-key keys/${GEN_NAME}.pem \

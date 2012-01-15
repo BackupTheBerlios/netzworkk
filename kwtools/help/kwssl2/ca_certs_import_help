@@ -3,7 +3,7 @@ TITLE="${lv_CA_Import}::${gv_Help}"
 MSG=$(gettext 'privater Schluessel (Passwort): Eingabe des Passwortes fuer den
 \tprivaten Schluessel. Ist wichtig fuer das importieren.
 
-Name: Eingabe des Namens fuer die lokale Speicherung.
+Name: Eingabe des Namen fuer die lokale Speicherung.
 
 neues CA Passwort: Eingabe eines neuen Passwortes und dessen
 \tBestaetigung
@@ -13,14 +13,15 @@ Passwort generieren: Ein neues CA Passwort generieren.
 CA Zertifikat: Waehlen Sie die richtige CA Datei aus.
 
 privater CA Schluessel: Waehlen Sie die zur CA dazugehoerige
-\tSchluessel Datei aus.
+\tprivate Schluessel Datei aus. Dieser muss unverschluesselt
+\tvorliegen.
 
 openssl index Datei: Waehlen Sie die zur CA dazugehoerige
 \tindex.txt Datei aus.
 
+Verzeichnis mit Zertifikaten: Waehlen Sie das Verzeichnis in dem
+\tdie Zertifikate zum importieren liegen.
 
-Verzeichnis mit Zertifikaten: Waehlen Sie das CA Basis-Verzeichnis
-\taus.
-
+NOTIZ: Zertifikate mportieren geht noch nicht.
 ')
 #}}}
