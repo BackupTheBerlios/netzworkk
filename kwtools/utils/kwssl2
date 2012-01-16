@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 15.01.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.01.2012
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
-# Certrifikate, signiert....
+# CAs, Zertifikate, signiert diese ....
 #
 # Version: 0.0.1
 #
@@ -149,7 +149,6 @@ lv_User_Smime=$(gettext 'Email S/MIME')
 lv_User_Usr_Smime=$(gettext 'SSL Benutzer, Email S/MIME')
 lv_User_Usr_ObjectSign=$(gettext 'SSL Benutzer, Object Signieren')
 lv_User_Usr_Email_ObjectSign=$(gettext 'SSL Benutzer, Email, Object Signieren')
-lv_BasicConstraints=$(gettext 'basicConstraints')
 #
 SAVE_MSG=$(gettext 'Geben Sie den Namen fuer die lokale Speicherung ein.')
 #
