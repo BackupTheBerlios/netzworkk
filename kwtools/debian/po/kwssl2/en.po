@@ -1,15 +1,15 @@
 # kwssl2 english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2012
 # This file is distributed under the same license as the kwtools-utils-ssl package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: kwssl-0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-23 04:12+0100\n"
-"PO-Revision-Date: 2011-12-23 04:11+0200\n"
+"POT-Creation-Date: 2012-01-16 01:47+0100\n"
+"PO-Revision-Date: 2012-01-16 01:55+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -276,7 +276,7 @@ msgstr "Copy Email"
 
 #: ../../utils/kwssl2:126
 msgid "Frage Benutzer"
-msgstr ""
+msgstr "Ask user"
 
 #: ../../utils/kwssl2:127
 msgid "kritisch"
@@ -409,48 +409,48 @@ msgstr ""
 msgid "Geben Sie die Tage der Gueltigkeit von Widerrufslisten ein."
 msgstr ""
 
-#: ../../utils/kwssl2:976
+#: ../../utils/kwssl2:981
 msgid "Es ist keine CA geoeffnet."
 msgstr ""
 
-#: ../../utils/kwssl2:988
+#: ../../utils/kwssl2:993
 #, sh-format
 msgid "Es ist keine $Ca vorhanden. Sie muessen erst eine erstellen."
 msgstr ""
 
-#: ../../utils/kwssl2:997
+#: ../../utils/kwssl2:1002
 msgid "Es sind keine CAs bzw. Zertifikate vorhanden."
 msgstr ""
 
-#: ../../utils/kwssl2:1003
+#: ../../utils/kwssl2:1008
 msgid "Es sind keine gueltigen CAs bzw. Zertifikate vorhanden."
 msgstr ""
 
-#: ../../utils/kwssl2:1009
+#: ../../utils/kwssl2:1014
 msgid "Es sind keine ungueltigen CAs bzw. Zertifikate vorhanden."
 msgstr ""
 
-#: ../../utils/kwssl2:1016
+#: ../../utils/kwssl2:1021
 #, sh-format
 msgid "Diese CA ($gv_Auswahl) ist schon vorhanden."
 msgstr ""
 
-#: ../../utils/kwssl2:1022
+#: ../../utils/kwssl2:1027
 msgid "Es wurde keine CA oder Zertifikat Datei gefunden."
 msgstr ""
 
-#: ../../utils/kwssl2:1406
+#: ../../utils/kwssl2:1410
 msgid "Geben Sie den Dateinamen ein."
 msgstr ""
 
-#: ../../utils/kwssl2:1428
+#: ../../utils/kwssl2:1432
 #, sh-format
 msgid ""
 "Die Datei \"$DH_FILENAME\" ist schon vorhanden.\\n\\nSoll sie ueberschrieben "
 "werden ($gv_Yes/$gv_No)?"
 msgstr ""
 
-#: ../../utils/kwssl2:1438
+#: ../../utils/kwssl2:1442
 #, sh-format
 msgid ""
 "Sie muessen mindestens den Menupunkt $lv_Filename mit einem Wert belegen."
@@ -539,44 +539,57 @@ msgstr ""
 msgid "Geben Sie eine URL fuer nsCaPolicyUrl ein."
 msgstr ""
 
-#: ../../functions/kwssl2/ca_certs_import:7
+#: ../../functions/kwssl2/ca_certs_import:10
 msgid "privater Schluessel (Passwort)"
 msgstr ""
 
-#: ../../functions/kwssl2/ca_certs_import:8
+#: ../../functions/kwssl2/ca_certs_import:11
 #, fuzzy
 msgid "CA Zertifikat"
 msgstr "CA Certificate"
 
-#: ../../functions/kwssl2/ca_certs_import:9
+#: ../../functions/kwssl2/ca_certs_import:12
 msgid "privater CA Schluessel"
 msgstr "private CA Key"
 
-#: ../../functions/kwssl2/ca_certs_import:10
+#: ../../functions/kwssl2/ca_certs_import:13
 msgid "openssl index Datei"
 msgstr "openssl index file"
 
-#: ../../functions/kwssl2/ca_certs_import:11
+#: ../../functions/kwssl2/ca_certs_import:14
 msgid "Verzeichnis mit Zertifikaten"
 msgstr "Directory with Certificates"
 
-#: ../../functions/kwssl2/ca_certs_import:43
+#: ../../functions/kwssl2/ca_certs_import:44
+msgid "Kann die Zeile \\\"X509v3 Basic Constraints\\\" nicht finden."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:83
+msgid "Das ausgewaehlte CA Zertifikat ist nicht gueltig."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:106
+msgid "Der private Schluessel kann nicht gelesen werden."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:209
+#, sh-format
+msgid ""
+"Sie muessen mindestens die Menuepunkte $lv_Ssl_Priv_Pass, $lv_Ssl_Name, "
+"$lv_Ssl_Password, $lv_Ca_Cert, $lv_Priv_Key und $lv_Certs_Dir mit Werten "
+"belegen."
+msgstr ""
+
+#: ../../functions/kwssl2/ca_certs_import:224
 msgid "Geben Sie das Passwort des privaten Schluessels ein."
 msgstr ""
 
-#: ../../functions/kwssl2/ca_certs_import:88
+#: ../../functions/kwssl2/ca_certs_import:260
 #, sh-format
 msgid ""
 "Geben Sie bitte eine neue Passphrase fuer die CA ein (mindestens "
 "$PASSWD_LENGTH Zeichen lang) die importiert werden soll und wiederholen "
 "diese im Feld darunter."
-msgstr ""
-
-#: ../../functions/kwssl2/ca_certs_import:199
-#, sh-format
-msgid ""
-"Sie muessen mindestens die Menuepunkte $lv_Ssl_Priv_Pass, $lv_Ssl_Name, "
-"$lv_Ssl_Password, $lv_Ca_Cert, $lv_Priv_Key mit Werten belegen."
 msgstr ""
 
 #: ../../functions/kwssl2/conf_ca:192
@@ -595,7 +608,7 @@ msgid ""
 "mit Werten belegen."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:346
+#: ../../functions/kwssl2/conf_ca:348
 #, sh-format
 msgid ""
 "Sie muessen mindestens die Menuepunkte $Ssl_ServerUserName, "
@@ -603,60 +616,60 @@ msgid ""
 "mit Werten belegen."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:387
+#: ../../functions/kwssl2/conf_ca:389
 msgid "Geben Sie den allgemeinen Namen fuer die CA ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:399
+#: ../../functions/kwssl2/conf_ca:401
 msgid "Geben Sie den Namen fuer den Server ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:406
+#: ../../functions/kwssl2/conf_ca:408
 #, sh-format
 msgid "Dieser Servername ($gv_Auswahl) ist schon vorhanden."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:417
+#: ../../functions/kwssl2/conf_ca:419
 msgid "Geben Sie einen Benutzernamen ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:424
+#: ../../functions/kwssl2/conf_ca:426
 #, sh-format
 msgid "Dieser Benutzername ($gv_Auswahl) ist schon vorhanden."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:435
+#: ../../functions/kwssl2/conf_ca:437
 msgid "Geben Sie den Laendercode (2 Buchstaben, z. B. DE) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:450
+#: ../../functions/kwssl2/conf_ca:452
 #, sh-format
 msgid ""
 "Geben Sie bitte eine Passphrase fuer das Zertifikat oder CA ein (mindestens "
 "$PASSWD_LENGTH Zeichen lang) und wiederholen diese im Feld darunter."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:482
+#: ../../functions/kwssl2/conf_ca:484
 msgid "Geben Sie den Bundesstaat oder die Provinz ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:494
+#: ../../functions/kwssl2/conf_ca:496
 msgid "Geben Sie den Standort (z. B. Stadt) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:506
+#: ../../functions/kwssl2/conf_ca:508
 msgid "Geben Sie ihre Organisation (z. B. Firma) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:518
+#: ../../functions/kwssl2/conf_ca:520
 msgid "Geben Sie ihre Organisationeinheit (z. B. Arbeit) ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:530
+#: ../../functions/kwssl2/conf_ca:532
 msgid "Geben Sie eine Mail Adresse ein."
 msgstr ""
 
-#: ../../functions/kwssl2/conf_ca:609
+#: ../../functions/kwssl2/conf_ca:611
 #, sh-format
 msgid "eMail Adresse zu Subject DN hinzufuegen (${gv_Yes}/${gv_No})?"
 msgstr ""
@@ -757,7 +770,7 @@ msgid ""
 "privater Schluessel (Passwort): Eingabe des Passwortes fuer den\n"
 "\\tprivaten Schluessel. Ist wichtig fuer das importieren.\n"
 "\n"
-"Name: Eingabe des Namens fuer die lokale Speicherung.\n"
+"Name: Eingabe des Namen fuer die lokale Speicherung.\n"
 "\n"
 "neues CA Passwort: Eingabe eines neuen Passwortes und dessen\n"
 "\\tBestaetigung\n"
@@ -767,15 +780,16 @@ msgid ""
 "CA Zertifikat: Waehlen Sie die richtige CA Datei aus.\n"
 "\n"
 "privater CA Schluessel: Waehlen Sie die zur CA dazugehoerige\n"
-"\\tSchluessel Datei aus.\n"
+"\\tprivate Schluessel Datei aus. Dieser muss unverschluesselt\n"
+"\\tvorliegen.\n"
 "\n"
 "openssl index Datei: Waehlen Sie die zur CA dazugehoerige\n"
 "\\tindex.txt Datei aus.\n"
 "\n"
+"Verzeichnis mit Zertifikaten: Waehlen Sie das Verzeichnis in dem\n"
+"\\tdie Zertifikate zum importieren liegen.\n"
 "\n"
-"Verzeichnis mit Zertifikaten: Waehlen Sie das CA Basis-Verzeichnis\n"
-"\\taus.\n"
-"\n"
+"NOTIZ: Zertifikate mportieren geht noch nicht.\n"
 msgstr ""
 
 #: ../../help/kwssl2/ca_del_help:3
