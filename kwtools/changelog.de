@@ -11,7 +11,7 @@ kwtools (0.8.3-4) unstable; urgency=low
   * Funktion: crontbconf neue Features - @reboot, @daily, ....
   * Funktionen: hw_conf und sys_conf Support fuer kernel Release 2.4 - >3.
 
- -- Kai Wilke <kiste@netzworkk.de>  Sun, 15 Jan 2012 15:46:23 +0100
+ -- Kai Wilke <kiste@netzworkk.de>  Mon, 16 Jan 2012 05:00:23 +0100
 
 kwtools (0.8.3-3) unstable; urgency=low
   * update Scripts (dialog option --default-item), kwdjbdns, kwnetconf,
