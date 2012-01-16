@@ -458,7 +458,9 @@ binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installdebconf
-	dh_installdocs
+	# alle nicht definierten Doc-dirs in *.dirs als Link
+	# nach kwtools-common erstellen
+	dh_installdocs --link-doc=kwtools-common
 	dh_installexamples
 	dh_installmenu -n
 #	dh_installlogrotate

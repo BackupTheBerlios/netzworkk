@@ -4,3 +4,4 @@ usr/lib/kwtools/net/kwproxy usr/sbin/kwproxy
 usr/lib/kwtools/net/kwrsync_backup usr/sbin/kwrsync_backup
 usr/lib/kwtools/kwrsync_cron usr/bin/kwrsync_cron
 usr/lib/kwtools/kwrsync_backup_cron usr/sbin/kwrsync_backup_cron
+usr/share/doc/kwtools-common usr/share/doc/kwtools-net

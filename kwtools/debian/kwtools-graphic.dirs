@@ -1,9 +1,8 @@
 usr/share/menu
 usr/bin
 usr/lib/kwtools/graphic
+usr/share/kwtools/help
 usr/share/kwtools/functions
-usr/share/kwtools/help/kwadmin
-usr/share/doc/kwtools-graphic
 usr/share/man/de/man5
 usr/share/man/de/man1
 usr/share/lintian/overrides

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: kwtools@packages.debian.org\n"
-"POT-Creation-Date: 2008-03-20 00:06+0100\n"
+"POT-Creation-Date: 2010-04-08 15:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,22 +18,119 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../kwtools-net-firewall.templates:1001
-msgid "Should kwfirewall be started when booting?"
+#: ../kwtools-net-narc.templates:1001
+msgid "Should kwnarc be started when booting?"
 msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../kwtools-net-firewall.templates:1001
+#: ../kwtools-net-narc.templates:1001
 msgid ""
-"If enabled, each time your machine starts, the kwfirewall will be started."
+"If enabled, each time your machine starts, the kwnarc (kwtools Netfilter "
+"Automatic Rule Configurator) will be started."
 msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../kwtools-net-firewall.templates:1001
+#: ../kwtools-net-narc.templates:1001
 msgid ""
-"Otherwise, if you have a dynamic connections the firewall is started when "
-"connection is established and stopped when connection is cancelled. This is "
-"done per pppd Daemon."
+"Otherwise, if you have a dynamic connections the kwnarc firewall is started "
+"when connection is established and stopped when connection is cancelled. "
+"This is done per pppd Daemon."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-narc.templates:1001
+msgid ""
+"Note: kwnarc only started, when variable EDITED is to yes (/etc/kwtools/"
+"kwnarc.conf)."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:1001
+msgid "DNS domain:"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:1001
+msgid ""
+"Please enter the DNS domain to manage from kwdjbdns_update. This is very "
+"important to create the Makefile."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:1001
+msgid "Else to use output from \"hostname -d\"."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:2001
+msgid "dhcpd.lease file:"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:2001
+msgid "Please enter the path to dhcpd.leases file from your dhcp3-server."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:3001
+msgid "Enter path to tinydns directory:"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:3001
+msgid "Please enter the path to tinydns root directory."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:3001
+msgid "tinydns must before to configured correctly."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:4001
+msgid "Enter the intervall in seconds:"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../kwtools-net-djbdns-update.templates:4001
+msgid "Please enter the intervall in seconds to check the dhcpd.leases file."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-djbdns-update.templates:5001
+msgid "Should debuging to on (yes/no)?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-djbdns-update.templates:5001
+msgid "Default is no."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-djbdns-update.templates:6001
+msgid "Should kwdjbdns_update be started when booting?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../kwtools-net-djbdns-update.templates:6001
+msgid ""
+"If enabled, each time your machine starts, the kwdjbdns_update script (dhcp-"
+"to-tindns) will be started."
 msgstr ""

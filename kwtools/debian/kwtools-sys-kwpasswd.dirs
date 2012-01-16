@@ -3,8 +3,7 @@ etc/skel/.config/autostart
 usr/share/menu
 usr/bin
 usr/lib/kwtools/sys
-usr/share/kwtools/help/kwadmin
+usr/share/kwtools/help
 usr/share/kwtools/functions
 usr/share/man/de/man1
-usr/share/doc/kwtools-sys-kwpasswd
 usr/share/lintian/overrides
