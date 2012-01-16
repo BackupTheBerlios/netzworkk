@@ -55,7 +55,7 @@ Architecture: all
 Depends: kwtools-common (>= 0.8.3-3), cddb, cd-discid, cdparanoia, cdrdao (>=1.1.9), dvd+rw-tools, mjpegtools (>= 1.6.0), lame, genisoimage (>= 1.1.8), vcdimager
 Suggests: kwtools-bin, ddrescue, vorbis-tools (>=1.0.0), wodim 
 Description: Multimedia scripts
- Multimedia scripts to create VCD's, audio CD's, rip DVD's etc.
+ Multimedia scripts to create VCD's, audio CD's, etc.
  .
  kwrecord: Burns audio, video, data CD's and ISO images, etc., onto CD-R(W) and
         DVD-+R(W).
