@@ -1,17 +1,24 @@
 Bis Version 0.9.*
 * kwxen-tools fertig stellen?
-* mehrere tinydns server nebeneinander einrichten.
 * evtl. zsh Kalendersystem fuer Termine oder mailsystem benutzen?
-* kwpostfix neue Optionen implementieren.
+* kwpostfix neue Optionen implementieren?
+* mehrere tinydns server nebeneinander einrichten?
 
-Bis Version 0.8.*
-* kwgrub2: Frontend Script fuer Bootloader "grub2" schreiben.
-* dialog Option --default-item in alle Scripte integrieren.
+Bis Version 0.8.4
+* Bug fixing.
+* dialog Option --default-item weiter integrieren.
   Dient zur schnelleren Handhabung, z. B. koennen die vorher
   ausgewaehlten Menuepunkte markiert werden.
-* mehrere tinydns server nebeneinander und pickdns einrichten.
-* kwpostfix neue Optionen implementieren.
-* kwssl umschreiben. Zeit?
+* kwssl umschreiben -> kwssl2.
+* kwrsync_backup neue features einfügen
+
+Bis Version 0.8.3
+* Bug fixing.
+* kwgrub2: Frontend Script fuer Bootloader "grub2" schreiben.
+* dialog Option --default-item in die meisten Scripte integrieren.
+  Dient zur schnelleren Handhabung, z. B. koennen die vorher
+  ausgewaehlten Menuepunkte markiert werden.
+* pickdns einrichten.
 
 Bis Version 0.8.2
 * Bug fixing.

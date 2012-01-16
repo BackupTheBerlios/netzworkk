@@ -51,6 +51,7 @@ kwtools-sys-quota: Script to manage quota.
 kwtools-sys-raid: Script for Software RAID.
 kwtools-utils: Scripts for daily use.
 kwtools-utils-pim: Scripts for the Personal Informations Management.
+kwtools-utils-ssl: Script for openssl (PKI).
 
 4. Documentation
 -----------------------------------------------------------------------
@@ -58,4 +59,4 @@ The documentation can be found on the following servers:
 http://netzworkk.berlios.de/doku/kwtools/index.html
 http://www.netzworkk.de/doku/kwtools/index.html
 
- -- Kai Wilke <kiste@netzworkk.de>, Wed, 12 Januar 2011 14:13:29 +0100
+ -- Kai Wilke <kiste@netzworkk.de>, Sat, 04 Januar 2011 01:01:29 +0100
