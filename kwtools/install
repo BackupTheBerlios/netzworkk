@@ -1,10 +1,10 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 21.01.2010
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.01.2012
 #
 # Script: install, installiert die kwtools Scripts und kompiliert,
 # wenn angegeben alle Funktionen.
 #
-# Version: 0.2.2
+# Version: 0.2.3
 #
 setopt shwordsplit extendedglob
 NAME=kwtools
@@ -196,6 +196,25 @@ cp $CP_OPT ./doc/kwtools* $DOC_PATH
 chmod -R 0755 ${DOC_PATH}/kwtools-*(/N)
 chmod -R 0755 ${DOC_PATH}/kwtools-*/**/*(/N)
 chmod 0644 ${DOC_PATH}/kwtools-*/**/*(.N)
+
+# Dokumentation Links erstellen
+echo ""
+echo "Jetzt werden vorhandene Dokumentations Verzeichnisse gelöscht,"
+echo "beziehungsweise durch Links zu kwtools-common ersetzt."
+echo ""
+pushd $DOC_PATH
+for i in kwtools-{bin,graphic,multi,net,sys,utils} \
+	kwtools-multi-{xmms2,xmms2d} kwtools-net-{djbdns,postfix} \
+	kwtools-sys-{fuse,grub,grub2,kwpasswd,parted,quota,raid,crypt,lvm} \
+	kwtools-utils-ssl ; do
+	if [ -d ${DOC_PATH}/${i} ] ; then
+		rm -rfv ${DOC_PATH}/${i}
+	fi
+	if [ ! -L ${DOC_PATH}/${i} ] ; then
+		ln -sf kwtools-common ${i}
+	fi
+done
+popd
 
 cp $CP_OPT ./doc/html ${DOC_PATH}/kwtools-doc
 chmod -R 0755 ${DOC_PATH}/kwtools-doc/**/*(/N)
