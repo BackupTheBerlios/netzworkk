@@ -1,3 +1,18 @@
+kwtools (0.8.3-4) unstable; urgency=low
+  * Bugfix: kwraid (Funktion raidhotadd_remove).
+  * Bugfix: kwlvm (Funktion vg_groups, lv_volumes).
+  * update Scripts (dialog Option --default-item), kwlogrotate, kwxmms2.
+  * Bugfix: kwpwsafe (Funktion read_pwsafe_data).
+  * Bugfix: kwxmms2 (Equalizer) und abspielen der Songs.
+  * Bugfix: kwxmms2d Konfiguration speichern.
+  * Bugfix: kwvcdburn (Photo-CD) neue Fehlerpruefung.
+  * Neues Script kwssl2.
+  * Bugfix: kwrsync_backup (Funktion kwrsync_backup_exec - Formatfehler).
+  * Funktion: crontbconf neue Features - @reboot, @daily, ....
+  * Funktionen: hw_conf und sys_conf Support fuer kernel Release 2.4 - >3.
+
+ -- Kai Wilke <kiste@netzworkk.de>  Sun, 15 Jan 2012 15:46:23 +0100
+
 kwtools (0.8.3-3) unstable; urgency=low
   * update Scripts (dialog option --default-item), kwdjbdns, kwnetconf,
     kwmutt, kwecryptfs, kwcryptsetup, kwlosetup, kwraid, kwnetcardconf.
