@@ -3,8 +3,8 @@ TITLE="${lv_Export}::${gv_Help}"
 MSG=$(gettext 'Export Dateiname: Geben Sie einen Dateinamen, mit vollem Pfad,
 \tfuer den Export ein. Standard ist ~/Mailadresse-cert.p12.
 
-Mit/Ohne Passwort: Auswahl ob ein Passwort fuer den Export benutzt
-\twerden soll (ja/nein). Bei ja muessen Sie auch den Menuepunkt
+Ohne Passwort: Auswahl ob ein Passwort fuer den Export benutzt
+\twerden soll (ja/nein). Bei nein muessen Sie auch den Menuepunkt
 \t\"Export Passwort\" mit einem Wert  belegen.
 
 Schluessel Passwort: Geben Sie das Passwort fuer den Schluessel ein.

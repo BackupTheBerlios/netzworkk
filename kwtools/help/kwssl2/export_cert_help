@@ -1,4 +1,4 @@
-# export_ca_help fuer kwssl2{{{
+# export_cert_help fuer kwssl2{{{
 TITLE="${lv_Export}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie Zertifikate in verschiedene Formate exportieren.
 
@@ -8,11 +8,8 @@ PEM: Exportiert ein Zertifikat in das PEM Format.
 
 PKCS#12: Exportiert ein Zertifikat in das PKCS#12 Format.
 
-TAR: Erstellt ein Tar-Archiv aus den Dateien die den Schluessel,
-\tdas Zertifikat und die Zertifikatskette enthalten.
-\tcachain.pem
-\tcert.pem
-\tkey.pem
+TAR: Erstellt ein Tar-Archiv aus den Dateien die den privaten
+\tSchluessel, das Zertifikat und die Zertifikatskette enthalten.
 
 TXT: Exportiert ein Zertifikat in das TXT Format. Der
 \tAbschnitt "----- BEGIN CERTIFICATE-----" bis
