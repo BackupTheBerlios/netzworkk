@@ -6,7 +6,7 @@
 # FILE - CA/Zertifikat Datei (voller Pfad)
 #
 revoke_files() {
-	if [[ ${#argv} == 1 ]] ; then
+	if [[ ${#argv} == 1 ]] && [[ -f $1 ]] ; then
 		unset -- Revoke_File
 		Revoke_File="$1"
 		GROUND=${GROUND:-unspecified}
@@ -83,10 +83,12 @@ revoke_files() {
 							-batch -crl_reason $GROUND \
 							-revoke $Revoke_File \
 							-passin pass:${PASSPHRASE} || prog_failure
-						openssl ca -config $KWSSL2RC \
-							-batch \
-							-gencrl -out crl/crl.pem \
-							-passin pass:${PASSPHRASE} || prog_failure
+						if [[ $RET == 0 ]] ; then
+							openssl ca -config $KWSSL2RC \
+								-batch \
+								-gencrl -out crl/crl.pem \
+								-passin pass:${PASSPHRASE} || prog_failure
+						fi
 						#
 						unset -- PASSPHRASE CA_PASS
 						break
