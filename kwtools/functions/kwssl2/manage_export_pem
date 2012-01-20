@@ -1,37 +1,78 @@
 # Funktion (manage_export_pem), managed das exportieren ins# {{{
 # PEM Format.
 #
+# usage: manage_export_pem OPTION EXPORT_FILE SUFFIX
+# OPTION      - [ -keys | -ca | -certs | -crl ]
+# EXPORT_FILE - zu exportierende Datei
+# SUFFIX      - pem
+#
 manage_export_pem() {
 	#
-	if [[ ${#argv} == 2 ]] && [[ -f $1 ]] ; then
-		# Export Dateiname und FORMAT erst einmal festlegen
-		export_filename_format "$1" "$2"
+	if [[ ${#argv} == 3 ]] && [[ -f $2 ]] && [[ $3 == pem ]] ; then
+		local Opt Suffix In_File
+		Opt="$1"
+		In_File="$2"
+		Suffix="$3"
+		# Export Dateiname und Suffix erst einmal festlegen
+		export_create_filename "$Opt" "$Suffix"
 		#
 		# Funktion (export_pem_menu)# {{{
 		#
 		# Variablen
 		lv_KeyAdd=$(gettext 'Schluessel hinzufuegen')
+		lv_CertAdd=$(gettext 'Zertifikat hinzufuegen')
+		lv_PassAdd=$(gettext 'ohne Passwort')
 		lv_Fingerprint_Add=$(gettext 'Fingerabdruck hinzufuegen')
+		PASS_VALUE="$gv_No"
+		CERT_VALUE="$gv_No"
 		KEY_VALUE="$gv_No"
 		FINGERPRINT_VALUE="$gv_No"
 		#
 		export_pem_menu() {
-			if [[ $ExportName == crl.pem ]] ; then
-				EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
-				\"$lv_Ssl_CA_Password\" \"$CA_CAPASSWORD\"
-				$lv_Ssl_Validity \"$DEFAULT_REVOKE_DAYS\"
-				$gv_Create \"\" $gv_Back \"\")
-			else
-				EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$Export_FileName\"
-				\"$lv_KeyAdd\" \"$KEY_VALUE\"
-				\"$lv_Fingerprint_Add\" \"$FINGERPRINT_VALUE\"
-				$gv_Create \"\" $gv_Back \"\")
-			fi
+			case "$Opt" in
+				-keys)
+					# Schluessel export Menue# {{{
+					if [[ $PASS_VALUE == $gv_Yes ]] ; then
+						EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$EXPORT_FILENAME\"
+						\"$lv_PassAdd\" \"$PASS_VALUE\"
+						\"$lv_Ssl_Key_Password\" \"$CA_CAPASSWORD\"
+						\"$lv_CertAdd\" \"$CERT_VALUE\"
+						$gv_Create \"\" $gv_Back \"\")
+					else
+						EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$EXPORT_FILENAME\"
+						\"$lv_PassAdd\" \"$PASS_VALUE\"
+						\"$lv_CertAdd\" \"$CERT_VALUE\"
+						$gv_Create \"\" $gv_Back \"\")
+					fi
+					## }}}
+					;;
+				-ca)
+					# CA export Menue
+					EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$EXPORT_FILENAME\"
+					\"$lv_KeyAdd\" \"$KEY_VALUE\"
+					\"$lv_Fingerprint_Add\" \"$FINGERPRINT_VALUE\"
+					$gv_Create \"\" $gv_Back \"\")
+					;;
+				-certs)
+					# Zertifikate export Menue
+					EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$EXPORT_FILENAME\"
+					\"$lv_KeyAdd\" \"$KEY_VALUE\"
+					\"$lv_Fingerprint_Add\" \"$FINGERPRINT_VALUE\"
+					$gv_Create \"\" $gv_Back \"\")
+					;;
+				-crl)
+					# CRL export Menue
+					EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$EXPORT_FILENAME\"
+					\"$lv_Ssl_CA_Password\" \"$CA_CAPASSWORD\"
+					$lv_Ssl_Validity \"$DEFAULT_REVOKE_DAYS\"
+					$gv_Create \"\" $gv_Back \"\")
+					;;
+			esac
 			#
 			if [[ ${#argv} == 1 ]] ; then
-				menubox -d "$1" "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_PEM_MENU"
+				menubox -d "$1" "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_PEM_MENU"
 			else
-				menubox "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_PEM_MENU"
+				menubox "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_PEM_MENU"
 			fi
 		}
 		## }}}
@@ -44,20 +85,37 @@ manage_export_pem() {
 					export_pem_menu
 					;;
 				"$lv_ExportFilename")
-					# Dateiname fuer den Export eingaben# {{{
-					export_filename $FORMAT
+					# Dateiname fuer den Export eingeben# {{{
+					export_filename $Suffix
 					## }}}
 					export_pem_menu $lv_ExportFilename
 					;;
 				$lv_Ssl_CA_Password)
 					# CA Passwort eingeben
 					ca_passwd_input
-					export_most_menu $lv_Ssl_CA_Password
+					export_pem_menu $lv_Ssl_CA_Password
+					;;
+				$lv_Ssl_Key_Password)
+					# CA Passwort eingeben
+					ca_passwd_input -keys
+					export_pem_menu $lv_Ssl_Key_Password
 					;;
 				$lv_Ssl_Validity)
 					# Gueltigkeitseingabe
 					revoke_days_input
-					export_most_menu $lv_Ssl_Validity
+					export_pem_menu $lv_Ssl_Validity
+					;;
+				"$lv_CertAdd")
+					# Zertifikat hinzufuegen (yes/no)# {{{
+					CERTADD_MSG=$(gettext 'Zertifikat hinzufuegen (ja/nein).')
+					yesno "$EXPORT_TITLE" "$CERTADD_MSG"
+					if [ "$?" = 0 ] ; then
+						CERT_VALUE="$gv_Yes"
+					else
+						CERT_VALUE="$gv_No"
+					fi
+					## }}}
+					export_pem_menu $lv_CertAdd
 					;;
 				"$lv_KeyAdd")
 					# Schluessel hinzufuegen (yes/no)# {{{
@@ -70,6 +128,18 @@ manage_export_pem() {
 					fi
 					## }}}
 					export_pem_menu $lv_KeyAdd
+					;;
+				"$lv_PassAdd")
+					# Passwort hinzufuegen (yes/no)# {{{
+					PASSADD_MSG=$(gettext 'Ohne Passwort (ja/nein).')
+					yesno "$EXPORT_TITLE" "$PASSADD_MSG"
+					if [ "$?" = 0 ] ; then
+						PASS_VALUE="$gv_Yes"
+					else
+						PASS_VALUE="$gv_No"
+					fi
+					## }}}
+					export_pem_menu $lv_PassAdd
 					;;
 				"$lv_Fingerprint_Add")
 					# Fingerabdruck hinzufuegen (yes/no)# {{{
@@ -85,57 +155,124 @@ manage_export_pem() {
 					;;
 				$gv_Create)
 					# exportieren# {{{
-					if [[ $ExportName == crl.pem ]] ; then
-						cd $KWSSL_DIR
-						if [[ -n $Export_FileName ]] && \
-							[[ -n $CA_CAPASSWD ]] && \
-							[[ -n $DEFAULT_REVOKE_DAYS ]] ; then
-							# ertsmal ./tmp loeschen
-							rm -rf tmp &>/dev/null
-							# ./tmp erstellen
-							create_file -d tmp
-							#
-							openssl ca -gencrl -config $KWSSL2RC \
-								-out ./tmp/${ExportName} \
-								-passin pass:${CA_CAPASSWD} \
-								-crldays $DEFAULT_REVOKE_DAYS || prog_failure
-							openssl crl -in ./tmp/${ExportName} \
-								-outform PEM -out "$Export_FileName" || prog_failure
-							#
-							unset -- CA_CAPASSWD CA_CAPASSWORD
-							break
-						else
-							failed_entry_msg
-							export_most_menu
-						fi
-					else
-						cd ${KWSSL_DIR}/${CA_OPEN_NAME}
-						check_ca_filenames
+					# Funktion (create_export_ca_certs)# {{{
+					#
+					create_export_ca_certs() {
 						# Fingerprint und Schluessel mit hinzufuegen
 						if [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
-							fingerprint "$CACERT" "$Export_FileName"
-							< $CACERT >> "$Export_FileName" &>/dev/null
-							echo "" >> "$Export_FileName" &>/dev/null
-							< $CAKEY >> "$Export_FileName" &>/dev/null
+							fingerprint "$CACERT" "$EXPORT_FILENAME"
+							< $CACERT >> "$EXPORT_FILENAME" &>/dev/null
+							echo "" >> "$EXPORT_FILENAME" &>/dev/null
+							< $CAKEY >> "$EXPORT_FILENAME" &>/dev/null
 						# Schluessel mit hinzufuegen
 						elif [ "$FINGERPRINT_VALUE" = "$gv_No" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
-							< $CACERT > "$Export_FileName" &>/dev/null
-							echo "" >> "$Export_FileName" &>/dev/null
-							< $CAKEY >> "$Export_FileName" &>/dev/null
+							< $CACERT > "$EXPORT_FILENAME" &>/dev/null
+							echo "" >> "$EXPORT_FILENAME" &>/dev/null
+							< $CAKEY >> "$EXPORT_FILENAME" &>/dev/null
 						# Fingerprint mit hinzufuegen
 						elif [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_No" ] ; then
-							fingerprint "$CACERT" "$Export_FileName"
-							< $CACERT >> "$Export_FileName" &>/dev/null
+							fingerprint "$CACERT" "$EXPORT_FILENAME"
+							< $CACERT >> "$EXPORT_FILENAME" &>/dev/null
 						# nur Zertifikat hinzufuegen
 						else
-							< $CACERT > "$Export_FileName" &>/dev/null
+							< $CACERT > "$EXPORT_FILENAME" &>/dev/null
 						fi
-						break
-					fi
+					}
+					## }}}
+					case "$Opt" in
+						-crl)
+							# Widerrufsliste exportieren# {{{
+							cd $KWSSL_DIR
+							if [[ -n $CA_CAPASSWORD ]] && \
+								[[ -n $DEFAULT_REVOKE_DAYS ]] ; then
+								# ertsmal ./tmp loeschen
+								rm -rf tmp &>/dev/null
+								# ./tmp erstellen
+								create_file -d tmp
+								#
+								openssl ca -gencrl -config $KWSSL2RC \
+									-out ./tmp/crl.pem \
+									-passin pass:${CA_CAPASSWD} \
+									-crldays $DEFAULT_REVOKE_DAYS || prog_failure
+								if [[ $RET == 0 ]] ; then
+									openssl crl -in ./tmp/crl.pem \
+										-outform PEM -out "$EXPORT_FILENAME" || \
+										prog_failure
+								fi
+								#
+								unset -- CA_CAPASSWD CA_CAPASSWORD
+								break
+							else
+								failed_entry_msg
+								export_pem_menu
+							fi
+							## }}}
+							;;
+						-ca)
+							# CAs exportieren# {{{
+							unset -- CACERT CAKEY
+							local TmpFile
+							TmpFile="${In_File##*/}"
+							if [[ $TmpFile == cacert.pem ]] ; then
+								CACERT="$In_File"
+								CAKEY="${In_File%/cacert.pem}/cacert.key"
+							fi
+							# exportieren
+							create_export_ca_certs
+							break
+							## }}}
+							;;
+						-certs)
+							# Zertifikate exportieren# {{{
+							unset -- CACERT CAKEY
+							CACERT="$In_File"
+							CAKEY="${In_File/\/certs\///keys/}"
+							# exportieren
+							create_export_ca_certs
+							break
+							## }}}
+							;;
+						-keys)
+							# Schluessel exportieren# {{{
+							# Algorithmus herausfinden
+							get_alg_privkey "$In_File"
+							# Zertifikat Variable belegen
+							CACERT="${In_File/\/keys\///certs/}"
+							# ohne Passwort, mit Zertifikat
+							if [[ $PASS_VALUE == $gv_Yes ]] && \
+								[[ -n $CA_CAPASSWORD ]] && \
+								[[ $CERT_VALUE == $gv_Yes ]] ; then
+								openssl "$ALGORITHM" -in $In_File -outform PEM \
+									-out "$EXPORT_FILENAME" \
+									-passin pass:${CA_CAPASSWD} || prog_failure
+								< "$CACERT" >> "$EXPORT_FILENAME" &>/dev/null
+							# ohne Passwort, ohne Zertifikat
+							elif [[ $PASS_VALUE == $gv_Yes ]] && \
+								[[ -n $CA_CAPASSWORD ]] && \
+								[[ $CERT_VALUE == $gv_No ]] ; then
+								openssl "$ALGORITHM" -in $In_File -outform PEM \
+									-out "$EXPORT_FILENAME" \
+									-passin pass:${CA_CAPASSWD} || prog_failure
+							# mit Passwort, mit Zertifikat
+							elif [[ $PASS_VALUE == $gv_No ]] && \
+								[[ $CERT_VALUE == $gv_Yes ]] ; then
+								< "$In_File" > "$EXPORT_FILENAME" &>/dev/null
+								< "$CACERT" >> "$EXPORT_FILENAME" &>/dev/null
+							# mit Passwort, ohne Zertifikat
+							else
+								< "$In_File" > "$EXPORT_FILENAME" &>/dev/null
+							fi
+							# Passwoerter loeschen
+							unset -- CA_CAPASSWORD CA_CAPASSWD
+							break
+							## }}}
+							;;
+					esac
 					## }}}
 					;;
 				$gv_Back)
 					# Abbrechen
+					unset -- CA_CAPASSWORD CA_CAPASSWD
 					break
 					;;
 			esac

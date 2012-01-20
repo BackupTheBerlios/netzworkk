@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.01.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2012
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # CAs, Zertifikate, signiert diese ....
 #
-# Version: 0.0.1
+# Version: 0.0.2
 #
 
 # Ausführen von Befehlen auf bestimmte Signale.
@@ -72,6 +72,8 @@ lv_Dh_File=$(gettext 'Diffie Hellman')
 lv_UserCA_Create=$(gettext 'Benutzer Zertifikat erstellen')
 lv_ServerCA_Create=$(gettext 'Server Zertifikat erstellen')
 lv_Cert=$(gettext 'Zertifikate')
+lv_Key=$(gettext 'Schluessel')
+lv_Request=$(gettext 'Anforderungen')
 lv_ExportFilename=$(gettext 'Export Dateiname')
 lv_YesValidity=$(gettext 'gueltig')
 lv_NoValidity=$(gettext 'ungueltig')
@@ -84,6 +86,7 @@ lv_Ssl_UserName=$(gettext 'Benutzername')
 lv_Ssl_CommonName=$(gettext 'allgemeiner Name')
 lv_Ssl_Land_Code=$(gettext 'Land')
 lv_Ssl_CA_Password=$(gettext 'CA Passwort')
+lv_Ssl_Key_Password=$(gettext 'Schluessel Passwort')
 lv_Ssl_Password=$(gettext 'Passwort eingeben')
 lv_Ssl_Password_Generate=$(gettext 'Passwort generieren')
 lv_Ssl_Bundesstaat=$(gettext 'Bundesstaat')
@@ -94,7 +97,7 @@ lv_Ssl_Email=$(gettext 'Mail')
 lv_Ssl_Validity=$(gettext 'Gueltigkeit')
 lv_Ssl_Key_length=$(gettext 'Schluessellaenge')
 lv_Ssl_Digest=$(gettext 'Digest')
-lv_Ssl_Alg=$(gettext 'Algotrithmus')
+lv_Ssl_Alg=$(gettext 'Algorithmus')
 lv_Ssl_PreserveDN=$(gettext 'preserveDN')
 ## }}}
 # Variablen, Einstellungen# {{{
@@ -278,64 +281,6 @@ search_ca() {
 	}
 }
 ## }}}
-# Funktion (search_cert), Certificate herausfinden, ob gueltig oder nicht # {{{
-#
-# usage: search_cert [ -u | -v | nichts ]
-# -u - ungueltig
-# -v  - gueltig
-# - - alle
-#
-search_cert() {
-	unset -- Opt CERTS_VAL_M CERTS_NON_VAL_M CERTS_ALL_VAL_M CERTS_FILE CERTS_CN
-	local Anz Opt
-	Opt="$1"
-	# un/gueltige/alle Zertifikate finden
-	Anz=0
-	while read Val b Serial d Subject ; do
-		# herrausfinden der Serial Nummer
-		case $Val in
-			R)	SerialNr=$d
-				;;
-			V)	SerialNr="$Serial"
-				;;
-		esac
-		case "$Opt" in
-			-u)
-				# ungueltige Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem"
-				case "$lv_Validity" in
-					$lv_NoValidity|$lv_RevokeValidity)
-						(( Anz++ ))
-						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem)
-						CERTS_CN+=($COMMONNAME)
-						CERTS_NON_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
-						;;
-				esac
-				;;
-			-v)
-				# gueltige Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem"
-				case "$lv_Validity" in
-					$lv_YesValidity)
-						(( Anz++ ))
-						CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem)
-						CERTS_CN+=($COMMONNAME)
-						CERTS_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
-						;;
-				esac
-				;;
-			*)
-				# alle ((un)gueltige) Certificates herrausfinden
-				read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem"
-				(( Anz++ ))
-				CERTS_FILE+=(${KWSSL_DIR}/${CA_OPEN_NAME}/newcerts/${SerialNr}.pem)
-				CERTS_CN+=($COMMONNAME)
-				CERTS_ALL_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
-				;;
-		esac
-	done < ${KWSSL_DIR}/${CA_OPEN_NAME}/index.txt
-}
-## }}}
 # Funktion (ca_open), CA oeffnen# {{{
 #
 # usage: ca_open
@@ -384,8 +329,8 @@ main_menu() {
 		-ca|-subca)
     		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
 			$gv_Display \"\" \"$lv_CA_Create\" \"\"
-			\"$lv_SubCA_Create\" \"\"
-			\"$lv_Cert\" \"\"
+			\"$lv_SubCA_Create\" \"\" \"$lv_Cert\" \"\"
+			\"$lv_Key\" \"\" \"$lv_Request\" \"\"
 			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
 			\"$lv_CA_CRL_Export\" \"\" \"$lv_Dh_File\" \"\"
 			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
@@ -415,28 +360,6 @@ main_menu() {
 	fi
 }
 # }}}
-# Funktion (find_need_files), findet anhand# {{{
-# der ../newcerts/Nummer.pem die ../certs/Name.pem
-# Datei, die ja den Namen enthaelt
-#
-# usage: find_need_files FILE
-#
-find_need_files() {
-	if [[ ${#argv} == 1 ]] ; then
-		unset -- Found_File
-		File="$1"
-		Dir="${KWSSL_DIR}/${CA_OPEN_NAME}/certs"
-		for i in ${Dir}/*(.N) ; {
-			if diff -q $i $File >/dev/null ; then
-				Found_File="$i"
-				break
-			fi
-		}
-	else
-		no_para_msg $0
-	fi
-}
-## }}}
 # Funktion (fingerprint)# {{{
 #
 fingerprint() {
@@ -456,6 +379,150 @@ fingerprint() {
 # Schluessel und fuer Anforderungen.
 gen_name() {
 	GEN_NAME="`print ${COMMONNAME}${MAIL}${ORGANISATIONUNIT}${ORGANISATION}${LOCATION}${COUNTRY}${COUNTRYCODE} | openssl base64 | tr -d '\n'`"
+}
+## }}}
+# Funktion (get_alg_privkey), ueberprueft welcher Algorithmus # {{{
+# der private Schluessel besitzt.
+#
+# usage: get_alg_privkey PRIVKEY
+# PRIVKEY - private Schluesseldatei
+#
+get_alg_privkey() {
+	if [ -f "$1" ] ; then
+		local Tmp
+		Tmp=${$(file -b $1)[2]}
+		if [[ $Tmp == RSA ]] ; then
+			ALGORITHM=rsa
+		else
+			ALGORITHM=dsa
+		fi
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+# Funktion (get_info_files), Zertifikate/Schluessel/Anforderungen Dateien herausfinden# {{{
+#
+# usage: get_info_files [ -k | -r | -u | -v | nichts ]
+# -k  - Schluessel finden
+# -r  - Anforderungen (Request) finden
+# -u - ungueltige Zertifikate
+# -v  - gueltige Zertifikate
+# - - alle Zertifikate
+#
+#
+get_info_files() {
+	UNSET_INFO_FILE=(CERTS_VAL_M CERTS_NON_VAL_M CERTS_ALL_VAL_M
+		CERTS_FILE CERTS_CN CERTFILE KEYS_FILE KEYS_ALL_M KEYFILE
+		REQS_FILE REQS_ALL_M REQFILE)
+	unset -- $UNSET $UNSET_INFO_FILE
+	local Anz Tmp Opt
+	Opt="$1"
+	# Funktion (check_datetime), gueltig/ungueltig anhand# {{{
+	# der Zeitdaten herausfinden
+	#
+	check_datetime() {
+		DATE=$(date +%Y%m%d)
+		DATE1=$(date +%H%M%S)
+		# Daten von notAfter einlesen
+		GESY=$(date -d ${Time[1,6]} +%Y%m%d)
+		GESH="${Time[7,12]}"
+		# Ist das aktuelle Datum gleich dem Datum von Not After
+		# dann wird die Uhrzeit ueberprueft.
+		if [ "$DATE" -eq "$GESY" ] ; then
+			# Uhrzeit ueberpruefen
+			if [ "$DATE1" -lt "$GESH" ] ; then
+				lv_Validity="$lv_YesValidity"
+			else
+				lv_Validity="$lv_NoValidity"
+			fi
+		elif [ "$DATE" -gt "$GESY" ] ; then
+			lv_Validity="$lv_NoValidity"
+		else
+			lv_Validity="$lv_YesValidity"
+		fi
+	}
+	## }}}
+	# index.txt Datei einlesen
+	Anz=0
+	while read Val Time Serial d Subject Rest; do
+		case $Val in
+			V)	Tmp="$Subject"
+				# V = gueltig, aber trotzdem pruefen.
+				#lv_Validity="$lv_YesValidity"
+				check_datetime
+				;;
+			R)	Tmp="$Rest"
+				;;
+		esac
+		# Subject einlesen und Variablen belegen
+		read_subject "$Tmp"
+		# base64-codierten Dateinamen herausfinden
+		gen_name
+		case "$Opt" in
+			-k)
+				# alle Schluessel finden# {{{
+				KEYFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/keys/${GEN_NAME}.pem"
+				if [ -f "$KEYFILE" ] ; then
+					(( Anz++ ))
+					KEYS_FILE+=($KEYFILE)
+					KEYS_ALL_M+=($Anz \"$COMMONNAME\" off)
+				fi
+				## }}}
+				;;
+			-r)
+				# alle Anforderungen finden# {{{
+				REQFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/req/${GEN_NAME}.pem"
+				if [ -f "$REQFILE" ] ; then
+					(( Anz++ ))
+					REQS_FILE+=($REQFILE)
+					REQS_ALL_M+=($Anz \"$COMMONNAME\" off)
+				fi
+				## }}}
+				;;
+			-u)
+				# ungueltige Certificates herrausfinden# {{{
+				CERTFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${GEN_NAME}.pem"
+				if [ -f "$CERTFILE" ] ; then
+					case "$lv_Validity" in
+						$lv_NoValidity|$lv_RevokeValidity)
+							(( Anz++ ))
+							CERTS_FILE+=($CERTFILE)
+							CERTS_CN+=($COMMONNAME)
+							CERTS_NON_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
+							;;
+					esac
+				fi
+				## }}}
+				;;
+			-v)
+				# gueltige Certificates herrausfinden# {{{
+				CERTFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${GEN_NAME}.pem"
+				if [ -f "$CERTFILE" ] ; then
+					case "$lv_Validity" in
+						$lv_YesValidity)
+							(( Anz++ ))
+							CERTS_FILE+=($CERTFILE)
+							CERTS_CN+=($COMMONNAME)
+							CERTS_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
+							;;
+					esac
+				fi
+				## }}}
+				;;
+			*)
+				# alle ((un)gueltige) Certificates herrausfinden# {{{
+				CERTFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${GEN_NAME}.pem"
+				if [ -f "$CERTFILE" ] ; then
+					(( Anz++ ))
+					CERTS_FILE+=($CERTFILE)
+					CERTS_CN+=($COMMONNAME)
+					CERTS_ALL_VAL_M+=($Anz \"$COMMONNAME $lv_Validity\" off)
+				fi
+				## }}}
+				;;
+		esac
+	done < ${KWSSL_DIR}/${CA_OPEN_NAME}/index.txt
 }
 ## }}}
 # Funktion (keylength_input), eingabe der Schluessellaenge (numbits)# {{{
@@ -491,8 +558,17 @@ keylength_input() {
 # Funktion (ca_passwd_input), CA Passwort Eingabe# {{{
 #
 ca_passwd_input() {
-	CA_PASS_MSG=$(gettext 'Geben Sie die Passphrase fuer die CA ein.')
-	password "$lv_Ssl_CA_Password" "$CA_PASS_MSG" "$PASSWD_LENGTH"
+	case "$1" in
+		-keys)
+			KEY_PASS_MSG=$(gettext 'Geben Sie das Passwort fuer den Schluessel ein.')
+			password "$lv_Ssl_Key_Password" "$KEY_PASS_MSG" "$PASSWD_LENGTH"
+			;;
+		*)
+			CA_PASS_MSG=$(gettext 'Geben Sie das Passwort fuer die CA ein.')
+			password "$lv_Ssl_CA_Password" "$CA_PASS_MSG" "$PASSWD_LENGTH"
+			;;
+	esac
+	# Passworteingabe pruefen
 	if [ -n "$PASSPHRASE" ] ; then
 		password_display "$PASSPHRASE"
 		if [ -n "$gv_Star_Passphrase" ] ; then
@@ -537,148 +613,19 @@ revoke_days_input() {
 #
 read_ca_data() {
 	if [[ ${#argv} == 1 ]] ; then
-		unset -- SEARCH_INDEX_TXT
-		local DataFile File Tmp
+		unset -- ALG $UNSET
+		local File Tmp
 		File="$1"
-		DataFile="${File##*/}.data"
 		if [ "`file -b $File`" = "PEM certificate" ] ; then
 			PROG_OPT="-inform PEM"
 		else
 			PROG_OPT="-inform DER"
 		fi
-		# Tmp-Datei anlegen und Variablen mit eingelesenen Werten belegen
-		openssl x509 ${=PROG_OPT} -in $File \
-		   -issuer -subject -enddate -noout \
-			> ${gv_WorkDir}/${DataFile}
-		#
-		while read a ; do
-			case "$a" in
-#				issuer*)
-#					# Issuer# {{{
-#					SEARCH_INDEX_TXT="${a#*= }"
-#					print "${a#*= /}" | tr '/' '\n' | while read d ; do
-#						case $d in
-#							C=*)
-#								COUNTRYCODE="${d#*=}"
-#								;;
-#							ST=*)
-#								COUNTRY="${d#*=}"
-#								;;
-#							L=*)
-#								LOCATION="${d#*=}"
-#								;;
-#							O=*)
-#								ORGANISATION="${d#*=}"
-#								;;
-#							OU=*)
-#								ORGANISATIONUNIT="${d#*=}"
-#								;;
-#							CN=*)
-#								COMMONNAME="${d#*=}"
-#								;;
-#							emailAddress=*)
-#								MAIL="${d#*=}"
-#								;;
-#						esac
-#					done
-#					## }}}
-#						;;
-				subject*)
-					# Subject# {{{
-					SEARCH_INDEX_TXT="${a#*= }"
-					print "${a#*= /}" | tr '/' '\n' | while read d ; do
-						case $d in
-							C=*)
-								COUNTRYCODE="${d#*=}"
-								;;
-							ST=*)
-								COUNTRY="${d#*=}"
-								;;
-							L=*)
-								LOCATION="${d#*=}"
-								;;
-							O=*)
-								ORGANISATION="${d#*=}"
-								;;
-							OU=*)
-								ORGANISATIONUNIT="${d#*=}"
-								;;
-							CN=*)
-								COMMONNAME="${d#*=}"
-								;;
-							emailAddress=*)
-								MAIL="${d#*=}"
-								;;
-						esac
-					done
-					## }}}
-					;;
-				notAfter*)
-					# Datum - un/gueltig# {{{
-					# CA_OPEN_NAME/index.txt kontrollieren/vergleichen, wegen
-					# gueltig und ungueltig.
-					#
-					# Variable CHECK_VALUE ist fuer die Funktion check_datetime
-					CHECK_VALUE="$a"
-					# Funktion (check_datetime), gueltig/ungueltig anhand# {{{
-					# der Zeitdaten herausfinden
-					#
-					check_datetime() {
-						DATE=$(date +%Y%m%d)
-						DATE1=$(date +%H%M%S)
-						# Daten von notAfter einlesen
-						print ${${(ws:=:)${CHECK_VALUE}}[2,$]} | \
-						while read mon day time year Rest ; do
-							Monat="$mon"
-							Day="$day"
-							Year="$year"
-							Hour=${${(ws,:,)${time}}[1]}
-							Minute=${${(ws,:,)${time}}[2]}
-							Second=${${(ws,:,)${time}}[3]}
-							# Datum umrechnen
-							GESY=$(date -d "$Day $Monat $Year" +%Y%m%d)
-							GESH="${Hour}${Minute}${Second}"
-							# Ist das aktuelle Datum gleich dem Datum von Not After
-							# dann wird die Uhrzeit ueberprueft.
-							if [ "$DATE" -eq "$GESY" ] ; then
-								# Uhrzeit ueberpruefen
-								if [ "$DATE1" -lt "$GESH" ] ; then
-									lv_Validity="$lv_YesValidity"
-								else
-									lv_Validity="$lv_NoValidity"
-								fi
-							elif [ "$DATE" -gt "$GESY" ] ; then
-								lv_Validity="$lv_NoValidity"
-							else
-								lv_Validity="$lv_YesValidity"
-							fi
-						done
-					}
-					## }}}
-					#
-					INDEX_FILE="${KWSSL_DIR}/${CA_OPEN_NAME}/index.txt"
-					if [ -s "$INDEX_FILE" ] ; then
-						Tmp=${${(ws: :)${(M)${(f)"$(< $INDEX_FILE)"}##*$SEARCH_INDEX_TXT}}[1]}
-						case "$Tmp" in
-							R)
-								# R = widerrufen
-								lv_Validity="$lv_RevokeValidity"
-								;;
-							V|*)
-								# V = gueltig, aber trotzdem pruefen.
-								#lv_Validity="$lv_YesValidity"
-								check_datetime
-								;;
-						esac
-					else
-						check_datetime
-					fi
-					## }}}
-					;;
-			esac
-		done < ${gv_WorkDir}/${DataFile}
+		# Subject holen und Variablen mit eingelesenen Werten belegen
+		Tmp=${$(openssl x509 ${=PROG_OPT} -in $File -subject -noout)[2]}
+		read_subject "$Tmp"
 		# Verschluesselung herausfinden# {{{
-		Tmp=${${(ws,: ,)${(M)${(f)"$(openssl x509 ${=PROG_OPT} -in $File -text)"}##*Public Key Algorithm*}}[2]}
+		Tmp=${${(ws,: ,)${(M)${(f)"$(openssl x509 ${=PROG_OPT} -in $File -text -noout)"}##*Public Key Algorithm*}}[2]}
 		if [[ $Tmp == rsaEncryption ]] ; then
 			ALG=RSA
 		else
@@ -975,6 +922,40 @@ read_openssl_conf() {
 	done < ${gv_WorkDir}/cert_conf
 }
 ## }}}
+	# Funktion (read_subject), Subject einlesen# {{{
+	#
+	# usage: read_subject SUBJECT
+	#
+	read_subject() {
+		local Tmp
+		Tmp="$1"
+		print "${Tmp//\//\n}" | while read a ; do
+			case "$a" in
+				C=*)
+					COUNTRYCODE="${a#*=}"
+					;;
+				ST=*)
+					COUNTRY="${a#*=}"
+					;;
+				L=*)
+					LOCATION="${a#*=}"
+					;;
+				O=*)
+					ORGANISATION="${a#*=}"
+					;;
+				OU=*)
+					ORGANISATIONUNIT="${a#*=}"
+					;;
+				CN=*)
+					COMMONNAME="${a#*=}"
+					;;
+				emailAddress=*)
+					MAIL="${a#*=}"
+					;;
+			esac
+		done
+	}
+	## }}}
 # Funktion (no_open_ca_msg)# {{{
 no_open_ca_msg() {
 	MSG=$(gettext 'Es ist keine CA geoeffnet.')
@@ -1014,16 +995,16 @@ no_cas_nonvalid_msg() {
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
+# Funktion (no_keys_msg)# {{{
+no_keys_msg() {
+	MSG=$(gettext 'Es sind keine Schluessel vorhanden.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
 # Funktion (ca_existed_msg), Nachricht das diese CA schon existiert# {{{
 #
 ca_existed_msg() {
 	MSG=$(gettext 'Diese CA ($gv_Auswahl) ist schon vorhanden.')
-	msgbox "$gv_Info" "$MSG"
-}
-## }}}
-# Funktion (no_need_file_msg)# {{{
-no_need_file_msg() {
-	MSG=$(gettext 'Es wurde keine CA oder Zertifikat Datei gefunden.')
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
@@ -1139,7 +1120,7 @@ while [ "$gv_Auswahl" ] ; do
 							}
 							## }}}
 							# alle Zertifikate herraussuchen, ob gueltig oder nicht.
-							search_cert
+							get_info_files
 							if [ -n "${CERTS_ALL_VAL_M[1]}" ] ; then
 								cert_choice_menu
 								while [ "$gv_Auswahl" ] ; do
@@ -1208,15 +1189,15 @@ while [ "$gv_Auswahl" ] ; do
 						$lv_Export)
 							# Zertifikate exportieren# {{{
 							autoload -U export_files
-							CERT_EXPORT_TITLE="${lv_Cert}::${lv_Export}"
-							#
+							EXPORT_TITLE="${lv_Cert}::${lv_Export}"
 							# Funktion (cert_choice_menu)# {{{
 							cert_choice_menu() {
 								CERT_EXPORT_MENU=($CERTS_VAL_M)
-								radiolist "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$CERT_EXPORT_MENU"
+								radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$CERT_EXPORT_MENU"
 							}
 							## }}}
-							search_cert -v
+							#
+							get_info_files -v
 							if [[ -n ${CERTS_VAL_M[1]} ]] ; then
 								cert_choice_menu
 								while [ -n "$gv_Auswahl" ] ; do
@@ -1227,15 +1208,9 @@ while [ "$gv_Auswahl" ] ; do
 											cert_choice_menu
 											;;
 										*)
-											# Auswahl der Export Formate,
-											# Daten der CA einlesen etc.
+											# Auswahl uebernehmen
 											Ex_File="${CERTS_FILE[gv_Auswahl]}"
-											find_need_files "$Ex_File"
-											if [[ -n $Found_File ]] ; then
-												export_files "$Found_File" "export_cert_help"
-											else
-												no_need_file_msg
-											fi
+											export_files -certs "$Ex_File" "export_cert_help"
 											break
 											;;
 									esac
@@ -1257,7 +1232,7 @@ while [ "$gv_Auswahl" ] ; do
 								radiolist "$CERT_REVOKE_TITLE" "$gv_Menupoint" "$CERT_REVOKE_MENU"
 							}
 							## }}}
-							search_cert -v
+							get_info_files -v
 							if [[ -n ${CERTS_VAL_M[1]} ]] ; then
 								cert_revoke_menu
 								while [ -n "$gv_Auswahl" ] ; do
@@ -1271,12 +1246,7 @@ while [ "$gv_Auswahl" ] ; do
 											# Auswahl der Export Formate,
 											# Daten der CA einlesen etc.
 											Ex_File="${CERTS_FILE[gv_Auswahl]}"
-											find_need_files "$Ex_File"
-											if [[ -n $Found_File ]] ; then
-												revoke_files "$Found_File"
-											else
-												no_need_file_msg
-											fi
+											revoke_files "$Ex_File"
 											break
 											;;
 									esac
@@ -1297,7 +1267,7 @@ while [ "$gv_Auswahl" ] ; do
 								checklist "$CERT_TITLE" "$gv_Menupoint" "$CERT_DEL_MENU"
 							}
 							## }}}
-							search_cert -u
+							get_info_files -u
 							if [ -n "${CERTS_NON_VAL_M[1]}" ] ; then
 								del_cert_choice_menu
 								while [ "$gv_Auswahl" ] ; do
@@ -1309,16 +1279,8 @@ while [ "$gv_Auswahl" ] ; do
 											;;
 										*)
 											# Auswahl uebernehmen# {{{
-											cd $KWSSL_DIR
 											for i in ${=gv_Auswahl} ; {
-												find_need_files "${CERTS_FILE[i]}"
-												if [[ -n $Found_File ]] ; then
-													FileName=${${Found_File##*/}%.pem}
-													rm -rf ./${CA_OPEN_NAME}/certs/${FileName}.* \
-													./${CA_OPEN_NAME}/keys/${FileName}.* \
-													./${CA_OPEN_NAME}/req/${FileName}.* \
-													./${CA_OPEN_NAME}/${FileName}.cachain.* &>/dev/null
-												fi
+												rm -rfv "${CERTS_FILE[i]}" &>/dev/null
 											}
 											## }}}
 											break
@@ -1342,6 +1304,117 @@ while [ "$gv_Auswahl" ] ; do
 			## }}}
 			main_menu $lv_Cert
 			;;
+		$lv_Key)
+			# Schluessel verwalten# {{{
+			if [ -n "$CA_OPEN_NAME" ] ; then
+				# Funktion (key_menu)# {{{
+				#
+				KEY_TITLE="${CA_OPEN_NAME}::${lv_Key}"
+				key_menu() {
+		    		KEY_MENU=(\"$lv_Export\" \"\"
+					$gv_Delete \"\" $gv_Back \"\")
+					#
+					if [[ ${#argv} == 1 ]] ; then
+						menubox -d "$1" "$KEY_TITLE" "$gv_Menupoint" "$KEY_MENU"
+					else
+						menubox "$KEY_TITLE" "$gv_Menupoint" "$KEY_MENU"
+					fi
+				}
+				# }}}
+				key_menu
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)
+							script_help key_help
+							key_menu
+							;;
+						$lv_Export)
+							# Schluessel exportieren# {{{
+							autoload -U export_files
+							EXPORT_TITLE="${lv_Key}::${lv_Export}"
+							#
+							# Funktion (key_choice_menu)# {{{
+							key_choice_menu() {
+								KEY_EXPORT_MENU=($KEYS_ALL_M)
+								radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$KEY_EXPORT_MENU"
+							}
+							## }}}
+							get_info_files -k
+							if [[ -n ${KEYS_ALL_M[1]} ]] ; then
+								key_choice_menu
+								while [ -n "$gv_Auswahl" ] ; do
+									case $gv_Auswahl in
+										HELP*)
+								    	    # Hilfe Messagebox
+											script_help export_key_help
+											key_choice_menu
+											;;
+										*)
+											# Auswahl uebernehmen
+											Ex_File="${KEYS_FILE[gv_Auswahl]}"
+											export_files -keys "$Ex_File" "export_key_help"
+											break
+											;;
+									esac
+								done
+							else
+								no_keys_msg
+							fi
+							## }}}
+							key_menu $lv_Export
+							;;
+						$gv_Delete)
+							# Schluessel loeschen# {{{
+							# Funktion (del_cert_choice_menu)# {{{
+							KEY_DEL_TITLE="${lv_Key}::${gv_Delete}"
+							del_key_choice_menu() {
+								KEY_DEL_MENU=($KEYS_ALL_M)
+								checklist "$KEY_DEL_TITLE" "$gv_Menupoint" "$KEY_DEL_MENU"
+							}
+							## }}}
+							get_info_files -k
+							if [ -n "${KEYS_ALL_M[1]}" ] ; then
+								del_key_choice_menu
+								while [ "$gv_Auswahl" ] ; do
+									case "$gv_Auswahl" in
+										HELP*)
+								    	    # Hilfe Messagebox
+											script_help key_del_help
+											del_key_choice_menu
+											;;
+										*)
+											# Auswahl uebernehmen
+											for i in ${=gv_Auswahl} ; {
+												rm -rf "${KEYS_FILE[i]}" &>/dev/null
+											}
+											#
+											break
+											;;
+									esac
+								done
+							else
+								no_keys_msg
+							fi
+							## }}}
+							key_menu $gv_Delete
+							;;
+						$gv_Back)
+							break
+							;;
+					esac
+				done
+			else
+				no_open_ca_msg
+			fi
+			## }}}
+			main_menu $lv_Key
+			;;
+		$lv_Request)
+			# Anforderungen verwalten
+			hier_ist_noch_nichts $lv_Request
+			#
+			main_menu $lv_Request
+			;;
 		$lv_CA_Import)
 			# CA importieren# {{{
 			autoload -U ca_certs_import
@@ -1355,7 +1428,7 @@ while [ "$gv_Auswahl" ] ; do
 				autoload -U export_files
 				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Export}"
 				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-				export_files "$Ex_File" "export_ca_help"
+				export_files -ca "$Ex_File" "export_ca_help"
 			else
 				no_open_ca_msg
 			fi
@@ -1368,7 +1441,7 @@ while [ "$gv_Auswahl" ] ; do
 				autoload -U export_files
 				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_CRL_Export}"
 				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/crl/crl.pem"
-				export_files "$Ex_File" "export_crl_help"
+				export_files -crl "$Ex_File" "export_crl_help"
 			else
 				no_open_ca_msg
 			fi

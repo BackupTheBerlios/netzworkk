@@ -2,48 +2,63 @@
 #
 # benoetigt die Variablen CERT_EXPORT_TITLE und Export_File
 #
-# usage: export_files FILE
-# FILE - CA/Zertifikat Datei (voller Pfad)
+# usage: export_files EXPORT_OPT FILE HELPFILE
+# EXPORT_OPT - [ -keys | -ca | -certs | -crl ]
+# FILE       - zu exportierende Datei (voller Pfad)
+# HELPFILE   - Hilfe Datei
 #
 export_files() {
-	if [[ ${#argv} == 2 ]] ; then
-		unset -- Export_File
-		Export_File="$1"
-		CERTHELPFILE="$2"
+	if [[ ${#argv} == 3 ]] ; then
+		unset -- Export_File Export_Opt CERTHELPFILE
+		Export_Opt="$1"
+		Export_File="$2"
+		CERTHELPFILE="$3"
 		#
 		check_default_revoke_days ca_ca
 		DEFAULT_REVOKE_DAYS=${DEFAULT_REVOKE_DAYS:-30}
 		#
-		# Funktion (export_filename_format), bestimmt den Dateinamen# {{{
+		# Funktion (export_create_filename), bestimmt den Dateinamen# {{{
 		# der ZielDatei.
 		#
-		# usage: export_filename_format FILE FORMAT
-		# FORMAT - der, pem, pkcs#12, tar, txt, zip
+		# usage: export_create_filename OPTION EXPORT_SUFFIX
+		# OPTION        - [ -keys | -ca | -certs | -crl ]
+		# EXPORT_SUFFIX - [ der | pem | p12 | tar | txt | zip ]
 		#
-		export_filename_format() {
+		export_create_filename() {
 			if [[ ${#argv} == 2 ]] ; then
-				unset -- FORMAT
-				if [ -f "$1" ] ; then
-					ExportName=${1##*/}
-					case "$2" in
-						der|pem|p12|tar|txt|zip)
-							FORMAT="$2"
-							;;
-						*)
-							;;
-					esac
-					case $ExportName in
-						cacert.pem)
-							Export_FileName="${HOME}/${CA_OPEN_NAME}-cert.${FORMAT}"
-							;;
-						crl.pem)
-							Export_FileName="${HOME}/${CA_OPEN_NAME}-crl.${FORMAT}"
-							;;
-						*)
-							Export_FileName="${HOME}/${MAIL}-cert.${FORMAT}"
-							;;
-					esac
-				fi
+				unset -- SUFFIX EXPORT_FILENAME EXPORT_OPT
+				local Export_Opt Export_Suffix
+				Export_Opt="$1"
+				Export_Suffix="$2"
+				# Export Suffix festlegen# {{{
+				case "$Export_Suffix" in
+					der|pem|p12|tar|txt|zip)
+						SUFFIX="$2"
+						;;
+					*)	unset -- SUFFIX
+						;;
+				esac
+				## }}}
+				# Export Dateiname vorlaeufig belegen# {{{
+				case "$Export_Opt" in
+					-ca)
+						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-cert.${SUFFIX}"
+						EXPORT_OPT="-ca"
+						;;
+					-certs)
+						EXPORT_FILENAME="${HOME}/${MAIL}-cert.${SUFFIX}"
+						EXPORT_OPT="-certs"
+						;;
+					-crl)
+						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-crl.${SUFFIX}"
+						EXPORT_OPT="-crl"
+						;;
+					-keys)
+						EXPORT_FILENAME="${HOME}/${MAIL}-key.${SUFFIX}"
+						EXPORT_OPT="-keys"
+						;;
+				esac
+				## }}}
 			else
 				no_para_msg $0
 			fi
@@ -54,46 +69,36 @@ export_files() {
 		# usage: export_filename [ der | pem | p12 | tar | txt | zip ]
 		#
 		export_filename() {
-			unset -- SUFFIX
-			local SUFFIX
 			if [[ ${#argv} == 1 ]] ; then
-				SUFFIX="$1"
+				local Suffix
+				Suffix="$1"
+				EXPORT_FILENAME_MSG=$(gettext 'Geben Sie den Export Dateinamen mit SUFFIX $Suffix ein.')
+				inputbox "$lv_ExportFilename" "$EXPORT_FILENAME_MSG" "$EXPORT_FILENAME"
+				if [ -n "$gv_Auswahl" ] ; then
+					EXPORT_FILENAME="$gv_Auswahl"
+				fi
 			else
 				no_para_msg $0
-			fi
-			#
-			EXPORT_FILENAME_MSG=$(gettext 'Geben Sie den Export Dateinamen mit SUFFIX $SUFFIX ein.')
-			inputbox "$lv_ExportFilename" "$EXPORT_FILENAME_MSG" "$Export_FileName"
-			if [ -n "$gv_Auswahl" ] ; then
-				Export_FileName="$gv_Auswahl"
 			fi
 		}
 		## }}}
 		# Funktion (export_menu)# {{{
 		export_menu() {
-			case ${Export_File##*/} in
-				cacert.pem|crl.pem)
+			case "$Export_Opt" in
+				-ca|-crl)
 					EXPORT_MENU=(PEM \"\" on DER \"\" off TXT \"\" off)
 					;;
-				*)
+				-keys)
+					EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
+					TAR \"\" off ZIP \"\" off)
+					;;
+				-certs)
 					EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
 					TAR \"\" off TXT \"\" off ZIP \"\" off)
 					;;
 			esac
 			#
-			radiolist "$CERT_EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
-		}
-		## }}}
-		# Funktion (check_ca_filenames)# {{{
-		check_ca_filenames() {
-			unset -- CACERT CAKEY
-			if [ "$ExportName" = cacert.pem ] ; then
-				CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.key"
-				CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-			else
-				CAKEY="${KWSSL_DIR}/${CA_OPEN_NAME}/keys/${ExportName%.*}.pem"
-				CACERT="${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${ExportName%.*}.pem"
-			fi
+			radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
 		}
 		## }}}
 		export_menu
@@ -109,7 +114,7 @@ export_files() {
 					#
 					# Funktion manage_export_most
 					autoload -U manage_export_most
-					manage_export_most "$Export_File" der
+					manage_export_most "$Export_Opt" "$Export_File" der
 					break
 					;;
 				PEM)
@@ -117,7 +122,7 @@ export_files() {
 					#
 					# Funktion manage_export_pem
 					autoload -U manage_export_pem
-					manage_export_pem "$Export_File" pem
+					manage_export_pem "$Export_Opt" "$Export_File" pem
 					break
 					;;
 				PKCS*)
@@ -125,7 +130,7 @@ export_files() {
 					#
 					# Funktion manage_export_pkcs12
 					autoload -U manage_export_pkcs12
-					manage_export_pkcs12 "$Export_File" p12
+					manage_export_pkcs12 "$Export_Opt" "$Export_File" p12
 					break
 					;;
 				TAR)
@@ -133,7 +138,7 @@ export_files() {
 					#
 					# Funktion manage_export_most
 					autoload -U manage_export_most
-					manage_export_most "$Export_File" tar
+					manage_export_most "$Export_Opt" "$Export_File" tar
 					break
 					;;
 				TXT)
@@ -141,7 +146,7 @@ export_files() {
 					#
 					# Funktion manage_export_most
 					autoload -U manage_export_most
-					manage_export_most "$Export_File" txt
+					manage_export_most "$Export_Opt" "$Export_File" txt
 					break
 					;;
 				ZIP)
@@ -149,7 +154,7 @@ export_files() {
 					#
 					# Funktion manage_export_most
 					autoload -U manage_export_most
-					manage_export_most "$Export_File" zip
+					manage_export_most "$Export_Opt" "$Export_File" zip
 					break
 					;;
 				*)
