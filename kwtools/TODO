@@ -1,8 +1,17 @@
 Bis Version 0.9.*
 * kwxen-tools fertig stellen?
 * evtl. zsh Kalendersystem fuer Termine oder mailsystem benutzen?
+* altes Script kwdvdburn wieder aufleben lassen?
 * kwpostfix neue Optionen implementieren?
 * mehrere tinydns server nebeneinander einrichten?
+
+Bis Version 0.8.4.*
+* Bug fixing.
+* dialog Option --default-item weiter integrieren.
+  Dient zur schnelleren Handhabung, z. B. koennen die vorher
+  ausgewaehlten Menuepunkte markiert werden.
+* kwssl2 weiterentwickeln.
+* kwrsync_backup neue Features einfügen
 
 Bis Version 0.8.4
 * Bug fixing.
@@ -10,7 +19,6 @@ Bis Version 0.8.4
   Dient zur schnelleren Handhabung, z. B. koennen die vorher
   ausgewaehlten Menuepunkte markiert werden.
 * kwssl umschreiben -> kwssl2.
-* kwrsync_backup neue features einfügen
 
 Bis Version 0.8.3
 * Bug fixing.
