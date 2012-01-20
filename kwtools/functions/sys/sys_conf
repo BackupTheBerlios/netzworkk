@@ -963,13 +963,13 @@ sys_conf() {
 			else
 				# Hilfe der Scripts.
 				for i in ${=1} ; {
-					for f in ${HELP_PATH}/${gv_ScriptName}/${i}(N) ; {
+					for f in ${HELP_PATH}/${gv_ScriptName}/${i}(.N) ; {
 						. $f
 						>> "${gv_WorkDir}/help$$" <<< "`print $MSG`
 "
 					}
 				}
-				if [ "`wc -l < ${gv_WorkDir}/help$$`" -gt 1 ] ; then
+				if [ -s "${gv_WorkDir}/help$$" ] ; then
 					textbox "$TITLE" "${gv_WorkDir}/help$$"
 				else
 					no_help_msg
