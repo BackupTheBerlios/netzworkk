@@ -448,8 +448,8 @@ conf_ca() {
 				conf_ca_menu $Opt $lv_Ssl_Land_Code
 				;;
 			"$lv_Ssl_Password")
-				# Passphrase eingeben# {{{
-				PASSWD_MSG=$(gettext 'Geben Sie bitte eine Passphrase fuer das Zertifikat oder CA ein (mindestens $PASSWD_LENGTH Zeichen lang) und wiederholen diese im Feld darunter.')
+				# Passwort eingeben# {{{
+				PASSWD_MSG=$(gettext 'Geben Sie bitte ein Passwort fuer das Zertifikat oder CA ein (mindestens $PASSWD_LENGTH Zeichen lang) und wiederholen diese im Feld darunter.')
 				mixed_password "$gv_Passwd_TITLE" "$PASSWD_MSG" "$PASSWD_LENGTH"
 				if [[ -n $gv_Pass ]] ; then
 					password_display "$gv_Pass"

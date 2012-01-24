@@ -2,7 +2,7 @@
 # PKCS#12 Format.
 #
 # usage: manage_export_pkcs12 OPTION EXPORT_FILE SUFFIX
-# OPTION      - [ -keys | -ca | -certs | -crl ]
+# OPTION      - [ -keys | -certs ]
 # EXPORT_FILE - zu exportierende Datei
 # SUFFIX      - p12
 #
@@ -14,10 +14,6 @@ manage_export_pkcs12() {
 		Opt="$1"
 		In_File="$2"
 		Suffix="$3"
-		# Export Dateiname und Suffix erst einmal festlegen
-		export_create_filename "$Opt" "$Suffix"
-		#
-		# Funktion (export_pkcs12_menu)# {{{
 		#
 		# Variablen
 		lv_ExportFilename=$(gettext 'Export Dateiname')
@@ -38,6 +34,11 @@ manage_export_pkcs12() {
 				PKCS_VALUE=${PKCS_VALUE:-$gv_Yes}
 				;;
 		esac
+		#
+		# Export Dateiname und Suffix erst einmal festlegen
+		export_create_filename "$Opt" "$Suffix"
+		#
+		# Funktion (export_pkcs12_menu)# {{{
 		#
 		export_pkcs12_menu() {
 			if [[ $PASS_VALUE == $gv_No ]] ; then
@@ -80,13 +81,7 @@ manage_export_pkcs12() {
 					;;
 				"$lv_PassAdd")
 					# mit oder ohne Passwort exportieren.# {{{
-					MSG=$(gettext 'Ohne Passwort exportieren (ja/nein)? Standard ist Nein - mit Passwort.')
-					yesno "$gv_Info" "$MSG"
-					if [ "$?" = 0 ] ; then
-						PASS_VALUE=$gv_Yes
-					else
-						PASS_VALUE=$gv_No
-					fi
+					pass_add
 					## }}}
 					export_pkcs12_menu $lv_PassAdd
 					;;
@@ -127,8 +122,8 @@ manage_export_pkcs12() {
 					export_pkcs12_menu $lv_Display_Name
 					;;
 				"$lv_PKCS_Structure")
-					# Zertifikat in die PKCS#12 Struktur hinzufuegen .# {{{
-					MSG=$(gettext 'Soll das Zertifikat in die PKCS#12 Struktur hinzugefuegt werden (ja/nein)?')
+					# CA in die PKCS#12 Struktur hinzufuegen .# {{{
+					MSG=$(gettext 'Soll die CA in die PKCS#12 Struktur hinzugefuegt werden (ja/nein)?')
 					yesno "$gv_Info" "$MSG"
 					if [ "$?" = 0 ] ; then
 						PKCS_VALUE=$gv_Yes
@@ -156,11 +151,12 @@ manage_export_pkcs12() {
 					## }}}
 					# Funktion (check_pkcs12_structure)# {{{
 					check_pkcs12_structure() {
-						##############################
-						# TODO: Struktur erstellen?
-						##############################
+						###############################
+						# TODO: nur cacert.pem
+						###############################
 						if [[ $PKCS_VALUE == $gv_Yes ]] ; then
-							PROG_OPT+=(-certfile ${${In_File/\/(certs|keys)\///}%.pem}.cachain.pem)
+							#PROG_OPT+=(-certfile ${${In_File/\/(certs|keys)\///}%.pem}.cachain.pem)
+							PROG_OPT+=(-certfile ${In_File%/*}.cacert.pem)
 						fi
 					}
 					## }}}
