@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 24.01.2012
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # CAs, Zertifikate, signiert diese ....
