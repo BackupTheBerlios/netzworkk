@@ -1,9 +1,9 @@
 # ca_revoke_help fuer kwssl2{{{
 TITLE="${lv_RevokeValidity}::${gv_Help}"
-MSG=$(gettext 'Mit kwssl2 koennen Sie Zertifikate widerrufen bezehungsweise
+MSG=$(gettext 'Mit kwssl2 koennen Sie Zertifikate widerrufen beziehungsweise
 fuer ungueltig erklaeren.
 
-Password: Geben Sie das Passwort der CA oder SubCA ein.
+Password: Geben Sie das Passwort der CA ein.
 
 Grund: Waehlen Sie einen Grund fuer das Widerrufen des Zertifikates
 \taus. Ist optional.

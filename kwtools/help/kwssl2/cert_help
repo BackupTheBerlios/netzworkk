@@ -11,7 +11,7 @@ Benutzer Zertifikat: Erstellt ein Benutzer Zertifikat fuer die
 \tjeweilige CA.
 
 exportieren: Exportiert Zertifikate der jeweiligen CA in
-\tverschiedene Formate (PEM, DER, TXT, PKCS#12 und ZIP).
+\tverschiedene Formate (PEM, DER, TAR, TXT, PKCS#12 und ZIP).
 
 widerrufen: Erklaert Zertifikate fuer ungueltig.
 

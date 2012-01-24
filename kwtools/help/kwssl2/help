@@ -16,12 +16,16 @@ CA erstellen: Erstellt eine CA.
 
 SubCA erstellen: Erstellt eine SubCA.
 
-NOTIZ: SubCAs - diese werden mit der Passphrase der gerade
+NOTIZ: SubCAs - diese werden mit dem Passwort der gerade
 \tgeoeffneten CA unterschrieben und signiert.
 
 Zertifikate: Verwalten der Zertifikate.
 
 CA importieren: Importiert eine CA.
+
+Schluessel: Verwaltet die privaten Schluessel.
+
+Anforderungen: Verwaltet die Anforderungen.
 
 CA exportieren: Exportiert die geoeffnete CA in verschiedene
 \tFormate (PEM, DER, und TXT).

@@ -22,6 +22,6 @@ openssl index Datei: Waehlen Sie die zur CA dazugehoerige
 Verzeichnis mit Zertifikaten: Waehlen Sie das Verzeichnis in dem
 \tdie Zertifikate zum importieren liegen.
 
-NOTIZ: Zertifikate mportieren geht noch nicht.
+NOTIZ: Zertifikate importieren geht noch nicht.
 ')
 #}}}
