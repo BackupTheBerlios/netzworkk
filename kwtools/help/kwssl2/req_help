@@ -1,0 +1,16 @@
+# req_help fuer kwssl2{{{
+TITLE="${lv_Request}::${gv_Help}"
+MSG=$(gettext 'Anzeige: Anzeige von ein oder mehreren Anforderungen.
+\tAnforderungen sind "Certificate Request" Dateien.
+
+Anforderung erstellen: Eine neue Anforderung erstellen.
+
+importieren: Eine Anforderung importieren. Es gehen nur die Formate
+\tPEM und DER. Die importierte Anforderungen wird im PEM Format
+\tgespeichert.
+
+signieren: Eine Anforderung signieren.
+
+loeschen: Loescht ein oder mehrerer Anforderungen.
+')
+#}}}

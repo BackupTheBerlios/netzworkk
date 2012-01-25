@@ -1,0 +1,4 @@
+# req_del_help fuer kwssl2{{{
+TITLE="${lv_Request}::${gv_Delete}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie ein oder mehrere Anforderungen loeschen.')
+#}}}
