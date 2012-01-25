@@ -1,3 +1,9 @@
+kwtools (0.8.4-2) unstable; urgency=low
+  * kwssl2: Neu - Support fuer Schluessel, Zertifikat und Reqest
+    (Anforderung) Management.
+
+ -- Kai Wilke <kiste@netzworkk.de>  Thu, 26 Jan 2012 05:00:23 +0100
+ 
 kwtools (0.8.3-4) unstable; urgency=low
   * Bugfix: kwraid (Funktion raidhotadd_remove).
   * Bugfix: kwlvm (Funktion vg_groups, lv_volumes).

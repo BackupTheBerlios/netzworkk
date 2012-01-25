@@ -194,7 +194,7 @@ Section: admin
 Priority: optional
 Architecture: all
 Depends: kwtools-common (>= 0.8.4-1), gnupg, cryptsetup (>= 1.0.6)
-Suggests: kwtools-bin, kwtools-sys-lvm, kwtools-sys-raid, loop-aes-utils, openssl (>= 1.0.0), ecryptfs-utils, sudo
+Suggests: kwtools-bin, kwtools-sys-lvm, kwtools-sys-raid, loop-aes-utils, openssl (>= 0.9.8), ecryptfs-utils, sudo
 Replaces: kwtools-sys-losetup (<= 0.5.2-3)
 Description: Script for encrypted devices
  Includes three scripts which enables management of encrypted devices.
@@ -361,7 +361,7 @@ Package: kwtools-utils-ssl
 Section: utils
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-1), openssl (>= 1.0.0)
+Depends: kwtools-common (>= 0.8.4-1), openssl (>= 0.9.8)
 Suggests: kwtools-bin
 Description: Script kwssl2 to manage CAs (is ALPHA).
  Includes a very simple script to manage CAs (Certification Authorities).
