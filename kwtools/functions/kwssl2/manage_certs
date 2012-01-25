@@ -1,0 +1,224 @@
+# Funktion (manage_certs), Verwaltung von Zertifikaten# {{{
+#
+# usage: manage_certs
+#
+manage_certs() {
+	# Pruefen ob eine CA geoeffnet ist.
+	if [ -n "$CA_OPEN_NAME" ] ; then
+		# Funktion (cert_menu)# {{{
+		#
+		CERT_TITLE="${CA_OPEN_NAME}::${lv_Cert}"
+		cert_menu() {
+    		CERT_MENU=($gv_Display \"\"
+			\"$lv_ServerCA_Create\" \"\"
+			\"$lv_UserCA_Create\" \"\"
+			\"$lv_Export\" \"\" \"$lv_RevokeValidity\" \"\"
+			$gv_Delete \"\" $gv_Back \"\")
+			#
+			if [[ ${#argv} == 1 ]] ; then
+				menubox -d "$1" "$CERT_TITLE" "$gv_Menupoint" "$CERT_MENU"
+			else
+				menubox "$CERT_TITLE" "$gv_Menupoint" "$CERT_MENU"
+			fi
+		}
+		# }}}
+		cert_menu
+		while [ -n "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)
+					script_help cert_help
+					cert_menu
+					;;
+				$gv_Display)
+					# Zertifikate anschauen# {{{
+					# Funktion (cert_choice_menu)# {{{
+					CERT_TITLE="${lv_Cert}::${gv_Display}"
+					#
+					cert_choice_menu() {
+						CERT_MENU=($CERTS_ALL_VAL_M)
+						checklist "$CERT_TITLE" "$gv_Menupoint" "$CERT_MENU"
+					}
+					## }}}
+					# alle Zertifikate herraussuchen, ob gueltig oder nicht.
+					get_info_files
+					if [ -n "${CERTS_ALL_VAL_M[1]}" ] ; then
+						cert_choice_menu
+						while [ "$gv_Auswahl" ] ; do
+							case $gv_Auswahl in
+								HELP*)
+						    	    # Hilfe Messagebox
+									script_help cert_help
+									cert_choice_menu
+									;;
+								*)
+									# Auswahl anzeigen
+									# alte Datei loeschen
+									rm -f $DISPLAY_FILE &>/dev/null
+									# Anzeige Datei fuellen
+									for i in ${=gv_Auswahl} ; {
+										CN_CERT_FILE="${CERTS_FILE[i]}"
+										CN_NAME="${CERTS_CN[i]}"
+										echo "################################" >> $DISPLAY_FILE
+										echo "$CN_NAME" >> $DISPLAY_FILE
+										echo "################################" >> $DISPLAY_FILE
+										fingerprint "$CN_CERT_FILE" $DISPLAY_FILE
+										echo "" >> $DISPLAY_FILE
+										openssl x509 -in "$CN_CERT_FILE" -text >> $DISPLAY_FILE
+										echo "" >> $DISPLAY_FILE
+									}
+									view_file $DISPLAY_FILE
+									break
+									;;
+							esac
+						done
+					else
+						no_cas_msg
+					fi
+					## }}}
+					cert_menu $gv_Display
+					;;
+				$lv_ServerCA_Create|$lv_UserCA_Create)
+					# Server Zertifikate erstellen# {{{
+					if [ -n "$CA_OPEN_NAME" ] ; then
+						Menu_Opt="$gv_Auswahl"
+						# pruefen ob die $CA_OPEN_NAME (CA) schon existiert
+						if [ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem ] ; then
+							# Daten der SubCA einlesen.
+							read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
+							# einige Variablen loeschen
+							unset -- SUBCAPASSWORD PASSWORD CAPASSWD COMMONNAME
+							if [[ $Menu_Opt == $lv_ServerCA_Create ]] ; then
+								# openssl.cnf Section auswaehlen
+								CONF_SECTION=server_cert
+								CONF_SECT=server_ca
+							else
+								CONF_SECTION=client_cert
+								CONF_SECT=client_ca
+							fi
+							# Zertifikate konfigurieren, ... und erstellen.
+							conf_ca -c
+						else
+							no_ca_msg $CA_OPEN_NAME
+						fi
+					else
+						no_open_ca_msg
+					fi
+					## }}}
+					cert_menu $Menu_Opt
+					;;
+				$lv_Export)
+					# Zertifikate exportieren# {{{
+					autoload -U export_files
+					EXPORT_TITLE="${lv_Cert}::${lv_Export}"
+					# Funktion (cert_choice_menu)# {{{
+					cert_choice_menu() {
+						CERT_EXPORT_MENU=($CERTS_VAL_M)
+						radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$CERT_EXPORT_MENU"
+					}
+					## }}}
+					#
+					get_info_files -v
+					if [[ -n ${CERTS_VAL_M[1]} ]] ; then
+						cert_choice_menu
+						while [ -n "$gv_Auswahl" ] ; do
+							case $gv_Auswahl in
+								HELP*)
+						    	    # Hilfe Messagebox
+									script_help export_cert_help
+									cert_choice_menu
+									;;
+								*)
+									# Auswahl uebernehmen
+									Ex_File="${CERTS_FILE[gv_Auswahl]}"
+									export_files -certs "$Ex_File" "export_cert_help"
+									break
+									;;
+							esac
+						done
+					else
+						no_cas_valid_msg
+					fi
+					## }}}
+					cert_menu $lv_Export
+					;;
+				$lv_RevokeValidity)
+					# Zertifikate fuer ungueltig erklaeren #{{{
+					autoload -U revoke_files
+					CERT_REVOKE_TITLE="${lv_Cert}::${lv_RevokeValidity}"
+					#
+					# Funktion (cert_revoke_menu)# {{{
+					cert_revoke_menu() {
+						CERT_REVOKE_MENU=($CERTS_VAL_M)
+						radiolist "$CERT_REVOKE_TITLE" "$gv_Menupoint" "$CERT_REVOKE_MENU"
+					}
+					## }}}
+					get_info_files -v
+					if [[ -n ${CERTS_VAL_M[1]} ]] ; then
+						cert_revoke_menu
+						while [ -n "$gv_Auswahl" ] ; do
+							case $gv_Auswahl in
+								HELP*)
+						    	    # Hilfe Messagebox
+									script_help ca_revoke_help
+									cert_revoke_menu
+									;;
+								*)
+									# Auswahl der Export Formate,
+									# Daten der CA einlesen etc.
+									Ex_File="${CERTS_FILE[gv_Auswahl]}"
+									revoke_files "$Ex_File"
+									break
+									;;
+							esac
+						done
+					else
+						no_cas_valid_msg
+					fi
+					## }}}
+					cert_menu $lv_RevokeValidity
+					;;
+				$gv_Delete)
+					# Zertifikate loeschen# {{{
+					# Funktion (del_cert_choice_menu)# {{{
+					CERT_DEL_TITLE="${lv_Cert}::${gv_Delete}"
+					del_cert_choice_menu() {
+						CERT_DEL_MENU=($CERTS_NON_VAL_M)
+						checklist "$CERT_TITLE" "$gv_Menupoint" "$CERT_DEL_MENU"
+					}
+					## }}}
+					get_info_files -u
+					if [ -n "${CERTS_NON_VAL_M[1]}" ] ; then
+						del_cert_choice_menu
+						while [ "$gv_Auswahl" ] ; do
+							case "$gv_Auswahl" in
+								HELP*)
+						    	    # Hilfe Messagebox
+									script_help cert_del_help
+									del_cert_choice_menu
+									;;
+								*)
+									# Auswahl uebernehmen# {{{
+									for i in ${=gv_Auswahl} ; {
+										rm -rfv "${CERTS_FILE[i]}" &>/dev/null
+									}
+									## }}}
+									break
+									;;
+							esac
+						done
+					else
+						no_cas_nonvalid_msg
+					fi
+					## }}}
+					cert_menu $gv_Delete
+					;;
+				$gv_Back)
+					break
+					;;
+			esac
+		done
+	else
+		no_open_ca_msg
+	fi
+}
+## }}}

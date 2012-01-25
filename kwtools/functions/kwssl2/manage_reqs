@@ -1,0 +1,174 @@
+# Funktion (manage_reqs), Verwaltung von Anforderungen# {{{
+#
+# usage: manage_reqs
+#
+manage_reqs() {
+	# Pruefen ob eine CA geoeffnet ist.
+	if [ -n "$CA_OPEN_NAME" ] ; then
+		# Funktion (req_menu)# {{{
+		#
+		REQ_TITLE="${CA_OPEN_NAME}::${lv_Request}"
+		req_menu() {
+    		REQ_MENU=(\"$gv_Display\" \"\" \"$lv_Request_Create\" \"\"
+			\"$lv_Import\" \"\" \"$lv_Sign\" \"\"
+			$gv_Delete \"\" $gv_Back \"\")
+			#
+			if [[ ${#argv} == 1 ]] ; then
+				menubox -d "$1" "$REQ_TITLE" "$gv_Menupoint" "$REQ_MENU"
+			else
+				menubox "$REQ_TITLE" "$gv_Menupoint" "$REQ_MENU"
+			fi
+		}
+		# }}}
+		req_menu
+		while [ -n "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)
+					script_help req_help
+					req_menu
+					;;
+				$gv_Display)
+					# Anforderungen anschauen# {{{
+					# Funktion (cert_choice_menu)# {{{
+					REQ_TITLE="${lv_Request}::${gv_Display}"
+					#
+					req_choice_menu() {
+						REQ_MENU=($REQS_ALL_M)
+						checklist "$REQ_TITLE" "$gv_Menupoint" "$REQ_MENU"
+					}
+					## }}}
+					# alle Anforderungen herraussuchen.
+					get_info_files -r
+					if [ -n "${REQS_ALL_M[1]}" ] ; then
+						req_choice_menu
+						while [ "$gv_Auswahl" ] ; do
+							case $gv_Auswahl in
+								HELP*)
+						    	    # Hilfe Messagebox
+									script_help req_help
+									req_choice_menu
+									;;
+								*)
+									# Auswahl anzeigen
+									# alte Datei loeschen
+									rm -f $DISPLAY_FILE &>/dev/null
+									# Anzeige Datei fuellen
+									for i in ${=gv_Auswahl} ; {
+										CN_REQ_FILE="${REQS_FILE[i]}"
+										CN_NAME="${REQS_CN[i]}"
+										echo "################################" >> $DISPLAY_FILE
+										echo "$CN_NAME" >> $DISPLAY_FILE
+										echo "################################" >> $DISPLAY_FILE
+										echo "" >> $DISPLAY_FILE
+										openssl req -in "$CN_REQ_FILE" -text >> $DISPLAY_FILE
+										echo "" >> $DISPLAY_FILE
+									}
+									view_file $DISPLAY_FILE
+									break
+									;;
+							esac
+						done
+					else
+						no_reqs_msg
+					fi
+					## }}}
+					req_menu $gv_Display
+					;;
+				$lv_Request_Create)
+					#############################
+					# NOTIZ:
+					# conf_ca benutzen
+					#############################
+					hier_ist_noch_nichts $lv_Request_Create
+					req_menu $lv_Request_Create
+					;;
+				$lv_Import)
+					# Anforderung zum Import auswaehlen# {{{
+					FORMAT=""
+					SUFFIX=".pem .der .req"
+					file_choice "${REQ_FILE%/*}" only "$REQ_FILE"
+					if [ -n "$WERT" ] ; then
+						get_format_file "${VERZ}/${WERT}"
+						if openssl req ${=FORMAT} "${VERZ}/${WERT}" &>/dev/null ; then
+							REQ_FILE="${VERZ}/${WERT}"
+							# Subject holen und Variablen mit eingelesenen Werten belegen
+							Tmp=${$(openssl req ${=INFORM_FORMAT} -in $REQ_FILE -subject -noout)[2]}
+							read_subject "$Tmp"
+							# base64 encodierten Dateienamen herausfinden
+							# und checken ob er schon existiert.
+							gen_name
+							if [ ! -f "${CA_OPEN_NAME}/req/${GEN_NAME}.pem" ] ; then
+								# Frage ob diese Request Datei importiert werden soll
+								IMPORT_REQ_TITLE="${lv_Request}::${lv_Import}"
+								IMPORT_REQ_MSG=$(gettext 'Soll diese Anforderung wirklich importiert werden (ja/nein)?')
+								yesno "$IMPORT_REQ_TITLE" "$IMPORT_REQ_MSG"
+								if [ "$?" = 0 ] ; then
+									# Request importieren
+									REQ_NEW_FILE="${CA_OPEN_NAME}/req/${GEN_NAME}.pem"
+									PROG_OPT=(req $INFORM_FORMAT -in $REQ_FILE
+								   		-outform PEM -out $REQ_NEW_FILE)
+									openssl $PROG_OPT || prog_failure
+								fi
+							else
+								file_existed_msg "$REQ_NEW_FILE"
+							fi
+						else
+							no_req_msg
+						fi
+					fi
+					## }}}
+					req_menu $lv_Import
+					;;
+				$lv_Sign)
+					###########################
+					# TODO:
+					# Server oder Benutzer???
+					###########################
+					hier_ist_noch_nichts $lv_Sign
+					req_menu $lv_Sign
+					;;
+				$gv_Delete)
+					# Anforderungen loeschen# {{{
+					# Funktion (del_req_choice_menu)# {{{
+					REQ_DEL_TITLE="${lv_Request}::${gv_Delete}"
+					del_req_choice_menu() {
+						REQ_DEL_MENU=($REQS_ALL_M)
+						checklist "$REQ_DEL_TITLE" "$gv_Menupoint" "$REQ_DEL_MENU"
+					}
+					## }}}
+					get_info_files -r
+					if [ -n "${REQS_ALL_M[1]}" ] ; then
+						del_req_choice_menu
+						while [ "$gv_Auswahl" ] ; do
+							case "$gv_Auswahl" in
+								HELP*)
+						    	    # Hilfe Messagebox
+									script_help req_del_help
+									del_req_choice_menu
+									;;
+								*)
+									# Auswahl uebernehmen
+									for i in ${=gv_Auswahl} ; {
+										rm -rf "${REQS_FILE[i]}" &>/dev/null
+									}
+									#
+									break
+									;;
+							esac
+						done
+					else
+						no_reqs_msg
+					fi
+					## }}}
+					req_menu $gv_Delete
+					;;
+				$gv_Back)
+					break
+					;;
+			esac
+		done
+	else
+		no_open_ca_msg
+	fi
+}
+## }}}
