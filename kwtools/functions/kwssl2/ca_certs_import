@@ -196,7 +196,7 @@ ca_certs_import() {
 				cat ${CA_OPEN_NAME}/cacert.pem ${NEW_CA_NAME}/cacert.pem > ${NEW_CA_NAME}/cachain.pem
 				###############################
 				# TODO:
-				# - certs finden und iportieren
+				# - certs finden und importieren
 				# - index.txt Datei
 				################################
 				#
@@ -300,7 +300,7 @@ ca_certs_import() {
 				;;
 			"$lv_Priv_Key")
 				# privaten Schluessel auswaehlen# {{{
-				FORMAT="text"
+				FORMAT=""
 				SUFFIX=".pem .der"
 				file_choice "${PRIV_KEY%/*}" only "$PRIV_KEY"
 				if [ -n "$WERT" ] ; then
