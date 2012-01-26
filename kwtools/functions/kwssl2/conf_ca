@@ -376,7 +376,7 @@ conf_ca() {
 						CA_NAME="$gv_Auswahl"
 					else
 						unset -- CA_NAME
-						ca_existed_msg
+						ca_existed_msg "$gv_Auswahl"
 					fi
 				else
 					unset -- CA_NAME

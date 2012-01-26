@@ -247,7 +247,7 @@ ca_certs_import() {
 						NEW_CA_NAME="$gv_Auswahl"
 					else
 						unset -- NEW_CA_NAME
-						ca_existed_msg
+						ca_existed_msg "$gv_Auswahl"
 					fi
 				else
 					unset -- NEW_CA_NAME

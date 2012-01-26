@@ -89,22 +89,22 @@ manage_reqs() {
 					file_choice "${REQ_FILE%/*}" only "$REQ_FILE"
 					if [ -n "$WERT" ] ; then
 						get_format_file "${VERZ}/${WERT}"
-						if openssl req ${=FORMAT} "${VERZ}/${WERT}" &>/dev/null ; then
+						if openssl req ${=INFORM_FORMAT} -in "${VERZ}/${WERT}" &>/dev/null ; then
 							REQ_FILE="${VERZ}/${WERT}"
 							# Subject holen und Variablen mit eingelesenen Werten belegen
-							Tmp=${$(openssl req ${=INFORM_FORMAT} -in $REQ_FILE -subject -noout)[2]}
+							Tmp=${$(openssl req ${=INFORM_FORMAT} -in $REQ_FILE -subject -noout)[1]}
 							read_subject "$Tmp"
 							# base64 encodierten Dateienamen herausfinden
 							# und checken ob er schon existiert.
 							gen_name
-							if [ ! -f "${CA_OPEN_NAME}/req/${GEN_NAME}.pem" ] ; then
+							REQ_NEW_FILE="${CA_OPEN_NAME}/req/${GEN_NAME}.pem"
+							if [ ! -f "$REQ_NEW_FILE" ] ; then
 								# Frage ob diese Request Datei importiert werden soll
 								IMPORT_REQ_TITLE="${lv_Request}::${lv_Import}"
-								IMPORT_REQ_MSG=$(gettext 'Soll diese Anforderung wirklich importiert werden (ja/nein)?')
+								IMPORT_REQ_MSG=$(gettext 'Soll diese Anforderung wirklich importiert werden (ja/nein)?\n\n${lv_Ssl_CommonName}: $COMMONNAME\n${lv_Ssl_Land_Code}: $COUNTRYCODE\n${lv_Ssl_Bundesstaat}: $COUNTRY\n${lv_Ssl_Location}: $LOCATION\n${lv_Ssl_Organisation}: $ORGANISATION\n${lv_Ssl_Organisation_Unit}: $ORGANISATIONUNIT\n${lv_Ssl_Email}: $MAIL')
 								yesno "$IMPORT_REQ_TITLE" "$IMPORT_REQ_MSG"
 								if [ "$?" = 0 ] ; then
 									# Request importieren
-									REQ_NEW_FILE="${CA_OPEN_NAME}/req/${GEN_NAME}.pem"
 									PROG_OPT=(req $INFORM_FORMAT -in $REQ_FILE
 								   		-outform PEM -out $REQ_NEW_FILE)
 									openssl $PROG_OPT || prog_failure
@@ -113,7 +113,7 @@ manage_reqs() {
 								file_existed_msg "$REQ_NEW_FILE"
 							fi
 						else
-							no_req_msg
+							no_req_msg "$WERT"
 						fi
 					fi
 					## }}}

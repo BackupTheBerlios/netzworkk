@@ -1039,14 +1039,18 @@ no_reqs_msg() {
 # usage: no_req_msg FILE
 #
 no_req_msg() {
-	MSG=$(gettext 'Diese Datei ($1) ist keine Anforderung.')
+	local File
+	File="$1"
+	MSG=$(gettext 'Diese Datei ($File) ist keine Anforderung.')
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
 # Funktion (ca_existed_msg), Nachricht das diese CA schon existiert# {{{
 #
 ca_existed_msg() {
-	MSG=$(gettext 'Diese CA ($gv_Auswahl) ist schon vorhanden.')
+	local File
+	File="$1"
+	MSG=$(gettext 'Diese CA ($File) ist schon vorhanden.')
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
