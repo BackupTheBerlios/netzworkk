@@ -78,6 +78,7 @@ manage_reqs() {
 					#############################
 					# NOTIZ:
 					# conf_ca benutzen
+					# conf_ca -ca?
 					#############################
 					hier_ist_noch_nichts $lv_Request_Create
 					req_menu $lv_Request_Create
