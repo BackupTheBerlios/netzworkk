@@ -151,6 +151,7 @@ if [ "$1" != -o ] ; then
 	gv_Firm=$(gettext 'Firma')
 	gv_Filename=$(gettext 'Dateiname')
 	gv_German=$(gettext 'deutsch')
+	gv_Group=$(gettext 'Gruppe')
 	gv_Host=$(gettext 'Rechner')
 	gv_Help=$(gettext 'Hilfe')
 	gv_Info=$(gettext 'Info')
@@ -173,6 +174,7 @@ if [ "$1" != -o ] ; then
 	gv_Start=$(gettext 'start')
 	gv_Stop=$(gettext 'stop')
 	gv_Unknown=$(gettext 'unbekannt')
+	gv_User=$(gettext 'Benutzer')
 	gv_Yes=$(gettext 'Ja')
 	#
 	No_Dialog_Msg1=$(gettext '"Sie benoetigen dialog, um dieses Programm"')
