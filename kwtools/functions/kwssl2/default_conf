@@ -28,22 +28,19 @@ default_conf() {
 				;;
 			"$lv_Ca_Certs")
 				# normale CA Zertifikate konfigurieren
-				CONF_SECTION=v3_ca
-				read_openssl_conf
+				read_openssl_conf v3_ca
 				ca_certs_conf -n
 				default_conf_menu $lv_Ca_Certs
 				;;
 			"$lv_Server_Ca")
 				# Server Zertifikate konfigurieren
-				CONF_SECTION=server_cert
-				read_openssl_conf
+				read_openssl_conf server_cert
 				ca_certs_conf -s
 				default_conf_menu $lv_Server_Ca
 				;;
 			"$lv_User_Ca")
 				# Benutzer Zertifikate konfigurieren
-				CONF_SECTION=client_cert
-				read_openssl_conf
+				read_openssl_conf client_cert
 				ca_certs_conf -u
 				default_conf_menu $lv_User_Ca
 				;;

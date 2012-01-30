@@ -10,7 +10,7 @@ manage_keys() {
 		KEY_TITLE="${CA_OPEN_NAME}::${lv_Key}"
 		key_menu() {
     		KEY_MENU=(\"$lv_Export\" \"\"
-			$gv_Delete \"\" $gv_Back \"\")
+				$gv_Delete \"\" $gv_Back \"\")
 			#
 			if [[ ${#argv} == 1 ]] ; then
 				menubox -d "$1" "$KEY_TITLE" "$gv_Menupoint" "$KEY_MENU"
@@ -19,6 +19,12 @@ manage_keys() {
 			fi
 		}
 		# }}}
+		# Funktion (no_keys_msg)# {{{
+		no_keys_msg() {
+			MSG=$(gettext 'Es sind keine Schluessel vorhanden.')
+			msgbox "$gv_Info" "$MSG"
+		}
+		## }}}
 		key_menu
 		while [ -n "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in

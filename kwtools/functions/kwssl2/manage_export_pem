@@ -117,7 +117,7 @@ manage_export_pem() {
 					export_pem_menu $lv_CertAdd
 					;;
 				"$lv_KeyAdd")
-					# Schluessel hinzufuegen (yes/no)# {{{
+					# Schluessel hinzufuegen (ja/nein)# {{{
 					key_add
 					## }}}
 					export_pem_menu $lv_KeyAdd
@@ -146,18 +146,21 @@ manage_export_pem() {
 					#
 					create_export_ca_certs() {
 						# Fingerprint und Schluessel mit hinzufuegen
-						if [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
+						if [[ $FINGERPRINT_VALUE == $gv_Yes ]] && \
+							[[ $KEY_VALUE == $gv_Yes ]] ; then
 							fingerprint "$CACERT" "$EXPORT_FILENAME"
 							< $CACERT >> "$EXPORT_FILENAME" &>/dev/null
 							echo "" >> "$EXPORT_FILENAME" &>/dev/null
 							< $CAKEY >> "$EXPORT_FILENAME" &>/dev/null
 						# Schluessel mit hinzufuegen
-						elif [ "$FINGERPRINT_VALUE" = "$gv_No" -a "$KEY_VALUE" = "$gv_Yes" ] ; then
+						elif [[ $FINGERPRINT_VALUE == $gv_No ]] && \
+							[[ $KEY_VALUE == $gv_Yes ]] ; then
 							< $CACERT > "$EXPORT_FILENAME" &>/dev/null
 							echo "" >> "$EXPORT_FILENAME" &>/dev/null
 							< $CAKEY >> "$EXPORT_FILENAME" &>/dev/null
 						# Fingerprint mit hinzufuegen
-						elif [ "$FINGERPRINT_VALUE" = "$gv_Yes" -a "$KEY_VALUE" = "$gv_No" ] ; then
+						elif [[ $FINGERPRINT_VALUE == $gv_Yes ]] && \
+							[[ $KEY_VALUE == $gv_No ]] ; then
 							fingerprint "$CACERT" "$EXPORT_FILENAME"
 							< $CACERT >> "$EXPORT_FILENAME" &>/dev/null
 						# nur Zertifikat

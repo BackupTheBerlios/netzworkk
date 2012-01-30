@@ -667,18 +667,18 @@ ca_certs_conf() {
 					# und in Konfigurationsvariablen uebersetzen
 					#
 					read_var_conf() {
-							# kritisch oder unkritisch# {{{
-							# Diese EInstellung wird für die Einstellung von
-							# KEYUSAGE benötigt.
-							case "$CRITICAL" in
-								"$lv_Critical")
-									CONF_CRITICAL="critical, "
-									;;
-								"$lv_UnCritical")
-									CONF_CRITICAL=""
-									;;
-							esac
-							## }}}
+						# kritisch oder unkritisch# {{{
+						# Diese EInstellung wird für die Einstellung von
+						# KEYUSAGE benötigt.
+						case "$CRITICAL" in
+							"$lv_Critical")
+								CONF_CRITICAL="critical, "
+								;;
+							"$lv_UnCritical")
+								CONF_CRITICAL=""
+								;;
+						esac
+						## }}}
 						# SUBJECT_ALTER_NAME# {{{
 						if [ -n "$SUBJECT_ALTER_NAME" ] ; then
 							case "$SUBJECT_ALTER_NAME" in
@@ -924,21 +924,29 @@ ca_certs_conf() {
 					## }}}
 					# Variablen einlesen
 					read_var_conf
-					# Pruefen welche Konfigurationssektion fuer# {{{
-					# den Wert default_days geaendert werden soll.
-					if [[ $CONF_SECTION == v3_ca ]] ; then
-						# dazugehoerige Section einstellen
-						CONF_SECT="ca_ca"
-						# Konfiguration schreiben
-						write_openssl "$CONF_SECTION"
-						write_openssl "$CONF_SECT"
-					else
-						# dazugehoerige Section einstellen
-						CONF_SECT="${CONF_SECTION%%_*}_ca"
-						# Konfiguration schreiben
-						write_openssl "$CONF_SECTION"
-						write_openssl "$CONF_SECT"
-					fi
+					# Pruefen welche Konfigurationssektion# {{{
+					# geaendert werden soll.
+					case "$CAOpt" in
+						-r|-n)
+							# dazugehoerige Section einstellen und
+							# Konfiguration schreiben
+							CONF_SECTION="v3_ca"
+							write_openssl "$CONF_SECTION"
+							write_openssl "ca_ca"
+							;;
+						-s)
+							# Server Sektion
+							CONF_SECTION="server_cert"
+							write_openssl "$CONF_SECTION"
+							write_openssl "server_ca"
+							;;
+						-u)
+							# Client Sektion
+							CONF_SECTION="client_cert"
+							write_openssl "$CONF_SECTION"
+							write_openssl "client_ca"
+							;;
+					esac
 					## }}}
 					break
 					## }}}

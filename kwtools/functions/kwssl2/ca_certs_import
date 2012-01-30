@@ -4,7 +4,7 @@
 #
 ca_certs_import() {
 	# Variablen die nach dem speichern/zurueck geloescht werden sollen.
-	IMPORT_UNSET=(PRIVPASSWD PRIV_PASSWORD CA_NEW_PASSWD PASSWORD
+	IMPORT_UNSET=(CA_CAPASSWD CA_CAPASSWORD CA_NEW_PASSWD PASSWORD
 		CERTS_DIR NEW_CA_NAME INDEX_FILE PRIV_KEY CACERT_FILE)
 	# Variablen# {{{
 	lv_Ssl_Priv_Pass=$(gettext 'privater Schluessel (Passwort)')
@@ -18,7 +18,7 @@ ca_certs_import() {
 	IMPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Import}"
 	#
 	import_menu() {
-		IMPORT_MENU=(\"$lv_Ssl_Priv_Pass\" \"$PRIV_PASSWORD\"
+		IMPORT_MENU=(\"$lv_Ssl_Priv_Pass\" \"$CA_CAPASSWORD\"
 		\"$lv_Ssl_Name\" \"$NEW_CA_NAME\"
 		\"$lv_CA_Password\" \"$PASSWORD\"
 		\"$lv_Ssl_Password_Generate\" \"\"
@@ -36,6 +36,9 @@ ca_certs_import() {
 	## }}}
 	# Funktion (check_import_cacert), ueberprueft die zu importierende# {{{
 	# CA Certificate Dateien
+	#
+	# usage: check_import_cacert X509_CERT_FILE
+	#
 	check_import_cacert() {
 		if [[ ${#argv} == 1 ]] ; then
 			# Funktion (no_basic_constraints_msg)# {{{
@@ -93,6 +96,11 @@ ca_certs_import() {
 	## }}}
 	# Funktion (check_import_cakey), ueberprueft die zu importierende# {{{
 	# Key Datei
+	#
+	# benoetigt zuvor die Funktion check_import_cacert
+	#
+	# usage: check_import_cakey ALGORITHM FORMAT PRIVKEY_FILE
+	#
 	check_import_cakey() {
 		if [[ ${#argv} == 3 ]] ; then
 			local File Alg InForm
@@ -118,7 +126,7 @@ ca_certs_import() {
 	# Funktion (import_files)# {{{
 	#
 	import_files() {
-		if [[ -n $PRIV_PASSWORD ]] && \
+		if [[ -n $CA_CAPASSWORD ]] && \
 			[[ -n $NEW_CA_NAME ]] && \
 			[[ -n $PASSWORD ]] && \
 			[[ -n $CACERT_FILE ]] && \
@@ -129,81 +137,79 @@ ca_certs_import() {
 				# Die Variablen $IMPORT_ALG und $IMPORT_INFORM werden
 				# von der Funktion check_import_cacert belegt.
 				check_import_cakey "$IMPORT_ALG" "$IMPORT_INFORM" "$PRIV_KEY"
-			fi
-			if [ $? -eq 0 ] ; then
-				########################################
-				# TODO:
-				# Frage: MSG Wollen Sie die CA wirklich importieren?
-				# alles mit ausgewaehlter Anzeige der Parameter,
-				# wie Aussteller, etc.
-				########################################
-				#
-				# openssl
-				# create_file -d "$CA_NAME"
-				create_pki "$NEW_CA_NAME"
-				# aktuelle Serial Nr. herausbekommen
-				NR=$(< ${KWSSL_DIR}/${CA_OPEN_NAME}/serial)
-				# ins Verzeichnis wechseln
-				cd $KWSSL_DIR
-				# einlesen vom Subject des Zertifikates
-				read_ca_data "$CACERT_FILE"
-				# Dateinamen aus den Werten vom Subject erstellen
-				# Basis: CN EMAIL OU O L ST C
-				gen_name
-				# Standard Variablen belegen
-				lv_Digest=(-sha1)
-				VALIDITY=3650
-				# Key Datei importieren
-				openssl $IMPORT_ALG ${=IMPORT_INFORM} -outform PEM \
-					-in $PRIV_KEY -aes256 \
-					-out ${NEW_CA_NAME}/cacert.key \
-					-passout pass:${CA_NEW_PASSWD} || prog_failure ; return 1
-				#
-				# Certificate Request erstellen
-				openssl req -new -keyform PEM -outform PEM \
-					-config $KWSSL2RC \
-					-key ${NEW_CA_NAME}/cacert.key \
-					-out ${NEW_CA_NAME}/cacert.req \
-					-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-					-batch -passin pass:${CA_NEW_PASSWD} $lv_Digest || prog_failure ; return 1
-				# Rechte einstellen
-				chmod 444 ${NEW_CA_NAME}/cacert.req
-				# privaten Schluessel mit RootCA signieren
-				openssl ca -batch -notext \
-					-config ${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
-					-name ca_ca -in ${NEW_CA_NAME}/cacert.req \
-					-days $VALIDITY -preserveDN \
-					-extensions $CONF_SECTION \
-					-keyfile ${CA_OPEN_NAME}/cacert.key \
-					-cert ${CA_OPEN_NAME}/cacert.pem \
-					-out ${NEW_CA_NAME}/cacert.pem \
-					-outdir ${CA_OPEN_NAME}/newcerts \
-					-passin pass:${PRIVPASSWD} || prog_failure ; return 1
-				# Rechte einstellen
-				chmod 444 ${NEW_CA_NAME}/cacert.pem
-				chmod 444 ${CA_OPEN_NAME}/newcerts/${NR}.pem
-				# req file nach CA/req verschieben
-				mv ${NEW_CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem
-				# Zertifikat in die CA integrieren
-				cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${GEN_NAME}.pem
-				# keyfile in die CA integrieren
-				cp -a ${NEW_CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
-				# CRL erstellen
-				openssl ca -config $KWSSL2RC -name ca_ca -gencrl \
-					-out ${NEW_CA_NAME}/crl/crl.pem \
-					-batch -passin pass:${CA_NEW_PASSWD} || prog_failure ; return 1
-				# cachain.pem Datei erstellen.
-				cat ${CA_OPEN_NAME}/cacert.pem ${NEW_CA_NAME}/cacert.pem > ${NEW_CA_NAME}/cachain.pem
-				###############################
-				# TODO:
-				# - certs finden und importieren
-				# - index.txt Datei
-				################################
-				#
-				# CA oeffnen
-				CA_OPEN_NAME="$NEW_CA_NAME"
-			else
-				import_menu
+				if [ $? -eq 0 ] ; then
+					########################################
+					# TODO:
+					# Frage: MSG Wollen Sie die CA wirklich importieren?
+					# alles mit ausgewaehlter Anzeige der Parameter,
+					# wie Aussteller, etc.
+					########################################
+					#
+					# Verzeichnisstruktur erstellen
+					create_pki "$NEW_CA_NAME"
+					# Grundkonfiguration/Sektion einlesen
+					read_openssl_conf v3_ca
+					# Digest umwandeln
+					convert_digest $DIGEST
+					# aktuelle Serial Nr. herausbekommen
+					NR=$(< ${KWSSL_DIR}/${CA_OPEN_NAME}/serial)
+					# einlesen vom Subject des Zertifikates
+					read_ca_data "$CACERT_FILE"
+					# Dateinamen aus den Werten vom Subject erstellen
+					# Basis: CN EMAIL OU O L ST C
+					gen_name
+					# Standard Variablen belegen
+					lv_Digest=${lv_Digest:--sha1}
+					VALIDITY=${VALIDITY:-3650}
+					# ins Verzeichnis wechseln
+					cd $KWSSL_DIR
+					# Key Datei importieren
+					openssl $IMPORT_ALG ${=IMPORT_INFORM} -outform PEM \
+						-in $PRIV_KEY -aes256 \
+						-out ${NEW_CA_NAME}/cacert.key \
+						-passout pass:${CA_NEW_PASSWD} || prog_failure ; return 1
+					#
+					# Certificate Request erstellen
+					openssl req -new -keyform PEM -outform PEM \
+						-config $KWSSL2RC \
+						-key ${NEW_CA_NAME}/cacert.key \
+						-out ${NEW_CA_NAME}/cacert.req \
+						-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
+						-batch -passin pass:${CA_NEW_PASSWD} $lv_Digest || prog_failure ; return 1
+					# CA Zertifikat erzeugen und mit CA signieren
+					openssl ca -batch -notext \
+						-config ${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
+						-name ca_ca -in ${NEW_CA_NAME}/cacert.req \
+						-days $VALIDITY -preserveDN \
+						-extensions $CONF_SECTION \
+						-keyfile ${CA_OPEN_NAME}/cacert.key \
+						-cert ${CA_OPEN_NAME}/cacert.pem \
+						-out ${NEW_CA_NAME}/cacert.pem \
+						-outdir ${CA_OPEN_NAME}/newcerts \
+						-passin pass:${CA_CAPASSWD} || prog_failure ; return 1
+					# req file nach CA/req verschieben
+					mv ${NEW_CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem
+					# Zertifikat in die CA integrieren
+					cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${GEN_NAME}.pem
+					# keyfile in die CA integrieren
+					cp -a ${NEW_CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
+					# CRL erstellen
+					openssl ca -config $KWSSL2RC -name ca_ca -gencrl \
+						-out ${NEW_CA_NAME}/crl/crl.pem \
+						-batch -passin pass:${CA_NEW_PASSWD} || prog_failure ; return 1
+					# cachain.pem Datei erstellen.
+					cat ${CA_OPEN_NAME}/cacert.pem ${NEW_CA_NAME}/cacert.pem > ${NEW_CA_NAME}/cachain.pem
+					###############################
+					# TODO:
+					# - certs finden und importieren
+					# - index.txt Datei
+					################################
+					#
+					# CA oeffnen
+					CA_OPEN_NAME="$NEW_CA_NAME"
+				else
+					import_menu
+				fi
 			fi
 		else
 			MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $lv_Ssl_Priv_Pass, $lv_Ssl_Name, $lv_Ssl_Password, $lv_Ca_Cert, $lv_Priv_Key und $lv_Certs_Dir mit Werten belegen.')
@@ -220,22 +226,8 @@ ca_certs_import() {
 				import_menu
 				;;
 			"$lv_Ssl_Priv_Pass")
-				# Password des privaten Schluessel eingeben# {{{
-				PRIV_PASS_MSG=$(gettext 'Geben Sie das Passwort des privaten Schluessels ein.')
-				password "$lv_Ssl_Priv_Pass" "$PRIV_PASS_MSG" "$PASSWD_LENGTH"
-				if [ -n "$PASSPHRASE" ] ; then
-					password_display "$PASSPHRASE"
-					if [ -n "$gv_Star_Passphrase" ] ; then
-						PRIV_PASSWORD="$gv_Star_Passphrase"
-						PRIVPASSWD="$PASSPHRASE"
-						unset -- PASSPHRASE
-					else
-						unset -- PRIVPASSWD PASSPHRASE
-					fi
-				else
-					unset -- PRIVPASSWD PASSPHRASE
-				fi
-				## }}}
+				# Password des privaten Schluessel eingeben
+				ca_passwd_input -keys
 				import_menu $lv_Ssl_Priv_Pass
 				;;
 			$lv_Ssl_Name)
@@ -256,8 +248,8 @@ ca_certs_import() {
 				import_menu $lv_Ssl_Name
 				;;
 			"$lv_CA_Password")
-				# Passphrase eingeben# {{{
-				PASSWD_MSG=$(gettext 'Geben Sie bitte eine neue Passphrase fuer die CA ein (mindestens $PASSWD_LENGTH Zeichen lang) die importiert werden soll und wiederholen diese im Feld darunter.')
+				# Passwort eingeben# {{{
+				PASSWD_MSG=$(gettext 'Geben Sie bitte eine neues Passwort fuer die CA ein (mindestens $PASSWD_LENGTH Zeichen lang) die importiert werden soll und wiederholen diese im Feld darunter.')
 				mixed_password "$gv_Passwd_TITLE" "$PASSWD_MSG" "$PASSWD_LENGTH"
 				if [[ -n $gv_Pass ]] ; then
 					password_display "$gv_Pass"
@@ -266,7 +258,7 @@ ca_certs_import() {
 						CA_NEW_PASSWD="$gv_Pass"
 						unset -- gv_Pass
 					else
-						unset -- PASSWORD gv_Pass
+						unset -- PASSWORD CA_NEW_PASSWD gv_Pass
 					fi
 				else
 					unset -- PASSWORD CA_NEW_PASSWD gv_Pass
@@ -338,12 +330,11 @@ ca_certs_import() {
 				#####################################
 				# TODO:
 				# NOTIZ ueber was noch nicht geht.
-				# weider weg!
 				#####################################
 				MSG="Zertifikate aus $CERTS_DIR importieren geht noch nicht."
 				msgbox "$gv_Info" "$MSG"
 				#
-				# Passphrasen/etc. loeschen
+				# Passwoerter/etc. loeschen
 				unset -- $IMPORT_UNSET
 				break
 				## }}}

@@ -22,6 +22,24 @@ manage_certs() {
 			fi
 		}
 		# }}}
+		# Funktion (no_certs_msg)# {{{
+		no_certs_msg() {
+			MSG=$(gettext 'Es sind keine Zertifikate vorhanden.')
+			msgbox "$gv_Info" "$MSG"
+		}
+		## }}}
+		# Funktion (no_certs_valid_msg)# {{{
+		no_certs_valid_msg() {
+			MSG=$(gettext 'Es sind keine gueltigen Zertifikate vorhanden.')
+			msgbox "$gv_Info" "$MSG"
+		}
+		## }}}
+		# Funktion (no_certs_nonvalid_msg)# {{{
+		no_certs_nonvalid_msg() {
+			MSG=$(gettext 'Es sind keine ungueltigen Zertifikate vorhanden.')
+			msgbox "$gv_Info" "$MSG"
+		}
+		## }}}
 		cert_menu
 		while [ -n "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
@@ -72,7 +90,7 @@ manage_certs() {
 							esac
 						done
 					else
-						no_cas_msg
+						no_certs_msg
 					fi
 					## }}}
 					cert_menu $gv_Display
@@ -81,24 +99,14 @@ manage_certs() {
 					# Server Zertifikate erstellen# {{{
 					if [ -n "$CA_OPEN_NAME" ] ; then
 						Menu_Opt="$gv_Auswahl"
-						# pruefen ob die $CA_OPEN_NAME (CA) schon existiert
-						if [ -f ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem ] ; then
-							# Daten der SubCA einlesen.
-							read_ca_data "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-							# einige Variablen loeschen
-							unset -- SUBCAPASSWORD PASSWORD CAPASSWD COMMONNAME
-							if [[ $Menu_Opt == $lv_ServerCA_Create ]] ; then
-								# openssl.cnf Section auswaehlen
-								CONF_SECTION=server_cert
-								CONF_SECT=server_ca
-							else
-								CONF_SECTION=client_cert
-								CONF_SECT=client_ca
-							fi
+						if [[ $Menu_Opt == $lv_ServerCA_Create ]] ; then
+							# Section mit uebergeben fuer die Funktion
+							# read_openssl_conf von conf_ca.
+							#
 							# Zertifikate konfigurieren, ... und erstellen.
-							conf_ca -c
+							conf_ca -c server_cert
 						else
-							no_ca_msg $CA_OPEN_NAME
+							conf_ca -c client_cert
 						fi
 					else
 						no_open_ca_msg
@@ -136,7 +144,7 @@ manage_certs() {
 							esac
 						done
 					else
-						no_cas_valid_msg
+						no_certs_valid_msg
 					fi
 					## }}}
 					cert_menu $lv_Export
@@ -172,7 +180,7 @@ manage_certs() {
 							esac
 						done
 					else
-						no_cas_valid_msg
+						no_certs_valid_msg
 					fi
 					## }}}
 					cert_menu $lv_RevokeValidity
@@ -207,7 +215,7 @@ manage_certs() {
 							esac
 						done
 					else
-						no_cas_nonvalid_msg
+						no_certs_nonvalid_msg
 					fi
 					## }}}
 					cert_menu $gv_Delete

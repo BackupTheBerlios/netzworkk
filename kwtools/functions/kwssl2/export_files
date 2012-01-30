@@ -30,38 +30,43 @@ export_files() {
 		#
 		export_create_filename() {
 			if [[ ${#argv} == 2 ]] ; then
-				unset -- SUFFIX EXPORT_FILENAME
-				local Export_Opt Export_Suffix
+				unset -- EXPORT_FILENAME
+				local Export_Opt Suffix
 				Export_Opt="$1"
-				Export_Suffix="$2"
+				Suffix="$2"
 				# Export Suffix festlegen# {{{
-				case "$Export_Suffix" in
+				case "$Suffix" in
 					der|pem|p12|tar|txt|zip)
-						SUFFIX="$2"
 						;;
-					*)	unset -- SUFFIX
+					*)	unset -- Suffix
+						return 1
 						;;
 				esac
 				## }}}
 				# Export Dateiname vorlaeufig belegen# {{{
 				case "$Export_Opt" in
 					-ca)
-						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-cacert.${SUFFIX}"
+						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-cacert.${Suffix}"
 						;;
 					-certs)
-						EXPORT_FILENAME="${HOME}/${MAIL}-cert.${SUFFIX}"
+						EXPORT_FILENAME="${HOME}/${MAIL}-cert.${Suffix}"
 						;;
 					-crl)
-						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-crl.${SUFFIX}"
+						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-crl.${Suffix}"
 						;;
 					-keys)
-						EXPORT_FILENAME="${HOME}/${MAIL}-key.${SUFFIX}"
+						EXPORT_FILENAME="${HOME}/${MAIL}-key.${Suffix}"
+						;;
+					*)
+						return 1
 						;;
 				esac
 				## }}}
 			else
 				no_para_msg $0
+				return 1
 			fi
+			return 0
 		}
 		## }}}
 		# Funktion (export_filename), Export Dateinamen eingeben# {{{
@@ -72,7 +77,7 @@ export_files() {
 			if [[ ${#argv} == 1 ]] ; then
 				local Suffix
 				Suffix="$1"
-				EXPORT_FILENAME_MSG=$(gettext 'Geben Sie den Export Dateinamen mit SUFFIX $Suffix ein.')
+				EXPORT_FILENAME_MSG=$(gettext 'Geben Sie den Export Dateinamen mit Suffix ($Suffix) ein.')
 				inputbox "$lv_ExportFilename" "$EXPORT_FILENAME_MSG" "$EXPORT_FILENAME"
 				if [ -n "$gv_Auswahl" ] ; then
 					EXPORT_FILENAME="$gv_Auswahl"
@@ -96,9 +101,33 @@ export_files() {
 					EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
 					TAR \"\" off TXT \"\" off ZIP \"\" off)
 					;;
+				*)
+					no_para_msg $0
+					break
+					;;
 			esac
 			#
 			radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
+		}
+		## }}}
+		# Funktion (get_alg_privkey), ueberprueft welcher Algorithmus # {{{
+		# der private Schluessel besitzt.
+		#
+		# usage: get_alg_privkey PRIVKEY
+		# PRIVKEY - private Schluesseldatei
+		#
+		get_alg_privkey() {
+			if [ -f "$1" ] ; then
+				local Tmp
+				Tmp=${$(file -b $1)[2]}
+				if [[ $Tmp == RSA ]] ; then
+					ALGORITHM=rsa
+				else
+					ALGORITHM=dsa
+				fi
+			else
+				no_para_msg $0
+			fi
 		}
 		## }}}
 		# Funktion (pass_add), Passwort hinzufuegen (yes/no)# {{{
@@ -191,9 +220,6 @@ export_files() {
 					# Funktion manage_export_most
 					autoload -U manage_export_most
 					manage_export_most "$Export_Opt" "$Export_File" zip
-					break
-					;;
-				*)
 					break
 					;;
 			esac
