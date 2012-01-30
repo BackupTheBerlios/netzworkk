@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 25.01.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 30.01.2012
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # CAs, Zertifikate, signiert diese ....
@@ -14,6 +14,10 @@
 #
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+
+# Rechte einstellen
+# umask 077 - sicherer?
+umask 022
 
 gv_ScriptName=${0##*/}
 
@@ -180,6 +184,160 @@ PASSWD_LENGTH="${PASSWD_LENGTH:-10}"
 autoload -U conf_ca kwssl_config net_conf ca_certs_conf
 net_conf
 
+# Funktion (ca_open), CA oeffnen# {{{
+#
+# usage: ca_open
+#
+ca_open() {
+	# Funktion (ca_open_menu)# {{{
+	CA_OPEN_TITLE="${lv_CA}::${lv_Open}"
+	#
+	ca_open_menu() {
+		CA_OPEN_MENU=($CA_DIRS)
+		menubox "$CA_OPEN_TITLE" "$gv_Menupoint" "$CA_OPEN_MENU"
+	}
+	## }}}
+	search_ca
+	if [[ -n ${CA_DIRS[1]} ]] ; then
+		ca_open_menu
+		while [ -n "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)
+					script_help help
+					ca_open_menu
+					;;
+				*)
+					# Auswahl uebernehmen
+					CA_OPEN_NAME="$gv_Auswahl"
+					KWSSL2RC="${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME}"
+					#
+					SERIAL=${${(ws:=:)$(openssl x509 -in ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem -noout -serial)}[2]}
+					case "$SERIAL" in
+						[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]*)
+							MAIN_MENU_OPT="-ca"
+							;;
+						*)
+							MAIN_MENU_OPT="-subca"
+							;;
+					esac
+					break
+					;;
+			esac
+		done
+	else
+		no_ca_existed_msg
+	fi
+}
+## }}}
+# Funktion (ca_passwd_input), CA Passwort Eingabe# {{{
+#
+# usage: ca_passwd_input [ -keys ]
+# -keys - privater Schluessel Passwort
+# - nichts - CA Passwort
+#
+ca_passwd_input() {
+	case "$1" in
+		-keys)
+			KEY_PASS_MSG=$(gettext 'Geben Sie das Passwort fuer den privaten Schluessel ein.')
+			password "$lv_Ssl_Key_Password" "$KEY_PASS_MSG" "$PASSWD_LENGTH"
+			;;
+		*)
+			CA_PASS_MSG=$(gettext 'Geben Sie das Passwort fuer die CA ein.')
+			password "$lv_Ssl_CA_Password" "$CA_PASS_MSG" "$PASSWD_LENGTH"
+			;;
+	esac
+	# Passworteingabe pruefen
+	if [ -n "$PASSPHRASE" ] ; then
+		password_display "$PASSPHRASE"
+		if [ -n "$gv_Star_Passphrase" ] ; then
+			CA_CAPASSWORD="$gv_Star_Passphrase"
+			CA_CAPASSWD="$PASSPHRASE"
+			unset -- PASSPHRASE
+		else
+			unset -- CA_CAPASSWORD CA_CAPASSWD PASSPHRASE
+		fi
+	else
+		unset -- CA_CAPASSWORD CA_CAPASSWD PASSPHRASE
+	fi
+}
+## }}}
+# Funktion (check_default_revoke_days), prueft die Gueltigkeit der Widerrufsliste# {{{
+#
+# usage:  check_default_revoke_days CONF_SECTION
+#
+check_default_revoke_days() {
+	if [[ ${#argv} == 1 ]] ; then
+		DEFAULT_REVOKE_DAYS="`awk -F '= ' '/\[/{if(/'"$1"'/){found=1}else{found=0}}
+			/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
+			END{print DEFAULT_REVOKE_DAYS}' $KWSSL2RC`"
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+# Funktion (check_preservedn), prueft ob email zu Subject DN hinzugefuegt werden soll# {{{
+#
+check_preservedn() {
+	if [[ $PRESERVEDN == $gv_Yes ]] ; then
+		PRESERVEDN_YES="-preserveDN"
+	else
+		unset -- PRESERVEDN_YES
+	fi
+}
+## }}}
+# Funktion (choice_preservedn), eMail Subject DN hinzufuegen?# {{{
+#
+choice_preservedn() {
+	PRESERVEDN_TITLE="$lv_Ssl_PreserveDN"
+	PRESERVEDN_MSG=$(gettext 'Email Adresse zum Subject DN hinzufuegen (ja/nein)?')
+	yesno "$PRESERVEDN_TITLE" "$PRESERVEDN_MSG"
+	if [ "$?" = 0 ] ; then
+		PRESERVEDN="$gv_Yes"
+	else
+		PRESERVEDN="$gv_No"
+	fi
+}
+## }}}
+# Funktion (convert_digest), Digest umwandeln# {{{
+#
+# usage: convert_digest DIGEST
+#
+convert_digest() {
+	unset -- Digest lv_Digest
+	case "$1" in
+		SHA-1)
+			Digest=sha1
+			lv_Digest=(-sha1)
+			;;
+		MD2)
+			Digest=md2
+			lv_Digest=(-md2)
+			;;
+		MDC2)
+			Digest=mdc2
+			lv_Digest=(-mdc2)
+			;;
+		MD4)
+			Digest=md4
+			lv_Digest=(-md4)
+			;;
+		MD5)
+			Digest=md5
+			lv_Digest=(-md5)
+			;;
+		RIPEMD-160)
+			Digest=ripemd160
+			lv_Digest=(-ripemd160)
+			;;
+		*)
+			# eingelesene Variable DEFAULT_MD, durch die Funktion read_openssl_conf
+			# belegt, benutzen.
+			Digest="$DEFAULT_MD"
+			lv_Digest=(-${DEFAULT_MD})
+			;;
+	esac
+}
+## }}}
 # Funktion (create_pki), Verzeichnisstruktur erstellen# {{{
 #
 # usage: create_pki CA-NAME (DIRNAME)
@@ -217,194 +375,6 @@ create_pki() {
 	fi
 }
 ## }}}
-# Funktion (check_helpfile), prueft welche Hilfe Datei angezeigt# {{{
-# werden soll, etc..
-#
-# usage: check_helpfile [ -c | -ca | -subca ]
-#
-# -c - Benutzer/Server Zertifikate
-# -ca - CA
-# -subca - SubCA
-#
-check_helpfile() {
-	unset -- H_Opt
-	local H_Opt="$1"
-	case "$H_Opt" in
-		-ca)
-			# CA
-			CA_TITLE=$(gettext 'erstelle CA')
-			HELPFILE="conf_rootca_help conf_defaultca_help"
-			;;
-		-subca)
-			# SubCA
-			CA_TITLE=$(gettext 'erstelle SubCA')
-			HELPFILE="conf_subca_help conf_defaultca_help"
-			;;
-		-c)
-			# Einstellungen fuer die Erstellung von Benutzer/Server Zertifikaten
-			# und Anzeigen bzw. der Hilfedateien.
-			CA_TITLE=$(gettext 'erstelle $lv_Cert')
-			TITLE="${CA_TITLE}::${gv_Help}"
-			if [[ $CONF_SECTION == server_cert ]] ; then
-				Ssl_ServerUserName="$lv_Ssl_ServerName"
-				HELPFILE="conf_serverca_help conf_defaultca_help"
-			else
-				Ssl_ServerUserName="$lv_Ssl_UserName"
-				HELPFILE="conf_userca_help conf_defaultca_help"
-			fi
-			# 
-			;;
-	esac
-}
-## }}}
-# Funktion (check_default_revoke_days), prueft die Gueltigkeit der Widerrufsliste# {{{
-#
-# usage:  check_default_revoke_days CONF_SECTION
-#
-check_default_revoke_days() {
-	if [[ ${#argv} == 1 ]] ; then
-		DEFAULT_REVOKE_DAYS="`awk -F '= ' '/\[/{if(/'"$1"'/){found=1}else{found=0}}
-			/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
-			END{print DEFAULT_REVOKE_DAYS}' $KWSSL2RC`"
-	else
-		no_para_msg $0
-	fi
-}
-## }}}
-# Funktion (search_ca), sucht nach vorhandenen CAs.# {{{
-#
-# usage: search_ca
-#
-search_ca() {
-	unset -- CA_DIRS CA_DIRS_M
-	for i in ${KWSSL_DIR}/*(/N) ; {
-		if [ -f ${i}/cacert.pem ] ; then
-			CA_DIRS+=( ${i##*/} \"\" )
-			CA_DIRS_M+=( ${i##*/} \"\" off)
-		fi
-	}
-}
-## }}}
-# Funktion (ca_open), CA oeffnen# {{{
-#
-# usage: ca_open
-#
-ca_open() {
-	# Funktion (ca_open_menu)# {{{
-	CA_OPEN_TITLE="${lv_CA}::${lv_Open}"
-	#
-	ca_open_menu() {
-		CA_OPEN_MENU=($CA_DIRS)
-		menubox "$CA_OPEN_TITLE" "$gv_Menupoint" "$CA_OPEN_MENU"
-	}
-	## }}}
-	search_ca
-	ca_open_menu
-	while [ -n "$gv_Auswahl" ] ; do
-		case "$gv_Auswahl" in
-			HELP*)
-				script_help help
-				ca_open_menu
-				;;
-			*)
-				# Auswahl uebernehmen
-				CA_OPEN_NAME="$gv_Auswahl"
-				KWSSL2RC="${KWSSL_DIR}/${CA_OPEN_NAME}/${KWSSL2RC_NAME}"
-				#
-				SERIAL=${${(ws:=:)$(openssl x509 -in ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem -noout -serial)}[2]}
-				case "$SERIAL" in
-					[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]*)
-						MAIN_MENU_OPT="-ca"
-						;;
-					*)
-						MAIN_MENU_OPT="-subca"
-						;;
-				esac
-				break
-				;;
-		esac
-	done
-}
-## }}}
-# Funktion (main_menu)# {{{
-#
-main_menu() {
-	case $MAIN_MENU_OPT in
-		-ca|-subca)
-    		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
-			$gv_Display \"\" \"$lv_CA_Create\" \"\"
-			\"$lv_SubCA_Create\" \"\" \"$lv_Cert\" \"\"
-			\"$lv_Key\" \"\" \"$lv_Request\" \"\"
-			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
-			\"$lv_CA_CRL_Export\" \"\" \"$lv_Dh_File\" \"\"
-			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
-			;;
-		-n)	# new
-    		MAIN_MENU=(\"$lv_Open\" \"\" \"$lv_CA_Create\" \"\"
-			\"$lv_CA_Import\" \"\"
-			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
-			;;
-		*)
-    		MAIN_MENU=(\"$lv_CA_Create\" \"\"
-			\"$lv_CA_Import\" \"\"
-			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
-			;;
-	esac
-	#
-	if [ -z "$CA_OPEN_NAME" ] ; then
-		MAIN_TITLE="$gv_None"
-	else
-		MAIN_TITLE="$CA_OPEN_NAME"
-	fi
-
-	if [[ ${#argv} == 1 ]] ; then
-		menubox -d "$1" "$MAIN_TITLE" "$gv_Menupoint" "$MAIN_MENU"
-	else
-		menubox "$MAIN_TITLE" "$gv_Menupoint" "$MAIN_MENU"
-	fi
-}
-# }}}
-# Funktion (fingerprint)# {{{
-#
-fingerprint() {
-	if [[ ${#argv} == 2 ]] ; then
-		local File Dst_File
-		File="$1"
-		Dst_File="$2"
-		echo "Fingerprint (SHA1): `print ${${(ws:=:)${(M)$(openssl x509 -fingerprint -sha1 -in "$File" -noout)##*Fingerprint*}}[2]}`" >> "$Dst_File" &>/dev/null
-		echo "Fingerprint (MD5): `print ${${(ws:=:)${(M)$(openssl x509 -fingerprint -md5 -in "$File" -noout)##*Fingerprint*}}[2]}`" >> "$Dst_File" &>/dev/null
-		echo "" >> "$Dst_File" &>/dev/null
-	else
-		no_para_msg $0
-	fi
-}
-## }}}
-# Funktion (gen_name), generiert den Dateinamen fuer Zertifikate,# {{{
-# Schluessel und fuer Anforderungen.
-gen_name() {
-	GEN_NAME="`print ${COMMONNAME}${MAIL}${ORGANISATIONUNIT}${ORGANISATION}${LOCATION}${COUNTRY}${COUNTRYCODE} | openssl base64 | tr -d '\n'`"
-}
-## }}}
-# Funktion (get_alg_privkey), ueberprueft welcher Algorithmus # {{{
-# der private Schluessel besitzt.
-#
-# usage: get_alg_privkey PRIVKEY
-# PRIVKEY - private Schluesseldatei
-#
-get_alg_privkey() {
-	if [ -f "$1" ] ; then
-		local Tmp
-		Tmp=${$(file -b $1)[2]}
-		if [[ $Tmp == RSA ]] ; then
-			ALGORITHM=rsa
-		else
-			ALGORITHM=dsa
-		fi
-	else
-		no_para_msg $0
-	fi
-}
-## }}}
 # Funktion (get_format_file), ueberprueft welches input Format # {{{
 # die Datei besitzt.
 #
@@ -429,9 +399,8 @@ get_format_file() {
 ## }}}
 # Funktion (get_info_files), Zertifikate/Schluessel/Anforderungen Dateien herausfinden# {{{
 #
-# usage: get_info_files [ -k | -r | -u | -v | nichts ]
+# usage: get_info_files [ -k | -u | -v | nichts ]
 # -k  - Schluessel finden
-# -r  - Anforderungen (Request) finden
 # -u - ungueltige Zertifikate
 # -v  - gueltige Zertifikate
 # - - alle Zertifikate
@@ -439,8 +408,7 @@ get_format_file() {
 #
 get_info_files() {
 	UNSET_INFO_FILE=(CERTS_VAL_M CERTS_NON_VAL_M CERTS_ALL_VAL_M
-		CERTS_FILE CERTS_CN CERTFILE KEYS_FILE KEYS_ALL_M KEYFILE
-		REQS_FILE REQS_ALL_M REQFILE)
+		CERTS_FILE CERTS_CN CERTFILE KEYS_FILE KEYS_ALL_M KEYFILE)
 	unset -- $UNSET $UNSET_INFO_FILE
 	local Anz Tmp Opt
 	Opt="$1"
@@ -496,17 +464,6 @@ get_info_files() {
 				fi
 				## }}}
 				;;
-			-r)
-				# alle Anforderungen finden# {{{
-				REQFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/req/${GEN_NAME}.pem"
-				if [ -f "$REQFILE" ] ; then
-					(( Anz++ ))
-					REQS_FILE+=($REQFILE)
-					REQS_CN+=($COMMONNAME)
-					REQS_ALL_M+=($Anz \"$COMMONNAME\" off)
-				fi
-				## }}}
-				;;
 			-u)
 				# ungueltige Certificates herrausfinden# {{{
 				CERTFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${GEN_NAME}.pem"
@@ -552,18 +509,40 @@ get_info_files() {
 	done < ${KWSSL_DIR}/${CA_OPEN_NAME}/index.txt
 }
 ## }}}
+# Funktion (gen_name), generiert den Dateinamen fuer Zertifikate,# {{{
+# Schluessel und fuer Anforderungen.
+gen_name() {
+	GEN_NAME="`print ${COMMONNAME}${MAIL}${ORGANISATIONUNIT}${ORGANISATION}${LOCATION}${COUNTRY}${COUNTRYCODE} | openssl base64 | tr -d '\n'`"
+}
+## }}}
+# Funktion (fingerprint)# {{{
+#
+fingerprint() {
+	if [[ ${#argv} == 2 ]] ; then
+		local File Dst_File
+		File="$1"
+		Dst_File="$2"
+		echo "Fingerprint (SHA1): `print ${${(ws:=:)${(M)$(openssl x509 -fingerprint -sha1 -in "$File" -noout)##*Fingerprint*}}[2]}`" >> "$Dst_File" &>/dev/null
+		echo "Fingerprint (MD5): `print ${${(ws:=:)${(M)$(openssl x509 -fingerprint -md5 -in "$File" -noout)##*Fingerprint*}}[2]}`" >> "$Dst_File" &>/dev/null
+		echo "" >> "$Dst_File" &>/dev/null
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
 # Funktion (keylength_input), eingabe der Schluessellaenge (numbits)# {{{
 #
 # usage: keylength_input
 #
 keylength_input() {
 	KEY_LENGTH_MENU=(1024 \"\" 2048 \"\" 4096 \"\")
+	KEYLENGTH_TITLE="$lv_Ssl_Key_length"
 	# Funktion (keylength_menu)# {{{
 	keylength_menu() {
 		if [ -n "$KEYLENGTH" ] ; then
-			menubox -d "$KEYLENGTH" "$CA_TITLE" "$gv_Menupoint" "$KEY_LENGTH_MENU"
+			menubox -d "$KEYLENGTH" "$KEYLENGTH_TITLE" "$gv_Menupoint" "$KEY_LENGTH_MENU"
 		else
-			menubox "$CA_TITLE" "$gv_Menupoint" "$KEY_LENGTH_MENU"
+			menubox "$KEYLENGTH_TITLE" "$gv_Menupoint" "$KEY_LENGTH_MENU"
 		fi
 	}
 	## }}}
@@ -582,58 +561,44 @@ keylength_input() {
 	done
 }
 ## }}}
-# Funktion (ca_passwd_input), CA Passwort Eingabe# {{{
+# Funktion (main_menu)# {{{
 #
-ca_passwd_input() {
-	case "$1" in
-		-keys)
-			KEY_PASS_MSG=$(gettext 'Geben Sie das Passwort fuer den Schluessel ein.')
-			password "$lv_Ssl_Key_Password" "$KEY_PASS_MSG" "$PASSWD_LENGTH"
+main_menu() {
+	case $MAIN_MENU_OPT in
+		-ca|-subca)
+    		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
+			$gv_Display \"\" \"$lv_CA_Create\" \"\"
+			\"$lv_SubCA_Create\" \"\" \"$lv_Cert\" \"\"
+			\"$lv_Key\" \"\" \"$lv_Request\" \"\"
+			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
+			\"$lv_CA_CRL_Export\" \"\" \"$lv_Dh_File\" \"\"
+			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
+			;;
+		-n)	# new
+    		MAIN_MENU=(\"$lv_Open\" \"\" \"$lv_CA_Create\" \"\"
+			\"$lv_CA_Import\" \"\"
+			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
 			;;
 		*)
-			CA_PASS_MSG=$(gettext 'Geben Sie das Passwort fuer die CA ein.')
-			password "$lv_Ssl_CA_Password" "$CA_PASS_MSG" "$PASSWD_LENGTH"
+    		MAIN_MENU=(\"$lv_CA_Create\" \"\"
+			\"$lv_CA_Import\" \"\"
+			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
 			;;
 	esac
-	# Passworteingabe pruefen
-	if [ -n "$PASSPHRASE" ] ; then
-		password_display "$PASSPHRASE"
-		if [ -n "$gv_Star_Passphrase" ] ; then
-			CA_CAPASSWORD="$gv_Star_Passphrase"
-			CA_CAPASSWD="$PASSPHRASE"
-			unset -- PASSPHRASE
-		else
-			unset -- CA_CAPASSWD PASSPHRASE
-		fi
+	#
+	if [ -z "$CA_OPEN_NAME" ] ; then
+		MAIN_TITLE="$gv_None"
 	else
-		unset -- CA_CAPASSWD PASSPHRASE
+		MAIN_TITLE="$CA_OPEN_NAME"
+	fi
+
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$MAIN_TITLE" "$gv_Menupoint" "$MAIN_MENU"
+	else
+		menubox "$MAIN_TITLE" "$gv_Menupoint" "$MAIN_MENU"
 	fi
 }
-## }}}
-# Funktion (validity_input), Gueltigkeitseingabe# {{{
-#
-validity_input() {
-	VALIDITY_MSG=$(gettext 'Geben Sie die Gueltigkeit des Zertifikats in Tagen ein.')
-	number_input "$lv_Ssl_Validity" "$VALIDITY_MSG" "$VALIDITY"
-	if [ -n "$NUMBER" ] ; then
-		VALIDITY="$NUMBER"
-	else
-		VALIDITY="3650"
-	fi
-}
-## }}}
-# Funktion (revoke_days_input), Gueltigkeitseingabe der CRLs# {{{
-#
-revoke_days_input() {
-	CONF_REVOKE_MSG=$(gettext 'Geben Sie die Tage der Gueltigkeit von Widerrufslisten ein.')
-	number_input "$lv_Revokes" "$CONF_REVOKE_MSG" "$DEFAULT_REVOKE_DAYS"
-	if [ -n "$NUMBER" ] ; then
-		DEFAULT_REVOKE_DAYS="$NUMBER"
-	else
-		DEFAULT_REVOKE_DAYS=30
-	fi
-}
-## }}}
+# }}}
 # Funktion (read_ca_data), einlesen der CA Daten# {{{
 #
 # usage: read_ca_data FILE
@@ -664,289 +629,304 @@ read_ca_data() {
 	fi
 }
 ## }}}
-# Funktion (read_openssl_conf)# {{{
+# Funktion (read_openssl_conf), kwssl2rc einlesen, die eigtl. openssl.cnf# {{{
+#
+# usage: read_openssl_conf CONF_SECTION (v3_ca, client_cert, server_cert)
 #
 read_openssl_conf() {
-	# mittels awk Daten einlesen# {{{
-	unset -- CONF_SECT
-	awk -F '= ' '/\[/{if(/'"$CONF_SECTION"'/){found=1}else{found=0}}
-		/authorityKeyIdentifier/{if(found){AUTHKEYIDENT=$NF}}
-		/basicConstraints/{if(found){BASICCONSTRAINTS=$NF}}
-		/crlDistributionPoints/{if(found){CRLDISTPOINT=$NF}}
-		/extendedKeyUsage/{if(found){EKEYUSAGE=$NF}}
-		/issuerAltName/{if(found){ISSUERALTNAME=$NF}}
-		/keyUsage/{if(found){KEYUSAGE=$NF}}
-		/nsBaseUrl/{if(found){NSBASEURL=$NF}}
-		/nsCaPolicyUrl/{if(found){NSCAPOLICYURL=$NF}}
-		/nsCaRevokeUrl/{if(found){NSCAREVOKEURL=$NF}}
-		/nsCertType/{if(found){NSCERTTYPE=$NF}}
-		/nsComment/{if(found){NSCOMMENT=$NF}}
-		/nsRenewalUrl/{if(found){NSRENEWALURL=$NF}}
-		/nsRevokeUrl/{if(found){NSREVOKEURL=$NF}}
-		/nsSsLServerName/{if(found){NSSSLSERVERNAME=$NF}}
-		/subjectAltName/{if(found){SUBJECT_ALTER_NAME=$NF}}
-		END{print AUTHKEYIDENT"\n"BASICCONSTRAINTS"\n"CRLDISTPOINT"\n"EKEYUSAGE"\n"ISSUERALTNAME"\n"KEYUSAGE"\n"NSBASEURL"\n"NSCAPOLICYURL"\n"NSCAREVOKEURL"\n"NSCERTTYPE"\n"NSCOMMENT"\n"NSRENEWALURL"\n"NSREVOKEURL"\n"NSSSLSERVERNAME"\n"SUBJECT_ALTER_NAME}' \
-		$KWSSL2RC >${gv_WorkDir}/cert_conf
-	if [[ $CONF_SECTION == v3_ca ]] ; then
-		awk -F '= ' '/\[/{if(/'"ca_ca"'/){found=1}else{found=0}}
-			/default_days/{if(found){VALIDITY=$NF}}
-			/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
-			END{print VALIDITY"\n"DEFAULT_REVOKE_DAYS}' \
-			$KWSSL2RC >> ${gv_WorkDir}/cert_conf
+	if [[ ${#argv} == 1 ]] ; then
+		unset -- CONF_SECT CONF_SECTION
+		local Anz
+		CONF_SECTION="$1"
+		# mittels awk Daten einlesen# {{{
+		awk -F '= ' '/\[/{if(/'"$CONF_SECTION"'/){found=1}else{found=0}}
+			/authorityKeyIdentifier/{if(found){AUTHKEYIDENT=$NF}}
+			/basicConstraints/{if(found){BASICCONSTRAINTS=$NF}}
+			/crlDistributionPoints/{if(found){CRLDISTPOINT=$NF}}
+			/extendedKeyUsage/{if(found){EKEYUSAGE=$NF}}
+			/issuerAltName/{if(found){ISSUERALTNAME=$NF}}
+			/keyUsage/{if(found){KEYUSAGE=$NF}}
+			/nsBaseUrl/{if(found){NSBASEURL=$NF}}
+			/nsCaPolicyUrl/{if(found){NSCAPOLICYURL=$NF}}
+			/nsCaRevokeUrl/{if(found){NSCAREVOKEURL=$NF}}
+			/nsCertType/{if(found){NSCERTTYPE=$NF}}
+			/nsComment/{if(found){NSCOMMENT=$NF}}
+			/nsRenewalUrl/{if(found){NSRENEWALURL=$NF}}
+			/nsRevokeUrl/{if(found){NSREVOKEURL=$NF}}
+			/nsSsLServerName/{if(found){NSSSLSERVERNAME=$NF}}
+			/subjectAltName/{if(found){SUBJECT_ALTER_NAME=$NF}}
+			END{print AUTHKEYIDENT"\n"BASICCONSTRAINTS"\n"CRLDISTPOINT"\n"EKEYUSAGE"\n"ISSUERALTNAME"\n"KEYUSAGE"\n"NSBASEURL"\n"NSCAPOLICYURL"\n"NSCAREVOKEURL"\n"NSCERTTYPE"\n"NSCOMMENT"\n"NSRENEWALURL"\n"NSREVOKEURL"\n"NSSSLSERVERNAME"\n"SUBJECT_ALTER_NAME}' \
+			$KWSSL2RC >${gv_WorkDir}/cert_conf
+		if [[ $CONF_SECTION == v3_ca ]] ; then
+			awk -F '= ' '/\[/{if(/'"ca_ca"'/){found=1}else{found=0}}
+				/default_days/{if(found){VALIDITY=$NF}}
+				/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
+				/default_md/{if(found){DEFAULT_MD=$NF}}
+				END{print VALIDITY"\n"DEFAULT_REVOKE_DAYS"\n"DEFAULT_MD}' \
+				$KWSSL2RC >> ${gv_WorkDir}/cert_conf
+		else
+			CONF_SECT="${CONF_SECTION%_*}_ca"
+			awk -F '= ' '/\[/{if(/'"$CONF_SECT"'/){found=1}else{found=0}}
+				/default_days/{if(found){VALIDITY=$NF}}
+				/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
+				/default_md/{if(found){DEFAULT_MD=$NF}}
+				END{print VALIDITY"\n"DEFAULT_REVOKE_DAYS"\n"DEFAULT_MD}' \
+				$KWSSL2RC >> ${gv_WorkDir}/cert_conf
+		fi
+		## }}}
+		# Werte einlesen# {{{
+		Anz=1
+		while read Value ; do
+			case $Anz in
+				1)
+					AUTHKEYIDENT="$Value"
+					(( Anz++ ))
+					;;
+				2)
+					BASICCONSTRAINTS="$Value"
+					(( Anz++ ))
+					;;
+				3)
+					CRLDISTPOINT="$Value"
+					(( Anz++ ))
+					;;
+				4)
+					# erweiterte Schluesselverwendung (EKEYUSAGE) uebersetzen# {{{
+					case "$Value" in
+						*::EKEYUSAGE)
+							EKEYUSAGE="$lv_Qestion_User"
+							;;
+						*)
+							EKEYUSAGE="$Value"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				5)
+					ISSUERALTNAME="$Value"
+					(( Anz++ ))
+					;;
+				6)
+					# Schluesselverwendung (KEYUSAGE) uebersetzen# {{{
+					case "$Value" in
+						critical,*keyCertSign,*cRLSign)
+							KEYUSAGE="$lv_CertSign_CrlSign_Ca"
+							CRITICAL="$lv_Critical"
+							;;
+						keyCertSign,*cRLSign)
+							KEYUSAGE="$lv_CertSign_CrlSign_Ca"
+							CRITICAL="$lv_UnCritical"
+							;;
+						critical,*digitalSignature,*keyEncipherment)
+							KEYUSAGE="$lv_Encrypt_DigitalSign"
+							CRITICAL="$lv_Critical"
+							;;
+						digitalSignature,*keyEncipherment)
+							KEYUSAGE="$lv_Encrypt_DigitalSign"
+							CRITICAL="$lv_UnCritical"
+							;;
+						critical,*keyCertSign)
+							KEYUSAGE="$lv_CertSign_Ca"
+							CRITICAL="$lv_Critical"
+							;;
+						keyCertSign)
+							KEYUSAGE="$lv_CertSign_Ca"
+							CRITICAL="$lv_UnCritical"
+							;;
+						critical,*cRLSign)
+							KEYUSAGE="$lv_CrlSign_Ca"
+							CRITICAL="$lv_Critical"
+							;;
+						cRLSign)
+							KEYUSAGE="$lv_CrlSign_Ca"
+							CRITICAL="$lv_UnCritical"
+							;;
+						critical,*digitalSignature)
+							KEYUSAGE="$lv_DigitalSign"
+							CRITICAL="$lv_Critical"
+							;;
+						digitalSignature)
+							KEYUSAGE="$lv_DigitalSign"
+							CRITICAL="$lv_UnCritical"
+							;;
+						critical,*keyEncipherment)
+							KEYUSAGE="$lv_Encrypt"
+							CRITICAL="$lv_Critical"
+							;;
+						keyEncipherment)
+							KEYUSAGE="$lv_Encrypt"
+							CRITICAL="$lv_UnCritical"
+							;;
+						critical,*)
+							KEYUSAGE="${Value//*, /}"
+							CRITICAL="$lv_Critical"
+							;;
+						*)
+							KEYUSAGE="$Value"
+							CRITICAL="$lv_UnCritical"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				7)
+					NSBASEURL="$Value"
+					(( Anz++ ))
+					;;
+				8)
+					NSCAPOLICYURL="$Value"
+					(( Anz++ ))
+					;;
+				9)
+					# Variable fuer NSCAREVOKEURL uebersetzen# {{{
+					case "$Value" in
+						*::NSCAREVOKEURL)
+							NSCAREVOKEURL="$lv_Qestion_User"
+							;;
+						*)
+							NSCAREVOKEURL="$Value"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				10)
+					# Variable NSCERTTYPE uebersetzen# {{{
+					case "$Value" in
+						sslCA,*emailCA,*objCA)
+							NSCERTTYPE="$lv_SMime_SSL_ObjectSign_Ca"
+							;;
+						sslCA,*objCA)
+							NSCERTTYPE="$lv_ObjectSign_SSL_Ca"
+							;;
+						emailCA,*objCA)
+							NSCERTTYPE="$lv_SMime_ObjectSign_Ca"
+							;;
+						sslCA,*emailCA)
+							NSCERTTYPE="$lv_SMime_SSL_Ca"
+							;;
+						emailCA)
+							NSCERTTYPE="$lv_SMime_Ca"
+							;;
+						objCA)
+							NSCERTTYPE="$lv_ObjectSign_Ca"
+							;;
+						sslCA)
+							NSCERTTYPE="$lv_SSL_Ca"
+							;;
+						server,*client)
+							NSCERTTYPE="$lv_SSL_SERVER_CLIENT"
+							;;
+						client)
+							# Anzeige fuer das Menu herausfinden.
+							if [[ ${CONF_SECTION%%_*} == server ]] ; then
+								NSCERTTYPE="$lv_SSL_CLIENT"
+							else
+								NSCERTTYPE="$lv_SSL_USER"
+							fi
+							;;
+						server)
+							NSCERTTYPE="$lv_SSL_SERVER"
+							;;
+						objsign)
+							NSCERTTYPE="$lv_User_ObjectSign"
+							;;
+						client,*email,*objsign)
+							NSCERTTYPE="$lv_User_Usr_Email_ObjectSign"
+							;;
+						client,*objsign)
+							NSCERTTYPE="$lv_User_Usr_ObjectSign"
+							;;
+						client,*email)
+							NSCERTTYPE="$lv_User_Usr_Smime"
+							;;
+						email)
+							NSCERTTYPE="$lv_User_Smime"
+							;;
+						*)
+							NSCERTTYPE="$Value"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				11)
+					NSCOMMENT="${Value//\"/\\\"}"
+					(( Anz++ ))
+					;;
+				12)
+					# Variable fuer NSRENEWALURL uebersetzen# {{{
+					case "$Value" in
+						*::NSRENEWALURL)
+							NSRENEWALURL="$lv_Qestion_User"
+							;;
+						*)
+							NSRENEWALURL="$Value"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				13)
+					# Variable fuer NSREVOKEURL uebersetzen# {{{
+					case "$Value" in
+						*::NSREVOKEURL)
+							NSREVOKEURL="$lv_Qestion_User"
+							;;
+						*)
+							NSREVOKEURL="$Value"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				14)
+					# Variable fuer NSSSLSERVERNAME uebersetzen# {{{
+					case "$Value" in
+						*::NSSSLSERVERNAME)
+							NSSSLSERVERNAME="$lv_Qestion_User"
+							;;
+						*)
+							NSSSLSERVERNAME="$Value"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				15)
+					# Variable SUBJECT_ALTER_NAME uebersetzen# {{{
+					case "$Value" in
+						email:copy)
+							SUBJECT_ALTER_NAME="$lv_CopyMail"
+							;;
+						*::SUBJECTALTNAMEIP)
+							SUBJECT_ALTER_NAME="$lv_Qestion_User"
+							;;
+						*)
+							SUBJECT_ALTER_NAME="$Value"
+							;;
+					esac
+					(( Anz++ ))
+					## }}}
+					;;
+				16)
+					VALIDITY="$Value"
+					(( Anz++ ))
+					;;
+				17)
+					DEFAULT_REVOKE_DAYS="$Value"
+					(( Anz++ ))
+					;;
+				18)
+					DEFAULT_MD="$Value"
+					;;
+			esac
+		done < ${gv_WorkDir}/cert_conf
+		## }}}
 	else
-		CONF_SECT="${CONF_SECTION%%_*}_ca"
-		awk -F '= ' '/\[/{if(/'"$CONF_SECT"'/){found=1}else{found=0}}
-			/default_days/{if(found){VALIDITY=$NF}}
-			/default_crl_days/{if(found){DEFAULT_REVOKE_DAYS=$NF}}
-			END{print VALIDITY"\n"DEFAULT_REVOKE_DAYS}' \
-			$KWSSL2RC >> ${gv_WorkDir}/cert_conf
+		no_para_msg $0
 	fi
-	## }}}
-	# Werte einlesen
-	Anz=1
-	while read Value ; do
-		case $Anz in
-			1)
-				AUTHKEYIDENT="$Value"
-				(( Anz++ ))
-				;;
-			2)
-				BASICCONSTRAINTS="$Value"
-				(( Anz++ ))
-				;;
-			3)
-				CRLDISTPOINT="$Value"
-				(( Anz++ ))
-				;;
-			4)
-				# erweiterte Schluesselverwendung (EKEYUSAGE) uebersetzen# {{{
-				case "$Value" in
-					*::EKEYUSAGE)
-						EKEYUSAGE="$lv_Qestion_User"
-						;;
-					*)
-						EKEYUSAGE="$Value"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			5)
-				ISSUERALTNAME="$Value"
-				(( Anz++ ))
-				;;
-			6)
-				# Schluesselverwendung (KEYUSAGE) uebersetzen# {{{
-				case "$Value" in
-					critical,*keyCertSign,*cRLSign)
-						KEYUSAGE="$lv_CertSign_CrlSign_Ca"
-						CRITICAL="$lv_Critical"
-						;;
-					keyCertSign,*cRLSign)
-						KEYUSAGE="$lv_CertSign_CrlSign_Ca"
-						CRITICAL="$lv_UnCritical"
-						;;
-					critical,*digitalSignature,*keyEncipherment)
-						KEYUSAGE="$lv_Encrypt_DigitalSign"
-						CRITICAL="$lv_Critical"
-						;;
-					digitalSignature,*keyEncipherment)
-						KEYUSAGE="$lv_Encrypt_DigitalSign"
-						CRITICAL="$lv_UnCritical"
-						;;
-					critical,*keyCertSign)
-						KEYUSAGE="$lv_CertSign_Ca"
-						CRITICAL="$lv_Critical"
-						;;
-					keyCertSign)
-						KEYUSAGE="$lv_CertSign_Ca"
-						CRITICAL="$lv_UnCritical"
-						;;
-					critical,*cRLSign)
-						KEYUSAGE="$lv_CrlSign_Ca"
-						CRITICAL="$lv_Critical"
-						;;
-					cRLSign)
-						KEYUSAGE="$lv_CrlSign_Ca"
-						CRITICAL="$lv_UnCritical"
-						;;
-					critical,*digitalSignature)
-						KEYUSAGE="$lv_DigitalSign"
-						CRITICAL="$lv_Critical"
-						;;
-					digitalSignature)
-						KEYUSAGE="$lv_DigitalSign"
-						CRITICAL="$lv_UnCritical"
-						;;
-					critical,*keyEncipherment)
-						KEYUSAGE="$lv_Encrypt"
-						CRITICAL="$lv_Critical"
-						;;
-					keyEncipherment)
-						KEYUSAGE="$lv_Encrypt"
-						CRITICAL="$lv_UnCritical"
-						;;
-					critical,*)
-						KEYUSAGE="${Value//*, /}"
-						CRITICAL="$lv_Critical"
-						;;
-					*)
-						KEYUSAGE="$Value"
-						CRITICAL="$lv_UnCritical"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			7)
-				NSBASEURL="$Value"
-				(( Anz++ ))
-				;;
-			8)
-				NSCAPOLICYURL="$Value"
-				(( Anz++ ))
-				;;
-			9)
-				# Variable fuer NSCAREVOKEURL uebersetzen# {{{
-				case "$Value" in
-					*::NSCAREVOKEURL)
-						NSCAREVOKEURL="$lv_Qestion_User"
-						;;
-					*)
-						NSCAREVOKEURL="$Value"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			10)
-				# Variable NSCERTTYPE uebersetzen# {{{
-				case "$Value" in
-					sslCA,*emailCA,*objCA)
-						NSCERTTYPE="$lv_SMime_SSL_ObjectSign_Ca"
-						;;
-					sslCA,*objCA)
-						NSCERTTYPE="$lv_ObjectSign_SSL_Ca"
-						;;
-					emailCA,*objCA)
-						NSCERTTYPE="$lv_SMime_ObjectSign_Ca"
-						;;
-					sslCA,*emailCA)
-						NSCERTTYPE="$lv_SMime_SSL_Ca"
-						;;
-					emailCA)
-						NSCERTTYPE="$lv_SMime_Ca"
-						;;
-					objCA)
-						NSCERTTYPE="$lv_ObjectSign_Ca"
-						;;
-					sslCA)
-						NSCERTTYPE="$lv_SSL_Ca"
-						;;
-					server,*client)
-						NSCERTTYPE="$lv_SSL_SERVER_CLIENT"
-						;;
-					client)
-						# Anzeige fuer das Menu herausfinden.
-						if [[ ${CONF_SECTION%%_*} == server ]] ; then
-							NSCERTTYPE="$lv_SSL_CLIENT"
-						else
-							NSCERTTYPE="$lv_SSL_USER"
-						fi
-						;;
-					server)
-						NSCERTTYPE="$lv_SSL_SERVER"
-						;;
-					objsign)
-						NSCERTTYPE="$lv_User_ObjectSign"
-						;;
-					client,*email,*objsign)
-						NSCERTTYPE="$lv_User_Usr_Email_ObjectSign"
-						;;
-					client,*objsign)
-						NSCERTTYPE="$lv_User_Usr_ObjectSign"
-						;;
-					client,*email)
-						NSCERTTYPE="$lv_User_Usr_Smime"
-						;;
-					email)
-						NSCERTTYPE="$lv_User_Smime"
-						;;
-					*)
-						NSCERTTYPE="$Value"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			11)
-				NSCOMMENT="${Value//\"/\\\"}"
-				(( Anz++ ))
-				;;
-			12)
-				# Variable fuer NSRENEWALURL uebersetzen# {{{
-				case "$Value" in
-					*::NSRENEWALURL)
-						NSRENEWALURL="$lv_Qestion_User"
-						;;
-					*)
-						NSRENEWALURL="$Value"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			13)
-				# Variable fuer NSREVOKEURL uebersetzen# {{{
-				case "$Value" in
-					*::NSREVOKEURL)
-						NSREVOKEURL="$lv_Qestion_User"
-						;;
-					*)
-						NSREVOKEURL="$Value"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			14)
-				# Variable fuer NSSSLSERVERNAME uebersetzen# {{{
-				case "$Value" in
-					*::NSSSLSERVERNAME)
-						NSSSLSERVERNAME="$lv_Qestion_User"
-						;;
-					*)
-						NSSSLSERVERNAME="$Value"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			15)
-				# Variable SUBJECT_ALTER_NAME uebersetzen# {{{
-				case "$Value" in
-					email:copy)
-						SUBJECT_ALTER_NAME="$lv_CopyMail"
-						;;
-					*::SUBJECTALTNAMEIP)
-						SUBJECT_ALTER_NAME="$lv_Qestion_User"
-						;;
-					*)
-						SUBJECT_ALTER_NAME="$Value"
-						;;
-				esac
-				(( Anz++ ))
-				## }}}
-				;;
-			16)
-				VALIDITY="$Value"
-				(( Anz++ ))
-				;;
-			17)
-				DEFAULT_REVOKE_DAYS="$Value"
-				;;
-		esac
-	done < ${gv_WorkDir}/cert_conf
 }
 ## }}}
 	# Funktion (read_subject), Subject einlesen# {{{
@@ -983,74 +963,96 @@ read_openssl_conf() {
 		done
 	}
 	## }}}
-# Funktion (no_open_ca_msg)# {{{
-no_open_ca_msg() {
-	MSG=$(gettext 'Es ist keine CA geoeffnet.')
-	msgbox "$gv_Info" "$MSG"
+# Funktion (revoke_days_input), Gueltigkeitseingabe der CRLs# {{{
+#
+revoke_days_input() {
+	CONF_REVOKE_MSG=$(gettext 'Geben Sie die Tage der Gueltigkeit von Widerrufslisten ein.')
+	number_input "$lv_Revokes" "$CONF_REVOKE_MSG" "$DEFAULT_REVOKE_DAYS"
+	if [ -n "$NUMBER" ] ; then
+		DEFAULT_REVOKE_DAYS="$NUMBER"
+	else
+		DEFAULT_REVOKE_DAYS=30
+	fi
 }
 ## }}}
-# Funktion (no_ca_msg)# {{{
+# Funktion (search_ca), sucht nach vorhandenen CAs.# {{{
 #
-# usage: no_ca_msg CA-Name
-no_ca_msg() {
-	if [[ ${#argv} == 1 ]] ; then
-		local Ca
-		unset -- Ca
-		Ca="$1"
-		MSG=$(gettext 'Es ist keine $Ca vorhanden. Sie muessen erst eine erstellen.')
-		msgbox "$gv_Info" "$MSG"
+# usage: search_ca
+#
+search_ca() {
+	unset -- CA_DIRS CA_DIRS_M
+	for i in ${KWSSL_DIR}/*(/N) ; {
+		if [ -f ${i}/cacert.pem ] ; then
+			CA_DIRS+=( ${i##*/} \"\" )
+			CA_DIRS_M+=( ${i##*/} \"\" off)
+		fi
+	}
+}
+## }}}
+# Funktion (sign_cert_request), mittels Anforderung (certificate request) Zertifikat# {{{
+# erzeugen und mit CA signieren. Ist fuer Server und Benutzer Zertifikate.
+#
+# benoetigt vorher die Belegung einiger Variablen (Digest, ...)
+#
+# usage: sign_cert_request CANAME [ server_ca | client_ca ] REQ_DATEI VALIDITY DIGEST
+#
+sign_cert_request() {
+	if [[ ${#argv} == 5 ]] ; then
+		local CAName Section File Validity Digest Dir
+		CAName="$1"
+		Section="$2"
+		File="$3"
+		Validity="$4"
+		Digest="$5"
+		Dir="${KWSSL_DIR}/${CAName}"
+		openssl ca -batch -notext -config $KWSSL2RC \
+			-name $Section \
+			-in ${Dir}/req/${File} \
+			-days $Validity $PRESERVEDN_YES \
+			-md $Digest \
+			-out ${Dir}/certs/${File} \
+			-outdir ${Dir}/newcerts \
+			-passin pass:${CA_CAPASSWD} || prog_failure
+			# Passwoerter loeschen
+			unset -- CAPASSWD CA_CAPASSWD CA_CAPASSWORD PASSWORD
 	else
 		no_para_msg $0
 	fi
 }
 ## }}}
-# Funktion (no_cas_msg)# {{{
-no_cas_msg() {
-	MSG=$(gettext 'Es sind keine CAs bzw. Zertifikate vorhanden.')
-	msgbox "$gv_Info" "$MSG"
-}
-## }}}
-# Funktion (no_cas_valid_msg)# {{{
-no_cas_valid_msg() {
-	MSG=$(gettext 'Es sind keine gueltigen CAs bzw. Zertifikate vorhanden.')
-	msgbox "$gv_Info" "$MSG"
-}
-## }}}
-# Funktion (no_cas_nonvalid_msg)# {{{
-no_cas_nonvalid_msg() {
-	MSG=$(gettext 'Es sind keine ungueltigen CAs bzw. Zertifikate vorhanden.')
-	msgbox "$gv_Info" "$MSG"
-}
-## }}}
-# Funktion (no_keys_msg)# {{{
-no_keys_msg() {
-	MSG=$(gettext 'Es sind keine Schluessel vorhanden.')
-	msgbox "$gv_Info" "$MSG"
-}
-## }}}
-# Funktion (no_reqs_msg)# {{{
-no_reqs_msg() {
-	MSG=$(gettext 'Es sind keine Anforderungen vorhanden.')
-	msgbox "$gv_Info" "$MSG"
-}
-## }}}
-# Funktion (no_req_msg)# {{{
+# Funktion (validity_input), Gueltigkeitseingabe# {{{
 #
-# usage: no_req_msg FILE
-#
-no_req_msg() {
-	local File
-	File="$1"
-	MSG=$(gettext 'Diese Datei ($File) ist keine Anforderung.')
-	msgbox "$gv_Info" "$MSG"
+validity_input() {
+	VALIDITY_MSG=$(gettext 'Geben Sie die Gueltigkeit des Zertifikats in Tagen ein.')
+	number_input "$lv_Ssl_Validity" "$VALIDITY_MSG" "$VALIDITY"
+	if [ -n "$NUMBER" ] ; then
+		VALIDITY="$NUMBER"
+	else
+		VALIDITY="3650"
+	fi
 }
 ## }}}
+# Messages
 # Funktion (ca_existed_msg), Nachricht das diese CA schon existiert# {{{
 #
 ca_existed_msg() {
 	local File
 	File="$1"
 	MSG=$(gettext 'Diese CA ($File) ist schon vorhanden.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
+# Funktion (no_open_ca_msg)# {{{
+no_open_ca_msg() {
+	MSG=$(gettext 'Es ist keine CA geoeffnet.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
+# Funktion (no_ca_existed_msg)# {{{
+#
+# usage: no_ca_existed_msg
+no_ca_existed_msg() {
+	MSG=$(gettext 'Es ist keine CA vorhanden. Sie muessen erst eine erstellen.')
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
@@ -1084,32 +1086,27 @@ while [ "$gv_Auswahl" ] ; do
 			main_menu $lv_Open
 			;;
 		$gv_Configuration)
-			# Konfiguration erstellen# {{{
+			# Konfiguration erstellen
 			autoload -U default_conf
 			default_conf
-			## }}}
 			main_menu $gv_Configuration
 			;;
 		$gv_Display)
 			# CA anschauen# {{{
 			if [ -n "$CA_OPEN_NAME" ] ; then
-				if [ -f "${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem" ] ; then
-					CN_CERT_FILE="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
-					CN_NAME="$CA_OPEN_NAME"
-					# alte Datei loeschen
-					rm -f $DISPLAY_FILE &>/dev/null
-					# Anzeige Datei fuellen
-					echo "################################" >> $DISPLAY_FILE
-					echo "$CN_NAME" >> $DISPLAY_FILE
-					echo "################################" >> $DISPLAY_FILE
-					fingerprint "$CN_CERT_FILE" $DISPLAY_FILE
-					echo "" >> $DISPLAY_FILE
-					openssl x509 -in "$CN_CERT_FILE" -text >> $DISPLAY_FILE
-					echo "" >> $DISPLAY_FILE
-					view_file $DISPLAY_FILE
-				else
-					no_ca_msg $CA_OPEN_NAME
-				fi
+				CN_CERT_FILE="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
+				CN_NAME="$CA_OPEN_NAME"
+				# alte Datei loeschen
+				rm -f $DISPLAY_FILE &>/dev/null
+				# Anzeige Datei fuellen
+				echo "################################" >> $DISPLAY_FILE
+				echo "$CN_NAME" >> $DISPLAY_FILE
+				echo "################################" >> $DISPLAY_FILE
+				fingerprint "$CN_CERT_FILE" $DISPLAY_FILE
+				echo "" >> $DISPLAY_FILE
+				openssl x509 -in "$CN_CERT_FILE" -text >> $DISPLAY_FILE
+				echo "" >> $DISPLAY_FILE
+				view_file $DISPLAY_FILE
 			else
 				no_open_ca_msg
 			fi
@@ -1117,50 +1114,44 @@ while [ "$gv_Auswahl" ] ; do
 			main_menu $gv_Display
 			;;
 		$lv_CA_Create)
-			# CAs erstellen# {{{
+			# CAs erstellen
 			conf_ca -ca
-			## }}}
 			main_menu $lv_CA_Create
 			;;
 		$lv_SubCA_Create)
-			# SubCAs erstellen# {{{
+			# SubCAs erstellen
 			conf_ca -subca
-			## }}}
 			main_menu $lv_SubCA_Create
 			;;
 		$lv_Cert)
-			# Zertifikate verwalten/bearbeiten.# {{{
+			# Zertifikate verwalten/bearbeiten.
 			autoload -U manage_certs
 			manage_certs
-			## }}}
 			main_menu $lv_Cert
 			;;
 		$lv_Key)
-			# Schluessel verwalten# {{{
+			# Schluessel verwalten
 			autoload -U manage_keys
 			manage_keys
-			## }}}
 			main_menu $lv_Key
 			;;
 		$lv_Request)
-			# Anforderungen verwalten# {{{
+			# Anforderungen verwalten
 			autoload -U manage_reqs
 			manage_reqs
-			## }}}
 			main_menu $lv_Request
 			;;
 		$lv_CA_Import)
-			# CA importieren# {{{
+			# CA importieren
 			autoload -U ca_certs_import
 			ca_certs_import
-			## }}}
 			main_menu $lv_CA_Import
 			;;
 		$lv_CA_Export)
 			# CA exportieren# {{{
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				autoload -U export_files
-				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Export}"
+				EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Export}"
 				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem"
 				export_files -ca "$Ex_File" "export_ca_help"
 			else
@@ -1173,7 +1164,7 @@ while [ "$gv_Auswahl" ] ; do
 			# Widerrufsliste der CA exportieren# {{{
 			if [ -n "$CA_OPEN_NAME" ] ; then
 				autoload -U export_files
-				CERT_EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_CRL_Export}"
+				EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_CRL_Export}"
 				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/crl/crl.pem"
 				export_files -crl "$Ex_File" "export_crl_help"
 			else
@@ -1213,7 +1204,7 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					$lv_Filename)
 						# Dateiname eingeben# {{{
-						DH_FILENAME_MSG=$(gettext 'Geben Sie den Dateinamen ein.')
+						DH_FILENAME_MSG=$(gettext 'Geben Sie den Dateinamen mit vollem Pfad ein.')
 						inputbox "$lv_Filename" "$DH_FILENAME_MSG" "$DH_FILENAME"
 						if [ -n "$gv_Auswahl" ] ; then
 							DH_FILENAME="$gv_Auswahl"
@@ -1288,7 +1279,7 @@ while [ "$gv_Auswahl" ] ; do
 					esac
 				done
 			else
-				no_ca_msg
+				no_ca_existed_msg
 			fi
 			## }}}
 			main_menu
