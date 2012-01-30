@@ -26,5 +26,12 @@ Schluessellaenge: Waehlen Sie die Schluessellaenge aus. Zur Auswahl
 
 Digest: Waehlen Sie den Digest aus. Zur Auswahl stehen SHA-1, MD2,
 \tMDC2, MD4, MD5 und RIPEMD-160. Standard ist SHA-1.
+
+Algorithmus: Waehlen Sie einen Algorithmus fuer die Verschluesselung
+\taus. Zur Auswahl stehen RSA und DSA. Damit wird Ihr privater
+\tSchluessel erzeugt.
+
+preserveDN: Soll die  Email Adresse zum Subjekt DN hinzugefuegt
+\twerden (ja/nein).
 ')
 #}}}
