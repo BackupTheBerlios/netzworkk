@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 30.01.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 02.02.2012
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # CAs, Zertifikate, signiert diese ....
@@ -109,7 +109,6 @@ lv_Ssl_Alg=$(gettext 'Algorithmus')
 lv_Ssl_PreserveDN=$(gettext 'preserveDN')
 ## }}}
 # Variablen, Einstellungen# {{{
-DEFAULT_CONF_TITLE="$gv_Configuration"
 DEFAULT_URL_MSG=$(gettext 'URL Eingabe')
 lv_Ca_Certs=$(gettext 'CA Zertifikate')
 lv_Revokes=$(gettext 'Widerrufslisten')
@@ -251,7 +250,7 @@ ca_passwd_input() {
 		password_display "$PASSPHRASE"
 		if [ -n "$gv_Star_Passphrase" ] ; then
 			CA_CAPASSWORD="$gv_Star_Passphrase"
-			CA_CAPASSWD="$PASSPHRASE"
+			export CA_CAPASSWD="$PASSPHRASE"
 			unset -- PASSPHRASE
 		else
 			unset -- CA_CAPASSWORD CA_CAPASSWD PASSPHRASE
@@ -338,6 +337,40 @@ convert_digest() {
 	esac
 }
 ## }}}
+# Funktion (create_crl), erstellt die Widerrufsliste# {{{
+#
+# usage: create_crl CANAME [ SEKTION ]
+# SEKTION - Section in der $KWSSL2RC
+#
+create_crl() {
+	if [ "${#argv}" -ge 1 ] ; then
+		local CAName CrlFile CaDir Section
+		# Variablen
+		CAName="$1"
+		Section="$2"
+		CaDir="${KWSSL_DIR}/${CAName}"
+		CrlFile="${CaDir}/crl/crl.pem"
+		# CRL erstellen
+		case "$Section" in
+			ca_ca|server_ca|client_ca)
+				# mit Section beruecksichtigen
+				openssl ca -config $KWSSL2RC \
+					-name $Section \
+					-gencrl -out $CrlFile \
+					-batch -passin env:CAPASSWD || prog_failure
+				;;
+			*)
+				# ohne Section beruecksichtigen
+				openssl ca -config $KWSSL2RC \
+					-gencrl -out $CrlFile \
+					-batch -passin env:CAPASSWD || prog_failure
+				;;
+		esac
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
 # Funktion (create_pki), Verzeichnisstruktur erstellen# {{{
 #
 # usage: create_pki CA-NAME (DIRNAME)
@@ -375,10 +408,39 @@ create_pki() {
 	fi
 }
 ## }}}
+# Funktion (create_request), erstellt eine Anforderung# {{{
+#
+# usage: create_request CANAME FILENAME DIGEST
+#
+create_request() {
+	if [[ ${#argv} == 3 ]] ; then
+		local CAName KeyFile ReqFile Digest CaDir
+		# Variablen
+		CAName="$1"
+		Digest="$3"
+		CaDir="${KWSSL_DIR}/${CAName}"
+		#
+		if [ "$2" != cacert.key ] ; then
+			KeyFile="${CaDir}/keys/${2}.pem"
+			ReqFile="${CaDir}/req/${2}.pem"
+		else
+			KeyFile="${CaDir}/cacert.key"
+			ReqFile="${CaDir}/cacert.req"
+		fi
+		# Certificate Request
+		openssl req -new -keyform PEM -outform PEM \
+			-config $KWSSL2RC \
+			-key $KeyFile \
+			-out $ReqFile \
+			-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
+			-passin env:CAPASSWD $Digest || prog_failure
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
 # Funktion (get_format_file), ueberprueft welches input Format # {{{
 # die Datei besitzt.
-#
-# Benutzt bisher nur der Menuepunkt Anforderungen/$lv_Request
 #
 # usage: get_format_file FILE
 # FILE - Datei
@@ -397,10 +459,9 @@ get_format_file() {
 	fi
 }
 ## }}}
-# Funktion (get_info_files), Zertifikate/Schluessel/Anforderungen Dateien herausfinden# {{{
+# Funktion (get_info_files), Zertifikate Dateien herausfinden# {{{
 #
-# usage: get_info_files [ -k | -u | -v | nichts ]
-# -k  - Schluessel finden
+# usage: get_info_files [ -u | -v | nichts ]
 # -u - ungueltige Zertifikate
 # -v  - gueltige Zertifikate
 # - - alle Zertifikate
@@ -408,7 +469,7 @@ get_format_file() {
 #
 get_info_files() {
 	UNSET_INFO_FILE=(CERTS_VAL_M CERTS_NON_VAL_M CERTS_ALL_VAL_M
-		CERTS_FILE CERTS_CN CERTFILE KEYS_FILE KEYS_ALL_M KEYFILE)
+		CERTS_FILE CERTS_CN CERTFILE)
 	unset -- $UNSET $UNSET_INFO_FILE
 	local Anz Tmp Opt
 	Opt="$1"
@@ -454,16 +515,6 @@ get_info_files() {
 		# base64-codierten Dateinamen herausfinden
 		gen_name
 		case "$Opt" in
-			-k)
-				# alle Schluessel finden# {{{
-				KEYFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/keys/${GEN_NAME}.pem"
-				if [ -f "$KEYFILE" ] ; then
-					(( Anz++ ))
-					KEYS_FILE+=($KEYFILE)
-					KEYS_ALL_M+=($Anz \"$COMMONNAME\" off)
-				fi
-				## }}}
-				;;
 			-u)
 				# ungueltige Certificates herrausfinden# {{{
 				CERTFILE="${KWSSL_DIR}/${CA_OPEN_NAME}/certs/${GEN_NAME}.pem"
@@ -507,6 +558,36 @@ get_info_files() {
 				;;
 		esac
 	done < ${KWSSL_DIR}/${CA_OPEN_NAME}/index.txt
+}
+## }}}
+# Funktion (get_req_key_files), herausfinden aller Anforderungs- und Schluesseldateien# {{{
+#
+# usage: get_req_key_files
+#
+get_req_key_files() {
+	unset -- $UNSET REQS_FILE REQS_ALL_E REQS_ALL_M REQS_CN KEYS_FILE KEYS_ALL_M
+	local Anz
+	Anz=0
+	for f in ${KWSSL_DIR}/${CA_OPEN_NAME}/req/*.pem(.N) ; {
+		if [ -f "$f" ] ; then
+			get_format_file "$f"
+			# Subject holen und Variablen mit eingelesenen Werten belegen
+			Tmp=${$(openssl req ${=INFORM_FORMAT} -in $f -subject -noout)[1]}
+			# Subject einlesen und Variablen belegen
+			read_subject "$Tmp"
+			(( Anz++ ))
+			REQS_FILE+=($f)
+			REQS_CN+=($COMMONNAME)
+			REQS_ALL_E+=($Anz \"$COMMONNAME\")
+			REQS_ALL_M+=($Anz \"$COMMONNAME\" off)
+			# Schluessel suchen
+			if [ -f "${f/\/req\///keys/}" ] ; then
+				# Variablen belegen
+				KEYS_FILE[Anz]="${f/\/req\///keys/}"
+				KEYS_ALL_M+=($Anz \"$COMMONNAME\" off)
+			fi
+		fi
+	}
 }
 ## }}}
 # Funktion (gen_name), generiert den Dateinamen fuer Zertifikate,# {{{
@@ -992,8 +1073,6 @@ search_ca() {
 # Funktion (sign_cert_request), mittels Anforderung (certificate request) Zertifikat# {{{
 # erzeugen und mit CA signieren. Ist fuer Server und Benutzer Zertifikate.
 #
-# benoetigt vorher die Belegung einiger Variablen (Digest, ...)
-#
 # usage: sign_cert_request CANAME [ server_ca | client_ca ] REQ_DATEI VALIDITY DIGEST
 #
 sign_cert_request() {
@@ -1012,9 +1091,34 @@ sign_cert_request() {
 			-md $Digest \
 			-out ${Dir}/certs/${File} \
 			-outdir ${Dir}/newcerts \
-			-passin pass:${CA_CAPASSWD} || prog_failure
-			# Passwoerter loeschen
-			unset -- CAPASSWD CA_CAPASSWD CA_CAPASSWORD PASSWORD
+			-passin env:CA_CAPASSWD || prog_failure
+	else
+		no_para_msg $0
+	fi
+}
+## }}}
+# Funktion (sign_ca_request), mittels Anforderung (certificate request) CA# {{{
+# erzeugen und mit (Root)CA signieren. Ist fuer CA Zertifikate.
+#
+# usage: sign_ca_request CANAME VALIDITY
+#
+sign_ca_request() {
+	if [[ ${#argv} == 2 ]] ; then
+		local CAName Validity CADir CANewDir
+		CAName="$1"
+		Validity="$2"
+		CANewDir="${KWSSL_DIR}/${CAName}"
+		CAOpenDir="${KWSSL_DIR}/${CA_OPEN_NAME}"
+		openssl ca -batch -notext \
+			-config ${CAOpenDir}/${KWSSL2RC_NAME} \
+			-name ca_ca -in ${CANewDir}/cacert.req \
+			-days $Validity $PRESERVEDN_YES \
+			-extensions v3_ca \
+			-keyfile ${CAOpenDir}/cacert.key \
+			-cert ${CAOpenDir}/cacert.pem \
+			-out ${CANewDir}/cacert.pem \
+			-outdir ${CAOpenDir}/newcerts \
+			-passin env:CA_CAPASSWD || prog_failure
 	else
 		no_para_msg $0
 	fi
