@@ -12,29 +12,6 @@ manage_reqs() {
 			msgbox "$gv_Attention" "$MSG"
 		}
 		## }}}
-		# Funktion (get_req_files), herausfinden aller Anforderungsdateien# {{{
-		#
-		# usage: get_req_files
-		#
-		get_req_files() {
-			unset -- $UNSET REQS_FILE REQS_ALL_E REQS_ALL_M REQS_CN
-			local Anz
-			Anz=0
-			for f in ${KWSSL_DIR}/${CA_OPEN_NAME}/req/*.pem(.N) ; {
-				if [ -f "$f" ] ; then
-					# Subject holen und Variablen mit eingelesenen Werten belegen
-					Tmp=${$(openssl req ${=INFORM_FORMAT} -in $f -subject -noout)[1]}
-					# Subject einlesen und Variablen belegen
-					read_subject "$Tmp"
-					(( Anz++ ))
-					REQS_FILE+=($f)
-					REQS_CN+=($COMMONNAME)
-					REQS_ALL_E+=($Anz \"$COMMONNAME\")
-					REQS_ALL_M+=($Anz \"$COMMONNAME\" off)
-				fi
-			}
-		}
-		## }}}
 		# Funktion (req_sign), Erzeugt aus Anforderungen Zertifikate und# {{{
 		# signiert diese
 		#
@@ -53,7 +30,7 @@ manage_reqs() {
 				}
 				## }}}
 				# alle Anforderungen herraussuchen.
-				get_req_files
+				get_req_key_files
 				if [ -n "${REQS_ALL_E[1]}" ] ; then
 					req_sign_menu
 					while [ "$gv_Auswahl" ] ; do
@@ -129,8 +106,8 @@ manage_reqs() {
 												convert_digest $DEFAULT_MD
 												# preserveDN pruefen
 												check_preservedn
-												# signieren
-												sign_cert_request "${Conf_Section%_*}_ca" "$SIGN_FILE"
+												# Zertifikate erzeugen und mit CA signieren
+												sign_cert_request "$CA_OPEN_NAME" "${Conf_Section%_*}_ca" "$SIGN_FILE" "$VALIDITY" "$Digest"
 												# Passwoerter loeschen
 												unset -- $REQS_UNSET
 												break
@@ -214,7 +191,7 @@ manage_reqs() {
 					}
 					## }}}
 					# alle Anforderungen herraussuchen.
-					get_req_files
+					get_req_key_files
 					if [ -n "${REQS_ALL_M[1]}" ] ; then
 						req_display_menu
 						while [ "$gv_Auswahl" ] ; do
@@ -311,7 +288,7 @@ manage_reqs() {
 						checklist "$REQ_DEL_TITLE" "$gv_Menupoint" "$REQ_DEL_MENU"
 					}
 					## }}}
-					get_req_files
+					get_req_key_files
 					if [ -n "${REQS_ALL_M[1]}" ] ; then
 						del_req_choice_menu
 						while [ "$gv_Auswahl" ] ; do

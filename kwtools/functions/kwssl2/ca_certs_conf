@@ -13,6 +13,9 @@ ca_certs_conf() {
 		local CAOpt
 		CAOpt="$1"
 		#
+		DEFAULT_CONF_CA_TITLE=$(gettext 'Konfiguration der CA')
+		DEFAULT_CONF_CERT_TITLE=$(gettext 'Konfiguration des Zertifikats')
+		DEFAULT_CACERTS_CA_MSG=$(gettext 'Diese Optionen werden fuer die Erstellung dieser CA und fuer die Erstellung aller SubCAs an Openssl weitergeleitet.')
 		# Funktion (default_cacerts_menu)# {{{
 		#
 		default_cacerts_menu() {
@@ -27,7 +30,8 @@ ca_certs_conf() {
 					AUTHKEYIDENT=${AUTHKEYIDENT:-keyid:always,issuer:always}
 					CRITICAL=${CRITICAL:-$lv_UnCritical}
 					#
-					DEFAULT_CACERTS_MSG=$(gettext 'Diese Optionen werden fuer die Erstellung dieser CA und fuer die Erstellung aller SubCAs an Openssl weitergeleitet.')
+					DEFAULT_CONF_TITLE="$DEFAULT_CONF_CA_TITLE"
+					DEFAULT_CACERTS_MSG="$DEFAULT_CACERTS_CA_MSG"
 					DEFAULT_CACERTS_MENU=(\"$lv_SubjectAlternateName\" \"$SUBJECT_ALTER_NAME\"
 					\"$lv_NsCertType\" \"$NSCERTTYPE\"
 					\"$lv_KeyUsage\" \"$KEYUSAGE\"
@@ -52,7 +56,8 @@ ca_certs_conf() {
 					AUTHKEYIDENT=${AUTHKEYIDENT:-keyid:always,issuer:always}
 					CRITICAL=${CRITICAL:-$lv_Critical}
 					#
-					DEFAULT_CACERTS_MSG=$(gettext 'Diese Optionen werden fuer die Erstellung von CAs und fuer die Erstellung aller SubCAs an Openssl weitergeleitet.')
+					DEFAULT_CONF_TITLE="$DEFAULT_CONF_CA_TITLE"
+					DEFAULT_CACERTS_MSG="$DEFAULT_CACERTS_CA_MSG"
 					DEFAULT_CACERTS_MENU=(\"$lv_SubjectAlternateName\" \"$SUBJECT_ALTER_NAME\"
 					\"$lv_NsCertType\" \"$NSCERTTYPE\"
 					\"$lv_KeyUsage\" \"$KEYUSAGE\"
@@ -76,6 +81,7 @@ ca_certs_conf() {
 					AUTHKEYIDENT=${AUTHKEYIDENT:-keyid,issuer:always}
 					ISSUERALTNAME=${ISSUERALTNAME:-issuer:copy}
 					#
+					DEFAULT_CONF_TITLE="$DEFAULT_CONF_CERT_TITLE"
 					DEFAULT_CACERTS_MSG=$(gettext 'Diese Optionen werden fuer die Erstellung von Server Zertifikaten eingesetzt.')
 					DEFAULT_CACERTS_MENU=(\"$lv_SubjectAlternateName\" \"$SUBJECT_ALTER_NAME\"
 					\"$lv_KeyUsage\" \"$KEYUSAGE\"
@@ -104,6 +110,7 @@ ca_certs_conf() {
 					AUTHKEYIDENT=${AUTHKEYIDENT:-keyid,issuer:always}
 					ISSUERALTNAME=${ISSUERALTNAME:-issuer:copy}
 					#
+					DEFAULT_CONF_TITLE="$DEFAULT_CONF_CERT_TITLE"
 					DEFAULT_CACERTS_MSG=$(gettext 'Diese Optionen werden fuer die Erstellung von Benutzer Zertifikaten eingesetzt.')
 					DEFAULT_CACERTS_MENU=(\"$lv_SubjectAlternateName\" \"$SUBJECT_ALTER_NAME\"
 					\"$lv_KeyUsage\" \"$KEYUSAGE\"

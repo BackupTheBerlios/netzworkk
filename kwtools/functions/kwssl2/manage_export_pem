@@ -182,9 +182,9 @@ manage_export_pem() {
 								#
 								openssl ca -gencrl -config $KWSSL2RC \
 									-out ./tmp/crl.pem \
-									-passin pass:${CA_CAPASSWD} \
+									-passin env:CA_CAPASSWD \
 									-crldays $DEFAULT_REVOKE_DAYS || prog_failure
-								if [[ $RET == 0 ]] ; then
+								if [ "$RET" != 1 ] ; then
 									openssl crl -in ./tmp/crl.pem \
 										-outform PEM -out "$EXPORT_FILENAME" || \
 										prog_failure
@@ -228,7 +228,7 @@ manage_export_pem() {
 								[[ $CERT_VALUE == $gv_Yes ]] ; then
 								openssl "$ALGORITHM" -in $In_File -outform PEM \
 									-out "$EXPORT_FILENAME" \
-									-passin pass:${CA_CAPASSWD} || prog_failure
+									-passin env:CA_CAPASSWD || prog_failure
 								echo "" >> "$EXPORT_FILENAME" &>/dev/null
 								< "$CACERT" >> "$EXPORT_FILENAME" &>/dev/null
 							# ohne Passwort, ohne Zertifikat
@@ -237,7 +237,7 @@ manage_export_pem() {
 								[[ $CERT_VALUE == $gv_No ]] ; then
 								openssl "$ALGORITHM" -in $In_File -outform PEM \
 									-out "$EXPORT_FILENAME" \
-									-passin pass:${CA_CAPASSWD} || prog_failure
+									-passin env:CA_CAPASSWD || prog_failure
 							# mit Passwort, mit Zertifikat
 							elif [[ $PASS_VALUE == $gv_No ]] && \
 								[[ $CERT_VALUE == $gv_Yes ]] ; then

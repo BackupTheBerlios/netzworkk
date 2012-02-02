@@ -8,7 +8,7 @@
 #
 conf_ca() {
 	if [ "${#argv}" -ge 1 ] ; then
-		CONF_CA_UNSET=(COMMONNAME CA_NAME CA_CAPASSWORD CAPASSWD CA_CAPASSWD PASSWORD)
+		CONF_CA_UNSET=(COMMONNAME CA_NAME CA_CAPASSWORD CAPASSWD CA_CAPASSWD CAPASSWORD)
 		unset -- Cert_Opt Opt
 		local Opt Cert_Opt
 		Opt="$1"
@@ -49,11 +49,17 @@ conf_ca() {
 				local CAName Filename Keylength TmpDir KeyDir CaDir
 				# Variablen
 				CAName="$1"
-				Filename="$2"
 				Keylength="$3"
 				CaDir="${KWSSL_DIR}/${CAName}"
 				TmpDir="${KWSSL_DIR}/Tmp"
-				KeyDir="${CaDir}/keys"
+				#
+				if [ "$2" != cacert.key ] ; then
+					Filename="${2}.pem"
+					KeyDir="${CaDir}/keys"
+				else
+					Filename="$2"
+					KeyDir="$CaDir"
+				fi
 				# DSA oder RSA# {{{
 				# Algorithmus pruefen
 				check_alg
@@ -64,42 +70,16 @@ conf_ca() {
 						-out ${TmpDir}/${Filename}.dsaparam \
 						-rand ${CaDir}/.rand $Keylength || prog_failure
 					# -----BEGIN DSA PRIVATE KEY-----
-					openssl $Gen_Alg -aes256 -out ${KeyDir}/${Filename}.pem \
-						-rand ${CaDir}/.rand -passout pass:$CAPASSWD \
+					openssl $Gen_Alg -aes256 -out ${KeyDir}/${Filename} \
+						-rand ${CaDir}/.rand -passout env:CAPASSWD \
 						${TmpDir}/${Filename}.dsaparam || prog_failure
 				else
 					# -----BEGIN RSA PRIVATE KEY-----
-					openssl $Gen_Alg -aes256 -out ${KeyDir}/${Filename}.pem \
+					openssl $Gen_Alg -aes256 -out ${KeyDir}/${Filename} \
 						-rand ${CaDir}/.rand \
-						-passout pass:${CAPASSWD} $Keylength || prog_failure
+						-passout env:CAPASSWD $Keylength || prog_failure
 				fi
 				## }}}
-			else
-				no_para_msg $0
-			fi
-		}
-		## }}}
-		# Funktion (create_request), erstellt eine Anforderung# {{{
-		#
-		# usage: create_request CANAME FILENAME DIGEST
-		#
-		create_request() {
-			if [[ ${#argv} == 3 ]] ; then
-				local CAName Filename Digest CaDir KeyDir ReqDir
-				# Variablen
-				CAName="$1"
-				Filename="$2"
-				Digest="$3"
-				CaDir="${KWSSL_DIR}/${CAName}"
-				KeyDir="${CaDir}/keys"
-				ReqDir="${CaDir}/req"
-				# Certificate Request
-				openssl req -new -keyform PEM -outform PEM \
-					-config $KWSSL2RC \
-					-key ${KeyDir}/${Filename}.pem \
-					-out ${ReqDir}/${Filename}.pem \
-					-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-					-passin pass:${CAPASSWD} $Digest || prog_failure
 			else
 				no_para_msg $0
 			fi
@@ -120,7 +100,7 @@ conf_ca() {
 					# CA erstellen# {{{
 					REQ_CREATE_MENU=($lv_Ssl_Name \"$CA_NAME\"
 					\"$lv_Ssl_CommonName\" \"$COMMONNAME\"
-	                $lv_Ssl_Land_Code \"$COUNTRYCODE\" \"$lv_Ssl_Password\" \"$PASSWORD\"
+	                $lv_Ssl_Land_Code \"$COUNTRYCODE\" \"$lv_Ssl_Password\" \"$CAPASSWORD\"
 	                \"$lv_Ssl_Password_Generate\" \"\" $lv_Ssl_Bundesstaat \"$COUNTRY\"
 	                $lv_Ssl_Location \"$LOCATION\" $lv_Ssl_Organisation \"$ORGANISATION\"
 	                $lv_Ssl_Organisation_Unit \"$ORGANISATIONUNIT\" $lv_Ssl_Email \"$MAIL\"
@@ -133,7 +113,7 @@ conf_ca() {
 					REQ_CREATE_MENU=($lv_Ssl_Name \"$CA_NAME\"
 					\"$lv_Ssl_CA_Password\" \"$CA_CAPASSWORD\"
 				   	\"$lv_Ssl_CommonName\" \"$COMMONNAME\"
-	                $lv_Ssl_Land_Code \"$COUNTRYCODE\" \"$lv_Ssl_Password\" \"$PASSWORD\"
+	                $lv_Ssl_Land_Code \"$COUNTRYCODE\" \"$lv_Ssl_Password\" \"$CAPASSWORD\"
 	                \"$lv_Ssl_Password_Generate\" \"\" $lv_Ssl_Bundesstaat \"$COUNTRY\"
 	                $lv_Ssl_Location \"$LOCATION\" $lv_Ssl_Organisation \"$ORGANISATION\"
 	                $lv_Ssl_Organisation_Unit \"$ORGANISATIONUNIT\" $lv_Ssl_Email \"$MAIL\"
@@ -147,7 +127,7 @@ conf_ca() {
 					REQ_CREATE_MENU=(\"$Ssl_ServerUserName\" \"$COMMONNAME\"
 	                \"$lv_Ssl_CA_Password\" \"$CA_CAPASSWORD\"
 					$lv_Ssl_Land_Code \"$COUNTRYCODE\"
-					\"$lv_Ssl_Password\" \"$PASSWORD\"
+					\"$lv_Ssl_Password\" \"$CAPASSWORD\"
 	                \"$lv_Ssl_Password_Generate\" \"\" $lv_Ssl_Bundesstaat \"$COUNTRY\"
 	                $lv_Ssl_Location \"$LOCATION\" $lv_Ssl_Organisation \"$ORGANISATION\"
 	                $lv_Ssl_Organisation_Unit \"$ORGANISATIONUNIT\" $lv_Ssl_Email \"$MAIL\"
@@ -161,7 +141,7 @@ conf_ca() {
 					# nur Anforderungen erstellen# {{{
 					REQ_CREATE_MENU=(\"$lv_Ssl_CommonName\" \"$COMMONNAME\"
 					$lv_Ssl_Land_Code \"$COUNTRYCODE\"
-					\"$lv_Ssl_Password\" \"$PASSWORD\"
+					\"$lv_Ssl_Password\" \"$CAPASSWORD\"
 	                \"$lv_Ssl_Password_Generate\" \"\" $lv_Ssl_Bundesstaat \"$COUNTRY\"
 	                $lv_Ssl_Location \"$LOCATION\" $lv_Ssl_Organisation \"$ORGANISATION\"
 	                $lv_Ssl_Organisation_Unit \"$ORGANISATIONUNIT\" $lv_Ssl_Email \"$MAIL\"
@@ -199,11 +179,12 @@ conf_ca() {
 		# Funktion (check_helpfile), prueft welche Hilfe Datei angezeigt# {{{
 		# werden soll, etc..
 		#
-		# usage: check_helpfile [ -c | -ca | -subca ] [ -c [ server_cert | client_cert ]]
+		# usage: check_helpfile [ -r | -ca | -subca ] [ -c [ server_cert | client_cert ]]
 		#
 		# -c - Benutzer/Server Zertifikate + openssl.cnf Sektion
 		# -ca - CA
 		# -subca - SubCA
+		# -r - Anforderung
 		#
 		check_helpfile() {
 			local H_Opt Conf_Section
@@ -248,43 +229,38 @@ conf_ca() {
 				# check auf CommonName, Land, Passwoerter, etc.
 				if [[ -n $COMMONNAME ]] && \
 					[[ -n $COUNTRYCODE ]] && [[ -n $CA_NAME ]] && \
-					[[ -n $PASSWORD ]] && [[ -n $MAIL ]] ; then
+					[[ -n $CAPASSWORD ]] && [[ -n $MAIL ]] ; then
 					# Verzeichnisstruktur erstellen
 					create_pki $CA_NAME
 					# Grundkonfiguration/Sektion einlesen
 					read_openssl_conf v3_ca
 					# Digest umwandeln
 					convert_digest $DIGEST
-					# Algorithmus pruefen
-					check_alg
 					# Grundkonfiguration erstellen
 					ca_certs_conf -r
 					# ins Verzeichnis wechseln
 					cd $KWSSL_DIR
-					# privater Schluessel erzeugen
-					openssl $Gen_Alg -aes256 -rand ${CA_NAME}/.rand \
-						-out ${CA_NAME}/cacert.key \
-						-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
+					# privaten Schluessel erstellen
+					create_private_key "$CA_NAME" cacert.key "$KEYLENGTH"
 					# Cacert (Zertifikat) erzeugen und signieren
-					openssl req -new -keyform PEM -outform PEM \
-						-config $KWSSL2RC -x509 $lv_Digest -days $VALIDITY \
-						-key ${CA_NAME}/cacert.key \
-						-out ${CA_NAME}/cacert.pem \
-						-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-						-batch -passin pass:${CAPASSWD} || prog_failure
-					# CRL erstellen
-					openssl ca -config $KWSSL2RC -name ca_ca \
-						-gencrl -out ${CA_NAME}/crl/crl.pem \
-						-batch -passin pass:${CAPASSWD} || prog_failure
-					# Options Variable fuers Hauptmenue festlegen.
-					# Wird benoetigt falls es noch keine CA gibt, um
-					# nach deren Erstellung das richtige Menue aufzurufen..
-					MAIN_MENU_OPT="-ca"
-					# Variable der ab jetzt geoeffneten CA belegen.
-					CA_OPEN_NAME="$CA_NAME"
-					# einige Variablen/Passwoerter loeschen
-					unset -- $CONF_CA_UNSET
-					break
+					if [ "$RET" != 1 ] ; then
+						openssl req -new -keyform PEM -outform PEM \
+							-config $KWSSL2RC -x509 $lv_Digest -days $VALIDITY \
+							-key ${CA_NAME}/cacert.key \
+							-out ${CA_NAME}/cacert.pem \
+							-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
+							-batch -passin env:CAPASSWD || prog_failure
+						# CRL erstellen
+						if [ "$RET" != 1 ] ; then
+							create_crl "$CA_NAME" ca_ca
+							# Options Variable fuers Hauptmenue festlegen.
+							# Wird benoetigt falls es noch keine CA gibt, um
+							# nach deren Erstellung das richtige Menue aufzurufen..
+							MAIN_MENU_OPT="-ca"
+							# Variable der ab jetzt geoeffneten CA belegen.
+							CA_OPEN_NAME="$CA_NAME"
+						fi
+					fi
 				else
 					MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, $lv_Ssl_Land_Code, $lv_Ssl_Password, $lv_Ssl_Name und $lv_Ssl_Email mit Werten belegen.')
 					msgbox "$gv_Attention" "$MSG"
@@ -295,7 +271,7 @@ conf_ca() {
 			elif [[ $Opt == -subca ]] ; then
 				if [[ -n $COMMONNAME ]] && [[ -n $CA_CAPASSWORD ]] && \
 					[[ -n $COUNTRYCODE ]] && [[ -n $CA_NAME ]] && \
-					[[ -n $PASSWORD ]] && [[ -n $MAIL ]] ; then
+					[[ -n $CAPASSWORD ]] && [[ -n $MAIL ]] ; then
 					# Verzeichnisstruktur erstellen
 					create_pki $CA_NAME
 					# Grundkonfiguration/Sektion einlesen
@@ -307,8 +283,6 @@ conf_ca() {
 					# Dateinamen aus den Werten vom Subject erstellen
 					# Basis: CN EMAIL OU O L ST C
 					gen_name
-					# Algorithmus pruefen
-					check_alg
 					# Grundkonfiguration erstellen
 					ca_certs_conf -r
 					# preserveDN pruefen
@@ -316,48 +290,34 @@ conf_ca() {
 					# ins Verzeichnis wechseln
 					cd $KWSSL_DIR
 					# privater Schluessel
-					openssl $Gen_Alg -aes256 -rand ${CA_NAME}/.rand \
-						-out ${CA_NAME}/cacert.key \
-						-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
+					create_private_key "$CA_NAME" cacert.key "$KEYLENGTH"
 					# Certificate Request
-					openssl req -new -keyform PEM -outform PEM \
-						-config $KWSSL2RC \
-						-key ${CA_NAME}/cacert.key \
-						-out ${CA_NAME}/cacert.req \
-						-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-						-batch -passin pass:${CAPASSWD} $lv_Digest || prog_failure
-					# Zertifikate erzeugen und mit RootCA signieren
-					openssl ca -batch -notext -config ${CA_OPEN_NAME}/${KWSSL2RC_NAME} \
-						-name ca_ca -in ${CA_NAME}/cacert.req \
-						-days $VALIDITY $PRESERVEDN_YES \
-						-extensions v3_ca \
-						-keyfile ${CA_OPEN_NAME}/cacert.key \
-						-cert ${CA_OPEN_NAME}/cacert.pem \
-						-out ${CA_NAME}/cacert.pem \
-						-outdir ${CA_OPEN_NAME}/newcerts \
-						-passin pass:${CA_CAPASSWD} || prog_failure
-					# req file nach CA/req verschieben
-					mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem
-					# Zertifikat in die CA integrieren
-					cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${GEN_NAME}.pem
-					# keyfile in die CA integrieren
-					cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
-					# CRL erstellen
-					openssl ca -config $KWSSL2RC -name ca_ca -gencrl \
-						-out ${CA_NAME}/crl/crl.pem \
-						-batch -passin pass:${CAPASSWD} || prog_failure
-					# cachain.pem Datei erstellen.
-					cat ${CA_OPEN_NAME}/cacert.pem ${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
-					#
-					# Options Variable fuers Hauptmenue festlegen.
-					# Wird benoetigt falls es noch keine CA gibt, um
-					# nach deren Erstellung das richtige Menue aufzurufen..
-					MAIN_MENU_OPT="-subca"
-					# Variable der ab jetzt geoeffneten CA belegen.
-					CA_OPEN_NAME="$CA_NAME"
-					# einige Variablen/Passwoerter loeschen
-					unset -- $CONF_CA_UNSET
-					break
+					if [ "$RET" != 1 ] ; then
+						create_request "$CA_NAME" cacert.key "$lv_Digest"
+						# Zertifikat erzeugen und mit RootCA signieren
+						if [ "$RET" != 1 ] ; then
+							sign_ca_request "$NEW_CA_NAME" "$VALIDITY"
+							if [ "$RET" != 1 ] ; then
+								# req file nach CA/req verschieben
+								mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem
+								# Zertifikat in die CA integrieren
+								cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${GEN_NAME}.pem
+								# keyfile in die CA integrieren
+								cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
+								# cachain.pem Datei erstellen.
+								cat ${CA_OPEN_NAME}/cacert.pem ${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
+								# CRL erstellen
+								create_crl "$CA_NAME" ca_ca
+								#
+								# Options Variable fuers Hauptmenue festlegen.
+								# Wird benoetigt falls es noch keine CA gibt, um
+								# nach deren Erstellung das richtige Menue aufzurufen..
+								MAIN_MENU_OPT="-subca"
+								# Variable der ab jetzt geoeffneten CA belegen.
+								CA_OPEN_NAME="$CA_NAME"
+							fi
+						fi
+					fi
 				else
 					MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $lv_Ssl_Name, $lv_Ssl_CA_Password, $lv_Ssl_CommonName, $lv_Ssl_Password, $lv_Ssl_Land_Code und $lv_Ssl_Email mit Werten belegen.')
 					msgbox "$gv_Attention" "$MSG"
@@ -367,7 +327,7 @@ conf_ca() {
 			# Benutzer/Server Zertifikate erstellen# {{{
 			elif [[ $Opt == -c ]] ; then
 				if [[ -n $COMMONNAME ]] && [[ -n $CA_CAPASSWORD ]] && \
-					[[ -n $MAIL ]] && [[ -n $PASSWORD ]] && \
+					[[ -n $MAIL ]] && [[ -n $CAPASSWORD ]] && \
 					[[ -n $COUNTRYCODE ]] ; then
 					# Grundkonfiguration/Sektion einlesen
 					read_openssl_conf "$Cert_Opt"
@@ -388,53 +348,18 @@ conf_ca() {
 #					else
 #						ca_certs_conf -u
 #					fi
-#					# ins Verzechnis der CA wechseln
-#					cd ${KWSSL_DIR}/${CA_OPEN_NAME}
-#					# DSA oder RSA# {{{
-#					# Algorithmus pruefen
-#					check_alg
-#					if [ -n "$DsaParam" ] ; then
-#						create_file -d ../tmp
-#						# -----BEGIN DSA PARAMETERS-----
-#						openssl dsaparam \
-#							-out ../tmp/${GEN_NAME}.dsaparam \
-#							-rand ./.rand $KEYLENGTH || prog_failure
-#						# -----BEGIN DSA PRIVATE KEY-----
-#						openssl $Gen_Alg -aes256 -out keys/${GEN_NAME}.pem \
-#							-rand ./.rand -passout pass:$CAPASSWD \
-#							../tmp/${GEN_NAME}.dsaparam || prog_failure
-#						# Certificate Request
-#						openssl req -new -keyform PEM -outform PEM \
-#							-config $KWSSL2RC \
-#							-key keys/${GEN_NAME}.pem \
-#							-out req/${GEN_NAME}.pem \
-#							-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-#							-passin pass:${CAPASSWD} $lv_Digest || prog_failure
-#					else
-#						# -----BEGIN RSA PRIVATE KEY-----
-#						openssl $Gen_Alg -aes256 -out keys/${GEN_NAME}.pem \
-#							-rand ./.rand \
-#							-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
-#						# Certificate Request
-#						openssl req -new -keyform PEM -outform PEM \
-#							-config $KWSSL2RC \
-#							-key keys/${GEN_NAME}.pem \
-#							-out req/${GEN_NAME}.pem \
-#							-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-#							-passin pass:${CAPASSWD} $lv_Digest || prog_failure
-#					fi
-#					## }}}
+					# preserveDN pruefen
+					check_preservedn
 					# privaten Schluessel erstellen
 					create_private_key "$CA_OPEN_NAME" "$GEN_NAME" "$KEYLENGTH"
 					# Anforderung erstellen
-					create_cert_request "$CA_OPEN_NAME" "$GEN_NAME" "$lv_Digest"
-					# preserveDN pruefen
-					check_preservedn
-					# Zertifikate erzeugen und mit SubCA signieren
-					sign_cert_request "$CA_OPEN_NAME" "${Cert_Opt%_*}_ca" "${GEN_NAME}.pem" "$VALIDITY" "$Digest"
-					# einige Variablen/Passwoerter loeschen
-					unset -- $CONF_CA_UNSET
-					break
+					if [ "$RET" != 1 ] ; then
+						create_request "$CA_OPEN_NAME" "$GEN_NAME" "$lv_Digest"
+						# Zertifikate erzeugen und mit (Sub)CA signieren
+						if [ "$RET" != 1 ] ; then
+							sign_cert_request "$CA_OPEN_NAME" "${Cert_Opt%_*}_ca" "${GEN_NAME}.pem" "$VALIDITY" "$Digest"
+						fi
+					fi
 				else
 					MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $Ssl_ServerUserName, $lv_Ssl_CA_Password, $lv_Ssl_Password, $lv_Ssl_Land_Code und $lv_Ssl_Email mit Werten belegen.')
 					msgbox "$gv_Attention" "$MSG"
@@ -444,7 +369,7 @@ conf_ca() {
 			# nur Anforderung erstellen# {{{
 			elif [[ $Opt == -r ]] ; then
 				if [[ -n $COMMONNAME ]] && \
-					[[ -n $MAIL ]] && [[ -n $PASSWORD ]] && \
+					[[ -n $MAIL ]] && [[ -n $CAPASSWORD ]] && \
 					[[ -n $COUNTRYCODE ]] ; then
 					# Digest umwandeln
 					convert_digest $DIGEST
@@ -453,49 +378,12 @@ conf_ca() {
 					# Dateinamen aus den Werten vom Subject erstellen
 					# Basis: CN EMAIL OU O L ST C
 					gen_name
-#					# ins Verzechnis der CA wechseln
-#					cd ${KWSSL_DIR}/${CA_OPEN_NAME}
-#					# DSA oder RSA# {{{
-#					# Algorithmus pruefen
-#					check_alg
-#					if [ -n "$DsaParam" ] ; then
-#						create_file -d ../tmp
-#						# -----BEGIN DSA PARAMETERS-----
-#						openssl dsaparam \
-#							-out ../tmp/${GEN_NAME}.dsaparam \
-#							-rand ./.rand $KEYLENGTH || prog_failure
-#						# -----BEGIN DSA PRIVATE KEY-----
-#						openssl $Gen_Alg -aes256 -out keys/${GEN_NAME}.pem \
-#							-rand ./.rand -passout pass:$CAPASSWD \
-#							../tmp/${GEN_NAME}.dsaparam || prog_failure
-#						# Certificate Request
-#						openssl req -new -keyform PEM -outform PEM \
-#							-config $KWSSL2RC \
-#							-key keys/${GEN_NAME}.pem \
-#							-out req/${GEN_NAME}.pem \
-#							-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-#							-passin pass:${CAPASSWD} $lv_Digest || prog_failure
-#					else
-#						# -----BEGIN RSA PRIVATE KEY-----
-#						openssl $Gen_Alg -aes256 -out keys/${GEN_NAME}.pem \
-#							-rand ./.rand \
-#							-passout pass:${CAPASSWD} $KEYLENGTH || prog_failure
-#						# Certificate Request
-#						openssl req -new -keyform PEM -outform PEM \
-#							-config $KWSSL2RC \
-#							-key keys/${GEN_NAME}.pem \
-#							-out req/${GEN_NAME}.pem \
-#							-subj "/C=${COUNTRYCODE}/ST=${COUNTRY}/L=${LOCATION}/O=${ORGANISATION}/OU=${ORGANISATIONUNIT}/CN=${COMMONNAME}/emailAddress=${MAIL}" \
-#							-passin pass:${CAPASSWD} $lv_Digest || prog_failure
-#					fi
-#					## }}}
 					# privaten Schluessel erstellen
 					create_private_key "$CA_OPEN_NAME" "$GEN_NAME" "$KEYLENGTH"
 					# Anforderung erstellen
-					create_request "$CA_OPEN_NAME" "$GEN_NAME" "$lv_Digest"
-					# einige Variablen/Passwoerter loeschen
-					unset -- $CONF_CA_UNSET
-					break
+					if [ "$RET" != 1 ] ; then
+						create_request "$CA_OPEN_NAME" "$GEN_NAME" "$lv_Digest"
+					fi
 				else
 					MSG=$(gettext 'Sie muessen mindestens die Menuepunkte $lv_Ssl_CommonName, $lv_Ssl_Password, $lv_Ssl_Land_Code und $lv_Ssl_Email mit Werten belegen.')
 					msgbox "$gv_Attention" "$MSG"
@@ -589,19 +477,19 @@ conf_ca() {
 					;;
 				"$lv_Ssl_Password")
 					# Passwort eingeben# {{{
-					PASSWD_MSG=$(gettext 'Geben Sie bitte ein Passwort fuer das Zertifikat oder CA ein (mindestens $PASSWD_LENGTH Zeichen lang) und wiederholen diese im Feld darunter.')
+					PASSWD_MSG=$(gettext 'Geben Sie bitte ein Passwort fuer das Zertifikat oder CA ein (mindestens $PASSWD_LENGTH Zeichen lang) und wiederholen dieses im Feld darunter.')
 					mixed_password "$gv_Passwd_TITLE" "$PASSWD_MSG" "$PASSWD_LENGTH"
 					if [[ -n $gv_Pass ]] ; then
 						password_display "$gv_Pass"
 						if [ -n "$gv_Star_Passphrase" ] ; then
-							PASSWORD="$gv_Star_Passphrase"
-							CAPASSWD="$gv_Pass"
+							CAPASSWORD="$gv_Star_Passphrase"
+							export CAPASSWD="$gv_Pass"
 							unset -- gv_Pass
 						else
-							unset -- CAPASSWD PASSWORD gv_Pass
+							unset -- CAPASSWD CAPASSWORD gv_Pass
 						fi
 					else
-						unset -- PASSWORD CAPASSWD gv_Pass
+						unset -- CAPASSWORD CAPASSWD gv_Pass
 					fi
 					## }}}
 					conf_ca_menu $Opt $lv_Ssl_Password
@@ -613,7 +501,7 @@ conf_ca() {
 					gv_Pass=${${${(ws: :)$(head -c 256 /dev/urandom | uuencode -m -)}[4]}[1,$PASSWD_LENGTH]}
 					if [[ -n $gv_Pass ]] ; then
 						PASSWORD="$gv_Pass"
-						CAPASSWD="$gv_Pass"
+						export CAPASSWD="$gv_Pass"
 						unset -- gv_Pass
 					fi
 					## }}}
@@ -754,6 +642,9 @@ conf_ca() {
 				$gv_Create)
 					# CAs, Zertifikate erstellen und konfigurieren
 					create_ca
+					# einige Variablen/Passwoerter loeschen
+					unset -- $CONF_CA_UNSET
+					break
 					;;
 				$gv_Back)
 					# zurueck

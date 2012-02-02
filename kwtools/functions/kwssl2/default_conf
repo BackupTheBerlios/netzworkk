@@ -11,9 +11,9 @@ default_conf() {
 		$lv_Revokes \"\" $gv_Back \"\")
 		#
 		if [[ ${#argv} == 1 ]] ; then
-			menubox -d "$1" "$DEFAULT_CONF_TITLE" "$gv_Menupoint" "$DEFAULT_CONF_MENU"
+			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$DEFAULT_CONF_MENU"
 		else
-			menubox "$DEFAULT_CONF_TITLE" "$gv_Menupoint" "$DEFAULT_CONF_MENU"
+			menubox "$gv_Configuration" "$gv_Menupoint" "$DEFAULT_CONF_MENU"
 		fi
 	}
 	# }}}

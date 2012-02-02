@@ -97,13 +97,13 @@ manage_export_pkcs12() {
 						password_display "$PASSPHRASE"
 						if [ -n "$gv_Star_Passphrase" ] ; then
 							EXPORT_PASSWORD="$gv_Star_Passphrase"
-							EXPORT_PASSWD="$PASSPHRASE"
+							export EXPORT_PASSWD="$PASSPHRASE"
 							unset -- PASSPHRASE
 						else
-							unset -- EXPORT_PASSWD PASSPHRASE
+							unset -- EXPORT_PASSWORD EXPORT_PASSWD PASSPHRASE
 						fi
 					else
-						unset -- EXPORT_PASSWD PASSPHRASE
+						unset -- EXPORT_PASSWORD EXPORT_PASSWD PASSPHRASE
 					fi
 					## }}}
 					export_pkcs12_menu $lv_ExportPass
@@ -184,7 +184,7 @@ manage_export_pkcs12() {
 							# PROG_OPT speichern.
 							PROG_OPT=(pkcs12 -export -inkey "$CAKEY"
 							-in "$CACERT" -out "$EXPORT_FILENAME"
-							-passin pass:${CA_CAPASSWD} -passout pass:${EXPORT_PASSWD})
+							-passin env:CA_CAPASSWD -passout env:EXPORT_PASSWD)
 							# Anzeigename belegen falls nicht erfolgt.
 							check_displayname
 							# pkcs12 Struktur mit hinzufuegen
@@ -208,7 +208,7 @@ manage_export_pkcs12() {
 							# PROG_OPT speichern.
 							PROG_OPT=(pkcs12 -export -inkey "$CAKEY"
 							-in "$CACERT" -out "$EXPORT_FILENAME"
-							-passin pass:${CA_CAPASSWD} -passout pass: -nodes)
+							-passin env:CA_CAPASSWD -passout pass: -nodes)
 							# Anzeigename belegen falls nicht erfolgt.
 							check_displayname
 							# pkcs12 Struktur mit hinzufuegen

@@ -43,7 +43,7 @@ manage_keys() {
 						radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$KEY_EXPORT_MENU"
 					}
 					## }}}
-					get_info_files -k
+					get_req_key_files
 					if [[ -n ${KEYS_ALL_M[1]} ]] ; then
 						key_choice_menu
 						while [ -n "$gv_Auswahl" ] ; do
@@ -76,7 +76,7 @@ manage_keys() {
 						checklist "$KEY_DEL_TITLE" "$gv_Menupoint" "$KEY_DEL_MENU"
 					}
 					## }}}
-					get_info_files -k
+					get_req_key_files
 					if [ -n "${KEYS_ALL_M[1]}" ] ; then
 						del_key_choice_menu
 						while [ "$gv_Auswahl" ] ; do

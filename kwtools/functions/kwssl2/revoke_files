@@ -25,7 +25,7 @@ revoke_files() {
 		## }}}
 		# Funktion (conf_revoke_menu)# {{{
 		conf_revoke_menu() {
-			CONF_REVOKE_MENU=(\"$lv_Ssl_Password\" \"$CA_PASS\"
+			CONF_REVOKE_MENU=(\"$lv_Ssl_Password\" \"$CAPASSWORD\"
 			$lv_Ground \"$GROUND\" $gv_Save \"\" $gv_Back \"\")
 			menubox "$CERT_REVOKE_TITLE" "$gv_Menupoint" "$CONF_REVOKE_MENU"
 		}
@@ -45,12 +45,14 @@ revoke_files() {
 					if [ -n "$PASSPHRASE" ] ; then
 						password_display "$PASSPHRASE"
 						if [ -n "$gv_Star_Passphrase" ] ; then
-							CA_PASS="$gv_Star_Passphrase"
+							CAPASSWORD="$gv_Star_Passphrase"
+							export CAPASSWD="$PASSPHRASE"
+							unset -- PASSPHRASE
 						else
-							unset -- CA_PASS PASSPHRASE
+							unset -- CAPASSWORD CAPASSWD PASSPHRASE
 						fi
 					else
-						unset -- CA_PASS PASSPHRASE
+						unset -- CAPASSWD CAPASSWORD PASSPHRASE
 					fi
 					## }}}
 					conf_revoke_menu $lv_Ssl_Password
@@ -78,19 +80,17 @@ revoke_files() {
 				$gv_Save)
 					# CAs und Zertifikate widerrufen# {{{
 					cd ${KWSSL_DIR}/${CA_OPEN_NAME}
-					if [ -n "$PASSPHRASE" ] ; then
+					if [ -n "$CAPASSWORD" ] ; then
+						# Widerrufsliste erstellen/bearbeiten
 						openssl ca -config $KWSSL2RC \
 							-batch -crl_reason $GROUND \
 							-revoke $Revoke_File \
-							-passin pass:${PASSPHRASE} || prog_failure
-						if [[ $RET == 0 ]] ; then
-							openssl ca -config $KWSSL2RC \
-								-batch \
-								-gencrl -out crl/crl.pem \
-								-passin pass:${PASSPHRASE} || prog_failure
+							-passin env:CAPASSWD || prog_failure
+						if [ "$RET" != 1 ] ; then
+							create_crl "$CA_OPEN_NAME"
 						fi
-						#
-						unset -- PASSPHRASE CA_PASS
+						# Passwoerter loeschen
+						unset -- CAPASSWORD CAPASSWD
 						break
 					else
 						MSG=$(gettext 'Sie muessen ein Passwort eingeben.')
@@ -100,6 +100,8 @@ revoke_files() {
 					## }}}
 					;;
 				$gv_Back)
+					# Passwoerter loeschen
+					unset -- CAPASSWORD CAPASSWD
 					break
 					;;
 			esac

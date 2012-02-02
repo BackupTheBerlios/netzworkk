@@ -182,9 +182,9 @@ manage_export_most() {
 										#
 										openssl ca -gencrl -config $KWSSL2RC \
 											-out ./tmp/crl.pem \
-											-passin pass:${CA_CAPASSWD} \
+											-passin env:CA_CAPASSWD \
 											-crldays $DEFAULT_REVOKE_DAYS || prog_failure
-										if [[ $RET == 0 ]] ; then
+										if [ "$RET" != 1 ] ; then
 											openssl crl -in ./tmp/crl.pem \
 												-outform DER -out "$EXPORT_FILENAME" || \
 												prog_failure
@@ -210,9 +210,9 @@ manage_export_most() {
 										#
 										openssl ca -gencrl -config $KWSSL2RC \
 											-out ./tmp/crl.pem \
-											-passin pass:${CA_CAPASSWD} \
+											-passin env:CA_CAPASSWD \
 											-crldays $DEFAULT_REVOKE_DAYS || prog_failure
-										if [[ $RET == 0 ]] ; then
+										if [ "$RET" != 1 ] ; then
 											openssl crl -in ./tmp/crl.pem \
 												-text -noout > "$EXPORT_FILENAME" || \
 												prog_failure
@@ -242,7 +242,7 @@ manage_export_most() {
 										[[ $CERT_VALUE == $gv_Yes ]] ; then
 										openssl "$ALGORITHM" -in "$In_File" \
 										-outform DER -out "$EXPORT_FILENAME" \
-										-passin pass:${CA_CAPASSWD} || prog_failure
+										-passin env:CA_CAPASSWD || prog_failure
 										# Zertifikat hinzufuegen
 										echo "" >> "$EXPORT_FILENAME" &>/dev/null
 										< "$CACERT" >> "$EXPORT_FILENAME" &>/dev/null
@@ -254,7 +254,7 @@ manage_export_most() {
 										[[ $CERT_VALUE == $gv_No ]] ; then
 										openssl "$ALGORITHM" -in "$In_File" \
 										-outform DER -out "$EXPORT_FILENAME" \
-										-passin pass:${CA_CAPASSWD} || prog_failure
+										-passin env:CA_CAPASSWD || prog_failure
 										# Passwoerter loeschen
 										unset -- CA_CAPASSWORD CA_CAPASSWD
 										break
