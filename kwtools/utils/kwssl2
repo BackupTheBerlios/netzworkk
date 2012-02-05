@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 02.02.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 05.02.2012
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # CAs, Zertifikate, signiert diese ....
@@ -65,6 +65,7 @@ lv_SubCa=$(gettext 'SubCA')
 lv_CA_Create=$(gettext 'CA erstellen')
 lv_CA_Import=$(gettext 'CA importieren')
 lv_CA_Export=$(gettext 'CA exportieren')
+lv_CA_Chain_Export=$(gettext 'Kette exportieren')
 lv_CA_CRL_Export=$(gettext 'Widerrufsliste exportieren')
 lv_CA_Delete=$(gettext 'CA loeschen')
 lv_SubCA_Create=$(gettext 'SubCA erstellen')
@@ -646,13 +647,23 @@ keylength_input() {
 #
 main_menu() {
 	case $MAIN_MENU_OPT in
-		-ca|-subca)
+		-ca)
     		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
 			$gv_Display \"\" \"$lv_CA_Create\" \"\"
 			\"$lv_SubCA_Create\" \"\" \"$lv_Cert\" \"\"
 			\"$lv_Key\" \"\" \"$lv_Request\" \"\"
 			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
 			\"$lv_CA_CRL_Export\" \"\" \"$lv_Dh_File\" \"\"
+			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
+			;;
+		-subca)
+    		MAIN_MENU=($lv_Open \"\" $gv_Configuration \"\"
+			$gv_Display \"\" \"$lv_CA_Create\" \"\"
+			\"$lv_SubCA_Create\" \"\" \"$lv_Cert\" \"\"
+			\"$lv_Key\" \"\" \"$lv_Request\" \"\"
+			\"$lv_CA_Import\" \"\" \"$lv_CA_Export\" \"\"
+			\"$lv_CA_Chain_Export\" \"\" \"$lv_CA_CRL_Export\" \"\"
+			\"$lv_Dh_File\" \"\"
 			\"$lv_CA_Delete\" \"\" $gv_Exit \"\")
 			;;
 		-n)	# new
@@ -1160,6 +1171,12 @@ no_ca_existed_msg() {
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
+# Funktion (no_cachain_msg)# {{{
+no_cachain_msg() {
+	MSG=$(gettext 'Es ist keine CA Kette vorhanden.')
+	msgbox "$gv_Info" "$MSG"
+}
+## }}}
 
 ##################################################################
 #
@@ -1263,6 +1280,23 @@ while [ "$gv_Auswahl" ] ; do
 			fi
 			## }}}
 			main_menu $lv_CA_Export
+			;;
+		$lv_CA_Chain_Export)
+			# CA Kette exportieren# {{{
+			if [ -n "$CA_OPEN_NAME" ] ; then
+				Ex_File="${KWSSL_DIR}/${CA_OPEN_NAME}/cachain.pem"
+				if [ -f "$Ex_File" ] ; then
+					autoload -U export_files
+					EXPORT_TITLE="${CA_OPEN_NAME}::${lv_CA_Chain_Export}"
+					export_files -chain "$Ex_File" "export_cachain_help"
+				else
+					no_cachain_msg
+				fi
+			else
+				no_open_ca_msg
+			fi
+			## }}}
+			main_menu $lv_CA_Chain_Export
 			;;
 		$lv_CA_CRL_Export)
 			# Widerrufsliste der CA exportieren# {{{
