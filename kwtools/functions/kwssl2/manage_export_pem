@@ -63,6 +63,13 @@ manage_export_pem() {
 #					$gv_Create \"\" $gv_Back \"\")
 #					## }}}
 #					;;
+				-chain)
+					# CAChain export Menue# {{{
+					EXP_HELPFILE=export_cachain_help
+					EXPORT_PEM_MENU=(\"$lv_ExportFilename\" \"$EXPORT_FILENAME\"
+					$gv_Create \"\" $gv_Back \"\")
+					## }}}
+					;;
 				-crl)
 					# CRL export Menue# {{{
 					EXP_HELPFILE=export_crl_all_help
@@ -213,6 +220,12 @@ manage_export_pem() {
 							CAKEY="${In_File/\/certs\///keys/}"
 							# exportieren
 							create_export_ca_certs
+							break
+							## }}}
+							;;
+						-chain)
+							# CAChain exportieren# {{{
+							< "$In_File" > "$EXPORT_FILENAME" &>/dev/null
 							break
 							## }}}
 							;;

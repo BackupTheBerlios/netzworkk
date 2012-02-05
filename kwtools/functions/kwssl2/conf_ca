@@ -296,7 +296,7 @@ conf_ca() {
 						create_request "$CA_NAME" cacert.key "$lv_Digest"
 						# Zertifikat erzeugen und mit RootCA signieren
 						if [ "$RET" != 1 ] ; then
-							sign_ca_request "$NEW_CA_NAME" "$VALIDITY"
+							sign_ca_request "$CA_NAME" "$VALIDITY"
 							if [ "$RET" != 1 ] ; then
 								# req file nach CA/req verschieben
 								mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem

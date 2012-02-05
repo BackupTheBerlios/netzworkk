@@ -51,6 +51,9 @@ export_files() {
 					-certs)
 						EXPORT_FILENAME="${HOME}/${MAIL}-cert.${Suffix}"
 						;;
+					-chain)
+						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-cachain.${Suffix}"
+						;;
 					-crl)
 						EXPORT_FILENAME="${HOME}/${CA_OPEN_NAME}-crl.${Suffix}"
 						;;
@@ -92,22 +95,26 @@ export_files() {
 			case "$Export_Opt" in
 				-ca|-crl)
 					EXPORT_MENU=(PEM \"\" on DER \"\" off TXT \"\" off)
+					radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
 					;;
 				-keys)
 					EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
 					TAR \"\" off ZIP \"\" off)
+					radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
 					;;
 				-certs)
 					EXPORT_MENU=(PEM \"\" on DER \"\" off PKCS#12 \"\" off
 					TAR \"\" off TXT \"\" off ZIP \"\" off)
+					radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
+					;;
+				-chain)
+					gv_Auswahl=PEM
 					;;
 				*)
 					no_para_msg $0
 					break
 					;;
 			esac
-			#
-			radiolist "$EXPORT_TITLE" "$gv_Menupoint" "$EXPORT_MENU"
 		}
 		## }}}
 		# Funktion (get_alg_privkey), ueberprueft welcher Algorithmus # {{{
