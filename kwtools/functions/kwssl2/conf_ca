@@ -305,7 +305,13 @@ conf_ca() {
 								# keyfile in die CA integrieren
 								cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
 								# cachain.pem Datei erstellen.
-								cat ${CA_OPEN_NAME}/cacert.pem ${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
+								if [ -f ${CA_OPEN_NAME}/cachain.pem ] ; then
+									cat ${CA_OPEN_NAME}/cachain.pem \
+									${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
+								else
+									cat ${CA_OPEN_NAME}/cacert.pem \
+									${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
+								fi
 								# CRL erstellen
 								create_crl "$CA_NAME" ca_ca
 								#
