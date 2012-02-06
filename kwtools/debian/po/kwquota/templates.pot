@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-22 05:28+0100\n"
+"POT-Creation-Date: 2012-02-06 16:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,27 +35,43 @@ msgid ""
 "nehmen."
 msgstr ""
 
-#: ../../sys/kwquota:141
-msgid "Laufwerke"
-msgstr ""
-
-#: ../../sys/kwquota:142
-msgid "Warnung"
-msgstr ""
-
-#: ../../sys/kwquota:143
-msgid "Benutzer"
-msgstr ""
-
-#: ../../sys/kwquota:144
-msgid "Gruppe"
-msgstr ""
-
-#: ../../sys/kwquota:145
+#: ../../sys/kwquota:125 ../../sys/kwquota:152
 msgid "Projekt"
 msgstr ""
 
-#: ../../sys/kwquota:163
+#: ../../sys/kwquota:126
+msgid "An"
+msgstr ""
+
+#: ../../sys/kwquota:127
+msgid "Aus"
+msgstr ""
+
+#: ../../sys/kwquota:128
+msgid "komplett Aus"
+msgstr ""
+
+#: ../../sys/kwquota:130
+msgid "Quota"
+msgstr ""
+
+#: ../../sys/kwquota:148
+msgid "Laufwerke"
+msgstr ""
+
+#: ../../sys/kwquota:149
+msgid "Warnung"
+msgstr ""
+
+#: ../../sys/kwquota:150
+msgid "Benutzer"
+msgstr ""
+
+#: ../../sys/kwquota:151
+msgid "Gruppe"
+msgstr ""
+
+#: ../../sys/kwquota:170
 #, sh-format
 msgid ""
 "Es sind keine Benutzer/Gruppen/Projekte mit \"quota\", zum $gv_Create, "
@@ -64,49 +80,49 @@ msgid ""
 "und neu starten."
 msgstr ""
 
-#: ../../sys/kwquota:285
+#: ../../sys/kwquota:299
 #, sh-format
 msgid "Dieses Dateisystem ($QFS) wird nicht unterstuetzt."
 msgstr ""
 
-#: ../../sys/kwquota:434
+#: ../../sys/kwquota:448
 #, sh-format
 msgid "Status des Laufwerks ist: $QUOTA_STATE."
 msgstr ""
 
-#: ../../sys/kwquota:451
+#: ../../sys/kwquota:465
 msgid "einschalten"
 msgstr ""
 
-#: ../../sys/kwquota:452
+#: ../../sys/kwquota:466
 msgid "ausschalten"
 msgstr ""
 
-#: ../../sys/kwquota:453
+#: ../../sys/kwquota:467
 msgid "Backup_erstellen"
 msgstr ""
 
-#: ../../sys/kwquota:454
+#: ../../sys/kwquota:468
 msgid "Backup_zurueck"
 msgstr ""
 
-#: ../../sys/kwquota:455
+#: ../../sys/kwquota:469
 msgid "Platz_schaffen"
 msgstr ""
 
-#: ../../sys/kwquota:456
+#: ../../sys/kwquota:470
 msgid "komplett_aus"
 msgstr ""
 
-#: ../../sys/kwquota:524
+#: ../../sys/kwquota:538
 msgid "Es existiert schon eine Backup Datei. Ueberschreiben (ja/nein)?"
 msgstr ""
 
-#: ../../sys/kwquota:551
+#: ../../sys/kwquota:565
 msgid "Es ist kein Backup vorhanden."
 msgstr ""
 
-#: ../../sys/kwquota:575
+#: ../../sys/kwquota:589
 msgid ""
 " Das Quota auf dem Laufwerk komplett ausschalten (ja/nein)?\\n\n"
 "\\n\n"
@@ -114,7 +130,7 @@ msgid ""
 "starten."
 msgstr ""
 
-#: ../../sys/kwquota:592
+#: ../../sys/kwquota:606
 msgid ""
 "Quota wurde komplett ausgestellt. Sie muessen wahrscheinlich den Rechner neu "
 "starten. Sie koennen aber auch ein neu einbinden des Laufwerks versuchen."

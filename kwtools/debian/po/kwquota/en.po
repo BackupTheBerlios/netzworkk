@@ -1,15 +1,15 @@
 # kwquota english Translation.
-# Copyright (C) 2009-2011
+# Copyright (C) 2009-2012
 # This file is distributed under the same license as the kwtools-sys-quota package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: kwquota-0.0.6\n"
+"Project-Id-Version: kwquota-0.0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-22 05:28+0100\n"
-"PO-Revision-Date: 2011-02-22 05:30+0200\n"
+"POT-Creation-Date: 2012-02-06 16:33+0100\n"
+"PO-Revision-Date: 2011-02-06 16:35+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -35,30 +35,47 @@ msgid ""
 "nehmen."
 msgstr ""
 
-#: ../../sys/kwquota:141
-msgid "Laufwerke"
-msgstr "Drives"
-
-#: ../../sys/kwquota:142
-msgid "Warnung"
-msgstr "Warning"
-
-#: ../../sys/kwquota:143
-#, fuzzy
-msgid "Benutzer"
-msgstr "User"
-
-#: ../../sys/kwquota:144
-#, fuzzy
-msgid "Gruppe"
-msgstr "Group"
-
-#: ../../sys/kwquota:145
+#: ../../sys/kwquota:125 ../../sys/kwquota:152
 #, fuzzy
 msgid "Projekt"
 msgstr "Project"
 
-#: ../../sys/kwquota:163
+#: ../../sys/kwquota:126
+msgid "An"
+msgstr "On"
+
+#: ../../sys/kwquota:127
+msgid "Aus"
+msgstr "Off"
+
+#: ../../sys/kwquota:128
+#, fuzzy
+msgid "komplett Aus"
+msgstr "complete off"
+
+#: ../../sys/kwquota:130
+msgid "Quota"
+msgstr "quota"
+
+#: ../../sys/kwquota:148
+msgid "Laufwerke"
+msgstr "Drives"
+
+#: ../../sys/kwquota:149
+msgid "Warnung"
+msgstr "Warning"
+
+#: ../../sys/kwquota:150
+#, fuzzy
+msgid "Benutzer"
+msgstr "User"
+
+#: ../../sys/kwquota:151
+#, fuzzy
+msgid "Gruppe"
+msgstr "Group"
+
+#: ../../sys/kwquota:170
 #, sh-format
 msgid ""
 "Es sind keine Benutzer/Gruppen/Projekte mit \"quota\", zum $gv_Create, "
@@ -67,49 +84,49 @@ msgid ""
 "und neu starten."
 msgstr ""
 
-#: ../../sys/kwquota:285
+#: ../../sys/kwquota:299
 #, sh-format
 msgid "Dieses Dateisystem ($QFS) wird nicht unterstuetzt."
 msgstr "This filesystem ($QFS) is not supported."
 
-#: ../../sys/kwquota:434
+#: ../../sys/kwquota:448
 #, sh-format
 msgid "Status des Laufwerks ist: $QUOTA_STATE."
 msgstr "Drive status is: $QUOTA_STATE."
 
-#: ../../sys/kwquota:451
+#: ../../sys/kwquota:465
 msgid "einschalten"
 msgstr "on"
 
-#: ../../sys/kwquota:452
+#: ../../sys/kwquota:466
 msgid "ausschalten"
 msgstr "off"
 
-#: ../../sys/kwquota:453
+#: ../../sys/kwquota:467
 msgid "Backup_erstellen"
 msgstr "Backup_create"
 
-#: ../../sys/kwquota:454
+#: ../../sys/kwquota:468
 msgid "Backup_zurueck"
 msgstr "Backup_restore"
 
-#: ../../sys/kwquota:455
+#: ../../sys/kwquota:469
 msgid "Platz_schaffen"
 msgstr "Clean_Space"
 
-#: ../../sys/kwquota:456
+#: ../../sys/kwquota:470
 msgid "komplett_aus"
 msgstr "complete_off"
 
-#: ../../sys/kwquota:524
+#: ../../sys/kwquota:538
 msgid "Es existiert schon eine Backup Datei. Ueberschreiben (ja/nein)?"
 msgstr ""
 
-#: ../../sys/kwquota:551
+#: ../../sys/kwquota:565
 msgid "Es ist kein Backup vorhanden."
 msgstr "No backup is exited."
 
-#: ../../sys/kwquota:575
+#: ../../sys/kwquota:589
 msgid ""
 " Das Quota auf dem Laufwerk komplett ausschalten (ja/nein)?\\n\n"
 "\\n\n"
@@ -117,7 +134,7 @@ msgid ""
 "starten."
 msgstr ""
 
-#: ../../sys/kwquota:592
+#: ../../sys/kwquota:606
 msgid ""
 "Quota wurde komplett ausgestellt. Sie muessen wahrscheinlich den Rechner neu "
 "starten. Sie koennen aber auch ein neu einbinden des Laufwerks versuchen."
