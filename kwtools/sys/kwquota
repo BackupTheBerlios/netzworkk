@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 26.01.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 06.02.2012
 #
 # Script: kwquota, Frontend fuer quota und xfs_quota
 #
@@ -123,8 +123,12 @@ USER_LOGFILE="${gv_WorkDir}/user"
 GROUP_LOGFILE="${gv_WorkDir}/group"
 PROJECT_LOGFILE="${gv_WorkDir}/project"
 lv_Project=$(gettext 'Projekt')
+lv_Status_On=$(gettext 'An')
+lv_Status_Off=$(gettext 'Aus')
+lv_Status_Total_Off=$(gettext 'komplett Aus')
 # Im englischen ist es quota
 lv_Quota=$(gettext 'Quota')
+
 if [ -f /etc/warnquota.conf ] ; then
 	QUOTA_WARN_CF=/etc/warnquota.conf
 elif [ -f /usr/local/etc/warnquota.conf ] ; then
@@ -274,9 +278,14 @@ quota_check_fs() {
 			LC_ALL=C xfs_quota -x -c "state -v $1" $2 2>/dev/null \
 			   >${gv_WorkDir}/state || prog_failure
 			if [ "`print ${${(ws: :)${(M)${(f)"$(< ${gv_WorkDir}/state)"}##*Accounting:*}}[2]}`" = OFF ] ; then
-				print "total OFF"
+				# Quota Status: total ausgeschaltet
+				print "$lv_Status_Total_Off"
+			elif [ "`print ${${(ws: :)${(M)${(f)"$(< ${gv_WorkDir}/state)"}##*Enforcement:*}}[2]}`" = OFF ] ; then
+				# Quota Status: ausgeschaltet
+				print "$lv_Status_Off"
 			else
-				print ${${(ws: :)${(M)${(f)"$(< ${gv_WorkDir}/state)"}##*Enforcement:*}}[2]}
+				# Quota Status: eingeschaltet
+				print "$lv_Status_On"
 			fi
 		else
 			no_para_msg $0
@@ -328,12 +337,12 @@ ext_ug_quota_check() {
 			# ext2/3, jfs und reiserfs logdateien erstellen
 			repquota $REPQUOTA_UOPT $QUOTA_PART 2>/dev/null >$USER_LOGFILE
 			if [ "`wc -l < $USER_LOGFILE`" -gt 1 ] ; then
-				QUOTA_STATE=${${(ws: :)$(sudo quotaon -pu ${QUOTA_PART})}[7]}
+				QUOTA_STATE=${${(ws: :)$(quotaon -pu ${QUOTA_PART})}[7]}
 			fi
 			# Group Quota herraus finden
 			repquota $REPQUOTA_GOPT $QUOTA_PART 2>/dev/null >$GROUP_LOGFILE
 			if [ "`wc -l < $GROUP_LOGFILE`" -gt 1 ] ; then
-				QUOTA_STATE=${${(ws: :)$(sudo quotaon -pg ${QUOTA_PART})}[7]}
+				QUOTA_STATE=${${(ws: :)$(quotaon -pg ${QUOTA_PART})}[7]}
 			fi
 			;;
 	esac
@@ -470,7 +479,6 @@ while [ "$gv_Auswahl" ] ; do
 									ZNr="`wc -l < $gv_LogFile`"
 									if [ "$ZNr" -gt 0 ] ; then
 										# welches Quota# {{{
-										echo "$gv_LogFile"
 										WHAT_QUOTA="`print ${${(ws: :)${(M)${(f)"$(< $gv_LogFile)"}##*$lv_Quota*}}[1]}`"
 										case "$WHAT_QUOTA" in
 											$gv_User)
@@ -575,7 +583,7 @@ while [ "$gv_Auswahl" ] ; do
 													menubox "$FS_DRIVE_TITLE" "$DRIVE_STATUS_MSG" "$XFS_DRIVE_MENU"
 													;;
 												$lv_Complete_off)
-													# Quota auf dem Laufwerk permannent ausschalten# {{{
+													# Quota auf dem Laufwerk permanent ausschalten# {{{
 													# Danach muss man das Laufwerk neueinbinden
 													# bzw. den Rechner neu starten.
 													OFF_MSG=$(gettext ' Das Quota auf dem Laufwerk komplett ausschalten (ja/nein)?\n
