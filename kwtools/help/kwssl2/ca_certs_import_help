@@ -1,7 +1,8 @@
 # ca_certs_import_help fuer kwssl2{{{
 TITLE="${lv_CA_Import}::${gv_Help}"
 MSG=$(gettext 'privater Schluessel (Passwort): Eingabe des Passwortes fuer den
-\tprivaten Schluessel. Ist wichtig fuer das importieren.
+\tprivaten Schluessel der gerade geoeffneten CA. Damit wird die
+\tneue CA signiert.
 
 Name: Eingabe des Namen fuer die lokale Speicherung.
 
