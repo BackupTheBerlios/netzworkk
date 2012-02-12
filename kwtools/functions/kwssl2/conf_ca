@@ -87,13 +87,6 @@ conf_ca() {
 		## }}}
 		# Funktion (conf_ca_menu)# {{{
 		#
-		#################################
-		# TODO:
-		# neue Anforderung ohne CA_CAPASSWD
-		# und ohne index.txt beruehrung, also
-		# ohne signatur
-		# - neue Schluessel findung
-		#################################
 		conf_ca_menu() {
 			case $Opt in
 				-ca)
@@ -298,20 +291,8 @@ conf_ca() {
 						if [ "$RET" != 1 ] ; then
 							sign_ca_request "$CA_NAME" "$VALIDITY"
 							if [ "$RET" != 1 ] ; then
-								# req file nach CA/req verschieben
-								mv ${CA_NAME}/cacert.req ${CA_OPEN_NAME}/req/${GEN_NAME}.pem
-								# Zertifikat in die CA integrieren
-								cp -a ${CA_OPEN_NAME}/newcerts/${NR}.pem ${CA_OPEN_NAME}/certs/${GEN_NAME}.pem
-								# keyfile in die CA integrieren
-								cp -a ${CA_NAME}/cacert.key ${CA_OPEN_NAME}/keys/${GEN_NAME}.pem
-								# cachain.pem Datei erstellen.
-								if [ -f ${CA_OPEN_NAME}/cachain.pem ] ; then
-									cat ${CA_OPEN_NAME}/cachain.pem \
-									${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
-								else
-									cat ${CA_OPEN_NAME}/cacert.pem \
-									${CA_NAME}/cacert.pem > ${CA_NAME}/cachain.pem
-								fi
+								# Dateien in die CA-Struktur kopieren und CA-Kette erstellen.
+								integrate_files_to_ca "$CA_NAME" "$GEN_NAME" "$NR"
 								# CRL erstellen
 								create_crl "$CA_NAME" ca_ca
 								#

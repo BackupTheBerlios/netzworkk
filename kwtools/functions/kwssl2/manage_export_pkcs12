@@ -141,20 +141,14 @@ manage_export_pkcs12() {
 						if [ -n "$DISPLAYNAME" ] ; then
 							PROG_OPT+=(-name "$DISPLAYNAME")
 						else
-							##################################
-							# TODO: KEYLENGTH ?
-							##################################
+							KEYLENGTH=$(get_keylength $CACERT)
 							PROG_OPT+=(-name "${EXPORT_FILENAME##*/} $KEYLENGTH Bit Zertifikat")
 						fi
 					}
 					## }}}
 					# Funktion (check_pkcs12_structure)# {{{
 					check_pkcs12_structure() {
-						###############################
-						# TODO: nur cacert.pem
-						###############################
 						if [[ $PKCS_VALUE == $gv_Yes ]] ; then
-							#PROG_OPT+=(-certfile ${${In_File/\/(certs|keys)\///}%.pem}.cachain.pem)
 							PROG_OPT+=(-certfile ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem)
 						fi
 					}
@@ -171,8 +165,8 @@ manage_export_pkcs12() {
 						-keys)
 							# Schluessel exportieren# {{{
 							# Datei Variablen belegen
-							CACERT="$In_File"
-							CAKEY="${In_File/\/keys\///certs/}"
+							CAKEY="$In_File"
+							CACERT="${In_File/\/keys\///certs/}"
 							## }}}
 							;;
 					esac

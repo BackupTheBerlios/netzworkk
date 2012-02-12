@@ -238,7 +238,7 @@ manage_reqs() {
 					SUFFIX=".pem .der .req"
 					file_choice "${REQ_FILE%/*}" only "$REQ_FILE"
 					if [ -n "$WERT" ] ; then
-						get_format_file "${VERZ}/${WERT}"
+						get_format_file -r "${VERZ}/${WERT}"
 						if openssl req ${=INFORM_FORMAT} -in "${VERZ}/${WERT}" &>/dev/null ; then
 							REQ_FILE="${VERZ}/${WERT}"
 							# Subject holen und Variablen mit eingelesenen Werten belegen
