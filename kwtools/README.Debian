@@ -28,7 +28,7 @@ deb ftp://ftp.berlios.de/pub/netzworkk/scripts/debian-kwtools stable main
 
 kwtools is to split into the following packages:
 kwtools-bin: kwadmin is a wrapper for all other scripts.
-kwtools-common: Generell funktions which are used by all kwtools scripts.
+kwtools-common: General functions which are used by all kwtools scripts.
 kwtools-doc: Documentation referring to all scripts and functions.
 kwtools-graphic: Graphic Scripts.
 kwtools-multi: Multimedia Scripts.
@@ -59,4 +59,4 @@ The documentation can be found on the following servers:
 http://netzworkk.berlios.de/doku/kwtools/index.html
 http://www.netzworkk.de/doku/kwtools/index.html
 
- -- Kai Wilke <kiste@netzworkk.de>, Sat, 04 Januar 2011 01:01:29 +0100
+ -- Kai Wilke <kiste@netzworkk.de>, Sat, 11 Februar 2012 20:53:29 +0100
