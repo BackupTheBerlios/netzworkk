@@ -100,8 +100,6 @@ install: build
 	cp -a functions/kwadmin $(CURDIR)/debian/$(package-bin)$(share_path)
 	cp -a man/de/man1/kwadmin.1 $(CURDIR)/debian/$(package-bin)$(man_path)/de/man1
 	cp -a debian/po/kwadmin/usr $(CURDIR)/debian/$(package-bin)
-	cp -a debian/kwtools-bin.overrides.lintian \
-		$(CURDIR)/debian/$(package-bin)$(lintian_path)/kwtools-bin
 	
 	# kwtools-common
 	cp -a etc/kwtools/main.cf $(CURDIR)/debian/$(package-common)$(etc_path)/kwtools
@@ -110,8 +108,6 @@ install: build
 	cp -a man/de/man5/main.cf.5 $(CURDIR)/debian/$(package-common)$(man_path)/de/man5
 	cp -a functions/sys $(CURDIR)/debian/$(package-common)$(share_path)
 	cp -a debian/po/kwtools-common/usr $(CURDIR)/debian/$(package-common)
-	cp -a debian/kwtools-common.overrides.lintian \
-		$(CURDIR)/debian/$(package-common)$(lintian_path)/kwtools-common
 
 	# kwtools-doc
 	#cp -a doc/html/* $(CURDIR)/debian/$(package-doc)$(doc_path)/$(package-doc)/html
@@ -124,8 +120,6 @@ install: build
 	cp -a man/de/man5/kwcamerarc.5 $(CURDIR)/debian/$(package-graphic)$(man_path)/de/man5
 	cp -a man/de/man1/kwcamera.1 $(CURDIR)/debian/$(package-graphic)$(man_path)/de/man1
 	cp -a debian/po/kwcamera/usr $(CURDIR)/debian/$(package-graphic)
-	cp -a debian/kwtools-graphic.overrides.lintian \
-		$(CURDIR)/debian/$(package-graphic)$(lintian_path)/kwtools-graphic
 
 	# kwtools-multi
 	cp -a multi/kwrecord multi/kwrip multi/kwsnd2sndfm multi/kwvcdburn \
@@ -147,8 +141,6 @@ install: build
 	cp -a debian/po/kwrip/usr debian/po/kwrecord/usr \
 		debian/po/kwsnd2sndfm/usr debian/po/kwvcdburn/usr \
 		$(CURDIR)/debian/$(package-multi)
-	cp -a debian/kwtools-multi.overrides.lintian \
-		$(CURDIR)/debian/$(package-multi)$(lintian_path)/kwtools-multi
 
 	# kwtools-multi-xmms2
 	cp -a multi/kwxmms2 $(CURDIR)/debian/$(package-multi-xmms2)$(exec_path)/multi
@@ -159,8 +151,6 @@ install: build
 	cp -a man/de/man5/kwxmms2rc.5 \
 		$(CURDIR)/debian/$(package-multi-xmms2)$(man_path)/de/man5
 	cp -a debian/po/kwxmms2/usr $(CURDIR)/debian/$(package-multi-xmms2)
-	cp -a debian/kwtools-multi-xmms2.overrides.lintian \
-		$(CURDIR)/debian/$(package-multi-xmms2)$(lintian_path)/kwtools-multi-xmms2
 
 	# kwtools-multi-xmms2d
 	cp -a multi/kwxmms2d $(CURDIR)/debian/$(package-multi-xmms2d)$(exec_path)/multi
@@ -169,8 +159,6 @@ install: build
 	cp -a functions/kwxmms2d $(CURDIR)/debian/$(package-multi-xmms2d)$(share_path)
 	cp -a man/de/man1/kwxmms2d.1 $(CURDIR)/debian/$(package-multi-xmms2d)$(man_path)/de/man1
 	cp -a debian/po/kwxmms2d/usr $(CURDIR)/debian/$(package-multi-xmms2d)
-	cp -a debian/kwtools-multi-xmms2d.overrides.lintian \
-		$(CURDIR)/debian/$(package-multi-xmms2d)$(lintian_path)/kwtools-multi-xmms2d
 
 	# kwtools-net
 	cp -a etc/kwtools/kwrsync_backup.cf etc/kwtools/kwrsync_backup-excludes \
@@ -198,8 +186,6 @@ install: build
 		debian/po/kwrsync_backup/usr debian/po/kwrsync_backup_cron/usr \
 		debian/po/kwrsync/usr debian/po/kwrsync_cron/usr \
 		$(CURDIR)/debian/$(package-net)
-	cp -a debian/kwtools-net.overrides.lintian \
-		$(CURDIR)/debian/$(package-net)$(lintian_path)/kwtools-net
 
 	# kwtools-net-djbdns
 	cp -a net/kwdjbdns $(CURDIR)/debian/$(package-net-djbdns)$(exec_path)/net
@@ -208,8 +194,6 @@ install: build
 	cp -a functions/kwdjbdns $(CURDIR)/debian/$(package-net-djbdns)$(share_path)
 	cp -a man/de/man1/kwdjbdns.1 $(CURDIR)/debian/$(package-net-djbdns)$(man_path)/de/man1
 	cp -a debian/po/kwdjbdns/usr $(CURDIR)/debian/$(package-net-djbdns)
-	cp -a debian/kwtools-net-djbdns.overrides.lintian \
-		$(CURDIR)/debian/$(package-net-djbdns)$(lintian_path)/kwtools-net-djbdns
 
 	# kwtools-net-mutt
 	cp -a usr/bin/check-smtp-auth usr/bin/mutt.* usr/bin/mailhops \
@@ -221,8 +205,6 @@ install: build
 	cp -a functions/kwmutt $(CURDIR)/debian/$(package-net-mutt)$(share_path)
 	cp -a man/de/man1/kwmutt.1 $(CURDIR)/debian/$(package-net-mutt)$(man_path)/de/man1
 	cp -a debian/po/kwmutt/usr $(CURDIR)/debian/$(package-net-mutt)
-	cp -a debian/kwtools-net-mutt.overrides.lintian \
-		$(CURDIR)/debian/$(package-net-mutt)$(lintian_path)/kwtools-net-mutt
 
 	# kwtools-net-narc
 	cp -a etc/kwtools/kwnarc.conf $(CURDIR)/debian/$(package-net-narc)$(etc_path)/kwtools
@@ -237,8 +219,6 @@ install: build
 	cp -a man/en/man8/kwnarc.8 $(CURDIR)/debian/$(package-net-narc)$(man_path)/man8
 	cp -a man/en/man5/kwnarc.conf.5 $(CURDIR)/debian/$(package-net-narc)$(man_path)/man5
 	cp -a debian/po/kwnarcconf/usr $(CURDIR)/debian/$(package-net-narc)
-	cp -a debian/kwtools-net-narc.overrides.lintian \
-		$(CURDIR)/debian/$(package-net-narc)$(lintian_path)/kwtools-net-narc
 
 	# kwtools-net-postfix
 	cp -a net/kwpostfix $(CURDIR)/debian/$(package-net-postfix)$(exec_path)/net
@@ -247,8 +227,6 @@ install: build
 	cp -a functions/kwpostfix $(CURDIR)/debian/$(package-net-postfix)$(share_path)
 	cp -a man/de/man1/kwpostfix.1 $(CURDIR)/debian/$(package-net-postfix)$(man_path)/de/man1
 	cp -a debian/po/kwpostfix/usr $(CURDIR)/debian/$(package-net-postfix)
-	cp -a debian/kwtools-net-postfix.overrides.lintian \
-		$(CURDIR)/debian/$(package-net-postfix)$(lintian_path)/kwtools-net-postfix
 
 	# kwtools-sys
 	cp -a sys/kwauth sys/kwclock sys/kwgroup sys/kwlogrotate sys/kwnetconf \
@@ -282,8 +260,6 @@ install: build
 		debian/po/kwuser/usr debian/po/kwwvdialconf/usr \
 		debian/po/kwrunlevconf/usr debian/po/kwclock/usr \
 		$(CURDIR)/debian/$(package-sys)
-	cp -a debian/kwtools-sys.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys)$(lintian_path)/kwtools-sys
 
 	# kwtools-sys-fuse
 	cp -a sys/kwfuse $(CURDIR)/debian/$(package-sys-fuse)$(exec_path)/sys
@@ -292,8 +268,6 @@ install: build
 	cp -a functions/kwfuse $(CURDIR)/debian/$(package-sys-fuse)$(share_path)
 	cp -a man/de/man8/kwfuse.8 $(CURDIR)/debian/$(package-sys-fuse)$(man_path)/de/man8
 	cp -a debian/po/kwfuse/usr $(CURDIR)/debian/$(package-sys-fuse)
-	cp -a debian/kwtools-sys-fuse.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-fuse)$(lintian_path)/kwtools-sys-fuse
 
 	# kwtools-sys-crypt
 	cp -a sys/kwcrypt $(CURDIR)/debian/$(package-sys-crypt)$(exec_path)/sys
@@ -309,8 +283,6 @@ install: build
 		man/de/man8/kwlosetup.8 $(CURDIR)/debian/$(package-sys-crypt)$(man_path)/de/man8
 	cp -a debian/po/kwecryptfs/usr debian/po/kwcrypt/usr debian/po/kwcryptsetup/usr \
 		debian/po/kwlosetup/usr $(CURDIR)/debian/$(package-sys-crypt)
-	cp -a debian/kwtools-sys-crypt.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-crypt)$(lintian_path)/kwtools-sys-crypt
 
 	# kwtools-sys-grub
 	cp -a sys/kwgrub $(CURDIR)/debian/$(package-sys-grub)$(exec_path)/sys
@@ -319,8 +291,6 @@ install: build
 	cp -a functions/kwgrub $(CURDIR)/debian/$(package-sys-grub)$(share_path)
 	cp -a man/de/man8/kwgrub.8 $(CURDIR)/debian/$(package-sys-grub)$(man_path)/de/man8
 	cp -a debian/po/kwgrub/usr $(CURDIR)/debian/$(package-sys-grub)
-	cp -a debian/kwtools-sys-grub.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-grub)$(lintian_path)/kwtools-sys-grub
 
 	# kwtools-sys-grub2
 	cp -a sys/kwgrub2 $(CURDIR)/debian/$(package-sys-grub2)$(exec_path)/sys
@@ -330,8 +300,6 @@ install: build
 	cp -a functions/kwgrub2 $(CURDIR)/debian/$(package-sys-grub2)$(share_path)
 	cp -a man/de/man8/kwgrub2.8 $(CURDIR)/debian/$(package-sys-grub2)$(man_path)/de/man8
 	cp -a debian/po/kwgrub2/usr $(CURDIR)/debian/$(package-sys-grub2)
-	cp -a debian/kwtools-sys-grub2.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-grub2)$(lintian_path)/kwtools-sys-grub2
 
 	# kwtools-sys-kwpasswd
 	cp -a usr/bin/firstlogin $(CURDIR)/debian/$(package-sys-kwpasswd)$(bin_path)
@@ -345,9 +313,7 @@ install: build
 		$(CURDIR)/debian/$(package-sys-kwpasswd)$(kwhelp_path)
 	cp -a man/de/man1/kwpasswd.1 \
 		$(CURDIR)/debian/$(package-sys-kwpasswd)$(man_path)/de/man1
-	cp -a debian/kwtools-sys-kwpasswd.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-kwpasswd)$(lintian_path)/kwtools-sys-kwpasswd
-	cp -av debian/po/kwpasswd/usr $(CURDIR)/debian/$(package-sys-kwpasswd)
+	cp -a debian/po/kwpasswd/usr $(CURDIR)/debian/$(package-sys-kwpasswd)
 
 	# kwtools-sys-lvm
 	cp -a sys/kwlvm $(CURDIR)/debian/$(package-sys-lvm)$(exec_path)/sys
@@ -356,8 +322,6 @@ install: build
 	cp -a functions/kwlvm $(CURDIR)/debian/$(package-sys-lvm)$(share_path)
 	cp -a man/de/man8/kwlvm.8 $(CURDIR)/debian/$(package-sys-lvm)$(man_path)/de/man8
 	cp -a debian/po/kwlvm/usr $(CURDIR)/debian/$(package-sys-lvm)
-	cp -a debian/kwtools-sys-lvm.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-lvm)$(lintian_path)/kwtools-sys-lvm
 
 	# kwtools-sys-parted
 	cp -a sys/kwparted $(CURDIR)/debian/$(package-sys-parted)$(exec_path)/sys
@@ -366,8 +330,6 @@ install: build
 	cp -a functions/kwparted $(CURDIR)/debian/$(package-sys-parted)$(share_path)
 	cp -a man/de/man8/kwparted.8 $(CURDIR)/debian/$(package-sys-parted)$(man_path)/de/man8
 	cp -a debian/po/kwparted/usr $(CURDIR)/debian/$(package-sys-parted)
-	cp -a debian/kwtools-sys-parted.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-parted)$(lintian_path)/kwtools-sys-parted
 
 	# kwtools-sys-quota
 	cp -a sys/kwquota $(CURDIR)/debian/$(package-sys-quota)$(exec_path)/sys
@@ -376,8 +338,6 @@ install: build
 	cp -a functions/kwquota $(CURDIR)/debian/$(package-sys-quota)$(share_path)
 	cp -a man/de/man8/kwquota.8 $(CURDIR)/debian/$(package-sys-quota)$(man_path)/de/man8
 	cp -a debian/po/kwquota/usr $(CURDIR)/debian/$(package-sys-quota)
-	cp -a debian/kwtools-sys-quota.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-quota)$(lintian_path)/kwtools-sys-quota
 
 	# kwtools-sys-raid
 	cp -a sys/kwraid $(CURDIR)/debian/$(package-sys-raid)$(exec_path)/sys
@@ -387,8 +347,6 @@ install: build
 	cp -a man/de/man8/kwraid.8 \
 		$(CURDIR)/debian/$(package-sys-raid)$(man_path)/de/man8
 	cp -a debian/po/kwraid/usr $(CURDIR)/debian/$(package-sys-raid)
-	cp -a debian/kwtools-sys-raid.overrides.lintian \
-		$(CURDIR)/debian/$(package-sys-raid)$(lintian_path)/kwtools-sys-raid
 
 	# kwtools-utils
 	cp -a utils/kwbackup utils/kwgpgcrypt utils/kwmuttprintcf utils/kwpwsafe \
@@ -411,8 +369,6 @@ install: build
 	cp -av debian/po/kwbackup/usr debian/po/kwbackup_cron/usr debian/po/kwgpgcrypt/usr \
 		debian/po/kwmuttprintcf/usr debian/po/kwpwsafe/usr \
 		debian/po/kwvmstat/usr $(CURDIR)/debian/$(package-utils)
-	cp -a debian/kwtools-utils.overrides.lintian \
-		$(CURDIR)/debian/$(package-utils)$(lintian_path)/kwtools-utils
 
 	# kwtools-utils-pim
 	cp -a create.cal.pl kwholiday kwtex-cal kwtermin kwtermin_cron \
@@ -434,8 +390,6 @@ install: build
 	cp -a debian/po/kwholiday/usr debian/po/kwtex-cal/usr \
 		debian/po/kwplaner/usr debian/po/kwtermin/usr \
 		debian/po/kwtermin_cron/usr $(CURDIR)/debian/$(package-utils-pim)
-	cp -a debian/kwtools-utils-pim.overrides.lintian \
-		$(CURDIR)/debian/$(package-utils-pim)$(lintian_path)/kwtools-utils-pim
 	
 	# kwtools-utils-ssl
 	cp -a utils/kwssl2 $(CURDIR)/debian/$(package-utils-ssl)$(exec_path)/utils
@@ -445,8 +399,6 @@ install: build
 	cp -a functions/kwssl2 $(CURDIR)/debian/$(package-utils-ssl)$(share_path)
 	cp -a man/de/man1/kwssl2.1 $(CURDIR)/debian/$(package-utils-ssl)$(man_path)/de/man1
 	cp -a debian/po/kwssl2/usr $(CURDIR)/debian/$(package-utils-ssl)
-	cp -a debian/kwtools-utils-ssl.overrides.lintian \
-		$(CURDIR)/debian/$(package-utils-ssl)$(lintian_path)/kwtools-utils-ssl
 
 
 # We have nothing to do by default.
@@ -461,6 +413,7 @@ binary-indep: build install
 	# alle nicht definierten Doc-dirs in *.dirs als Link
 	# nach kwtools-common erstellen
 	dh_installdocs --link-doc=kwtools-common
+	dh_installdocs
 	dh_installexamples
 	dh_installmenu -n
 #	dh_installlogrotate
@@ -473,8 +426,9 @@ binary-indep: build install
 	dh_installppp --name=1kwnarc
 	dh_installppp --name=kwnarc
 #	dh_installinfo
-	dh_installchangelogs
+	dh_installchangelogs --exclude=changelog
 	dh_link
+	dh_lintian
 	dh_strip
 	dh_compress
 	dh_fixperms
