@@ -1,30 +1,89 @@
+'\" t
 .\"     Title: KWRSYNC_BACKUP_CRON
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
-.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 06/12/2008
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 03/01/2012
 .\"    Manual: Benutzerhandbuch f\(:ur kwrsync_backup_cron
-.\"    Source: Version 0.0.6
+.\"    Source: Version 0.1.0
+.\"  Language: English
 .\"
-.TH "KWRSYNC_BACKUP_CRON" "8" "06/12/2008" "Version 0.0.6" "Benutzerhandbuch f\(:ur kwrsync_b"
+.TH "KWRSYNC_BACKUP_CRON" "8" "03/01/2012" "Version 0.1.0" "Benutzerhandbuch f\(:ur kwrsync_b"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
 .SH "NAME"
-kwrsync_backup_cron \- Crontab Script f\(:ur das Script kwrsync_backup.
+kwrsync_backup_cron \- Crontab Script f\(:ur das Script \fBkwrsync_backup\fR\&.
 .SH "SYNTAX"
-.HP 20
-\fBkwrsync_backup_cron\fR
+.HP \w'\fBkwrsync_backup_cron\ [\ hourly\ |\ daily\ |\ weekly\ |\ mounthly\ ]\fR\ 'u
+\fBkwrsync_backup_cron [ hourly | daily | weekly | mounthly ]\fR
 .SH "BESCHREIBUNG"
 .PP
 \fBkwrsync_backup_cron\fR
-liest die Datei
+liest die Konfigurations Datei
 \fI/etc/kwtools/kwrsync_backup\&.cf\fR
-und
-\fI/etc/kwtools/kwrsync_backup\-excludes\fR
+und die Dateien unter
+\fI/etc/kwtools/kwrsync_backup\&.d\fR
 ein und wird vom
 \fBCron\fR
 Daemon ausgef\(:uhrt\&. Bei Beendigung wird eine Mail an root verschickt\&.
+.SH "OPTIONEN"
+.PP
+\fBhourly\fR
+.RS 4
+Erstellt ein Snapshot im Backup Level hourly\&.
+.RE
+.PP
+\fBdaily\fR
+.RS 4
+Erstellt ein Snapshot im Backup Level daily\&.
+.RE
+.PP
+\fBweekly\fR
+.RS 4
+Erstellt ein Snapshot im Backup Level weekly\&.
+.RE
+.PP
+\fBmounthly\fR
+.RS 4
+Erstellt ein Snapshot im Backup Level mounthly\&.
+.RE
+.SH "EXAMPLES"
+.PP
+Hier ein beispiel f\(:ur einen crontab Eintrag:
+.PP
+\fB0 */4 * * * /usr/sbin/kwrsync_backup_cron hourly\fR
+.PP
+\fB30 23 * * * /usr/sbin/kwrsync_backup_cron daily\fR
+.PP
+\fB0 23 * * 6 /usr/sbin/kwrsync_backup_cron weekly\fR
+.PP
+\fB30 22 1 * * /usr/sbin/kwrsync_backup_cron monthly\fR
+.PP
+kwrsync_backup_cron wird wie folgt ausgef\(:uhrt:
+.PP
+6 hourly Backups am Tag alle 4 Stunden (0,4,8,12,16,20)\&.
+.PP
+1 daily Backup jeden Tag um 23:30 Uhr\&.
+.PP
+1 weekly Backup jede Woche um 23:00 Uhr am Samstag (6 Tag der Woche)\&.
+.PP
+1 mounthly Backup jeden Monat um 22:30 Uhr am 1\&. Tag des Monats\&.
 .SH "DATEIEN"
 .PP
 \fI/etc/kwtools/kwrsync_backup\&.cf\fR
@@ -35,11 +94,11 @@ Haupt Konfiguration Datei f\(:ur
 f\(:ur weitere Details\&.
 .RE
 .PP
-\fI/etc/kwtools/kwrsync_backup\-excludes\fR
+\fI/etc/kwtools/kwrsync_backup\&.d\fR
 .RS 4
-Beinhaltet Verzeichnisse/Dateien die nicht mit einbezogen werden sollen (z\&.B\&.
-\fI/sys\fR,
-\fI/proc\fR)
+Verzeichnis mit den Rechnereigenen Konfigurationsdateien (\fIrechner\&.conf\fR,
+\fIrechner\-exclude\&.conf\fR,
+\fIrechner\-include\&.conf\fR)
 .RE
 .SH "SIEHE AUCH"
 .PP
@@ -52,9 +111,10 @@ Beinhaltet Verzeichnisse/Dateien die nicht mit einbezogen werden sollen (z\&.B\&
 .SH "AUTOR"
 .PP
 \fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
-.sp -1n
-.IP "" 4
+.RS 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
+.RE
 .SH "COPYRIGHT"
-Copyright \(co 2002-2008 Kai Wilke
+.br
+Copyright \(co 2002-2012 Kai Wilke
 .br
