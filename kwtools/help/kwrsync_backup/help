@@ -6,7 +6,15 @@ crontab Eintrag.
 
 Konfiguration: Konfiguration von kwrsync_backup
 
-Backup: Backup der zu sichernden Server starten.
+Rechner Konfiguration: Konfiguration der einzelnen Rechner und deren
+\tAusschluss- beziehungsweise die Include Datei.
 
-Rotierung: Backup Verzeichnisse rotieren.')
+Ansicht: Anzeige der belegten Speichergroesse von Snapshots.
+
+Backup: Backup der zu sichernden Server starten.
+')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

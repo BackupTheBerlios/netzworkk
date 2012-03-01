@@ -1,24 +1,11 @@
 # conf_help fuer kwrsync_backup{{{
 TITLE="${gv_Configuration}::${gv_Help}"
-MSG=$(gettext 'Zum bearbeiten der Datei
-/etc/kwtools/kwrsync_backup-excludes koennen Sie die Variable
-"EDITOR", in der Datei /etc/kwtools/main.cf, mit einem Editor
-Ihrer Wahl belegen. Ansonsten wird die Dialogbox "editbox"
-verwendet (Bsp.: EDITOR=/usr/bin/vim).
+MSG=$(gettext 'Backupverz.: Verzeichnis in dem die Backups angelegt werden.
+\tDiese liegen dann zum Beispiel unter Backupverz/hourly.0/Rechner.
 
-Ausschluss_Datei: Bearbeitung der Datei
-\t/etc/kwtools/kwrsync_backup-excludes. Diese beinhaltet die
-\tVerzeichnisse/Dateien die nicht gesichert werden sollen. Als
-\tVerzeichnisse sollten Sie auf jeden Fall /proc und /sys eintragen,
-\tda diese fuer die Wiederherstellung der Backups nicht benoetigt
-\twerden. Die Datei /etc/shadow sollte ebenfalls drin stehen, denn
-\tfalls Ihr Rechner geknackt wird kann man mit einem Passwortcracker
-\tihre Passwoerter herausfinden.
-
-Backup_verzeichnis: Verzeichnis in dem die Backups angelegt werden.
-\tDiese liegen dann unter Backupverz/Rechner/snapshot.0.
-
-NOTIZ: Es gibt maximal 7 Sicherungsverzeichnisse (snapshot.0-6).
+NOTIZ: Es gibt je nach Konfiguration n Sicherungen bevor die letzte
+\tSicherung geloescht wird.
+\tROTATE_COUNT_HOURLY=6 - hourly.0 - hourly.5
 
 Bandbreite: Hier koennen Sie die Banbreite der Uebertragung
 \tlimitieren (100 = 100 KBytes/s).
@@ -29,33 +16,76 @@ Check_Platz: Soll geprueft werden, ob noch ein gewisser Prozentsatz
 Minimum_Platz: Geben Sie hier den Prozentsatz ein der maximal an
 \tPlattenplatz benutzt werden darf. Denken Sie daran das die
 \tRorierung der Daten auch etwas Platz benoetigt.
-\tIntegerzahl zwischen 0 und <100 (Prozent).
+\tIntegerzahl zwischen 0 und \<100 (Prozent).
 \tIst die benutzte Kilobyte oder Inode Prozentzahl kleiner
 \tals die angegebene maximale Prozentzahl an Plattenplatz
 \t($HDMINFREE), wird ein Backup durchgefuehrt.
 
-Mount_verzeichnis: Hier wird das Verzeichnis ausgewaehlt, welches
+Mountverz.: Hier wird das Verzeichnis ausgewaehlt, welches
 \tins Dateisystem vorher eingebunden werden muss, wo sich das
-\tBackup Verzeichnis befindet. Es muss bereits in der 
-\t/etc/fstab konfiguriert sein.
+\tBackup Verzeichnis befindet. 
 
-Remote_shell: Auswahl der Shell die fuer die Uebertragung genutzt
+NOTIZ: Das Mountverz. muss bereits in der /etc/fstab konfiguriert
+\tsein.
+
+Rechner: Eingabe der zu sichernden Server/Rechner.
+
+Logdatei: Eingabe/Auswahl der Logdatei. Standard ist
+\t/var/log/kwrsync_backup.log.
+
+Benutzer: Waehlen Sie einen Benutzer aus, der sich anstelle von
+\t"root" auf die zu sichernden Rechnern einloggen darf. Es werden
+\tnur Benutzer angeboten die auf diesem System installiert sind.
+\tDieser wird als Vorschlag fuer die Konfiguration der
+\teinzelnen Rechner oder falls keiner in der Server Konfiguration
+\tangegeben wurde benutzt.
+
+Remote_Shell: Auswahl der Shell die fuer die Uebertragung genutzt
 \twerden soll. Zur Auswahl stehen rsh und ssh, falls sie
 \tinstalliert sind. Die ssh uebertraegt alles verschluesselt.
 
 NOTIZ: Die rsh sollte man nur noch in Netzwerken ohne Internet
 \tAnschluss benutzen.
 
-Server: Eingabe der zu sichernden Server/Rechner.
+Dateisystemgrenze: Bei "yes" wird das rekursive Sichern ueber
+\tDateisystemgrenzen hinweg ausgeschaltet (yes/no).
 
-Benutzer: Waehlen Sie einen Benutzer aus, der sich anstelle von
-\t"root" auf die zu sichernden Rechnern einloggen darf. Es werden
-\tnur Benutzer angeboten die auf diesem System installiert sind.
+Hardlinks erstellen: Sollen Hardlinks bei identischen Dateien
+\terstellt werden. Dies ist der beste Weg um spezielle Dateien,
+\twie FIFOs, zu unterstuetzen und natuerlich um Platz zu sparen.
+\tSchalten Sie dies ein (yes), wenn Ihr rsync (\>=2.6.4) dies
+\tunterstuetzt.
 
-crontab: Das Script kwrsync_backup_cron in die crontab Tabelle von
-\troot einfuegen oder loeschen. Dieses Script fuehrt die
-\tSicherung im Hintergrund aus und schickt bei Fehlern eine
-\tMail.
+Rotiere stuendlich: Geben Sie bitte eine Integer Zahl fuer die
+\tAnzahl der stuendlichen Snapshots ein die behalten werden sollen.
+\tStandard ist 6.
+
+Rotiere taeglich: Geben Sie bitte eine Integer Zahl fuer die
+\tAnzahl der taeglichen Snapshots ein die behalten werden sollen.
+\tStandard ist 7.
+
+Rotiere woechentlich: Geben Sie bitte eine Integer Zahl fuer die
+\tAnzahl der woechentlichen Snapshots ein die behalten werden
+\tsollen. Standard ist 4.
+
+Rotiere monatlich: Geben Sie bitte eine Integer Zahl fuer die
+\tAnzahl der monatlichen Snapshots ein die behalten werden sollen.
+\tStandard ist 6.
+
+LVM lvcreate: Angabe des LVM Programm lvcreate mit vollem Pfad.
+
+LVM lvremove: Angabe des LVM Programm lvremoove mit vollem Pfad.
+
+Snapshot Groesse: Angabe der Groesse fuer den temporaeren LVM
+\tSnapshot.
+
+Snapshot Name: Name des LVM Snapshot. Standard ist lvmsnapshot.
+
+VG Pfad: Verzeichnis unter dem die Volume Groups (VG) liegen.
+\tUnter Linux ist dies /dev.
+
+LVM Mountpunkt: Angabe eines Mountpunkts fuer den temporaeren LVM
+\tSnapshot.
 
 speichern: Beim speichern wird ueberprueft, ob der Benutzer "root"
 \tschon eine Datei /root/.ssh/id_dsa.pub besitzt. Wenn nicht wird
@@ -73,3 +103,7 @@ speichern: Beim speichern wird ueberprueft, ob der Benutzer "root"
 NOTIZ: Lesen Sie dazu die html Hilfe unter
 \t/usr/share/doc/kwtools-doc/html/kwtools/doku/kwtools/net/kwrsync_backup.html.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
