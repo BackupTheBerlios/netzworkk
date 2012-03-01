@@ -8,3 +8,7 @@ preserveDN: Soll die Email Adresse zum Subject DN hinzugefuegt
 \twerden (ja/nein)?
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

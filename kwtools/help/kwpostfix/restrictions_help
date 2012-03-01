@@ -203,3 +203,7 @@ warn_if_reject: Wuerde die nachfolgende Pruefung ein Reject liefern,
 \tDamit lassen sich Konfigurationaenderungen leicht testen, ohne
 \tden Verlust von Mails riskieren zu muessen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

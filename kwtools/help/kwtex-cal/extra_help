@@ -4,3 +4,7 @@ MSG=$(gettext 'Hier koennen Sie Geburtstage und Ferien fuer den Kalender
 auswaehlen. Diese werden in der Datei ~/.kwtools/kwplaner/holidays
 gespeichert und mit in den Kalender uebernommen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

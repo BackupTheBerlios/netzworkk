@@ -17,3 +17,7 @@ NOTIZ: Wenn das Laufwerk schon vorhanden ist, wird nachgefragt ob es
 \tueberschrieben werden soll. Fuer das Einlesen der Optionen des
 \tLaufwerks wird die Datei "/etc/crypttab" hergenommen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

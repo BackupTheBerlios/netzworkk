@@ -35,3 +35,7 @@ iwpriv_Optionen: Geben Sie hier die extra (private) Parameter fuer
 NOTIZ: Die Nameserver werden aus der Datei /etc/resolv.conf
 \tgelesen. Man muss sie also meist nur einmal eingeben.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

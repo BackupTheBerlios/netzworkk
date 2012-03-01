@@ -38,3 +38,7 @@ Makeactive: Wird nur benoetigt wenn grub einen anderen Bootloader,
 \tloader auf +1 gesetzt. Das ist der 1. Sector auf der Boot-
 \tPartition.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

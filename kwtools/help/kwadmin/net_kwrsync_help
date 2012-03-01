@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwrsync: Synchronisiert Ihr Homeverzeichnis oder Verzeichnisse
 \tIhrer Wahl mit anderen Rechnern.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

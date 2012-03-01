@@ -29,3 +29,7 @@ speichern: Speichern/aendern des Eintrags fuer das dementsprechenden
 
 loeschen: Loeschen des Eintrags fuer das dementsprechenden Script.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

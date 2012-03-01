@@ -255,3 +255,7 @@ XMASSCAN: Geben Sie hier eine Kommagetrennte Liste von illegalen TCP
 \tLeerzeichen, ein. Standard ist URG,PSH,FIN.
 \tBeispiel: Wert,Wert Wert,Wert,Wert.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

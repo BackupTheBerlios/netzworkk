@@ -30,3 +30,7 @@ NOTIZ: Lesen Sie unbedingt die Dokumentation ihrer Distribution.
 \tFedora: hat keine oder finde ich nicht (Handbuch?).
 \tSuSE: /etc/init.d/REDAME')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

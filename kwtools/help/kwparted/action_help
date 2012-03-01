@@ -25,3 +25,7 @@ loeschen: Loeschen von Partitionen.
 pruefen: Ueberpruefen der Partitionen auf Fehler. Entweder mit den
 \tDateisystem eigenen Werkzeugen oder mit parted.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

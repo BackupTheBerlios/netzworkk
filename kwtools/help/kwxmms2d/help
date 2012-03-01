@@ -12,3 +12,7 @@ Server starten: Lokalen Server starten.
 Server stoppen: Lokalen Server stoppen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

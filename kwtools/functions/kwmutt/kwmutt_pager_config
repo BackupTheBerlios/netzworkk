@@ -36,3 +36,7 @@ set pager_stop=\"$pager_stop\"
 # End $M_PAGER"
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

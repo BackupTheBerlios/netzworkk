@@ -10,3 +10,7 @@ Zum Brennen benutzt kwvcdburn "cdrdao" und zur Video CD Erstellung
 Als erstes sollten Sie kwvcdburn konfigurieren, um sich die Arbeit
 zu erleichtern.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

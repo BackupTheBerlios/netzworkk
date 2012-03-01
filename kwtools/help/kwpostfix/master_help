@@ -14,3 +14,7 @@ loeschen: Vorhandenen Prozess loeschen
 Postfix reload: Postfix mitteilen das es seine Konfiguration neu
 \teinlesen soll.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

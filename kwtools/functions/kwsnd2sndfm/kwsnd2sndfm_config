@@ -30,3 +30,7 @@ OGG_ENC_OPT=\"$OGG_ENC_OPT\"
 read_file kwsnd2sndfmrc
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

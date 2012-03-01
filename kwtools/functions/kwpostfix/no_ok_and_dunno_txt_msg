@@ -5,3 +5,7 @@ no_ok_and_dunno_txt_msg() {
 	msgbox "$gv_Info" "$MSG"
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

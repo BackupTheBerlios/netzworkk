@@ -73,3 +73,7 @@ Multisession: Hier ist noch nichts.
 NOTIZ: Zur Zeit ist es egal was Sie auswaehlen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

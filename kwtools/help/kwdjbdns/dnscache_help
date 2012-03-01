@@ -19,3 +19,7 @@ Workstation: Einstellung das ein einzelner Rechner einen anderen DNS
 \tCache fuer seine Anfragen benutzt, um Internet Adressen
 \tzu finden.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

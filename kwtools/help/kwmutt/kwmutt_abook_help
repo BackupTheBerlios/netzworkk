@@ -8,3 +8,7 @@ aendern: Aendern eines Adressbuch Eintrages.
 
 loeschen: Loeschen eines Adressbuch Eintrages.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

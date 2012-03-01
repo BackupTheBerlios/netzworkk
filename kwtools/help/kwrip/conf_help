@@ -57,3 +57,7 @@ Video_Mountverz.: Mountverzeichnis fuer Videofilme auswaehlen,
 
 Videoverz.: Standard Videoverzeichnis auswaehlen oder erstellen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

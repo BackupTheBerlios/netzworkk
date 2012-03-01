@@ -200,6 +200,7 @@ if [ "$1" != -o ] ; then
             dialog --create-rc ${gv_HomePath}/.dialogrc
             sed -e 's#^use_colors.*#use_colors = ON# ;
 				s#^title_color.*#title_color = (RED,WHITE,ON)# ;
+				s#^tag_color.*#tag_color = (BLUE,WHITE,ON)# ;
 			 	s#^tab_len.*#tab_len = 4#' ${gv_HomePath}/.dialogrc > ${gv_HomePath}/dialogrc$$
             mv ${gv_HomePath}/dialogrc$$ ${gv_HomePath}/.dialogrc
         fi
@@ -223,3 +224,7 @@ gv_LogFile="${gv_WorkDir}/logfile"
 
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -30,3 +30,7 @@ Aufraeumen: Loescht uebrig gebliebene Temporaere Dateien, checkt die
 \tnimmt, muessen Sie diesen Menuepunkt nach dem Zurueckspielen
 \teines Backups aufrufen (postsuper -s).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

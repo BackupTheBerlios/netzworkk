@@ -25,3 +25,7 @@ mailbox_transport: optionale Transportmethode, bevor eine Mail in
 
 mailq_path: Pfad zum Programm mailq.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

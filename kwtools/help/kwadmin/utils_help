@@ -4,3 +4,7 @@ MSG=$(gettext 'Hier koennen Sie einzelne Dienstprogramme aufrufen und konfigurie
 Dieses sind meist kleine Scripte fuer die Verwaltung von
 persoenlichen Dingen und Anzeigen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

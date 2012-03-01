@@ -489,3 +489,7 @@ done
 #
 unset -- gv_Auswahl IMAGE_DIR CAMERA_MODELL CAMERA_PORT IST IMAGE_PRAEFIX
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

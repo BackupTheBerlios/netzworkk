@@ -81,3 +81,7 @@ pop_checkinterval: Diese Variable bestimmt, wie oft (in Sekunden)
 \tDefault ist set pop_checkinterval=900
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

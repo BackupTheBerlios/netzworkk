@@ -27,3 +27,7 @@ umbennen: Umbenennen einer VG.
 
 loeschen: Loeschen einer oder mehrerer leerer VGs.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

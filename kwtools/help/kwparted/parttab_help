@@ -24,3 +24,7 @@ Sicherung anlegen: Zur Auswahl steht die Sicherung der
 
 Sicherung zurueck: Hier ist noch nichts.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

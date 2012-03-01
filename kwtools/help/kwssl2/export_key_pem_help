@@ -15,3 +15,7 @@ Zertifikat hinzufuegen: Auswahl ob der Fingerabdruck hinzugefuegt
 \twerden soll (ja/nein).
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

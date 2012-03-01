@@ -11,3 +11,7 @@ Form:
 # nur Mails dieses Users wird an newuser@domain.de geschickt.
 olduser@domain.de\tnewuser@domain.de')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

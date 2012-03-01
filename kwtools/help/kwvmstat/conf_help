@@ -12,3 +12,7 @@ Verzoegerung: Geben Sie hier eine Nummer fuer die Verzoegerung
 Speichereinheit: bestimmte Speichereinheit anzeigen (k,M).
 \tSiehe man 8 vmstat.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -24,3 +24,7 @@ Passwort: Geben Sie Ihr Passwort fuer diese Verbindung ein.
 Telefon: Geben Sie Ihre Telefonnummer, die diese Verbindung
 \tanwaehlen soll, ein.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

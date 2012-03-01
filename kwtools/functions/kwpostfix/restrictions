@@ -515,3 +515,7 @@ restrictions_to_maincf() {
 	rm -rf ${gv_WorkDir}/restrictions* &>/dev/null
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

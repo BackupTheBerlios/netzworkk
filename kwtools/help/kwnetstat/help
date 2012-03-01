@@ -10,3 +10,7 @@ Anzeige kleiner ist als die des Terminal^^.
 Die einzelnen Optionen koennen meist gemixt werden. Nur "i", "r" und 
 "s" muessen einzeln ausgewaehlt werden.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

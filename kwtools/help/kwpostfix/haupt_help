@@ -429,3 +429,7 @@ undisclosed_recipient_header: Header, der eingefuegt wird, wenn kein
 verp_delimiter_filter: Zeichen, die fuer eine Kodierung der Mail-
 \tadresse bei VERP genutzt werden koennen (-=+).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

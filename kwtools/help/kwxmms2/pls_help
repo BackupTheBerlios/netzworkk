@@ -28,3 +28,7 @@ loeschen: Hier koennen Sie eine oder mehrere ausgewaehlte Playlisten
 \tloeschen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

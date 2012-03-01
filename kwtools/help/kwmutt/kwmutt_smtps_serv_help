@@ -8,3 +8,7 @@ NOTIZ: Sie haben die Auswahl zwischen einer Sendmail Konfiguration
 \tInformationen sind unter den einzelen Menuepunkten zu finden.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

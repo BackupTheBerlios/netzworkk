@@ -9,3 +9,7 @@ Passwortlaenge: Eingabe einer Passwortlaenge die beim generieren
 \teine Laenge von 8 Zeichen benutzt.
 .')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

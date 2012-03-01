@@ -20,3 +20,7 @@ komplett ausschaltet muss man den Rechner neu starten, damit
 das \"quota\" wieder aktiviert wird. Ein neueinbinden des
 Dateisystems reicht nicht aus.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

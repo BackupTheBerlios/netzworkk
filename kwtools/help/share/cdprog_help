@@ -4,3 +4,7 @@ MSG=$(gettext 'Hier kann man ein CD-Brennprogramm auswaehlen. Es werden nur die
 angezeigt wenn man auch die dementsprechende Rechte besitzt, um sie
 benutzen zu duerfen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

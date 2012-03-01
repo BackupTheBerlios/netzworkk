@@ -3,3 +3,7 @@ MSG=$(gettext 'kwgrub2: Mit kwgrub2 koennen Sie Ihren Bootloader installieren, a
 \tin verschiedene Festplatten, Partitionen, oder Boot Einstellungen
 \tvornehmen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

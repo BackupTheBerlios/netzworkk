@@ -161,7 +161,7 @@ install: build
 	cp -a debian/po/kwxmms2d/usr $(CURDIR)/debian/$(package-multi-xmms2d)
 
 	# kwtools-net
-	cp -a etc/kwtools/kwrsync_backup.cf etc/kwtools/kwrsync_backup-excludes \
+	cp -a etc/kwtools/kwrsync_backup.cf \
 		$(CURDIR)/debian/$(package-net)$(etc_path)/kwtools
 	cp -a ./kwrsync_cron $(CURDIR)/debian/$(package-net)$(exec_path)
 	cp -a ./kwrsync_backup_cron $(CURDIR)/debian/$(package-net)$(exec_path)
@@ -417,11 +417,13 @@ binary-indep: build install
 	dh_installexamples
 	dh_installmenu -n
 #	dh_installlogrotate
+	dh_installlogrotate --name=kwrsync_backup
 #	dh_installemacsen
 #	dh_installpam
 #	dh_installmime
 	dh_installinit -n --name=kwnarc
 #	dh_installcron
+	dh_installcron --name=kwrsync_backup
 	dh_installman
 	dh_installppp --name=1kwnarc
 	dh_installppp --name=kwnarc

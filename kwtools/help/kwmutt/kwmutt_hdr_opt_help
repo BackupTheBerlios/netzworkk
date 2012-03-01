@@ -47,3 +47,7 @@ Dabei handelt es sich bei AUSDRUCK, NAME, ID und SUBJECT um regulaere Ausdruecke
 *) Die Formen <[MAX], >[MIN], [MIN]- und -[MAX] sind ebenfalls zulaessig.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

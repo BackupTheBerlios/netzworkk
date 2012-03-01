@@ -9,3 +9,7 @@ Es werden dann nur die Dienste gestartet die in diesem
 Runlevel zur Verfuegung stehen. Lesen Sie dazu die README
 Datei im Verzeichnis /etc/init.d oder /etc/rc.d/init.d.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

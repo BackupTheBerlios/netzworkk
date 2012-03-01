@@ -22,3 +22,7 @@ symbolische Links: Sollen Symlinks von ARRAYs in /dev/md/n nach
 \tNummer des Devices. Standard ist yes.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

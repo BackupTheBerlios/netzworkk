@@ -5,3 +5,7 @@ CA Zertifikate, Server Zertifikate, Benutzer Zertifikate und der
 Widerrufslisten.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

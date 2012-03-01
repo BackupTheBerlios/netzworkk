@@ -44,3 +44,7 @@ sendmail_wait: Bestimmt, wie viele Sekunden lang Mutt abwarten soll,
 \tDefault ist set sendmail_wait="0"
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

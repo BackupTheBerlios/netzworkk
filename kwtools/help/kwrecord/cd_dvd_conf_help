@@ -3,3 +3,7 @@ TITLE="${gv_Configuration}::${gv_Help}"
 MSG=$(gettext 'Hier werden alle in ihrem System vorhandenen Geraete,
 die Sie zum Lesen und Brennen besitzen, aufgelistet.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

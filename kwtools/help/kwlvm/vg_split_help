@@ -15,3 +15,7 @@ PV: Hier koennen Sie die PVs auswaehlen die zu der neuen VG
 NOTIZ: Ein PV muss fuer die existierende VG bleiben, ansonsten
 \tist es dasselbe wie umbenennen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -57,3 +57,7 @@ lmtp_tcp_port: TCP Port, auf dem der LMTP Server angesprochen wird
 lmtp_xforward_timeout: Timeout fuer den LMTP clienten beim senden
 \teines XFORWARD Befehls und dessen Antwort.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

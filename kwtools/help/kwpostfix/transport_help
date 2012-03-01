@@ -24,3 +24,7 @@ tux@domain.de\tsmtp:[intern.domain.de]
 # der erzeugt dann ein Bounce mit Erklaerung:
 aol.de\terror:Tippfehler, die korrekte Domain ist aol.com')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

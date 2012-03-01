@@ -5,3 +5,7 @@ auswaehlen, die von ihrer Firewall erlaubt sind. Die Liste wird
 von "iptables -p icmp -h" erzeugt.
 Siehe http://www.iana.org/assignments/icmp-parameters')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

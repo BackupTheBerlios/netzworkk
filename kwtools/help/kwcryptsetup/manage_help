@@ -23,3 +23,7 @@ loeschen: Loeschen von Containern bzw. Partitionen. Heisst, ver-
 \tContainer (Dateien) geloescht. In der Datei /etc/crypttab
 \twerden die dementsprechenden Eintraege geloescht.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

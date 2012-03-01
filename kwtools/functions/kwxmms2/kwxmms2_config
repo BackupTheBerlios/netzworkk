@@ -17,3 +17,7 @@ XMMS_PATH=\"$XMMS_PATH\"
 	read_conf
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

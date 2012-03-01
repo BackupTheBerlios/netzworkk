@@ -4,3 +4,7 @@ MSG=$(gettext 'Hier koennen Sie eine der installierten Shells fuer die
 Uebertragung auswaehlen. Zur Zeit sind diese, falls sie installiert sind,
 rsh und ssh.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

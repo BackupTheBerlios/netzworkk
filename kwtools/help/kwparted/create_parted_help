@@ -19,3 +19,7 @@ Partitions_Typ: Partitionstype auswaehlen (primaere, erweiterte
 
 Flags: Partitions Flag auswaehlen, wie lvm, raid oder boot.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

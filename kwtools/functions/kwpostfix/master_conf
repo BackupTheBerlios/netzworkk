@@ -637,3 +637,7 @@ unset -- AENDERN AENDERN_NR AENDERN_NR1 IST CHROOT SERVICE \
 	COMMAND ARGS AUSWAHL_MULTI AUSWAHL
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -17,3 +17,7 @@ kwecryptfs: Datei weise Verschluessellung von Verzeichnissen in dem
 kwlosetup: Verschluessellung von Laufwerken und Image-Dateien,
 \tmittels loop-aes-utils und losetup.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

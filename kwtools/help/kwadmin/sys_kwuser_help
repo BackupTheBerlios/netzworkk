@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwuser: Mit kwuser koennen Sie User anlegen, veraendern und
 \tloeschen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

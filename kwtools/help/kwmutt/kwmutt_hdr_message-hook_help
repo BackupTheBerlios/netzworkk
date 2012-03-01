@@ -21,3 +21,7 @@ Set-Variablen: Geben Sie hier den Befehl beziehungsweise setzen
 \tSie hier die Variable die angewendet werden soll auf das Muster.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

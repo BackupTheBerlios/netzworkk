@@ -3529,7 +3529,8 @@ file_choice() {
 					Anz=1
 					for i in "${(ws: :)${2}}" ; {
 						#for file in ./(*/)#*${i}(.N) ; { 
-						for file in ./*${i}(.N) ; { 
+						#for file in ./*${i}(.N) ; { 
+						for file in ./*${i}(N) ; { 
 							if [ -f "$file" ] ; then
 								if [ "$3" ] ; then
 									# Ausschluss bearbeiten
@@ -6483,3 +6484,7 @@ no_use_dir_msg() {
 	## }}}
 }
 # }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

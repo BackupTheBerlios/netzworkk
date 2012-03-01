@@ -24,3 +24,7 @@ Rechnername: Sie koennen hier die Werte Rechnername, "system" und
 Programm: Eingabe eines Programms, welches bei einem interessanten
 \tMonitoring-Ereignis ausgefuehrt werden soll.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

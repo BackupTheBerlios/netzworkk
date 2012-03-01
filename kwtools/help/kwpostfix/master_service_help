@@ -2,3 +2,7 @@
 TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
 MSG=$(gettext 'Auswahl eines Services zur weiteren Bearbeitung.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

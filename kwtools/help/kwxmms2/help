@@ -14,3 +14,7 @@ Playlisten: Verwaltung der Playlisten.
 Plugins: Anzeige der vom "xmms2d" Server unterstuetzten Plugins.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

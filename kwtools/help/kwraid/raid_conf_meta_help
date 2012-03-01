@@ -33,3 +33,7 @@ imsm: Hier wird das Intel(R) Matrix Storage Manager Metadaten
 \thttp://www.intel.com/design/chipsets/matrixstorage_sb.htm
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

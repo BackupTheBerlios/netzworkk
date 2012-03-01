@@ -41,3 +41,7 @@ virtual_transport: Tabelle, fuer die Umschreibung von Mailadressen.
 virtual_uid_maps: Tabelle fuer die Zuordnung von UID zu Mailadressen
 \tfuer die Transportmethode virtual.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -30,3 +30,7 @@ NOTIZ: Alle Eingaben erfolgen im ipv4 Format (192.168.0.1). Ipv6
 \tZur Zeit gehen nur die OSs Debian, grml, CentOS, Fedora und
 \tOpenSuSE.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

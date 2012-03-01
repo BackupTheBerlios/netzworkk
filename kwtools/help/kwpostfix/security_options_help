@@ -16,3 +16,7 @@ noplaintext: Verhindert Authentifizierungsmethoden bei denen das
 mutual_auth: Erlaubt nur Methoden der gegenseitigen
 \tAuthentifizierung (nicht verfuegbar mit SASL Version 1).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

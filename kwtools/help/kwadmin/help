@@ -42,3 +42,7 @@ kwtools-utils: Scripte fuer den taeglichen Bedarf.
 kwtools-utils-pim: Scripte fuer das Personal Informations Management.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

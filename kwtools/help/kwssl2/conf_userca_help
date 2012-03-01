@@ -6,3 +6,7 @@ MSG=$(gettext 'BenutzerName: Geben Sie den Namen des Benutzers ein, fuer den
 CA Passwort: Geben Sie das Passwort fuer die CA ein.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

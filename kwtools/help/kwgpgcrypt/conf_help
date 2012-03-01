@@ -11,3 +11,7 @@ Schluessel_server: Hier kann man einen Schluessel Server angeben.
 Standard_Schluessel_ID: Hier kann man die ID auswaehlen mit welchem 
 \tSchluessel man standardmaessig signiert, verschluesselt etc..')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

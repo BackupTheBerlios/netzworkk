@@ -34,3 +34,7 @@ queue_minfree: Minimaler Plattenplatz in Bytes, der noch frei ist,
 queue_run_delay: Anzahl der Sekunden, nach denen Postfix die
 \tdeferred-Queue nach zuzustellenden Mails durchsucht.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

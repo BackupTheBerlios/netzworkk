@@ -40,3 +40,7 @@ Diffie Hellman: Erstellt eine Diffie Hellman Datei. Zur Auswahl
 CA loeschen: Loescht ein oder mehrere CAs.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

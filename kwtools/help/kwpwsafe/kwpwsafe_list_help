@@ -3,3 +3,7 @@ TITLE="$gv_Help"
 MSG=$(gettext 'Hier koennen Sie einen Eintrag auswaehlen um den Benutzernamen
 und das dazugehoerige Passwort ansehen zu koennen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -17,3 +17,7 @@ loeschen: Loeschen von ein oder mehreren LVs.
 
 NOTIZ: Verkleinern einer LV geht nicht mit dem xfs Dateisystem.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

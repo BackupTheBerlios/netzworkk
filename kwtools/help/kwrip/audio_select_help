@@ -5,3 +5,7 @@ Informationen zur CD in der angegebenen CD Datenbank werden
 die Lieder gleich mit ihrem richtigen Namen angezeigt. Ansonsten
 haben die Lieder die Bezeichnung track#.cdda.* (#=Nummer).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

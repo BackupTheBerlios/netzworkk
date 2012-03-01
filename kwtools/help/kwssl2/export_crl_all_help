@@ -9,3 +9,7 @@ Gueltigkeit: Geben Sie die Gueltigkeit in Tagen fuer die
 \tWiderrufsliste ein.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

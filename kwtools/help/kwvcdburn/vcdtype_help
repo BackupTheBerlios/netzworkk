@@ -5,3 +5,7 @@ Sie hier.
 
 http://www.vcdimager.org/pub/vcdimager/manuals/0.7/vcdimager.html#SEC49')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

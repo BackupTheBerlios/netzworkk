@@ -5,3 +5,7 @@ MSG=$(gettext 'Standard_Boot: Welche Boot Konfiguration soll standardmaessig
 \tEs werden nur die vorhandenen aufgelistet oder gleich
 \tmit 0 belegt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -29,3 +29,7 @@ print_split: Diese Variable wird in Verbindung mit dem Befehl
 \tDefault ist print_split="no"
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

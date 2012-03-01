@@ -3,3 +3,7 @@ TITLE=$(gettext 'Transportmethoden::Hilfe')
 MSG=$(gettext 'Hier kann man die vorhandenen Transportmethoden von Postfix
 auswaehlen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -4,3 +4,7 @@ MSG=$(gettext 'kwnetconf ist ein Frontend fuer verschiedene Scripte die die
 Konfiguration des Netzwerks betreffen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

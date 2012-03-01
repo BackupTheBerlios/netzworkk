@@ -3,3 +3,7 @@ TITLE="${lv_Vol_Groups}::${lv_Convert}::${gv_Help}"
 MSG=$(gettext 'Hier kann man den Metadatentype von VGs, zu LVM1 oder LVM2,
 konvertieren.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

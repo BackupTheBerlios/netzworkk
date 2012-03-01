@@ -6,3 +6,7 @@ no_raid_arrays_msg() {
 	msgbox "$gv_Attention" "$MSG"
 }
 # }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

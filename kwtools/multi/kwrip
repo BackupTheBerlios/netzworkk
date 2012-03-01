@@ -614,3 +614,7 @@ for i in $AUDIO_MOUNT_PATH $VIDEO_MOUNT_PATH ; {
 	mount_check -u $i
 }
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

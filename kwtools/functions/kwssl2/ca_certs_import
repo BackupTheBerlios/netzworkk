@@ -380,3 +380,7 @@ ca_certs_import() {
 	done
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -91,3 +91,7 @@ done
 #
 exit 0
 # vim:foldmethod=marker expandtab shiftwidth=2 tabstop=4 
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

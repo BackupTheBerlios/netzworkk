@@ -146,3 +146,7 @@ ABC-Netzwerke: Hier koennen Sie die Schriftfarbe und die
 \t127.0.0.0   bis 127.255.255.255
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

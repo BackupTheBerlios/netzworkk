@@ -9,3 +9,7 @@ Server: Tragen Sie bitte die Adresse(n) Ihres xmms2d Servers ein.
 \tSocket "tcp" funktioniert lokal wie remote.
 ') 
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

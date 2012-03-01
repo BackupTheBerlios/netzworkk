@@ -25,3 +25,7 @@ Verzeichnis: Verzeichnis in dem der Multi_key gespeichert werden
 \tsein. Externe Geraete muessen vorher, entweder automatisch
 \toder manuell eingebunden werden.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

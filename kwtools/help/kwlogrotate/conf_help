@@ -34,3 +34,7 @@ Script: Hier koennen Sie einen Befehl eingeben der nach der
 \tseine Konfiguration neu ein ohne ihn zu beenden:
 \t/sbin/killall -HUP syslogd')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

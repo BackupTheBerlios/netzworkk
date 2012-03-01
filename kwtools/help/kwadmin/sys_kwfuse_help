@@ -3,3 +3,7 @@ MSG=$(gettext 'kwfuse: Dies ist ein Frontend Script fuer Fuse. Mit Fuse koennen 
 \tDateiesyteme in den Linux Kernel exportieren und deren
 \tRechte verwalten.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

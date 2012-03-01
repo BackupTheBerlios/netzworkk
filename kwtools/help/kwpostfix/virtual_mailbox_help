@@ -14,3 +14,7 @@ info@domain.de\tdomain.de/info
 # domain.de/catch-all.
 @domain.de\tdomain.de/catch-all')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

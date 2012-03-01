@@ -63,3 +63,7 @@ if [ -n "$ENCRYPT_METHOD" ] ; then
 fi
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

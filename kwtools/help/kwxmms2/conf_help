@@ -16,3 +16,7 @@ NOTIZ: Es koennen mehrere Adressen, getrennt durch ein Semikolon
 \tangegeben werden.
 ') 
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -12,3 +12,7 @@ aus.
 
 oder fuehre eine Warnung, per mail, die Zeit vor dem Termin aus.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

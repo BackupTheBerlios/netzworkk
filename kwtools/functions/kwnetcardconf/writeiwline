@@ -71,3 +71,7 @@ writeiwline()
 	#echo "DEBUG: for interfaces $IWOURLINE"
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

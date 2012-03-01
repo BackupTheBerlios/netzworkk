@@ -23,3 +23,7 @@ NOTIZ: Vergeben Sie nicht die Option "-o" (outputfile), diese wird
 \tselbststaendig errechnet (Bsp. track1.cdda.wav -->
 \ttarck1.cdda.ogg).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

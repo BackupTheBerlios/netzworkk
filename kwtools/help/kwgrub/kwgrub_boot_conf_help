@@ -4,3 +4,7 @@ MSG=$(gettext 'Hier kann man die Boot Eintraege der Konfigurationsdatei
 vom Bootloader grub ansehen, anlegen, aendern oder loeschen.
 /boot/grub/menu.lst ist meist die Konfigurationsdatei.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

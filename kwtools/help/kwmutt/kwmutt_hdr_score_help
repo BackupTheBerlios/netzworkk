@@ -31,3 +31,7 @@ Muster: Geben Sie das Muster ein auf das die Speicherung greifen
 Punkte: Geben Sie eine ganze Zahl (+-=Zahl) zur Bewertung ein.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

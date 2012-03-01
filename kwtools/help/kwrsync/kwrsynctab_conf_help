@@ -19,3 +19,7 @@ Ausschluss: Dateien/Verzeichnisse die von der Synchronisation
 \t/home/user/foo ist dann der Ausschluss einer Datei z. B.
 \tfoo/bar.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

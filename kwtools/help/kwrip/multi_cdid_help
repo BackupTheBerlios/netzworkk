@@ -6,3 +6,7 @@ Artisten der Scheibe aufgelistet. Zusaetzlich haben Sie die Moeglichkeit selber
 Artist und Album einzugeben. Falls zum Beispiel keine oder falsche
 Informationen von der CD-Datenbank geholt werden.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

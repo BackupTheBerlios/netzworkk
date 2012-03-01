@@ -21,3 +21,7 @@ System_Backup: Sicherung der System-Verzeichnisse, ausser des /home
 NOTIZ: System_Backup wird nur angezeigt wenn Sie als root eingeloggt
 \tsind.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -11,3 +11,7 @@ aendern: Eine ausgewaehlte Gruppe aendern.
 
 loeschen: Eine ausgewaehlte Gruppe loeschen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

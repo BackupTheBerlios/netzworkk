@@ -12,3 +12,7 @@ VG: Volume Groups sind virtuelle Festplatten, die eine oder
 LV: Logische Volumes sind virtuelle Partitionen, auf welchen
 \tdann Dateisysteme angelegt werden koennen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -6,3 +6,7 @@ Export Dateiname: Geben Sie einen Dateinamen, mit vollem Pfad,
 \tfuer den Export ein. Standard ist ~/CAName-cachain.pem.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

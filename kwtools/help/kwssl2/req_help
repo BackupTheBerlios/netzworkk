@@ -18,3 +18,7 @@ signieren (Benutzer): Erstellt ein Benutzer Zertifikat und signiert
 loeschen: Loescht ein oder mehrerer Anforderungen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

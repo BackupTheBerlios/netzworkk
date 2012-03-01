@@ -39,3 +39,7 @@ set smime_verify_opaque_command=\"$smime_verify_opaque_command\"
 # End $M_SMIME"
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

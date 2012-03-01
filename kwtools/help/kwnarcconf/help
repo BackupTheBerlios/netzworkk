@@ -13,3 +13,7 @@ Verbindungen: Anzeige der bestehenden Verbindungen.
 
 Regelketten: Anzeige der bestehenden Regelketten.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

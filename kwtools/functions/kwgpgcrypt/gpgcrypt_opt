@@ -23,3 +23,7 @@ gpgcrypt_opt() {
 	esac
 }	
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

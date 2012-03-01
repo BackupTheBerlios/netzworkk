@@ -12,3 +12,7 @@ Namensuebernahme: Zuerst waehlen Sie einen Tabellentyp aus.
 Variablenauswahl: Eine Variable, als Wert, aus vorhandenen
 \tVariablen auswaehlen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

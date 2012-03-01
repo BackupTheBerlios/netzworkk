@@ -46,3 +46,7 @@ set ssl_ca_certificates_file=\"$ssl_ca_certificates_file\"
 # End $M_SSL"
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

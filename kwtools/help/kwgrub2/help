@@ -16,3 +16,7 @@ Installation: Nach einer Auswahl des Geraetes/Laufwerks wohin
 \tkoennen Festplatten oder der Bootsector von Partitionen sein
 .')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

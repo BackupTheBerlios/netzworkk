@@ -11,3 +11,7 @@ pc98: PC98
 sun: Sun
 Amiga')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

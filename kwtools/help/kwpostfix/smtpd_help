@@ -235,3 +235,7 @@ smtpd_tls_wrappermode: Soll die Kompalitaet zu Outlock eingestellt
 smtpd_use_tls: Soll SMTP-Auth bei eingehenden Verbindungen benutzt
 \twerden (ja/nein)?')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

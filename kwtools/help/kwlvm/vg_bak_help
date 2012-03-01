@@ -8,3 +8,7 @@ Sicherung_zurueck: Gesicherte Metadaten von VGs wieder zurueck
 
 Sicherung_loeschen: Gespeicherte Sicherungen loeschen')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

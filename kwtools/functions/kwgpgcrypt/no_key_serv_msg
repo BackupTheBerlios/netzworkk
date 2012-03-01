@@ -6,3 +6,7 @@ no_key_serv_msg() {
 	msgbox "$gv_Attention" "$MSG"
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

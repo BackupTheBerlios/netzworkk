@@ -5,3 +5,7 @@ MSG=$(gettext 'Mit kwwvdialconf koennen Sie die Konfigurationsdatei
 einzelne Konfigurationsabschnitte erstellen, loeschen, veraendern
 oder sich anzeigen lassen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

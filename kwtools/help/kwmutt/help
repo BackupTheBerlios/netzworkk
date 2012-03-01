@@ -31,3 +31,7 @@ NOTIZ: Andere Drucker Konfigurationen werden noch nicht unterstuetzt.
 Mailinglisten: Verwaltung der Mailinglisten.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

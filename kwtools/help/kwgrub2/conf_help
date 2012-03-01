@@ -135,3 +135,7 @@ Speicheradressen: Tragen Sie bitte die Speicheradressen ein die grub
 \t0xefefefef).
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

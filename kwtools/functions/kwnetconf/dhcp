@@ -20,3 +20,7 @@ dhcp()
 	unset -- ETH_IST 
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

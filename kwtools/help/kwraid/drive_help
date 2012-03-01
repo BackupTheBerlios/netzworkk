@@ -27,3 +27,7 @@ NOTIZ: Dies geht nicht mit den meisten IDE Festplatten. Pruefen Sie
 loeschen: Loeschen von ein oder mehreren Raid Arrays. Der Superblock
 \tder dazugehoerigen Partitionen wird dabei auch geloescht.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

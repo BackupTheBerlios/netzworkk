@@ -17,3 +17,7 @@ loeschen: Loeschen von Terminen, entweder alle, nur fuer Heute, nur
 \tletztes Jahr. Gezaehlt wird immer von Heute minus 1 Tag,
 \trueckwaerts.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

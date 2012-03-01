@@ -62,3 +62,7 @@ raiddisk: Auswahl der Arrays/Partitionen, die zu dem Array
 \tgehoeren sollen. Passen Sie auf das Sie eine eventuelle Ersatz
 \t-Festplatte, -Partition oder -Array mit auswaehlen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

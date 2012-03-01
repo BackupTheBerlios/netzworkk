@@ -106,3 +106,7 @@ ftp_proxy="$gv_Ftp_Proxy"
 done	
 unset -- PROXY_FILE
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

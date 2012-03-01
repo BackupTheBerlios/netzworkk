@@ -2219,7 +2219,7 @@ FILE \"`pwd`/${i}\" 0"
 					#}}}
 					;;
 				*)	# falsche Parametereingabe
-					wrong_parameter_msg "$OPT"
+					wrong_parameter_msg "$0"
 					;;
 			esac
 		else
@@ -2528,3 +2528,7 @@ split_size() {
 ## }}}
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

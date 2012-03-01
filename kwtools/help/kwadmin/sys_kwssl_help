@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwssl: Mit diesem Script koennen Sie SSL Certrifikate erstellen,
 \tsignieren etc.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

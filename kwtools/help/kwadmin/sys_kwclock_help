@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwclock: Mit kwclock koennen Sie das Datum und die Uhrzeit des
 \tRechners einstellen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

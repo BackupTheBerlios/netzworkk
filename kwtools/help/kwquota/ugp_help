@@ -4,3 +4,7 @@ MSG=$(gettext 'Sie haben usr- und grpquota eingestellt. Hier haben Sie die Auswa
 welches quota Sie bearbeiten koennen, zwischen Benutzern, Gruppen oder auch
 Projekten (XFS Dateisystem).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

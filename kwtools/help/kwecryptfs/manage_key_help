@@ -6,3 +6,7 @@ anlegen: Anlegen von Schluessel Dateien.
 
 loeschen: Loeschen von ein oder mehrere Schluessel Dateien.')
 
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

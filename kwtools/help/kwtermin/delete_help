@@ -10,3 +10,7 @@ Jahr: Alle Termine des letzten Jahres loeschen.
 
 alle: Alle Termine loeschen, vergangene wie kommende.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

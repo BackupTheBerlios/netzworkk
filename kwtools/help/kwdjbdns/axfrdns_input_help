@@ -17,3 +17,7 @@ AXFR: Bei ja wird ein AXFR="host.domain.de/3.2.1.in-addr.arpa" an
 \tdie IP/Rechnername angehaengt. Das funktioniert nur mit IP und
 \tRechnernamen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -86,3 +86,7 @@ Uebertragung der Mail (DATA-Befehl)
 
 554: Transaction failed: allgemeiner Uebertragunsfehler.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

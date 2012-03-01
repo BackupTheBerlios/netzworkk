@@ -5,3 +5,7 @@ MSG=$(gettext 'Artist: Eingabe des Artisten fuer dieses Album. Dies kann bei
 
 Album: Geben Sie hier den Namen des Albums ein.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

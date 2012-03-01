@@ -35,3 +35,7 @@ Action: Dies sind Aktionen die auf eine bestimmte Adresse
 
 Text: Text der auf eine Aktion zurueckgesendet werden soll.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

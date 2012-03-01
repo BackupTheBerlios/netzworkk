@@ -59,3 +59,7 @@ GRUB_PASSWD_PBKDF2=\"$GRUB_PASSWD_PBKDF2\"
 	read_file -f "$GRUB_DEFAULT_CONFFILE"
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

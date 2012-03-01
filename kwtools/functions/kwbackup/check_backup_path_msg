@@ -6,3 +6,7 @@ check_backup_path_msg() {
 	msgbox "$ACHTUNG" "$MSG"
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

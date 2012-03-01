@@ -8,3 +8,7 @@ Mailadresse: Geben Sie ein oder mehrere Mailadressen mit einem Komma
 Beispiel: Vorname Nachname <user@domain.de> oder
 \tMailinglistenname <user@domain.de>, <user1@domain.de>, ...')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

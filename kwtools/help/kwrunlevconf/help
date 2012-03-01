@@ -10,3 +10,7 @@ Init-Script: Auswahl des Init-Scriptes. Es wird angezeigt, welche
 Standard-Runlevel: Auswahl des Runlevel, welchen nach dem Start des
 \tSystems gewechselt werden soll (Standard Start Runlevel).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

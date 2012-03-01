@@ -5,3 +5,7 @@ Arbeit mit mit ihrem Netzwerk erleichtern koennen.
 
  NOTIZ: Fuer die meisten Aktionen brauchen Sie ROOT Rechte.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

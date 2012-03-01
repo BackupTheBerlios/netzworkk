@@ -28,3 +28,7 @@ Pager: Eingabe eines Pagers mit vollen Pfad oder auch ohne,
 \twenn dieser in ihrem Pfad liegt. Es wird ueberprueft ob
 \tdieser ausfuehrbar ist.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

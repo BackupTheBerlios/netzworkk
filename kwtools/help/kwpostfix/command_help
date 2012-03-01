@@ -2,3 +2,7 @@
 TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
 MSG=$(gettext 'Auswahl eines Postfix eigenen Daemons.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

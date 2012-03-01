@@ -34,3 +34,7 @@ crypt_verify_sig: Soll Mutt immer versuchen PGP oder S/MIME
 \tSignaturen zu ueberpruefen (ja/nein)? Standard ist "yes".
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

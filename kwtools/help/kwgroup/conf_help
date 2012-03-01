@@ -10,3 +10,7 @@ Passwort: Passwort fuer die Gruppe eingeben. Es muessen mindestens 6 Zeichen sei
 
 speichern: Gruppe anlegen oder veraendern.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

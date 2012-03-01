@@ -68,3 +68,7 @@ read_raid_conf() {
 	CR_SYM=${CR_SYM:-yes}
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

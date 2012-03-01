@@ -52,3 +52,7 @@ CD-loeschen: Loeschen von CD-+R(W) (minimal/vollstaendig).
 
 DVD-formatieren: Formatierung von DVD-+R(W)/RAM Rohlingen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -11,3 +11,7 @@ Schluesseltyp: Auswahl des Schluesseltyps. Zur Auswahl stehen
 \tpkcs11-helper und tspi werden noch nicht unterstuetzt.
 
 Passwort_generieren: Die Passphrase wird generiert.')
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

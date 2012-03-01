@@ -39,3 +39,7 @@ Argumente: Argumente die dem Befehl mituebergeben werden soll.
 \tLesen Sie dazu die Dokumentation von Postfix und dem
 \tdementsprechenden Programm welches zum Einsatz kommt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

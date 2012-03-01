@@ -12,3 +12,7 @@ smime: Hier koennen Sie Ihre "openssl" Verschluesselung einrichten.
 
 ssl: Hier koennen Sie Ihre SSL/TLS Verschluesselung einrichten.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

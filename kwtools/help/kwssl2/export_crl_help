@@ -12,3 +12,7 @@ TXT: Exportiert die Widerrufsliste in das TXT Format. Der
 \t"----- END X509 CRL-----" wird nicht exportiert.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

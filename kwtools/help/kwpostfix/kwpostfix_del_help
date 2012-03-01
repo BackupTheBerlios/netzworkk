@@ -3,3 +3,7 @@ TITLE=$(gettext 'Tabellen Eintraege loeschen::Hilfe')
 MSG=$(gettext 'Hier koennen Sie ein oder mehrere Eintraege aus den Postfix Tabellen
 loeschen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

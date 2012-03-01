@@ -4,3 +4,7 @@ MSG=$(gettext 'Stoppen von ein oder mehreren verschluesselten Laufwerken. Dabei
 werden die Eintraege der Konfigurationsdatei /etc/crypttab nicht geloescht.')
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -26,3 +26,7 @@ upload: Hochladen des eigenen Scluessel auf den angegebenen
 
 loeschen: Loeschen von oeffentlichen/sicheren Schluesseln.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -13,3 +13,7 @@ Datenbank verwalten: Datenbanken erstellen, Passwort aendern
 \tund Datenbanken loeschen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

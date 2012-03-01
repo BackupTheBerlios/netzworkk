@@ -27,3 +27,7 @@ macro pager p \"<display-toggle-weed> <print-message> <display-toggle-weed>\"
 # End $M_PRINT"
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -9,3 +9,7 @@ NIS Server: Eingabe des NIS Servers. Sie koennen Rechnernamen oder
 NIS Domain: Eingabe der NIS Domain (z.B.: nisdomain.org).
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

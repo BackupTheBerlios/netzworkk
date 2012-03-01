@@ -4,3 +4,7 @@ MSG=$(gettext 'kwnarcconf: Mit diesem Script kann man die Firewall (Netfilter),
 \tkwnarcconf ist ein Frontend fuer das Script "kwnarc" -
 \tkwtools Netfilter Autommatic Rules Configurator.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

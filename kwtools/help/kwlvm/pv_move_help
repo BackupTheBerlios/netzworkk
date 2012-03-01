@@ -19,3 +19,7 @@ Beispiele
 Bei der Verschiebung von 0 benutzten PEs auf andere 0 benutzte PEs
 kommt eine Fehlermeldung.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

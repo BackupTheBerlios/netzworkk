@@ -193,3 +193,7 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 	fi
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

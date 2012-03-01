@@ -932,3 +932,7 @@ done
 # umounten der Mount-Verzeichnisse falls nicht schon getan.
 umount_fs
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

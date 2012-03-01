@@ -7,3 +7,7 @@ makeactive_msg() {
 	infobox "$gv_Info" "$MSG" 3
 }
 # }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

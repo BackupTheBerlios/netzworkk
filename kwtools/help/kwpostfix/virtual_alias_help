@@ -34,3 +34,7 @@ Empfaenger: Eingabe von Empfaengern, getrennt durch 1 Komma und 1
 \tLeerzeichen. Dies koennen auch ein externe Empfaenger sein.
 \t(Bsp. user@domain.de, user1@domain.de)')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

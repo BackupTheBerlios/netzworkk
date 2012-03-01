@@ -17,3 +17,7 @@ NOTIZ: Das ":" steht nur fuer die Konformitaet der Tabellen. IPv6
 \tdas Zeichen ":" in der Adresse gibt und dadurch Probleme
 \tmit dem anderen ":" Zeichen gibt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

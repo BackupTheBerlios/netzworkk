@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwrsync_backup: Erstellt ein Backup (Snapshot) von vorkonfigurierten
 \tServern.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

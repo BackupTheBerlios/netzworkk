@@ -170,3 +170,7 @@ Latex_Code: Geben Sie hier Latex Code ein um den Text weiter zu
 \tDie Voreinstellung ist LATEXCODE=""
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

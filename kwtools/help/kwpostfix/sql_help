@@ -28,3 +28,7 @@ Konditionen:
 Funktion: Datenbank Funktion, dann braucht man nicht Tabelle,
 \tSource_Feld, Ziel_Feld und Konditionen eingeben.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

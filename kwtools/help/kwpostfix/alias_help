@@ -16,3 +16,7 @@ anderer Empfaenger: Dies kann auch ein externer Empfaenger sein. Es
 \tkoennen mehrere Empfaenger, durch 1 Komma und 1 Leerzeichen
 \tgetrennt, eingegeben werden.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

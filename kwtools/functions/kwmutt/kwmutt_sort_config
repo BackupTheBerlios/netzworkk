@@ -53,3 +53,7 @@ set strict_threads=\"$strict_threads\"
 # End $M_SORT"
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -3,3 +3,7 @@ TITLE="${gv_Configuration}::${LANGUAGE}::${gv_Help}"
 MSG=$(gettext 'Hauptsaechlich ist zur Zeit nur deutsch vorhanden. Englisch ist in
 wenigen Teilen vorhanden, oder in Arbeit.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

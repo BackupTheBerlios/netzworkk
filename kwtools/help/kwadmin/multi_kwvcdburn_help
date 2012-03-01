@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwvcdburn: Hiermit kann man MPEG Dateien in Video-CD Dateien
 \tkonvertieren und brennen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

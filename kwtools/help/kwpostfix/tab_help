@@ -83,3 +83,7 @@ virtual_transport: Tabelle fuer die Regelung der Transport Methode.
 virtual_uid: Tabelle fuer die Zuordnung der UID zu Mailadressen
 \tfuer die Transportmethode virtual.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

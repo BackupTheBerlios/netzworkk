@@ -15,3 +15,7 @@ NOTIZ: Vergewissern Sie sich, ob nicht schon der erweiterte
 \tInternet Daemon (x)inetd den einen oder anderen Service
 \tuebernommen hat.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -11,3 +11,7 @@ manuell: Hier muss man von Hand die Parameter IP Adresse, Boot,
 \tBroadcast, Netmask, Gateway und Nameserver dieser Karte ein-
 \tgeben, Bis auf die IP Adresse sind alle Parameter optional.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

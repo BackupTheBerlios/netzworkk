@@ -22,3 +22,7 @@ NOTIZ: Bedenken Sie das einige Programme Ihren eigenen Gruppennamen
 \tWenn Sie sich nicht sicher sind, lesen Sie erst die 
 \tDokumentation zu den einzelnen Programmen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

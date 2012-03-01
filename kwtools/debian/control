@@ -10,7 +10,7 @@ Section: shells
 Architecture: all
 Priority: optional
 Pre-Depends: zsh (>= 4.2.0)
-Depends: dialog (>= 1.1-20070227-1), coreutils (>= 5.0), file (>= 4.10), gettext (>= 0.14.5-3), hwinfo, udev, util-linux (>= 2.17.2), sharutils
+Depends: dialog (>= 1.1-20070227-1), coreutils (>= 8.13), file (>= 4.10), gettext (>= 0.14.5-3), hwinfo, udev, util-linux (>= 2.17.2), sharutils
 Suggests: less
 Description: General functions for kwtools scripts
  These are general functions which are required by every kwtools script.
@@ -20,7 +20,7 @@ Package: kwtools-bin
 Section: admin
 Architecture: all
 Priority: optional
-Depends: kwtools-common (>= 0.8.4-2), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), zsh (>= 4.2.0)
 Description: Includes kwadmin, combines kwtools scripts
  Includes kwadmin, a script which combines all kwtools scripts.
  Is divided up into the categories service programmes, graphics, multimedia,
@@ -40,7 +40,7 @@ Package: kwtools-graphic
 Section: graphics
 Architecture: all
 Priority: optional
-Depends: kwtools-common (>= 0.8.4-2), gphoto2 (>= 2.0), zgv, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), gphoto2 (>= 2.0), zgv, zsh (>= 4.2.0)
 Suggests: kwtools-bin
 Description: Graphics scripts
  Graphics scripts to operate digital cameras, etc.
@@ -52,7 +52,7 @@ Package: kwtools-multi
 Section: utils
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), cddb, cd-discid, cdparanoia, cdrdao (>=1.1.9), dvd+rw-tools, mjpegtools (>= 1.6.0), lame, genisoimage (>= 1.1.8), vcdimager, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), cddb, cd-discid, cdparanoia, cdrdao (>=1.1.9), dvd+rw-tools, mjpegtools (>= 1.6.0), lame, genisoimage (>= 1.1.8), vcdimager, zsh (>= 4.2.0)
 Suggests: kwtools-bin, ddrescue, vorbis-tools (>=1.0.0), wodim 
 Description: Multimedia scripts
  Multimedia scripts to create VCD's, audio CD's, etc.
@@ -69,7 +69,7 @@ Package: kwtools-multi-xmms2
 Section: sound
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), xmms2-client-nycli, xmms2-client-cli, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), xmms2-client-nycli, xmms2-client-cli, zsh (>= 4.2.0)
 Suggests: kwtools-bin
 Description: Frontend for xmms2 client
  Frontend script to use xmms2 client.
@@ -82,7 +82,7 @@ Package: kwtools-multi-xmms2d
 Section: sound
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), xmms2, xmms2-plugin-m3u, xmms2-plugin-pls, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), xmms2, xmms2-plugin-m3u, xmms2-plugin-pls, zsh (>= 4.2.0)
 Suggests: kwtools-bin, xmms2-plugin-cdda, xmms2-plugin-curl, xmms2-plugin-all
 Description: Frontend for xmms2d server
  Frontend script to use xmms2d server.
@@ -95,8 +95,8 @@ Package: kwtools-net
 Priority: optional
 Architecture: all
 Section: net
-Depends: kwtools-common (>= 0.8.4-2), rsync, ssh, zsh (>= 4.2.0) 
-Suggests: kwtools-bin, sudo
+Depends: kwtools-common (>= 0.8.5-1), logrotate, rsync, zsh (>= 4.2.0) 
+Suggests: kwtools-bin, openssh-client | ssh-client, sudo
 Description: Network scripts
  Includes several network scripts.
  .
@@ -107,14 +107,18 @@ Description: Network scripts
         or /etc/(zsh/)zprofile (zsh).
  kwrsync: Synchronises your home directory, directories of choice
         and can edit the user crontab table for rsync.
- kwrsync_backup: Make a snapshot from local and remote hosts.
+ kwrsync_backup: Make a snapshot from local and remote hosts.It's an
+        rsync-based filesystem snapshot utility. It can take incremental
+        backups of local and remote filesystems for any number of machines.
+        kwrsync_backup makes extensive use of hard links, so disk space is
+        only used when absolutely necessary.
 Homepage: http://www.netzworkk.de
 
 Package: kwtools-net-djbdns
 Priority: optional
 Architecture: all
 Section: net
-Depends: kwtools-common (>= 0.8.4-2), daemontools, djbdns (>=1.05), ucspi-tcp, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), daemontools, djbdns (>=1.05), ucspi-tcp, zsh (>= 4.2.0)
 Suggests: kwtools-bin, kwdjbdns-update, sudo
 Description: Network script kwdjbdns
  kwdjbdns script plus help files and functions.
@@ -127,7 +131,7 @@ Package: kwtools-net-mutt
 Priority: optional
 Architecture: all
 Section: net
-Depends: kwtools-common (>= 0.8.4-2), mutt, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), mutt, zsh (>= 4.2.0)
 Suggests: kwtools-bin, antiword
 Description: Mutt Configurations script
  Includes a script to configures your mail client mutt.
@@ -139,7 +143,7 @@ Package: kwtools-net-narc
 Priority: optional
 Architecture: all
 Section: net
-Depends: debconf, ethtool, iptables, kwtools-common (>= 0.8.4-2), lsb-base (>= 3.0-6), zsh (>= 4.2.0)
+Depends: debconf, ethtool, iptables, kwtools-common (>= 0.8.5-1), lsb-base (>= 3.0-6), zsh (>= 4.2.0)
 Suggests: kwtools-bin, sudo
 Conflicts: narc , kwtools-net-firewall
 Description: Firewall network script
@@ -155,7 +159,7 @@ Package: kwtools-net-postfix
 Priority: optional
 Architecture: all
 Section: net
-Depends: kwtools-common (>= 0.8.4-2), postfix (>=2.5.5), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), postfix (>=2.5.5), zsh (>= 4.2.0)
 Suggests: kwtools-bin, postfix-ldap, postfix-mysql, postfix-pgsql, postfix-pcre, sudo
 Description: Network script kwpostfix
  Includes a script which enables management of MTA postfix.
@@ -168,7 +172,7 @@ Package: kwtools-sys
 Section: admin
 Priority: optional
 Architecture: all
-Depends: ethtool, kwtools-common (>= 0.8.4-2), libpam-runtime (>=1.0.1-6), logrotate, sysv-rc (>= 2.88)| file-rc, zsh (>= 4.2.0)
+Depends: ethtool, kwtools-common (>= 0.8.5-1), libpam-runtime (>=1.0.1-6), logrotate, sysv-rc (>= 2.88)| file-rc, zsh (>= 4.2.0)
 Suggests: kwtools-bin, dhcp-client (>=2.0) | dhcp3-client, isdnutils-base, ntpdate | ntp, pppoeconf, sudo, wvdial
 Description: System scripts
  Includes several scripts for system administration.
@@ -193,7 +197,7 @@ Package: kwtools-sys-crypt
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), gnupg, cryptsetup (>= 1.0.6), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), gnupg, cryptsetup (>= 1.0.6), zsh (>= 4.2.0)
 Suggests: kwtools-bin, kwtools-sys-lvm, kwtools-sys-raid, loop-aes-utils, openssl (>= 0.9.8), ecryptfs-utils, sudo
 Replaces: kwtools-sys-losetup (<= 0.5.2-3)
 Description: Script for encrypted devices
@@ -213,7 +217,7 @@ Package: kwtools-sys-fuse
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), fuse-utils, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), fuse-utils, zsh (>= 4.2.0)
 Suggests: kwtools-bin, ntfsprogs, sudo
 Recommends: fuse-source
 Description: System script
@@ -228,7 +232,7 @@ Package: kwtools-sys-grub
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), grub-legacy, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), grub-legacy, zsh (>= 4.2.0)
 Suggests: kwtools-bin, sudo
 Description: System script
  Include a frontend script for bootloader administration (grub).
@@ -240,7 +244,7 @@ Package: kwtools-sys-grub2
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), expect, grub-pc (>= 1.98) | grub-coreboot (>= 1.98) | grub-efi-amd64 (>= 1.98) | grub-efi-ia32 (>= 1.98) | grub-ieee1275 (>= 1.98), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), expect, grub-pc (>= 1.98) | grub-coreboot (>= 1.98) | grub-efi-amd64 (>= 1.98) | grub-efi-ia32 (>= 1.98) | grub-ieee1275 (>= 1.98), zsh (>= 4.2.0)
 Suggests: kwtools-bin, grub-rescue-pc, sudo
 Conflicts: grub-legacy, kwtools-sys-grub
 Description: System script
@@ -253,7 +257,7 @@ Package: kwtools-sys-kwpasswd
 Section: utils
 Architecture: all
 Priority: optional
-Depends: kwtools-common (>= 0.8.4-2), expect, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), expect, zsh (>= 4.2.0)
 Suggests: kwtools-bin
 Description: Change user password.
  Script and files force to change the User password by first login.
@@ -266,7 +270,7 @@ Package: kwtools-sys-lvm
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), lvm10 | lvm2, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), lvm10 | lvm2, zsh (>= 4.2.0)
 Suggests: kwtools-bin, sudo
 Description: Script to manage LVMs
  Includes a script (kwlvm) to manage LVMs.
@@ -280,7 +284,7 @@ Package: kwtools-sys-parted
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), parted (>= 1.7.1-3), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), parted (>= 1.7.1-3), zsh (>= 4.2.0)
 Suggests: kwtools-bin, jfsutils, ntfsprogs, reiserfsprogs, reiser4progs, sudo, xfsprogs 
 Description: System script kwparted
  Include a frontend script for parted.
@@ -294,7 +298,7 @@ Package: kwtools-sys-quota
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), quota (>= 3.15), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), quota (>= 3.15), zsh (>= 4.2.0)
 Suggests: kwtools-bin, sudo
 Description: Script to manage quota
  Includes a script (kwquota) to manage quota.
@@ -308,7 +312,7 @@ Package: kwtools-sys-raid
 Section: admin
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), mdadm (>= 3.1.1), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), mdadm (>= 3.1.1), zsh (>= 4.2.0)
 Suggests: kwtools-bin, sudo
 Conflicts: mdctl (<< 0.7.2), raidtools2 (<< 1.00.3-12.1)
 Description: Script for software RAID administration
@@ -326,7 +330,7 @@ Package: kwtools-utils
 Section: utils
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), bzip2, expect, gnupg | gpg, muttprint, pwsafe, tar (>=1.14), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), bzip2, expect, gnupg | gpg, muttprint, pwsafe, tar (>=1.14), zsh (>= 4.2.0)
 Suggests: kwtools-bin
 Description: Scripts for general tasks
  Includes several scripts for general tasks.
@@ -345,7 +349,7 @@ Package: kwtools-utils-pim
 Section: utils
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), bsdmainutils, bzip2, gcal, gnupg | gpg, texlive-latex-base, texlive-latex-extra, zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), bsdmainutils, bzip2, gcal, gnupg | gpg, texlive-latex-base, texlive-latex-extra, zsh (>= 4.2.0)
 Suggests: kwtools-bin
 Description: Scripts for the Personal Information Management (PIM)
  Includes several scripts for the Personal Information Management (PIM).
@@ -361,7 +365,7 @@ Package: kwtools-utils-ssl
 Section: utils
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.4-2), openssl (>= 0.9.8), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), openssl (>= 0.9.8), zsh (>= 4.2.0)
 Suggests: kwtools-bin, zip
 Description: Script kwssl2 to manage CAs (is ALPHA).
  Includes a very simple script to manage CAs (Certification Authorities).

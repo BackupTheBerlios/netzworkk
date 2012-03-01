@@ -77,3 +77,7 @@ if("'"$IWOURLINE"'"!=""){print "'"$IWOURLINE"'"};print "\n"}' \
 	#}}}
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

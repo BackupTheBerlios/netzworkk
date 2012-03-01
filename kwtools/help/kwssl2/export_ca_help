@@ -11,3 +11,7 @@ TXT: Exportiert die CA in das TXT Format. Der
 \t"----- END CERTIFICATE-----" wird nicht exportiert.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

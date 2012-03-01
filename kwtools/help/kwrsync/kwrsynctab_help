@@ -3,3 +3,7 @@ TITLE=$(gettext 'Verzeichnisse::${gv_Help}')
 MSG=$(gettext 'Hier koennen Sie die Datei ~/.ktools/kwrsynctab ansehen, deren
 Eintraege aendern, welche anlegen und loeschen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

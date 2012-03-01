@@ -5,3 +5,7 @@ MSG=$(gettext 'Export Dateiname: Geben Sie einen Dateinamen, mit vollem Pfad,
 \tCAs CAName-cacert.FORMAT.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

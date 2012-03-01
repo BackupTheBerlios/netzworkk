@@ -8,3 +8,7 @@ zubekommen.
 NOTIZ: Zur Zeit geht nur die Veraenderung der Groesse von
 \tverschluesselten Laufwerken mit LUKS Erweiterung.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

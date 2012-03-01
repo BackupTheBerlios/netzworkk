@@ -10,3 +10,7 @@ Installation: Nach einer Auswahl von Kernel Partition und wohin er
 \tder MBR (Master-Boot_Record), eine Floppy oder der
 \tBootsector einer Partition sein.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

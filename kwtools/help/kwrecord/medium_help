@@ -5,3 +5,7 @@ Es stehen CD und DVD zur Verfuegung. Achten Sie darauf das Sie das
 richtige auswaehlen, da jedes Medium mit einem anderen Programm 
 bearbeitet wird.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

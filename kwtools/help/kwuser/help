@@ -22,3 +22,7 @@ aendern: Vorhandene Einstellungen eines Benutzers aendern.
 loeschen: Benutzer loeschen. Dabei werden die Home-Verzeichnisse
 \trekursiv geloescht.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

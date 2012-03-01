@@ -23,3 +23,7 @@ tls_random_source: Hier kann man zwischen den Devices /dev/random
 \ttls_random_exchange_name beim Start und waehrend der Laufzeit
 \tgeneriert.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

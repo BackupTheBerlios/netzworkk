@@ -208,3 +208,7 @@ smtp_use_tls: Soll SMTP-Auth bei ausgehenden Verbindungen benutzt
 smtp_xforward_timeout: Timeout fuer den SMTP Clienten fuer das
 \tsenden eines XFORWARD Kommandos und der Antwort vom Server.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

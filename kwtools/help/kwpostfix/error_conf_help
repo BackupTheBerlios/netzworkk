@@ -34,3 +34,7 @@ unknown_virtual_alias_reject_code:
 
 unknown_virtual_mailbox_reject_code:')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

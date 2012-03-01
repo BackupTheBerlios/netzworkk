@@ -5,3 +5,7 @@ MSG=$(gettext 'Hier koennen Sie eine der installierten Shells auswaehlen.
 
 Die Login Shell ist die Standard Shell nachdem einloggen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

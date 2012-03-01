@@ -61,3 +61,7 @@ unix:group.byname
 NOTIZ: Andere Tabellentypen existieren nur, wenn Sie in postfix
 \tmit einkompiliert wurden.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

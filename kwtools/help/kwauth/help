@@ -16,3 +16,7 @@ LDAP: Authentifizierung ueber LDAP.
 NIS: Authentifizierung ueber NIS, ehemals \"yellow pages\".
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

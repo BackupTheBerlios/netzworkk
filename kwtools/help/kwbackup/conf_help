@@ -19,3 +19,7 @@ crontab: Das Script kwbackup_cron in die crontab Tabelle des Users
 NOTIZ: Achten Sie darauf das Sie Schreib/Lesezugriff auf die 
 \tVerzeichnisse haben. Sonst gibt es Fehlermeldungen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

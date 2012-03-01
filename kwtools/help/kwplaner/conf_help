@@ -23,3 +23,7 @@ Verzeichnis: Auswahl des Verzeichnisses in denen nach den Kalender
 \tFeiertagen gesucht wird. Standard ist /usr/share/calendar
 \tund $HOME/.calendar.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

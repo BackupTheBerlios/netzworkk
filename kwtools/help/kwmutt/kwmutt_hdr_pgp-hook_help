@@ -13,3 +13,7 @@ einen bestimmten Empfaenger benutzt werden soll.
 Beispiel: pgp-hook user@domain.de 0xKey-ID
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

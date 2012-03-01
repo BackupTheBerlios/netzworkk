@@ -23,3 +23,7 @@ Notiz: Eingabe einer Notiz. Dies geschieht entweder ueber die
 \thaben (man 5 main.cf, Option EDITOR).
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

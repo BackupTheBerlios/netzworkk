@@ -32,3 +32,7 @@ New_Port: Zu welchen Port sollen die Pakete weitergeleitet werden
 NOTIZ: Sie muessen, bei den Menuepunkten zu den Ports, Portnummern
 \tvergeben, keine Portnamen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

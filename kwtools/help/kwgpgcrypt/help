@@ -27,3 +27,7 @@ signieren/verschl: Dateien oder ganze Verzeichnisse mit gnupg
 entschluesseln: Dateien oder ganze Verzeichnisse mit gnupg 
 \tentschluesseln.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

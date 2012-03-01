@@ -716,3 +716,7 @@ oder ein Projekt und natuerlich die Limits eingeben/auswaehlen.')
 	fi
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

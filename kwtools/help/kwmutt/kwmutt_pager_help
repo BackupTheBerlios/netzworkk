@@ -19,3 +19,7 @@ pager_stop: Falls die Variable auf "ja" gesetzt ist, wird der
 \tgeschlossen.
 \tDefault ist pager_stop="no"')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

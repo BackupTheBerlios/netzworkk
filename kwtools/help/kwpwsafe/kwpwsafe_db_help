@@ -22,3 +22,7 @@ Passwort aendern: Passwort einer Datenbank aendern. Dabei muessen
 Datenbank loeschen: Ein oder mehrere Datenbanken loeschen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

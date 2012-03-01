@@ -67,3 +67,7 @@ set status_format=\"$status_format\"
 # End $M_FORMAT"
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

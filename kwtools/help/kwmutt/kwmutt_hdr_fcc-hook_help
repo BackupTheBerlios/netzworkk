@@ -14,3 +14,7 @@ Das obige speichert eine Kopie von allen Nachrichten, die an die
 Domain aol.com gesendet werden, in der Mailbox +spammers.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

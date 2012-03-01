@@ -292,3 +292,7 @@ done
 unset -- BLAND CAL FEIERTAG_DIR PLAN_HOST gv_Auswahl
 exit 0
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

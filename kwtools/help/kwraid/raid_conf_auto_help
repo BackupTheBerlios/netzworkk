@@ -13,3 +13,7 @@ part: Wenn Sie moechten koennen Sie noch die Anzahl eingeben bis zu
 \tvorhanden sind.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

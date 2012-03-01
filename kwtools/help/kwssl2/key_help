@@ -6,3 +6,7 @@ MSG=$(gettext 'exportieren: Exportiert den privaten Schluessel in verschiedene
 loeschen: Loescht ein oder mehrerer Schluessel.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

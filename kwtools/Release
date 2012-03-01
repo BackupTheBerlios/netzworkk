@@ -7,7 +7,7 @@
    grml ist eine Live-CD basierend auf Debian.
 
 -------------------------------------------------------------------------------
-kwtools 0.8.4 Release Notes for Debian Sid (unstable) and grml >=1.0
+kwtools 0.8.5 Release Notes for Debian Sid (unstable) and grml >=1.0
 -------------------------------------------------------------------------------
 
 Kai Wilke <kiste@netzworkk.de>
@@ -15,7 +15,7 @@ Kai Wilke <kiste@netzworkk.de>
 Diese Release wurde auf Debian/Sid erzeugt.
 
 Benutzte Programme:
-bsdmainutils, bzip2, cddb, cd-discid, cdparanoia, cdrdao >=1.1.9, coreutils >=5.0,
+bsdmainutils, bzip2, cddb, cd-discid, cdparanoia, cdrdao >=1.1.9, coreutils >=8.13,
 cryptsetup >=1.0.1-16, daemontools-0.70, dhcp-client, dialog, djbdns-1.05,
 dvd+rw-tools >=5.12, ecryptfs-utils, eject, ethtool, expect, file >=4.17,
 file-rc, fuse-utils, gcal, gettext >=0.14.5-3, genisoimage-1.1.8i,
@@ -27,7 +27,7 @@ texlive-latex-base, texlive-latex-extra, ucspi-tcp-0.88, util-linux >=2.17.2
 udev, vcdimager, vorbis-tools >=1.0, wireless-tools, wodim, wpasupplicant,
 zgv, xmms2, zsh >=4.2.0
 
-kwtools 0.8.4 Release Notes for OpenSuSE >= 11.0
+kwtools 0.8.5 Release Notes for OpenSuSE >= 11.0
 -----------------------------------------------------
 
 Kai Wilke <kiste@netzworkk.de>
@@ -36,7 +36,7 @@ Diese Release wurde auf Debian/Sid erzeugt.
 
 Benutzte Programme:
 aaa_base, bsdmainutils, bzip2, cddb, cd-discid, cdparanoia, cdrdao >=1.1.9,
-coreutils >=5.0, daemontools-0.70, dhcp-client, dialog, djbdns-1.05,
+coreutils >=8.13, daemontools-0.70, dhcp-client, dialog, djbdns-1.05,
 dvd+rw-tools >=5.12, ecryptfs-utils, eject, ethtool, expect, file >=4.17,
 file-rc, fuse-utils, gcal, gettext >=0.15-22, genisoimage-1.1.8, gphoto,
 grub, grub2, hwinfo, iptables, mjpegtools (>= 1.6.0), lame,
@@ -47,7 +47,7 @@ ucspi-tcp-0.88, udev, util-linux >=2.17.2, util-linux-crypto >=2.12, vcdimager,
 vorbis-tools >=1.0, wireless-tools, wodim, wpasupplicant, yast2-*, 
 zgv, xmms2, zsh >=4.2.0
 
-kwtools 0.8.4 Release Notes for CentOS >=5.4 and Fedora >=9
+kwtools 0.8.5 Release Notes for CentOS >=5.4 and Fedora >=9
 -----------------------------------------------------
 
 Kai Wilke <kiste@netzworkk.de>
@@ -56,7 +56,7 @@ Diese Release wurde auf Debian/Sid erzeugt.
 
 Benutzte Programme:
 authconfig-tui, bsdmainutils, bzip2, cddb, cd-discid,
-cdparanoia, cdrdao >=1.1.9, coreutils >=5.0, cryptsetup-luks >=1.0.3-2.1,
+cdparanoia, cdrdao >=1.1.9, coreutils >=8.13, cryptsetup-luks >=1.0.3-2.1,
 daemontools-0.70, dhcp-client, dialog, djbdns-1.05, dvd+rw-tools >=5.12,
 ecryptfs-utils, eject, ethtool, expect, file >=4.17, file-rc, fuse-utils,
 gcal, gettext >=0.14.1, genisoimage-1.1.8, gphoto, grub, grub2, hwinfo, iptables,

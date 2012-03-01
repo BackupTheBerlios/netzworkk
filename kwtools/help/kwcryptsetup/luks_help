@@ -31,3 +31,7 @@ NOTIZ: Achten Sie darauf das Sie nicht die Passphrase loeschen die
 \tDie Passphrase wird nachdem beenden, des addieren oder
 \tloeschen Prozesses sofort wieder geloescht.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

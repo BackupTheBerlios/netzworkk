@@ -63,3 +63,7 @@ WARN_LOG_LEVEL: Level ab dem alles in /var/log/warn geloggt
 NOTIZ: Auch hier muss ein Eintrag in der Datei /etc/syslog.conf
 \tsein.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

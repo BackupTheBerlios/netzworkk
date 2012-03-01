@@ -26,3 +26,7 @@ kwtermin: ist ein client-script, mit deren Hilfe man seine Termine
 \tverwalten kann. Termine werden per mail gemeldet. Geben Sie
 \talso immer Ihre Mailadresse, in der Konfiguration, an.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -76,3 +76,7 @@ fi
 # Verzeichnisse syncronisieren
 kwrsync_exec no_kwrsync_cron_exec
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

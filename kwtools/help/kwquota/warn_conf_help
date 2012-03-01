@@ -77,3 +77,7 @@ Mail Laufwerk: Falls Sie warnquota auf einem Mail Server
 \tauswaehlen (Bsp. /dev/hdb1) wird nur fuer dieses Laufwerk
 \tkeine Ueber Quota-E-Mail verschickt. Fuer alle anderen
 \tLaufwerke schon.')
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

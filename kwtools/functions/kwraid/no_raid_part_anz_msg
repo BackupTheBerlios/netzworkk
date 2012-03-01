@@ -13,3 +13,7 @@ no_raid_part_anz_msg() {
 	fi
 }
 # }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

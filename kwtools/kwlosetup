@@ -590,3 +590,7 @@ if [ "$MOUNT_PATH" ] ; then
 fi
 #
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

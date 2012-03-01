@@ -92,3 +92,7 @@ set forward_decrypt=\"$forward_decrypt\"
 # End $M_GPG"
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

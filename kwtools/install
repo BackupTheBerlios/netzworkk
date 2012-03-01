@@ -1,10 +1,10 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.01.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 29.02.2012
 #
 # Script: install, installiert die kwtools Scripts und kompiliert,
 # wenn angegeben alle Funktionen.
 #
-# Version: 0.2.3
+# Version: 0.2.4
 #
 setopt shwordsplit extendedglob
 NAME=kwtools
@@ -80,6 +80,8 @@ BIN_PATH="${PREFIX}/bin"
 LOCALE_PATH="${PREFIX}/share/locale"
 LINTIAN_PATH="${PREFIX}/share/lintian/overrides"
 INITD_PATH="/etc/init.d"
+CROND_PATH="/etc/cron.d"
+LOGROTATED_PATH="/etc/logrotate.d"
 GRUB_PATH="/etc/grub.d"
 PPP_PATH="/etc/ppp"
 SKEL_DIR="/etc/skel"
@@ -137,6 +139,12 @@ if [ ! -d "$BIN_PATH" ] ; then
 fi
 if [ ! -d "$INITD_PATH" ] ; then
 	$INSTALL $INSTALL_DIR_OPT $INITD_PATH
+fi
+if [ ! -d "$CROND_PATH" ] ; then
+	$INSTALL $INSTALL_DIR_OPT $CROND_PATH
+fi
+if [ ! -d "$LOGROTATED_PATH" ] ; then
+	$INSTALL $INSTALL_DIR_OPT $LOGROTATED_PATH
 fi
 if [ ! -d "$GRUB_PATH" ] ; then
 	$INSTALL $INSTALL_DIR_OPT $GRUB_PATH
@@ -299,6 +307,12 @@ fi
 if [ -x ./etc/ppp/kwnarc.ip-down ] ; then
 	$INSTALL $INSTALL_EXEC_OPT ./etc/ppp/kwnarc.ip-down ${PPP_PATH}/ip-down.d/kwnarc
 fi
+# kwrsync_backup (cron) kopieren
+$INSTALL $INSTALL_FILE_OPT ./etc/cron.d/kwrsync_backup ${CROND_PATH}
+
+# kwrsync_backup (logrotate) kopieren
+$INSTALL $INSTALL_FILE_OPT ./etc/logrotate.d/kwrsync_backup ${LOGROTATED_PATH}
+
 # kwnarc Init Script kopieren
 if [ -e /etc/debian_version ] ; then
 	if [ -e ./etc/init.d/kwnarc.debian ] ; then
@@ -372,3 +386,7 @@ if [ "$COMPILE" = yes ] ; then
 	}'
 fi
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

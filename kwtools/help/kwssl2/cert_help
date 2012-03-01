@@ -18,3 +18,7 @@ widerrufen: Erklaert Zertifikate fuer ungueltig.
 loeschen: Loescht ein oder mehrere ungueltige Zertifikate.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

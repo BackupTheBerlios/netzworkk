@@ -1,14 +1,14 @@
 # kwrsync_backup english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2012
 # This file is distributed under the same license as the kwtools-net package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kwrsync_backup-0.1.10\n"
+"Project-Id-Version: kwrsync_backup-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-10 09:02+0200\n"
-"PO-Revision-Date: 2011-07-10 09:04+0200\n"
+"POT-Creation-Date: 2012-03-01 23:48+0100\n"
+"PO-Revision-Date: 2012-03-01 23:49+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -25,91 +25,194 @@ msgstr "Backup"
 msgid "Rotierung"
 msgstr "Rotate"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:7
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:42
-msgid "Ausschluss_Datei"
-msgstr "Exclude_File"
+#: ../../net/kwrsync_backup:58
+#, fuzzy
+msgid "Rechner Konfiguration"
+msgstr "Server Configuration"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:8
+#: ../../net/kwrsync_backup:81
+msgid "stuendlich"
+msgstr "hourly"
+
+#: ../../net/kwrsync_backup:82
+msgid "taeglich"
+msgstr "daily"
+
+#: ../../net/kwrsync_backup:83
+#, fuzzy
+msgid "woechentlich"
+msgstr "weekly"
+
+#: ../../net/kwrsync_backup:84
+msgid "monatlich"
+msgstr "mounthly"
+
+#: ../../net/kwrsync_backup:150
+msgid "Es ist kein Backup/Snapshot vorhanden"
+msgstr ""
+
+#: ../../net/kwrsync_backup:162
+#, sh-format
+msgid ""
+"Das ermitteln des belegten Platzes des Snapshots vom Rechner $S kann etwas "
+"dauern."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:10
 #, fuzzy
 msgid "Backupverz."
 msgstr "Backupdir."
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:9
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:11
 msgid "Bandbreite"
 msgstr "Bandwith"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:10
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:12
 msgid "Check_Platz"
 msgstr "Check_Space"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:11
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:13
 #, fuzzy
 msgid "Minimum_Platz"
 msgstr "Minimum_Space"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:12
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:14
 msgid "Mountverz."
 msgstr "Mountdir."
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:13
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:15
 #, fuzzy
 msgid "Remote_Shell"
 msgstr "Remote_Shell"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:14
-msgid "Server"
-msgstr "Server"
-
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:15
-#, fuzzy
-msgid "Benutzer"
-msgstr "User"
-
 #: ../../functions/kwrsync_backup/kwrsync_backup_conf:16
-msgid "crontab"
-msgstr "crontab"
+msgid "Rechner"
+msgstr "Host"
 
 #: ../../functions/kwrsync_backup/kwrsync_backup_conf:17
-msgid "bearbeiten (dialog)"
+msgid "Logdatei"
+msgstr "Logfile"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:18
+msgid "Dateisystemgrenze"
+msgstr "Filesystem boundary"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:19
+msgid "Hardlinks erstellen"
+msgstr "Hardlink create"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:20
+msgid "Rotiere stuendlich"
+msgstr "Rotate hourly"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:21
+msgid "Rotiere taeglich"
+msgstr "Rotate daily"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:22
+msgid "Rotiere woechentlich"
+msgstr "Rotate weekly"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:23
+msgid "Rotiere monatlich"
+msgstr "Rotate mounthly"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:24
+msgid "LVM lvcreate"
+msgstr "LVM lvcreate"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:25
+msgid "LVM lvremove"
+msgstr "LVM lvremove"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:26
+msgid "Snapshot Groesse"
+msgstr "Snapshot Size"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:27
+msgid "Snapshot Name"
+msgstr "Snapshot Name"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:28
+msgid "VG Pfad"
+msgstr "VG Path"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:29
+msgid "LVM Mountpunkt"
+msgstr "LVM Mountpoint"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:30
+msgid ""
+"Geben Sie bitte eine Integer Zahl fuer die Anzahl der Snapshots ein die "
+"behalten werden sollen."
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:63
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:88
 msgid ""
 "Geben Sie hier ein Limit fuer die Bandbreite, in Kbyte/s, bei der "
 "Uebertragung ein (256=256Kb/s)."
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:76
-msgid "Soll die Festplatten/Partitionsgroesse gecheckt werden (yes/no)?"
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:101
+#, sh-format
+msgid ""
+"Soll die Festplatten/Partitionsgroesse geprueft werden ($gv_Yes/$gv_No)?"
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:89
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:114
 msgid ""
 "Geben Sie hier den Platz in Prozent an, den die Partition/Festplatte "
 "mindestens haben sollte, in welcher das Backup gespeichert soll."
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:107
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:132
 msgid "Geben Sie hier die Rechner an von denen ein Backup gezogen werden soll."
 msgstr "Please to enter the backup hosts"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:123
-msgid "Waehlen Sie Ihre Remote Shell aus."
-msgstr "Select your remote shell."
-
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:151
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:162
 #, fuzzy
 msgid "kein_Benutzer"
 msgstr "no_User"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:152
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:163
 msgid ""
 "Waehlen Sie einen Benutzer aus, der sich anstelle von \"root\" auf den zu "
 "sichernden Rechnern einloggen darf."
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:184
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:190
+msgid "Waehlen Sie Ihre Remote Shell aus."
+msgstr "Select your remote shell."
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:217
+#, sh-format
+msgid ""
+"Soll das rekursive Sichern ueber Dateisystemgrenzen hinweg ausgeschaltet "
+"werden ($gv_Yes/$gv_No)?"
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:230
+#, sh-format
+msgid ""
+"Sollen Hardlinks bei identischen Dateien erstellt werden ($gv_Yes/$gv_No)?"
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:314
+msgid "Geben Sie die Groesse fuer den LVM Snapshot ein (20G = 20 GigaByte)."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:326
+msgid "Geben Sie einen Namen fuer den LVM Snapshot ein."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:370
+#, sh-format
+msgid ""
+"Sie muessen mindestens den Menuepunkt \\\"$gv_User\\\" mit einem Wert "
+"belegen, wenn Sie eine Shell fuer die entfernte Uebertragung auswaehlen."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:381
 msgid ""
 "Es gibt keinen DSA Schluessel (ssh) fuer den Benutzer \\\"root\\\". Soll "
 "jetzt einer erstellt werden (Ja/Nein)? Beantworten Sie bei \\\"Ja\\\" die "
@@ -117,11 +220,11 @@ msgid ""
 "\"cronjob\\\" moeglich."
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:188
-msgid "Es konnte kein Schluessl erstellt werden"
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:385
+msgid "Es konnte kein Schluessel erstellt werden"
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:192
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:389
 #, sh-format
 msgid ""
 "Sie koennen jetzt die Datei /root/.ssh/authorized_keys.rsync auf die zu "
@@ -130,7 +233,7 @@ msgid ""
 "angelegt haben."
 msgstr ""
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_conf:197
+#: ../../functions/kwrsync_backup/kwrsync_backup_conf:399
 #, sh-format
 msgid ""
 "Denken Sie dran die Datei /root/.ssh/authorized_keys(.rsync) auf die zu "
@@ -138,21 +241,6 @@ msgid ""
 "\"$USER_RUN\\\" zu kopieren. Diesen Benutzer sollten Sie vorher anlegen oder "
 "angelegt haben. Lesen Sie dazu die Hilfe!"
 msgstr ""
-
-#: ../../functions/kwrsync_backup/kwrsync_backup_exec:6
-#, sh-format
-msgid "Starte rsync Backup von $S ..."
-msgstr "Starting rsync Backup from $S ..."
-
-#: ../../functions/kwrsync_backup/kwrsync_backup_exec:7
-#, sh-format
-msgid "Fatal: rsync Backup ($S) mit Fehlern beendet!"
-msgstr "Fatal: rsync Backup ($S) finished with errors!"
-
-#: ../../functions/kwrsync_backup/kwrsync_backup_exec:8
-#, sh-format
-msgid "Beende rsync Backup von $S ..."
-msgstr "Finished rsync Backup from $S ..."
 
 #: ../../functions/kwrsync_backup/kwrsync_backup_exec:9
 #, fuzzy
@@ -164,53 +252,183 @@ msgstr "kwrsync_backup_cron: Backup Error"
 msgid "kwrsync_backup_cron: Backup beendet"
 msgstr "kwrsync_backup_cron: Backup finished"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_exec:33
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:14
+msgid "Sie muessen erst LVM in der Konfiguration einstellen."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:71
+#, sh-format
+msgid "Es ist noch kein Snapshot (${Opt}.${Arg}) vorhanden."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:88
+#, sh-format
+msgid "Rotiere $DATE_OPT Snapshots ..."
+msgstr "Rotate $DATE_OPT snapshots ..."
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:96
+#, fuzzy, sh-format
+msgid "Loesche das letzte Backup ${DATE_OPT}.${RotateCount}."
+msgstr "Delete the last backup ${DATE_OPT}.${RotateCount}."
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:136
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:313
+msgid "Backuprotierung"
+msgstr "Backuprotate"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:154
+#, fuzzy
+msgid "Ausfuehrung"
+msgstr "Execution"
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:170
 msgid "kein Netz?"
 msgstr "No Net?"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_exec:67
-msgid "Backupausfuehrung"
-msgstr "Backupexecution"
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:208
+#, sh-format
+msgid "Starte rsync Backup von $S ..."
+msgstr "Starting rsync Backup from $S ..."
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_rotate:6
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:209
 #, fuzzy, sh-format
-msgid "Rotiere Momentaufnahme von $S ..."
-msgstr "Rotate snapshot from $S ..."
+msgid "FATAL: rsync Backup ($S) mit Fehlern beendet!"
+msgstr "FATAL: rsync Backup ($S) finished with errors!"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_rotate:39
-msgid "loeschen"
-msgstr "delete"
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:210
+#, sh-format
+msgid "Beende rsync Backup von $S ..."
+msgstr "Finished rsync Backup from $S ..."
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_rotate:40
-msgid "Loesche das letzte Backup snapshot.7."
-msgstr "Delete the last backup snapshot.7."
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:304
+#, sh-format
+msgid "ERROR: backup_script $SCRIPT returned 1"
+msgstr "ERROR: backup_script $SCRIPT returned 1"
 
-#: ../../functions/kwrsync_backup/kwrsync_backup_rotate:58
-msgid "Backuprotierung"
-msgstr "Backuprotate"
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:349
+#, sh-format
+msgid "Es ist keine Konfiguration (${S}.conf) vorhanden."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/kwrsync_backup_exec:372
+#, sh-format
+msgid ""
+"ERROR: Zielkonflikt zwischen \\\"$b\\\" und \\\"$Tmp\\\" bei mehrfachen "
+"backup_script Eintraegen."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:11
+#, fuzzy
+msgid "Exclude Datei"
+msgstr "Exclude File"
+
+#: ../../functions/kwrsync_backup/server_conf:12
+#, fuzzy
+msgid "Include Datei"
+msgstr "Include File"
+
+#: ../../functions/kwrsync_backup/server_conf:107
+msgid "Waehlen Sie einen Eintrag zum aendern aus."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:197
+msgid "Quelle"
+msgstr "Source"
+
+#: ../../functions/kwrsync_backup/server_conf:198
+msgid "Ziel"
+msgstr "Destination"
+
+#: ../../functions/kwrsync_backup/server_conf:199
+msgid "rsync Argumente"
+msgstr "rsync arguments"
+
+#: ../../functions/kwrsync_backup/server_conf:200
+#, fuzzy
+msgid "LVM"
+msgstr "LVM"
+
+#: ../../functions/kwrsync_backup/server_conf:201
+msgid "Script"
+msgstr "Script"
+
+#: ../../functions/kwrsync_backup/server_conf:202
+msgid "Eingabe"
+msgstr "Input"
+
+#: ../../functions/kwrsync_backup/server_conf:203
+msgid "Auswahl"
+msgstr "Choice"
+
+#: ../../functions/kwrsync_backup/server_conf:258
+msgid "Geben Sie das Quellverzeichnis ein das gesichert werden soll."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:287
+#, sh-format
+msgid "Das Ziel ($DST) existiert schon!"
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:299
+msgid "Geben Sie den Benutzer fuer die Verbindung zum entfernten Rechner ein."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:311
+#, sh-format
+msgid ""
+"Geben Sie zusaetzliche Argumente zu den Standard Optionen "
+"($DEFAULT_RSYNC_ARGS) fuer rsync ein."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:363
+msgid "Geben Sie einen Befehl oder ein Script mit vollem Pfad ein."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:388
+#, fuzzy
+msgid "Waehlen Sie ein LV aus."
+msgstr "Select a LV."
+
+#: ../../functions/kwrsync_backup/server_conf:488
+#, sh-format
+msgid ""
+"Sie haben beim Menuepunkt $lv_Source einen falschen Wert eingegeben. Lesen "
+"Sie bitte die Hilfe."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:495
+msgid ""
+"Sie haben vergessen einige Menuepunkte mit Werten zu belegen. Lesen Sie "
+"bitte die Hilfe."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:522
+msgid "Waehlen Sie ein oder mehrere Eintraege zum loeschen aus."
+msgstr ""
+
+#: ../../functions/kwrsync_backup/server_conf:585
+msgid ""
+"Es gibt keine Konfigurationsdatei (${SERVER_CONF_FILE##*/). Sie muessen erst "
+"eine erstellen."
+msgstr ""
+
+#: ../../help/kwrsync_backup/backup_time_help:3
+#, sh-format
+msgid ""
+"Auswahl der zeitlichen Sicherung. Nur bei der Auswahl von\n"
+"$lv_hourly wird wirklich eine Sicherung erstellt, bei allen anderen\n"
+"Menuepunkten werden die Sicherungen rotiert.\n"
+msgstr ""
 
 #: ../../help/kwrsync_backup/conf_help:3
 #, sh-format
 msgid ""
-"Zum bearbeiten der Datei\n"
-"/etc/kwtools/kwrsync_backup-excludes koennen Sie die Variable\n"
-"\"EDITOR\", in der Datei /etc/kwtools/main.cf, mit einem Editor\n"
-"Ihrer Wahl belegen. Ansonsten wird die Dialogbox \"editbox\"\n"
-"verwendet (Bsp.: EDITOR=/usr/bin/vim).\n"
+"Backupverz.: Verzeichnis in dem die Backups angelegt werden.\n"
+"\\tDiese liegen dann zum Beispiel unter Backupverz/hourly.0/Rechner.\n"
 "\n"
-"Ausschluss_Datei: Bearbeitung der Datei\n"
-"\\t/etc/kwtools/kwrsync_backup-excludes. Diese beinhaltet die\n"
-"\\tVerzeichnisse/Dateien die nicht gesichert werden sollen. Als\n"
-"\\tVerzeichnisse sollten Sie auf jeden Fall /proc und /sys eintragen,\n"
-"\\tda diese fuer die Wiederherstellung der Backups nicht benoetigt\n"
-"\\twerden. Die Datei /etc/shadow sollte ebenfalls drin stehen, denn\n"
-"\\tfalls Ihr Rechner geknackt wird kann man mit einem Passwortcracker\n"
-"\\tihre Passwoerter herausfinden.\n"
-"\n"
-"Backup_verzeichnis: Verzeichnis in dem die Backups angelegt werden.\n"
-"\\tDiese liegen dann unter Backupverz/Rechner/snapshot.0.\n"
-"\n"
-"NOTIZ: Es gibt maximal 7 Sicherungsverzeichnisse (snapshot.0-6).\n"
+"NOTIZ: Es gibt je nach Konfiguration n Sicherungen bevor die letzte\n"
+"\\tSicherung geloescht wird.\n"
+"\\tROTATE_COUNT_HOURLY=6 - hourly.0 - hourly.5\n"
 "\n"
 "Bandbreite: Hier koennen Sie die Banbreite der Uebertragung\n"
 "\\tlimitieren (100 = 100 KBytes/s).\n"
@@ -221,33 +439,76 @@ msgid ""
 "Minimum_Platz: Geben Sie hier den Prozentsatz ein der maximal an\n"
 "\\tPlattenplatz benutzt werden darf. Denken Sie daran das die\n"
 "\\tRorierung der Daten auch etwas Platz benoetigt.\n"
-"\\tIntegerzahl zwischen 0 und <100 (Prozent).\n"
+"\\tIntegerzahl zwischen 0 und \\<100 (Prozent).\n"
 "\\tIst die benutzte Kilobyte oder Inode Prozentzahl kleiner\n"
 "\\tals die angegebene maximale Prozentzahl an Plattenplatz\n"
 "\\t($HDMINFREE), wird ein Backup durchgefuehrt.\n"
 "\n"
-"Mount_verzeichnis: Hier wird das Verzeichnis ausgewaehlt, welches\n"
+"Mountverz.: Hier wird das Verzeichnis ausgewaehlt, welches\n"
 "\\tins Dateisystem vorher eingebunden werden muss, wo sich das\n"
-"\\tBackup Verzeichnis befindet. Es muss bereits in der \n"
-"\\t/etc/fstab konfiguriert sein.\n"
+"\\tBackup Verzeichnis befindet. \n"
 "\n"
-"Remote_shell: Auswahl der Shell die fuer die Uebertragung genutzt\n"
+"NOTIZ: Das Mountverz. muss bereits in der /etc/fstab konfiguriert\n"
+"\\tsein.\n"
+"\n"
+"Rechner: Eingabe der zu sichernden Server/Rechner.\n"
+"\n"
+"Logdatei: Eingabe/Auswahl der Logdatei. Standard ist\n"
+"\\t/var/log/kwrsync_backup.log.\n"
+"\n"
+"Benutzer: Waehlen Sie einen Benutzer aus, der sich anstelle von\n"
+"\\t\"root\" auf die zu sichernden Rechnern einloggen darf. Es werden\n"
+"\\tnur Benutzer angeboten die auf diesem System installiert sind.\n"
+"\\tDieser wird als Vorschlag fuer die Konfiguration der\n"
+"\\teinzelnen Rechner oder falls keiner in der Server Konfiguration\n"
+"\\tangegeben wurde benutzt.\n"
+"\n"
+"Remote_Shell: Auswahl der Shell die fuer die Uebertragung genutzt\n"
 "\\twerden soll. Zur Auswahl stehen rsh und ssh, falls sie\n"
 "\\tinstalliert sind. Die ssh uebertraegt alles verschluesselt.\n"
 "\n"
 "NOTIZ: Die rsh sollte man nur noch in Netzwerken ohne Internet\n"
 "\\tAnschluss benutzen.\n"
 "\n"
-"Server: Eingabe der zu sichernden Server/Rechner.\n"
+"Dateisystemgrenze: Bei \"yes\" wird das rekursive Sichern ueber\n"
+"\\tDateisystemgrenzen hinweg ausgeschaltet (yes/no).\n"
 "\n"
-"Benutzer: Waehlen Sie einen Benutzer aus, der sich anstelle von\n"
-"\\t\"root\" auf die zu sichernden Rechnern einloggen darf. Es werden\n"
-"\\tnur Benutzer angeboten die auf diesem System installiert sind.\n"
+"Hardlinks erstellen: Sollen Hardlinks bei identischen Dateien\n"
+"\\terstellt werden. Dies ist der beste Weg um spezielle Dateien,\n"
+"\\twie FIFOs, zu unterstuetzen und natuerlich um Platz zu sparen.\n"
+"\\tSchalten Sie dies ein (yes), wenn Ihr rsync (\\>=2.6.4) dies\n"
+"\\tunterstuetzt.\n"
 "\n"
-"crontab: Das Script kwrsync_backup_cron in die crontab Tabelle von\n"
-"\\troot einfuegen oder loeschen. Dieses Script fuehrt die\n"
-"\\tSicherung im Hintergrund aus und schickt bei Fehlern eine\n"
-"\\tMail.\n"
+"Rotiere stuendlich: Geben Sie bitte eine Integer Zahl fuer die\n"
+"\\tAnzahl der stuendlichen Snapshots ein die behalten werden sollen.\n"
+"\\tStandard ist 6.\n"
+"\n"
+"Rotiere taeglich: Geben Sie bitte eine Integer Zahl fuer die\n"
+"\\tAnzahl der taeglichen Snapshots ein die behalten werden sollen.\n"
+"\\tStandard ist 7.\n"
+"\n"
+"Rotiere woechentlich: Geben Sie bitte eine Integer Zahl fuer die\n"
+"\\tAnzahl der woechentlichen Snapshots ein die behalten werden\n"
+"\\tsollen. Standard ist 4.\n"
+"\n"
+"Rotiere monatlich: Geben Sie bitte eine Integer Zahl fuer die\n"
+"\\tAnzahl der monatlichen Snapshots ein die behalten werden sollen.\n"
+"\\tStandard ist 6.\n"
+"\n"
+"LVM lvcreate: Angabe des LVM Programm lvcreate mit vollem Pfad.\n"
+"\n"
+"LVM lvremove: Angabe des LVM Programm lvremoove mit vollem Pfad.\n"
+"\n"
+"Snapshot Groesse: Angabe der Groesse fuer den temporaeren LVM\n"
+"\\tSnapshot.\n"
+"\n"
+"Snapshot Name: Name des LVM Snapshot. Standard ist lvmsnapshot.\n"
+"\n"
+"VG Pfad: Verzeichnis unter dem die Volume Groups (VG) liegen.\n"
+"\\tUnter Linux ist dies /dev.\n"
+"\n"
+"LVM Mountpunkt: Angabe eines Mountpunkts fuer den temporaeren LVM\n"
+"\\tSnapshot.\n"
 "\n"
 "speichern: Beim speichern wird ueberprueft, ob der Benutzer \"root\"\n"
 "\\tschon eine Datei /root/.ssh/id_dsa.pub besitzt. Wenn nicht wird\n"
@@ -275,7 +536,86 @@ msgid ""
 "\n"
 "Konfiguration: Konfiguration von kwrsync_backup\n"
 "\n"
-"Backup: Backup der zu sichernden Server starten.\n"
+"Rechner Konfiguration: Konfiguration der einzelnen Rechner und deren\n"
+"\\tAusschluss- beziehungsweise die Include Datei.\n"
 "\n"
-"Rotierung: Backup Verzeichnisse rotieren."
+"Ansicht: Anzeige der belegten Speichergroesse von Snapshots.\n"
+"\n"
+"Backup: Backup der zu sichernden Server starten.\n"
+msgstr ""
+
+#: ../../help/kwrsync_backup/server_conf_help:3
+msgid ""
+"Ansicht: Ansicht der Konfiguration.\n"
+"\n"
+"Zum bearbeiten der Datei rechner-excludes.conf, im Verzeichnis\n"
+"/etc/kwtools/kwrsync_backup.d, koennen Sie die Variable\n"
+"\"EDITOR\", in der Datei /etc/kwtools/main.cf, mit einem Editor\n"
+"Ihrer Wahl belegen. Ansonsten wird die Dialogbox \"editbox\"\n"
+"verwendet (Bsp.: EDITOR=/usr/bin/vim).\n"
+"\n"
+"Exclude Datei: Bearbeitung der Datei rechner-excludes.conf.\n"
+"\\tDiese beinhaltet die Verzeichnisse/Dateien die nicht gesichert\n"
+"\\twerden sollen. Als Verzeichnisse sollten Sie auf jeden Fall /proc\n"
+"\\t/sys und /run eintragen, da diese fuer die Wiederherstellung der\n"
+"\\tBackups nicht benoetigt werden. Die Datei /etc/shadow sollte\n"
+"\\tebenfalls drin stehen, denn falls Ihr Rechner geknackt wird kann\n"
+"\\tman mit einem Passwortcracker ihre Passwoerter herausfinden.\n"
+"\n"
+"Include Datei: Bearbeitung der Datei rechner-includes.conf.\n"
+"\n"
+"anlegen: Einen Konfigurationseintrag anlegen.\n"
+"\n"
+"aendern: Eintraege aendern.\n"
+"\n"
+"loeschen: Loeschen von Eintraegen.\n"
+msgstr ""
+
+#: ../../help/kwrsync_backup/server_input_help:3
+msgid ""
+"Quelle: Angabe der Quelle die gesichert werden soll. Dies kann\n"
+"\\tein Verzeichnis, eine Datei oder Rechner sein.\n"
+"\n"
+"SYNTAX:\n"
+"/Pfad/Verzeichnis\n"
+"/Pfad/Datei\n"
+"Rechner:/Pfad/Verzeichnis\n"
+"Rechner:/Pfad/Datei\n"
+"\n"
+"Ziel: Auswahl des Ziels, relativ zum Backup Verzeichnis, wohin\n"
+"\\tgesichert werden soll. Dies ist meist der Rechnername, kann aber\n"
+"\\tauch ein Verzeichnis sein.\n"
+"\n"
+"SYNTAX:\n"
+"Verzeichnis\n"
+"Rechner/Verzeichnis\n"
+"Verzeichnis/Verzeichnis\n"
+"\n"
+"Benutzer: Waehlen Sie einen Benutzer aus, der sich anstelle von\n"
+"\\t\"root\" auf die zu sichernden Rechnern einloggen darf.\n"
+"\n"
+"rsync Argumente: Eingabe von zusaetzlichen Argumenten fuer das\n"
+"\\tProgramm rsync. Diese muessen mit einem Leerzeichen getrennt\n"
+"\\tsein (man 1 rsync).\n"
+"\n"
+"LVM: Auswahl eines Logischen Volume (LV) von dem ein temporaerer\n"
+"\\tSnapshot erstellt werden soll.\n"
+"\n"
+"Script: Geben Sie einen Befehl oder ein Script mit vollem Pfad ein.\n"
+"\\tDieser Punkt besitzt eine eigene Hilfe.\n"
+msgstr ""
+
+#: ../../help/kwrsync_backup/server_script_help:3
+msgid ""
+"Auswahl: Auswahl eines Script oder Programm das ausgefuehrt werden\n"
+"\\tsoll.\n"
+"\n"
+"Eingabe: Eingabe eines Befehls. Dieser kann auch ein Befehl sein\n"
+"\\tder auf entfernten Rechnern ausgefuehrt werden soll. Bei Befehlen\n"
+"\\tdie auf entfernten Rechnern ausgefuehrt werden muss eine remote\n"
+"\\tShell angegeben werden.\n"
+"\n"
+"SYNTAX:\n"
+"/bin/date \"+ backup of localhost started at %c\"\n"
+"ssh root@example.com \"mysqldump -A > /var/db/dump/mysql.sql\"\n"
 msgstr ""

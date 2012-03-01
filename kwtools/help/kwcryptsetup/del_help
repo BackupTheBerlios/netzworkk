@@ -4,3 +4,7 @@ MSG=$(gettext 'Loeschen von ein oder mehreren verschluesselten Laufwerken. Dabei
 werden auch die Eintraege der Konfigurationsdatei /etc/crypttab
 geloescht.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

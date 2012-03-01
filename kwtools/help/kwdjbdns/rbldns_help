@@ -21,3 +21,7 @@ loeschen: Hier koennen Sie ihre Eintraege wieder loeschen.
 Datenbank neu erstellen: Erstellt eine neue Datenbank fuer den
 \trbldns.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

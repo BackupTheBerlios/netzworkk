@@ -29,3 +29,7 @@ Datenbank neu erstellen: Erstellt eine neue Datenbank fuer den
 \taxfrdns, die vom tcpserver gelesen wird,
 \tum die Zugriffsrechte zu bestimmen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

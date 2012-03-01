@@ -3,3 +3,7 @@ TITLE=$(gettext 'Tabellen::Werte::Hilfe')
 MSG=$(gettext 'Hier koennen Sie vorhandene Konfigurationen zur Bearbeitung
 auswaehlen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

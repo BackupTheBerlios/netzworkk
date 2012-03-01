@@ -701,3 +701,7 @@ vg_groups() {
 	unset -- O_VG Z_VG S_VG PV_AUSWAHL VG_NAME
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

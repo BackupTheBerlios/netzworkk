@@ -40,3 +40,7 @@ PLAN_HOST=\"$PLAN_HOST\"
 read_file kwplanerrc
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

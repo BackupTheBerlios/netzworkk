@@ -37,3 +37,7 @@ Header Anzeige: Einstellung von Headern die angezeigt werden sollen.
 \tStandardmaessig werden alle Header bei der Anzeige ignoriert.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

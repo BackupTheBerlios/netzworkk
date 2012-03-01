@@ -21,3 +21,7 @@ Schluessel_Server: Eingabe des Schluessel Server. Dieser Server
 Port: Geben Sie bitte den Port ein, auf dem dieser Schluessel
 \tServer laeuft.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

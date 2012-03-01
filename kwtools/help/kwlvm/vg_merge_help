@@ -8,3 +8,7 @@ VG: Auswahl einer existierenden Volume Group, die
 neue VG: Auswahl der neuen VG zu der die andere gehoeren 
 \tsoll.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

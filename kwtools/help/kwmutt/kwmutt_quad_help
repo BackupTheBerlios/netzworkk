@@ -8,3 +8,7 @@ no: Nein ohne Nachfrage.
 
 ask-no: Nein mit Nachfrage.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

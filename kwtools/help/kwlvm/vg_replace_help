@@ -5,3 +5,7 @@ Namen, fuer diese VG, ein.
 
 NOTIZ: Bitte ohne Leerzeichen, diese werden herausgefilltert.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

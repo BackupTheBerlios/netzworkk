@@ -116,3 +116,7 @@ if [ "$MOUNT_PATH" ] ; then
 fi
 unset -- gv_Auswahl MOUNT_PATH BACKUP_PATH DIRS BACKUP_PATH
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

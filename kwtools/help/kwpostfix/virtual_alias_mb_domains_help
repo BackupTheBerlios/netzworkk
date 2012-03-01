@@ -15,3 +15,7 @@ domain.de\tanything
 
 NOTIZ: Das Wort "anything" steht nur fuer die Konformitaet der Tabellen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

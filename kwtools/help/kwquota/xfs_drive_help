@@ -21,3 +21,7 @@ komplett_aus: Quota auf dem Laufwerk permannent ausschalten.
 
 NOTIZ: Im Menue steht der Status des Laufwerks.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

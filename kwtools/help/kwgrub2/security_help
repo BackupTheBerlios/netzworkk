@@ -18,3 +18,7 @@ Passwort_pbkdf2: Hiermit koennen Sie ein verschluesseltes Passwort
 \tdaraus ein Hash erzeugt.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

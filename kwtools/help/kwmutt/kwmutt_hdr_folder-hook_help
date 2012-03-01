@@ -49,3 +49,7 @@ Signatur: Auswahl der Signatur Datei fuer die ausgewaehlte Mailbox.
 \tDefault ist die Signatur Datei aus ~/.muttrc.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

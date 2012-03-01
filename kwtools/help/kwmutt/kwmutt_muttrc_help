@@ -279,3 +279,7 @@ write_bcc: Bestimmt, ob Mutt auch die Kopfzeile "Bcc" ausgibt, wenn
 \tDefault ist write_bcc="yes" (Ja ohne Nachfrage)
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

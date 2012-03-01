@@ -47,3 +47,7 @@ Block_Softlimit: Groesse des Block Softlimits. Siehe
 \tBlock_Hardlimit.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

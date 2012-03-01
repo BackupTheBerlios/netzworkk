@@ -84,3 +84,7 @@ CHARSET     = \"$CHARSET\"
 read_file -s '[[:space:]]*=[[:space:]]*' "$QUOTA_WARN_CF"
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

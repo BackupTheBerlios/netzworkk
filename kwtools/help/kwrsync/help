@@ -29,3 +29,7 @@ NOTIZ: Sie sollten sicherstellen das Sie Schreibrechte fuer das
 \tvorgesehen, da das sowieso nicht mit den crontab Eintraegen 
 \tfunktionieren wuerde.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

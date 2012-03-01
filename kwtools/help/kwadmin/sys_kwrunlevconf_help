@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwrunlevconf: Zum Einstellen der Runlevel, fuer die einzelnen 
 \tInit-Scripts.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

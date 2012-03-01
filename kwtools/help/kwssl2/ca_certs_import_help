@@ -26,3 +26,7 @@ Verzeichnis mit Zertifikaten: Waehlen Sie das Verzeichnis in dem
 NOTIZ: Zertifikate importieren geht noch nicht.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

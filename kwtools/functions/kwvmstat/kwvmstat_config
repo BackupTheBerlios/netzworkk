@@ -26,3 +26,7 @@ MEM_UNIT=\"$MEM_UNIT\"
 read_file kwvmstatrc
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

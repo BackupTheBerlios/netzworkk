@@ -79,3 +79,7 @@ XATTR=\"$XATTR\"
 read_file kwecryptfsrc
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

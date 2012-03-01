@@ -8,3 +8,7 @@ NOTIZ: Frage Sie ihren Administrator oder schauen Sie sich die
 \tKernel ${gv_Configuration} an, welche Groesse ihr Dateisystem 
 \tunterstuetzt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

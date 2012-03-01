@@ -1251,3 +1251,7 @@ fi
 # End
 removetemp
 echo $BOLD"Finished firewall (iptables) initialization$NORMAL"
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

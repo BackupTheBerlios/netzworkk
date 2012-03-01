@@ -19,3 +19,7 @@ user\t\t\tanderer-user@domain.de
 # wandelt pauschal diese auch externe
 user@domain.de\t\tanderer-user@domain.de')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

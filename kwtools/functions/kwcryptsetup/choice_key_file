@@ -18,3 +18,7 @@ choice_key_file() {
 	fi
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -24,3 +24,7 @@ Framegroesse: Auswahl oder Eingabe der Groesse fuer die Frames.
 \tZur Auswahl stehen MONOCHROM, VCD, SVCD und DVD. Standard ist
 \t480x576 (PAL/SVCD.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -14,3 +14,7 @@ table = $Table
 where_field = $Where_Field"
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

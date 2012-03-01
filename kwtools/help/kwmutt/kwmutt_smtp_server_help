@@ -34,3 +34,7 @@ smtp_authenticators: Dies ist eine durch Doppelpunkte getrennte Liste
 \tBeispiel: set smtp_authenticators="digest-md5:cram-md5:login"
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

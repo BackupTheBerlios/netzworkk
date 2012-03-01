@@ -29,3 +29,7 @@ color light-blue/brown blink-red/cyan
 fi
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

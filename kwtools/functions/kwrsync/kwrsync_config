@@ -31,3 +31,7 @@ HOME_SYNC_CRON=\"$HOME_SYNC_CRON\"
 read_file kwrsyncrc
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

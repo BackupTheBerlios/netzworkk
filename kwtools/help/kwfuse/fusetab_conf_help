@@ -16,3 +16,7 @@ Dump: Soll das Laufwerk gedumpt werden (yes/no)?
 Check: Soll das Laufwerk beim Systemstart, mittels fsck
 \t(filesystemcheck) ueberprueft werden (yes/no)?')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwcamera: speichert, loescht Bilder und Thumbnails, von
 \tDigitalkameras, und konfiguriert diese Kamera.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

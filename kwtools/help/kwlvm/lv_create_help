@@ -18,3 +18,7 @@ LV erzeugen: Hier wird zuerst das LV erzeugt und dann
 \tEs werden die Formatierungs tools ageboten
 \twelche installiert sind (ext3, ext2 ...).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -4,3 +4,7 @@ MSG=$(gettext 'kwecryptfs: Ein Script zur Datei weisen Verschluessellung von
 \tbestehendes Verzeichnis gelegt wird. Dabei wird die Krypto-API
 \tdes Kernels benutzt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

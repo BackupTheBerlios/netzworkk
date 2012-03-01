@@ -29,3 +29,7 @@ TLS: Standard Einstellungen rund um SSL/TLS.
 
 Virtual: Einstellungen fuer die Transport Methode virtual.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

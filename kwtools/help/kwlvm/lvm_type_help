@@ -4,3 +4,7 @@ MSG=$(gettext 'Bestimmt welcher LVM Typ benutzt werden soll.
 1 = LVM1
 2 = LVM2')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

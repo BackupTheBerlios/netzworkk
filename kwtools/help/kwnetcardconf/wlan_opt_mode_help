@@ -19,3 +19,7 @@ Secondary: Die Node arbeitet als Backup Master/Repeater.
 
 Auto: Die Operations Modus wird automatisch gewaehlt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

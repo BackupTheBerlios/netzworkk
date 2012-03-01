@@ -22,3 +22,7 @@ fusetab_bearbeiten: Verwaltung oder Erstellung der Dateisystem-
 Laufwerk_ein_ausbinden: Dateisysteme ein oder ausbinden. Diese
 \tmuessen in der Dateisystemtabelle /etc/fstab stehen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

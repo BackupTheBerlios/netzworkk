@@ -26,3 +26,7 @@ Aktion: DISCARD = behauptet erfolgreiche Zustellung und loescht die
 
 Text: Antworttext (optional)')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

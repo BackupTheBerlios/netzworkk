@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwrecord: Brennt ISO Images, Audio CDs, Video CD/DVDs und Daten
 \tCD/DVDs.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

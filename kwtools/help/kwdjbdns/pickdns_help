@@ -39,3 +39,7 @@ loeschen: Loescht verschiedene Eintraege aus
 
 Datenbank neu erstellen: Erstellt eine neue Datenbank fuer pickdns.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -129,3 +129,7 @@ umask: Ueberschreibt die Zugriffbits im 'st_mode' Feld, welches vom
 \tDateisystem gesetzt wird. Sie muessen Oktalziffern benutzen
 \t(Bsp.: 0022 = rwxr-xr-x).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

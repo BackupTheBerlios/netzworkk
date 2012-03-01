@@ -2,3 +2,7 @@
 TITLE="${lv_Port_Conf}::${gv_Change}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie vorhandene Regeln aendern.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

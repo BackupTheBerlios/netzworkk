@@ -83,3 +83,7 @@ if [ "$gv_Auswahl" ] ; then
 	break &>/dev/null
 fi
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

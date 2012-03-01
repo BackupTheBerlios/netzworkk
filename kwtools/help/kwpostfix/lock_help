@@ -6,3 +6,7 @@ keiten, und zwar flock, fcntl und dotlock (siehe man 2 flock, man 2
 ...). Diese Lockarten koennen Sie natuerlich auch kombinieren.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

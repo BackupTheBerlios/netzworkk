@@ -22,3 +22,7 @@ Monitor: Hier kann man einen RAID Monitor einstellen, der per mail
 
 Status: Statusanzeige der RAID Arrays.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

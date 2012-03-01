@@ -13,3 +13,7 @@ aendern: Einen Eintrag aus der Datenbank aendern.
 loeschen: Ein oder mehrere Eintraege aus der Datenbank loeschen.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

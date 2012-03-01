@@ -16,3 +16,7 @@ Zusatzkonfiguration: Falls man noch extra Einstellungen benoetigt
 \tEditor ihrer Wahl belegen. Ansonsten wird die Dialogbox
 \t"editbox" verwendet.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

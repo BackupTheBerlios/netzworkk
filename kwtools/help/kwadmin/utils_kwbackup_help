@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwbackup: Sicherung der Systemverzeichnisse und Verzeichnisse Ihrer
 \tWahl. Entweder per crontab oder manuell.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

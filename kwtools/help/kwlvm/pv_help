@@ -21,3 +21,7 @@ hinzufuegen: Hinzufuegen einer leeren PV zu einer bestehenden Volume
 
 loeschen: Loeschen von ein oder mehreren leeren PVs.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -5,3 +5,7 @@ Namen, fuer dieses LV, ein.
 
 NOTIZ: Bitte ohne Leerzeichen, diese werden herausgefiltert.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

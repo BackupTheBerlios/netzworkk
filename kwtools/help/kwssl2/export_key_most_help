@@ -13,3 +13,7 @@ Zertifikat hinzufuegen: Auswahl ob das dazugehoerende Zertifikat
 \thinzugefuegt werden soll (ja/nein).
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

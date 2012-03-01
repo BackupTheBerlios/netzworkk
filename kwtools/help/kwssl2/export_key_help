@@ -18,3 +18,7 @@ ZIP: Erstellt ein ZIP-Archiv aus den Dateien die den Schluessel,
 \tTAR Export Format.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

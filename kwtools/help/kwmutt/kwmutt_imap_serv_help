@@ -79,3 +79,7 @@ mail_check: Diese Variable bestimmt, wie oft (in Sekunden) Mutt auf
 \tDefault ist set mail_check=900
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

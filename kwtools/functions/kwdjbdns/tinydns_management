@@ -242,3 +242,7 @@ tinydns_management() {
 	unset -- DOMAIN_NAME H_IP DATA ROH HOSTNAME IP
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -28,3 +28,7 @@ Attribute: Attribute der Verzeichnisse, die Dns oder URLs enthalten;
 \tin diesen Faellen wird rekursiv eine erneute Suche mit
 \tdiesen Werten durchgefuehrt (Bsp. mail).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

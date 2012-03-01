@@ -49,3 +49,7 @@ BOLD=\$'\\e[1m'
 read_file -f $CONF_FILE
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

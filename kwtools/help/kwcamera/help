@@ -12,3 +12,7 @@ Loeschen: aller Bilder und Thumbnails
 Kamera_Einstellung: Hier kann man Bildqualitaet, Uhrzeit, etc. der
 \tDigital Kamera einstellen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

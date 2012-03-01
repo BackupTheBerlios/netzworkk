@@ -30,3 +30,7 @@ anlegen: Erstellung des Kalenders und Frage ob er ausgedruckt
 NOTIZ: Denken Sie an die richtige Konfiguration des
 \tBundeslandes/Staates (kwplaner).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 03.09.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 29.02.2012
 #
 # Script: uninstall, deinstalliert alle Dateien der
 #         kwtools.
@@ -28,6 +28,8 @@ KW_SKEL_FILES="${KW_SKEL_DIR}/.firstlogin ${KW_SKEL_DIR}/.bash_login
 KW_CONF_FILES="/etc /usr/local/etc"
 KW_PPP="/etc/ppp/ip-up.d /etc/ppp/ip-down.d"
 KW_INIT="/etc/init.d"
+KW_CROND="/etc/cron.d"
+KW_LOGROTATED="/etc/logrotate.d"
 KW_GRUB_FILES="/etc/grub.d/42_passwd"
 MAN_DIRS="/usr/share/man /usr/local/share/man"
 MAN_SUBDIRS="man1 man5 man8 de/man1 de/man5 de/man8"
@@ -123,6 +125,12 @@ rm -f /etc/init.d/kwnarc &>/dev/null
 rm -f /etc/init.d/rc?.d/???kwnarc &>/dev/null
 rm -f /etc/rc?.d/init.d/???kwnarc &>/dev/null
 
+# Cron Dateien loeschen
+rm -f ${KW_CROND}/kwrsync_backup &>/dev/null
+
+# Logrotate Dateien loeschen
+rm -f ${KW_LOGROTATED}/kwrsync_backup &>/dev/null
+
 # kwgrub2 Script loeschen
 rm -f $KW_GRUB_FILES &>/dev/null
 
@@ -146,3 +154,7 @@ if [ -d debian/po ] ; then
 	}
 fi
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

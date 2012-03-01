@@ -27,3 +27,7 @@ certificate_file: Speicherort der Zertifikat Datei die vom Server
 ssl_ca_certificates_file: CA Zertifikat, zur automatischen
 \tAutorisierung beim Server.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

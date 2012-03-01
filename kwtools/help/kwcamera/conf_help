@@ -8,3 +8,7 @@ Port: Hier kann man den Port auswaehlen an dem die Kamera haengt.
 
 Modell: Hier kann man aus einer Liste, sein Kamera Modell auswaehlen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

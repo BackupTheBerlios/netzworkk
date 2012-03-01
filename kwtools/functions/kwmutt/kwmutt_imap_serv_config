@@ -25,3 +25,7 @@ mailboxes "$mailboxes"
 # End $M_IMAP_SERV"
 }
 ## }}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

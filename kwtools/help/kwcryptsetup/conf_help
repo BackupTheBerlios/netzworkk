@@ -109,3 +109,7 @@ Warnung: Soll beim starten des Laufwerks eine Warnung ausgegeben
 Wiederholungen: Geben Sie ein, wie oft die Passphrasenabfrage
 \tversucht werden soll zu wiederholen (Standard ist 3).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

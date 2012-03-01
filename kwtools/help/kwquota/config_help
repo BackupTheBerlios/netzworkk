@@ -52,3 +52,7 @@ Inode_Grace_Zeit: Zeit die beim Inode Limit ueberschritten
 Realtime_Block_Grace_Zeit: Zeit die beim Realtime Block Limit
 \tueberschritten werden darf. Siehe Block_Grace_Zeit.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

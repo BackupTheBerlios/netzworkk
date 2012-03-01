@@ -5,3 +5,7 @@ gleichzeitigen Ausfuehrung der beiden Befehle fcc-hook und save-hook
 mit den angegebenen Argumenten.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

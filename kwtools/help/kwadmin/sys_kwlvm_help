@@ -3,3 +3,7 @@ MSG=$(gettext 'kwlvm: Kann Logische Volumes, Volume Groups und Physikalische
 \tVolumes anzeigen, kreieren, loeschen, verkleinern und
 \tvergoessern. Dieses Script kann mit lvm1 und lvm2 umgehen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

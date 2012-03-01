@@ -40,3 +40,7 @@ urlview: Mit Hilfe von urlview koennen die Urls in einer Mail direkt
 \taktivieren bzw. deaktivieren.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

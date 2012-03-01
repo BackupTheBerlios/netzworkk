@@ -10,3 +10,7 @@ Termine: Hier koennen Sie Ihre Termine verwalten, wie ansehen,
 feste_Kalendardaten: Hier koennen Sie sich feste Kalenderdaten,
 \twie ueber Geschichte, Literatur, Kirche, etc. ansehen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

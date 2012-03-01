@@ -3,3 +3,7 @@ TITLE="${gv_Configuration}::${gv_Delete}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie einen oder mehrere Konfigurationsabschnitte zum
 loeschen auswaehlen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

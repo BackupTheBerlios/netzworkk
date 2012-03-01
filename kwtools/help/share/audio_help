@@ -6,3 +6,7 @@ MSG=$(gettext 'Hier kann man zwischen den Formaten wav (Audio CD), ogg und mp3
 Wenn Sie ganze Sound Verzeichnisse brennen wollen (ogg,mp3)
 benutzen Sie bitte den Menuepunkt Daten, im Hauptmenue von kwrecord.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

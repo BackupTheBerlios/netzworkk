@@ -178,3 +178,7 @@ forward_decrypt: Diese Variable kontrolliert den Umgang mit
 \tDefault ist set forward_decrypt="yes"
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

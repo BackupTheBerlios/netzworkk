@@ -24,3 +24,7 @@ start: Starten von ein oder mehreren verschluesselten
 stop: Stoppen von ein oder mehreren verschluesselten
 \tVerzeichnissen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

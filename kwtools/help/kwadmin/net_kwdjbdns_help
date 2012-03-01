@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwdjbdns: Hiermit koennen Sie alle dnsserver von D. J. Bernstein
 \tkonfigurieren.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

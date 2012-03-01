@@ -36,3 +36,7 @@ rbldns: rbldns ist ein IP-Adressen-list DNS Server. Er beantwortet
 \tDUL Liste eingetragen sind. Man kann hier IPs, Netzmasken
 \tund A records eintragen und loeschen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

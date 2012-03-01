@@ -37,3 +37,7 @@ set crypt_verify_sig=\"$crypt_verify_sig\"
 # End $M_CRYPT"
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

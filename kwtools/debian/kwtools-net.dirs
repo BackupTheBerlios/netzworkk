@@ -1,4 +1,4 @@
-etc/kwtools
+etc/kwtools/kwrsync_backup.d
 usr/bin
 usr/sbin
 usr/share/menu

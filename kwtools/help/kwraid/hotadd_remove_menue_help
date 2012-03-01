@@ -24,3 +24,7 @@ Laufwerk_hinzufuegen: Hier kann man eine RAID Partition auswaehlen
 \tund dem RAID Array hinzufuegen. Vergebene RAID Partitionen
 \twerden herraus gefiltert.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

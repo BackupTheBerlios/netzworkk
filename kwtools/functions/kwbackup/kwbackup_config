@@ -23,3 +23,7 @@ DIRS=\"$DIRS\"
 read_file kwbackuprc
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

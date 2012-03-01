@@ -30,3 +30,7 @@ strict_threads: Soll Threading auf dem In-Reply-To:-Header und
 \tReferenz Feld basieren (yes/no)?
 \tDefault ist strict_threads="no"')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

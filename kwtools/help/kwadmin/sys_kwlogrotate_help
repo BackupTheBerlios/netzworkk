@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwlogrotate: Mit diesem Script koennen Sie bequem ihre Logdateien
 \tverwalten.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

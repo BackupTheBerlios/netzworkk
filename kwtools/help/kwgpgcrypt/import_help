@@ -5,3 +5,7 @@ MSG=$(gettext 'Server: Importieren der Schluessel von einem Schluesselserver. Si
 
 Datei: Importieren der Schluessel aus einer Datei.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

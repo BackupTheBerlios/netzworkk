@@ -3,16 +3,17 @@
 # kwrsync_backup_cron
 #
 # Developed by Kai Wilke <kiste@netzworkk.de>
-# Copyright (c) 2002-2011 Netzworkk
+# Copyright (c) 2002-2012 Netzworkk
 # Licensed under terms of GNU General Public License.
 # All rights reserved.
 #
-# Description: kwrsync_backup_cron, make a snapshot from servern and localhost
+# Description: kwrsync_backup_cron, make a snapshot from local and remote hosts
 # per crontab.
 #
-# Version: 0.0.9
+# Version: 0.1.0
 #
 # Changelog:
+# 2012-03-01 - to conform to new kwrsync_backup.
 # 2011-06-03 - checked.
 # 2009-06-22 - correct $fpath.
 # 2008-10-12 - correct the syntax.
@@ -58,21 +59,27 @@ autoload -U script_init
 # Scriptinitialisierung
 script_init -o
 
+# Option for kwrsync_backup_exec
+case "$1" in
+	hourly|daily|weekly|mounthly)	OPT="$1"	;;
+	*)	OPT="hourly"	;;
+esac
+
 # Nachdem das Script initialiiert wurde, kann man die anderen
 # benötigten Funktionen laden.
-autoload -U kwrsync_backup_exec kwrsync_backup_rotate
+autoload -U kwrsync_backup_exec
 
 HostName="`hostname`"
 #
 # Wenn es eine KONFIGURATIONSRC Datei gibt einlesen.
 #
 KWRSYNC_CF=${ETC_PATH}/kwrsync_backup.cf
-EXCLUDE_FILE="${ETC_PATH}/kwrsync_backup-excludes"
+KWRSYNC_CF_DIR=${ETC_PATH}/kwrsync_backup.d
 
 if [ -f $KWRSYNC_CF ] ; then
 	source $KWRSYNC_CF
 else
-	MSG=$(gettext 'Es gibt keine Konfigurationsdatei auf Rechner dem $HostName.')
+	MSG=$(gettext 'Es gibt keine Konfigurationsdatei auf dem Rechner $HostName.')
 	> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
 $MSG"
 	mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
@@ -85,6 +92,7 @@ fi
 if [ -z "$SERVER" ] ; then
 	SERVER=localhost
 fi
+LOGFILE="${LOGFILE:-/var/log/kwrsync_backup.log}"
 
 ##################################################################
 #
@@ -118,20 +126,18 @@ fi
 
 # Pruefe auf freien Plattenplatz
 if [ "$CHECK_HDMINFREE" = yes ] ; then
-	Kb_Is_Free=${${(s: :)${(M)${(f)"$(df $MOUNT_PATH)"}##*%}%\%}[9]}
-	Inode_Is_Free=${${(s: :)${(M)${(f)"$(df -i $MOUNT_PATH)"}##*%}%\%}[9]}
+	Kb_Is_Free=${${(s: :)${(M)${(f)"$(df $MOUNT_PATH)"}##*%}%\%}[10]}
+	Inode_Is_Free=${${(s: :)${(M)${(f)"$(df -i $MOUNT_PATH)"}##*%}%\%}[10]}
 	if [ "$Kb_Is_Free" -ge "$HDMINFREE" -o "$Inode_Is_Free" -ge "$HDMINFREE" ] ; then
 		MSG=$(gettext 'Es ist nicht mehr genug Platz vorhanden.')
 		> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
 $MSG"
 		mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
 	else
-		kwrsync_backup_exec
-		kwrsync_backup_rotate
+		kwrsync_backup_exec $OPT
 	fi
 else
-	kwrsync_backup_exec
-	kwrsync_backup_rotate
+	kwrsync_backup_exec $OPT
 fi
 # umounten des Backup-Verzeichnis
 if [ "$MOUNT_PATH" ] ; then
@@ -146,3 +152,7 @@ $MSG"
 fi
 
 exit 0
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

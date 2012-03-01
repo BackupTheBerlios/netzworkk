@@ -42,3 +42,7 @@ KEY_FILE_PATH=\"$KEY_FILE_PATH\"
 read_file kwlosetuprc
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

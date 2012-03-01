@@ -23,3 +23,7 @@ RAID6 -\> RAID1:
 RAID5 -\> RAID1:
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

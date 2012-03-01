@@ -36,3 +36,7 @@ default_verp_delimiters: Verp kodiert die Ziel-Adresse im Return-
 \tPath, nuetzlich fuer Mailinglisten. Der Delimiter legt fest,
 \tdurch welche Zeichen dabei "." und "@" ersetzt werden.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

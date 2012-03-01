@@ -27,3 +27,7 @@ Tastatur: Welche Tastatur Einstellung soll genommen werden. Es gehen
 Timeout: Nach wieviel Sekunden soll grub, die Standard Boot
 \tKonfiguration starten.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

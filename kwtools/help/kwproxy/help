@@ -19,3 +19,7 @@ staendig.
 NOTIZ: Wenn Sie Debian benutzen achten Sie darauf das die Werte 
 die selben sind wie in Ihrer /etc/apt/apt.conf.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

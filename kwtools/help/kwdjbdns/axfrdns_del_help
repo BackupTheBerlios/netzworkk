@@ -2,3 +2,7 @@
 TITLE=$(gettext 'Administration::axfrdns::loeschen')
 MSG=$(gettext 'Alle hier aufgefuehrten Datensaetze kann man loeschen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

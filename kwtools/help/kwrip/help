@@ -21,3 +21,7 @@ NOTIZ: Eine Verbindung zu einer Film Datenbank gibts noch nicht.
 \thttp_proxy. Diese koennen Sie auch mit dem Script kwproxy
 \t(Paket kwtools-net) einstellen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

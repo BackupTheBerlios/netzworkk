@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwpasswd: Frontend zur Passwortaenderung. Unterstuetzt zur Zeit
 \tnur die Programme \"passwd\" und \"yppasswd\" (NIS).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

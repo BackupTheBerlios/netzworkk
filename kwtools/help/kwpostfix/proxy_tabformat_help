@@ -10,3 +10,7 @@ chroot-Umgebung vorhanden sind, aber benoetigt werden.
 
 Lesen Sie dazu bitte die Manpage von proxymap (man 8 proxymap).')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

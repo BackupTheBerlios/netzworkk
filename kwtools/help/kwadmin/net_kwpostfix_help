@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwpostfix: Hiermit koennen Sie Ihren Postfix Mail Server
 \tkonfigurieren und verwalten.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

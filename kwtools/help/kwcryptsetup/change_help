@@ -3,3 +3,7 @@ TITLE="${lv_Management}::${gv_Change}::${gv_Help}"
 MSG=$(gettext 'Veraendern von ein oder mehreren verschluesselten Laufwerke. Dabei
 werden die Eintraege der Konfigurationsdatei /etc/crypttab benutzt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

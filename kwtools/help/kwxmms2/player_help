@@ -22,3 +22,7 @@ naechstes: Das naechste Lied wird gespielt.
 vorheriges: Das vorherige Lied wird gespielt.
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

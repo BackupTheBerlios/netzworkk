@@ -78,3 +78,7 @@ read_wlan_option() {
 	fi
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -6,3 +6,7 @@ ausgewaehlten Volume Group hinzufuegen.
 NOTIZ: Es werden nur inaktive, nicht zu einer VG gehoerende
 \tleere PVs angezeigt.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -21,3 +21,7 @@ Mailbox: Geben Sie die Mailbox ein fuer die die Einstellung gemacht
 \twerden soll. Bei IMAP koennen das die INBOX.Mailbox* und bei POP
 \tdie Mailboxen in Ihrem Verzeichnis sein.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

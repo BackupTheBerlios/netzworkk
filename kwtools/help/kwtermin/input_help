@@ -16,3 +16,7 @@ Wiederholung: Wiederholung oder Kennzeichnung der Termine, taeglich,
 CC: An wen soll dieser Termin noch verschickt werden, getrennt
 \tdurch ein Komma.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

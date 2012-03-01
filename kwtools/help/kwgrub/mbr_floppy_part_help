@@ -8,3 +8,7 @@ Syntax Linux:
 1. Festplatte ist (hd0)
 1. Partition auf der 1. Festplatte ist (hd0,0)')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

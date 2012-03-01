@@ -14,3 +14,7 @@ NOTIZ: Fuer die gpg Schluessel Erstellung muss der Benutzer "root"
 \tden "root" Schluessel verteilen, zur Aktivierung der
 \tLaufwerke/Container.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

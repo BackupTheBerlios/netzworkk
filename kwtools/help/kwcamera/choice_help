@@ -10,3 +10,7 @@ anschauen und mit jedem weiteren "Enter" das naechstfolgende Bild.
 Mit der "Esc" Taste verlassen Sie wieder die Vorschau und das
 Programm.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

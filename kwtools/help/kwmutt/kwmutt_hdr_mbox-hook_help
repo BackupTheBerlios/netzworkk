@@ -27,3 +27,7 @@ Mailbox1: Geben Sie die Mailbox ein in der die Nachrichten der
 \tin Ihrem Verzeichnis sein. 
 ')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

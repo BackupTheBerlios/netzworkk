@@ -3,3 +3,7 @@ TITLE="${lv_Logical_Vol}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie eine oder mehrere Logische Volumes zur weiteren
 Bearbeitung auswaehlen.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

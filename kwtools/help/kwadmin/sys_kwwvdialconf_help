@@ -2,3 +2,7 @@
 MSG=$(gettext 'kwwvdialconf: Mit diesen Script koennen Sie ihr Analog Modem
 \tkonfigurieren.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

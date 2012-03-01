@@ -696,3 +696,7 @@ kwxmms2_manage_pls() {
 	fi
 }
 #
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

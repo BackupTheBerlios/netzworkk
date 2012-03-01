@@ -5,3 +5,7 @@ MSG=$(gettext '-: Heisst das der Standard aus der globalen Konfiguration main.cf
 
 n: Heisst Nein.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -4,3 +4,7 @@ MSG=$(gettext 'Waehlen Sie eine oder mehrere Logische Volumes aus und
 druecken ENTER, dann werden diese LVs geloescht, 
 vorrausgesetzt diese sind inaktiv.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

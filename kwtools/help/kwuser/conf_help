@@ -51,3 +51,7 @@ inaktiv nach Verfallsdatum: Geben Sie hier eine Zahl, in Tagen ein, nachdem das
 
 speichern: Benutzer anlegen oder veraendern.')
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
