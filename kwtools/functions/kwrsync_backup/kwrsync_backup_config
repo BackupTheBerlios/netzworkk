@@ -14,6 +14,10 @@ fi
 #
 # Autor: Kai Wilke <kiste@netzworkk.de>
 
+###########################################
+# globale Optionen
+###########################################
+
 # Unter welchem Pfad wird gesichert?
 BACKUP_PATH=\"$BACKUP_PATH\"
 
@@ -32,23 +36,73 @@ BW_LIMIT=\"$BW_LIMIT\"
 HDMINFREE=\"$HDMINFREE\"
 CHECK_HDMINFREE=\"$CHECK_HDMINFREE\"
 
-# Partition die gemountet werden soll.
+# Partition die gemountet werden soll - auf der die
+# Snapshots gesichert werden.
 MOUNT_PATH=\"$MOUNT_PATH\"
 
-# Remote Shell für die Übertragung nutzen (rsh,ssh).
-# ssh ist eine Secure Shell, rsh hat keine Verschluesselung.
-RSYNC_RSH=\"$RSYNC_RSH\"
-
-# Server die gesichert werden sollen, getrennt durch ein Leerzeichen.
+# Rechner/Server die gesichert werden sollen, getrennt durch ein Leerzeichen.
 SERVER=\"$SERVER\"
+
+# Logdatei mit vollem Pfad.
+LOGFILE=\"$LOGFILE\"
 
 # Fuer welchen User soll der Crontab Eintrag (kwrsync_backup_cron)
 # erstellt werden. Wenn der User nicht root ist benoetigt er einen
 # Eintrag in /etc/sudoers, damit er das Script ausfuehren darf.
 USER_RUN=\"$USER_RUN\"
 
+# Remote Shell für die Übertragung nutzen (rsh,ssh).
+# ssh ist eine Secure Shell, rsh hat keine Verschluesselung.
+RSYNC_RSH=\"$RSYNC_RSH\"
+
+# Bei yes wird das rekursive Sichern ueber Dateisystemgrenzen hinweg
+# ausgeschaltet (yes/no).
+ONE_FS=\"$ONE_FS\"
+
+# Sollen Hardlinks bei identischen Dateien erstellt werden.
+# Dies ist der beste Weg um spezielle Dateien, wie FIFO's, zu
+# unterstuetzen und natuerlich um Platz zu sparen.
+# Schalten Sie dies ein (yes), wenn Ihr rsync (>=2.6.4)
+# dies unterstuetzt.
+LINK_DST=\"$LINK_DST\"
+
+# Anzahl der Rotierung der einzelnen Snapshots.
+ROTATE_COUNT_HOURLY=\"$ROTATE_COUNT_HOURLY\"
+
+ROTATE_COUNT_DAILY=\"$ROTATE_COUNT_DAILY\"
+
+ROTATE_COUNT_WEEKLY=\"$ROTATE_COUNT_WEEKLY\"
+
+ROTATE_COUNT_MOUNTHLY=\"$ROTATE_COUNT_MOUNTHLY\"
+
+###########################################
+# LVM Snapshot
+###########################################
+
+# LVM Komandos zum erzeugen und loeschen des
+# LVM Snapshots
+LVCREATE_CMD=\"$LVCREATE_CMD\"
+LVREMOVE_CMD=\"$LVREMOVE_CMD\"
+
+# Groesse des LVM Snapshots der angelegt werden soll.
+LV_SIZE=\"$LV_SIZE\"
+
+# Name des LVM Snapshots (snapshot)
+SNAPSHOT_NAME=\"$SNAPSHOT_NAME\"
+
+# Pfad unter der die Volume Groups liegen (/dev).
+VG_PATH=\"$VG_PATH\"
+
+# Mountpunkt unter dem das/die LVM Snapshot(s) temporaer
+# eingehaengt werden soll(en).
+LVM_MOUNTPOINT=\"$LVM_MOUNTPOINT\"
+
 # End $KWRSYNC_CF"
 #
 read_file -f $KWRSYNC_CF
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

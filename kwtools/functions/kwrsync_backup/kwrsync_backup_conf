@@ -3,26 +3,53 @@
 # usage: kwrsync_backup_conf
 #
 kwrsync_backup_conf() {
-	local Anz
-	lv_Exclude_File=$(gettext 'Ausschluss_Datei')
+	# Variablen# {{{
+	CONF_UNSET=(BACKUP_PATH MOUNT_PATH ROTATE_COUNT_HOURLY ROTATE_COUNT_DAILY
+		ROTATE_COUNT_WEEKLY ROTATE_COUNT_MOUNTHLY BW_LIMIT HDMINFREE
+		CHECK_HDMINFREE RSYNC_RSH SERVER USER_RUN)
 	lv_Backup_Dir=$(gettext 'Backupverz.')
 	lv_Bandwith=$(gettext 'Bandbreite')
 	lv_Check_Space=$(gettext 'Check_Platz')
 	lv_Minimal_Space=$(gettext 'Minimum_Platz')
 	lv_Mount_Dir=$(gettext 'Mountverz.')
 	lv_Remote_Shell=$(gettext 'Remote_Shell')
-	lv_Server=$(gettext 'Server')
-	lv_User=$(gettext 'Benutzer')
-	lv_Crontab=$(gettext 'crontab')
-	lv_Crontab_Change=$(gettext 'bearbeiten (dialog)')
+	lv_Host=$(gettext 'Rechner')
+	lv_LogFile=$(gettext 'Logdatei')
+	lv_One_Fs=$(gettext 'Dateisystemgrenze')
+	lv_Link_Dest=$(gettext 'Hardlinks erstellen')
+	lv_Rotate_Hourly=$(gettext 'Rotiere stuendlich')
+	lv_Rotate_Daily=$(gettext 'Rotiere taeglich')
+	lv_Rotate_Weekly=$(gettext 'Rotiere woechentlich')
+	lv_Rotate_Mounthly=$(gettext 'Rotiere monatlich')
+	lv_Lvm_Cmd_Lvcreate=$(gettext 'LVM lvcreate')
+	lv_Lvm_Cmd_Lvremove=$(gettext 'LVM lvremove')
+	lv_Lvm_Snapshotsize=$(gettext 'Snapshot Groesse')
+	lv_Lvm_Snapshotname=$(gettext 'Snapshot Name')
+	lv_Lvm_Vgpath=$(gettext 'VG Pfad')
+	lv_Lvm_Mountpath=$(gettext 'LVM Mountpunkt')
+	ROTATE_COUNT_MSG=$(gettext 'Geben Sie bitte eine Integer Zahl fuer die Anzahl der Snapshots ein die behalten werden sollen.')
+	## }}}
 	# Funktion kwrsync_backup_conf_menue{{{
 	kwrsync_backup_conf_menue() {
-		CONF_MENU=($lv_Exclude_File \"$gv_Change\" $lv_Backup_Dir \"$BACKUP_PATH\"
+		CONF_MENU=($lv_Backup_Dir \"$BACKUP_PATH\"
 		$lv_Bandwith \"$BW_LIMIT\" $lv_Check_Space \"$CHECK_HDMINFREE\"
 		$lv_Minimal_Space \"$HDMINFREE\" $lv_Mount_Dir \"$MOUNT_PATH\"
+		$lv_Host \"$SERVER\"
+		$lv_LogFile \"$LOGFILE\"
+		$gv_User \"$USER_RUN\"
 		$lv_Remote_Shell \"$RSYNC_RSH\"
-		$lv_Server \"$SERVER\"
-		$lv_User \"$USER_RUN\" $lv_Crontab \"$lv_Crontab_Change\"
+		\"$lv_One_Fs\" \"$ONE_FS\"
+		\"$lv_Link_Dest\" \"$LINK_DST\"
+		\"$lv_Rotate_Hourly\" \"$ROTATE_COUNT_HOURLY\"
+		\"$lv_Rotate_Daily\" \"$ROTATE_COUNT_DAILY\"
+		\"$lv_Rotate_Weekly\" \"$ROTATE_COUNT_WEEKLY\"
+		\"$lv_Rotate_Mounthly\" \"$ROTATE_COUNT_MOUNTHLY\"
+		\"$lv_Lvm_Cmd_Lvcreate\" \"$LVCREATE_CMD\"
+		\"$lv_Lvm_Cmd_Lvremove\" \"$LVREMOVE_CMD\"
+		\"$lv_Lvm_Snapshotsize\" \"$LV_SIZE\"
+		\"$lv_Lvm_Snapshotname\" \"$SNAPSHOT_NAME\"
+		\"$lv_Lvm_Vgpath\" \"$VG_PATH\"
+		\"$lv_Lvm_Mountpath\" \"$LVM_MOUNTPOINT\"
 		$gv_Save \"\" $gv_Back \"\")
 		if [[ ${#argv} == 1 ]] ; then
 			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
@@ -31,18 +58,16 @@ kwrsync_backup_conf() {
 		fi
 	}
 	#}}}
+	# Variablen erst einmal loeschen, falls sie temporaer
+	# angelegt worden sind
+	unset -- $CONF_UNSET
+	# Konfiguration einlesen
+	read_file -f $KWRSYNC_CF
 	kwrsync_backup_conf_menue
 	while [ "$gv_Auswahl" ] ; do
 		case $gv_Auswahl in
 			HELP*)	script_help conf_help
 				kwrsync_backup_conf_menue
-				;;
-			$lv_Exclude_File)
-				# Exclude Datei bearbeiten{{{
-				EXCLUDE_TITLE=$(gettext 'Ausschluss_Datei')
-				exec_edit_prog "$lv_Exclude_File" "$EXCLUDE_FILE"
-				#}}}
-				kwrsync_backup_conf_menue $lv_Exclude_File
 				;;
 			$lv_Backup_Dir)
 				# Backup Verzeichnis angeben{{{
@@ -73,7 +98,7 @@ kwrsync_backup_conf() {
 			$lv_Check_Space)
 				# Soll der Partitions-/Festplattenplatz gecheckt werden?{{{
 				C_TITLE=(${gv_Configuration}::${lv_Check_Space})
-				C_MSG=$(gettext 'Soll die Festplatten/Partitionsgroesse gecheckt werden (yes/no)?')
+				C_MSG=$(gettext 'Soll die Festplatten/Partitionsgroesse geprueft werden ($gv_Yes/$gv_No)?')
 				yesno "$C_TITLE" "$C_MSG"
 				if [ "$?" = 0 ] ; then
 					CHECK_HDMINFREE=yes
@@ -101,57 +126,43 @@ kwrsync_backup_conf() {
 				mount_path "$MOUNT_PATH"
 				kwrsync_backup_conf_menue $lv_Mount_Dir
 				;;
-			$lv_Server)
-				# Server eingeben getrennt durch ein Leerzeichen.{{{
+			$lv_Host)
+				# Server/Rechner eingeben getrennt durch ein Leerzeichen.{{{
 				S_TITLE=(${gv_Configuration}::${lv_Server})
 				S_MSG=$(gettext 'Geben Sie hier die Rechner an von denen ein Backup gezogen werden soll.')
 				inputbox "$S_TITLE" "$S_MSG" "$SERVER"
 				if [ "$gv_Auswahl" ] ; then
 					SERVER="$gv_Auswahl"
 				else
-					unset -- SERVER
+					SERVER=localhost
 					no_input_msg
 				fi
 				#}}}
-				kwrsync_backup_conf_menue $lv_Server
+				kwrsync_backup_conf_menue $lv_Host
 				;;
-			$lv_Remote_Shell)
-				# Transport Auswahl{{{
-				remote_sh
-				if [ "${R_SHELL[1]}" ] ; then
-					R_TITLE=(${gv_Configuration}::${lv_Remote_Shell})
-					R_MSG=$(gettext 'Waehlen Sie Ihre Remote Shell aus.')
-					menubox "$R_TITLE" "$R_MSG" "$R_SHELL"
-					while [ "$gv_Auswahl" ] ; do
-						case "$gv_Auswahl" in
-							HELP*)	script_help share/remote_shell_help
-								menubox "$R_TITLE" "$R_MSG" "$R_SHELL"
-								;;
-							*)	RSYNC_RSH="$gv_Auswahl"
-								break
-								;;
-						esac
-					done
-				else
-					unset -- RSYNC_RSH
-					no_remote_shell_msg
+			$lv_LogFile)
+				# Logdatei eingeben/auswaehlen.{{{
+				fselect /var/log
+				if [ -n "$gv_Auswahl" ] ; then
+					fselect_check -c "$gv_Auswahl"
+					if [ -n "$FILE" ] ; then
+						LOGFILE="$FILE"
+					else
+						LOGFILE=/var/log/kwrsync_backup.log
+						no_input_msg
+					fi
 				fi
 				#}}}
-				kwrsync_backup_conf_menue $lv_Remote_Shell
+				kwrsync_backup_conf_menue $lv_LogFile
 				;;
-			$lv_User)
-				# Userauswahl unter dem alles laufen soll{{{
-				#####################################
-				# TODO: Ein lokaler Benutzer wird
-				# nicht benoetigt, da sich ja root
-				# remote einloggt (?).
-				#####################################
+			$gv_User)
+				# Userauswahl unter dem alles laufen soll/koennte{{{
 				user_group_check -p
 				if [ -n "$U_G_ARRAY" ] ; then
 					lv_No_User=$(gettext 'kein_Benutzer')
 					U_MSG=$(gettext 'Waehlen Sie einen Benutzer aus, der sich anstelle von "root" auf den zu sichernden Rechnern einloggen darf.')
 					U_MENU=($lv_No_User \"\" $U_G_ARRAY)
-					U_TITLE=(${gv_Configuration}::${lv_User})
+					U_TITLE=(${gv_Configuration}::${gv_User})
 					menubox "$U_TITLE" "$U_MSG" "$U_MENU"
 					while [ -n "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
@@ -169,36 +180,238 @@ kwrsync_backup_conf() {
 					done
 				fi
 				#}}}
-				kwrsync_backup_conf_menue $lv_User
+				kwrsync_backup_conf_menue $gv_User
 				;;
-			$lv_Crontab)
-				# crontab für kwrsync_backup_cron konfigurieren.{{{
-				crontbconf kwrsync_backup_cron 
+			$lv_Remote_Shell)
+				# Transport Auswahl{{{
+				remote_sh
+				if [ "${R_SHELL[1]}" ] ; then
+					R_TITLE=(${gv_Configuration}::${lv_Remote_Shell})
+					R_MSG=$(gettext 'Waehlen Sie Ihre Remote Shell aus.')
+					R_MENU=($gv_None \"\" $R_SHELL)
+					menubox "$R_TITLE" "$R_MSG" "$R_MENU"
+					while [ "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help share/remote_shell_help
+								menubox "$R_TITLE" "$R_MSG" "$R_MENU"
+								;;
+							$gv_None)	# nichts
+								unset -- RSYNC_RSH
+								break
+								;;
+							*)	RSYNC_RSH="$gv_Auswahl"
+								break
+								;;
+						esac
+					done
+				else
+					unset -- RSYNC_RSH
+					no_remote_shell_msg
+				fi
 				#}}}
-				kwrsync_backup_conf_menue $lv_Crontab
+				kwrsync_backup_conf_menue $lv_Remote_Shell
+				;;
+			$lv_One_Fs)
+				# Dateisystemgrenze einschalten ?{{{
+				ONE_FS_TITLE=(${gv_Configuration}::${lv_One_Fs})
+				ONE_FS_MSG=$(gettext 'Soll das rekursive Sichern ueber Dateisystemgrenzen hinweg ausgeschaltet werden ($gv_Yes/$gv_No)?')
+				yesno "$ONE_FS_TITLE" "$ONE_FS_MSG"
+				if [ "$?" = 0 ] ; then
+					ONE_FS=yes
+				else
+					ONE_FS=no
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_One_Fs
+				;;
+			$lv_Link_Dest)
+				# Hardlinks erstellen einschalten?{{{
+				LINK_DST_TITLE=(${gv_Configuration}::${lv_Link_Dest})
+				LINK_DST_MSG=$(gettext 'Sollen Hardlinks bei identischen Dateien erstellt werden ($gv_Yes/$gv_No)?')
+				yesno "$LINK_DST_TITLE" "$LINK_DST_MSG"
+				if [ "$?" = 0 ] ; then
+					LINK_DST=yes
+				else
+					LINK_DST=no
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Link_Dest
+				;;
+			$lv_Rotate_Hourly)
+				# Rotate Zaehler fuer stuendliche Backups.{{{
+				# Standard ist 6 Tage = 1/2 Tag
+				number_input "$lv_Rotate" "$ROTATE_COUNT_MSG" "${ROTATE_COUNT_HOURLY:-6}"
+				if [ -n "$NUMBER" ] ; then
+					ROTATE_COUNT_HOURLY="$NUMBER"
+				else
+					# Standard Rotate Zaehler
+					ROTATE_COUNT_HOURLY="${ROTATE_COUNT_HOURLY:-6}"
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Rotate_Hourly
+				;;
+			$lv_Rotate_Daily)
+				# Rotate Zaehler fuer taegliche Backups.{{{
+				# Standard ist 7 Tage = 1 Woche
+				number_input "$lv_Rotate" "$ROTATE_COUNT_MSG" "${ROTATE_COUNT_DAILY:-7}"
+				if [ -n "$NUMBER" ] ; then
+					ROTATE_COUNT_DAILY="$NUMBER"
+				else
+					# Standard Rotate Zaehler
+					ROTATE_COUNT_DAILY="${ROTATE_COUNT_DAILY:-7}"
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Rotate_Daily
+				;;
+			$lv_Rotate_Weekly)
+				# Rotate Zaehler fuer woechentliche Backups.{{{
+				# Standard ist 4 Tage = 1 Monat
+				number_input "$lv_Rotate" "$ROTATE_COUNT_MSG" "${ROTATE_COUNT_WEEKLY:-4}"
+				if [ -n "$NUMBER" ] ; then
+					ROTATE_COUNT_WEEKLY="$NUMBER"
+				else
+					# Standard Rotate Zaehler
+					ROTATE_COUNT_WEEKLY="${ROTATE_COUNT_WEEKLY:-4}"
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Rotate_Weekly
+				;;
+			$lv_Rotate_Mounthly)
+				# Rotate Zaehler fuer monatliche Backups.{{{
+				# Standard ist 6 Tage = 1/2 Jahr
+				number_input "$lv_Rotate" "$ROTATE_COUNT_MSG" "${ROTATE_COUNT_MOUNTHLY:-6}"
+				if [ -n "$NUMBER" ] ; then
+					ROTATE_COUNT_MOUNTHLY="$NUMBER"
+				else
+					# Standard Rotate Zaehler
+					ROTATE_COUNT_MOUNTHLY="${ROTATE_COUNT_MOUNTHLY:-6}"
+				fi
+				#}}}
+				kwrsync_backup_conf_menue $lv_Rotate_Mounthly
+				;;
+			$lv_Lvm_Cmd_Lvcreate)
+				# Pfad zum lvcreate Befehl# {{{
+				FORMAT=""
+				file_choice /sbin only $LVCREATE_CMD
+				if [ -n "$WERT" ] ; then
+					LVCREATE_CMD="${VERZ}/${WERT}"
+				fi
+				## }}}
+				kwrsync_backup_conf_menue $lv_Lvm_Cmd_Lvcreate
+				;;
+			$lv_Lvm_Cmd_Lvremove)
+				# Pfad zum lvremove Befehl# {{{
+				FORMAT=""
+				file_choice /sbin only $LVREMOVE_CMD
+				if [ -n "$WERT" ] ; then
+					LVREMOVE_CMD="${VERZ}/${WERT}"
+				fi
+				## }}}
+				kwrsync_backup_conf_menue $lv_Lvm_Cmd_Lvremove
+				;;
+			$lv_Lvm_Snapshotsize)
+				# LV Groesse# {{{
+				SNAPSHOT_SIZE_MSG=$(gettext 'Geben Sie die Groesse fuer den LVM Snapshot ein (20G = 20 GigaByte).')
+				number_input -D "$lv_Lvm_Snapshotsize" "$SNAPSHOT_SIZE_MSG" "$LV_SIZE"
+				if [ -n "$NUMBER" ] ; then
+					LV_SIZE="$NUMBER"
+				else
+					LV_SIZE=""
+				fi
+				## }}}
+				kwrsync_backup_conf_menue $lv_Lvm_Snapshotsize
+				;;
+			$lv_Lvm_Snapshotname)
+				# LV Name# {{{
+				NAME_MSG=$(gettext 'Geben Sie einen Namen fuer den LVM Snapshot ein.')
+				inputbox "$lv_Lvm_Snapshotname" "$NAME_MSG" "$SNAPSHOT_NAME"
+				if [ -n "$gv_Auswahl" ] ; then
+					SNAPSHOT_NAME="$gv_Auswahl"
+				else
+					SNAPSHOT_NAME="lvmsnapshot"
+				fi
+				## }}}
+				kwrsync_backup_conf_menue $lv_Lvm_Snapshotname
+				;;
+			$lv_Lvm_Vgpath)
+				# Pfad unter dem die VG liegen# {{{
+				dselect "${VG_PATH:-/dev}"
+				if [ -n "$VERZ" ] ; then
+					VG_PATH="$VERZ"
+				else
+					VG_PATH=""
+				fi
+				## }}}
+				kwrsync_backup_conf_menue $lv_Lvm_Vgpath
+				;;
+			$lv_Lvm_Mountpath)
+				# Pfad zum Mountpunkt fuer den LVM Snapshot# {{{
+				dselect "$LVM_MOUNTPOINT"
+				if [ -n "$VERZ" ] ; then
+					dselect_check "$VERZ"
+					if [ -n "$VERZ" ] ; then
+						LVM_MOUNTPOINT="$VERZ"
+					else
+						LVM_MOUNTPOINT=""
+					fi
+				else
+					LVM_MOUNTPOINT=""
+				fi
+				## }}}
+				kwrsync_backup_conf_menue $lv_Lvm_Mountpath
 				;;
 			$gv_Save)
 				# Konfiguration speichern# {{{
 				kwrsync_backup_config
-				if [ -n "$USER_RUN" -a ! -f /root/.ssh/id_dsa.pub ] ; then
-					NO_ID_DSA_MSG=$(gettext 'Es gibt keinen DSA Schluessel (ssh) fuer den Benutzer \"root\". Soll jetzt einer erstellt werden (Ja/Nein)? Beantworten Sie bei \"Ja\" die Frage nach der Passphrase mit \"ENTER\", sonst ist kein automatischer \"cronjob\" moeglich.')
-					yesno "$gv_Info" "$NO_ID_DSA_MSG" 2
-					if [ "$?" -eq 0 ] ; then
-						PROG_OPT="-t dsa -b 1024 -f /root/.ssh/id_dsa"
-						ssh-keygen "$PROG_OPT" || (MSG=$(gettext 'Es konnte kein Schluessl erstellt werden') ; msgbox "$gv_Attention" "$MSG")
-						print "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids . /\" "$(< /root/.ssh/id_dsa.pub) > /root/.ssh/authorized_keys.rsync
-						# Nachricht das man jetzt den Schluessel auf die
-						# zusichernden Hosts kopieren sollte.
-						MSG=$(gettext 'Sie koennen jetzt die Datei /root/.ssh/authorized_keys.rsync auf die zu sichernden Rechner ($SERVER), ins ~/.ssh Verzeichnis des Benutzers \"$USER_RUN\" kopieren. Diesen Benutzer sollten Sie vorher anlegen oder angelegt haben.')
-						msgbox "$gv_Info" "$MSG"
-					fi
-				else
-					print "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids . /\" "$(< /root/.ssh/id_dsa.pub) > /root/.ssh/authorized_keys.rsync
-					MSG=$(gettext 'Denken Sie dran die Datei /root/.ssh/authorized_keys(.rsync) auf die zu sichernden Rechner ($SERVER), ins ~/.ssh Verzeichnis des Benutzers \"$USER_RUN\" zu kopieren. Diesen Benutzer sollten Sie vorher anlegen oder angelegt haben. Lesen Sie dazu die Hilfe!')
-					msgbox "$gv_Info" "$MSG"
-				fi
+				# Remote shell und Authentifizierungsdatei Ueberpruefung
+				case "$RSYNC_RSH" in
+					[rs]sh|rsync)
+						if [[ -z $USER_RUN ]] ; then
+							MSG=$(gettext 'Sie muessen mindestens den Menuepunkt \"$gv_User\" mit einem Wert belegen, wenn Sie eine Shell fuer die entfernte Uebertragung auswaehlen.')
+							msgbox "$gv_Info" "$MSG"
+							kwrsync_backup_conf_menue
+						fi
+						;;
+				esac
+				#
+				case "$RSYNC_RSH" in
+					ssh)
+						# SSH# {{{
+						if [[ ! -f /root/.ssh/id_dsa.pub ]] ; then
+							NO_ID_DSA_MSG=$(gettext 'Es gibt keinen DSA Schluessel (ssh) fuer den Benutzer \"root\". Soll jetzt einer erstellt werden (Ja/Nein)? Beantworten Sie bei \"Ja\" die Frage nach der Passphrase mit \"ENTER\", sonst ist kein automatischer \"cronjob\" moeglich.')
+							yesno "$gv_Info" "$NO_ID_DSA_MSG" 2
+							if [ "$?" -eq 0 ] ; then
+								PROG_OPT="-t dsa -b 1024 -f /root/.ssh/id_dsa"
+								ssh-keygen ${=PROG_OPT} || (MSG=$(gettext 'Es konnte kein Schluessel erstellt werden') ; msgbox "$gv_Attention" "$MSG")
+								print "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids --relative . /\" "$(< /root/.ssh/id_dsa.pub) > /root/.ssh/authorized_keys.rsync
+								# Nachricht das man jetzt den Schluessel auf die
+								# zu sichernden Hosts kopieren sollte.
+								MSG=$(gettext 'Sie koennen jetzt die Datei /root/.ssh/authorized_keys.rsync auf die zu sichernden Rechner ($SERVER), ins ~/.ssh Verzeichnis des Benutzers \"$USER_RUN\" kopieren. Diesen Benutzer sollten Sie vorher anlegen oder angelegt haben.')
+								msgbox "$gv_Info" "$MSG"
+								break
+							fi
+						else
+							# pruefen, ob der rsync Befehl in der Datei
+							# /root/.ssh/authorized_keys(.rsync) drin steht.
+							if ! grep -q "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids --relative . /" /root/.ssh/authorized_keys.rsync ; then
+								print "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids --relative . /\" "$(< /root/.ssh/id_dsa.pub) > /root/.ssh/authorized_keys.rsync
+							fi
+							MSG=$(gettext 'Denken Sie dran die Datei /root/.ssh/authorized_keys(.rsync) auf die zu sichernden Rechner ($SERVER), ins ~/.ssh Verzeichnis des Benutzers \"$USER_RUN\" zu kopieren. Diesen Benutzer sollten Sie vorher anlegen oder angelegt haben. Lesen Sie dazu die Hilfe!')
+							msgbox "$gv_Info" "$MSG"
+							break
+						fi
+						## }}}
+						;;
+					rsh|rsync)
+						################################# {{{
+						# TODO: Was ist mit der rsh/rsync?
+						################################
+						break
+						## }}}
+						;;
+					*)	break ;;
+				esac
 				## }}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -206,3 +419,7 @@ kwrsync_backup_conf() {
 	done
 }
 #}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
