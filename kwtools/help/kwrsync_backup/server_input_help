@@ -1,0 +1,38 @@
+# server_input_help fuer kwrsync_backup{{{
+TITLE="${lv_Host_Conf}::${gv_Help}"
+MSG=$(gettext 'Quelle: Angabe der Quelle die gesichert werden soll. Dies kann
+\tein Verzeichnis, eine Datei oder Rechner sein.
+
+SYNTAX:
+/Pfad/Verzeichnis
+/Pfad/Datei
+Rechner:/Pfad/Verzeichnis
+Rechner:/Pfad/Datei
+
+Ziel: Auswahl des Ziels, relativ zum Backup Verzeichnis, wohin
+\tgesichert werden soll. Dies ist meist der Rechnername, kann aber
+\tauch ein Verzeichnis sein.
+
+SYNTAX:
+Verzeichnis
+Rechner/Verzeichnis
+Verzeichnis/Verzeichnis
+
+Benutzer: Waehlen Sie einen Benutzer aus, der sich anstelle von
+\t"root" auf die zu sichernden Rechnern einloggen darf.
+
+rsync Argumente: Eingabe von zusaetzlichen Argumenten fuer das
+\tProgramm rsync. Diese muessen mit einem Leerzeichen getrennt
+\tsein (man 1 rsync).
+
+LVM: Auswahl eines Logischen Volume (LV) von dem ein temporaerer
+\tSnapshot erstellt werden soll.
+
+Script: Geben Sie einen Befehl oder ein Script mit vollem Pfad ein.
+\tDieser Punkt besitzt eine eigene Hilfe.
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
