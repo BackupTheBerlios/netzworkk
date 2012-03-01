@@ -29,7 +29,7 @@
 .\" -----------------------------------------------------------------
 .SH "NAME"
 kwgrub2 \- ein Zshell Frontend Script f\(:ur grub2
-.SH "SYNOPSIS"
+.SH "SYNTAX"
 .HP \w'\fBkwgrub2\fR\ 'u
 \fBkwgrub2\fR
 .SH "BESCHREIBUNG"
@@ -39,7 +39,7 @@ Mit
 k\(:onnen Sie den Bootloader
 \fBgrub2\fR
 verwalten\&. Dazu geh\(:ort die Konfiguration der Datei
-/etc/default/grub
+\fI/etc/default/grub\fR
 zu bearbeiten und
 \fBgrub2\fR
 in den Master Boot Record (\fBMBR\fR), oder in den
@@ -50,7 +50,7 @@ einer Partition zu installieren\&.
 \fBKonfiguration\fR
 .RS 4
 Hier kann man die Konfiguration der Datei
-/etc/default/grub
+\fI/etc/default/grub\fR
 verwalten\&. Lesen Sie dazu die Programm Hilfe oder
 \fBinfo grub\fR\&.
 .RE
@@ -63,9 +63,9 @@ Hier k\(:onnen Sie den Passwortschutz f\(:ur das Bootmen\(:u erstellen bzw\&. \(
 \fBAktualisierung\fR
 .RS 4
 Aktualisiert die Datei
-/boot/grub/grub\&.cfg
+\fI/boot/grub/grub\&.cfg\fR
 (Bootmen\(:u) anhand der Konfigurationsdatei
-/etc/default/grub
+\fI/etc/default/grub\fR
 .RE
 .PP
 \fBInstallation\fR
@@ -75,11 +75,11 @@ Nach einer Auswahl wohin
 installiert werden soll (\fBMBR\fR
 oder
 \fBBootsektor\fR
-einer Partition), wird dieser dorthin installiert\&. Es k\(:onnen mehrere Zieorte ausgew\(:ahlt werden\&.
+einer Partition), wird dieser dorthin installiert\&. Es k\(:onnen mehrere Zielorte ausgew\(:ahlt werden\&.
 .RE
 .SH "DATEIEN"
 .PP
-/etc/default/grub
+\fI/etc/default/grub\fR
 .RS 4
 Konfiguration Datei f\(:ur
 \fBgrub2\fR\&. Siehe
@@ -93,7 +93,7 @@ f\(:ur weitere Details\&.
 \fBgrub-reboot\fR(8),
 \fBgrub-set-default\fR(8),
 \fBupdate-grub\fR(8)
-.SH "AUTHOR"
+.SH "AUTOR"
 .PP
 \fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
 .RS 4
