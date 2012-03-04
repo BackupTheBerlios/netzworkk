@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 01.03.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 04.03.2012
 #
 # Script: kwrsync_backup, erstellt remote Backups mittels dem Programm rsync
 # Version: 1.0.0
@@ -13,6 +13,8 @@ trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
 
 gv_ScriptName=${0##*/}
+
+umask 0022
 
 #
 # Verzeichniss in denen nach Funktionen gesucht wird
@@ -56,9 +58,10 @@ autoload -U kwrsync_backup_exec
 lv_Backup=$(gettext 'Backup')
 lv_Rotate=$(gettext 'Rotierung')
 lv_Host_Conf=$(gettext 'Rechner Konfiguration')
+SCRIPT_INPUT_MSG=$(gettext 'Geben Sie einen Befehl oder ein Script mit vollem Pfad, plus optionale Argumente, ein.')
 KWRSYNC_CF=${ETC_PATH}/kwrsync_backup.cf
 KWRSYNC_CF_DIR=${ETC_PATH}/kwrsync_backup.d
-KWRSYNC_EXEC_DIR=${ETC_PATH}/kwrsync_exec.d
+KWRSYNC_EXEC_DIR=${ETC_PATH}/kwrsync_backup.exec.d
 IFSBAK="$IFS"
 #
 # Wenn es eine Konfigurationsdatei gibt einlesen.

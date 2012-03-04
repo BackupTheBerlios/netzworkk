@@ -210,7 +210,7 @@ server_conf() {
 					$gv_Save \"\" $gv_Back \"\")
 			else
 				SERVER_INPUT_MENU=($lv_Source \"$SRC\" $lv_Destination \"$DST\"
-					$gv_User \"REMOTE_USER\" \"$lv_Rsync_Args\" \"$RSYNC_ARGS\"
+					$gv_User \"$REMOTE_USER\" \"$lv_Rsync_Args\" \"$RSYNC_ARGS\"
 					$lv_Script \"$SCRIPT\"
 					$gv_Save \"\" $gv_Back \"\")
 			fi
@@ -345,31 +345,34 @@ server_conf() {
 							HELP*)
 					    	    # Hilfe
 								script_help server_script_help
+								script_input_menu
 								;;
 							$lv_Choice)
-								# Scriptauswahl
-								FORMAT=""
+								# Scriptauswahl (Format-executable [ausfuehrbar]
+								FORMAT="executable"
 								file_choice "$KWRSYNC_EXEC_DIR" only "${SCRIPT##*/}"
-								if [ -x "${VERZ}/${WERT}" ] ; then
+								if [ -x "${VERZ}/${WERT}" -a ! -d "${VERZ}/${WERT}" ] ; then
 									SCRIPT="${VERZ}/${WERT}"
 									unset -- RLVM SRC REMOTE_USER RSYNC_ARGS
+									break
 								else
-									unset -- SCRIPT
+									unset -- SCRIPT VERZ WERT
+									script_input_menu $lv_Input
 								fi
-								break
 								;;
 							$lv_Input)
 								# Befehlseingabe# {{{
 								MSG=$(gettext 'Geben Sie einen Befehl oder ein Script mit vollem Pfad ein.')
-								inputbox "$SERVER_CONF_TITLE" "$MSG" "$SCRIPT"
-								if [ -n "$gv_Auswahl" ] ; then
+								inputbox "$SERVER_CONF_TITLE" "$SCRIPT_INPUT_MSG" "$SCRIPT"
+								if [ -x "${gv_Auswahl%% *}" ] ; then
 									SCRIPT="$gv_Auswahl"
 									unset -- RLVM SRC REMOTE_USER RSYNC_ARGS
+									break
 								else
 									unset -- SCRIPT
+									script_input_menu $lv_Input
 								fi
 								## }}}
-								break
 								;;
 							$gv_Back)	break
 								;;
@@ -413,6 +416,9 @@ server_conf() {
 				$gv_Save)
 					# Server Konfiguration speichern# {{{
 					#
+					if [ ! -f $SERVER_CONF_FILE ] ; then
+						create_file $SERVER_CONF_FILE
+					fi
 					# IFS
 					IFS=$'\t'
 					# erstmal alten Eintrag loeschen
@@ -476,11 +482,11 @@ server_conf() {
 								if [ "`wc -l < $SERVER_CONF_FILE`" -gt 0 ] ; then
 									print -l ${(R)${(R)${(f)"$(< $SERVER_CONF_FILE)"}##(s#)(\#)*}##(backup${IFS}${SRC}${IFS}${DST})*} > ${gv_WorkDir}/serverfile 
 									mv ${gv_WorkDir}/serverfile $SERVER_CONF_FILE
-									if [ -n "$RSYNC_ARGS" ] ; then
-										>> "$SERVER_CONF_FILE" <<< "backup${IFS}${SRC}${IFS}${DST}${IFS}${RSYNC_ARGS}"
-									else
-										>> "$SERVER_CONF_FILE" <<< "backup${IFS}${SRC}${IFS}${DST}"
-									fi
+								fi
+								if [ -n "$RSYNC_ARGS" ] ; then
+									>> "$SERVER_CONF_FILE" <<< "backup${IFS}${SRC}${IFS}${DST}${IFS}${RSYNC_ARGS}"
+								else
+									>> "$SERVER_CONF_FILE" <<< "backup${IFS}${SRC}${IFS}${DST}"
 								fi
 								;;
 							*)
@@ -651,13 +657,13 @@ server_conf() {
 							;;
 						$lv_Exclude_File)
 							# Exclude Datei bearbeiten{{{
-							exec_edit_prog "$lv_Exclude_File" "${KWRSYNC_CF_DIR}/${SERVER_EXCLUDE_FILE}"
+							exec_edit_prog "$lv_Exclude_File" "$SERVER_EXCLUDE_FILE"
 							#}}}
 							server_conf_menu $lv_Exclude_File
 							;;
 						$lv_Include_File)
 							# Exclude Datei bearbeiten{{{
-							exec_edit_prog "$lv_Include_File" "${KWRSYNC_CF_DIR}/${SERVER_INCLUDE_FILE}"
+							exec_edit_prog "$lv_Include_File" "$SERVER_INCLUDE_FILE"
 							#}}}
 							server_conf_menu $lv_Include_File
 							;;

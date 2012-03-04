@@ -33,6 +33,14 @@ Rechner: Eingabe der zu sichernden Server/Rechner.
 Logdatei: Eingabe/Auswahl der Logdatei. Standard ist
 \t/var/log/kwrsync_backup.log.
 
+Pre_Script: Eingabe eines Script + Argumente (optional).
+\tDieses Sript wird sofort ausgefuehrt bevor die Snapshots
+\terstellt und rotiert werden.
+
+Post_Script: Eingabe eines Script + Argumente (optional).
+\tDieses Sript wird sofort ausgefuehrt nachdem die Snapshots
+\terstellt und rotiert wurden.
+
 Benutzer: Waehlen Sie einen Benutzer aus, der sich anstelle von
 \t"root" auf die zu sichernden Rechnern einloggen darf. Es werden
 \tnur Benutzer angeboten die auf diesem System installiert sind.

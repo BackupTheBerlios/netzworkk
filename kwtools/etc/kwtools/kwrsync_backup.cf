@@ -7,7 +7,7 @@
 ###########################################
 
 # Unter welchem Pfad wird gesichert?
-BACKUP_PATH=""
+BACKUP_PATH="/var/cache/kwrsync_backup"
 
 # Weitere Optionen fuer rsync. Ggf. macht eine Limitierung 
 # der Bandbreite Sinn, Angabe in kbyte/sec:

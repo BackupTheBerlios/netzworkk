@@ -52,7 +52,7 @@ oder ist leer wird dies als Kommentar interpretiert\&.
 .PP
 \fBBACKUP_PATH\fR
 .RS 4
-Verzeichnis in dem die Backups angelegt werden\&. Diese liegen dann unter Backupverzeichnis/<Backup Level>\&.n\&. Folgende \(lqBackup  Level\(rq gibt es; \fBhourly\fR, \fBdaily\fR, \fBweekly\fR und \fBmounthly\fR\&.
+Verzeichnis in dem die Backups angelegt werden\&. Diese liegen dann unter Backupverzeichnis/<Backup Level>\&.n\&. Folgende \(lqBackup Level\(rq gibt es; \fBhourly\fR, \fBdaily\fR, \fBweekly\fR und \fBmounthly\fR\&.
 .RE
 .PP
 \fBBW_LIMIT\fR
@@ -94,6 +94,16 @@ Rechner/Server die zu sichern sind, getrennt durch ein Leerzeichen\&. Dies koenn
 .RS 4
 Angabe der Logdatei\&. Standard ist
 \fI/var/log/kwrsync_backup\&.log\&.\fR
+.RE
+.PP
+\fBPREEXEC\fR
+.RS 4
+Angabe eines Script + Argumente (optional)\&. Dieses Sript wird sofort ausgef\(:uhrt bevor die Snapshots erstellt und rotiert werden\&.
+.RE
+.PP
+\fBPOSTEXEC\fR
+.RS 4
+Angabe eines Script + Argumente (optional)\&. Dieses Sript wird sofort ausgef\(:uhrt nachdem die Snapshots erstellt und rotiert wurden\&.
 .RE
 .PP
 \fBUSER_RUN\fR

@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 29.02.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 03.03.2012
 #
 # Script: install, installiert die kwtools Scripts und kompiliert,
 # wenn angegeben alle Funktionen.
@@ -71,6 +71,7 @@ fi
 # Variablen belegen
 #
 SHARE_PATH="${PREFIX}/share/kwtools"
+KWRSYNC_BACKUP_PATH="${SHARE_PATH}/kwrsync_backup/utils"
 EXEC_PATH="${PREFIX}/lib/kwtools"
 FUNC_PATH="${SHARE_PATH}/functions"
 DOC_PATH="${PREFIX}/share/doc"
@@ -159,6 +160,9 @@ if [ ! -d "$PPP_PATH" ] ; then
 	$INSTALL $INSTALL_DIR_OPT ${PPP_PATH}/ip-up.d
 	$INSTALL $INSTALL_DIR_OPT ${PPP_PATH}/ip-down.d
 fi
+if [ ! -d "$KWRSYNC_BACKUP_PATH" ] ; then
+	$INSTALL $INSTALL_DIR_OPT $KWRSYNC_BACKUP_PATH
+fi
 #
 # Alle Dateien kopieren
 #
@@ -233,6 +237,7 @@ chown -R root:root $DOC_PATH
 $INSTALL $INSTALL_EXEC_OPT ./usr/sbin/*(.xN) $SBIN_PATH
 $INSTALL $INSTALL_EXEC_OPT ./usr/bin/*(.xN) $BIN_PATH
 $INSTALL $INSTALL_EXEC_OPT ./etc/grub.d/*(.xN) $GRUB_PATH
+$INSTALL $INSTALL_EXEC_OPT ./usr/share/kwrsync_backup/*(.xN) $KWRSYNC_BACKUP_PATH
 
 # Konfiguration installieren
 cp $CP_OPT -ub ./etc/kwtools/* $ETC_PATH
@@ -282,6 +287,9 @@ for f in ${EXEC_PATH}/{graphic,multi,net,sys,utils}/*(N.x) ; {
 	fi
 }
 
+# kwrsync_backup
+ln -sf $KWRSYNC_BACKUP_PATH ${ETC_PATH}/kwrsync_backup.exec.d
+
 # *.po Dateien erstellen.
 if [ -d debian/po ] ; then
 	pushd ./debian/po
@@ -301,6 +309,10 @@ if [ -d debian/po ] ; then
 fi
 
 # kwnarc ip_(up,down) Script kopieren
+#######################################
+# TODO: etc/abschaffen, lieber debian/*.cron.d
+# ....
+#######################################
 if [ -x ./etc/ppp/1kwnarc.ip-up ] ; then
 	$INSTALL $INSTALL_EXEC_OPT ./etc/ppp/1kwnarc.ip-up ${PPP_PATH}/ip-up.d/1kwnarc
 fi
@@ -312,6 +324,7 @@ $INSTALL $INSTALL_FILE_OPT ./etc/cron.d/kwrsync_backup ${CROND_PATH}
 
 # kwrsync_backup (logrotate) kopieren
 $INSTALL $INSTALL_FILE_OPT ./etc/logrotate.d/kwrsync_backup ${LOGROTATED_PATH}
+
 
 # kwnarc Init Script kopieren
 if [ -e /etc/debian_version ] ; then

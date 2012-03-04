@@ -8,6 +8,11 @@ kwrsync_backup_exec() {
 		DEFAULT_ARGS=(-av --numeric-ids --delete --delete-excluded --relative)
 		ERROR_MSG=$(gettext 'kwrsync_backup_cron: Backup Fehler')
 		FINISH_MSG=$(gettext 'kwrsync_backup_cron: Backup beendet')
+		NOT_NET=$(gettext 'kein Netz?')
+		# ins Backup Verzeichnis wechseln falls z. B.
+		# einige Scripts ihren Output im aktuellen Verzeichnis
+		# speichern.
+		cd "$BACKUP_PATH"
 		# Funktion (no_lvm_conf_msg)# {{{
 		#
 		no_lvm_conf_msg() {
@@ -43,7 +48,9 @@ kwrsync_backup_exec() {
 			unset -- LINK_DEST
 			# Hardlinks
 			if [[ $LINK_DST == yes ]] ; then
-				LINK_DEST="--link-dest=${BACKUP_PATH}/hourly.1/${DST}"
+				if [ -d "${BACKUP_PATH}/hourly.1/${DST}" ] ; then
+					LINK_DEST="--link-dest=${BACKUP_PATH}/hourly.1/${DST}"
+				fi
 			fi
 		}
 		## }}}
@@ -134,7 +141,8 @@ kwrsync_backup_exec() {
 						PROG_OPT="-avl ${BACKUP_PATH}/hourly.0 ${BACKUP_PATH}/hourly.1"
 						# ausfuehren
 						R_TITLE=$(gettext 'Backuprotierung')
-						cp ${=PROG_OPT} | progressbox "$R_TITLE" "$LOG_ROTATE_MSG"
+						cp ${=PROG_OPT} | tee -a "$LOGFILE" | \
+							progressbox "$R_TITLE" "$LOG_ROTATE_MSG"
 					else
 						cp -al ${BACKUP_PATH}/hourly.0 ${BACKUP_PATH}/hourly.1
 					fi
@@ -154,12 +162,12 @@ kwrsync_backup_exec() {
 				P_TITLE=$(gettext 'Ausfuehrung')
 				P_MSG="$LOG_START_MSG (${S}-log)"
 				(rsync ${=RSYNC_OPT} | \
-					&>> ${BACKUP_PATH}/hourly.0/${S}-log &>> "$LOGFILE" || \ 
+					tee -a "$LOGFILE" || \ 
 					sys_logger -r syslog "$gv_ScriptName" "$LOG_ERR_MSG") | \
 					progressbox "$P_TITLE" "$P_MSG"
 			else
 				rsync ${=RSYNC_OPT} | \
-					&>> ${BACKUP_PATH}/hourly.0/${S}-log &>> "$LOGFILE"
+					tee -a ${BACKUP_PATH}/hourly.0/${S}-log | &>> "$LOGFILE"
 				# Rueckgabewert pruefen.
 				# 0 = fehlerfrei, 
 				# 24 ist harmlos; tritt auf, wenn waehrend der Laufzeit
@@ -167,9 +175,9 @@ kwrsync_backup_exec() {
 				# Alles andere ist fatal -- siehe man (1) rsync
 				if ! [ $? = 24 -o $? = 0 ] ; then
 					sys_logger -r syslog "$gv_ScriptName" "$LOG_ERR_MSG"
-					Not_Net=$(gettext 'kein Netz?')
 					> "${gv_WorkDir}/error" <<< "${S}:
-					$Not_Net"
+					$NOT_NET"
+					< ${BACKUP_PATH}/hourly.0/${S}-log >> "${gv_WorkDir}/error"
 					mail -s "$ERROR_MSG" root < "${gv_WorkDir}/error"
 				fi
 			fi
@@ -205,7 +213,7 @@ kwrsync_backup_exec() {
 					unset -- SERVER_IN_FILE
 				fi
 				# Backup
-				LOG_START_MSG=$(gettext 'Starte rsync Backup von $S ...')
+				LOG_START_MSG=$(gettext 'Starte rsync Backup von ${S} ${DLVM}${SRC%/} ...')
 				LOG_ERR_MSG=$(gettext 'FATAL: rsync Backup ($S) mit Fehlern beendet!')
 				LOG_FINISH_MSG=$(gettext 'Beende rsync Backup von $S ...')
 				# Logging beginnen.
@@ -233,6 +241,7 @@ kwrsync_backup_exec() {
 										# Variablen belegen
 										Tmp="${${(ws:/:)${2#lvm://}}[1]}"
 										Tmp1="${${(ws:/:)${2#lvm://}}[2]}"
+										DLVM="lvm://${Tmp}/${Tmp1}"
 										RLVM="${VG_PATH}/${Tmp}/${Tmp1}"
 										RVG="${VG_PATH}/${Tmp}"
 										SRC="/${2#lvm://${Tmp}/${Tmp1}}"
@@ -246,7 +255,7 @@ kwrsync_backup_exec() {
 										SNAPSHOT_NAME="${SNAPSHOT_NAME:-lvmsnapshot}"
 										RLVM_CREATE_OPT=(--snapshot --size $LV_SIZE 
 											--name $SNAPSHOT_NAME $RLVM)
-										$LVCREATE_CMD ${=RLVM_CREATE_OPT} &>> ${BACKUP_PATH}/hourly.0/${S}-log &>> "$LOGFILE"
+										$LVCREATE_CMD ${=RLVM_CREATE_OPT} &>> "$LOGFILE"
 										# Snapshot mounten
 										mount "${RVG}/${SNAPSHOT_NAME}" "$LVM_MOUNTPOINT"
 										# ins Verzeichnis wechseln
@@ -263,7 +272,8 @@ kwrsync_backup_exec() {
 										# LV umounten und loeschen
 										umount "$LVM_MOUNTPOINT"
 										#
-										$LVREMOVE_CMD --force "${RVG}/${SNAPSHOT_NAME}"  &>> ${BACKUP_PATH}/hourly.0/${S}-log &>> "$LOGFILE"
+										$LVREMOVE_CMD --force "${RVG}/${SNAPSHOT_NAME}" | \
+											&>> "$LOGFILE"
 									else
 										no_lvm_conf_msg
 									fi
@@ -290,31 +300,43 @@ kwrsync_backup_exec() {
 							# Scripte/Befehle# {{{
 							SCRIPT="${2//\"/\"}"
 							DST="$3"
+							# IFS
+							IFSOLD="$IFS"
+							IFS="$IFSBAK"
 							if [ ! -d "${BACKUP_PATH}/hourly.0/${DST%/*}" ] ; then
 								mkdir -m 0755 -p "${BACKUP_PATH}/hourly.0/${DST%/*}" &>/dev/null
 							fi
 							# temporares Verzeichnis erstellen
 							# und hinein wechseln.
-							mkdir ${BACKUP_PATH}/tmp
+							mkdir -p -m 0755 ${BACKUP_PATH}/tmp
 							pushd ${BACKUP_PATH}/tmp
 							# Script/Befehl ausfuehren mit syslog
-							eval ${=SCRIPT} &>> "$LOGFILE"
+							eval ${=SCRIPT} | &>> "$LOGFILE"
 							if [ "$?" != 0 ] ; then
 								# Fehler Loggen
 								SCRIPT_ERR_MSG=$(gettext 'ERROR: backup_script $SCRIPT returned 1')
 								sys_logger -r syslog "$gv_ScriptNameT" "$SCRIPT_ERR_MSG"
 							fi
-							# hourly Snapshot von Level-0 per Hardlink-Kopie nach Level-1 kopieren
+							# hourly Snapshot von Level-1 per Hardlink-Kopie 
+							# nach Level-0 kopieren
 							# siehe Option -l in man 1 cp.
+							# erstmal das Ziel fuer den Link herausfinden
+							if [[ ${DST%/*} == $DST ]] ; then
+								DST_LINK=""
+							else
+								DST_LINK="${DST%/*}"
+							fi
 							if [ -d ${BACKUP_PATH}/hourly.1/${DST} ] ; then
 								if [[ -n $gv_Terminal ]] ; then
-									PROG_OPT="-avl ${BACKUP_PATH}/hourly.1/${DST} ${BACKUP_PATH}/hourly.0"
+									PROG_OPT="-avl ${BACKUP_PATH}/hourly.1/${DST} ${BACKUP_PATH}/hourly.0/${DST_LINK}"
 									# ausfuehren
 									R_TITLE=$(gettext 'Backuprotierung')
-									cp ${=PROG_OPT} | progressbox "$R_TITLE" "$LOG_ROTATE_MSG"
+									cp ${=PROG_OPT} | tee -a "$LOGFILE" | \
+										progressbox "$R_TITLE" "$LOG_ROTATE_MSG"
 								else
 									cp -al ${BACKUP_PATH}/hourly.1/${DST} \
-										${BACKUP_PATH}/hourly.0/${DST%/*}
+										${BACKUP_PATH}/hourly.0/${DST_LINK} | \
+										&>> "$LOGFILE"
 								fi
 							else
 								mkdir -m 0755 -p "${BACKUP_PATH}/hourly.0/${DST}" #&>/dev/null
@@ -322,11 +344,14 @@ kwrsync_backup_exec() {
 							#
 							# Daten kopieren
 							cd ..
-							cp -av ./tmp/* ${BACKUP_PATH}/hourly.0/${DST} &>> ${BACKUP_PATH}/hourly.0/${S}-log &>> "$LOGFILE"
+							cp -av ./tmp/* ${BACKUP_PATH}/hourly.0/${DST} 2>/dev/null | \
+								&>> "$LOGFILE"
 							popd
 							# temporares Verzeichnis loeschen
 							rm -rf ${BACKUP_PATH}/tmp &>/dev/null
 							(( Nr++ ))
+							# IFS
+							IFS="$IFSOLD"
 							## }}}
 							;;
 					esac
@@ -339,12 +364,6 @@ kwrsync_backup_exec() {
 				touch "${BACKUP_PATH}/hourly.0"
 				# Sicher ist sicher...
 				sync
-				# logDatei verschicken
-				if [ -z "$gv_Terminal" ] ; then
-					print ${S}: > "${gv_WorkDir}/finish"
-					< ${BACKUP_PATH}/hourly.0/${S}-log >> "${gv_WorkDir}/finish"
-					mail -s "$FINISH_MSG" root < "${gv_WorkDir}/finish"
-				fi
 			else
 				MSG=$(gettext 'Es ist keine Konfiguration (${S}.conf) vorhanden.')
 				if [[ -n $gv_Terminal ]] ; then
@@ -363,7 +382,8 @@ kwrsync_backup_exec() {
 		backup_rot_exec() {
 			# Konfigurationen auf multiple Ziel Eintraege pruefen
 			# und gegebenfalls abbrechen
-			awk -F '\t' '(/^backup_script*/){print $3}' ${KWRSYNC_CF_DIR}/*.conf \
+			awk -F '\t' '(/^backup_script*/){print $3}'  \
+				${KWRSYNC_CF_DIR}/*.conf~*-exclude.conf~*-include.conf(.N) \
 				> ${gv_WorkDir}/conftest
 			while read b ; do 
 				if [ `print -l ${(M)$(< ${gv_WorkDir}/conftest)##${b}*} | wc -l` -gt 1 ] ; then
@@ -382,23 +402,44 @@ kwrsync_backup_exec() {
 			if [ ! -d ${BACKUP_PATH}/hourly.0 ] ; then
 				mkdir -m 0755 -p ${BACKUP_PATH}/hourly.0 &>/dev/null
 			fi
-			# Rotierung			
-			backup_rotate
+			# Erst einmal das Dateisystem auf dem localhost
+			# synchronisieren.
+			sync
+			#
 			case "$DATE_OPT" in
 				hourly)
+					#
+					# preexec Script ausfuehren, falls vorhanden.
+					#
+					if [ -x "${PREEXEC%% *}" ] ; then
+						${=PREEXEC} | &>> "$LOGFILE"
+					fi
+					# Rotierung			
+					backup_rotate
 					# Snapshot taetigen
 					backup_exec
+					#
+					# postexec Script ausfuehren, falls vorhanden.
+					if [ -x "${POSTEXEC%% *}" ] ; then
+						${=POSTEXEC} | &>> "$LOGFILE"
+					fi
 					;;
 				daily)
+					# Rotierung			
+					backup_rotate
+					#
 					check_rotate_count hourly $ROTATE_COUNT_HOURLY
 					(( RotateCount = ROTATE_COUNT_HOURLY - 1 ))
 					if [ -d ${BACKUP_PATH}/hourly.${RotateCount} ] ; then
 						mv -v ${BACKUP_PATH}/hourly.${RotateCount} \
-							${BACKUP_PATH}/${DATE_OPT}.0 \
+							${BACKUP_PATH}/${DATE_OPT}.0 | \
 							&>> "$LOGFILE"
 					fi
 					;;
 				weekly)
+					# Rotierung			
+					backup_rotate
+					#
 					check_rotate_count daily $ROTATE_COUNT_DAILY
 					(( RotateCount = ROTATE_COUNT_DAILY - 1 ))
 					if [ -d ${BACKUP_PATH}/daily.${RotateCount} ] ; then
@@ -408,6 +449,9 @@ kwrsync_backup_exec() {
 					fi
 					;;
 				mounthly)
+					# Rotierung			
+					backup_rotate
+					#
 					check_rotate_count weekly $ROTATE_COUNT_WEEKLY
 					(( RotateCount = ROTATE_COUNT_WEEKLY - 1 ))
 					if [ -d ${BACKUP_PATH}/weekly.${RotateCount} ] ; then

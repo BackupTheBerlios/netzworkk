@@ -4817,7 +4817,8 @@ kernel_choice() {
 			PART_DEV="$2"
 			# Pruefen ob es ein LVM Device ist und dementsprechend
 			# die Variable PART_DEV belegen.
-            if [ "${#${(ws:/:)$(print ${PART_DEV})}}" = 3 ] ; then
+            if [ "${#${(ws:/:)$(print ${PART_DEV})}}" = 3 ] && \
+				[ "${PART_DEV%%/*}" = /dev ] ; then
 				print ${(ws:/:)$(print ${PART_DEV})} | while read Dev Vg Lv ; do
 					PART_DEV1="${Dev}/mapper/${Vg}-${Lv}"
 				done

@@ -2,8 +2,10 @@ kwtools (0.8.5-1) unstable; urgency=low
   * kwrsync_backup: neues Feature Anzeige (hosts/snapshots), hourly,
     daily, weekly und mounthly, erweiterte Konfiguration,....
   * vim Einstellungen in den Dateien (functions, help, scripts).
+  * bugfix: Funktion mount_check
+  * script install upgedatet.
 
- -- Kai Wilke <kiste@netzworkk.de>  Thu, 01 Mar 2012 23:52:52 +0100
+ -- Kai Wilke <kiste@netzworkk.de>  Sun, 04 Mar 2012 13:37:52 +0100
  
 kwtools (0.8.4-2) unstable; urgency=low
   * kwssl2: Neu - Support fuer Schluessel, Zertifikat und Reqest

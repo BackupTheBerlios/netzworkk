@@ -46,6 +46,16 @@ SERVER=\"$SERVER\"
 # Logdatei mit vollem Pfad.
 LOGFILE=\"$LOGFILE\"
 
+# voller Pfad, Preexec Script + optionale Argumente.
+# Dieses Sript wird sofort ausgefuehrt bevor das/die Backup(s)
+# erstellt werden.
+PREEXEC=\"$PREEXEC\"
+
+# voller Pfad, Preexec Script + optionale Argumente.
+# Dieses Sript wird sofort ausgefuehrt nachdem das/die
+# Backup(s) erstellt wurden.
+POSTEXEC=\"$POSTEXEC\"
+
 # Fuer welchen User soll der Crontab Eintrag (kwrsync_backup_cron)
 # erstellt werden. Wenn der User nicht root ist benoetigt er einen
 # Eintrag in /etc/sudoers, damit er das Script ausfuehren darf.

@@ -75,6 +75,7 @@ HostName="`hostname`"
 #
 KWRSYNC_CF=${ETC_PATH}/kwrsync_backup.cf
 KWRSYNC_CF_DIR=${ETC_PATH}/kwrsync_backup.d
+IFSBAK="$IFS"
 
 if [ -f $KWRSYNC_CF ] ; then
 	source $KWRSYNC_CF

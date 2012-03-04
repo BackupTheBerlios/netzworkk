@@ -7,7 +7,7 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2012-03-01">
+        <meta name="date" content="2012-03-03">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
 	<meta name="Robots" content="index,follow">
@@ -62,7 +62,12 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><p><img src="../../../images/trans.gif" width="15" height="1"><a href="kwrsync_backup.html#server_conf_exclude">2.2 Ausschluss Datei</a></p></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="15" height="1"><a href="kwrsync_backup.html#server_conf_exclude">2.2 Exclude Datei</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="15" height="1"><a href="kwrsync_backup.html#server_conf_include">2.3 Include Datei</a></p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -129,6 +134,12 @@
 				Rechnenername.domain.de (FQDN) sein.</p>
 				<p><b>Logdatei</b> Logdatei in die die Ausgaben von kwrsync_backup geloggt
 				werden sollen. Standard ist /var/log/kwrsync_backup.log.</p>
+				<p><b>Pre_Script</b> Anngabe eines Script &#043; Argumente (optional).
+				Dieses Sript wird sofort ausgef&uuml;hrt bevor die Snapshots
+				erstellt und rotiert werden.</p>
+				<p><b>Post_Script</b> Angabe eines Script &#043; Argumente (optional).
+				Dieses Sript wird sofort ausgef&uuml;hrt nachdem die Snapshots
+				erstellt und rotiert wurden.</p>
 				<p><b>User</b> W&auml;hlen Sie einen Benutzer aus, der sich anstelle von "root"
 				auf den zu sichernden Rechnern einloggen darf. Es werden
 				nur Benutzer angeboten die auf diesem System installiert
@@ -210,11 +221,19 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h4><a name=server_conf_exclude></a>2.2 Ausschluss Datei</a></h4>
-				<p><b>Ausschluss Datei</b> Hier kann man eine Datei bearbeiten, in der die 
+                        <td vAlign=top><h4><a name=server_conf_exclude></a>2.2 Exclude Datei</a></h4>
+				<p><b>Exclude Datei</b> Hier kann man eine Datei bearbeiten, in der die 
 				Verzeichnisse und Dateien stehen die nicht mit ins Backup fliessen sollen.
 				Sie sollten z.B. die Verzeichnisse /proc und /sys nicht mit einbeziehen, da sie
-				nicht f&uuml;r die Wiederherstellung ben&ouml;tigt werden.</p></td>
+				nicht f&uuml;r die Wiederherstellung ben&ouml;tigt werden.</p><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h4><a name=server_conf_include></a>2.3 Include Datei</a></h4>
+				<p><b>Include Datei</b> Hier kann man eine Datei bearbeiten, in der die 
+				Verzeichnisse und Dateien stehen die zus&auml;tzlich mit ins Backup fliessen 
+				sollen.</p></td>
                         <td></td>
                 </tr>
                 <tr>

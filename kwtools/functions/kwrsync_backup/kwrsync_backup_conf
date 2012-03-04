@@ -15,6 +15,8 @@ kwrsync_backup_conf() {
 	lv_Remote_Shell=$(gettext 'Remote_Shell')
 	lv_Host=$(gettext 'Rechner')
 	lv_LogFile=$(gettext 'Logdatei')
+	lv_Preexec_Script=$(gettext 'Pre_script')
+	lv_Postexec_Script=$(gettext 'Post_script')
 	lv_One_Fs=$(gettext 'Dateisystemgrenze')
 	lv_Link_Dest=$(gettext 'Hardlinks erstellen')
 	lv_Rotate_Hourly=$(gettext 'Rotiere stuendlich')
@@ -36,6 +38,8 @@ kwrsync_backup_conf() {
 		$lv_Minimal_Space \"$HDMINFREE\" $lv_Mount_Dir \"$MOUNT_PATH\"
 		$lv_Host \"$SERVER\"
 		$lv_LogFile \"$LOGFILE\"
+		$lv_Preexec_Script \"$PREEXEC\"
+		$lv_Postexec_Script \"$POSTEXEC\"
 		$gv_User \"$USER_RUN\"
 		$lv_Remote_Shell \"$RSYNC_RSH\"
 		\"$lv_One_Fs\" \"$ONE_FS\"
@@ -71,7 +75,7 @@ kwrsync_backup_conf() {
 				;;
 			$lv_Backup_Dir)
 				# Backup Verzeichnis angeben{{{
-				dselect "$BACKUP_PATH"
+				dselect "${BACKUP_PATH:-/var/cache/${gv_ScriptName}}"
 				if [ "$VERZ" ] ; then
 					dselect_check -c "$VERZ"
 					if [ "$VERZ" ] ; then
@@ -79,6 +83,7 @@ kwrsync_backup_conf() {
 						BACKUP_PATH="$VERZ"
 					fi
 				fi
+				BACKUP_PATH="${BACKUP_PATH:-/var/cache/${gv_ScriptName}}"
 				#}}}
 				kwrsync_backup_conf_menue $lv_Backup_Dir
 				;;
@@ -142,7 +147,7 @@ kwrsync_backup_conf() {
 				;;
 			$lv_LogFile)
 				# Logdatei eingeben/auswaehlen.{{{
-				fselect /var/log
+				fselect "${LOGFILE:-/var/log/kwrsync_backup.log}"
 				if [ -n "$gv_Auswahl" ] ; then
 					fselect_check -c "$gv_Auswahl"
 					if [ -n "$FILE" ] ; then
@@ -155,13 +160,42 @@ kwrsync_backup_conf() {
 				#}}}
 				kwrsync_backup_conf_menue $lv_LogFile
 				;;
+			$lv_Preexec_Script)
+				# Preexec Script + optionale Argumente# {{{
+				# Wird vor dem rotieren ausgefuehrt.
+				PRE_TITLE=(${gv_Configuration}::${lv_Preexec_Script})
+				inputbox "$PRE_TITLE" "$SCRIPT_INPUT_MSG" "$PREEXEC"
+				if [ -x "${gv_Auswahl%% *}" ] ; then
+					PREEXEC="$gv_Auswahl"
+				else
+					unset -- PREEXEC
+					no_input_msg
+				fi
+			set +x
+				## }}}
+				kwrsync_backup_conf_menue $lv_Preexec_Script
+				;;
+			$lv_Preexec_Script)
+				# Postexec Script + optionale Argumente# {{{
+				# Wird nach dem rotieren ausgefuehrt.
+				POST_TITLE=(${gv_Configuration}::${lv_Postexec_Script})
+				inputbox "$POST_TITLE" "$SCRIPT_INPUT_MSG" "$POSTEXEC"
+				if [ -x "${gv_Auswahl%% *}" ] ; then
+					POSTEXEC="$gv_Auswahl"
+				else
+					unset -- POSTEXEC
+					no_input_msg
+				fi
+				## }}}
+				kwrsync_backup_conf_menue $lv_Postexec_Script
+				;;
 			$gv_User)
 				# Userauswahl unter dem alles laufen soll/koennte{{{
 				user_group_check -p
 				if [ -n "$U_G_ARRAY" ] ; then
-					lv_No_User=$(gettext 'kein_Benutzer')
+					lv_No_User=$(gettext 'kein Benutzer')
 					U_MSG=$(gettext 'Waehlen Sie einen Benutzer aus, der sich anstelle von "root" auf den zu sichernden Rechnern einloggen darf.')
-					U_MENU=($lv_No_User \"\" $U_G_ARRAY)
+					U_MENU=(\"$lv_No_User\" \"\" $U_G_ARRAY)
 					U_TITLE=(${gv_Configuration}::${gv_User})
 					menubox "$U_TITLE" "$U_MSG" "$U_MENU"
 					while [ -n "$gv_Auswahl" ] ; do
@@ -169,7 +203,7 @@ kwrsync_backup_conf() {
 							HELP*)	script_help share/user_help
 								menubox "$U_TITLE" "$U_MSG" "$U_MENU"
 								;;
-							kein*|no*)
+							$lv_No_User)
 								USER_RUN=""
 								break
 								;;
@@ -348,7 +382,7 @@ kwrsync_backup_conf() {
 				# Pfad zum Mountpunkt fuer den LVM Snapshot# {{{
 				dselect "$LVM_MOUNTPOINT"
 				if [ -n "$VERZ" ] ; then
-					dselect_check "$VERZ"
+					dselect_check -c "$VERZ"
 					if [ -n "$VERZ" ] ; then
 						LVM_MOUNTPOINT="$VERZ"
 					else
