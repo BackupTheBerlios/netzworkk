@@ -352,24 +352,23 @@ install: build
 	cp -a debian/po/kwraid/usr $(CURDIR)/debian/$(package-sys-raid)
 
 	# kwtools-utils
-	cp -a utils/kwbackup utils/kwgpgcrypt utils/kwmuttprintcf utils/kwpwsafe \
+	cp -a utils/kwgpgcrypt utils/kwmuttprintcf utils/kwpwsafe \
 		utils/kwvmstat $(CURDIR)/debian/$(package-utils)$(exec_path)/utils
-	cp -a kwbackup_cron $(CURDIR)/debian/$(package-utils)$(exec_path)/
-	cp -a help/kwbackup help/kwgpgcrypt help/kwmuttprintcf help/kwpwsafe \
+	cp -a help/kwgpgcrypt help/kwmuttprintcf help/kwpwsafe \
 		help/kwvmstat $(CURDIR)/debian/$(package-utils)$(help_path)
-#	cp -a help/kwadmin/utils_kwbackup_help help/kwadmin/utils_kwgpgcrypt_help \
+#	cp -a help/kwadmin/utils_kwgpgcrypt_help \
 #		help/kwadmin/utils_kwmuttprintcf_help help/kwadmin/utils_kwpwsafe_help \
 #		help/kwadmin/utils_kwvmstat_help \
 #		$(CURDIR)/debian/$(package-utils)$(kwhelp_path)
-	cp -a functions/kwbackup functions/kwgpgcrypt functions/kwmuttprintcf \
+	cp -a functions/kwgpgcrypt functions/kwmuttprintcf \
 		functions/kwpwsafe functions/kwvmstat \
 		$(CURDIR)/debian/$(package-utils)$(func_path)
-	cp -a man/de/man1/kwbackup.1 man/de/man1/kwbackup_cron.1 man/de/man1/kwgpgcrypt.1 \
+	cp -a man/de/man1/kwgpgcrypt.1 \
 		man/de/man1/kwmuttprintcf.1 man/de/man1/kwpwsafe.1 man/de/man1/kwvmstat.1 \
 		$(CURDIR)/debian/$(package-utils)$(man_path)/de/man1
-	cp -a man/de/man5/kwbackuprc.5 man/de/man5/kwvmstatrc.5 \
+	cp -a man/de/man5/kwvmstatrc.5 \
 		$(CURDIR)/debian/$(package-utils)$(man_path)/de/man5
-	cp -av debian/po/kwbackup/usr debian/po/kwbackup_cron/usr debian/po/kwgpgcrypt/usr \
+	cp -av debian/po/kwgpgcrypt/usr \
 		debian/po/kwmuttprintcf/usr debian/po/kwpwsafe/usr \
 		debian/po/kwvmstat/usr $(CURDIR)/debian/$(package-utils)
 

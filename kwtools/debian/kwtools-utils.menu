@@ -1,11 +1,5 @@
 ?package(kwtools-utils):\
 	needs="text"\
-	section="Applications/File Management"\
-	hints="Scripts"\
-	title="kwbackup"\
-	command="/usr/lib/kwtools/utils/kwbackup"
-?package(kwtools-utils):\
-	needs="text"\
 	section="Applications/System/Security"\
 	hints="Scripts"\
 	title="kwgpgcrypt"\

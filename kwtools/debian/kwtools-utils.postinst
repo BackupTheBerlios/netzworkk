@@ -28,7 +28,7 @@ case "$1" in
 				echo ""
 				echo "Compile functions from kwtools-scripts"
 				echo ""
-				zsh -fc 'setopt extendedglob ; for i in /usr/share/kwtools/functions/kwbackup /usr/share/kwtools/functions/kwgpgcrypt /usr/share/kwtools/functions/kwmuttprintcf /usr/share/kwtools/functions/kwpwsafe /usr/share/kwtools/functions/kwvmstat ; do
+				zsh -fc 'setopt extendedglob ; for i in /usr/share/kwtools/functions/kwgpgcrypt /usr/share/kwtools/functions/kwmuttprintcf /usr/share/kwtools/functions/kwpwsafe /usr/share/kwtools/functions/kwvmstat ; do
 					zcompile -U -M $i.zwc $i/*~*.zwc(^/) ; chmod 644 $i.zwc ; done'	
 				# Menues erzeugen
 				if [ -x "`which update-menus 2>/dev/null`" ] ; then

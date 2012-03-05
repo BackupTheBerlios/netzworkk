@@ -1,4 +1,3 @@
-usr/lib/kwtools/utils/kwbackup usr/bin/kwbackup
 usr/lib/kwtools/kwbackup_cron usr/bin/kwbackup_cron
 usr/lib/kwtools/utils/kwgpgcrypt usr/bin/kwgpgcrypt
 usr/lib/kwtools/utils/kwmuttprintcf usr/bin/kwmuttprintcf

@@ -330,13 +330,11 @@ Package: kwtools-utils
 Section: utils
 Priority: optional
 Architecture: all
-Depends: kwtools-common (>= 0.8.5-1), bzip2, expect, gnupg | gpg, muttprint, pwsafe, tar (>=1.14), zsh (>= 4.2.0)
+Depends: kwtools-common (>= 0.8.5-1), bzip2, expect, gnupg | gpg, muttprint, pwsafe, zsh (>= 4.2.0)
 Suggests: kwtools-bin
 Description: Scripts for general tasks
  Includes several scripts for general tasks.
  .
- kwbackup: Simple backup script for the system and directories of your choice.
-        Also possible per crontab entry.
  kwgpgcrypt: De-, encodes and signs whole directories or single files.
         Management of keys and configuration of gnupg.
  kwmuttprintcf: Configures the program muttprint.
