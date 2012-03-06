@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 03.03.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 06.03.2012
 #
 # Script: install, installiert die kwtools Scripts und kompiliert,
 # wenn angegeben alle Funktionen.
@@ -208,6 +208,9 @@ cp $CP_OPT ./doc/kwtools* $DOC_PATH
 chmod -R 0755 ${DOC_PATH}/kwtools-*(/N)
 chmod -R 0755 ${DOC_PATH}/kwtools-*/**/*(/N)
 chmod 0644 ${DOC_PATH}/kwtools-*/**/*(.N)
+# kwrsync_backup examples
+$INSTALL $INSTALL_DIR_OPT ${DOC_PATH}/kwtools-net/examples
+$INSTALL $INSTALL_FILE_OPT ./etc/kwtools/kwrsync_backup.d/* ${DOC_PATH}/kwtools-net/examples
 
 # Dokumentation Links erstellen
 echo ""
@@ -215,7 +218,7 @@ echo "Jetzt werden vorhandene Dokumentations Verzeichnisse gelöscht,"
 echo "beziehungsweise durch Links zu kwtools-common ersetzt."
 echo ""
 pushd $DOC_PATH
-for i in kwtools-{bin,graphic,multi,net,sys,utils} \
+for i in kwtools-{bin,graphic,multi,sys,utils} \
 	kwtools-multi-{xmms2,xmms2d} kwtools-net-{djbdns,postfix} \
 	kwtools-sys-{fuse,grub,grub2,kwpasswd,parted,quota,raid,crypt,lvm} \
 	kwtools-utils-ssl ; do

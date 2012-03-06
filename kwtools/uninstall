@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 29.02.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 06.03.2012
 #
 # Script: uninstall, deinstalliert alle Dateien der
 #         kwtools.
@@ -35,12 +35,12 @@ MAN_DIRS="/usr/share/man /usr/local/share/man"
 MAN_SUBDIRS="man1 man5 man8 de/man1 de/man5 de/man8"
 KW_MANPAGES="create.cal.pl.1.gz kwdjbdns.1.gz kwholiday.1.gz
 	kwgpgcrypt.1.gz kwcamera.1.gz kwtex-cal.1.gz kwadmin.1.gz
-	kwbackup.1.gz kwbackup_cron.1.gz kwmutt.1.gz kwmuttprintcf.1.gz
+	kwmutt.1.gz kwmuttprintcf.1.gz
 	kwnetstat.1.gz kwpasswd.1.gz kwpostfix.1.gz kwpwsafe.1.gz kwrecord.1.gz
    	kwrip.1.gz kwvmstat.1.gz kwxmms2.1.gz kwxmms2d.1.gz
 	kwplaner.1.gz kwrsync.1.gz kwrsync_cron.1.gz kwsnd2sndfm.1.gz
 	kwssl2.1.gz kwtermin.1.gz kwtermin_cron.1.gz kwvcdburn.1.gz
-	cd_dvdrc.5.gz kwbackuprc.5.gz kwcryptsetuprc.5.gz kwecryptfsrc.5.gz kwpwsaferc.5.gz
+	cd_dvdrc.5.gz kwcryptsetuprc.5.gz kwecryptfsrc.5.gz kwpwsaferc.5.gz
 	kwcamerarc.5.gz kwnarc.conf.5.gz kwlosetuprc.5.gz
 	kwrsync_backup.cf.5.gz main.cf.5.gz
 	kwplanerrc.5.gz kwriprc.5.gz kwrsyncrc.5.gz kwrsynctab.5.gz
