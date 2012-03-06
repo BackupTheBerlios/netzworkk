@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2010
+# Autor: Kai Wilke <kiste@netzworkk.de> 06.03.2012
 #
 # Script: kwauth, stellt PAM und andere Authentifizierungs-
 # Methoden fuer ihr System ein.
 #
-# Version: 0.0.1
+# Version: 0.0.2
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -49,9 +49,7 @@ lv_Auth=$(gettext 'Authentifizierung')
 #
 check_auth() {
 	unset -- AUTH_IS
-	if [[ -e /lib/security/pam_unix.so ]] ; then
-		AUTH_IS+=(PAM \"\")
-	fi
+	AUTH_IS+=(PAM \"\")
 	if [[ -e /lib/security/pam_ldap.so ]] ; then
 		AUTH_IS+=(LDAP \"\")
 	fi
