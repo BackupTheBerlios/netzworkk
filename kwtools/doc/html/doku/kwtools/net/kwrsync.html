@@ -7,7 +7,7 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2010-03-10">
+        <meta name="date" content="2012-03-08">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
 	<meta name="Robots" content="index,follow">
@@ -35,9 +35,9 @@
                         <td></td>
                         <td vAlign=top><h2><a name=kwrsync>kwrsync</a></h2>
                                 <p>Mit diesem Script k&ouml;nnen Sie wahlweise entweder ihre Homverzeichnisse mit 
-				anderen	Rechnern synchronisieren (Laptop) oder Verzeichnisse ihrer Wahl spiegeln. Sie 
-				k&ouml;nnen auch einen crontab Eintrag vornehmen, damit die Verzeichnisse automatisch 
-				gespiegelt werden.</p></td>
+				anderen	Rechnern synchronisieren (Laptop) oder Verzeichnisse ihrer Wahl spiegeln. 
+				Sie k&ouml;nnen auch einen crontab Eintrag vornehmen, damit die Verzeichnisse 
+				automatisch gespiegelt werden.</p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -89,8 +89,9 @@
 				<p><b>crontab:</b> Das Script kwrsync_cron in die crontab Tabelle des Users
 				einf&uuml;gen oder l&ouml;schen. kwrsync_cron f&uuml;hrt rsync aus und
 				schickt bei Fehlern eine Mail.</p>
-				<p><b>Notiz:</b> Als Programm wird rsync benutzt. Fuer das ssh Protokoll sollten Sie 
-				sich eine Datei namens ~/.ssh/authorized_keys anlegen (man 1 ssh).</p></td>
+				<p><b>Notiz:</b> Als Programm wird rsync benutzt. F&uuml;r das ssh Protokoll
+				sollten Sie sich eine Datei namens ~/.ssh/authorized_keys anlegen
+				(man 1 ssh).</p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -128,22 +129,30 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><p><b><i>Remote_shell:</i></b> Auswahl einer der 
-						installierten remote Shells (z.B. ssh).</p></td>
+						<td><p><b><i>rsync Argumente:</i></b> Eingabe von zus&auml;tzlichen 
+						Argumenten f&uuml;r das Programm rsync. Diese m&uuml;ssen mit
+						einem Leerzeichen getrennt sein (man 1 rsync).</p>
+						<p><b>Notiz:</b> Standard rsync Argmunte sind: &quot;-avu 
+						--numeric-ids --delete --delete-excluded --backup
+						--suffix=_&#096;date +%d.%m.%Y&#096;&quot;</p></td>
+					</tr>
+					<tr>
+						<td colspan="3"><br></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td><p><b><i>Ausschluss:</i></b> Dateien/Verzeichnisse die 
 						von der Synchronisation ausgeschlossen werden sollen. 
-						Diese m&uuml;ssen relativ zum Pfad des Sourceverz. liegen. Bei einem 	
+						Diese m&uuml;ssen relativ zum Pfad des Sourceverz. liegen. Bei einem 
 						Sourceverz. von /home/user/foo dann ist der Ausschluss einer
 						Datei z. B. foo/bar.</p></td>
 					</tr>
 				</table></p>
 
 				<p><b>l&ouml;schen:</b> Ein oder mehrere Eintr&auml;ge l&ouml;schen</p>
-				<p><b>Notiz:</b> Als Programm wird rsync benutzt. Fuer das ssh Protokoll sollten Sie 
-				sich eine Datei namens ~/.ssh/authorized_keys anlegen (man 1 ssh).</p></td>
+				<p><b>Notiz:</b> Als Programm wird rsync benutzt. F&uuml;r das ssh Protokoll
+				sollten Sie sich eine Datei namens ~/.ssh/authorized_keys anlegen
+				(man 1 ssh).</p></td>
                         <td></td>
                 </tr>
                 <tr>

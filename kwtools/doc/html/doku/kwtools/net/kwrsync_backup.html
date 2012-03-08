@@ -7,7 +7,7 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2012-03-03">
+        <meta name="date" content="2012-03-08">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
 	<meta name="Robots" content="index,follow">
@@ -315,29 +315,33 @@
                 <tr>
                         <td></td>
                         <td vAlign=top><h4><a name=ssh></a>5.2 SSH</a></h4>
-				<p>Sie sollten einen eigenen User (Bsp.:rsyncbackup) f&uuml;r kwrsync_backup
-				auf den Backup Rechnern und den zu sichernden Rechnern erstellen, damit
-				sich der Benutzer "root" nicht dauernd einloggen muss.
-				Diesen User kann man dann mit dem Programm sudo das Ausf&uuml;hren des "rsync" 
-				Kommandos zulassen. Mit "passwd User -l" kann man dem Backup User das Login
-				auf den zu sichernden Rechnern verbieten.<br>
-				- Loggen Sie sich auf jeden Backup Rechner, als "root", ein und erzeugen einen ssh 
+				<p>Sie sollten einen eigenen Backup User (Bsp.: kwrsyncbackup) f&uuml;r 
+				kwrsync_backup
+				auf dem Backup Rechner und den zu sichernden Rechnern erstellen, damit
+				sich der Benutzer &quot;root&quot; nicht dauernd einloggen muss.
+				Diesen User (kwrsyncbackup) kann man dann mit dem Programm &quot;sudo&quot;
+				das Ausf&uuml;hren des &quot;rsync&quot; Kommandos zulassen.
+				Mit &quot;passwd kwrsyncbackup -l&quot; kann man dem Backup User
+				(kwrsyncbackup) das Login auf dem Backup Rechner verbieten.<br>
+				- Loggen Sie sich auf dem Backup Rechner, als "root", ein und erzeugen einen ssh 
 				Key (ssh-keygen -t dsa), ohne Passphrase. Bei Frage nach der Passphrase einfach 
 				Enter dr&uuml;cken.<br>
-				- Auf den Backup Rechnern kopieren Sie die Datei 
-				/root/.ssh/id-dsa.pub nach /root/.ssh/authorized_keys. Dort tragen Sie das "rsync" 
-				Kommando command="sudo rsync --server --sender -vlogDtHAXprz  --delete-excluded 
-				--numeric-ids --relative . /" vor dem Key ein (command="sudo rsync ... ssh-dss 	AAA....).<br>
+				- Auf dem Backup Rechner kopieren Sie die Datei 
+				/root/.ssh/id-dsa.pub nach /root/.ssh/authorized_keys.rsync. Dort tragen Sie
+				das &quot;rsync&quot; Kommando
+				command=&quot;sudo rsync --server --sender -vlogDtHAXprz  --delete-excluded 
+				--numeric-ids --relative . /&quot; vor dem Key ein
+				(command=&quot;sudo rsync ...&quot; ssh-dss AAA....).<br>
 				- Diese Datei kopieren Sie auf jeden Host der zu sichern ist, 
-				ins Home Verzeichnis des Backup Users (~/.ssh/authorized_keys).</p>
+				ins Home Verzeichnis des Backup Users (kwrsyncbackup) (~/.ssh/authorized_keys).</p>
 				<p><b>Notiz:</b> Achten Sie darauf das, auf allen Rechnern, in der Datei 
 				/etc/ssh/sshd_config beim Parameter AuthorizedKeysFile      %h/.ssh/authorized_keys 
 				steht. Desweiteren muss die Rechnereigene Konfiguration die zus&auml;tzlichen
-				 &quot;rsync&quot; Argumente &quot;-HAX&quot; besitzen. Per Standard sind die
+				 &quot;rsync&quot; Argumente &quot;-HAX&quot; besitzen. Standard sind die
 				Argumente &quot;-av --numeric-ids --delete --delete-excluded --relative&quot;.</p>
-				<p>Sichern Sie den Backup Benutzer, durch das Programm "sudo" wie im Beispiel ab 
-				(Datei /etc/sudoers). F&uuml;r die zu sichernden Rechner k&ouml;nnte das so 
-				aussehen:<br>
+				<p>Sichern Sie den Backup User, durch das Programm &quot;sudo&quot; wie im
+				Beispiel ab (Datei /etc/sudoers). F&uuml;r die zu sichernden Rechner
+				k&ouml;nnte das so aussehen:<br>
 				# Host alias specification<br>
 				# in diesem Fall nat&uuml;rlich der lokale Rechner<br>
 				Host_Alias BACKUP_HOST = backuphost.domain.de<br>
