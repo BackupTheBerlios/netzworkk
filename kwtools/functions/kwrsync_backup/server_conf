@@ -10,6 +10,8 @@ server_conf() {
 	# Variablen
 	lv_Exclude_File=$(gettext 'Exclude Datei')
 	lv_Include_File=$(gettext 'Include Datei')
+	# rsync standard Argumente
+	DEFAULT_ARGS=(-av --numeric-ids --delete --delete-excluded --relative)
 	#
 	# Funktion (backup_change_list), liest die Konfigurationsdaten der# {{{
 	# einzelnen Server zeilenweise ein.
@@ -114,7 +116,7 @@ server_conf() {
 			backup_change_menu
 			while [ "$gv_Auswahl" ] ; do
 				case "$gv_Auswahl" in
-					HELP*)	script_help server_change_help
+					HELP*)	script_help share/conf_change_help
 						backup_change_menu
 						;;
 					$gv_Back)	break
@@ -308,7 +310,7 @@ server_conf() {
 					;;
 				$lv_Rsync_Args)
 		    	    # angeben von zusaetzlichen rsync Argumenten# {{{
-					MSG=$(gettext 'Geben Sie zusaetzliche Argumente zu den Standard Optionen ($DEFAULT_RSYNC_ARGS) fuer rsync ein.')
+					MSG=$(gettext 'Geben Sie zusaetzliche Argumente zu den Standard Optionen ($DEFAULT_ARGS) fuer rsync ein.')
 					inputbox "$SERVER_CONF_TITLE" "$MSG" "$RSYNC_ARGS"
 					if [ -n "$gv_Auswahl" ] ; then
 						RSYNC_ARGS="$gv_Auswahl"
@@ -535,7 +537,7 @@ server_conf() {
 			backup_del_menu
 			while [ "$gv_Auswahl" ] ; do
 				case "$gv_Auswahl" in
-					HELP*)	script_help server_conf_help
+					HELP*)	script_help share/conf_del_help
 						backup_del_menu
 						;;
 					*)

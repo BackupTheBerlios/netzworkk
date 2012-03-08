@@ -6,8 +6,8 @@ kwrsync_backup_exec() {
 	if [[ ${#argv} == 1 ]] ; then
 		DATE_OPT="$1"
 		DEFAULT_ARGS=(-av --numeric-ids --delete --delete-excluded --relative)
-		ERROR_MSG=$(gettext 'kwrsync_backup_cron: Backup Fehler')
-		FINISH_MSG=$(gettext 'kwrsync_backup_cron: Backup beendet')
+		ERROR_MSG=$(gettext '${gv_ScriptName}: Backup Fehler')
+		FINISH_MSG=$(gettext '${gv_ScriptName}: Backup beendet')
 		NOT_NET=$(gettext 'kein Netz?')
 		# ins Backup Verzeichnis wechseln falls z. B.
 		# einige Scripts ihren Output im aktuellen Verzeichnis
