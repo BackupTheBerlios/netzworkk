@@ -46,12 +46,17 @@ kwrsync_conf() {
 				remote_sh
 				if [ "${R_SHELL[1]}" ] ; then
 					REMOTE_TITLE=(${gv_Configuration}::${lv_Remote_Shell})
+					REMOTE_MENU=($gv_None \"\" $R_SHELL)
 					REMOTE_MSG=$(gettext 'Waehlen Sie ihre Remote Shell aus.')
-					menubox "$REMOTE_TITLE" "$REMOTE_MSG" "$R_SHELL"
+					menubox "$REMOTE_TITLE" "$REMOTE_MSG" "$REMOTE_MENU"
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help share/remote_shell_help
-								menubox "$REMOTE_TITLE" "$REMOTE_MSG" "$R_SHELL"
+								menubox "$REMOTE_TITLE" "$REMOTE_MSG" "$REMOTE_MENU"
+								;;
+							$gv_None)	# nichts
+								unset -- RSYNC_RSH
+								break
 								;;
 							*)	RSYNC_RSH="$gv_Auswahl"
 								break

@@ -4,31 +4,30 @@
 #
 kwrsync_home_exec() {
 	if [ -n "${R_HOST[1]}" ] ; then
-		for i in ${=R_HOST} ; {
-			if [ "$i" != localhost -o "$i" != "`hostname`" ] ; then
-				if [[ -n $RSYNC_RSH ]] ; then
-					# Kompression und remote Shell einschalten
-					RSH_OPT="-ze $RSYNC_RSH"
-				else
-					# Nur Kompression einschalten
-					RSH_OPT="-z"
-				fi
-				PROG_OPT="-avHAXu --numeric-ids $RSH_OPT -b --suffix=_`date +%d.%m.%Y` --bwlimit=${BW_LIMIT:-0} ${HOME}/* ${i}:${HOME}"
+		NOT_NET=$(gettext 'kein Netz?')
+		for h in ${=R_HOST} ; {
+			if ! [ "$h" = localhost -o "$h" = "`hostname`" ] ; then
+				# remote shell Variable belegen
+				check_remote_sh
+				# komplette rsync Optionen.
+				PROG_OPT=($DEFAULT_ARGS --bwlimit=${BW_LIMIT:-0} -HAX
+					$RSYNC_CONF_RSH ${HOME}/* ${h}:${HOME})
 			else
 				continue
 			fi
 			LOG_HOME_START_MSG=$(gettext 'Starte $HOME rsync nach $h ...')
 			LOG_HOME_ERR_MSG=$(gettext 'Fatal: $HOME rsync nach $h mit Fehlern beendet!')
 			LOG_HOME_FINISH_MSG=$(gettext 'Beende $HOME rsync nach $h ...')
-			FINISH_MSG=$(gettext 'kwrsync_cron: rsync beendet ($h) ')
-			HOME_ERROR_MSG=$(gettext 'kwrsync_cron: $HOME rsync nach $h mit Fehlern beendet! ')
+			FINISH_MSG=$(gettext '${gv_ScriptName}: rsync beendet ($h) ')
+			HOME_ERROR_MSG=$(gettext '${gv_ScriptName}: $HOME rsync nach $h mit Fehlern beendet! ')
 			# Logging beginnen.
 			sys_logger -n syslog "$gv_ScriptName" "$LOG_HOME_START_MSG"
-			if [ -n "$gv_Terminal" ] ; then
+			if [[ -n $gv_Terminal ]] ; then
 				TITLE=$(gettext 'Homesyncronisation')
-				MSG=$(gettext 'Syncronisiere das Home Verzeichnis mit dem Rechner $i.')
-				(rsync ${=PROG_OPT} 2>/dev/null || sys_logger -r syslog "$gv_ScriptName" "$LOG_HOME_ERR_MSG") | \
-				rsync ${=PROG_OPT} | progressbox "$TITLE" "$MSG"
+				MSG=$(gettext 'Syncronisiere das Home Verzeichnis mit dem Rechner $h.')
+				(rsync ${=PROG_OPT} 2>/dev/null || \
+					sys_logger -r syslog "$gv_ScriptName" "$LOG_HOME_ERR_MSG") | \
+					progressbox "$TITLE" "$MSG"
 				# Fertig!
 				sys_logger -n syslog "$gv_ScriptName" "$LOG_HOME_FINISH_MSG"
 				# Sicher ist sicher...
@@ -42,8 +41,7 @@ kwrsync_home_exec() {
 				# Alles andere ist fatal -- siehe man (1) rsync
 				if ! [ $? = 24 -o $? = 0 ] ; then
 					sys_logger -r syslog "$gv_ScriptName" "$LOG_HOME_ERR_MSG"
-					Not_Net=$(gettext 'kein Netz?')
-					> "${gv_WorkDir}/error" <<< "$Not_Net"
+					> "${gv_WorkDir}/error" <<< "$NOT_NET"
 					mail -s "$HOME_ERROR_MSG" $USER < "${gv_WorkDir}/error"
 				else
 					sys_logger -n syslog "$gv_ScriptName" "$LOG_HOME_FINISH_MSG"
@@ -53,7 +51,13 @@ kwrsync_home_exec() {
 			fi
 		}
 	else
-		no_host_rsh_msg
+		MSG=$(gettext 'Sie muessen mindestens einen Zielrechner konfigurieren, um Ihr Homeverzeichnis syncronisieren zu koennen.')
+		if [[ -n $gv_Terminal ]] ; then
+			msgbox "$gv_Attention" "$MSG"
+		else
+			> ${gv_WorkDir}/kwrsync_cron <<< "$MSG"
+			mail -s "${gv_ScriptName}: kwrsyncrc Error" $USER < ${gv_WorkDir}/kwrsync_cron
+		fi
 	fi
 }
 #}}}

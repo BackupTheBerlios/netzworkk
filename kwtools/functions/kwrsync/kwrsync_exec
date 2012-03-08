@@ -4,7 +4,8 @@
 #
 kwrsync_exec() {
 	unset -- S_VERZ R_VERZ RSYNC_RSH REMOTE_HOST DIR_EXCLUDE KwrsynctabListe
-	setopt shwordsplit
+	NOT_NET=$(gettext 'kein Netz?')
+	setopt localoptions shwordsplit
 	# IFS=Return
 	IFS=$'\r'
 	#
@@ -18,14 +19,14 @@ kwrsync_exec() {
 		(( Anz1++ ))
 		S_VERZ[Anz1]="$1"
 		R_VERZ[Anz1]="$2"
-		RSYNC_RSH[Anz1]="$3"
-		REMOTE_HOST[Anz1]="$4"
+		REMOTE_HOST[Anz1]="$3"
+		RSYNC_ARGS[Anz1]="$4"
 		DIR_EXCLUDE[Anz1]="$5"
 		(( Anz++ ))
 	done
-	# IFS=space
-	IFS=$'\ '
 	unsetopt shwordsplit
+	# IFS
+	IFS="$IFSBAK"
 	#
 	if [ "$Anz1" -gt 0 ] ; then
 		Nr=0
@@ -39,38 +40,37 @@ kwrsync_exec() {
 			fi
 			# Gibt es eine exclude Datei, wird diese mitbenutzt.
 			if [ -f ${gv_WorkDir}/exclude ] ; then
-				EXCLUDE_OPT="--delete --delete-excluded --exclude-from=${gv_WorkDir}/exclude"
+				EXCLUDE_OPT="--exclude-from=${gv_WorkDir}/exclude"
 			else
 				unset -- EXCLUDE_OPT
+			fi
+			# Gibt es eine exclude Datei, wird diese mitbenutzt.
+			if [ ! -z "${RSYNC_ARGS[Nr]}" -a "${RSYNC_ARGS[Nr]}" != - ] ; then
+				RSYNC_OPT="$RSYNC_ARGS"
+			else
+				unset -- RSYNC_OPT
 			fi
 			#
 			# fuer alle Rechner ausfuehren
 			for h in ${REMOTE_HOST[Nr]} ; {
-				if [ "$h" = localhost -o "$h" = "`hostname`" ] ; then
-					PROG_OPT="-avHAXu --numeric-ids -b --suffix=_`date +%d.%m.%Y` $EXCLUDE_OPT --bwlimit=${BW_LIMIT:-0} ${S_VERZ[Nr]} ${R_VERZ[Nr]}"
-				else
-					# remote-shell Optionen belegen
-					if [ ! -z "${RSYNC_RSH[Nr]}" -o "${RSYNC_RSH[Nr]}" != - ] ; then
-						# Kompression und remote Shell einschalten
-						RSH_OPT="-ze ${RSYNC_RSH[Nr]}"
-					else
-						# Nur Kompression einschalten
-						RSH_OPT="-z"
-					fi
-					# komplette rsync Optionen.
-					PROG_OPT="-avHAXu --numeric-ids $RSH_OPT -b --suffix=_`date +%d.%m.%Y` $EXCLUDE_OPT --bwlimit=${BW_LIMIT:-0} ${S_VERZ[Nr]} ${h}:${R_VERZ[Nr]}"
-				fi
+				check_remote_sh
+				# komplette rsync Optionen.
+				PROG_OPT=($DEFAULT_ARGS --bwlimit=${BW_LIMIT:-0} $RSYNC_OPT
+					$RSYNC_CONF_RSH $EXCLUDE_OPT
+					${S_VERZ[Nr]} ${h}:${R_VERZ[Nr]})
+				#
 				LOG_START_MSG=$(gettext 'Starte rsync nach $h ...')
 				LOG_ERR_MSG=$(gettext 'Fatal: rsync ($h) mit Fehlern beendet!')
 				LOG_FINISH_MSG=$(gettext 'Beende rsync nach $h ...')
-				FINISH_MSG=$(gettext 'kwrsync_cron: rsync beendet ($h) ')
-				ERROR_MSG=$(gettext 'kwrsync_cron: rsync Fehler ($h) ')
+				FINISH_MSG=$(gettext '${gv_ScriptName}: rsync beendet ($h) ')
+				ERROR_MSG=$(gettext '${gv_ScriptName}: rsync Fehler ($h) ')
 				# Logging beginnen.
 				sys_logger -n syslog "$gv_ScriptName" "$LOG_START_MSG"
 				if [ -n "$gv_Terminal" ] ; then
 					TITLE=$(gettext 'Syncronisation')
 					MSG=$(gettext 'Syncronisiere das Verzeichnis ${S_VERZ[Nr]} mit ${h}:${R_VERZ[Nr]}.')
-					(rsync ${=PROG_OPT} 2>/dev/null || sys_logger -r syslog "$gv_ScriptName" "$LOG_ERR_MSG") | \
+					(rsync ${=PROG_OPT} 2>/dev/null || \
+						sys_logger -r syslog "$gv_ScriptName" "$LOG_ERR_MSG") | \
 					progressbox "$TITLE" "$MSG"
 					sys_logger -n syslog "$gv_ScriptName" "$LOG_FINISH_MSG"
 					sync
@@ -83,8 +83,7 @@ kwrsync_exec() {
 					# Alles andere ist fatal -- siehe man (1) rsync
 					if ! [ $? = 24 -o $? = 0 ] ; then
 						sys_logger -r syslog "$gv_ScriptName" "$LOG_ERR_MSG"
-						Not_Net=$(gettext 'kein Netz?')
-						> "${gv_WorkDir}/error" <<< "$Not_Net"
+						> "${gv_WorkDir}/error" <<< "$NOT_NET"
 						mail -s "$ERROR_MSG" $USER < "${gv_WorkDir}/error"
 					else
 						sys_logger -n syslog "$gv_ScriptName" "$LOG_FINISH_MSG"
@@ -97,7 +96,13 @@ kwrsync_exec() {
 			rm -rf ${gv_WorkDir}/exclude &>/dev/null
 		done
 	else
-		no_kwrsynctab_msg
+		MSG=$(gettext 'Es sind keine Eintrage fuer kwrsync vorhanden.')
+		if [[ -n $gv_Terminal ]] ; then
+			msgbox "$gv_Attention" "$MSG"
+		else
+			> ${gv_WorkDir}/kwrsync_cron <<< "$MSG"
+			mail -s "${gv_ScriptName}: kwrsynctab Error" $USER < ${gv_WorkDir}/kwrsync_cron
+		fi
 	fi
 }
 #}}}
