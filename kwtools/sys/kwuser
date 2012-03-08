@@ -1,19 +1,18 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 29.03.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 07.04.2012
 #
 # Script: kwuser, legt an, aendert und loescht User
-# Version: 0.3.7
+# Version: 1.0.0
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
 
 # Optionen pruefen
-if [ -n "$1" -a "$1" = -m ] ; then
-	gv_Opt="$1"
-else
-	unset -- gv_Opt
-fi
+case "$1" in
+	-m|--multi)	gv_Opt="-m"	;;
+	*)	unset -- gv_Opt ;;
+esac
 
 gv_ScriptName=${0##*/}
 
@@ -86,7 +85,11 @@ lv_Per_Name=$(gettext 'per Name')
 MAIN_MENU=($gv_Configuration \"\" $gv_Display \"\"
 $gv_Create \"\" $gv_Change \"\" $gv_Delete \"\" $gv_Exit \"\")
 haupt_menue() {
-	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	else
+		menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	fi
 }
 #}}}
 # Funktion (user_konf_menue){{{
@@ -927,7 +930,7 @@ while [ "$gv_Auswahl" ] ; do
 				KWUSER_UMASK="`print ${${(ws: :)${=${(M)${(f)"$(< /etc/login.defs)"}##(#s)UMASK[[:space:]]*}}}[2]}`"
 				ENCRYPT_METHOD="`print ${${(ws: :)${=${(M)${(f)"$(< /etc/login.defs)"}##(#s)ENCRYPT_METHOD[[:space:]]*}}}[2]}`"
 			fi
-			kwuser_conf
+			kwuser_conf $gv_Configuration
 			#}}}
 			haupt_menue
 			;;
@@ -942,7 +945,7 @@ while [ "$gv_Auswahl" ] ; do
 				view_file $gv_LogFile
 			fi
 			#}}}
-			haupt_menue
+			haupt_menue $gv_Display
 			;;
 		$gv_Create)
 			# User Namen eingeben{{{
@@ -987,7 +990,7 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			haupt_menue
+			haupt_menue $gv_Create
 			;;
 		$gv_Change)
 			# vorhandene User auswaehlen{{{
@@ -1016,7 +1019,7 @@ while [ "$gv_Auswahl" ] ; do
 				done
 			fi
 			#}}}
-			haupt_menue
+			haupt_menue $gv_Change
 			;;
 		$gv_Delete)
 			# User loeschen{{{
@@ -1096,7 +1099,7 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			#}}}
-			haupt_menue
+			haupt_menue $gv_Delete
 			;;
 		$gv_Exit)	break
 			;;
