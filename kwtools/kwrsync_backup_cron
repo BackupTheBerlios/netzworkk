@@ -10,22 +10,7 @@
 # Description: kwrsync_backup_cron, make a snapshot from local and remote hosts
 # per crontab.
 #
-# Version: 0.1.0
-#
-# Changelog:
-# 2012-03-01 - to conform to new kwrsync_backup.
-# 2011-06-03 - checked.
-# 2009-06-22 - correct $fpath.
-# 2008-10-12 - correct the syntax.
-# 2008-01-26 - new Variables KWRSYNC_CF.
-# 2007-09-14 - system functions changed
-# 2007-08-06 - Support for new functions
-# 2007-04-02 - Support for hostname in error mail
-# 2007-01-30 - gv_WorkDirGlobal rename to gv_WorkDir
-# 2007-01-11 - sys_logger support
-# 2006-05-15 - locale support
-# 2006-03-18 - Bug in kwrsync_backup_exec gefixt
-# 2005-11-26 - created
+# Version: 0.1.1
 #
 
 trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -83,7 +68,7 @@ else
 	MSG=$(gettext 'Es gibt keine Konfigurationsdatei auf dem Rechner $HostName.')
 	> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
 $MSG"
-	mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+	mail -s "$gv_ScriptName Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
 	exit 1
 fi
 
@@ -107,7 +92,7 @@ if [ -z "$BACKUP_PATH" ] ; then
 werden sollen (/etc/kwtools/kwrsync_backup.cf).')
 	> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
 $MSG"
-	mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+	mail -s "$gv_ScriptName Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
 	exit 1
 fi
 
@@ -119,7 +104,7 @@ if [ "$MOUNT_PATH" ] ; then
 		MSG=$(gettext 'Kann Backup-Verzeichnis nicht einbinden.')
 			> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
 $MSG"
-			mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+			mail -s "$gv_ScriptName Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
 			exit 1
 		fi
 	fi
@@ -133,7 +118,7 @@ if [ "$CHECK_HDMINFREE" = yes ] ; then
 		MSG=$(gettext 'Es ist nicht mehr genug Platz vorhanden.')
 		> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
 $MSG"
-		mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+		mail -s "$gv_ScriptName Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
 	else
 		kwrsync_backup_exec $OPT
 	fi
@@ -147,7 +132,7 @@ if [ "$MOUNT_PATH" ] ; then
 		MSG=$(gettext 'Kann Backup-Verzeichnis nicht ausbinden.')
 		> ${gv_WorkDir}/kwrsync_backup_cron <<< "Host: $HostName
 $MSG"
-		mail -s "kwrsync_backup_cron Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
+		mail -s "$gv_ScriptName Error" root < "${gv_WorkDir}/kwrsync_backup_cron"
 		exit 1
 	fi
 fi
