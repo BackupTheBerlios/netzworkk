@@ -25,6 +25,9 @@ rsync Argumente: Eingabe von zusaetzlichen Argumenten fuer das
 \tProgramm rsync. Diese muessen mit einem Leerzeichen getrennt
 \tsein (man 1 rsync).
 
+NOTIZ: Standard rsync Argmunte sind: \"-av --numeric-ids --delete
+\t--delete-excluded --relative\"
+
 LVM: Auswahl eines Logischen Volume (LV) von dem ein temporaerer
 \tSnapshot erstellt werden soll.
 

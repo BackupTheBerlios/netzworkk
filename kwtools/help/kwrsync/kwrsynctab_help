@@ -1,6 +1,6 @@
 # kwrsynctab_help fuer kwrsync{{{
-TITLE=$(gettext 'Verzeichnisse::${gv_Help}')
-MSG=$(gettext 'Hier koennen Sie die Datei ~/.ktools/kwrsynctab ansehen, deren
+TITLE="${lv_Directories}::${gv_Help}"
+MSG=$(gettext 'Hier koennen Sie die Datei ~/.kwtools/kwrsynctab ansehen, deren
 Eintraege aendern, welche anlegen und loeschen.')
 #}}}
 ### Modeline {{{

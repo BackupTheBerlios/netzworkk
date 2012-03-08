@@ -3,6 +3,10 @@ TITLE="${gv_Configuration}::${gv_Help}"
 MSG=$(gettext 'Zielrechner: Eingabe der IP-Nummern oder Namen der Zielrechner. Name
 \tgeht nur wenn dieser Rechner auch bekannt ist (z.B. DNS).
 
+NOTIZ: Diese Einstellung wird als Vorschlag fuer die weitere
+\tKonfiguration und fuer die Synchronisation des Homeverzeichnis
+\tbenutzt.
+
 Remote_shell: Welche Shell soll fuer die Uebertragung genutzt
 \twerden. Zur Auswahl stehen rsh und ssh, falls sie
 \tinstalliert sind. Die ssh besitzt eine Kompression und
