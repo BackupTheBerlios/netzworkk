@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 06.03.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 07.03.2012
 #
 # Script: install, installiert die kwtools Scripts und kompiliert,
 # wenn angegeben alle Funktionen.
@@ -259,9 +259,9 @@ chmod 0644 ${SKEL_DIR}/.firstlogin(.N)
 chown -R root:root $SKEL_DIR
 
 # Lintian Dateien installieren
-for i in ./debian/*.lintian(:t) ; {
-	cp $CP_OPT ./debian/${i} ${LINTIAN_PATH}/${i%%.*}
-	chmod 0644 ${LINTIAN_PATH}/${i%%.*}
+for i in ./debian/*.lintian-overrides(:t) ; {
+	cp $CP_OPT ./debian/${i} ${LINTIAN_PATH}/${i%.lintian-overrides}
+	chmod 0644 ${LINTIAN_PATH}/${i%.lintian-overrides}
 }
 chown -R root:root $LINTIAN_PATH
 
