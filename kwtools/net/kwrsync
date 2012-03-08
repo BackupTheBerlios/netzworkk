@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 17.03.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 07.03.2012
 #
 # Script: kwrsync
-# Version: 0.0.9
+# Version: 1.0.0
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -43,7 +43,7 @@ fi
 
 # Nachdem das Script initialiiert wurde, kann man die anderen
 # benoetigten Funktionen laden.
-autoload -U no_kwrsynctab_msg
+autoload -U check_remote_sh
 
 # Wenn eine ~/.kwtools/kwrsyncrc Datei vorhanden ist einlesen.
 read_file kwrsyncrc
@@ -57,6 +57,9 @@ lv_Home_Sync=$(gettext 'Homesync')
 lv_Sync=$(gettext 'Synchronisation')
 lv_Remote_Host=$(gettext 'Zielrechner')
 lv_Remote_Shell=$(gettext 'Remote_Shell')
+# rsync standard Argumente
+DEFAULT_ARGS=(-avu --numeric-ids --delete --delete-excluded --backup --suffix=_`date +%d.%m.%Y`)
+IFSBAK="$IFS"
 
 # Funktion haupt_menue{{{
 MAIN_MENU=($gv_Configuration \"\" $lv_Directories \"\" $lv_Home_Sync \"\" $lv_Sync \"\" $gv_Exit \"\")
@@ -96,7 +99,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_Home_Sync)
 			# Homeverzeichnis synchronisieren (z.B. Laptop)
-			autoload -U kwrsync_home_exec no_host_rsh_msg
+			autoload -U kwrsync_home_exec
 			kwrsync_home_exec
 			haupt_menue
 			;;
