@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-17 04:51+0100\n"
+"POT-Creation-Date: 2012-03-07 23:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,139 +54,153 @@ msgid "bearbeiten (dialog)"
 msgstr ""
 
 #: ../../functions/kwrsync/kwrsync_conf:34
-#: ../../functions/kwrsync/kwrsynctab_conf:80
+#: ../../functions/kwrsync/kwrsynctab_conf:78
 msgid "Geben Sie bitte die/den Namen oder IP(s) der/des Zielrechner(s) ein."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_conf:49
-#: ../../functions/kwrsync/kwrsynctab_conf:95
+#: ../../functions/kwrsync/kwrsync_conf:50
 msgid "Waehlen Sie ihre Remote Shell aus."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_conf:71
+#: ../../functions/kwrsync/kwrsync_conf:76
 msgid ""
 "Geben Sie hier ein Limit fuer die Bandbreite, in Kbyte/s, bei der "
 "Uebertragung ein (256=256Kb/s)."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_conf:84
+#: ../../functions/kwrsync/kwrsync_conf:89
 msgid "Soll das Homeverzeichnis auch per Cron synchronisiert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_exec:63
+#: ../../functions/kwrsync/kwrsync_exec:7
+#: ../../functions/kwrsync/kwrsync_home_exec:7
+msgid "kein Netz?"
+msgstr ""
+
+#: ../../functions/kwrsync/kwrsync_exec:62
 #, sh-format
 msgid "Starte rsync nach $h ..."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_exec:64
+#: ../../functions/kwrsync/kwrsync_exec:63
 #, sh-format
 msgid "Fatal: rsync ($h) mit Fehlern beendet!"
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_exec:65
+#: ../../functions/kwrsync/kwrsync_exec:64
 #, sh-format
 msgid "Beende rsync nach $h ..."
 msgstr ""
 
+#: ../../functions/kwrsync/kwrsync_exec:65
+#: ../../functions/kwrsync/kwrsync_home_exec:21
+#, sh-format
+msgid "${gv_ScriptName}: rsync beendet ($h) "
+msgstr ""
+
 #: ../../functions/kwrsync/kwrsync_exec:66
-#: ../../functions/kwrsync/kwrsync_home_exec:23
 #, sh-format
-msgid "kwrsync_cron: rsync beendet ($h) "
+msgid "${gv_ScriptName}: rsync Fehler ($h) "
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_exec:67
-#, sh-format
-msgid "kwrsync_cron: rsync Fehler ($h) "
-msgstr ""
-
-#: ../../functions/kwrsync/kwrsync_exec:71
+#: ../../functions/kwrsync/kwrsync_exec:70
 msgid "Syncronisation"
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_exec:72
+#: ../../functions/kwrsync/kwrsync_exec:71
 msgid "Syncronisiere das Verzeichnis ${S_VERZ[Nr]} mit ${h}:${R_VERZ[Nr]}."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_exec:86
-#: ../../functions/kwrsync/kwrsync_home_exec:45
-msgid "kein Netz?"
+#: ../../functions/kwrsync/kwrsync_exec:99
+msgid "Es sind keine Eintrage fuer kwrsync vorhanden."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_home_exec:20
+#: ../../functions/kwrsync/kwrsync_home_exec:18
 #, sh-format
 msgid "Starte $HOME rsync nach $h ..."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_home_exec:21
+#: ../../functions/kwrsync/kwrsync_home_exec:19
 #, sh-format
 msgid "Fatal: $HOME rsync nach $h mit Fehlern beendet!"
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_home_exec:22
+#: ../../functions/kwrsync/kwrsync_home_exec:20
 #, sh-format
 msgid "Beende $HOME rsync nach $h ..."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_home_exec:24
+#: ../../functions/kwrsync/kwrsync_home_exec:22
 #, sh-format
-msgid "kwrsync_cron: $HOME rsync nach $h mit Fehlern beendet! "
+msgid "${gv_ScriptName}: $HOME rsync nach $h mit Fehlern beendet! "
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_home_exec:28
+#: ../../functions/kwrsync/kwrsync_home_exec:26
 msgid "Homesyncronisation"
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsync_home_exec:29
+#: ../../functions/kwrsync/kwrsync_home_exec:27
 #, sh-format
-msgid "Syncronisiere das Home Verzeichnis mit dem Rechner $i."
+msgid "Syncronisiere das Home Verzeichnis mit dem Rechner $h."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsynctab_conf:21
-msgid "Ausschluss"
+#: ../../functions/kwrsync/kwrsync_home_exec:54
+msgid ""
+"Sie muessen mindestens einen Zielrechner konfigurieren, um Ihr "
+"Homeverzeichnis syncronisieren zu koennen."
 msgstr ""
 
 #: ../../functions/kwrsync/kwrsynctab_conf:22
-msgid "Sourceverz."
+msgid "Ausschluss"
 msgstr ""
 
 #: ../../functions/kwrsync/kwrsynctab_conf:23
+msgid "Sourceverz."
+msgstr ""
+
+#: ../../functions/kwrsync/kwrsynctab_conf:24
 msgid "Remoteverz."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsynctab_conf:63
+#: ../../functions/kwrsync/kwrsynctab_conf:25
+msgid "rsync Argumente"
+msgstr ""
+
+#: ../../functions/kwrsync/kwrsynctab_conf:62
 msgid "Geben Sie bitte das Zielverzeichnis ein."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsynctab_conf:117
+#: ../../functions/kwrsync/kwrsynctab_conf:90
+#, sh-format
+msgid ""
+"Geben Sie zusaetzliche Argumente zu den Standard Optionen ($DEFAULT_ARGS) "
+"fuer rsync ein."
+msgstr ""
+
+#: ../../functions/kwrsync/kwrsynctab_conf:102
 msgid ""
 "Geben Sie die Verzeichnisse/Dateien mit relativen Pfad an die ausgeschlossen "
 "werden sollen."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsynctab_conf:150
+#: ../../functions/kwrsync/kwrsynctab_conf:135
 msgid ""
 "Sie muessen mindestens die Menuepunkte Sourceverz., Remoteverz. und "
 "Zielrechner mit Werten belegen."
 msgstr ""
 
-#: ../../functions/kwrsync/kwrsynctab_conf:234
+#: ../../functions/kwrsync/kwrsynctab_conf:220
 msgid "Waehlen Sie eine Konfiguration zum aendern aus."
-msgstr ""
-
-#: ../../functions/kwrsync/no_host_rsh_msg:5
-msgid ""
-"Sie muessen erst den Ziel Rechner und die remote Shell konfigurieren, um Ihr "
-"Homeverzeichnis zu syncronisieren."
-msgstr ""
-
-#: ../../functions/kwrsync/no_kwrsynctab_msg:3
-msgid "Es sind keine Eintrage fuer kwrsync vorhanden."
 msgstr ""
 
 #: ../../help/kwrsync/conf_help:3
 msgid ""
 "Zielrechner: Eingabe der IP-Nummern oder Namen der Zielrechner. Name\n"
 "\\tgeht nur wenn dieser Rechner auch bekannt ist (z.B. DNS).\n"
+"\n"
+"NOTIZ: Diese Einstellung wird als Vorschlag fuer die weitere\n"
+"\\tKonfiguration und fuer die Synchronisation des Homeverzeichnis\n"
+"\\tbenutzt.\n"
 "\n"
 "Remote_shell: Welche Shell soll fuer die Uebertragung genutzt\n"
 "\\twerden. Zur Auswahl stehen rsh und ssh, falls sie\n"
@@ -236,14 +250,9 @@ msgid ""
 "\\tfunktionieren wuerde."
 msgstr ""
 
-#: ../../help/kwrsync/kwrsynctab_conf_help:2
-#, sh-format
-msgid "Verzeichnisse::${gv_Configuration}::${gv_Help}"
-msgstr ""
-
 #: ../../help/kwrsync/kwrsynctab_conf_help:3
 msgid ""
-"Sourceverz.: Lokales Verzeichnis waehlen.\n"
+"Sourceverz.: Lokales Verzeichnis auswaehlen.\n"
 "\n"
 "Remoteverz.: In welches Verzeichnis soll syncronisiert werden. Kann\n"
 "\\tlocal wie remote sein. Bei remote muessen Sie auch den Ziel-\n"
@@ -253,8 +262,12 @@ msgid ""
 "\\tgeht nur wenn dieser Rechner auch bekannt ist (z.B. DNS).\n"
 "\\tDie Erreichbarkeit wird nach der Eingabe geprueft.\n"
 "\n"
-"Remote_shell: Auswahl einer der installierten remote Shells\n"
-"\\t(z.B. ssh).\n"
+"rsync Argumente: Eingabe von zusaetzlichen Argumenten fuer das\n"
+"\\tProgramm rsync. Diese muessen mit einem Leerzeichen getrennt\n"
+"\\tsein (man 1 rsync).\n"
+"\n"
+"NOTIZ: Standard rsync Argmunte sind: \\\"-avu --numeric-ids --delete\n"
+"\\t--delete-excluded --backup --suffix=_`date +%d.%m.%Y`\\\"\n"
 "\n"
 "Ausschluss: Dateien/Verzeichnisse die von der Synchronisation\n"
 "\\tausgeschlossen werden sollen. Diese muessen relativ zum\n"
@@ -263,13 +276,8 @@ msgid ""
 "\\tfoo/bar."
 msgstr ""
 
-#: ../../help/kwrsync/kwrsynctab_help:2
-#, sh-format
-msgid "Verzeichnisse::${gv_Help}"
-msgstr ""
-
 #: ../../help/kwrsync/kwrsynctab_help:3
 msgid ""
-"Hier koennen Sie die Datei ~/.ktools/kwrsynctab ansehen, deren\n"
+"Hier koennen Sie die Datei ~/.kwtools/kwrsynctab ansehen, deren\n"
 "Eintraege aendern, welche anlegen und loeschen."
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-03 22:05+0100\n"
+"POT-Creation-Date: 2012-03-07 23:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -459,12 +459,6 @@ msgid ""
 "Hier koennen Sie einzelne Dienstprogramme aufrufen und konfigurieren.\n"
 "Dieses sind meist kleine Scripte fuer die Verwaltung von\n"
 "persoenlichen Dingen und Anzeigen."
-msgstr ""
-
-#: ../../help/kwadmin/utils_kwbackup_help:2
-msgid ""
-"kwbackup: Sicherung der Systemverzeichnisse und Verzeichnisse Ihrer\n"
-"\\tWahl. Entweder per crontab oder manuell."
 msgstr ""
 
 #: ../../help/kwadmin/utils_kwgpgcrypt_help:2
