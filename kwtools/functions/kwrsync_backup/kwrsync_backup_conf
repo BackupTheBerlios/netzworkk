@@ -171,7 +171,6 @@ kwrsync_backup_conf() {
 					unset -- PREEXEC
 					no_input_msg
 				fi
-			set +x
 				## }}}
 				kwrsync_backup_conf_menue $lv_Preexec_Script
 				;;
@@ -438,7 +437,7 @@ kwrsync_backup_conf() {
 						;;
 					rsh|rsync)
 						################################# {{{
-						# TODO: Was ist mit der rsh/rsync?
+						# TODO: Was ist mit der rsh?
 						################################
 						break
 						## }}}

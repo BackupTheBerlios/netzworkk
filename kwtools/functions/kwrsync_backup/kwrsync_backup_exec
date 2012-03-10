@@ -32,11 +32,14 @@ kwrsync_backup_exec() {
 			if [[ $ONE_FS == yes ]] ; then
 				RSYNC_CONF_ARGS="--one-file-system"
 			fi
-			# remote-shell Optionen belegen
+		}
+		## }}}
+		# Funktion (check_rsh), remote-shell Option belegen# {{{
+		check_rsh() {
 			case "$RSYNC_RSH" in
 				[rs]sh)
 					if ! [ "`hostname`" = "$S" -o "$S" = localhost ] ; then
-						RSYNC_CONF_ARGS="$RSYNC_CONF_ARGS -ze $RSYNC_RSH"
+						RSYNC_RSH_ARGS="-e $RSYNC_RSH"
 					fi
 					;;
 			esac
@@ -279,7 +282,7 @@ kwrsync_backup_exec() {
 									fi
 									## }}}
 									;;
-								*@*:/*|/*)
+								rsync://*)
 									SRC="$2"
 									DST="$3"
 									RSYNC_ARGS="$4"
@@ -289,6 +292,22 @@ kwrsync_backup_exec() {
 									check_link_dest
 									RSYNC_OPT=($DEFAULT_ARGS $RSYNC_CONF_ARGS $RSYNC_ARGS 
 										$SERVER_EX_FILE $SERVER_IN_FILE $LINK_DEST 
+										$SRC ${BACKUP_PATH}/hourly.0/${DST})
+									# rsync ausfuehren
+									rsync_exec
+									;;
+								*@*:/*|/*)
+									SRC="$2"
+									DST="$3"
+									RSYNC_ARGS="$4"
+									if [ ! -d "${BACKUP_PATH}/hourly.0/${DST}" ] ; then
+										mkdir -m 0755 -p "${BACKUP_PATH}/hourly.0/${DST}" &>/dev/null
+									fi
+									check_rsh
+									check_link_dest
+									RSYNC_OPT=($DEFAULT_ARGS $RSYNC_CONF_ARGS $RSYNC_ARGS 
+										$RSYNC_RSH_ARGS $SERVER_EX_FILE
+										$SERVER_IN_FILE $LINK_DEST 
 										$SRC ${BACKUP_PATH}/hourly.0/${DST})
 									# rsync ausfuehren
 									rsync_exec
