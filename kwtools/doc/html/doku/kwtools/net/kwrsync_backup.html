@@ -7,7 +7,7 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2012-03-08">
+        <meta name="date" content="2012-03-10">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
 	<meta name="Robots" content="index,follow">
@@ -186,29 +186,33 @@
                 <tr>
                         <td></td>
                         <td vAlign=top><h3><a name=server_conf></a>2 Server Konfiguration</a></h3>
-				<p>F&uuml;r jeden konfigurierten Rechner wird eine Konfigurationsdatei angelegt und 
-				wenn man eine exclude Datei ben&ouml;tigt auch diese. Diese befinden sich 
-				in:<br>
+				<p>F&uuml;r jeden konfigurierten Rechner, beziehungsweise der Konfiguration von 
+				Rsync Servern. wird eine Konfigurationsdatei angelegt und 
+				wenn man eine &quot;exclude&quot; oder &quot;include&quot; Datei
+				ben&ouml;tigt auch diese. Diese befinden sich in:<br>
+				/etc/kwtools/kwrsync_backup.d/rsync.conf<br>
+				/etc/kwtools/kwrsync_backup.d/rsync-exclude.conf<br>
+				/etc/kwtools/kwrsync_backup.d/rsync-include.conf<br>
 				/etc/kwtools/kwrsync_backup.d/Rechnername.conf<br>
-				/etc/kwtools/kwrsync_backup.d/Rechnername-exclude.conf</p><br></td>
+				/etc/kwtools/kwrsync_backup.d/Rechnername-exclude.conf<br>
+				/etc/kwtools/kwrsync_backup.d/Rechnername-include.conf</p></td>
                         <td></td>
+                </tr>
+                <tr>
+                        <td colspan=3><br></td>
                 </tr>
                 <tr>
                         <td></td>
                         <td vAlign=top><h4><a name=server_config></a>2.1 Konfiguration</a></h4>
+				<p><b>Rechner</b> Angabe des Rechners von dem Daten gesichert werden sollen.</p>
 				<p><b>Quelle</b> Angabe der Quelle die gesichert werden soll. Dies kann ein 
-				Verzeichnis, eine Datei oder Rechner sein.<br><br>
-				<b>SYNTAX:</b><br>
-				/Pfad/Verzeichnis<br>
-				/Pfad/Datei<br>
-				Rechner:/Pfad/Verzeichnis<br>
-				Rechner:/Pfad/Datei</p>
+				Verzeichnis oder eine Datei sein.</p>
 				<p><b>Ziel</b> Auswahl des Ziels, relativ zum Backup Verzeichnis, wohin
 				gesichert werden soll. Dies ist meist der Rechnername, kann aber auch ein 
 				Verzeichnis sein. Wenn das Verzeichnis bzw. der Rechnername nicht vorhanden
-				geben sie ihn einfach ein. Dieses Unterverzeichnis wird dann erstellt.</p>
+				ist geben sie ihn einfach ein. Dieses Unterverzeichnis wird dann erstellt.</p>
 				<p><b>Benutzer</b> W&auml;hlen Sie einen Benutzer aus, der sich anstelle von
-				&quot;root&quot; auf die zu sichernden Rechnern einloggen darf.</p>
+				&quot;root&quot; auf dem zu sichernden Rechnern einloggen darf.</p>
 				<p><b>rsync Argumente</b> Eingabe von zus&auml;tzlichen Argumenten f&uuml;r das
 				Programm &quot;rsync&quot;. Diese m&uuml;ssen mit einem Leerzeichen getrennt
 				sein (man 1 rsync). Standard &quot;rsync&quot; Argumente sind 
@@ -216,8 +220,11 @@
 				<p><b>LVM</b> Auswahl eines Logischen Volume (LV) von dem ein tempor&auml;rer
 				Snapshot erstellt werden soll.</p>
 				<p><b>Script</b> Geben Sie einen Befehl oder ein Script mit vollem Pfad 
-				ein.</p><br></td>
+				ein.</p></td>
                         <td></td>
+                </tr>
+                <tr>
+                        <td colspan=3><br></td>
                 </tr>
                 <tr>
                         <td></td>
@@ -225,8 +232,11 @@
 				<p><b>Exclude Datei</b> Hier kann man eine Datei bearbeiten, in der die 
 				Verzeichnisse und Dateien stehen die nicht mit ins Backup fliessen sollen.
 				Sie sollten z.B. die Verzeichnisse /proc und /sys nicht mit einbeziehen, da sie
-				nicht f&uuml;r die Wiederherstellung ben&ouml;tigt werden.</p><br></td>
+				nicht f&uuml;r die Wiederherstellung ben&ouml;tigt werden.</p></td>
                         <td></td>
+                </tr>
+                <tr>
+                        <td colspan=3><br></td>
                 </tr>
                 <tr>
                         <td></td>
