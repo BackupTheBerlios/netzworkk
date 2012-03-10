@@ -1,3 +1,14 @@
+kwtools (0.8.5-2) unstable; urgency=low
+  * kwauth: Menuepunkt PAM ist jetzt statisch.
+  * kwuser: neue Option - --multi.
+  * kwbackup: geloescht.
+  * kwrsync_backup: update Dokumentation.
+  * kwrsync_backup: update und Support fuer rsynd daemon.
+  * kwrsync: update und neue Syntax (kwrsynctab), Dokumentation auch.
+  * Update Script install.
+
+ -- Kai Wilke <kiste@netzworkk.de>  Sun, 11 Mar 2012 00:30:07 +0100
+ 
 kwtools (0.8.5-1) unstable; urgency=low
   * kwrsync_backup: neues Feature Anzeige (hosts/snapshots), hourly,
     daily, weekly und mounthly, erweiterte Konfiguration,....
