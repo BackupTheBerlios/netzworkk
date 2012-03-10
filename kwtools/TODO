@@ -5,13 +5,14 @@ Bis Version 0.9.*
 * kwpostfix neue Optionen implementieren?
 * mehrere tinydns server nebeneinander einrichten?
 
-Bis Version 0.8.4.*
+Bis Version 0.8.6
 * Bug fixing.
-* dialog Option --default-item weiter integrieren.
-  Dient zur schnelleren Handhabung, z. B. koennen die vorher
-  ausgewaehlten Menuepunkte markiert werden.
 * kwssl2 weiterentwickeln.
-* kwrsync_backup neue Features einfügen
+
+Bis Version 0.8.5
+* Bug fixing.
+* kwrsync_backup neue Features einfügen.
+* kwrsync neue Features einfügen.
 
 Bis Version 0.8.4
 * Bug fixing.
