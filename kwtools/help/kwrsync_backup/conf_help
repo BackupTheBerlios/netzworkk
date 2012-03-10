@@ -19,7 +19,7 @@ Minimum_Platz: Geben Sie hier den Prozentsatz ein der maximal an
 \tIntegerzahl zwischen 0 und \<100 (Prozent).
 \tIst die benutzte Kilobyte oder Inode Prozentzahl kleiner
 \tals die angegebene maximale Prozentzahl an Plattenplatz
-\t($HDMINFREE), wird ein Backup durchgefuehrt.
+\twird ein Backup durchgefuehrt.
 
 Mountverz.: Hier wird das Verzeichnis ausgewaehlt, welches
 \tins Dateisystem vorher eingebunden werden muss, wo sich das

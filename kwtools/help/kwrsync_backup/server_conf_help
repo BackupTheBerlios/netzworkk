@@ -16,7 +16,8 @@ Exclude Datei: Bearbeitung der Datei rechner-excludes.conf.
 \tebenfalls drin stehen, denn falls Ihr Rechner geknackt wird kann
 \tman mit einem Passwortcracker ihre Passwoerter herausfinden.
 
-Include Datei: Bearbeitung der Datei rechner-includes.conf.
+Include Datei: Bearbeitung der Datei rechner-includes.conf. Siehe
+\tExclude Datei.
 
 anlegen: Einen Konfigurationseintrag anlegen.
 

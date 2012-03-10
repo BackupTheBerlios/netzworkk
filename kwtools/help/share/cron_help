@@ -1,7 +1,7 @@
 # cron_help {{{
 TITLE=$(gettext 'crontbconf::${gv_Configuration}::${gv_Help}')
 MSG=$(gettext 'Hier koennen Sie exact den cronjob fuer Scripte einstellen. Schauen
-Sie auch in die ${gv_Help} oder Header der Funktion (crontbconf).
+Sie auch in die Hilfe oder Header der Funktion (crontbconf).
 
 Programm: Kann man nicht aendern und dient nur zur Anzeige, von 
 \twelchem Programm gerade die crontab Eintraege gaendert 

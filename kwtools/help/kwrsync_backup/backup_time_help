@@ -1,7 +1,7 @@
 # backup_time_help fuer kwrsync_backup{{{
 TITLE="${lv_Backup}::${gv_Help}"
 MSG=$(gettext 'Auswahl der zeitlichen Sicherung. Nur bei der Auswahl von
-$lv_hourly wird wirklich eine Sicherung erstellt, bei allen anderen
+stuendlich wird wirklich eine Sicherung erstellt, bei allen anderen
 Menuepunkten werden die Sicherungen rotiert.
 ')
 #}}}
