@@ -3,7 +3,7 @@
 # usage: kwrsync_exec
 #
 kwrsync_exec() {
-	unset -- S_VERZ R_VERZ RSYNC_RSH REMOTE_HOST DIR_EXCLUDE KwrsynctabListe
+	unset -- S_VERZ R_VERZ RSYNC_ARGS REMOTE_HOST DIR_EXCLUDE KwrsynctabListe
 	NOT_NET=$(gettext 'kein Netz?')
 	setopt localoptions shwordsplit
 	# IFS=Return
