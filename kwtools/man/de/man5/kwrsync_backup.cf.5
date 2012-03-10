@@ -2,12 +2,12 @@
 .\"     Title: KWRSYNC_BACKUP.CF
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 03/01/2012
+.\"      Date: 03/10/2012
 .\"    Manual: Konfiguration
-.\"    Source: Version 1.0.0
+.\"    Source: Version 1.0.1
 .\"  Language: English
 .\"
-.TH "KWRSYNC_BACKUP\&.CF" "5" "03/01/2012" "Version 1.0.0" "Konfiguration"
+.TH "KWRSYNC_BACKUP\&.CF" "5" "03/10/2012" "Version 1.0.1" "Konfiguration"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -208,6 +208,10 @@ gespeichert\&. Die Syntax der Datei ist:
 .PP
 \fBbackup user@rechner:/verzeichnis verzeichnis options\fR
 .PP
+\fBbackup rsync://rechner/rsync_modul verzeichnis options\fR
+.PP
+\fBbackup rsync://user@rechner/rsync_modul verzeichnis options\fR
+.PP
 \fBbackup_script Befehl verzeichnis\fR
 .SS "Beispiele:"
 .PP
@@ -219,12 +223,12 @@ Estellt vom lokalem Rechner einen Snapshot vom Verzeichnis
 \fBbackup lvm://vg0/lv\-vm lvm\-vm\fR
 .PP
 Estellt vom lokalem Rechner einen LVM Snapshot, von der Volume Group
-\(lqvg0\(rq, dem Logischen Volume
-\(lqlv\-vm\(rq
+\(lq\fIvg0\fR\(rq, dem Logischen Volume
+\(lq\fIlv\-vm\fR\(rq
 und dem Verzeichnis
 \fI/\fR\&.
 .PP
-\fBbackup rechner:/verzeichnis verzeichnis \-HAX \-\-exclude=core \-\-exclude=\fR\fB\(lq*\&.bak\(rq\fR
+\fBbackup rechner:/ verzeichnis \-HAX \-\-exclude=core \-\-exclude=\fR\fB\(lq*\&.bak\(rq\fR
 .PP
 Estellt vom entfernten Rechner einen Snapshot vom Verzeichnis
 \fI/\fR
@@ -238,9 +242,24 @@ Dasselbe wie eine Zeile h\(:oher nur ohne zus\(:atzlichen Optionen aber mit Benu
 \(lqroot\(rq
 einloggt\&.
 .PP
+\fBbackup rsync://rechner/rsync_modul verzeichnis\fR
+.PP
+Estellt vom entfernten
+\(lq\fBrsync\fR\(rq
+Server einen Snapshot vom
+\fBrsync\fR
+Server Modul
+\(lq\fIrsync_modul\fR\(rq\&.
+.PP
+\fBbackup rsync://user@rechner/rsync_modul verzeichnis\fR
+.PP
+Dasselbe wie eine Zeile h\(:oher nur mit Benutzername, der sich anstelle von
+\(lqroot\(rq
+einloggt\&.
+.PP
 \fBbackup_script ssh user@rechner \fR\fB\(lqpg_dumpall | gzip >/var/lib/postgres/fulldump\&.sql\&.gz\(rq\fR\fB unused1\fR
 .PP
-Erstellt zum beispiel ein gezipptes komplettes Backup einer postgreSQL Datenbank, bevor ein Snapshot von dem Rechner erstellt wird\&.
+Erstellt zum Beispiel ein gezipptes komplettes Backup einer postgreSQL Datenbank, bevor ein Snapshot von dem Rechner erstellt wird\&.
 .SH "EX/INCLUDE DATEI"
 .PP
 Mit diesen Dateien kann man gezielt Verzeichnisse und Dateien vom Snapshot ausnehmen beziehungsweise mit einbeziehen\&.
@@ -278,7 +297,12 @@ und
 .PP
 \fI/etc/kwtools/kwrsync_backup\&.d\fR
 .RS 4
-Verzeichnis mit den Rechnereigenen Konfigurationsdateien (\fIrechner\&.conf\fR,
+Verzeichnis mit den Rechnereigenen und den
+\fBrsync\fR
+Server Konfigurationsdateien (\fIrsync\&.conf\fR,
+\fIrsync\-exclude\&.conf\fR,
+\fIrsync\-include\&.conf\fR,
+\fIrechner\&.conf\fR,
 \fIrechner\-exclude\&.conf\fR,
 \fIrechner\-include\&.conf\fR)
 .RE
