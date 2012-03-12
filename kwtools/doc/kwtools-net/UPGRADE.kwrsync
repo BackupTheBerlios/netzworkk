@@ -8,7 +8,8 @@ After (from kwrsync 1.0.0 on):
 
 <Sourcedir>TAB<Remotedir>TAB<Destination host>TAB<rsync arguments>TAB<Exclude>
 
-# upgrade from old configuration file -> new.
+# F.E. upgrade from old configuration file -> new.
 while read a b c d e ; do
-	print "${a}\t${b}\t${d}\t-\t${e}" >> tmp/test
+	print "${a}\t${b}\t${d}\t-\t${e}" >> /var/tmp/kwrsynctab-new
 done < ~/.kwtools/kwrsynctab
+mv  -v /var/tmp/kwrsynctab-new ~/.kwtools/kwrsynctab
