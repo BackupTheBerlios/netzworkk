@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 03.06.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.03.2012
 #
 # Script: kwclock, zeigt die aktuelle Zeit und das Datum des Rechners an und kann
 #         diese einstellen.
 #
-# Version: 0.1.20
+# Version: 0.1.21
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -49,14 +49,23 @@ fi
 # auf Root pruefen
 root_check
 
+# Pruefen ob ntpdate installiert ist.
+NTPDATE="$(which ntpdate)"
+
 # Variablen
 lv_Time_Serv=$(gettext 'Zeitserver')
 lv_Clock=$(gettext 'Uhrzeit')
 lv_Date=$(gettext 'Datum')
 
 # Funktion haupt_menue{{{
-MAIN_MENU=($lv_Time_Serv \"\" $lv_Clock \"$UHR\" $lv_Date \"$DATE\" $gv_Exit \"\")
 haupt_menue() {
+	if [[ -x $NTPDATE ]] ; then
+		MAIN_MENU=($lv_Time_Serv \"\" $lv_Clock \"$UHR\"
+			$lv_Date \"$DATE\" $gv_Exit \"\")
+	else
+		MAIN_MENU=($lv_Clock \"$UHR\"
+			$lv_Date \"$DATE\" $gv_Exit \"\")
+	fi
 	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
 }
 #}}}
