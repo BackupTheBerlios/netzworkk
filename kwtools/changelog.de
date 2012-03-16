@@ -6,8 +6,11 @@ kwtools (0.8.5-2) unstable; urgency=low
   * kwrsync_backup: update und Support fuer rsynd daemon.
   * kwrsync: update und neue Syntax (kwrsynctab), Dokumentation auch.
   * Update Script install.
+  * Update debian/control (Variablen misc:Depends und source:Version).
+  * neues Pakte kwtools-full.
+  * kwclock: pruefen ob ntpdate installiert ist.
 
- -- Kai Wilke <kiste@netzworkk.de>  Sun, 11 Mar 2012 00:30:07 +0100
+ -- Kai Wilke <kiste@netzworkk.de>  Fri, 16 Mar 2012 19:02:07 +0100
  
 kwtools (0.8.5-1) unstable; urgency=low
   * kwrsync_backup: neues Feature Anzeige (hosts/snapshots), hourly,
