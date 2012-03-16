@@ -99,7 +99,7 @@ kwrsynctab_conf_choice() {
 				;;
 			$lv_Exclude)
 				# Verzeichnisse/Dateien ausschliessen# {{{
-				EXCLUDE_MSG=$(gettext 'Geben Sie die Verzeichnisse/Dateien mit relativen Pfad an die ausgeschlossen werden sollen.')
+				EXCLUDE_MSG=$(gettext 'Geben Sie die Verzeichnisse/Dateien mit relativen Pfad an die ausgeschlossen werden sollen. Diese muessen durch ein Leerzeichen getrennt sein.')
 				inputbox "$DIR_TITLE" "$EXCLUDE_MSG" "${DIR_EXCLUDE:-$S_VERZ}"
 				# Ist gv_Auswahl groesser als ein Zeichen
 				# wird der letzte / abgetrennt.
@@ -190,7 +190,7 @@ while [ -n "$gv_Auswahl" ] ; do
 			# Ansicht der Konfiguration# {{{
 			read_tab_entry
 			if [ -n "${S_VERZ[1]}" ] ; then
-				> ${gv_WorkDir}/kwrsynctab <<< "<source dir> <remote dir> <shell> <remote host> <exclude>
+				> ${gv_WorkDir}/kwrsynctab <<< "<source dir> <remote dir> <remote host> <rsync Argumete> <exclude>
 " 
 				# leere und Kommantar Zeilen herausfiltern.
 				print -l ${(R)${(f)"$(< $KWRSYNCTAB)"}##(s#)(\#|$)*} >> ${gv_WorkDir}/kwrsynctab
