@@ -49,7 +49,7 @@ timeserver_conf() {
 			$lv_Update)
 				# Zeit aktualisieren{{{
 				if [ "$NTPSERVERS" ] ; then
-					ntpdate $NTPOPTIONS $NTPSERVERS || prog_failure
+					$NTPDATE ${=NTPOPTIONS} ${=NTPSERVERS} || prog_failure
 					hwclock --systohc
 				else
 					MSG=$(gettext 'Es sind keine Zeitserver konfiguriert/angegeben.')
