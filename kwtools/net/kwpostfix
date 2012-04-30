@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 29.03.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 29.04.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
-# Version: 0.1.14
+# Version: 0.1.15
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -47,7 +47,23 @@ root_check
 # benötigten Funktionen laden.
 autoload -U transport_methode
 
-# Variablen
+# Variablen# {{{
+lv_Quick_Conf=$(gettext 'Kurz-Konfiguration')
+lv_Tabs=$(gettext 'Tabellen')
+lv_Main_Cf=$(gettext 'Steuerdatei')
+lv_Clear=$(gettext 'Aufraeumen')
+
+# Konfiguration
+lv_Main=$(gettext 'Haupt')
+lv_Default=$(gettext 'Standard')
+lv_ErrorCodes=$(gettext 'Fehlercodes')
+lv_Mail=$(gettext 'Mail')
+lv_Lmtp=$(gettext 'LMTP')
+lv_Queue=$(gettext 'Queue')
+lv_Smtp=$(gettext 'SMTP')
+lv_Smtpd=$(gettext 'SMTPD')
+lv_Tls=$(gettext 'TLS')
+lv_Virtual=$(gettext 'Virtual')
 
 MAIL_CONFIG="`postconf -h config_directory &>/dev/null`"
 if [ -z "$MAIL_CONFIG" ] ; then
@@ -61,12 +77,13 @@ if [ ! -f "$MAIN_CF" ] ; then
 fi
 # Port als integer deklarieren
 integer PORT
-#
+
+## }}}
 # Funktion user_id auswaehlen{{{
 #
 user_id() {
 unset -- WERT USER_ID_MENU USER_ID_MSG
-local USER_ID_MENU
+local USER_ID_MENU USER_ID_MSG
 user_group_check -p
 if (( $? == 0 )) ; then
 	USER_ID_MENU=($U_U_ID_ARRAY)
@@ -74,7 +91,7 @@ if (( $? == 0 )) ; then
 	menubox "$gv_Configuration" "$USER_ID_MSG" "$USER_ID_MENU"
 	while [ "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
-			Help|Hilfe)	script_help share/user_id_help
+			HELP*)	script_help share/user_id_help
 				menubox "$gv_Configuration" "$USER_ID_MSG" "$USER_ID_MENU"
 				;;
 			*)	# uebernehmen
@@ -90,7 +107,7 @@ fi
 #
 group_id() {
 unset -- WERT GROUP_ID_MENU GROUP_ID_MSG
-local GROUP_ID_MENU
+local GROUP_ID_MENU GROUP_ID_MSG
 user_group_check -g
 #
 if (( $? == 0 )) ; then
@@ -99,7 +116,7 @@ if (( $? == 0 )) ; then
 	menubox "$gv_Configuration" "$GROUP_ID_MSG" "$GROUP_ID_MENU"
 	while [ "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
-			Help|Hilfe)	script_help share/group_id_help
+			HELP*)	script_help share/group_id_help
 				menubox "$gv_Configuration" "$GROUP_ID_MSG" "$GROUP_ID_MENU"
 				;;
 			*)	# uebernehmen
@@ -113,7 +130,7 @@ fi
 #}}}
 # Funktion unterstützte Tabellenformate{{{
 # diese werden unterschiedlich in Variablen gespeichert,
-# da nicht jede Tabelle mit jeden Type zurecht kommt.
+# da nicht jede Tabelle mit jeden Typ zurecht kommt.
 #
 tab_support() {
 	unset -- TABS TABS_A TABS_C TABS_M TABS_R TB_Format
@@ -173,9 +190,15 @@ postfix_start_reload() {
 }
 #}}}
 # Funktion haupt_menue{{{
-MAIN_MENU=$(gettext 'Quickly-Konfiguration "" Konfiguration "" Tabellen "" Steuerdatei "" Aufraeumen "" $gv_Exit ""')
+MAIN_MENU=($lv_Quick_Conf \"\" $gv_Configuration \"\"
+	$lv_Tabs \"\" $lv_Main_Cf \"\"
+	$lv_Clear \"\" $gv_Exit \"\")
 haupt_menue() {
-	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	else
+		menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	fi
 }
 #}}}
 ##################################################################
@@ -193,16 +216,16 @@ while [ "$gv_Auswahl" ] ; do
 			script_help help
 			haupt_menue
 			;;
-		Q*)
+		$lv_Quick_Conf)
 			# schnelle Konfiguration
 			os_check
 			if_conf_prog "$OS" mail
-			haupt_menue
+			haupt_menue $lv_Quick_Conf
 			;;
-		[CK]onfiguration)
+		$gv_Configuration)
 			# Konfiguration von main.cf{{{
 			#
-			autoload -U default_conf haupt_conf konf_menue lmtp_conf lock_art mail_conf \
+			autoload -U default_conf main_conf konf_menue lmtp_conf lock_art mail_conf \
 				postfix_variable q_conf tls_conf smtp_conf smtpd_conf \
 				tab_support_wahl virtual_conf
 			#
@@ -260,7 +283,6 @@ while [ "$gv_Auswahl" ] ; do
 						if [ "$DF_ARRAY_M" ] ; then
 							TLS_FILE_MENU=($DF_ARRAY_M)
 							menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
-							#
 							#
 							if [ -n "$gv_Auswahl" ] ; then
 								while [ "$gv_Auswahl" ] ; do
@@ -367,9 +389,16 @@ while [ "$gv_Auswahl" ] ; do
 			}
 			#}}}
 			# Funktion konf_menue{{{
-			CONF_MENU=$(gettext 'Haupt "" Standard "" Fehlercodes "" Mail "" LMTP "" Queue "" SMTP "" SMTPD "" TLS "" Virtual "" $gv_Back ""')
+			CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
+				$lv_Mail \"\" $lv_Lmtp \"\" $lv_Queue \"\"
+				$lv_Smtp \"\" $lv_Smtpd \"\" $lv_Tls \"\" $lv_Virtual \"\"
+				$gv_Back \"\")
 			konf_menue() {
-				menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+				if [[ ${#argv} == 1 ]] ; then
+					menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+				else
+					menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+				fi
 			}
 			#}}}
 			tab_support
@@ -379,65 +408,65 @@ while [ "$gv_Auswahl" ] ; do
 					HELP*) script_help conf_help
 						konf_menue
 						;;
-					Haupt|Main)
+					$lv_Main)
 						# Hauptkonfiguration
-						haupt_conf
-						konf_menue
+						main_conf
+						konf_menue $lv_Main
 						;;
-					Sta*|Def*)
+					$lv_Default)
 						# Default Einstellungen
 						default_conf
-						konf_menue
+						konf_menue $lv_Default
 						;;
-					Fehler*|Error*)
+					$lv_ErrorCodes)
 						# Fehlercodes
 						autoload -U error_codes_conf
 						error_codes_conf
-						konf_menue
+						konf_menue $lv_ErrorCodes
 						;;
-					LMTP)
+					$lv_Lmtp)
 						# lmtp Einstellungen
 						lmtp_conf
-						konf_menue
+						konf_menue $lv_Lmtp
 						;;
-					Mail)	
+					$lv_Mail)	
 						# Mail und Mailbox Einstellungen
 						mail_conf
-						konf_menue
+						konf_menue $lv_Mail
 						;;
-					Queue)
+					$lv_Queue)
 						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
 						q_conf
-						konf_menue
+						konf_menue $lv_Queue
 						;;
-					SMTP)
+					$lv_Smtp)
 						# smtp Einstellungen
 						smtp_conf
-						konf_menue
+						konf_menue $lv_Smtp
 						;;
-					SMTPD)
+					$lv_Smtpd)
 						# smtpd Einstellungen
 						smtpd_conf
-						konf_menue
+						konf_menue $lv_Smtpd
 						;;
-					TLS)
+					$lv_Tls)
 						# TLS Einstellungen
 						tls_conf
-						konf_menue
+						konf_menue $lv_Tls
 						;;
-					Virtual)
+					$lv_Virtual)
 						# VIRTUAL Einstellungen
 						virtual_conf
-						konf_menue
+						konf_menue $lv_Virtual
 						;;
 					$gv_Back)	break
 						;;
 				esac
 			done
 			#}}}
-			haupt_menue
+			haupt_menue $gv_Configuration
 			;;
-		Tab*)
+		$lv_Tabs)
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
 				flags_choice kwpostfix_action ldap_db \
@@ -580,9 +609,9 @@ while [ "$gv_Auswahl" ] ; do
 			}
 			#}}}
 			# Funktion tabellen_menue{{{
-			TABLE_TITLE=$(gettext 'Tabellen::${TAB}')
 			TABLE_MENU=$(gettext '$gv_Display "" $gv_Create "" $gv_Change "" $gv_Delete "" Datenbank "neu erzeugen/postfix reload" $gv_Back ""')
 			tabellen_menue() {
+				TABLE_TITLE=$(gettext 'Tabellen::${TAB}')
 				menubox "$TABLE_TITLE" "$gv_Menupoint" "$TABLE_MENU"
 			}
 			#}}}
@@ -830,21 +859,21 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			#}}}
-			haupt_menue
+			haupt_menue $lv_Tabs
 			;;
-		Steuerdatei|Taxfile)
+		$lv_Main_Cf)
 			# Konfiguration der master.cf
 			autoload -U master_conf
 			master_conf
-			haupt_menue
+			haupt_menue $lv_Main_Cf
 			;;
-		Aufraeumen|Clear)
+		$lv_Clear)
 			# loeschen uebrig gebliebener Temporaerer Dateien
 			postsuper -p
 			# fuehrt einen Check und eine eventuelle Reperatur der Queue-Struktur
 			# durch, wird beim zurueckspielen von Backups benoetigt.
 			postsuper -s
-			haupt_menue
+			haupt_menue $lv_Clear
 			;;
 		$gv_Exit)	break
 			;;
