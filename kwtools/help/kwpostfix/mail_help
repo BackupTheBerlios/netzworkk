@@ -1,10 +1,8 @@
 # mail_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::mail::Hilfe')
-MSG=$(gettext 'mail_name: Name fuer den SMTP-Begruessungsbanner
+TITLE="${gv_Configuration}::${lv_Mail}::${gv_Help}"
+MSG=$(gettext 'mail_name: Name fuer das SMTP-Begruessungsbanner (Bsp.: Postfix).
 
-mail_owner: Userkennung von Postfix
-
-mail_release_date: Datum der Postfix-Version
+mail_owner: Userkennung von Postfix (Bsp.: postfix).
 
 mail_spool_directory: Pfad zum Mail spool Verzeichnis
 
@@ -23,7 +21,10 @@ mailbox_size_limit: Maximale Groesse eines einzelnen Postfaches in
 mailbox_transport: optionale Transportmethode, bevor eine Mail in
 \tdie Postfaecher einsortiert werden soll.
 
-mailq_path: Pfad zum Programm mailq.')
+mailbox_transport_maps: Tabelle, fuer die optionale Transport-
+\tmethode, bevor eine Mail in die Postfaecher einsortiert werden
+\tsoll.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

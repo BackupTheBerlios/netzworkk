@@ -1,5 +1,5 @@
 # tls_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::tls::Hilfe')
+TITLE="${gv_Configuration}::${lv_Tls}::${gv_Help}"
 MSG=$(gettext 'PRNG = Pseudo Random Number Generator
 
 tls_daemon_random_bytes: Wieviel Bytes sollen jedesmal eingelesen
