@@ -5184,7 +5184,7 @@ kernel_choice() {
 								# Rechte des ausfuehrbaren Programs checken.
 								Perm=$2
 								for i in $3 ; {
-									P="`which $i`"
+									P="${commands[$i]}"
 									if [ -x "$P" ] ; then
 										if [ "$UID" != 0 -a n "${P}($Perm)" ] ; then
 											PROGS+=($i)
@@ -5215,15 +5215,15 @@ kernel_choice() {
 				*)
 					# Pruefen ob Programm ausfuehrbar ist.{{{
 					for i in $@ ; {
-						if [ -x "`which $i`" ] ; then
+						if [[ -x ${commands[$i]} ]] ; then
 							PROGS+=($i)
 							PROGS_E+=($i \"\")
-							PROGS_L+=(`which $i`)
+							PROGS_L+=(${commands[$i]})
 						else
-							if [ -z "$NO_PROGS" ] ; then
-								NO_PROGS="$i"
+							if [[ -z $NO_PROGS ]] ; then
+								NO_PROGS+=($i)
 							else
-								NO_PROGS="${NO_PROGS}, $i"
+								NO_PROGS+=(, $i)
 							fi
 						fi
 					}

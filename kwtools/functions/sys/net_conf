@@ -45,6 +45,7 @@ net_conf() {
 	#
 	conf_hostname() {
 		unset -- gv_Hostname
+		local Lv_Hostname_Msg
 		case "$1" in
 			-a)
 				# mehrere Rechnernamen/IP Adressen eingeben.# {{{
@@ -67,7 +68,7 @@ net_conf() {
 				# voll qualifizierten Rechnernamen eingeben.# {{{
 				Lv_Hostname_Msg=$(gettext 'Geben Sie bitte den voll qualifizierten Rechnernamen (FQDN) ein (Bsp.: host.domain.de).')
 				inputbox "$gv_Configuration" "$Lv_Hostname_Msg" "$2"
-				if [ -n "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					gv_Hostname="$gv_Auswahl"
 				else
 					no_input_msg
@@ -531,12 +532,14 @@ net_conf() {
 	#}}}
 	# Funktion (mail_address), fuer die mailadress Eingabe{{{
 	#
-	# usage: mail_address [ user@mail.de ]
-	#        mail_address [ MESSAGES ] [ user@mail.de ]
+	# usage: mail_address [ user@mail.de user1@... ]
+	#        mail_address [ MESSAGES ] [ user@mail.de user1@... ]
 	#
 	# MEASSAGE - eigene Nachricht der Funktion uebergeben.
 	#
 	mail_address() {
+		local TITLE MSG VALUE
+		unset -- gv_Mail_Adr
 		TITLE=$(gettext 'Mail')
 		if [ $# -eq 2 ] ; then
 			MSG="$1"
@@ -548,18 +551,19 @@ net_conf() {
 		inputbox "$TITLE" "$MSG" "$VALUE"
 		#
 		if [ -n "$gv_Auswahl" ] ; then
-			Anz=0
 			for i in ${=gv_Auswahl} ; {
 				case "$i" in
 					[a-zA-Z0-9-_.]*@[a-zA-Z0-9-_.]*.[a-z]*)
-						(( Anz++ ))
 						# mail adresse annehmen
-						gv_Mail_Adr[Anz]="$i"
+						gv_Mail_Adr+=($i)
 						;;
 					\<[a-zA-Z0-9-_.]*@[a-zA-Z0-9-_.]*.[a-z]*\>*)
-						(( Anz++ ))
 						# mail adresse annehmen
-						gv_Mail_Adr[Anz]="$i"
+						gv_Mail_Adr+=($i)
+						;;
+					[a-zA-Z0-9-_.]*)
+						# mail adresse annehmen
+						gv_Mail_Adr+=($i)
 						;;
 					*)	unset -- gv_Mail_Adr
 						no_input_msg
