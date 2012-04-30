@@ -1,21 +1,53 @@
 # tls Parameter einstellen{{{
 #
-postconf -c $MAIL_CONFIG | grep '^tls_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+# usage: tls_conf
+#
+tls_conf() {
+
+# Variable
+MAIL_TITLE="${gv_Configuration}::${lv_Tls}"
+
+# Bestehende Konfiguration einlesen# {{{
+print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)tls_*} | \
+	sed -e 's#\"#\\\"#g ; s# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-#
+
+####################################
+# Old
+####################################
+#postconf -c $MAIL_CONFIG | grep '^tls_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+#read_file -f ${gv_WorkDir}/postfix$$
+#rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+
+## }}}
 # Funktion conf_tls_menue{{{
-TLS_TITLE=$(gettext 'Konfiguration::TLS')
+#######################################
+# TODO:
+# tls_disable_workarounds =
+# tls_eecdh_strong_curve = prime256v1
+# tls_eecdh_ultra_curve = secp384r1
+# tls_export_cipherlist = aNULL:-aNULL:ALL:+RC4:@STRENGTH
+# tls_high_cipherlist = aNULL:-aNULL:ALL:!EXPORT:!LOW:!MEDIUM:+RC4:@STRENGTH
+# tls_low_cipherlist = aNULL:-aNULL:ALL:!EXPORT:+RC4:@STRENGTH
+# tls_medium_cipherlist = aNULL:-aNULL:ALL:!EXPORT:!LOW:+RC4:@STRENGTH
+# tls_null_cipherlist = eNULL:!aNULL
+# tls_preempt_cipherlist = no
+#######################################
 conf_tls_menue() {
-TLS_MENU=(tls_daemon_random_bytes \"\$tls_daemon_random_bytes\"
-tls_random_bytes \"\$tls_random_bytes\"
-tls_random_exchange_name \"\$tls_random_exchange_name\"
-tls_random_prng_update_period \"\$tls_random_prng_update_period\"
-tls_random_reseed_period \"\$tls_random_reseed_period\"
-tls_random_source \"\$tls_random_source\"
-postfix \"reload\"
-$gv_Back \"\")
-menubox "$TLS_TITLE" "$gv_Menupoint" "$TLS_MENU"
+	TLS_MENU=(tls_daemon_random_bytes \"\$tls_daemon_random_bytes\"
+	tls_random_bytes \"\$tls_random_bytes\"
+	tls_random_exchange_name \"\$tls_random_exchange_name\"
+	tls_random_prng_update_period \"\$tls_random_prng_update_period\"
+	tls_random_reseed_period \"\$tls_random_reseed_period\"
+	tls_random_source \"\$tls_random_source\"
+	postfix \"reload\"
+	$gv_Back \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$TLS_TITLE" "$gv_Menupoint" "$TLS_MENU"
+	else
+		menubox "$TLS_TITLE" "$gv_Menupoint" "$TLS_MENU"
+	fi
 }
 #}}}
 conf_tls_menue
@@ -24,27 +56,27 @@ while [ "$gv_Auswahl" ] ; do
 		HELP*)	script_help tls_help
 			conf_tls_menue
 			;;
-		tls_daemon_random_b*)
-			#
+		tls_daemon_random_bytes)
+			 # Wieviel Bytes sollen jedesmal eingelesen werden (32)?# {{{
 			number_input -b "$tls_daemon_random_bytes"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				tls_daemon_random_bytes="$NUMBER"
 				postconf -e tls_daemon_random_bytes="$NUMBER"
 			fi
-			#
-			conf_tls_menue
+			## }}}
+			conf_tls_menue tls_daemon_random_bytes
 			;;
-		tls_random_b*)
-			# irgendwas mit bytes ?????
+		tls_random_bytes)
+			# Wieviel Bytes sollen jedesmal eingelesen werden (32)?# {{{
 			number_input -b "$tls_random_bytes"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				tls_random_bytes="$NUMBER"
 				postconf -e tls_random_bytes="$NUMBER"
 			fi
-			#
-			conf_tls_menue
+			## }}}
+			conf_tls_menue tls_random_bytes
 			;;
-		tls_random_e*)
+		tls_random_exchange_name)
 			# Soll prng_exch fuer tlsmgr aktiviert werden, eine Datei welche {{{
 			# er von Zeit zu Zeit neu schreibt.
 			TLS_EXCHANGE_MSG=$(gettext 'Soll pseudo random number generator (PRNG) (\$data_directory/prng_exch) aktiviert werden (ja/nein)?')
@@ -57,36 +89,35 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e tls_random_exchange_name=""
 			fi
 			#}}}
-			conf_tls_menue
+			conf_tls_menue tls_random_exchange_name
 			;;
-		tls_random_p*)
-			#
+		tls_random_prng_update_period)
+			# Nach welcher Zeit (s) soll prng_exch neu generiert werden.# {{{
 			number_input -s "${tls_random_prng_update_period%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				tls_random_prng_update_period="$NUMBER"
 				postconf -e tls_random_prng_update_period="$NUMBER"
 			fi
-			#
-			conf_tls_menue
+			## }}}
+			conf_tls_menue tls_random_prng_update_period
 			;;
-		tls_random_r*)
+		tls_random_reseed_period)
 			# ? Eingabe in Sekunden
 			number_input -s "${tls_random_reseed_period%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				tls_random_reseed_period="$NUMBER"
 				postconf -e tls_random_reseed_period="$NUMBER"
 			fi
 			#
-			conf_tls_menue
+			conf_tls_menue tls_random_reseed_period
 			;;
-		tls_random_s*)
-			#
+		tls_random_source)
 			# Device um Zufallszahlen zu generieren{{{
 			RANDOM_DEV_MENU=(dev:/dev/random \"\" dev:/dev/urandom \"\")
 			RANDOM_DEV_MSG=$(gettext 'Waehlen Sie ein Device aus.')
 			menubox "$TLS_TITLE" "$RANDOM_DEV_MSG" "$RANDOM_DEV_MENU"
 			#
-			if [ "$gv_Auswahl" ] ; then
+			if [[ -n $gv_Auswahl ]] ; then
 				while [ "$gv_Auswahl" ] ; do
 					case "$gv_Auswahl" in
 						HELP*)	script_help tls_help
@@ -104,10 +135,10 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e tls_daemon_random_source=""
 			fi
 			#}}}
-			#
-			conf_tls_menue
+			conf_tls_menue tls_random_source
 			;;
-		p*)	#
+		postfix)
+			# postfix, Konfiguration neu einlesen
 			postfix_start_reload
 			break
 			;;
@@ -115,6 +146,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 	esac
 done
+}
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker
