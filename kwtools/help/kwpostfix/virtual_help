@@ -1,5 +1,5 @@
 # virtual_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::virtual::Hilfe')
+TITLE="${gv_Configuration}::${lv_Virtual}::${gv_Help}"
 MSG=$(gettext 'virtual_alias_domains: Diese Tabelle enthaelt domains die zu
 \tAdressen oder komplette Domains in andere Adressen
 \tumgeschrieben werden ($virtual_alias_maps).
