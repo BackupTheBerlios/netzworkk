@@ -8,7 +8,7 @@ mail_conf() {
 MAIL_TITLE="${gv_Configuration}::${lv_Mail}"
 
 # Bestehende Konfiguration einlesen# {{{
-print -l ${(M)${(R)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(maildrop|mailman)*}##(#s)mail*} | \
+print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(mail_|mailbox_)*} | \
 	sed -e 's#\"#\\\"#g ; s# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 # Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
@@ -20,10 +20,6 @@ rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 ##########################
 #postconf -c $MAIL_CONFIG | grep '^mail' | sed -e 's#\"#\\\"#g ; s# = #="#g ;
 #	s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
-#read_file -f ${gv_WorkDir}/postfix$$
-# Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
-#mailbox_command="${${mailbox_command//\"/\\\"}//\$/\\\$}"
-#rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 
 ## }}}
 # Funktion (conf_mail_menue), Parameter fuer alles was mit mail anfaengt{{{

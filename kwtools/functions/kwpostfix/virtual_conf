@@ -1,30 +1,65 @@
 # virtual Parameter einstellen{{{
 #
-postconf -c $MAIL_CONFIG | grep '^virtual_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+# usage: virtual_conf
+#
+virtual_conf() {
+
+# Variable
+VIRTUAL_TITLE="${gv_Configuration}::${lv_Virtual}"
+
+# Bestehende Konfiguration einlesen# {{{
+print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)virtual_*} | \
+	sed -e 's#\"#\\\"#g ; s# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-#
+
+##############################################
+# OLD
+#postconf -c $MAIL_CONFIG | grep '^virtual_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+##############################################
+
+## }}}
+
 # Funktion conf_virtual_menue{{{
-VIRTUAL_TITLE=$(gettext 'Konfiguration::virtual')
+#######################################
+# TODO:
+# virtual_delivery_slot_cost = $default_delivery_slot_cost
+# virtual_delivery_slot_discount = $default_delivery_slot_discount
+# virtual_delivery_slot_loan = $default_delivery_slot_loan
+# virtual_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
+# virtual_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
+# virtual_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
+# virtual_destination_rate_delay = $default_destination_rate_delay
+# virtual_extra_recipient_limit = $default_extra_recipient_limit
+# virtual_initial_destination_concurrency = $initial_destination_concurrency
+# virtual_minimum_delivery_slots = $default_minimum_delivery_slots
+# virtual_recipient_limit = $default_recipient_limit
+# virtual_recipient_refill_delay = $default_recipient_refill_delay
+# virtual_recipient_refill_limit = $default_recipient_refill_limit
+#######################################
 conf_virtual_menue() {
-VIRTUAL_MENU=(virtual_alias_domains \"\$virtual_alias_domains\"
-virtual_alias_expansion_limit \"\$virtual_alias_expansion_limit\"
-virtual_alias_maps \"\$virtual_alias_maps\"
-virtual_alias_recursion_limit \"\$virtual_alias_recursion_limit\"
-virtual_destination_concurrency_limit \"\$virtual_destination_concurrency_limit\"
-virtual_destination_recipient_limit \"\$virtual_destination_recipient_limit\"
-virtual_gid_maps \"\$virtual_gid_maps\"
-virtual_mailbox_base \"\$virtual_mailbox_base\"
-virtual_mailbox_domains \"\$virtual_mailbox_domains\"
-virtual_mailbox_limit \"$virtual_mailbox_limit\"
-virtual_mailbox_lock \"$virtual_mailbox_lock\"
-virtual_mailbox_maps \"\$virtual_mailbox_maps\"
-virtual_minimum_uid \"\$virtual_minimum_uid\"
-virtual_transport \"\$virtual_transport\"
-virtual_uid_maps \"\$virtual_uid_maps\"
-postfix \"reload\"
-$gv_Back \"\")
-menubox "$VIRTUAL_TITLE" "$gv_Menupoint" "$VIRTUAL_MENU"
+	VIRTUAL_MENU=(virtual_alias_domains \"\$virtual_alias_domains\"
+	virtual_alias_expansion_limit \"\$virtual_alias_expansion_limit\"
+	virtual_alias_maps \"\$virtual_alias_maps\"
+	virtual_alias_recursion_limit \"\$virtual_alias_recursion_limit\"
+	virtual_destination_concurrency_limit \"\$virtual_destination_concurrency_limit\"
+	virtual_destination_recipient_limit \"\$virtual_destination_recipient_limit\"
+	virtual_gid_maps \"\$virtual_gid_maps\"
+	virtual_mailbox_base \"\$virtual_mailbox_base\"
+	virtual_mailbox_domains \"\$virtual_mailbox_domains\"
+	virtual_mailbox_limit \"$virtual_mailbox_limit\"
+	virtual_mailbox_lock \"$virtual_mailbox_lock\"
+	virtual_mailbox_maps \"\$virtual_mailbox_maps\"
+	virtual_minimum_uid \"\$virtual_minimum_uid\"
+	virtual_transport \"\$virtual_transport\"
+	virtual_uid_maps \"\$virtual_uid_maps\"
+	postfix \"reload\"
+	$gv_Back \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$VIRTUAL_TITLE" "$gv_Menupoint" "$VIRTUAL_MENU"
+	else
+		menubox "$VIRTUAL_TITLE" "$gv_Menupoint" "$VIRTUAL_MENU"
+	fi
 }
 #}}}
 conf_virtual_menue
@@ -33,77 +68,77 @@ while [ "$gv_Auswahl" ] ; do
 		HELP*)	script_help virtual_help
 			conf_virtual_menue
 			;;
-		virtual_alias_d*)
+		virtual_alias_domains)
 			# Virtual Alias Domains{{{
 			tab_support_wahl "$gv_Auswahl"
 			virtual_alias_domains="$MAPS"
 			postconf -e virtual_alias_domains="$MAPS"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_alias_domains
 			;;
-		virtual_alias_e*)
+		virtual_alias_expansion_limit)
 			# Virtual Alias expansion limit{{{
 			number_input -i "$virtual_alias_expansion_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				virtual_alias_expansion_limit="$NUMBER"
 				postconf -e virtual_alias_expansion_limit="$NUMBER"
 			fi
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_alias_expansion_limit
 			;;
-		virtual_alias_m*)
+		virtual_alias_maps)
 			# Virtual Alias Maps{{{
 			tab_support_wahl "$gv_Auswahl"
 			virtual_alias_maps="$MAPS"
 			postconf -e virtual_alias_maps="$MAPS"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_alias_maps
 			;;
-		virtual_alias_r*)
-			# Virtual Alias expansion limit{{{
+		virtual_alias_recursion_limit)
+			# Virtual Alias recursion limit{{{
 			number_input -i "$virtual_alias_recursion_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				virtual_alias_recursion_limit="$NUMBER"
 				postconf -e virtual_alias_recursion_limit="$NUMBER"
 			fi
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_alias_recursion_limit
 			;;
-		virtual_destination_c*)
+		virtual_destination_concurrency_limit)
 			# Maximalanzahl gleichzeitiger Verbindungen zu einem Ziel{{{
 			number_input -i "$virtual_destination_concurrency_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				virtual_destination_concurrency_limit="$NUMBER"
 				postconf -e virtual_destination_concurrency_limit="$NUMBER"
 			fi
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_destination_concurrency_limit
 			;;
-		virtual_destination_r*)
+		virtual_destination_recipient_limit)
 			# Maximalanzahl der Empfänger in einer einzigen Mails{{{
-			# Grösser Empfängerlisten werden in mehrere Mails aufgeteilt
+			# Grössere Empfängerlisten werden in mehrere Mails aufgeteilt
 			number_input -i "$virtual_destination_recipient_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				virtual_destination_recipient_limit="$NUMBER"
 				postconf -e virtual_destination_recipient_limit="$NUMBER"
 			fi
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_destination_recipient_limit
 			;;
-		virtual_g*)
+		virtual_gid_maps)
 			# Virtual GID Maps{{{
 			tab_support_wahl "$gv_Auswahl"
 			virtual_gid_maps="$MAPS"
 			postconf -e virtual_gid_maps="$MAPS"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_gid_maps
 			;;
-		virtual_mailbox_b*)
+		virtual_mailbox_base)
 			# Pfad der jeder Virtual Mailbox vorangestellt wird{{{
 			dselect "$virtual_mailbox_base"
-			if [ "$VERZ" ] ; then
+			if [[ -n $VERZ ]] ; then
 				dselect_check -c "$VERZ"
-				if [ "$VERZ" ] ; then
+				if [[ -n $VERZ ]] ; then
 					virtual_mailbox_base="${VERZ%/}"
 					postconf -e virtual_mailbox_base="${VERZ%/}"
 				fi
@@ -112,71 +147,72 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e virtual_mailbox_base=""
 			fi
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_mailbox_base
 			;;
-		virtual_mailbox_d*)
+		virtual_mailbox_domains)
 			# Virtual Mailbox Domains{{{
 			tab_support_wahl "$gv_Auswahl"
-			virtual_mailbox_domains="${MAPS}"
-			postconf -e virtual_mailbox_domains="${MAPS}"
+			virtual_mailbox_domains="$MAPS"
+			postconf -e virtual_mailbox_domains="$MAPS"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_mailbox_domains
 			;;
-		virtual_mailbox_li*)
-			# Max. Groesse eines Virtual Mailbox User Postfaches{{{
+		virtual_mailbox_limit)
+			# Max. Groesse (in Bytes) eines Virtual Mailbox User Postfaches{{{
 			number_input -b "$virtual_mailbox_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				virtual_mailbox_limit="$NUMBER"
 				postconf -e virtual_mailbox_limit="$NUMBER"
 			fi
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_mailbox_limit
 			;;
-		virtual_mailbox_lo*)
+		virtual_mailbox_lock)
 			# Lock Art auswaehlen{{{
 			lock_art "$virtual_mailbox_lock"
 			virtual_mailbox_lock="$WERT"
 			postconf -e virtual_mailbox_lock="$WERT"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_mailbox_lock
 			;;
-		virtual_mailbox_m*)
+		virtual_mailbox_maps)
 			# Virtual Mailbox Maps{{{
 			tab_support_wahl "$gv_Auswahl"
 			virtual_mailbox_maps="$MAPS"
 			postconf -e virtual_mailbox_maps="$MAPS"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_mailbox_maps
 			;;
-		virtual_mi*)
+		virtual_minimum_uid)
 			# Virtual Minimum user_id{{{
 			user_id
-			if [ -z "$WERT" ] ; then
+			if [[ -z $WERT ]] ; then
 				WERT=100
 			fi
 			#
 			virtual_minimum_uid="$WERT"
 			postconf -e virtual_minimum_uid="$WERT"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_minimum_uid
 			;;
-		virtual_t*)
+		virtual_transport)
 			# Virtual Transport Metode{{{
 			tab_support_wahl "$gv_Auswahl"
 			virtual_transport="$MAPS"
 			postconf -e virtual_transport="$MAPS"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_transport
 			;;
-		virtual_u*)
+		virtual_uid_maps)
 			# Zuordnung von uid zu Mailadressen{{{
 			tab_support_wahl "$gv_Auswahl"
 			virtual_uid_maps="$MAPS"
 			postconf -e virtual_uid_maps="$MAPS"
 			#}}}
-			conf_virtual_menue
+			conf_virtual_menue virtual_uid_maps
 			;;
-		p*)	#
+		postfix)
+			# postfix, Konfiguration neu einlesen
 			postfix_start_reload
 			break
 			;;
@@ -184,6 +220,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 	esac
 done
+}
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

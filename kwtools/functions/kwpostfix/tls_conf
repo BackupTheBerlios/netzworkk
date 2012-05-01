@@ -17,8 +17,6 @@ rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 # Old
 ####################################
 #postconf -c $MAIL_CONFIG | grep '^tls_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
-#read_file -f ${gv_WorkDir}/postfix$$
-#rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 
 ## }}}
 # Funktion conf_tls_menue{{{
@@ -102,13 +100,13 @@ while [ "$gv_Auswahl" ] ; do
 			conf_tls_menue tls_random_prng_update_period
 			;;
 		tls_random_reseed_period)
-			# ? Eingabe in Sekunden
+			# Nach welcher Zeit (Sekunden) sollen die Werte neu ermittelt werden?# {{{
 			number_input -s "${tls_random_reseed_period%?}"
 			if [[ -n $NUMBER ]] ; then
 				tls_random_reseed_period="$NUMBER"
 				postconf -e tls_random_reseed_period="$NUMBER"
 			fi
-			#
+			## }}}
 			conf_tls_menue tls_random_reseed_period
 			;;
 		tls_random_source)

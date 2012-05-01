@@ -2,6 +2,11 @@
 main_conf() {
 autoload -U no_defer_msg
 
+###########################
+# TODO:
+# Variable data_directory fehlt
+###########################
+
 # Variable
 MAINCF_TITLE="${gv_Configuration}::${lv_Main}"
 
