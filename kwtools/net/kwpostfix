@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 29.04.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 01.05.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -224,7 +224,12 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$gv_Configuration)
 			# Konfiguration von main.cf{{{
-			#
+			#####################################################
+			# TODO:
+			# wegen einigen Daten was vorher einlesen?
+			# Wie zum Bsp. $data_directory fuer tls_conf und
+			# virtual_conf
+			#####################################################
 			autoload -U default_conf main_conf konf_menue lmtp_conf lock_art mail_conf \
 				postfix_variable q_conf tls_conf smtp_conf smtpd_conf \
 				tab_support_wahl virtual_conf
@@ -270,7 +275,7 @@ while [ "$gv_Auswahl" ] ; do
 		## }}}
 			# Funktion tls schlüssel Dateien Auswahl{{{
 			tls_file_auswahl() {
-				unset -- WERT TLS_FILE_MENU
+				unset -- WERT TLS_FILE_MENU FORMAT SUFFIX
 				local TLS_FILE_MENU
 				dselect "$MAIL_CONFIG"
 				if [ "$VERZ" ] ; then
@@ -308,6 +313,10 @@ while [ "$gv_Auswahl" ] ; do
 			}
 			#}}}
 			# Funktion ja_nein_tausch{{{
+			#######################################
+			# TODO:
+			# aendern?
+			#######################################
 			ja_nein_tausch() {
 			yesno "$1" "$2"
 			if [ $? = 0 ] ; then
@@ -319,73 +328,75 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			# Funktion, welche Mechanismen sind bei Mails erlaubt{{{
 			mail_mechanism() {
-			unset -- WERT
-			U_OPT=k
-			MECHANISM=(noactive \"\" off noanonymous \"\" off nodictionary \"\" off noplaintext \"\" off mutual_auth \"\" off)
-			checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
-			#
-			while [ "$gv_Auswahl" ] ; do
-				case "$gv_Auswahl" in
-					HELP*)	script_help security_options_help
-						U_OPT=k
-						checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
-						;;
-					*)	# übernehmen
-						WERT="$gv_Auswahl"
-						break
-						;;
-				esac
-			done
+				unset -- WERT MECHANISM
+				local MECHANISM
+				U_OPT=k
+				MECHANISM=(noactive \"\" off noanonymous \"\" off nodictionary \"\" off noplaintext \"\" off mutual_auth \"\" off)
+				checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+				#
+				while [ "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help security_options_help
+							U_OPT=k
+							checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+							;;
+						*)	# übernehmen
+							WERT="$gv_Auswahl"
+							break
+							;;
+					esac
+				done
 			}
 			#}}}
 			# User auswählen{{{
 			user_auswahl() {
-			unset -- WERT USER_CHOICE_MENU
-			local USER_CHOICE_MENU
-			user_group_check -p
-			#
-			if (( $? == 0 )) ; then
-				USER_CHOICE_MENU=($U_G_ARRAY)
-				USER_CHOICE_MSG=$(gettext 'Waehlen Sie einen Benutzer aus.')
-				menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+				unset -- WERT USER_CHOICE_MENU USER_CHOICE_MSG
+				local USER_CHOICE_MENU USER_CHOICE_MSG
+				user_group_check -p
+				#
+				if (( $? == 0 )) ; then
+					USER_CHOICE_MENU=($U_G_ARRAY)
+					USER_CHOICE_MSG=$(gettext 'Waehlen Sie einen Benutzer aus.')
+					menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+					if [ -n "$gv_Auswahl" ] ; then
+						while [ "$gv_Auswahl" ] ; do
+							case "$gv_Auswahl" in
+								HELP*)	script_help share/user_help
+									menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+									;;
+								*)	# übernehmen
+									WERT="$gv_Auswahl"
+									break
+									;;
+							esac
+						done
+					else
+						WERT=""
+					fi
+				fi
+			}
+			#}}}
+			# Loglevel auswählen{{{
+			loglevel() {
+				unset -- WERT LOGLEVEL_MSG LOGLEVEL_MENU
+				local LOGLEVEL_MSG LOGLEVEL_MENU
+				LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
+				LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
+				menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
 				if [ -n "$gv_Auswahl" ] ; then
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
-							HELP*)	script_help share/user_help
-								menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+							HELP*)	script_help loglevel_help
+								menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
 								;;
-							*)	# übernehmen
-								WERT="$gv_Auswahl"
+							*)	WERT="$gv_Auswahl"
 								break
 								;;
 						esac
 					done
 				else
-					WERT=""
+					gv_Auswahl=0
 				fi
-			fi
-			}
-			#}}}
-			# Loglevel auswählen{{{
-			loglevel() {
-			unset -- WERT
-			LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
-			LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
-			menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
-			if [ -n "$gv_Auswahl" ] ; then
-				while [ "$gv_Auswahl" ] ; do
-					case "$gv_Auswahl" in
-						HELP*)	script_help loglevel_help
-							menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
-							;;
-						*)	WERT="$gv_Auswahl"
-							break
-							;;
-					esac
-				done
-			else
-				gv_Auswahl=0
-			fi
 			}
 			#}}}
 			# Funktion konf_menue{{{
