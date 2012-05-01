@@ -1,5 +1,5 @@
 # help fuer kwpostfix{{{
-TITLE=$(gettext 'Hilfe')
+TITLE="$gv_Help"
 MSG=$(gettext 'Hier koennen Sie Ihren Postfix Mailserver konfigurieren.
 
 Quickly-Konfiguration: Bei diesem Menuepunkt, wird das

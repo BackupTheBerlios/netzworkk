@@ -1,5 +1,5 @@
 # error_conf_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::Fehlercodes::Hilfe')
+TITLE="${gv_Configuration}::${lv_ErrorCodes}::${gv_Help}"
 MSG=$(gettext 'access_map_reject_code: SMTP-Fehlercode bei einem REJECT aus einer
 \taccess Tabelle.
 
@@ -11,6 +11,8 @@ maps_rbl_reject_code: SMTP-Errorcode bei einem "REJECT" nach
 
 non_fqdn_reject_code: SMTP-Code bei einem "REJECT" wegen eines nicht
 \tFQDN-Hostnamens (504).
+
+plaintext_reject_code: (450) # TODO
 
 reject_code: allgemeiner SMTP-Code bei einem "REJECT".
 

@@ -1,5 +1,5 @@
 # error_codes_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::Fehlercodes::Hilfe')
+TITLE="${gv_Configuration}::${lv_ErrorCodes}::${gv_Help}"
 MSG=$(gettext 'Die Antworten des Servers selbst definieren sich durch Zahlen, die
 (Return Codes) er zurueckgibt und die eine definierte Bedeutung
 haben. Die Return Codes sind dabei grundsaetzlich dreistellig und je
