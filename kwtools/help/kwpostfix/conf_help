@@ -1,5 +1,5 @@
 # conf_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::Hilfe')
+TITLE="${gv_Configuration}::${gv_Help}"
 MSG=$(gettext 'Hier kann man fast alle Konfigurationsmoeglichkeiten einstellen.
 Dies geschieht nach folgenden Muster. Alle Variablen die am Anfang
 mit default, mail, lmtp, q, smtp, smtpd, tls oder virtual anfangen
@@ -18,7 +18,7 @@ Mail: Einstellungen fuer mail und mailboxen.
 
 LMTP: Einstellungen fuer lmtp (Local Mail Transport Protokoll).
 
-Queue: Einstellungen fuer den qmqpd (Queue Manager Qumail Protokoll
+Queue: Einstellungen fuer den qmqpd (Queue Manager Qmail Protokoll
 \tDaemon), der Queue und des qmgr (Queue Managers).
 
 SMTP: Einstellungen fuer ausgehende mail.

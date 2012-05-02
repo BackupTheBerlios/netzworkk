@@ -1,9 +1,13 @@
 # q_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::qmgm*::Hilfe')
-MSG=$(gettext 'qmgr_clog_warn_time: ?
+TITLE="${gv_Configuration}::${lv_Queue}::${gv_Help}"
+MSG=$(gettext 'qmgr_clog_warn_time: TODO
+
+qmgr_daemon_timeout: TODO
 
 qmgr_fudge_factor: Prozentsatz an Resourcen, den ausgehende Mails
 \tvon Postfix zur Verfuegung gestellt werden bekommen.
+
+qmgr_ipc_timeout: TODO
 
 qmgr_message_active_limit: Maximalzahl gleichzeitiger Mails in der
 \tactive-Queue
@@ -18,6 +22,8 @@ qmqpd_authorized_clients: rhosts, Postfix unterstuetzt auch das
 \tProtokoll QMQP, das eigentlich zum MTA qmail gehoert. Die in
 \tdiesem Parameter angegebenen Rechner duerfen Postfix mit QMQP
 \tkontakten.
+
+qmqpd_client_port_logging: TODO (yes/no)?
 
 qmqpd_error_delay: Wartezeit nach einem Fehler in einer
 \tQMQP-Verbindung

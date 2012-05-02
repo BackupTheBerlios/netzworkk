@@ -1,10 +1,6 @@
 # lmtp_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::lmtp::Hilfe')
-MSG=$(gettext 'lmtp_cache_connection: Soll die LMTP-Verbindung offen gehalten
-\twerden, um diese fuer mehrere Mails nacheinander zu nutzen
-\t(ja/nein).
-
-lmtp_connect_timeout: Timeout fuer den Aufbau der Verbindung. Wenn
+TITLE="${gv_Configuration}::${lv_Lmtp}::${gv_Help}"
+MSG=$(gettext 'lmtp_connect_timeout: Timeout fuer den Aufbau der Verbindung. Wenn
 \tdie Zahl 0 ist wird der Standardwert fuer TCP/IP Verbindungen
 \taus dem Kernel genommen.
 
