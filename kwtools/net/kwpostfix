@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 01.05.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 02.05.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -59,7 +59,7 @@ lv_Default=$(gettext 'Standard')
 lv_ErrorCodes=$(gettext 'Fehlercodes')
 lv_Mail=$(gettext 'Mail')
 lv_Lmtp=$(gettext 'LMTP')
-lv_Queue=$(gettext 'Queue')
+lv_Queue=$(gettext 'Queue/Qmail')
 lv_Smtp=$(gettext 'SMTP')
 lv_Smtpd=$(gettext 'SMTPD')
 lv_Tls=$(gettext 'TLS')
