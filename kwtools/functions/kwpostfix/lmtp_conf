@@ -3,36 +3,138 @@
 # usage: lmtp_conf
 #
 lmtp_conf() {
-#
-postconf -c $MAIL_CONFIG | grep '^lmtp_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+
+# Variable
+LMTP_TITLE="${gv_Configuration}::${lv_Lmtp}"
+
+# Bestehende Konfiguration einlesen# {{{
+print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)lmtp_*} | \
+	sed -e 's#\"#\\\"#g ; s# =#="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
-rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-#
+rm -rf ${gv_WorkDir}/postfix$$ &>/dev/null
+
+##############################################
+# OLD
+#postconf -c $MAIL_CONFIG | grep '^lmtp_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+##############################################
+
+## }}}
 # Funktion conf_lmtp_menue{{{
-LMTP_TITLE=$(gettext 'Konfiguration::LMTP')
+############################################
+# TODO:
+# lmtp_address_preference = any
+# lmtp_assume_final = no
+# lmtp_bind_address =
+# lmtp_bind_address6 =
+# lmtp_body_checks =
+# lmtp_cname_overrides_servername = no
+# lmtp_connection_cache_destinations =
+# lmtp_connection_cache_on_demand = yes
+# lmtp_connection_cache_time_limit = 2s
+# lmtp_connection_reuse_time_limit = 300s
+# lmtp_defer_if_no_mx_address_found = no
+# lmtp_delivery_slot_cost = $default_delivery_slot_cost
+# lmtp_delivery_slot_discount = $default_delivery_slot_discount
+# lmtp_delivery_slot_loan = $default_delivery_slot_loan
+# lmtp_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
+# lmtp_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
+# lmtp_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
+# lmtp_destination_rate_delay = $default_destination_rate_delay
+# lmtp_discard_lhlo_keyword_address_maps =
+# lmtp_discard_lhlo_keywords =
+# lmtp_dns_resolver_options =
+# lmtp_enforce_tls = no
+# lmtp_extra_recipient_limit = $default_extra_recipient_limit
+# lmtp_generic_maps =
+# lmtp_header_checks =
+# lmtp_host_lookup = dns
+# lmtp_initial_destination_concurrency = $initial_destination_concurrency
+# lmtp_lhlo_name = $myhostname
+# lmtp_line_length_limit = 998
+# lmtp_mime_header_checks =
+# lmtp_minimum_delivery_slots = $default_minimum_delivery_slots
+# lmtp_mx_address_limit = 5
+# lmtp_mx_session_limit = 2
+# lmtp_nested_header_checks =
+# lmtp_per_record_deadline = no
+# lmtp_pix_workaround_delay_time = 10s
+# lmtp_pix_workaround_maps =
+# lmtp_pix_workaround_threshold_time = 500s
+# lmtp_pix_workarounds = disable_esmtp,delay_dotcrlf
+# lmtp_quote_rfc821_envelope = yes
+# lmtp_randomize_addresses = yes
+# lmtp_recipient_limit = $default_recipient_limit
+# lmtp_recipient_refill_delay = $default_recipient_refill_delay
+# lmtp_recipient_refill_limit = $default_recipient_refill_limit
+# lmtp_reply_filter =
+# lmtp_sasl_auth_cache_name =
+# lmtp_sasl_auth_cache_time = 90d
+# lmtp_sasl_auth_soft_bounce = yes
+# lmtp_sasl_mechanism_filter =
+# lmtp_sasl_path =
+# lmtp_sasl_tls_security_options = $lmtp_sasl_security_options
+# lmtp_sasl_tls_verified_security_options = $lmtp_sasl_tls_security_options
+# lmtp_sasl_type = cyrus
+# lmtp_send_dummy_mail_auth = no
+# lmtp_sender_dependent_authentication = no
+# lmtp_skip_5xx_greeting = yes
+# lmtp_starttls_timeout = 300s
+# lmtp_tls_CAfile =
+# lmtp_tls_CApath =
+# lmtp_tls_block_early_mail_reply = no
+# lmtp_tls_cert_file =
+# lmtp_tls_ciphers = export
+# lmtp_tls_dcert_file =
+# lmtp_tls_dkey_file = $lmtp_tls_dcert_file
+# lmtp_tls_eccert_file =
+# lmtp_tls_eckey_file = $lmtp_tls_eccert_file
+# lmtp_tls_enforce_peername = yes
+# lmtp_tls_exclude_ciphers =
+# lmtp_tls_fingerprint_cert_match =
+# lmtp_tls_fingerprint_digest = md5
+# lmtp_tls_key_file = $lmtp_tls_cert_file
+# lmtp_tls_loglevel = 0
+# lmtp_tls_mandatory_ciphers = medium
+# lmtp_tls_mandatory_exclude_ciphers =
+# lmtp_tls_mandatory_protocols = SSLv3, TLSv1
+# lmtp_tls_note_starttls_offer = no
+# lmtp_tls_per_site =
+# lmtp_tls_policy_maps =
+# lmtp_tls_protocols = !SSLv2
+# lmtp_tls_scert_verifydepth = 9
+# lmtp_tls_secure_cert_match = nexthop
+# lmtp_tls_security_level =
+# lmtp_tls_session_cache_database =
+# lmtp_tls_session_cache_timeout = 3600s
+# lmtp_tls_verify_cert_match = hostname
+# lmtp_use_tls = no
+############################################
 conf_lmtp_menue() {
-LMTP_MENU=(lmtp_cache_connection \"\$lmtp_cache_connection\"
-lmtp_connect_timeout \"\$lmtp_connect_timeout\"
-lmtp_data_done_timeout \"\$lmtp_data_done_timeout\"
-lmtp_data_init_timeout \"\$lmtp_data_init_timeout\"
-lmtp_data_xfer_timeout \"\$lmtp_data_xfer_timeout\"
-lmtp_destination_concurrency_limit \"\$lmtp_destination_concurrency_limit\"
-lmtp_destination_recipient_limit \"\$lmtp_destination_recipient_limit\"
-lmtp_lhlo_timeout \"\$lmtp_lhlo_timeout\"
-lmtp_mail_timeout \"\$lmtp_mail_timeout\"
-lmtp_quit_timeout \"\$lmtp_quit_timeout\"
-lmtp_rcpt_timeout \"\$lmtp_rcpt_timeout\"
-lmtp_rset_timeout \"\$lmtp_rset_timeout\"
-lmtp_sasl_auth_enable \"\$lmtp_sasl_auth_enable\"
-lmtp_sasl_password_maps \"\$lmtp_sasl_password_maps\"
-lmtp_sasl_security_options \"\$lmtp_sasl_security_options\"
-lmtp_send_xforward_command \"\$lmtp_send_xforward_command\"
-lmtp_skip_quit_response \"\$lmtp_skip_quit_response\"
-lmtp_tcp_port \"\$lmtp_tcp_port\"
-lmtp_xforward_timeout \"\$lmtp_xforward_timeout\"
-postfix \"reload\"
-$gv_Back \"\")
-menubox "$LMTP_TITLE" "$gv_Menupoint" "$LMTP_MENU"
+	LMTP_MENU=(lmtp_connect_timeout \"\$lmtp_connect_timeout\"
+	lmtp_data_done_timeout \"\$lmtp_data_done_timeout\"
+	lmtp_data_init_timeout \"\$lmtp_data_init_timeout\"
+	lmtp_data_xfer_timeout \"\$lmtp_data_xfer_timeout\"
+	lmtp_destination_concurrency_limit \"\$lmtp_destination_concurrency_limit\"
+	lmtp_destination_recipient_limit \"\$lmtp_destination_recipient_limit\"
+	lmtp_lhlo_timeout \"\$lmtp_lhlo_timeout\"
+	lmtp_mail_timeout \"\$lmtp_mail_timeout\"
+	lmtp_quit_timeout \"\$lmtp_quit_timeout\"
+	lmtp_rcpt_timeout \"\$lmtp_rcpt_timeout\"
+	lmtp_rset_timeout \"\$lmtp_rset_timeout\"
+	lmtp_sasl_auth_enable \"\$lmtp_sasl_auth_enable\"
+	lmtp_sasl_password_maps \"\$lmtp_sasl_password_maps\"
+	lmtp_sasl_security_options \"\$lmtp_sasl_security_options\"
+	lmtp_send_xforward_command \"\$lmtp_send_xforward_command\"
+	lmtp_skip_quit_response \"\$lmtp_skip_quit_response\"
+	lmtp_tcp_port \"\$lmtp_tcp_port\"
+	lmtp_xforward_timeout \"\$lmtp_xforward_timeout\"
+	postfix \"reload\"
+	$gv_Back \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$LMTP_TITLE" "$gv_Menupoint" "$LMTP_MENU"
+	else
+		menubox "$LMTP_TITLE" "$gv_Menupoint" "$LMTP_MENU"
+	fi
 }
 #}}}
 #
@@ -42,128 +144,118 @@ while [ "$gv_Auswahl" ] ; do
 		HELP*)	script_help lmtp_help
 			conf_lmtp_menue
 			;;
-		lmtp_ca*)
-			# LMTP Verbindung, fuer mehrere mails nacheinander nutzen?{{{
-			LMTP_MORE_CONNECT_MSG=$(gettext 'LMTP Verbindung fuer mehrere mails nacheinander nutzen (ja/nein)?')
-			ja_nein_tausch "$LMTP_TITLE" "$LMTP_MORE_CONNECT_MSG"
-			lmtp_cache_connection="$WERT"
-			postconf -e lmtp_cache_connection="$WERT"
-			unset -- WERT
-			#}}}
-			conf_lmtp_menue
-			;;
-		lmtp_co*)
+		lmtp_connect_timeout)
 			# Timeout fuer den Aufbau der Verbindung{{{
 			number_input -s "${lmtp_connect_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_connect_timeout="$NUMBER"
 				postconf -e lmtp_connect_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_connect_timeout
 			;;
-		lmtp_data_d*)
+		lmtp_data_done_timeout)
 			# Timeout nach erfolgter Übertragung der mail per LMTP{{{
 			number_input -s "${lmtp_data_done_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_data_done_timeout="$NUMBER"
 				postconf -e lmtp_data_done_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_data_done_timeout
 			;;
-		lmtp_data_i*)
+		lmtp_data_init_timeout)
 			# Timeout nach dem LMTP Kommando DATA{{{
 			number_input -s "${lmtp_data_init_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_data_init_timeout="$NUMBER"
 				postconf -e lmtp_data_init_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_data_init_timeout
 			;;
-		lmtp_data_x*)
+		lmtp_data_xfer_timeout)
 			# Timeout waehrend der Übertragung zu einem LMTP Server{{{
 			number_input -s "${lmtp_data_xfer_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_data_xfer_timeout="$NUMBER"
 				postconf -e lmtp_data_xfer_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_data_xfer_timeout
 			;;
-		lmtp_destination_co*)
+		lmtp_destination_concurrency_limit)
 			# max. Anzahl gleichzeitiger Verbindungen per{{{
 			# LMTP zu einem Rechner
 			number_input -i "$lmtp_destination_concurrency_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_destination_concurrency_limit="$NUMBER"
 				postconf -e lmtp_destination_concurrency_limit="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_destination_concurrency_limit
 			;;
-		lmtp_destination_re*)
+		lmtp_destination_recipient_limit)
 			# max. Anzahl der Empfaenger in einer mail{{{
 			number_input -i "$lmtp_destination_recipient_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_destination_recipient_limit="$NUMBER"
 				postconf -e lmtp_destination_recipient_limit="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_destination_recipient_limit
 			;;
-		lmtp_l*)
+		lmtp_lhlo_timeout)
 			# Timeout nach dem LMTP Kommando LHLO{{{
 			number_input -s "${lmtp_lhlo_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_lhlo_timeout="$NUMBER"
 				postconf -e lmtp_lhlo_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_lhlo_timeout
 			;;
-		lmtp_m*)
+		lmtp_mail_timeout)
 			# Timeout nach dem LMTP Kommando MAIL FROM:{{{
 			number_input -s "${lmtp_mail_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_mail_timeout="$NUMBER"
 				postconf -e lmtp_mail_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_mail_timeout
 			;;
-		lmtp_q*)
+		lmtp_quit_timeout)
 			# Timeout nach dem LMTP Kommando QUIT{{{
 			number_input -s "${lmtp_quit_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_quit_timeout="$NUMBER"
 				postconf -e lmtp_quit_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_quit_timeout
 			;;
-		lmtp_rc*)
+		lmtp_rcpt_timeout)
 			# Timeout nach dem LMTP Kommando RCPT TO:{{{
 			number_input -s "${lmtp_rcpt_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_rcpt_timeout="$NUMBER"
 				postconf -e lmtp_rcpt_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_rcpt_timeout
 			;;
-		lmtp_rs*)
+		lmtp_rset_timeout)
 			# Timeout nach dem LMTP Kommando RSET{{{
 			number_input -s "${lmtp_rset_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_rset_timeout="$NUMBER"
 				postconf -e lmtp_rset_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_rset_timeout
 			;;
-		lmtp_sasl_a*)
+		lmtp_sasl_auth_enable)
 			# SMTP-AUTH beim Versand ueber LMTP aktivieren?{{{
 			LMTP_SASL_AUTH_MSG=$(gettext 'SMTP-AUTH beim Versand ueber LMTP aktivieren (ja/nein)?')
 			ja_nein_tausch "$LMTP_TITLE" "$LMTP_SASL_AUTH_MSG"
@@ -171,27 +263,27 @@ while [ "$gv_Auswahl" ] ; do
 			postconf -e lmtp_sasl_auth_enable="$WERT"
 			unset -- WERT
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_sasl_auth_enable
 			;;
-		lmtp_sasl_p*)
+		lmtp_sasl_password_maps)
 			# Tabelle fuer Kennungen/Passwoertern fuer authentifiezierte LMTP Verbindungen{{{
 			tab_support_wahl "$gv_Auswahl"
 			lmtp_sasl_password_maps="$MAPS"
 			postconf -e lmtp_sasl_password_maps="$MAPS"
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_sasl_password_maps
 			;;
-		lmtp_sasl_s*)
+		lmtp_sasl_security_options)
 			# Authentifizierungs Methoden{{{
 			mail_mechanism
-			if [ "$WERT" ] ; then
+			if [[ -n $WERT ]] ; then
 				lmtp_sasl_security_options="$WERT"
 				postconf -e lmtp_sasl_security_options="$WERT"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_sasl_security_options
 			;;
-		lmtp_send_*)
+		lmtp_send_xforward_command)
 			# {{{
 			LMTP_SEND_XFORWARD_COMD_MSG=$(gettext 'Soll ein XFORWARD Befehl an den LMTP Server gesendet werden (ja/nein)?')
 			ja_nein_tausch "$LMTP_TITLE" "$LMTP_SEND_XFORWARD_COMD_MSG"
@@ -199,9 +291,9 @@ while [ "$gv_Auswahl" ] ; do
 			postconf -e lmtp_send_xforward_command="$WERT"
 			unset -- WERT
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_send_xforward_command
 			;;
-		lmtp_sk*)
+		lmtp_skip_quit_response)
 			# Beenden einer LMTP Sitzung nach dem QUIT Kommando, ohne auf Antwort zu warten?{{{
 			LMTP_SKIP_QUIT_RESPONSE_MSG=$(gettext 'Beenden einer LMTP Sitzung nach dem QUIT Kommando, ohne auf Antwort zu warten (ja/nein)?')
 			ja_nein_tausch "$LMTP_TITLE" "$LMTP_SKIP_QUIT_RESPONSE_MSG"
@@ -209,30 +301,31 @@ while [ "$gv_Auswahl" ] ; do
 			postconf -e lmtp_skip_quit_response="$WERT"
 			unset -- WERT
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_skip_quit_response
 			;;
-		lmtp_t*)
+		lmtp_tcp_port)
 			# lmtp TCP Port vergeben{{{
 			LMTP_PORT_MSG=$(gettext 'Geben Sie den Port fuer das Protokoll LMTP ein. Standard ist 24.')
 			number_input "$LMTP_TITLE" "$LMTP_PORT_MSG" "$lmtp_tcp_port"
-			if [ -n "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_tcp_port="$NUMBER"
 				postconf -e lmtp_tcp_port="$NUMBER"
 			fi
 			#}}}
-		 	conf_lmtp_menue
+		 	conf_lmtp_menue lmtp_tcp_port
 			;;
-		lmtp_x*)
-			# Timeout #########HilfeText fehlt######################{{{
+		lmtp_xforward_timeout)
+			# LMTP xforward Timeout#{{{
 			number_input -s "${lmtp_xforward_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				lmtp_xforward_timeout="$NUMBER"
 				postconf -e lmtp_xforward_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_lmtp_menue
+			conf_lmtp_menue lmtp_xforward_timeout
 			;;
-		p*)	postfix_start_reload
+		postfix)
+			postfix_start_reload
 			break
 			;;
 		$gv_Back)	break

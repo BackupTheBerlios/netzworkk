@@ -9,7 +9,7 @@ VIRTUAL_TITLE="${gv_Configuration}::${lv_Virtual}"
 
 # Bestehende Konfiguration einlesen# {{{
 print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)virtual_*} | \
-	sed -e 's#\"#\\\"#g ; s# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+	sed -e 's#\"#\\\"#g ; s# =#="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 

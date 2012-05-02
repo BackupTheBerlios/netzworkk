@@ -5,7 +5,7 @@
 tls_conf() {
 
 # Variable
-MAIL_TITLE="${gv_Configuration}::${lv_Tls}"
+TLS_TITLE="${gv_Configuration}::${lv_Tls}"
 
 # Bestehende Konfiguration einlesen# {{{
 print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)tls_*} | \

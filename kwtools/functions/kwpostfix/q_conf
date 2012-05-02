@@ -1,31 +1,48 @@
-# Queue Parameter einstellen{{{
+# Queue/Qmail Parameter einstellen{{{
 #
 # usage: q_conf
 #
 q_conf() {
-#
-postconf -c $MAIL_CONFIG | grep '^q' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+
+# Variable
+QUEUE_TITLE="${gv_Configuration}::${lv_Queue}"
+
+# Bestehende Konfiguration einlesen# {{{
+print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)q*} | \
+	sed -e 's#\"#\\\"#g ; s# =#="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
-rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-#
+rm -rf ${gv_WorkDir}/postfix$$ &>/dev/null
+
+##############################################
+# OLD
+#postconf -c $MAIL_CONFIG | grep '^q' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+##############################################
+
+## }}}
 # Funktion conf_queue_menue{{{
-QUEUE_TITLE=$(gettext 'Konfiguration::queue/qmail')
 conf_queue_menue() {
-QUEUE_MENU=(qmgr_clog_warn_time \"\$qmgr_clog_warn_time\"
-qmgr_fudge_factor \"\$qmgr_fudge_factor\"
-qmgr_message_active_limit \"\$qmgr_message_active_limit\"
-qmgr_message_recipient_limit \"\$qmgr_message_recipient_limit\"
-qmgr_message_recipient_minimum \"\$qmgr_message_recipient_minimum\"
-qmqpd_authorized_clients \"\$qmqpd_authorized_clients\"
-qmqpd_error_delay \"\$qmqpd_error_delay\"
-qmqpd_timeout \"\$qmqpd_timeout\"
-queue_directory \"\$queue_directory\"
-queue_file_attribute_count_limit \"\$queue_file_attribute_count_limit\"
-queue_minfree \"\$queue_minfree\"
-queue_run_delay \"\$queue_run_delay\"
-postfix \"reload\"
-$gv_Back \"\")
-menubox "$QUEUE_TITLE" "$gv_Menupoint" "$QUEUE_MENU"
+	QUEUE_MENU=(qmgr_clog_warn_time \"\$qmgr_clog_warn_time\"
+	qmgr_daemon_timeout \"\$qmgr_daemon_timeout\"
+	qmgr_fudge_factor \"\$qmgr_fudge_factor\"
+	qmgr_ipc_timeout \"\$qmgr_ipc_timeout\"
+	qmgr_message_active_limit \"\$qmgr_message_active_limit\"
+	qmgr_message_recipient_limit \"\$qmgr_message_recipient_limit\"
+	qmgr_message_recipient_minimum \"\$qmgr_message_recipient_minimum\"
+	qmqpd_authorized_clients \"\$qmqpd_authorized_clients\"
+	qmqpd_client_port_logging \"\$qmqpd_client_port_logging\"
+	qmqpd_error_delay \"\$qmqpd_error_delay\"
+	qmqpd_timeout \"\$qmqpd_timeout\"
+	queue_directory \"\$queue_directory\"
+	queue_file_attribute_count_limit \"\$queue_file_attribute_count_limit\"
+	queue_minfree \"\$queue_minfree\"
+	queue_run_delay \"\$queue_run_delay\"
+	postfix \"reload\"
+	$gv_Back \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$QUEUE_TITLE" "$gv_Menupoint" "$QUEUE_MENU"
+	else
+		menubox "$QUEUE_TITLE" "$gv_Menupoint" "$QUEUE_MENU"
+	fi
 }
 #}}}
 #
@@ -35,65 +52,85 @@ while [ "$gv_Auswahl" ] ; do
 		HELP*)	script_help q_help
 			conf_queue_menue
 			;;
-		qmgr_c*)
+		qmgr_clog_warn_time)
 			#{{{
 			number_input -s "${qmgr_clog_warn_time%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				qmgr_clog_warn_time="$NUMBER"
 				postconf -e qmgr_clog_warn_time="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmgr_clog_warn_time
 			;;
-		qmgr_f*)
+		qmgr_daemon_timeout)
+			#{{{
+			number_input -s "${qmgr_daemon_timeout%?}"
+			if [[ -n $NUMBER ]] ; then
+				qmgr_daemon_timeout="$NUMBER"
+				postconf -e qmgr_daemon_timeout="$NUMBER"
+			fi
+			#}}}
+			conf_queue_menue qmgr_daemon_timeout
+			;;
+		qmgr_fudge_factor)
 			# Prozentsatz an Resourcen den postfix fuer ausgehende mails bekommt{{{
 			number_input -i "$qmgr_fudge_factor"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				qmgr_fudge_factor="$NUMBER"
 				postconf -e qmgr_fudge_factor="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmgr_fudge_factor
+			;;
+		qmgr_ipc_timeout)
+			#{{{
+			number_input -s "${qmgr_ipc_timeout%?}"
+			if [[ -n $NUMBER ]] ; then
+				qmgr_ipc_timeout="$NUMBER"
+				postconf -e qmgr_ipc_timeout="$NUMBER"
+			fi
+			#}}}
+			conf_queue_menue qmgr_ipc_timeout
 			;;
 		qmgr_message_active_limit)
 			# max. Anzahl gleichzeitiger mails in der active Queue{{{
 			number_input -i "$qmgr_message_active_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				qmgr_message_active_limit="$NUMBER"
 				postconf -e qmgr_message_active_limit="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmgr_message_active_limit
 			;;
 		qmgr_message_recipient_limit)
 			# max. Groesse der Verwaltungsabelle des qmgr{{{
 			number_input -i "$qmgr_message_recipient_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				qmgr_message_recipient_limit="$NUMBER"
 				postconf -e qmgr_message_recipient_limit="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmgr_message_recipient_limit
 			;;
 		qmgr_message_recipient_minimum)
 			# min. Groesse der Verwaltungsabelle des qmgr{{{
 			number_input -i "$qmgr_message_recipient_minimum"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				qmgr_message_recipient_minimum="$NUMBER"
 				postconf -e qmgr_message_recipient_minimum="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmgr_message_recipient_minimum
 			;;
-		qmqpd_a*)
+		qmqpd_authorized_clients)
 			# Welche clients duerfen mit dem qmail Protokoll{{{
 			# postfix kontakten.
 			QMAIL_CLIENTS_MSG=$(gettext 'Geben Sie die Rechner oder IP-Adressen ein, die das Qmail-Protokoll (QMQP) nutzen duerfen.')
 			inputbox "$QUEUE_TITLE" "$QMAIL_CLIENTS_MSG" "$qmqpd_authorized_clients"
-			if [ "$gv_Auswahl" ] ; then
+			if [[ -n $gv_Auswahl ]] ; then
 				# Alle eingebenen IP's ueberpruefen
 				ip_analyse $gv_Auswahl
-				if [ -n "$gv_Ip_Adr" ] ; then
+				if [[ -n $gv_Ip_Adr ]] ; then
 					qmqpd_authorized_clients="$gv_Ip_Adr"
 					postconf -e qmqpd_authorized_clients="$qmqpd_authorized_clients"
 				else
@@ -105,19 +142,36 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e qmqpd_authorized_clients=""
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmqpd_authorized_clients
 			;;
-		qmqpd_e*)
+		qmqpd_client_port_logging)
+			########################################
+			# TODO: nachlesen
+			########################################
+			# Port der Qmail Clients loggen (yes/no)?# {{{
+			QMAIL_CLIENT_LOG_MSG=$(gettext 'Sollen die Ports der clients geloggt werden (ja/nein)?')
+			yesno "$QUEUE_TITLE" "$QMAIL_CLIENT_LOG_MSG"
+			if [[ $? = 0 ]] ; then
+				qmqpd_client_port_logging=yes
+				postconf -e qmqpd_client_port_logging=yes
+			else
+				qmqpd_client_port_logging=no
+				postconf -e qmqpd_client_port_logging=no
+			fi
+			## }}}
+			conf_queue_menue qmqpd_client_port_logging
+			;;
+		qmqpd_error_delay)
 			# Wartezeit nach einem Fehler in einer QMQP Verbindung{{{
 			number_input -s "${qmqpd_error_delay%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				qmqpd_error_delay="$NUMBER"
 				postconf -e qmqpd_error_delay="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmqpd_error_delay
 			;;
-		queue_d*)
+		queue_directory)
 			# Pfad zum Queue Verzeichnis{{{
 			dselect "$queue_directory"
 			if [ "$VERZ" ] ; then
@@ -128,50 +182,52 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue queue_directory
 			;;
-		queue_f*)
+		queue_file_attribute_count_limit)
 			# queue_file_attribute_count_limit{{{
 			number_input -i "$queue_file_attribute_count_limit"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				queue_file_attribute_count_limit="$NUMBER"
 				postconf -e queue_file_attribute_count_limit="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue queue_file_attribute_count_limit
 			;;
-		queue_m*)
+		queue_minfree)
 			# min. Platenplatz in Bytes, bevor postfix die Annahme von mails verweigert.{{{
 			number_input -b "$queue_minfree"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				queue_minfree="$NUMBER"
 				postconf -e queue_minfree="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue queue_minfree
 			;;
-		queue_ru*)
+		queue_run_delay)
 			# Anzahl der Sek. nach denen postfix die deferred Queue nach{{{
 			# zuzustellenden mails durchsucht
 			number_input -s "${queue_run_delay%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				queue_run_delay="$NUMBER"
 				postconf -e queue_run_delay="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue queue_run_delay
 			;;
-		qmqpd_t*)
+		qmqpd_timeout)
 			# Timeout beim Aufruf des qmqpd{{{
 			number_input -s "${qmqpd_timeout%?}"
-			if [ "$NUMBER" ] ; then
+			if [[ -n $NUMBER ]] ; then
 				qmqpd_timeout="$NUMBER"
 				postconf -e qmqpd_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_queue_menue
+			conf_queue_menue qmqpd_timeout
 			;;
-		p*)	postfix_start_reload
+		postfix)
+			# postfix, Konfiguration neu einlesen
+			postfix_start_reload
 			break
 			;;
 		$gv_Back)	break
