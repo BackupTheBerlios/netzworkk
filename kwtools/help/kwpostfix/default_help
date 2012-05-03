@@ -1,13 +1,13 @@
 # default_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::default::Hilfe')
-MSG=$(gettext 'default_database_type: Datentyp den postfix erzeugt wenn nichts
-\tanderes angegeben.
+TITLE="${gv_Configuration}::${lv_Default}::${gv_Help}"
+MSG=$(gettext 'default_database_type: Datenbanktyp den Postfix beim Erzeugen der
+\tDatenbanken benutzt, wenn nichts anderes angegeben wurde.
 
-default_delivery_slot_cost:
+default_delivery_slot_cost: TODO
 
-default_delivery_slot_discount:
+default_delivery_slot_discount: TODO
 
-default_delivery_slot_loan:
+default_delivery_slot_loan: TODO
 
 default_destination_concurrency_limit: Maximalzahl gleichzeitiger
 \tVerbindungen zu einem Ziel.
@@ -16,25 +16,26 @@ default_destination_recipient_limit: Maximalzahl der Empfaenger in
 \teiner Mail. Groessere Empfaengerlisten werden auf mehrere
 \tMails aufgeteilt.
 
-default_extra_recipient_limit:
+default_extra_recipient_limit: TODO
 
-default_minimum_delivery_slots:
+default_minimum_delivery_slots: TODO
 
 default_privs: Default Nutzerrechte fuer nachgeladene Programme.
 
 default_process_limit: Maximale Anzahl gleichzeitiger Prozesse einer
 \tArt, sofern nichts anderes in master.cf angegeben wurde.
 
-default_rbl_reply:
+default_rbl_reply: TODO
 
-default_recipient_limit: Maximalzahl Empfaenger
+default_recipient_limit: Maximalzahl an Empfaengern.
 
 default_transport: zu benutzende Transport Methode falls nicht
 \tanders angegeben.
 
 default_verp_delimiters: Verp kodiert die Ziel-Adresse im Return-
 \tPath, nuetzlich fuer Mailinglisten. Der Delimiter legt fest,
-\tdurch welche Zeichen dabei "." und "@" ersetzt werden.')
+\tdurch welche Zeichen dabei "." und "@" ersetzt werden.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker
