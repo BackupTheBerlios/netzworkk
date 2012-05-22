@@ -22,7 +22,7 @@ default_conf() {
 	## }}}
 	# Funktion conf_default_menue{{{
 	#######################################
-	# TODO:
+	# TODO: Hilfe etc. vorbereitet, nur noch menue
 	# default_destination_concurrency_failed_cohort_limit = 1
 	# default_destination_concurrency_negative_feedback = 1
 	# default_destination_concurrency_positive_feedback = 1

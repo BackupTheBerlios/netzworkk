@@ -14,13 +14,6 @@ read_file -f ${gv_WorkDir}/postfix$$
 # Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
 mailbox_command="${${mailbox_command//\"/\\\"}//\$/\\\$}"
 rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-
-##########################
-# Old
-##########################
-#postconf -c $MAIL_CONFIG | grep '^mail' | sed -e 's#\"#\\\"#g ; s# = #="#g ;
-#	s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
-
 ## }}}
 # Funktion (conf_mail_menue), Parameter fuer alles was mit mail anfaengt{{{
 conf_mail_menue() {
