@@ -4,14 +4,10 @@
 #
 transport_methode() {
 	unset -- WERT MB_TRANS_MENU
-	local Anz
-	integer Anz
-	Anz=0
 	for i in `awk '(/^[^# ][^-]/){print $1}' $MASTER_CF | sort` ; {
 		# Duplikate herausfiltern.
 		if [ -z ${(M)${MB_TRANS_MENU}##${i#*:}} ] ; then
-			(( Anz++ ))
-			MB_TRANS_MENU[Anz]="${i#*:} \"\""
+			MB_TRANS_MENU+=(${i#*:} \"\")
 		fi
 	}
 	#

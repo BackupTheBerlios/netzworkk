@@ -4,10 +4,15 @@
 #
 tab_support_wahl() {
 	unset -- MAPS
+	local Choice
+	Choice="$1"
 	autoload -U password_display different_passwd
-	AUSWAHL="$1"
-	TAB_VALUE_TITLE=$(gettext 'Konfiguration::Tabellentyp::$AUSWAHL')
-	#
+	
+	lv_NameAdapt=$(gettext 'Namensuebernahme')
+	lv_VarChoice=$(gettext 'Variablenauswahl')
+
+	TAB_VALUE_TITLE="${gv_Configuration}::${lv_TableTyp}::${Choice}"
+	
 	# Für den Standard Tabellentyp wird -s (single) benötigt.
 	# Es wird dann nicht weiter nach Tabelle anlegen oder Namen
 	# übernehmen gefragt.
@@ -17,7 +22,8 @@ tab_support_wahl() {
 	else
 		# Funktion tab_wert_auswahl_menue{{{
 		#
-		TAB_VALUE_MENU=$(gettext 'Eingabe "" Namensuebernahme "" Variablenauswahl "" $gv_Back ""')
+		TAB_VALUE_MENU=($gv_Input \"\" $lv_NameAdapt \"\"
+		$lv_VarChoice \"\" $gv_Back \"\")
 		tab_wert_auswahl_menue() {
 			menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$TAB_VALUE_MENU"
 		}
@@ -28,9 +34,9 @@ tab_support_wahl() {
 				HELP*)	script_help tab_wert_auswahl_help
 					tab_wert_auswahl_menue
 					;;
-				Eingabe|Input)
+				$gv_Input)
 					# Datei/Variabl Eingabe# {{{
-					V_Wert="$(postconf -h $AUSWAHL)"
+					V_Wert="$(postconf -h $Choice)"
 					INPUT_MSG=$(gettext 'Hier koennen Sie Variablen und/oder Dateien eingeben (Bsp. \$alias_maps \$virtual_mailbox_maps unix:passwd.byname).')
 					inputbox "$TAB_VALUE_TITLE" "$INPUT_MSG" "${V_Wert//\$/\\\$}"
 					if [ "$gv_Auswahl" ] ; then
@@ -41,7 +47,7 @@ tab_support_wahl() {
 					break
 					## }}}
 					;;
-				Name*)
+				$lv_NameAdapt)
 					# Namensuebernahme{{{
 					# Funktion format_menue{{{
 					# TABS_A - ohne die Tabellenformate pcre und regexp
@@ -50,7 +56,7 @@ tab_support_wahl() {
 					# TABS_R - nur die Tabellenformate pcre und regexp
 					TABFORMAT_MSG=$(gettext 'Waehlen Sie das Tabellenformat aus.')
 					format_menue() {
-					case "$AUSWAHL" in
+					case "$Choice" in
 						*checks)
 							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_R"
 							TABS_WAHL="$TABS_R"
@@ -106,20 +112,20 @@ tab_support_wahl() {
 								;;
 							nis)
 								# nis{{{
-								if [ "$AUSWAHL" = alias_maps -o "$AUSWAHL" = alias_database ] ; then
+								if [ "$Choice" = alias_maps -o "$Choice" = alias_database ] ; then
 									MAPS="${gv_Auswahl}:mail.aliases"
 								else
-									MAPS="${gv_Auswahl}:${AUSWAHL}"
+									MAPS="${gv_Auswahl}:${Choice}"
 								fi
 								break
 								#}}}
 								;;
 							ldap)
 								# LDAP Datenbanken{{{
-								if [ "$AUSWAHL" = alias_database ] ; then
-									AUSWAHL=alias_maps
+								if [ "$Choice" = alias_database ] ; then
+									Choice=alias_maps
 								fi
-								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
 								create_file ${MAPS##*:}
 								break
 								#}}}
@@ -130,7 +136,7 @@ tab_support_wahl() {
 								Tabwahl="$gv_Auswahl"
 								TAB_Proxy_S=${TABS_WAHL//proxy \"\"/}
 								# Tabellentype Auswahl fuer proxy
-								TAB_VALUE_PROXY_TITLE=$(gettext 'Konfiguration::Tabellentype::proxymap')
+								TAB_VALUE_PROXY_TITLE="${gv_Configuration}::${lv_TableTyp}::proxymap"
 								menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$TAB_Proxy_S"
 								while [ "$gv_Auswahl" ] ; do
 									case "$gv_Auswahl" in
@@ -148,28 +154,28 @@ tab_support_wahl() {
 									case "$Proxy_Map" in
 										ldap)
 											# Proxymap LDAP Datenbanken{{{
-											if [ "$AUSWAHL" = alias_database ] ; then
-												AUSWAHL=alias_maps
+											if [ "$Choice" = alias_database ] ; then
+												Choice=alias_maps
 											fi
-											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
 											create_file ${MAPS##*:}
 											#}}}
 											;;
 										*sql)
 											# Proxymap SQL Datenbanken{{{
-											if [ "$AUSWAHL" = alias_database ] ; then
-												AUSWAHL=alias_maps
+											if [ "$Choice" = alias_database ] ; then
+												Choice=alias_maps
 											fi
-											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
 											create_file ${MAPS##*:}
 											#}}}
 											;;
 										nis)
 											# Proxymap NIS Datenbanken{{{
-											if [ "$AUSWAHL" = alias_maps -o "$AUSWAHL" = alias_database ] ; then
+											if [ "$Choice" = alias_maps -o "$Choice" = alias_database ] ; then
 												MAPS="${Tabwahl}:${Proxy_Map}:mail.aliases"
 											else
-												MAPS="${Tabwahl}:${Proxy_Map}:${AUSWAHL}"
+												MAPS="${Tabwahl}:${Proxy_Map}:${Choice}"
 											fi
 											#}}}
 											;;
@@ -195,10 +201,10 @@ tab_support_wahl() {
 											;;
 										*)
 											# alle anderten Tabellentypen
-											if [ "$AUSWAHL" = alias_database ] ; then
-												AUSWAHL=alias_maps
+											if [ "$Choice" = alias_database ] ; then
+												Choice=alias_maps
 											fi
-											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${AUSWAHL}"
+											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${Choice}"
 											;;
 									esac
 								else
@@ -210,10 +216,10 @@ tab_support_wahl() {
 								;;
 							*sql)
 								# SQL Datenbanken{{{
-								if [ "$AUSWAHL" = alias_database ] ; then
-									AUSWAHL=alias_maps
+								if [ "$Choice" = alias_database ] ; then
+									Choice=alias_maps
 								fi
-								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${AUSWAHL}.cf"
+								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
 								create_file ${MAPS##*:}
 								break
 								#}}}
@@ -255,11 +261,11 @@ tab_support_wahl() {
 							*)	#
 								# Auswahl übernehmen{{{
 								#
-								if [ "$AUSWAHL" = alias_maps -o "$AUSWAHL" = alias_database ] ; then
+								if [ "$Choice" = alias_maps -o "$Choice" = alias_database ] ; then
 									MAPS="${gv_Auswahl}:/etc/aliases"
 									create_file ${MAPS#*:}
 								else
-									MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${AUSWAHL}"
+									MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${Choice}"
 									create_file ${MAPS#*:}
 								fi
 								#}}}
@@ -270,12 +276,12 @@ tab_support_wahl() {
 					break
 					#}}}
 					;;
-				Va*)
+				$lv_VarChoice)
 					# Für diese Werte die Postfix Variablen generieren{{{
 					Werte="_checks |_database|_maps |mailbox_domains |_limit |alias_domains |rbl_domains |relay_domains |mynetworks |virtual_transport"
-					# AUSWAHL ist der eigene Parametername der einzustellen ist.
+					# Choice ist der eigene Parametername der einzustellen ist.
 					# Dieser wird nicht zur Auswahl angezeigt.
-					postfix_variable $Werte $AUSWAHL
+					postfix_variable $Werte $Choice
 					if [ "$WERT" ] ; then
 						MAPS="\$${WERT}"
 					else

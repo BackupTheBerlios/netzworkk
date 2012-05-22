@@ -20,7 +20,7 @@ kwpostfix_action() {
 				#
 				ERROR_CODE_MSG=$(gettext 'Geben Sie bitte einen Fehlercode, der 4XX oder 5XX Serie ein. Lesen Sie dazu bitte die Hilfe.')
 				inputbox "$TABLE_TITLE" "$ERROR_CODE_MSG" "$ACTION"
-				if [ "$gv_Auswahl" ] ; then
+				if [ -n "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
 						4[25][0-2]|5[05][0-4])	ACTION="$gv_Auswahl"
 							break

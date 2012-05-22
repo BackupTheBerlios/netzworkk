@@ -8,13 +8,9 @@
 #
 postfix_variable() {
 	unset -- WERT Var_T
-	local Anz
-	integer Anz
-	Anz=1
 	postconf | awk -F' ' /$1/'{print $1,$3}' | while read a b ; do
 		if [ "$b" -a $a != $AUSWAHL -a $a != proxy_read_maps ] ; then
-			Var_T[Anz]="$a \"\""
-			(( Anz++ ))
+			Var_T+=($a \"\")
 		fi
 	done
 	#
