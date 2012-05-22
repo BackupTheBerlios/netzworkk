@@ -100,6 +100,10 @@ default_conf() {
 				#}}}
 				conf_default_menue default_delivery_slot_loan
 				;;
+			default_destination_concurrency_failed_cohort_limit)
+				# = 1
+				conf_default_menue default_destination_concurrency_failed_cohort_limit
+				;;
 			default_destination_concurrency_limit)
 				# Maximalanzahl gleichzeitiger Verbindungen zu einem Ziel{{{
 				number_input -i "$default_destination_concurrency_limit"
@@ -109,6 +113,18 @@ default_conf() {
 				fi
 				#}}}
 				conf_default_menue default_destination_concurrency_limit
+				;;
+			default_destination_concurrency_negative_feedback)
+				# = 1
+				conf_default_menue default_destination_concurrency_negative_feedback
+				;;
+			default_destination_concurrency_positive_feedback)
+				# = 1
+				conf_default_menue default_destination_concurrency_positive_feedback
+				;;
+			default_destination_rate_delay)
+				# = 0s
+				conf_default_menue default_destination_rate_delay
 				;;
 			default_destination_recipient_limit)
 				# Maximalanzahl der Empfänger in einer einzigen Mails{{{
@@ -130,6 +146,10 @@ default_conf() {
 				fi
 				#}}}
 				conf_default_menue default_extra_recipient_limit
+				;;
+			default_filter_nexthop)
+				#
+				conf_default_menue default_filter_nexthop
 				;;
 			default_minimum_delivery_slots)
 				# Minimale Anzahl an Zustell Slots{{{
@@ -214,6 +234,14 @@ default_conf() {
 				#}}}
 				conf_default_menue default_recipient_limit
 				;;
+			default_recipient_refill_delay)
+				# = 5s
+				conf_default_menue default_recipient_refill_delay
+				;;
+			default_recipient_refill_limit)
+				# = 100
+				conf_default_menue default_recipient_refill_limit
+				;;
 			default_transport)
 				# Standard Transport Methode{{{
 				transport_methode
@@ -252,7 +280,7 @@ default_conf() {
 				conf_default_menue default_verp_delimiters
 				;;
 			postfix)
-			# postfix, Konfiguration neu einlesen
+				# postfix, Konfiguration neu einlesen
 				postfix_start_reload
 				break
 				;;

@@ -1,74 +1,93 @@
 # smtp Parameter einstellen{{{
 #
-postconf -c $MAIL_CONFIG | grep '^smtp_' | sed -e 's# = #="#g ; s#$#"#g ; s#\$#\\\$#g' >${gv_WorkDir}/postfix$$
+# Variable
+SMTP_TITLE="${gv_Configuration}::${lv_Smtp}"
+
+#######################################
+# TODO: Hilfe etc. vorbereitet, nur noch menue
+# auf smtp_tls_ciphers achten (Hilfe)
+#######################################
+####################################
+# Old
+####################################
+#postconf -c $MAIL_CONFIG | grep '^smtp_' | sed -e 's# = #="#g ; s#$#"#g ; s#\$#\\\$#g' >${gv_WorkDir}/postfix$$
+#read_file -f ${gv_WorkDir}/postfix$$
+#rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+
+# Bestehende Konfiguration einlesen# {{{
+print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)smtp_*} | \
+	sed -e 's#\"#\\\"#g ; s# =#="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-#
+## }}}
 # Funktion conf_smtp_menue{{{
-SMTP_TITLE=$(gettext 'Konfiguration::smtp')
 conf_smtp_menue() {
-SMTP_MENU=(smtp_always_send_ehlo \"\$smtp_always_send_ehlo\"
-smtp_bind_address \"\$smtp_bind_address\"
-smtp_bind_address6 \"\$smtp_bind_address6\"
-smtp_cname_overrides_servername \"\$smtp_cname_overrides_servername\"
-smtp_connect_timeout \"\$smtp_connect_timeout\"
-smtp_connection_cache_destinations \"\$smtp_connection_cache_destinations\"
-smtp_connection_cache_on_demand \"\$smtp_connection_cache_on_demand\"
-smtp_connection_cache_reuse_limit \"\$smtp_connection_cache_reuse_limit\"
-smtp_connection_cache_time_limit \"\$smtp_connection_cache_time_limit\"
-smtp_data_done_timeout \"\$smtp_data_done_timeout\"
-smtp_data_init_timeout \"\$smtp_data_init_timeout\"
-smtp_data_xfer_timeout \"\$smtp_data_xfer_timeout\"
-smtp_defer_if_no_mx_address_found \"\$smtp_defer_if_no_mx_address_found\"
-smtp_destination_concurrency_limit \"\$smtp_destination_concurrency_limit\"
-smtp_destination_recipient_limit \"\$smtp_destination_recipient_limit\"
-smtp_discard_ehlo_keyword_address_maps \"\$smtp_discard_ehlo_keyword_address_maps\"
-smtp_discard_ehlo_keywords \"\$smtp_discard_ehlo_keywords\"
-smtp_enforce_tls \"\$smtp_enforce_tls\"
-smtp_fallback_relay \"\$smtp_fallback_relay\"
-smtp_generic_maps \"\$smtp_generic_maps\"
-smtp_helo_name \"\$smtp_helo_name\"
-smtp_helo_timeout \"\$smtp_helo_timeout\"
-smtp_host_lookup \"\$smtp_host_lookup\"
-smtp_line_length_limit \"\$smtp_line_length_limit\"
-smtp_mail_timeout \"\$smtp_mail_timeout\"
-smtp_mx_address_limit \"\$smtp_mx_address_limit\"
-smtp_mx_session_limit \"\$smtp_mx_session_limit\"
-smtp_never_send_ehlo \"\$smtp_never_send_ehlo\"
-smtp_pix_workaround_delay_time \"\$smtp_pix_workaround_delay_time\"
-smtp_pix_workaround_threshold_time \"\$smtp_pix_workaround_threshold_time\"
-smtp_quit_timeout \"\$smtp_quit_timeout\"
-smtp_quote_rfc821_envelope \"\$smtp_quote_rfc821_envelope\"
-smtp_randomize_addresses \"\$smtp_randomize_addresses\"
-smtp_rcpt_timeout \"\$smtp_rcpt_timeout\"
-smtp_rset_timeout \"\$smtp_rset_timeout\"
-smtp_sasl_auth_enable \"\$smtp_sasl_auth_enable\"
-smtp_sasl_mechanism_filter \"\$smtp_sasl_mechanism_filter\"
-smtp_sasl_password_maps \"\$smtp_sasl_password_maps\"
-smtp_sasl_security_options \"\$smtp_sasl_security_options\"
-smtp_send_xforward_command \"\$smtp_send_xforward_command\"
-smtp_skip_5xx_greeting \"\$smtp_skip_5xx_greeting\"
-smtp_skip_quit_response \"\$smtp_skip_quit_response\"
-smtp_starttls_timeout \"\$smtp_starttls_timeout\"
-smtp_tls_CAfile \"\$smtp_tls_CAfile\"
-smtp_tls_CApath \"\$smtp_tls_CApath\"
-smtp_tls_cert_file \"\$smtp_tls_cert_file\"
-smtp_tls_cipherlist \"\$smtp_tls_cipherlist\"
-smtp_tls_dcert_file \"\$smtp_tls_dcert_file\"
-smtp_tls_dkey_file \"\$smtp_tls_dkey_file\"
-smtp_tls_enforce_peername \"\$smtp_tls_enforce_peername\"
-smtp_tls_key_file \"\$smtp_tls_key_file\"
-smtp_tls_loglevel \"\$smtp_tls_loglevel\"
-smtp_tls_note_starttls_offer \"\$smtp_tls_note_starttls_offer\"
-smtp_tls_per_site \"\$smtp_tls_per_site\"
-smtp_tls_scert_verifydepth \"\$smtp_tls_scert_verifydepth\"
-smtp_tls_session_cache_database \"\$smtp_tls_session_cache_database\"
-smtp_tls_session_cache_timeout \"\$smtp_tls_session_cache_timeout\"
-smtp_use_tls \"\$smtp_use_tls\"
-smtp_xforward_timeout \"\$smtp_xforward_timeout\"
-postfix \"reload\"
-$gv_Back \"\")
-menubox "$SMTP_TITLE" "$gv_Menupoint" "$SMTP_MENU"
+	SMTP_MENU=(smtp_always_send_ehlo \"\$smtp_always_send_ehlo\"
+	smtp_bind_address \"\$smtp_bind_address\"
+	smtp_bind_address6 \"\$smtp_bind_address6\"
+	smtp_cname_overrides_servername \"\$smtp_cname_overrides_servername\"
+	smtp_connect_timeout \"\$smtp_connect_timeout\"
+	smtp_connection_cache_destinations \"\$smtp_connection_cache_destinations\"
+	smtp_connection_cache_on_demand \"\$smtp_connection_cache_on_demand\"
+	smtp_connection_cache_time_limit \"\$smtp_connection_cache_time_limit\"
+	smtp_connection_reuse_time_limit \"\$smtp_connection_reuse_time_limit\"
+	smtp_data_done_timeout \"\$smtp_data_done_timeout\"
+	smtp_data_init_timeout \"\$smtp_data_init_timeout\"
+	smtp_data_xfer_timeout \"\$smtp_data_xfer_timeout\"
+	smtp_defer_if_no_mx_address_found \"\$smtp_defer_if_no_mx_address_found\"
+	smtp_destination_concurrency_limit \"\$smtp_destination_concurrency_limit\"
+	smtp_destination_recipient_limit \"\$smtp_destination_recipient_limit\"
+	smtp_discard_ehlo_keyword_address_maps \"\$smtp_discard_ehlo_keyword_address_maps\"
+	smtp_discard_ehlo_keywords \"\$smtp_discard_ehlo_keywords\"
+	smtp_enforce_tls \"\$smtp_enforce_tls\"
+	smtp_fallback_relay \"\$smtp_fallback_relay\"
+	smtp_generic_maps \"\$smtp_generic_maps\"
+	smtp_helo_name \"\$smtp_helo_name\"
+	smtp_helo_timeout \"\$smtp_helo_timeout\"
+	smtp_host_lookup \"\$smtp_host_lookup\"
+	smtp_line_length_limit \"\$smtp_line_length_limit\"
+	smtp_mail_timeout \"\$smtp_mail_timeout\"
+	smtp_mx_address_limit \"\$smtp_mx_address_limit\"
+	smtp_mx_session_limit \"\$smtp_mx_session_limit\"
+	smtp_never_send_ehlo \"\$smtp_never_send_ehlo\"
+	smtp_pix_workaround_delay_time \"\$smtp_pix_workaround_delay_time\"
+	smtp_pix_workaround_threshold_time \"\$smtp_pix_workaround_threshold_time\"
+	smtp_quit_timeout \"\$smtp_quit_timeout\"
+	smtp_quote_rfc821_envelope \"\$smtp_quote_rfc821_envelope\"
+	smtp_randomize_addresses \"\$smtp_randomize_addresses\"
+	smtp_rcpt_timeout \"\$smtp_rcpt_timeout\"
+	smtp_rset_timeout \"\$smtp_rset_timeout\"
+	smtp_sasl_auth_enable \"\$smtp_sasl_auth_enable\"
+	smtp_sasl_mechanism_filter \"\$smtp_sasl_mechanism_filter\"
+	smtp_sasl_password_maps \"\$smtp_sasl_password_maps\"
+	smtp_sasl_security_options \"\$smtp_sasl_security_options\"
+	smtp_send_xforward_command \"\$smtp_send_xforward_command\"
+	smtp_skip_5xx_greeting \"\$smtp_skip_5xx_greeting\"
+	smtp_skip_quit_response \"\$smtp_skip_quit_response\"
+	smtp_starttls_timeout \"\$smtp_starttls_timeout\"
+	smtp_tls_CAfile \"\$smtp_tls_CAfile\"
+	smtp_tls_CApath \"\$smtp_tls_CApath\"
+	smtp_tls_cert_file \"\$smtp_tls_cert_file\"
+	smtp_tls_ciphers \"\$smtp_tls_ciphers\"
+	smtp_tls_dcert_file \"\$smtp_tls_dcert_file\"
+	smtp_tls_dkey_file \"\$smtp_tls_dkey_file\"
+	smtp_tls_enforce_peername \"\$smtp_tls_enforce_peername\"
+	smtp_tls_key_file \"\$smtp_tls_key_file\"
+	smtp_tls_loglevel \"\$smtp_tls_loglevel\"
+	smtp_tls_note_starttls_offer \"\$smtp_tls_note_starttls_offer\"
+	smtp_tls_per_site \"\$smtp_tls_per_site\"
+	smtp_tls_scert_verifydepth \"\$smtp_tls_scert_verifydepth\"
+	smtp_tls_session_cache_database \"\$smtp_tls_session_cache_database\"
+	smtp_tls_session_cache_timeout \"\$smtp_tls_session_cache_timeout\"
+	smtp_use_tls \"\$smtp_use_tls\"
+	smtp_xforward_timeout \"\$smtp_xforward_timeout\"
+	postfix \"reload\"
+	$gv_Back \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$SMTP_TITLE" "$gv_Menupoint" "$SMTP_MENU"
+	else
+		menubox "$SMTP_TITLE" "$gv_Menupoint" "$SMTP_MENU"
+	fi
 }
 #}}}
 conf_smtp_menue
@@ -76,6 +95,10 @@ while [ "$gv_Auswahl" ] ; do
 	case "$gv_Auswahl" in
 		HELP*)	script_help smtp_help
 			conf_smtp_menue
+			;;
+		smtp_address_preference)
+			# = any
+			conf_smtp_menue smtp_address_preference
 			;;
 		smtp_always_send_ehlo)
 			# Soll sich postfix immer als ESMTP-faehiger Server{{{
@@ -85,7 +108,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_always_send_ehlo="$WERT"
 			postconf -e smtp_always_send_ehlo="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_always_send_ehlo
 			;;
 		smtp_bind_address)
 			# Welche IPv4 Adresse soll fuer ausgehende{{{
@@ -106,7 +129,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_bind_address=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_bind_address
 			;;
 		smtp_bind_address6)
 			# Welche IPv6 Adresse soll fuer ausgehende{{{
@@ -127,7 +150,11 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_bind_address6=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_bind_address6
+			;;
+		smtp_body_checks)
+			#
+			conf_smtp_menue smtp_body_checks
 			;;
 		smtp_cname_overrides_servername)
 			# Ueberschreiben von Servernamen bei CNAME records erlauben{{{
@@ -136,7 +163,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_cname_overrides_servername="$WERT"
 			postconf -e smtp_cname_overrides_servername="$WERT"
 			## }}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_cname_overrides_servername
 			;;
 		smtp_connect_timeout)
 			# Timeout fuer den Aufbau der Verbindung{{{
@@ -146,7 +173,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_connect_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_connect_timeout
 			;;
 		smtp_connection_cache_destinations)
 			# permanentes SMTP Verbindungscaching einschalten{{{
@@ -155,7 +182,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_connection_cache_destinations="$WERT"
 			postconf -e smtp_connection_cache_destinations="$WERT"
 			## }}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_connection_cache_destinations
 			;;
 		smtp_connection_cache_on_demand)
 			# Zeitweiliges SMTP Verbindungscaching einschalten{{{
@@ -164,17 +191,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_connection_cache_on_demand="$WERT"
 			postconf -e smtp_connection_cache_on_demand="$WERT"
 			## }}}
-			conf_smtp_menue
-			;;
-		smtp_connection_cache_reuse_limit)
-			# Zeit zum neubenutzen des Cache bevor die SMTP Sitzung geschlossen wird{{{
-			number_input -i "$smtp_connection_cache_reuse_limit"
-			if [ "$NUMBER" ] ; then
-				smtp_connection_cache_reuse_limit="$NUMBER"
-				postconf -e smtp_connection_cache_reuse_limit="$NUMBER"
-			fi
-			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_connection_cache_on_demand
 			;;
 		smtp_connection_cache_time_limit)
 			# Zeit die ein unbenutzter SMTP Client Socket offen gelassen werden soll{{{
@@ -184,7 +201,17 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_connection_cache_time_limit="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_connection_cache_time_limit
+			;;
+		smtp_connection_reuse_time_limit)
+			# Zeit zum neubenutzen des Cache bevor die SMTP Sitzung geschlossen wird{{{
+			number_input -i "$smtp_connection_reuse_time_limit"
+			if [ "$NUMBER" ] ; then
+				smtp_connection_reuse_time_limit="$NUMBER"
+				postconf -e smtp_connection_reuse_time_limit="$NUMBER"
+			fi
+			#}}}
+			conf_smtp_menue smtp_connection_reuse_time_limit
 			;;
 		smtp_data_done_timeout)
 			# Timeout nach Übertragung der mail {{{
@@ -194,7 +221,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_data_done_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_data_done_timeout
 			;;
 		smtp_data_init_timeout)
 			# Timeout nach Absendung des SMTP Komandos DATA{{{
@@ -204,7 +231,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_data_init_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_data_init_timeout
 			;;
 		smtp_data_xfer_timeout)
 			# Timeout bei Übertragung einer mail{{{
@@ -214,7 +241,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_data_xfer_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_data_xfer_timeout
 			;;
 		smtp_defer_if_no_mx_address_found)
 			# Zurueckstellung von mails wenn ein MX record nicht aufgeloest werden kann# {{{
@@ -223,7 +250,23 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_defer_if_no_mx_address_found="$WERT"
 			postconf -e smtp_defer_if_no_mx_address_found="$WERT"
 			## }}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_defer_if_no_mx_address_found
+			;;
+		smtp_delivery_slot_cost)
+		   # = $default_delivery_slot_cost
+			conf_smtp_menue smtp_delivery_slot_cost
+			;;
+		smtp_delivery_slot_discount)
+		   #= $default_delivery_slot_discount
+			conf_smtp_menue smtp_delivery_slot_discount
+			;;
+		smtp_delivery_slot_loan)
+			# = $default_delivery_slot_loan
+			conf_smtp_menue smtp_delivery_slot_loan
+			;;
+		smtp_destination_concurrency_failed_cohort_limit)
+			# = $default_destination_concurrency_failed_cohort_limit
+			conf_smtp_menue smtp_destination_concurrency_failed_cohort_limit
 			;;
 		smtp_destination_concurrency_limit)
 			# max. Anzahl gleichzeitiger Verbindungen per{{{
@@ -234,7 +277,19 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_destination_concurrency_limit="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_destination_concurrency_limit
+			;;
+		smtp_destination_concurrency_negative_feedback)
+			# = $default_destination_concurrency_negative_feedback
+			conf_smtp_menue smtp_destination_concurrency_negative_feedback
+			;;
+		smtp_destination_concurrency_positive_feedback)
+			# = $default_destination_concurrency_positive_feedback
+			conf_smtp_menue smtp_destination_concurrency_positive_feedback
+			;;
+		smtp_destination_rate_delay)
+			# = $default_destination_rate_delay
+			conf_smtp_menue smtp_destination_rate_delay
 			;;
 		smtp_destination_recipient_limit)
 			# max. Anzahl der Empfaenger in einer mail{{{
@@ -244,7 +299,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_destination_recipient_limit="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_destination_recipient_limit
 			;;
 		smtp_discard_ehlo_keyword_address_maps)
 			# Tabelle EHLO Schluesselwoertern{{{
@@ -252,7 +307,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_discard_ehlo_keyword_address_maps="$MAPS"
 			postconf -e smtp_discard_ehlo_keyword_address_maps="$MAPS"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_discard_ehlo_keyword_address_maps
 			;;
 		smtp_discard_ehlo_keywords)
 			# EHLO Schluesselwoertern{{{
@@ -266,7 +321,11 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_discard_ehlo_keywords=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_discard_ehlo_keywords
+			;;
+		smtp_dns_resolver_options)
+			#
+			conf_smtp_menue smtp_dns_resolver_options
 			;;
 		smtp_enforce_tls)
 			# SSL/TLS fuer den Versand erzwingen{{{
@@ -275,7 +334,11 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_enforce_tls="$WERT"
 			postconf -e smtp_enforce_tls="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_enforce_tls
+			;;
+		smtp_extra_recipient_limit)
+			# = $default_extra_recipient_limit
+			conf_smtp_menue smtp_extra_recipient_limit
 			;;
 		smtp_fallback_relay)
 			# Unzustellbare/fehlerhafte Mails werden an diesen Host geschickt{{{
@@ -289,7 +352,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_fallback_relay=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_fallback_relay
 			;;
 		smtp_generic_maps)
 			# Tabelle zum umschreiben von lokalen zu globalen Adressen# {{{
@@ -297,7 +360,11 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_generic_maps="$MAPS"
 			postconf -e smtp_generic_maps="$MAPS"
 			## }}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_generic_maps
+			;;
+		smtp_header_checks)
+			#
+			conf_smtp_menue smtp_header_checks
 			;;
 		smtp_helo_name)
 			# Rechnername der in einem SMTP_EHLO oder HELO Kommando gesendet werden soll.{{{
@@ -311,7 +378,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_helo_name=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_helo_name
 			;;
 		smtp_helo_timeout)
 			# Timeout nach Absendung des SMTP Komandos EHLO/HELO{{{
@@ -321,7 +388,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_helo_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_helo_timeout
 			;;
 		smtp_host_lookup)
 			# Welchen Mechanismus soll der Client zum nachschauen von Rechner{{{
@@ -336,7 +403,11 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_host_lookup=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_host_lookup
+			;;
+		smtp_initial_destination_concurrency)
+			# = $initial_destination_concurrency
+			conf_smtp_menue smtp_initial_destination_concurrency
 			;;
 		smtp_line_length_limit)
 			# SMTP Line Laenge einstellen{{{
@@ -346,7 +417,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_line_length_limit="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_line_length_limit
 			;;
 		smtp_mail_timeout)
 			# Timeout nach Absendung des SMTP Komandos MAIL FROM:{{{
@@ -356,8 +427,16 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_mail_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_mail_timeout
 			;;
+		smtp_mime_header_checks)
+			#
+			conf_smtp_menue smtp_mime_header_checks
+			;;
+		smtp_minimum_delivery_slots)
+			# = $default_minimum_delivery_slots
+			conf_smtp_menue smtp_minimum_delivery_slots
+		   ;;
 		smtp_mx_address_limit)
 			# Max. Anzahl von MX IP Adressen{{{
 			number_input -i "$smtp_mx_address_limit"
@@ -366,7 +445,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_mx_address_limit="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_mx_address_limit
 			;;
 		smtp_mx_session_limit)
 			# Max. Anzahl von MX IP Adressen{{{
@@ -376,7 +455,11 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_mx_session_limit="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_mx_session_limit
+			;;
+		smtp_nested_header_checks)
+			#
+			conf_smtp_menue smtp_nested_header_checks
 			;;
 		smtp_never_send_ehlo)
 			# Soll postfix sich nie als ESMTP-faehiger Server{{{
@@ -386,7 +469,11 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_never_send_ehlo="$WERT"
 			postconf -e smtp_never_send_ehlo="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_never_send_ehlo
+			;;
+		smtp_per_record_deadline)
+			# = no
+			conf_smtp_menue smtp_per_record_deadline
 			;;
 		smtp_pix_workaround_delay_time)
 			# Wartezeit fuer einen Fehler in CISCO PIX Firewalls{{{
@@ -396,7 +483,11 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_pix_workaround_delay_time="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_pix_workaround_delay_time
+			;;
+		smtp_pix_workaround_maps)
+			# =
+			conf_smtp_menue smtp_pix_workaround_maps
 			;;
 		smtp_pix_workaround_threshold_time)
 			# Wartezeit einer mail in der Queue, bevor postfix{{{
@@ -407,7 +498,11 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_pix_workaround_threshold_time="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_pix_workaround_threshold_time
+			;;
+		smtp_pix_workarounds)
+			# = disable_esmtp,delay_dotcrlf
+			conf_smtp_menue smtp_pix_workarounds
 			;;
 		smtp_quit_timeout)
 			# Timeout nach Übertragung des SMTP Komandos QUIT{{{
@@ -417,7 +512,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_quit_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_quit_timeout
 			;;
 		smtp_quote_rfc821_envelope)
 			# Sollen die Adressen im SMTP MAIL FROM und RCPT TO Kommando gequotet werden# {{{
@@ -426,7 +521,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_quote_rfc821_envelope="$WERT"
 			postconf -e smtp_quote_rfc821_envelope="$WERT"
 			## }}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_quote_rfc821_envelope
 			;;
 		smtp_randomize_addresses)
 			# Reihenfolge der envelope Adressen mixen?{{{
@@ -435,7 +530,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_randomize_addresses="$WERT"
 			postconf -e smtp_randomize_addresses="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_randomize_addresses
 			;;
 		smtp_rcpt_timeout)
 			# Timeout nach Übertragung des SMTP Komandos RCPT TO:{{{
@@ -445,7 +540,23 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_rcpt_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_rcpt_timeout
+			;;
+		smtp_recipient_limit)
+			# = $default_recipient_limit
+			conf_smtp_menue smtp_recipient_limit
+			;;
+		smtp_recipient_refill_delay)
+			# = $default_recipient_refill_delay
+			conf_smtp_menue smtp_recipient_refill_delay
+			;;
+		smtp_recipient_refill_limit)
+			# = $default_recipient_refill_limit
+			conf_smtp_menue smtp_recipient_refill_limit
+			;;
+		smtp_reply_filter)
+			# =
+			conf_smtp_menue smtp_reply_filter
 			;;
 		smtp_rset_timeout)
 			# Timeout nach Übertragung des SMTP Komandos RSET TO:{{{
@@ -455,7 +566,15 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_rset_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_rset_timeout
+			;;
+		smtp_sasl_auth_cache_name)
+			#
+			conf_smtp_menue smtp_sasl_auth_cache_name
+			;;
+		smtp_sasl_auth_cache_time)
+			# = 90d
+			conf_smtp_menue smtp_sasl_auth_cache_time
 			;;
 		smtp_sasl_auth_enable)
 			# SMTP-Auth Identifierzierung bei ausgehenden{{{
@@ -465,7 +584,11 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_sasl_auth_enable="$WERT"
 			postconf -e smtp_sasl_auth_enable="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_sasl_auth_enable
+			;;
+		smtp_sasl_auth_soft_bounce)
+			# = yes
+			conf_smtp_menue smtp_sasl_auth_soft_bounce
 			;;
 		smtp_sasl_mechanism_filter)
 			# Auswahl der zu beruecksichtigen SASL Mechanismen# {{{
@@ -489,7 +612,7 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			## }}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_sasl_mechanism_filter
 			;;
 		smtp_sasl_password_maps)
 			# Tabelle mit Passwoertern fuer ausgehende{{{
@@ -498,7 +621,11 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_sasl_password_maps="$MAPS"
 			postconf -e smtp_sasl_password_maps="$MAPS"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_sasl_password_maps
+			;;
+		smtp_sasl_path)
+			#
+			conf_smtp_menue smtp_sasl_path
 			;;
 		smtp_sasl_security_options)
 			# zulaessige SMTP-AUTH Identifierzierungsmethoden{{{
@@ -511,7 +638,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_sasl_security_options=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_sasl_security_options
 			;;
 		smtp_sasl_tls_security_options)
 			# zulaessige SMTP-AUTH Identifierzierungsmethoden,{{{
@@ -525,7 +652,19 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_sasl_tls_security_options=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_sasl_tls_security_options
+			;;
+		smtp_sasl_tls_verified_security_options)
+			# = $smtp_sasl_tls_security_options
+			conf_smtp_menue smtp_sasl_tls_verified_security_options
+			;;
+		smtp_sasl_type)
+			#= cyrus
+			conf_smtp_menue smtp_sasl_type
+			;;
+		smtp_send_dummy_mail_auth)
+			# = no
+			conf_smtp_menue smtp_send_dummy_mail_auth
 			;;
 		smtp_send_xforward_command)
 			# XFORWARD Komando senden{{{
@@ -534,7 +673,11 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_send_xforward_command="$WERT"
 			postconf -e smtp_send_xforward_command="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_send_xforward_command
+			;;
+		smtp_sender_dependent_authentication)
+			# = no
+			conf_smtp_menue smtp_sender_dependent_authentication
 			;;
 		smtp_skip_5xx_greeting)
 			# Begruessungstext bei SMTP_Code 5xx{{{
@@ -544,7 +687,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_skip_5xx_greeting="$WERT"
 			postconf -e smtp_skip_5xx_greeting="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_skip_5xx_greeting
 			;;
 		smtp_skip_quit_response)
 			# Trennung ohne warten auf Antwort nach dem{{{
@@ -554,7 +697,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_skip_quit_response="$WERT"
 			postconf -e smtp_skip_quit_response="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_skip_quit_response
 			;;
 		smtp_starttls_timeout)
 			# Timeout von starttls{{{
@@ -564,7 +707,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_starttls_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_starttls_timeout
 			;;
 		smtp_tls_CAfile)
 			# Auswahl der CA Datei{{{
@@ -572,7 +715,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_CAfile="$WERT"
 			postconf -e smtp_tls_CAfile="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_CAfile
 			;;
 		smtp_tls_CApath)
 			# Auswahl des Zertifikats Verzeichnisses{{{
@@ -588,7 +731,11 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_CApath
+			;;
+		smtp_tls_block_early_mail_reply)
+			# = no
+			conf_smtp_menue smtp_tls_block_early_mail_reply
 			;;
 		smtp_tls_cert_file)
 			# Auswahl der TLS Schluessel Dateien{{{
@@ -596,21 +743,21 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_cert_file="$WERT"
 			postconf -e smtp_tls_cert_file="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_cert_file
 			;;
-		smtp_tls_cipherlist)
+		smtp_tls_ciphers)
 			# Cipher eintragen, s. man ciphers {{{
-			SMTP_TLS_CIPHERLIST_MSG=$(gettext 'Geben Sie bitte Ihren Cipher String ein (man ciphers).')
-			inputbox "$SMTP_TITLE" "$SMTP_TLS_CIPHERLIST_MSG" "$smtp_tls_cipherlist"
+			SMTP_TLS_CIPHERS_MSG=$(gettext 'Geben Sie bitte Ihren Cipher String ein (man ciphers).')
+			inputbox "$SMTP_TITLE" "$SMTP_TLS_CIPHERS_MSG" "$smtp_tls_ciphers"
 			if [ -n "$gv_Auswahl" ] ; then
-				smtp_tls_cipherlist="$gv_Auswahl"
-				postconf -e smtp_tls_cipherlist="$gv_Auswahl"
+				smtp_tls_ciphers="$gv_Auswahl"
+				postconf -e smtp_tls_ciphers="$gv_Auswahl"
 			else
-				smtp_tls_cipherlist=""
-				postconf -e smtp_tls_cipherlist=""
+				smtp_tls_ciphers=""
+				postconf -e smtp_tls_ciphers=""
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_ciphers
 			;;
 		smtp_tls_dcert_file)
 			# Auswahl der TLS Schluessel Dateien{{{
@@ -618,7 +765,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_dcert_file="$WERT"
 			postconf -e smtp_tls_dcert_file="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_dcert_file
 			;;
 		smtp_tls_dkey_file)
 			# Auswahl der TLS Schluessel Dateien{{{
@@ -626,7 +773,15 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_dkey_file="$WERT"
 			postconf -e smtp_tls_dkey_file="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_dkey_file
+			;;
+		smtp_tls_eccert_file)
+			#
+			conf_smtp_menue smtp_tls_eccert_file
+			;;
+		smtp_tls_eckey_file)
+			# = $smtp_tls_eccert_file
+			conf_smtp_menue smtp_tls_eckey_file
 			;;
 		smtp_tls_enforce_peername)
 			# smtp_tls_enforce_peername aktivieren{{{
@@ -635,7 +790,19 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_enforce_peername="$WERT"
 			postconf -e smtp_tls_enforce_peername="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_enforce_peername
+			;;
+		smtp_tls_exclude_ciphers)
+			#
+			conf_smtp_menue smtp_tls_exclude_ciphers
+			;;
+		smtp_tls_fingerprint_cert_match)
+			#
+			conf_smtp_menue smtp_tls_fingerprint_cert_match
+			;;
+		smtp_tls_fingerprint_digest)
+			# = md5
+			conf_smtp_menue smtp_tls_fingerprint_digest
 			;;
 		smtp_tls_key_file)
 			# Auswahl der TLS Schluessel Dateien{{{
@@ -643,7 +810,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_key_file="$WERT"
 			postconf -e smtp_tls_key_file="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_key_file
 			;;
 		smtp_tls_loglevel)
 			# Loglevel auswaehlen{{{
@@ -651,7 +818,19 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_loglevel="$WERT"
 			postconf -e smtp_tls_loglevel="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_loglevel
+			;;
+		smtp_tls_mandatory_ciphers)
+			# = medium
+			conf_smtp_menue smtp_tls_mandatory_ciphers
+			;;
+		smtp_tls_mandatory_exclude_ciphers)
+			#
+			conf_smtp_menue smtp_tls_mandatory_exclude_ciphers
+			;;
+		smtp_tls_mandatory_protocols)
+			# = SSLv3, TLSv1
+			conf_smtp_menue smtp_tls_mandatory_protocols
 			;;
 		smtp_tls_note_starttls_offer)
 			# smtp_tls_note_starttls_offer aktivieren{{{
@@ -660,7 +839,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_note_starttls_offer="$WERT"
 			postconf -e smtp_tls_note_starttls_offer="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_note_starttls_offer
 			;;
 		smtp_tls_per_site)
 			# Tabelle fuer die Regeln der TLS Benutzung{{{
@@ -668,7 +847,15 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_per_site="$MAPS"
 			postconf -e smtp_tls_per_site="$MAPS"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_per_site
+			;;
+		smtp_tls_policy_maps)
+			#
+			conf_smtp_menue smtp_tls_policy_maps
+			;;
+		smtp_tls_protocols)
+			# = !SSLv2
+			conf_smtp_menue smtp_tls_protocols
 			;;
 		smtp_tls_scert_verifydepth)
 			# smtp_tls_scert_verifydepth{{{
@@ -678,7 +865,15 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_tls_scert_verifydepth="$WERT"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_scert_verifydepth
+			;;
+		smtp_tls_secure_cert_match)
+			# = nexthop, dot-nexthop
+			conf_smtp_menue smtp_tls_secure_cert_match
+			;;
+		smtp_tls_security_level)
+			#
+			conf_smtp_menue smtp_tls_security_level
 			;;
 		smtp_tls_session_cache_database)
 			# Tabelle des Session Cache# {{{
@@ -686,7 +881,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_tls_session_cache_database="$MAPS"
 			postconf -e smtp_tls_session_cache_database="$MAPS"
 			## }}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_session_cache_database
 			;;
 		smtp_tls_session_cache_timeout)
 			# smtp_tls_session_cache_timeout{{{
@@ -696,7 +891,11 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_tls_session_cache_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_tls_session_cache_timeout
+			;;
+		smtp_tls_verify_cert_match)
+			# = hostname
+			conf_smtp_menue smtp_tls_verify_cert_match
 			;;
 		smtp_use_tls)
 			# tls fuer eingehende Verbindungen aktivieren{{{
@@ -705,7 +904,7 @@ while [ "$gv_Auswahl" ] ; do
 			smtp_use_tls="$WERT"
 			postconf -e smtp_use_tls="$WERT"
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_use_tls
 			;;
 		smtp_xforward_timeout)
 			# Timeout fuer das senden eines XFORWARD Kommandos {{{
@@ -715,9 +914,10 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e smtp_xforward_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_smtp_menue
+			conf_smtp_menue smtp_xforward_timeout
 			;;
-		p*)	#
+		postfix)
+			# postfix, Konfiguration neu einlesen
 			postfix_start_reload
 			break
 			;;

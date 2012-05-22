@@ -21,7 +21,8 @@ rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 ## }}}
 # Funktion conf_tls_menue{{{
 #######################################
-# TODO:
+# TODO: Hilfe etc. vorbereitet, nur noch menue
+# tls_append_default_CA = no
 # tls_disable_workarounds =
 # tls_eecdh_strong_curve = prime256v1
 # tls_eecdh_ultra_curve = secp384r1
@@ -54,6 +55,10 @@ while [ "$gv_Auswahl" ] ; do
 		HELP*)	script_help tls_help
 			conf_tls_menue
 			;;
+		tls_append_default_CA)
+			# = no
+			conf_tls_menue tls_append_default_CA
+			;;
 		tls_daemon_random_bytes)
 			 # Wieviel Bytes sollen jedesmal eingelesen werden (32)?# {{{
 			number_input -b "$tls_daemon_random_bytes"
@@ -63,6 +68,42 @@ while [ "$gv_Auswahl" ] ; do
 			fi
 			## }}}
 			conf_tls_menue tls_daemon_random_bytes
+			;;
+		tls_disable_workarounds)
+			#
+			conf_tls_menue tls_disable_workarounds
+			;;
+		tls_eecdh_strong_curve)
+			# = prime256v1
+			conf_tls_menue tls_eecdh_strong_curve
+			;;
+		tls_eecdh_ultra_curve)
+			# = secp384r1
+			conf_tls_menue tls_eecdh_ultra_curve
+			;;
+		tls_export_cipherlist)
+			# = aNULL:-aNULL:ALL:+RC4:@STRENGTH
+			conf_tls_menue tls_export_cipherlist
+			;;
+		tls_high_cipherlist)
+			# = aNULL:-aNULL:ALL:!EXPORT:!LOW:!MEDIUM:+RC4:@STRENGTH
+			conf_tls_menue tls_high_cipherlist
+			;;
+		tls_low_cipherlist)
+			# = aNULL:-aNULL:ALL:!EXPORT:+RC4:@STRENGTH
+			conf_tls_menue tls_low_cipherlist
+			;;
+		tls_medium_cipherlist)
+			# = aNULL:-aNULL:ALL:!EXPORT:!LOW:+RC4:@STRENGTH
+			conf_tls_menue tls_medium_cipherlist
+			;;
+		tls_null_cipherlist)
+			# = eNULL:!aNULL
+			conf_tls_menue tls_null_cipherlist
+			;;
+		tls_preempt_cipherlist)
+			# = no
+			conf_tls_menue tls_preempt_cipherlist
 			;;
 		tls_random_bytes)
 			# Wieviel Bytes sollen jedesmal eingelesen werden (32)?# {{{
