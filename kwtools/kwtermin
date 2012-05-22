@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 12.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 20.05.2012
 #
 # Script: kwtermin, zum anzeigen, verändern und löschen von Terminen.
-# Version: 0.1.1
+# Version: 0.1.2
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -256,7 +256,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						unsetopt shwordsplit
 						if [ "`wc -l < $gv_LogFile`" -gt 0 ] ; then
-							cat $gv_LogFile | sort >$gv_LogFile$$
+							< $gv_LogFile | sort -n -t '.' -k 2 >$gv_LogFile$$
 							View_Header_Termin=$(gettext '# Datum Vorwarnzeit(min) Startzeit Betreff Text CC')
 							print "$View_Header_Termin" >$gv_LogFile
 							< "$gv_LogFile$$" >> $gv_LogFile
