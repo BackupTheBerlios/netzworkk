@@ -1,5 +1,5 @@
 # tabformat_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellentypen::Hilfe')
+TITLE="${lv_TableTyp}::${gv_Help}"
 MSG=$(gettext 'Listet alle supporteten oder nur die benoetigten Tabellentypen auf.
 Postfixs Tabellen sind spezifiziert als Typ:Name, wo Typ einer der
 aufgelisteten ist. Die Syntax des Tabellennamen entnehmen Sie der

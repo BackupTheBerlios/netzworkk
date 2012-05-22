@@ -28,7 +28,7 @@ qmqpd_client_port_logging: TODO (yes/no)?
 qmqpd_error_delay: Wartezeit nach einem Fehler in einer
 \tQMQP-Verbindung
 
-qmqpd_timeout: Zimaout beim Aufruf des qmqpd.
+qmqpd_timeout: Timeout beim Aufruf des qmqpd.
 
 queue_directory: Pfad zu den Queue Ordnern.
 

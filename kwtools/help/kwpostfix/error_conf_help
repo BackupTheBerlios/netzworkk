@@ -1,40 +1,58 @@
 # error_conf_help fuer kwpostfix{{{
 TITLE="${gv_Configuration}::${lv_ErrorCodes}::${gv_Help}"
-MSG=$(gettext 'access_map_reject_code: SMTP-Fehlercode bei einem REJECT aus einer
-\taccess Tabelle.
+MSG=$(gettext 'access_map_defer_code: Standard ist 450.
+
+access_map_reject_code: SMTP-Fehlercode bei einem REJECT aus einer
+\taccess Tabelle. Standard ist 211.
+
+defer_code: Standard ist 450.
+
+fault_injection_code: Standard ist 0.
 
 invalid_hostname_reject_code: SMTP-Errorcode bei ungueltigen Host-
-\tnamen im SMTP_Kommando HELO/EHLO (501).
+\tnamen im SMTP_Kommando HELO/EHLO. Standard ist 501.
 
 maps_rbl_reject_code: SMTP-Errorcode bei einem "REJECT" nach
-\tRBL-Pruefung.
+\tRBL-Pruefung. Standard ist 554.
+
+multi_recipient_bounce_reject_code: Standard ist 550.
 
 non_fqdn_reject_code: SMTP-Code bei einem "REJECT" wegen eines nicht
-\tFQDN-Hostnamens (504).
+\tFQDN-Hostnamens. Standard ist 504.
 
-plaintext_reject_code: (450) # TODO
+plaintext_reject_code: Standard ist 450.
 
-reject_code: allgemeiner SMTP-Code bei einem "REJECT".
+reject_code: allgemeiner SMTP-Code bei einem "REJECT". Standard
+\tist 554.
 
 relay_domains_reject_code: SMTP-Errorcode bei einem "Relay Access
-\tdenied" (554).
+\tdenied". Standard ist 554.
 
 unknown_address_reject_code: SMTP_Errorcode bei unbekannten Mail-
-\tadressen. (450)
+\tadressen. Standard ist 450.
 
 unknown_client_reject_code: SMTP-Errorcode bei einem "REJECT" eines
-\tClients nach einer "access" Tabelle (450).
+\tClients nach einer "access" Tabelle. Standard ist 450.
 
 unknown_hostname_reject_code: SMTP_Errorcode bei unbekannten/nicht-
-\taufloesbaren Hostnamen (450).
+\taufloesbaren Hostnamen. Standard ist 450.
 
-unknown_local_recipient_reject_code: 
+unknown_local_recipient_reject_code: Standard ist 550.
 
-unknown_relay_recipient_reject_code: 
+unknown_relay_recipient_reject_code: Standard ist 550.
 
-unknown_virtual_alias_reject_code: 
+unknown_virtual_alias_reject_code: Standard ist 550.
 
-unknown_virtual_mailbox_reject_code:')
+unknown_virtual_mailbox_reject_code: Standard ist 211.
+
+unverified_recipient_defer_code: Standard ist 450.
+
+unverified_recipient_reject_code: Standard ist 450.
+
+unverified_sender_defer_code: Standard ist 450.
+
+unverified_sender_reject_code: Standard ist 450.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker
