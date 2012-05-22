@@ -2,8 +2,28 @@
 TITLE="${gv_Configuration}::${lv_Tls}::${gv_Help}"
 MSG=$(gettext 'PRNG = Pseudo Random Number Generator
 
+tls_append_default_CA:
+
 tls_daemon_random_bytes: Wieviel Bytes sollen jedesmal eingelesen
 \twerden (32)?
+
+tls_disable_workarounds:
+
+tls_eecdh_strong_curve:
+
+tls_eecdh_ultra_curve:
+
+tls_export_cipherlist:
+
+tls_high_cipherlist:
+
+tls_low_cipherlist:
+
+tls_medium_cipherlist:
+
+tls_null_cipherlist:
+
+tls_preempt_cipherlist:
 
 tls_random_bytes: Wieviel Bytes sollen jedesmal eingelesen werden
 \t(32)?
