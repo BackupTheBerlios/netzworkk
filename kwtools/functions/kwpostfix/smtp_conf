@@ -1,5 +1,5 @@
 # smtp Parameter einstellen{{{
-#
+
 # Variable
 SMTP_TITLE="${gv_Configuration}::${lv_Smtp}"
 
