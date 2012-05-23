@@ -145,21 +145,27 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_address_preference)
 			# = any
+			conf_lmtp_menue lmtp_address_preference
 			;;
 		lmtp_assume_final)
 			# = no
+			conf_lmtp_menue lmtp_assume_final
 			;;
 		lmtp_bind_address)
 			#
+			conf_lmtp_menue lmtp_bind_address
 			;;
 		lmtp_bind_address6)
 			#
+			conf_lmtp_menue lmtp_bind_address6
 			;;
 		lmtp_body_checks)
 			#
+			conf_lmtp_menue lmtp_body_checks
 			;;
 		lmtp_cname_overrides_servername)
 			# = no
+			conf_lmtp_menue lmtp_cname_overrides_servername
 			;;
 		lmtp_connect_timeout)
 			# Timeout fuer den Aufbau der Verbindung{{{
@@ -173,15 +179,19 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_connection_cache_destinations)
 			# =
+			conf_lmtp_menue lmtp_connection_cache_destinations
 			;;
 		lmtp_connection_cache_on_demand)
 			# = yes
+			conf_lmtp_menue lmtp_connection_cache_on_demand
 			;;
 		lmtp_connection_cache_time_limit)
 			# = 2s
+			conf_lmtp_menue lmtp_connection_cache_time_limit
 			;;
 		lmtp_connection_reuse_time_limit)
 			# = 300s
+			conf_lmtp_menue lmtp_connection_reuse_time_limit
 			;;
 		lmtp_data_done_timeout)
 			# Timeout nach erfolgter Übertragung der mail per LMTP{{{
@@ -215,18 +225,23 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_defer_if_no_mx_address_found)
 			# = no
+			conf_lmtp_menue lmtp_defer_if_no_mx_address_found
 			;;
 		lmtp_delivery_slot_cost)
 			# = $default_delivery_slot_cost
+			conf_lmtp_menue lmtp_delivery_slot_cost
 			;;
 		lmtp_delivery_slot_discount)
 			# = $default_delivery_slot_discount
+			conf_lmtp_menue lmtp_delivery_slot_discount
 			;;
 		lmtp_delivery_slot_loan)
 			# = $default_delivery_slot_loan
+			conf_lmtp_menue lmtp_delivery_slot_loan
 			;;
 		lmtp_destination_concurrency_failed_cohort_limit)
 			# = $default_destination_concurrency_failed_cohort_limit
+			conf_lmtp_menue lmtp_destination_concurrency_failed_cohort_limit
 			;;
 		lmtp_destination_concurrency_limit)
 			# max. Anzahl gleichzeitiger Verbindungen per{{{
@@ -241,12 +256,15 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_destination_concurrency_negative_feedback)
 			# = $default_destination_concurrency_negative_feedback
+			conf_lmtp_menue lmtp_destination_concurrency_negative_feedback
 			;;
 		lmtp_destination_concurrency_positive_feedback)
 			# = $default_destination_concurrency_positive_feedback
+			conf_lmtp_menue lmtp_destination_concurrency_positive_feedback
 			;;
 		lmtp_destination_rate_delay)
 			# = $default_destination_rate_delay
+			conf_lmtp_menue lmtp_destination_rate_delay
 			;;
 		lmtp_destination_recipient_limit)
 			# max. Anzahl der Empfaenger in einer mail{{{
@@ -260,15 +278,19 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_discard_lhlo_keyword_address_maps)
 			# =
+			conf_lmtp_menue lmtp_discard_lhlo_keyword_address_maps
 			;;
 		lmtp_discard_lhlo_keywords)
 			# =
+			conf_lmtp_menue lmtp_discard_lhlo_keywords
 			;;
 		lmtp_dns_resolver_options)
 			# =
+			conf_lmtp_menue lmtp_dns_resolver_options
 			;;
 		lmtp_lhlo_name)
 			# = $myhostname
+			conf_lmtp_menue lmtp_lhlo_name
 			;;
 		lmtp_lhlo_timeout)
 			# Timeout nach dem LMTP Kommando LHLO{{{
@@ -282,6 +304,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_line_length_limit)
 			# = 998
+			conf_lmtp_menue lmtp_line_length_limit
 			;;
 		lmtp_mail_timeout)
 			# Timeout nach dem LMTP Kommando MAIL FROM:{{{
@@ -295,33 +318,43 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_mime_header_checks)
 			# =
+			conf_lmtp_menue lmtp_mime_header_checks
 			;;
 		lmtp_minimum_delivery_slots)
 			# = $default_minimum_delivery_slots
+			conf_lmtp_menue lmtp_minimum_delivery_slots
 			;;
 		lmtp_mx_address_limit)
 			# = 5
+			conf_lmtp_menue lmtp_mx_address_limit
 			;;
 		lmtp_mx_session_limit)
 			# = 2
+			conf_lmtp_menue lmtp_mx_session_limit
 			;;
 		lmtp_nested_header_checks)
 			# =
+			conf_lmtp_menue lmtp_nested_header_checks
 			;;
 		lmtp_per_record_deadline)
 			# = no
+			conf_lmtp_menue lmtp_per_record_deadline
 			;;
 		lmtp_pix_workaround_delay_time)
 			# = 10s
+			conf_lmtp_menue lmtp_pix_workaround_delay_time
 			;;
 		lmtp_pix_workaround_maps)
 			# =
+			conf_lmtp_menue lmtp_pix_workaround_maps
 			;;
 		lmtp_pix_workaround_threshold_time)
 			# = 500s
+			conf_lmtp_menue lmtp_pix_workaround_threshold_time
 			;;
 		lmtp_pix_workarounds)
 			# = disable_esmtp,delay_dotcrlf
+			conf_lmtp_menue lmtp_pix_workarounds
 			;;
 		lmtp_quit_timeout)
 			# Timeout nach dem LMTP Kommando QUIT{{{
@@ -335,9 +368,11 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_quote_rfc821_envelope)
 			# = yes
+			conf_lmtp_menue lmtp_quote_rfc821_envelope
 			;;
 		lmtp_randomize_addresses)
 			# = yes
+			conf_lmtp_menue lmtp_randomize_addresses
 			;;
 		lmtp_rcpt_timeout)
 			# Timeout nach dem LMTP Kommando RCPT TO:{{{
@@ -351,15 +386,19 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_recipient_limit)
 			# = $default_recipient_limit
+			conf_lmtp_menue lmtp_recipient_limit
 			;;
 		lmtp_recipient_refill_delay)
 			# = $default_recipient_refill_delay
+			conf_lmtp_menue lmtp_recipient_refill_delay
 			;;
 		lmtp_recipient_refill_limit)
 			# = $default_recipient_refill_limit
+			conf_lmtp_menue lmtp_recipient_refill_limit
 			;;
 		lmtp_reply_filter)
 			# =
+			conf_lmtp_menue lmtp_reply_filter
 			;;
 		lmtp_rset_timeout)
 			# Timeout nach dem LMTP Kommando RSET{{{
@@ -373,9 +412,11 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_sasl_auth_cache_name)
 			# =
+			conf_lmtp_menue lmtp_sasl_auth_cache_name
 			;;
 		lmtp_sasl_auth_cache_time)
 			# = 90d
+			conf_lmtp_menue lmtp_sasl_auth_cache_time
 			;;
 		lmtp_sasl_auth_enable)
 			# SMTP-AUTH beim Versand ueber LMTP aktivieren?{{{
@@ -389,9 +430,11 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_sasl_auth_soft_bounce)
 			# = yes
+			conf_lmtp_menue lmtp_sasl_auth_soft_bounce
 			;;
 		lmtp_sasl_mechanism_filter)
 			# =
+			conf_lmtp_menue lmtp_sasl_mechanism_filter
 			;;
 		lmtp_sasl_password_maps)
 			# Tabelle fuer Kennungen/Passwoertern fuer authentifiezierte LMTP Verbindungen{{{
@@ -403,6 +446,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_sasl_path)
 			# =
+			conf_lmtp_menue lmtp_sasl_path
 			;;
 		lmtp_sasl_security_options)
 			# Authentifizierungs Methoden{{{
@@ -416,15 +460,19 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_sasl_tls_security_options)
 			# = $lmtp_sasl_security_options
+			conf_lmtp_menue lmtp_sasl_tls_security_options
 			;;
 		lmtp_sasl_tls_verified_security_options)
 			# = $lmtp_sasl_tls_security_options
+			conf_lmtp_menue lmtp_sasl_tls_verified_security_options
 			;;
 		lmtp_sasl_type)
 			# = cyrus
+			conf_lmtp_menue lmtp_sasl_type
 			;;
 		lmtp_send_dummy_mail_auth)
 			# = no
+			conf_lmtp_menue lmtp_send_dummy_mail_auth
 			;;
 		lmtp_send_xforward_command)
 			# {{{
@@ -438,9 +486,11 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_sender_dependent_authentication)
 			# = no
+			conf_lmtp_menue lmtp_sender_dependent_authentication
 			;;
 		lmtp_skip_5xx_greeting)
 			# = yes
+			conf_lmtp_menue lmtp_skip_5xx_greeting
 			;;
 		lmtp_skip_quit_response)
 			# Beenden einer LMTP Sitzung nach dem QUIT Kommando, ohne auf Antwort zu warten?{{{
@@ -454,6 +504,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_starttls_timeout)
 			# = 300s
+			conf_lmtp_menue lmtp_starttls_timeout
 			;;
 		lmtp_tcp_port)
 			# lmtp TCP Port vergeben{{{
@@ -468,90 +519,119 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		lmtp_tls_CAfile)
 			# =
+			conf_lmtp_menue lmtp_tls_CAfile
 			;;
 		lmtp_tls_CApath)
 			# =
+			conf_lmtp_menue lmtp_tls_CApath
 			;;
 		lmtp_tls_block_early_mail_reply)
 			# = no
+			conf_lmtp_menue lmtp_tls_block_early_mail_reply
 			;;
 		lmtp_tls_cert_file)
 			# =
+			conf_lmtp_menue lmtp_tls_cert_file
 			;;
 		lmtp_tls_ciphers)
 			# = export
+			conf_lmtp_menue lmtp_tls_ciphers
 			;;
 		lmtp_tls_dcert_file)
 			# =
+			conf_lmtp_menue lmtp_tls_dcert_file
 			;;
 		lmtp_tls_dkey_file)
 			# = $lmtp_tls_dcert_file
+			conf_lmtp_menue lmtp_tls_dkey_file
 			;;
 		lmtp_tls_eccert_file)
 			# =
+			conf_lmtp_menue lmtp_tls_eccert_file
 			;;
 		lmtp_tls_eckey_file)
 			# = $lmtp_tls_eccert_file
+			conf_lmtp_menue lmtp_tls_eckey_file
 			;;
 		lmtp_tls_enforce_peername)
 			# = yes
+			conf_lmtp_menue lmtp_tls_enforce_peername
 			;;
 		lmtp_tls_exclude_ciphers)
 			# =
+			conf_lmtp_menue lmtp_tls_exclude_ciphers
 			;;
 		lmtp_tls_fingerprint_cert_match)
 			# =
+			conf_lmtp_menue lmtp_tls_fingerprint_cert_match
 			;;
 		lmtp_tls_fingerprint_digest)
 			# = md5
+			conf_lmtp_menue lmtp_tls_fingerprint_digest
 			;;
 		lmtp_tls_key_file)
 			# = $lmtp_tls_cert_file
+			conf_lmtp_menue lmtp_tls_key_file
 			;;
 		lmtp_tls_loglevel)
 			# = 0
+			conf_lmtp_menue lmtp_tls_loglevel
 			;;
 		lmtp_tls_mandatory_ciphers)
 			# = medium
+			conf_lmtp_menue lmtp_tls_mandatory_ciphers
 			;;
 		lmtp_tls_mandatory_exclude_ciphers)
 			# =
+			conf_lmtp_menue lmtp_tls_mandatory_exclude_ciphers
 			;;
 		lmtp_tls_mandatory_protocols)
 			# = SSLv3, TLSv1
+			conf_lmtp_menue lmtp_tls_mandatory_protocols
 			;;
 		lmtp_tls_note_starttls_offer)
 			# = no
+			conf_lmtp_menue lmtp_tls_note_starttls_offer
 			;;
 		lmtp_tls_per_site)
 			# =
+			conf_lmtp_menue lmtp_tls_per_site
 			;;
 		lmtp_tls_policy_maps)
 			# =
+			conf_lmtp_menue lmtp_tls_policy_maps
 			;;
 		lmtp_tls_protocols)
 			# = !SSLv2
+			conf_lmtp_menue lmtp_tls_protocols
 			;;
 		lmtp_tls_scert_verifydepth)
 			# = 9
+			conf_lmtp_menue lmtp_tls_scert_verifydepth
 			;;
 		lmtp_tls_secure_cert_match)
 			# = nexthop
+			conf_lmtp_menue lmtp_tls_secure_cert_match
 			;;
 		lmtp_tls_security_level)
 			# =
+			conf_lmtp_menue lmtp_tls_security_level
 			;;
 		lmtp_tls_session_cache_database)
 			# =
+			conf_lmtp_menue lmtp_tls_session_cache_database
 			;;
 		lmtp_tls_session_cache_timeout)
 			# = 3600s
+			conf_lmtp_menue lmtp_tls_session_cache_timeout
 			;;
 		lmtp_tls_verify_cert_match)
 			# = hostname
+			conf_lmtp_menue lmtp_tls_verify_cert_match
 			;;
 		lmtp_use_tls)
 			# = no
+			conf_lmtp_menue lmtp_use_tls
 			;;
 		lmtp_xforward_timeout)
 			# LMTP xforward Timeout#{{{
@@ -564,6 +644,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_lmtp_menue lmtp_xforward_timeout
 			;;
 		postfix)
+			# postfix, Konfiguration neu einlesen
 			postfix_start_reload
 			break
 			;;
