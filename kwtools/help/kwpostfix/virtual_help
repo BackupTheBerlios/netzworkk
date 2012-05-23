@@ -11,15 +11,33 @@ virtual_alias_maps: Diese Tabelle umschreibt alias spezifische
 
 virtual_alias_recursion_limit:
 
+virtual_delivery_slot_cost:
+
+virtual_delivery_slot_discount:
+
+virtual_delivery_slot_loan:
+
+virtual_destination_concurrency_failed_cohort_limit:
+
 virtual_destination_concurrency_limit: Maximalzahl gleichzeitiger
 \tVerbindungen zu einem Ziel.
 
+virtual_destination_concurrency_negative_feedback:
+
+virtual_destination_concurrency_positive_feedback:
+
+virtual_destination_rate_delay:
+
 virtual_destination_recipient_limit: Maximalzahl der Empfaenger in
-\teiner Mail Groessere Empfaengerlisten werden auf mehrere Mail
+\teiner Mail. Groessere Empfaengerlisten werden auf mehrere Mail
 \taufgeteilt.
+
+virtual_extra_recipient_limit:
 
 virtual_gid_maps: Tabelle fuer die Zuordnung GID zu Mailadressen fuer
 \tdie Transportmethode virtual.
+
+virtual_initial_destination_concurrency:
 
 virtual_mailbox_base: Pfad der jeder Mailbox vorangestellt wird.
 
@@ -33,8 +51,16 @@ virtual_mailbox_lock: Art des Lockings bei virtual.
 virtual_mailbox_maps: Tabelle mit den Zuordnungen von Mailadresse
 \tzum Postfach.
 
+virtual_minimum_delivery_slots:
+
 virtual_minimum_uid: kleinste UID, die virtual aus der
 \tvirtual_uid_maps akzeptiert.
+
+virtual_recipient_limit:
+
+virtual_recipient_refill_delay:
+
+virtual_recipient_refill_limit:
 
 virtual_transport: Tabelle, fuer die Umschreibung von Mailadressen.
 
