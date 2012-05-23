@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 02.05.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 23.05.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -64,6 +64,9 @@ lv_Smtp=$(gettext 'SMTP')
 lv_Smtpd=$(gettext 'SMTPD')
 lv_Tls=$(gettext 'TLS')
 lv_Virtual=$(gettext 'Virtual')
+
+lv_Proxy=$(gettext 'Proxy')
+lv_TableTyp=$(gettext 'Tabellentyp')
 
 MAIL_CONFIG="`postconf -h config_directory &>/dev/null`"
 if [ -z "$MAIL_CONFIG" ] ; then
