@@ -1,5 +1,5 @@
 # smtpd_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::smtpd::Hilfe')
+TITLE="${gv_Configuration}::${lv_Smtpd}::${gv_Help}"
 MSG=$(gettext 'smtpd_authorized_verp_clients: Welchen SMTP Clients soll die VERP
 \tStyle Zustellung erlaubt werden. Der Postfix QMQP Server
 \tbenutzt dies als eigenen Zugriffkontroll Machanismus und
@@ -34,6 +34,10 @@ smtpd_client_message_rate_limit: Maximale Nummer von Versuchen,
 \tegal ob oder nicht Postfix diese gerade akzeptiert
 \t(Standard: 0).
 
+smtpd_client_new_tls_session_rate_limit:
+
+smtpd_client_port_logging:
+
 smtpd_client_recipient_rate_limit: Maximale Anzahl von Empfaenger
 \tAdressen die beliebige clients pro Zeiteinheit an diesen
 \tServer senden duerfen, egal ob oder nicht Postfix diese
@@ -42,8 +46,12 @@ smtpd_client_recipient_rate_limit: Maximale Anzahl von Empfaenger
 smtpd_client_restrictions: Restrictions-Pruefungen direct nach dem
 \tConnect des Clients.
 
+smtpd_command_filters:
+
 smtpd_data_restrictions: Optionale Zugriffs Restrictionen fuer den
 \tSMTP DATA Befehl und seinem Inhalt.
+
+smtpd_delay_open_until_valid_rcpt:
 
 smtpd_delay_reject: ein REJECT einer Restriction wird aufgehoben
 \tund erst nach der Pruefung von RCPT TO: ausgegeben, auch wenn
@@ -96,6 +104,8 @@ smtpd_history_flush_threshold: maximale Kommandos zum debuggen.
 smtpd_junk_command_limit: maximale Muell-Kommandos, um Verbindungen
 \toffen zu halten. 
 
+smtpd_milters:
+
 smtpd_noop_commands: defeniert SMTP-Kommandos, auf denen Postfix
 \tzwar ein 250 OK ausgibt, aber keinerlei Aktion taetigt. Wenn
 \tder Wert leer ist, gilt weiterhin der SMTP-Befejl NOOP.
@@ -104,6 +114,10 @@ smtpd_null_access_lookup_key: Setzt einen Wert nach dem in den
 \tlookup Tabellen gesucht wird, wenn eine Mail keinen Absender
 \thatte. So lassen sich auch Bounces mit einem OK oder REJECT
 \tversehen.
+
+smtpd_peername_lookup:
+
+smtpd_per_record_deadline:
 
 smtpd_policy_service_max_idle: Zeit bevor eine unbenutzte Verbindung
 \tvon einem Policy clienten geschlossen wird (Standard: 300s).
@@ -136,6 +150,8 @@ smtpd_recipient_overshoot_limit: Die Nummer von Empfaengern die ein
 smtpd_recipient_restrictions: Restrictions nach dem SMTP-Envelope
 \tEmpfaenger.
 
+smtpd_reject_footer:
+
 smtpd_reject_unlisted_recipient: Soll der SMTP Server Mails mit unbe-
 \tkannter Empfaenger Adresse verwerfen (ja/nein)? Nur wenn
 \tnicht explicit reject_unlisted_sender Zugriffseinschraenk-
@@ -148,11 +164,10 @@ smtpd_reject_unlisted_sender: Soll der SMTP Server Mails mit unbe-
 
 smtpd_restriction_classes: defeniert Restrictionsclasses.
 
-smtpd_sasl_application_name: Der Applikationsname der fuer die SASL
-\tServer Initialisierung benutzt werden soll (Bsp. smtpd).
-
 smtpd_sasl_auth_enable: Soll SMTP-Auth auch bei eingehenden
 \tVerbindungen aktiviert werden (ja/nein)?
+
+smtpd_sasl_authenticated_header:
 
 smtpd_sasl_exceptions_networks: Welchen SMTP Clients soll kein AUTH
 \tSupport angeboten werden?
@@ -161,15 +176,21 @@ smtpd_sasl_local_domain: Domain, die bei SMTP-Auth an die
 \tNutzerkennung mit angehaengt wird, wenn diese in der
 \tDatenbank ueberprueft wird.
 
+smtpd_sasl_path:
+
 smtpd_sasl_security_options: Zulaessige Identifizierungsmethoden bei
 \teingehenden SMTP-Auth Verbindungen.
 
 smtpd_sasl_tls_security_options: zulaessige Identifizierungsmethoden
 \tbei eingehenden SMTP-Auth Verbindungen, per SSL/TLS.
 
+smtpd_sasl_type:
+
 smtpd_sender_login_maps: Zugriffstabelle fuer SMTP-Auth.
 
 smtpd_sender_restrictions: Restrictions nach dem SMTP-Envelope Sender.
+
+smtpd_service_name:
 
 smtpd_soft_error_limit: Anzahl der Fehler in einer SMTP-Sitzung,
 \tnach der Postfix eine Sonderwartezeit einlegt.
@@ -185,6 +206,8 @@ smtpd_tls_CAfile: Datei welche das Zertifikat Authority besitzt.
 smtpd_tls_CApath: Verzeichnis in dem die Zertifikate liegen. Diese
 \twerden dann mit den Rechten des Mail Servers gelesen.
 
+smtpd_tls_always_issue_session_ids:
+
 smtpd_tls_ask_ccert: Muss beim Server explizit nach einem Client
 \tZertifikat nachgefragt werden (ja/nein)?
 
@@ -197,7 +220,7 @@ smtpd_tls_ccert_verifydepth: Ueberpruefungstiefe des Client
 smtpd_tls_cert_file: Datei (RSA) welche das unterschriebene
 \tprivate Zertifikat besitzt.
 
-smtpd_tls_cipherlist: Siehe OpenSSL Dokumentation (Bsp. DEFAULT,
+smtpd_tls_ciphers: Siehe OpenSSL Dokumentation (Bsp. DEFAULT,
 \tman ciphers).
 
 smtpd_tls_dcert_file: Datei (DSA) welche das unterschriebene private
@@ -210,16 +233,36 @@ smtpd_tls_dh512_param_file:
 smtpd_tls_dkey_file: Datei (DSA) welche das unterschriebene,
 \tunverschluesselte private Zertifikat besitzt.
 
+smtpd_tls_eccert_file:
+
+smtpd_tls_eckey_file:
+
+smtpd_tls_eecdh_grade:
+
+smtpd_tls_exclude_ciphers:
+
+smtpd_tls_fingerprint_digest:
+
 smtpd_tls_key_file: Datei (RSA) welche das unterschriebene,
 \tunverschluesselte private Zertifikat besitzt.
 
 smtpd_tls_loglevel: Loglevel auswaehlen
+
+smtpd_tls_mandatory_ciphers:
+
+smtpd_tls_mandatory_exclude_ciphers:
+
+smtpd_tls_mandatory_protocols:
+
+smtpd_tls_protocols:
 
 smtpd_tls_received_header: Soll dieser Server ($myhosname), fuer
 \teingehende Mails, die received Zeilen loggen (ja/nein)?
 
 smtpd_tls_req_ccert: Benoetigen SMTP Clients ein Zertifikat
 \t(ja/nein)?
+
+smtpd_tls_security_level:
 
 smtpd_tls_session_cache_database: Datei die den TLS Sitzungs Cache
 \tdes SMTP Servers enthaelt. Dadurch koennen mehrere SMTP
