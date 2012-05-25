@@ -2,7 +2,7 @@
 TITLE="$gv_Help"
 MSG=$(gettext 'Hier koennen Sie Ihren Postfix Mailserver konfigurieren.
 
-Quickly-Konfiguration: Bei diesem Menuepunkt, wird das
+Kurz-Konfiguration: Bei diesem Menuepunkt, wird das
 \tKonfigurationsprogramm der jeweiligen Distribution
 \tgestartet.
 
