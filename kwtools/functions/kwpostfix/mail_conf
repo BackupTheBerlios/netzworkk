@@ -8,8 +8,12 @@ mail_conf() {
 MAIL_TITLE="${gv_Configuration}::${lv_Mail}"
 
 # Bestehende Konfiguration einlesen# {{{
+#########################################
+# TODO: mailbox_command checken
+#########################################
 print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(mail_|mailbox_)*} | \
-	sed -e 's#\"#\\\"#g ; s# =#="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+	sed -e 's#\"#\\\"#g ; s# = #="#g ; s# =#="#g ;
+	s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 # Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
 mailbox_command="${${mailbox_command//\"/\\\"}//\$/\\\$}"

@@ -22,9 +22,8 @@ smtpd_conf() {
 	
 	# Bestehende Konfiguration einlesen# {{{
 	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)smtpd_*} | \
-		sed -e 's#"#\\\"#g ; s# = #="# ; s#$#"# ; s#&#\\\&#g ; s#`#\\\`#g ;
-		s#\$#\\\$#g ; s#,\t.# #g' | sed -e "s#'#\\\'#g" >${gv_WorkDir}/postfix$$
-#		sed -e 's#\"#\\\"#g ; s# =#="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+		sed -e 's#"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
+		s#\$#\\\$#g ; s#$#"#' | sed -e "s#'#\\\'#g" >${gv_WorkDir}/postfix$$
 	read_file -f ${gv_WorkDir}/postfix$$
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
@@ -144,7 +143,7 @@ smtpd_conf() {
 			smtpd_authorized_verp_clients)
 				# Eingabe von Rechner, Netzen etc, die die VERP# {{{
 				# Zustellung benutzen duerfen.
-				SMTPD_AUTHORIZED_VERP_CLIENTS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder .domain ein, denen eine VERP Style Zustellung erlaubt werden soll.')
+				SMTPD_AUTHORIZED_VERP_CLIENTS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder Domains ein, denen eine VERP Style Zustellung erlaubt werden soll.')
 				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_VERP_CLIENTS_MSG" "${smtpd_authorized_verp_clients//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
 					smtpd_authorized_verp_clients="${gv_Auswahl//\\/}"
@@ -159,11 +158,11 @@ smtpd_conf() {
 			smtpd_authorized_xclient_hosts)
 				# Eingabe von Rechner, Netzen etc, die das XCLIENT Feature# {{{
 				# benutzen duerfen.
-				SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder .domain ein, die das XCLIENT Feature benutzen duerfen.')
-				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG" "${smtpd_authorized_xclient_hosts//$/\\\$}"
+				SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder Domains ein, die das XCLIENT Feature benutzen duerfen.')
+				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG" "${smtpd_authorized_xclient_hosts//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_authorized_xclient_hosts="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_authorized_xclient_hosts="${gv_Auswahl//$/\$}"
+					smtpd_authorized_xclient_hosts="${gv_Auswahl//\\/}"
+					postconf -e smtpd_authorized_xclient_hosts="${gv_Auswahl//\\/}"
 				else
 					smtpd_authorized_xclient_hosts=""
 					postconf -e smtpd_authorized_xclient_hosts=""
@@ -490,10 +489,10 @@ smtpd_conf() {
 				# Wie soll sich der Postfix Server sich selbst zum Proxy Filter ankuendigen.# {{{
 				# (Standard ist $myhostname)
 				SMTPD_PROXY_EHLO_MSG=$(gettext 'Geben Sie bitte den Namen an mit welchem sich der Postfix Server beim senden eines EHLO Befehl an einen Proxy Filter ankuendigen soll (Bsp. \$myhostname).')
-				inputbox "$SMTPD_TITLE" "$SMTPD_PROXY_EHLO_MSG" "${smtpd_proxy_ehlo//$/\\\$}"
+				inputbox "$SMTPD_TITLE" "$SMTPD_PROXY_EHLO_MSG" "${smtpd_proxy_ehlo//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_proxy_ehlo="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_proxy_ehlo="${gv_Auswahl//$/\$}"
+					smtpd_proxy_ehlo="${gv_Auswahl//\\/}"
+					postconf -e smtpd_proxy_ehlo="${gv_Auswahl//\\/}"
 				else
 					smtpd_proxy_ehlo=""
 					postconf -e smtpd_proxy_ehlo=""
@@ -615,10 +614,10 @@ smtpd_conf() {
 			smtpd_sasl_exceptions_networks)
 				# Welchen SMTP Clients soll kein AUTH Support angeboten werden?# {{{
 				SMTPD_SASL_EXCEPT_NETWORKS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder .domain ein, denen keine AUTH Unterstuetzung angeboten werden soll.')
-				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG" "${smtpd_sasl_exceptions_networks//$/\\\$}"
+				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG" "${smtpd_sasl_exceptions_networks//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_sasl_exceptions_networks="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_sasl_exceptions_networks="${gv_Auswahl//$/\$}"
+					smtpd_sasl_exceptions_networks="${gv_Auswahl//\\/}"
+					postconf -e smtpd_sasl_exceptions_networks="${gv_Auswahl//\\/}"
 				else
 					smtpd_sasl_exceptions_networks=""
 					postconf -e smtpd_sasl_exceptions_networks=""
