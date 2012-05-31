@@ -1,0 +1,54 @@
+# relay_help (Weiterleitung) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Relay}::${gv_Help}"
+MSG=$(gettext 'relay_clientcerts: Tabelle mit den Zertrifikaten der entfernten
+\tClients fuer die Postfix die Erlaubnis erteilen soll
+\t(man 5 postconf).
+
+relay_delivery_slot_cost:
+
+relay_delivery_slot_discount:
+
+relay_delivery_slot_loan:
+
+relay_destination_concurrency_failed_cohort_limit:
+
+relay_destination_concurrency_limit: Maximalzahl gleichzeitiger
+\tVerbindungen zu einem Ziel.
+
+relay_destination_concurrency_negative_feedback:
+
+relay_destination_concurrency_positive_feedback:
+
+relay_destination_rate_delay:
+
+relay_destination_recipient_limit: Maximalzahl der Empfaenger in
+\teiner Mail. Groessere Empfaengerlisten werden auf mehrere
+\tMails aufgeteilt.
+
+relay_domains: Domains fuer die bzw. von denen Postfix relayed.
+
+relay_extra_recipient_limit:
+
+relay_initial_destination_concurrency:
+
+relay_minimum_delivery_slots:
+
+relay_recipient_limit:
+
+relay_recipient_maps:
+
+relay_recipient_refill_delay:
+
+relay_recipient_refill_limit:
+
+relay_transport:
+
+relayhost: Host, an den alle ausgehenden Mails zugestellt werden,
+\tstatt diese an den MX-Host zu senden. Zum Beispiel:
+\t[address], [address]:port, domain oder host.
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
