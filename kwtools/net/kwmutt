@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 10.05.2011
+# Autor: Kai Wilke  <kiste@netzworkk.de> 01.06.2012
 #
 # Script: kwmutt, konfiguriert den Mail-Client Mutt.
 #
-# Version: 0.0.3
+# Version: 0.0.4
 
 ###################################################################
 # TODO:
@@ -105,6 +105,7 @@ lv_Mailbox=$(gettext 'Mailbox')
 lv_Mailing_List=$(gettext 'Mailinglisten')
 lv_Mutt_Start=$(gettext 'Mutt starten')
 lv_Print=$(gettext 'Drucker')
+lv_Send=$(gettext 'Versand')
 ## }}}
 		# Funktion (default_color), kopiert die Standardfarben# {{{
 		#
