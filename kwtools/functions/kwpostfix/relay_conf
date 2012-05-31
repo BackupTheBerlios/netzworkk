@@ -1,0 +1,135 @@
+# Relay (Weiterleitungen) Konfiguration einstellen{{{
+
+relay_conf() {
+
+# Variable
+RELAY_TITLE="${gv_Configuration}::${lv_Relay}"
+
+# Bestehende Konfiguration einlesen# {{{
+set -x
+print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)relay_*} | \
+	sed -e 's#"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
+	s#\$#\\\$#g ; s#$#"#' >${gv_WorkDir}/postfix$$
+read_file -f ${gv_WorkDir}/postfix$$
+set +x
+rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+## }}}
+# Funktion (conf_relay_menu), die Weiterleitungs-Parameter einstellen# {{{
+##############################################
+# TODO:
+# relay_delivery_slot_cost = $default_delivery_slot_cost
+# relay_delivery_slot_discount = $default_delivery_slot_discount
+# relay_delivery_slot_loan = $default_delivery_slot_loan
+# relay_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohor
+# relay_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedb
+# relay_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedb
+# relay_destination_rate_delay = $default_destination_rate_delay
+# relay_extra_recipient_limit = $default_extra_recipient_limit
+# relay_initial_destination_concurrency = $initial_destination_concurrency
+# relay_minimum_delivery_slots = $default_minimum_delivery_slots
+# relay_recipient_limit = $default_recipient_limit
+# relay_recipient_refill_delay = $default_recipient_refill_delay
+# relay_recipient_refill_limit = $default_recipient_refill_limit
+# relay_transport = relay
+##############################################
+conf_relay_menu() {
+	RELAY_MENU=(relay_clientcerts \"\$relay_clientcerts\"
+	relay_destination_concurrency_limit \"\$relay_destination_concurrency_limit\"
+	relay_destination_recipient_limit \"\$relay_destination_recipient_limit\"
+	relay_domains \"\$relay_domains\"
+	relay_recipient_maps \"\$relay_recipient_maps\"
+	relayhost \"\$relayhost\"
+	postfix \"reload\"
+	$gv_Back \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$RELAY_TITLE" "$gv_Menupoint" "$RELAY_MENU"
+	else
+		menubox "$RELAY_TITLE" "$gv_Menupoint" "$RELAY_MENU"
+	fi
+}
+## }}}
+conf_relay_menu
+while [ "$gv_Auswahl" ] ; do
+	case "$gv_Auswahl" in
+		HELP*)	script_help relay_help
+			conf_relay_menu
+			;;
+		relay_clientcerts)
+			# Tabelle mit Client Zertrifikaten{{{
+			tab_support_wahl "$gv_Auswahl"
+			relay_clientcerts="$MAPS"
+			postconf -e relay_clientcerts="$MAPS"
+			#}}}
+			conf_relay_menu relay_clientcerts
+			;;
+		relay_destination_concurrency_limit)
+			# Maximalanzahl gleichzeitiger Verbindungen zu einem Ziel{{{
+			number_input -i "$relay_destination_concurrency_limit"
+			if [ "$NUMBER" ] ; then
+				relay_destination_concurrency_limit="$NUMBER"
+				postconf -e relay_destination_concurrency_limit="$NUMBER"
+			fi
+			#}}}
+			conf_relay_menu relay_destination_concurrency_limit
+			;;
+		relay_destination_recipient_limit)
+			# Maximalanzahl der Empfaenger in einer einzigen Mails{{{
+			# Groesser Empfaengerlisten werden in mehrere Mails aufgeteilt
+			number_input -i "$relay_destination_recipient_limit"
+			if [ "$NUMBER" ] ; then
+				relay_destination_recipient_limit="$NUMBER"
+				postconf -e relay_destination_recipient_limit="$NUMBER"
+			fi
+			#}}}
+			conf_relay_menu relay_destination_recipient_limit
+			;;
+		relay_domains)
+			# Domains fuer die bzw. von denen postfix relayed{{{
+			tab_support_wahl "$gv_Auswahl"
+			relay_domains="$MAPS"
+			postconf -e relay_domains="$MAPS"
+			#}}}
+			conf_relay_menu relay_domains
+			;;
+		relay_recipient_maps)
+			# Tabelle mit Mailadressen, fuer die postfix Mails annehmen soll.{{{
+			# s. zless STANDARD_CONFIGURATION_README.gz im Dokumentations-Pfad
+			tab_support_wahl "$gv_Auswahl"
+			relay_recipient_maps="$MAPS"
+			postconf -e relay_recipient_maps="$MAPS"
+			#}}}
+			conf_relay_menu relay_recipient_maps
+			;;
+		relayhost)
+			# An welchen Host sollen alle ausgehenden Mails zugestellt werden{{{
+			RELAYHOST_MSG=$(gettext 'Geben Sie den Host an, an den alle ausgehenden Mails geschickt werden soll (Bsp. [smtp.domain.de] , smtp.domain.de:25).')
+			inputbox "$MAINCF_TITLE" "$RELAYHOST_MSG" "$relayhost"
+			if [ "$gv_Auswahl" ] ; then
+				if [ "${(w)#gv_Auswahl}" = 1 ] ; then
+					relayhost="$gv_Auswahl"
+					postconf -e relayhost="$gv_Auswahl"
+				else
+					no_input_msg
+				fi
+			else
+				relayhost=""
+				postconf -e relayhost=""
+			fi
+			#}}}
+			conf_relay_menu relayhost
+			;;
+		postfix)
+			# postfix, Konfiguration neu einlesen
+			postfix_start_reload
+			break
+			;;
+		$gv_Back)	break
+			;;
+	esac
+done
+}
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
