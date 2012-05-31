@@ -1,4 +1,5 @@
 # Haupt Konfiguration einstellen{{{
+
 main_conf() {
 autoload -U no_defer_msg
 
@@ -11,251 +12,248 @@ autoload -U no_defer_msg
 MAINCF_TITLE="${gv_Configuration}::${lv_Main}"
 
 # Bestehende Konfiguration einlesen{{{
+set -x
+print -l ${(R)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(address_|bsmtp_|default_|error_|ifmail_|lmtp_|mail_|mailbox_|mailman_|milter_|maildrop_|postscreen_|q|relay_|retry_|smtp_|smtpd_|tlsproxy_|tls_|uucp_|virtual_)*} | \
+	sed -e 's#"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
+	s#\$#\\\$#g ; s#$#"#' >${gv_WorkDir}/postfix$$
+read_file -f ${gv_WorkDir}/postfix$$
+set +x
+rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+#
+
 two_bounce_notice_recipient="`postconf -h -c $MAIL_CONFIG 2bounce_notice_recipient`"
-alias_database="`postconf -h -c $MAIL_CONFIG alias_database`" 
-alias_maps="`postconf -h -c $MAIL_CONFIG alias_maps`" 
-allow_mail_to_commands="`postconf -h -c $MAIL_CONFIG allow_mail_to_commands`"
-allow_mail_to_files="`postconf -h -c $MAIL_CONFIG allow_mail_to_files`"
-allow_min_user="`postconf -h -c $MAIL_CONFIG allow_min_user`"
-allow_percent_hack="`postconf -h -c $MAIL_CONFIG allow_percent_hack`" 
-allow_untrusted_routing="`postconf -h -c $MAIL_CONFIG allow_untrusted_routing`"
-alternate_config_directories="`postconf -h -c $MAIL_CONFIG alternate_config_directories`"
-always_bcc="`postconf -h -c $MAIL_CONFIG always_bcc`"
-append_at_myorigin="`postconf -h -c $MAIL_CONFIG append_at_myorigin`" 
-append_dot_mydomain="`postconf -h -c $MAIL_CONFIG append_dot_mydomain`" 
-best_mx_transport="`postconf -h -c $MAIL_CONFIG best_mx_transport`"
-biff="`postconf -h -c $MAIL_CONFIG biff`"
-body_checks="`postconf -h -c $MAIL_CONFIG body_checks`" 
-body_checks_size_limit="`postconf -h -c $MAIL_CONFIG body_checks_size_limit`" 
-bounce_notice_recipient="`postconf -h -c $MAIL_CONFIG bounce_notice_recipient`"
-bounce_size_limit="`postconf -h -c $MAIL_CONFIG bounce_size_limit`"
-broken_sasl_auth_clients="`postconf -h -c $MAIL_CONFIG broken_sasl_auth_clients`"
-canonical_maps="`postconf -h -c $MAIL_CONFIG canonical_maps`" 
-command_directory="`postconf -h -c $MAIL_CONFIG command_directory`"
-command_time_limit="`postconf -h -c $MAIL_CONFIG command_time_limit`"
-config_directory="`postconf -h -c $MAIL_CONFIG config_directory`"
-content_filter="`postconf -h -c $MAIL_CONFIG content_filter`"
-daemon_directory="`postconf -h -c $MAIL_CONFIG daemon_directory`"
-daemon_timeout="`postconf -h -c $MAIL_CONFIG daemon_timeout`"
-debug_peer_level="`postconf -h -c $MAIL_CONFIG debug_peer_level`" 
-debug_peer_list="`postconf -h -c $MAIL_CONFIG debug_peer_list`" 
-defer_transports="`postconf -h -c $MAIL_CONFIG defer_transports`"
-delay_notice_recipient="`postconf -h -c $MAIL_CONFIG delay_notice_recipient`"
-delay_warning_time="`postconf -h -c $MAIL_CONFIG delay_warning_time`"
-deliver_lock_attempts="`postconf -h -c $MAIL_CONFIG deliver_lock_attempts`"
-deliver_lock_delay="`postconf -h -c $MAIL_CONFIG deliver_lock_delay`"
-disable_dns_lookups="`postconf -h -c $MAIL_CONFIG disable_dns_lookups`"
-disable_verp_bounces="`postconf -h -c $MAIL_CONFIG disable_verp_bounces`"
-disable_vrfy_command="`postconf -h -c $MAIL_CONFIG disable_vrfy_command`"
-double_bounce_sender="`postconf -h -c $MAIL_CONFIG double_bounce_sender`"
-duplicate_filter_limit="`postconf -h -c $MAIL_CONFIG duplicate_filter_limit`"
-empty_address_recipient="`postconf -h -c $MAIL_CONFIG empty_address_recipient`"
-error_notice_recipient="`postconf -h -c $MAIL_CONFIG error_notice_recipient`"
-expand_owner_alias="`postconf -h -c $MAIL_CONFIG expand_owner_alias`"
-export_environment="`postconf -h -c $MAIL_CONFIG export_environment`"
-fallback_transport="`postconf -h -c $MAIL_CONFIG fallback_transport`"
-fast_flush_domains="`postconf -h -c $MAIL_CONFIG fast_flush_domains`" 
-fast_flush_purge_time="`postconf -h -c $MAIL_CONFIG fast_flush_purge_time`"
-fast_flush_refresh_time="`postconf -h -c $MAIL_CONFIG fast_flush_refresh_time`"
-fault_injection_code="`postconf -h -c $MAIL_CONFIG fault_injection_code`"
-fork_attempts="`postconf -h -c $MAIL_CONFIG fork_attempts`"
-fork_delay="`postconf -h -c $MAIL_CONFIG fork_delay`"
-forward_path="`postconf -h -c $MAIL_CONFIG forward_path | sed -e 's#\\$#\\\\$#g'`"
-hash_queue_depth="`postconf -h -c $MAIL_CONFIG hash_queue_depth`"
-hash_queue_names="`postconf -h -c $MAIL_CONFIG hash_queue_names`"
-header_checks="`postconf -h -c $MAIL_CONFIG header_checks`" 
-header_size_limit="`postconf -h -c $MAIL_CONFIG header_size_limit`"
-home_mailbox="`postconf -h -c $MAIL_CONFIG home_mailbox`"
-hopcount_limit="`postconf -h -c $MAIL_CONFIG hopcount_limit`"
-ignore_mx_lookup_error="`postconf -h -c $MAIL_CONFIG ignore_mx_lookup_error`"
-import_environment="`postconf -h -c $MAIL_CONFIG import_environment`"
-in_flow_delay="`postconf -h -c $MAIL_CONFIG in_flow_delay`"
-inet_interfaces="`postconf -h -c $MAIL_CONFIG inet_interfaces`"
-initial_destination_concurrency="`postconf -h -c $MAIL_CONFIG initial_destination_concurrency`"
-ipc_idle="`postconf -h -c $MAIL_CONFIG ipc_idle`"
-ipc_timeout="`postconf -h -c $MAIL_CONFIG ipc_timeout`"
-line_length_limit="`postconf -h -c $MAIL_CONFIG line_length_limit`"
-local_command_shell="`postconf -h -c $MAIL_CONFIG local_command_shell`"
-local_destination_concurrency_limit="`postconf -h -c $MAIL_CONFIG local_destination_concurrency_limit`" 
-local_destination_recipient_limit="`postconf -h -c $MAIL_CONFIG local_destination_recipient_limit`" 
-local_recipient_maps="`postconf -h -c $MAIL_CONFIG local_recipient_maps`" 
-local_transport="`postconf -h -c $MAIL_CONFIG local_transport`"
-luser_relay="`postconf -h -c $MAIL_CONFIG luser_relay`"
-maps_rbl_domains="`postconf -h -c $MAIL_CONFIG maps_rbl_domains`"
-masquerade_classes="`postconf -h -c $MAIL_CONFIG masquerade_classes`" 
-masquerade_domains="`postconf -h -c $MAIL_CONFIG masquerade_domains`" 
-masquerade_exceptions="`postconf -h -c $MAIL_CONFIG masquerade_exceptions`" 
-max_idle="`postconf -h -c $MAIL_CONFIG max_idle`"
-max_use="`postconf -h -c $MAIL_CONFIG max_use`"
-maximal_backoff_time="`postconf -h -c $MAIL_CONFIG maximal_backoff_time`"
-maximal_queue_lifetime="`postconf -h -c $MAIL_CONFIG maximal_queue_lifetime`"
-message_size_limit="`postconf -h -c $MAIL_CONFIG message_size_limit`"
-minimal_backoff_time="`postconf -h -c $MAIL_CONFIG minimal_backoff_time`"
-mime_header_checks="`postconf -h -c $MAIL_CONFIG mime_header_checks`" 
-mydestination="`postconf -h -c $MAIL_CONFIG mydestination`" 
-mydomain="`postconf -h -c $MAIL_CONFIG mydomain`" 
-myhostname="`postconf -h -c $MAIL_CONFIG myhostname`" 
-mynetworks_style="`postconf -h -c $MAIL_CONFIG mynetworks_style`"
-mynetworks="`postconf -h -c $MAIL_CONFIG mynetworks`"
-myorigin="`postconf -h -c $MAIL_CONFIG myorigin`" 
-nested_header_checks="`postconf -h -c $MAIL_CONFIG nested_header_checks`" 
-notify_classes="`postconf -h -c $MAIL_CONFIG notify_classes`"
-owner_request_special="`postconf -h -c $MAIL_CONFIG owner_request_special`"
-parent_domain_matches_subdomains="`postconf -h -c $MAIL_CONFIG parent_domain_matches_subdomains`"
-permit_mx_backup_networks="`postconf -h -c $MAIL_CONFIG permit_mx_backup_networks`"
-prepend_delivered_header="`postconf -h -c $MAIL_CONFIG prepend_delivered_header`"
-process_id_directory="`postconf -h -c $MAIL_CONFIG process_id_directory`"
-propagate_unmatched_extensions="`postconf -h -c $MAIL_CONFIG propagate_unmatched_extensions`"
-recipient_bcc_maps="`postconf -h -c $MAIL_CONFIG recipient_bcc_maps`" 
-recipient_canonical_maps="`postconf -h -c $MAIL_CONFIG recipient_canonical_maps`" 
-recipient_delimiter="`postconf -h -c $MAIL_CONFIG recipient_delimiter`" 
-relay_clientcerts="`postconf -h -c $MAIL_CONFIG relay_clientcerts`"
-relay_destination_concurrency_limit="`postconf -h -c $MAIL_CONFIG relay_destination_concurrency_limit`" 
-relay_destination_recipient_limit="`postconf -h -c $MAIL_CONFIG relay_destination_recipient_limit`" 
-relay_domains="`postconf -h -c $MAIL_CONFIG relay_domains`" 
-relayhost="`postconf -h -c $MAIL_CONFIG relayhost`" 
-relay_recipient_maps="`postconf -h -c $MAIL_CONFIG relay_recipient_maps`" 
-relocated_maps="`postconf -h -c $MAIL_CONFIG relocated_maps`" 
-require_home_directory="`postconf -h -c $MAIL_CONFIG require_home_directory`"
-sender_bcc_maps="`postconf -h -c $MAIL_CONFIG sender_bcc_maps`" 
-sender_canonical_maps="`postconf -h -c $MAIL_CONFIG sender_canonical_maps`" 
-service_throttle_time="`postconf -h -c $MAIL_CONFIG service_throttle_time`"
-setgid_group="`postconf -h -c $MAIL_CONFIG setgid_group`" 
-soft_bounce="`postconf -h -c $MAIL_CONFIG soft_bounce`"
-stale_lock_time="`postconf -h -c $MAIL_CONFIG stale_lock_time`"
-strict_rfc821_envelopes="`postconf -h -c $MAIL_CONFIG strict_rfc821_envelopes`"
-sun_mailtool_compatibility="`postconf -h -c $MAIL_CONFIG sun_mailtool_compatibility`"
-swap_bangpath="`postconf -h -c $MAIL_CONFIG swap_bangpath`"
-syslog_facility="`postconf -h -c $MAIL_CONFIG syslog_facility`"
-syslog_name="`postconf -h -c $MAIL_CONFIG syslog_name`"
-transport_maps="`postconf -h -c $MAIL_CONFIG transport_maps`"
-transport_retry_time="`postconf -h -c $MAIL_CONFIG transport_retry_time`"
-undisclosed_recipients_header="`postconf -h -c $MAIL_CONFIG undisclosed_recipients_header`"
-verp_delimiter_filter="`postconf -h -c $MAIL_CONFIG verp_delimiter_filter`"
+#alias_database="`postconf -h -c $MAIL_CONFIG alias_database`" 
+#alias_maps="`postconf -h -c $MAIL_CONFIG alias_maps`" 
+#allow_mail_to_commands="`postconf -h -c $MAIL_CONFIG allow_mail_to_commands`"
+#allow_mail_to_files="`postconf -h -c $MAIL_CONFIG allow_mail_to_files`"
+#allow_min_user="`postconf -h -c $MAIL_CONFIG allow_min_user`"
+#allow_percent_hack="`postconf -h -c $MAIL_CONFIG allow_percent_hack`" 
+#allow_untrusted_routing="`postconf -h -c $MAIL_CONFIG allow_untrusted_routing`"
+#alternate_config_directories="`postconf -h -c $MAIL_CONFIG alternate_config_directories`"
+#always_bcc="`postconf -h -c $MAIL_CONFIG always_bcc`"
+#append_at_myorigin="`postconf -h -c $MAIL_CONFIG append_at_myorigin`" 
+#append_dot_mydomain="`postconf -h -c $MAIL_CONFIG append_dot_mydomain`" 
+#best_mx_transport="`postconf -h -c $MAIL_CONFIG best_mx_transport`"
+#biff="`postconf -h -c $MAIL_CONFIG biff`"
+#body_checks="`postconf -h -c $MAIL_CONFIG body_checks`" 
+#body_checks_size_limit="`postconf -h -c $MAIL_CONFIG body_checks_size_limit`" 
+#bounce_notice_recipient="`postconf -h -c $MAIL_CONFIG bounce_notice_recipient`"
+#bounce_size_limit="`postconf -h -c $MAIL_CONFIG bounce_size_limit`"
+#broken_sasl_auth_clients="`postconf -h -c $MAIL_CONFIG broken_sasl_auth_clients`"
+#canonical_maps="`postconf -h -c $MAIL_CONFIG canonical_maps`" 
+#command_directory="`postconf -h -c $MAIL_CONFIG command_directory`"
+#command_time_limit="`postconf -h -c $MAIL_CONFIG command_time_limit`"
+#config_directory="`postconf -h -c $MAIL_CONFIG config_directory`"
+#content_filter="`postconf -h -c $MAIL_CONFIG content_filter`"
+#daemon_directory="`postconf -h -c $MAIL_CONFIG daemon_directory`"
+#daemon_timeout="`postconf -h -c $MAIL_CONFIG daemon_timeout`"
+#debug_peer_level="`postconf -h -c $MAIL_CONFIG debug_peer_level`" 
+#debug_peer_list="`postconf -h -c $MAIL_CONFIG debug_peer_list`" 
+#defer_transports="`postconf -h -c $MAIL_CONFIG defer_transports`"
+#delay_notice_recipient="`postconf -h -c $MAIL_CONFIG delay_notice_recipient`"
+#delay_warning_time="`postconf -h -c $MAIL_CONFIG delay_warning_time`"
+#deliver_lock_attempts="`postconf -h -c $MAIL_CONFIG deliver_lock_attempts`"
+#deliver_lock_delay="`postconf -h -c $MAIL_CONFIG deliver_lock_delay`"
+#disable_dns_lookups="`postconf -h -c $MAIL_CONFIG disable_dns_lookups`"
+#disable_verp_bounces="`postconf -h -c $MAIL_CONFIG disable_verp_bounces`"
+#disable_vrfy_command="`postconf -h -c $MAIL_CONFIG disable_vrfy_command`"
+#double_bounce_sender="`postconf -h -c $MAIL_CONFIG double_bounce_sender`"
+#duplicate_filter_limit="`postconf -h -c $MAIL_CONFIG duplicate_filter_limit`"
+#empty_address_recipient="`postconf -h -c $MAIL_CONFIG empty_address_recipient`"
+#error_notice_recipient="`postconf -h -c $MAIL_CONFIG error_notice_recipient`"
+#expand_owner_alias="`postconf -h -c $MAIL_CONFIG expand_owner_alias`"
+#export_environment="`postconf -h -c $MAIL_CONFIG export_environment`"
+#fallback_transport="`postconf -h -c $MAIL_CONFIG fallback_transport`"
+#fast_flush_domains="`postconf -h -c $MAIL_CONFIG fast_flush_domains`" 
+#fast_flush_purge_time="`postconf -h -c $MAIL_CONFIG fast_flush_purge_time`"
+#fast_flush_refresh_time="`postconf -h -c $MAIL_CONFIG fast_flush_refresh_time`"
+#fault_injection_code="`postconf -h -c $MAIL_CONFIG fault_injection_code`"
+#fork_attempts="`postconf -h -c $MAIL_CONFIG fork_attempts`"
+#fork_delay="`postconf -h -c $MAIL_CONFIG fork_delay`"
+#forward_path="`postconf -h -c $MAIL_CONFIG forward_path | sed -e 's#\\$#\\\\$#g'`"
+#hash_queue_depth="`postconf -h -c $MAIL_CONFIG hash_queue_depth`"
+#hash_queue_names="`postconf -h -c $MAIL_CONFIG hash_queue_names`"
+#header_checks="`postconf -h -c $MAIL_CONFIG header_checks`" 
+#header_size_limit="`postconf -h -c $MAIL_CONFIG header_size_limit`"
+#home_mailbox="`postconf -h -c $MAIL_CONFIG home_mailbox`"
+#hopcount_limit="`postconf -h -c $MAIL_CONFIG hopcount_limit`"
+#ignore_mx_lookup_error="`postconf -h -c $MAIL_CONFIG ignore_mx_lookup_error`"
+#import_environment="`postconf -h -c $MAIL_CONFIG import_environment`"
+#in_flow_delay="`postconf -h -c $MAIL_CONFIG in_flow_delay`"
+#inet_interfaces="`postconf -h -c $MAIL_CONFIG inet_interfaces`"
+#initial_destination_concurrency="`postconf -h -c $MAIL_CONFIG initial_destination_concurrency`"
+#ipc_idle="`postconf -h -c $MAIL_CONFIG ipc_idle`"
+#ipc_timeout="`postconf -h -c $MAIL_CONFIG ipc_timeout`"
+#line_length_limit="`postconf -h -c $MAIL_CONFIG line_length_limit`"
+#local_command_shell="`postconf -h -c $MAIL_CONFIG local_command_shell`"
+#local_destination_concurrency_limit="`postconf -h -c $MAIL_CONFIG local_destination_concurrency_limit`" 
+#local_destination_recipient_limit="`postconf -h -c $MAIL_CONFIG local_destination_recipient_limit`" 
+#local_recipient_maps="`postconf -h -c $MAIL_CONFIG local_recipient_maps`" 
+#local_transport="`postconf -h -c $MAIL_CONFIG local_transport`"
+#luser_relay="`postconf -h -c $MAIL_CONFIG luser_relay`"
+#maps_rbl_domains="`postconf -h -c $MAIL_CONFIG maps_rbl_domains`"
+#masquerade_classes="`postconf -h -c $MAIL_CONFIG masquerade_classes`" 
+#masquerade_domains="`postconf -h -c $MAIL_CONFIG masquerade_domains`" 
+#masquerade_exceptions="`postconf -h -c $MAIL_CONFIG masquerade_exceptions`" 
+#max_idle="`postconf -h -c $MAIL_CONFIG max_idle`"
+#max_use="`postconf -h -c $MAIL_CONFIG max_use`"
+#maximal_backoff_time="`postconf -h -c $MAIL_CONFIG maximal_backoff_time`"
+#maximal_queue_lifetime="`postconf -h -c $MAIL_CONFIG maximal_queue_lifetime`"
+#message_size_limit="`postconf -h -c $MAIL_CONFIG message_size_limit`"
+#minimal_backoff_time="`postconf -h -c $MAIL_CONFIG minimal_backoff_time`"
+#mime_header_checks="`postconf -h -c $MAIL_CONFIG mime_header_checks`" 
+#mydestination="`postconf -h -c $MAIL_CONFIG mydestination`" 
+#mydomain="`postconf -h -c $MAIL_CONFIG mydomain`" 
+#myhostname="`postconf -h -c $MAIL_CONFIG myhostname`" 
+#mynetworks_style="`postconf -h -c $MAIL_CONFIG mynetworks_style`"
+#mynetworks="`postconf -h -c $MAIL_CONFIG mynetworks`"
+#myorigin="`postconf -h -c $MAIL_CONFIG myorigin`" 
+#nested_header_checks="`postconf -h -c $MAIL_CONFIG nested_header_checks`" 
+#notify_classes="`postconf -h -c $MAIL_CONFIG notify_classes`"
+#owner_request_special="`postconf -h -c $MAIL_CONFIG owner_request_special`"
+#parent_domain_matches_subdomains="`postconf -h -c $MAIL_CONFIG parent_domain_matches_subdomains`"
+#permit_mx_backup_networks="`postconf -h -c $MAIL_CONFIG permit_mx_backup_networks`"
+#prepend_delivered_header="`postconf -h -c $MAIL_CONFIG prepend_delivered_header`"
+#process_id_directory="`postconf -h -c $MAIL_CONFIG process_id_directory`"
+#propagate_unmatched_extensions="`postconf -h -c $MAIL_CONFIG propagate_unmatched_extensions`"
+#recipient_bcc_maps="`postconf -h -c $MAIL_CONFIG recipient_bcc_maps`" 
+#recipient_canonical_maps="`postconf -h -c $MAIL_CONFIG recipient_canonical_maps`" 
+#recipient_delimiter="`postconf -h -c $MAIL_CONFIG recipient_delimiter`" 
+#relocated_maps="`postconf -h -c $MAIL_CONFIG relocated_maps`" 
+#require_home_directory="`postconf -h -c $MAIL_CONFIG require_home_directory`"
+#sender_bcc_maps="`postconf -h -c $MAIL_CONFIG sender_bcc_maps`" 
+#sender_canonical_maps="`postconf -h -c $MAIL_CONFIG sender_canonical_maps`" 
+#service_throttle_time="`postconf -h -c $MAIL_CONFIG service_throttle_time`"
+#setgid_group="`postconf -h -c $MAIL_CONFIG setgid_group`" 
+#soft_bounce="`postconf -h -c $MAIL_CONFIG soft_bounce`"
+#stale_lock_time="`postconf -h -c $MAIL_CONFIG stale_lock_time`"
+#strict_rfc821_envelopes="`postconf -h -c $MAIL_CONFIG strict_rfc821_envelopes`"
+#sun_mailtool_compatibility="`postconf -h -c $MAIL_CONFIG sun_mailtool_compatibility`"
+#swap_bangpath="`postconf -h -c $MAIL_CONFIG swap_bangpath`"
+#syslog_facility="`postconf -h -c $MAIL_CONFIG syslog_facility`"
+#syslog_name="`postconf -h -c $MAIL_CONFIG syslog_name`"
+#transport_maps="`postconf -h -c $MAIL_CONFIG transport_maps`"
+#transport_retry_time="`postconf -h -c $MAIL_CONFIG transport_retry_time`"
+#undisclosed_recipients_header="`postconf -h -c $MAIL_CONFIG undisclosed_recipients_header`"
+#verp_delimiter_filter="`postconf -h -c $MAIL_CONFIG verp_delimiter_filter`"
 #}}}
-# Funktion (conf_haupt_menue), die Haupt-Parameter einstellen{{{
-conf_haupt_menue() {
-	MAINCF_MENU=(2bounce_notice_recipient \"$two_bounce_notice_recipient\"
+# Funktion (conf_main_menu), die Haupt-Parameter einstellen{{{
+conf_main_menu() {
+	MAINCF_MENU=(2bounce_notice_recipient \"\$two_bounce_notice_recipient\"
 	alias_database \"\$alias_database\"
 	alias_maps \"\$alias_maps\"
-	allow_mail_to_commands \"$allow_mail_to_commands\"
-	allow_mail_to_files \"$allow_mail_to_files\"
-	allow_min_user \"$allow_min_user\"
-	allow_percent_hack \"$allow_percent_hack\"
-	allow_untrusted_routing \"$allow_untrusted_routing\"
-	alternate_config_directories \"$alternate_config_directories\"
-	always_bcc \"$always_bcc\"
-	append_at_myorigin \"$append_at_myorigin\"
-	append_dot_mydomain \"$append_dot_mydomain\"
-	best_mx_transport \"$best_mx_transport\"
-	biff \"$biff\"
+	allow_mail_to_commands \"\$allow_mail_to_commands\"
+	allow_mail_to_files \"\$allow_mail_to_files\"
+	allow_min_user \"\$allow_min_user\"
+	allow_percent_hack \"\$allow_percent_hack\"
+	allow_untrusted_routing \"\$allow_untrusted_routing\"
+	alternate_config_directories \"\$alternate_config_directories\"
+	always_bcc \"\$always_bcc\"
+	append_at_myorigin \"\$append_at_myorigin\"
+	append_dot_mydomain \"\$append_dot_mydomain\"
+	best_mx_transport \"\$best_mx_transport\"
+	biff \"\$biff\"
 	body_checks \"\$body_checks\"
-	body_checks_size_limit \"$body_checks_size_limit\"
-	bounce_notice_recipient \"$bounce_notice_recipient\"
-	bounce_size_limit \"$bounce_size_limit\"
-	broken_sasl_auth_clients \"$broken_sasl_auth_clients\"
+	body_checks_size_limit \"\$body_checks_size_limit\"
+	bounce_notice_recipient \"\$bounce_notice_recipient\"
+	bounce_size_limit \"\$bounce_size_limit\"
+	broken_sasl_auth_clients \"\$broken_sasl_auth_clients\"
 	canonical_maps \"\$canonical_maps\"
-	command_directory \"$command_directory\"
-	command_time_limit \"$command_time_limit\"
-	config_directory \"$config_directory\"
-	content_filter \"$content_filter\"
-	daemon_directory \"$daemon_directory\"
-	daemon_timeout \"$daemon_timeout\"
-	debug_peer_level \"$debug_peer_level\"
-	debug_peer_list \"$debug_peer_list\"
-	defer_transports \"$defer_transports\"
-	delay_notice_recipient \"$delay_notice_recipient\"
-	delay_warning_time \"$delay_warning_time\"
-	deliver_lock_attempts \"$deliver_lock_attempts\"
-	deliver_lock_delay \"$deliver_lock_delay\"
-	disable_dns_lookups \"$disable_dns_lookups\"
-	disable_verp_bounces \"$disable_verp_bounces\"
-	disable_vrfy_command \"$disable_vrfy_command\"
-	double_bounce_sender \"$double_bounce_sender\"
-	duplicate_filter_limit \"$duplicate_filter_limit\"
-	empty_address_recipient \"$empty_address_recipient\"
-	error_notice_recipient \"$error_notice_recipient\"
-	expand_owner_alias \"$expand_owner_alias\"
-	export_environment \"$export_environment\"
-	fallback_transport \"$fallback_transport\"
+	command_directory \" \$command_directory\"
+	command_time_limit \"\$command_time_limit\"
+	config_directory \"\$config_directory\"
+	content_filter \"\$content_filter\"
+	daemon_directory \"\$daemon_directory\"
+	daemon_timeout \"\$daemon_timeout\"
+	debug_peer_level \"\$debug_peer_level\"
+	debug_peer_list \"\$debug_peer_list\"
+	defer_transports \"\$defer_transports\"
+	delay_notice_recipient \"\$delay_notice_recipient\"
+	delay_warning_time \"\$delay_warning_time\"
+	deliver_lock_attempts \"\$deliver_lock_attempts\"
+	deliver_lock_delay \"\$deliver_lock_delay\"
+	disable_dns_lookups \"\$disable_dns_lookups\"
+	disable_verp_bounces \"\$disable_verp_bounces\"
+	disable_vrfy_command \"\$disable_vrfy_command\"
+	double_bounce_sender \"\$double_bounce_sender\"
+	duplicate_filter_limit \"\$duplicate_filter_limit\"
+	empty_address_recipient \"\$empty_address_recipient\"
+	error_notice_recipient \"\$error_notice_recipient\"
+	expand_owner_alias \"\$expand_owner_alias\"
+	export_environment \"\$export_environment\"
+	fallback_transport \"\$fallback_transport\"
 	fast_flush_domains \"\$fast_flush_domains\"
-	fast_flush_purge_time \"$fast_flush_purge_time\"
-	fast_flush_refresh_time \"$fast_flush_refresh_time\"
-	fault_injection_code \"$fault_injection_code\"
-	fork_attempts \"$fork_attempts\"
-	fork_delay \"$fork_delay\"
-	forward_path \"$forward_path\"
-	hash_queue_depth \"$hash_queue_depth\"
-	hash_queue_names \"$hash_queue_names\"
+	fast_flush_purge_time \"\$fast_flush_purge_time\"
+	fast_flush_refresh_time \"\$fast_flush_refresh_time\"
+	fault_injection_code \"\$fault_injection_code\"
+	fork_attempts \"\$fork_attempts\"
+	fork_delay \"\$fork_delay\"
+	forward_path \"\$forward_path\"
+	hash_queue_depth \"\$hash_queue_depth\"
+	hash_queue_names \"\$hash_queue_names\"
 	header_checks \"\$header_checks\"
-	header_size_limit \"$header_size_limit\"
-	home_mailbox \"$home_mailbox\"
-	hopcount_limit \"$hopcount_limit\"
-	ignore_mx_lookup_error \"$ignore_mx_lookup_error\"
-	import_environment \"$import_environment\"
-	in_flow_delay \"$in_flow_delay\"
-	inet_interfaces \"$inet_interfaces\"
-	initial_destination_concurrency \"$initial_destination_concurrency\"
-	ipc_idle \"$ipc_idle\"
-	ipc_timeout \"$ipc_timeout\"
-	line_length_limit \"$line_length_limit\"
-	local_command_shell \"$local_command_shell\"
-	local_destination_concurrency_limit \"$local_destination_concurrency_limit\"
-	local_destination_recipient_limit \"$local_destination_recipient_limit\"
+	header_size_limit \"\$header_size_limit\"
+	home_mailbox \"\$home_mailbox\"
+	hopcount_limit \"\$hopcount_limit\"
+	ignore_mx_lookup_error \"\$ignore_mx_lookup_error\"
+	import_environment \"\$import_environment\"
+	in_flow_delay \"\$in_flow_delay\"
+	inet_interfaces \"\$inet_interfaces\"
+	initial_destination_concurrency \"\$initial_destination_concurrency\"
+	ipc_idle \"\$ipc_idle\"
+	ipc_timeout \"\$ipc_timeout\"
+	line_length_limit \"\$line_length_limit\"
+	local_command_shell \"\$local_command_shell\"
+	local_destination_concurrency_limit \"\$local_destination_concurrency_limit\"
+	local_destination_recipient_limit \"\$local_destination_recipient_limit\"
 	local_recipient_maps \"\$local_recipient_maps\"
-	local_transport \"$local_transport\"
+	local_transport \"\$local_transport\"
 	luser_relay \"\$luser_relay\"
-	maps_rbl_domains \"$maps_rbl_domains\"
-	masquerade_classes \"$masquerade_classes\"
-	masquerade_domains \"$masquerade_domains\"
-	masquerade_exceptions \"$masquerade_exceptions\"
-	max_idle \"$max_idle\"
-	max_use \"$max_use\"
-	maximal_backoff_time \"$maximal_backoff_time\"
-	maximal_queue_lifetime \"$maximal_queue_lifetime\"
-	message_size_limit \"$message_size_limit\"
-	minimal_backoff_time \"$minimal_backoff_time\"
+	maps_rbl_domains \"\$maps_rbl_domains\"
+	masquerade_classes \"\$masquerade_classes\"
+	masquerade_domains \"\$masquerade_domains\"
+	masquerade_exceptions \"\$masquerade_exceptions\"
+	max_idle \"\$max_idle\"
+	max_use \"\$max_use\"
+	maximal_backoff_time \"\$maximal_backoff_time\"
+	maximal_queue_lifetime \"\$maximal_queue_lifetime\"
+	message_size_limit \"\$message_size_limit\"
+	minimal_backoff_time \"\$minimal_backoff_time\"
 	mime_header_checks \"\$mime_header_checks\"
-	mydestination \"$mydestination\"
-	mydomain \"$mydomain\"
-	myhostname \"$myhostname\"
+	mydestination \"\$mydestination\"
+	mydomain \"\$mydomain\"
+	myhostname \"\$myhostname\"
 	mynetworks \"\$mynetworks\"
-	mynetworks_style \"$mynetworks_style\"
-	myorigin \"$myorigin\"
+	mynetworks_style \"\$mynetworks_style\"
+	myorigin \"\$myorigin\"
 	nested_header_checks \"\$nested_header_checks\"
-	notify_classes \"$notify_classes\"
-	owner_request_special \"$owner_request_special\"
-	parent_domain_matches_subdomains \"$parent_domain_matches_subdomains\"
-	permit_mx_backup_networks \"$permit_mx_backup_networks\"
-	prepend_delivered_header \"$prepend_delivered_header\"
-	process_id_directory \"$process_id_directory\"
-	propagate_unmatched_extensions \"$propagate_unmatched_extensions\"
+	notify_classes \"\$notify_classes\"
+	owner_request_special \"\$owner_request_special\"
+	parent_domain_matches_subdomains \"\$parent_domain_matches_subdomains\"
+	permit_mx_backup_networks \"\$permit_mx_backup_networks\"
+	prepend_delivered_header \"\$prepend_delivered_header\"
+	process_id_directory \"\$process_id_directory\"
+	propagate_unmatched_extensions \"\$propagate_unmatched_extensions\"
 	recipient_bcc_maps \"\$recipient_bcc_maps\"
 	recipient_canonical_maps \"\$recipient_canonical_maps\"
-	recipient_delimiter \"$recipient_delimiter\"
-	relay_clientcerts \"$relay_clientcerts\"
-	relay_destination_concurrency_limit \"$relay_destination_concurrency_limit\"
-	relay_destination_recipient_limit \"$relay_destination_recipient_limit\"
-	relay_domains \"\$relay_domains\"
-	relayhost \"$relayhost\"
-	relay_recipient_maps \"\$relay_recipient_maps\"
+	recipient_delimiter \"\$recipient_delimiter\"
 	relocated_maps \"\$relocated_maps\"
-	require_home_directory \"$require_home_directory\"
+	require_home_directory \"\$require_home_directory\"
 	sender_bcc_maps \"\$sender_bcc_maps\"
 	sender_canonical_maps \"\$sender_canonical_maps\"
-	service_throttle_time \"$service_throttle_time\"
-	setgid_group \"$setgid_group\"
-	soft_bounce \"$soft_bounce\"
-	stale_lock_time \"$stale_lock_time\"
-	strict_rfc821_envelopes \"$strict_rfc821_envelopes\"
-	sun_mailtool_compatibility \"$sun_mailtool_compatibility\"
-	swap_bangpath \"$swap_bangpath\"
-	syslog_facility \"$syslog_facility\"
-	syslog_name \"$syslog_name\"
+	service_throttle_time \"\$service_throttle_time\"
+	setgid_group \"\$setgid_group\"
+	soft_bounce \"\$soft_bounce\"
+	stale_lock_time \"\$stale_lock_time\"
+	strict_rfc821_envelopes \"\$strict_rfc821_envelopes\"
+	sun_mailtool_compatibility \"\$sun_mailtool_compatibility\"
+	swap_bangpath \"\$swap_bangpath\"
+	syslog_facility \"\$syslog_facility\"
+	syslog_name \"\$syslog_name\"
 	transport_maps \"\$transport_maps\"
-	transport_retry_time \"$transport_retry_time\"
-	undisclosed_recipients_header \"$undisclosed_recipients_header\"
-	verp_delimiter_filter \"$verp_delimiter_filter\"
+	transport_retry_time \"\$transport_retry_time\"
+	undisclosed_recipients_header \"\$undisclosed_recipients_header\"
+	verp_delimiter_filter \"\$verp_delimiter_filter\"
 	postfix \"reload\"
 	$gv_Back \"\")
 	if [[ ${#argv} == 1 ]] ; then
@@ -266,11 +264,11 @@ conf_haupt_menue() {
 }
 #}}}
 #
-conf_haupt_menue
+conf_main_menu
 while [ "$gv_Auswahl" ] ; do
 	case "$gv_Auswahl" in
 		HELP*)	script_help main_help
-			conf_haupt_menue
+			conf_main_menu
 			;;
 		2bounce_notice_recipient)
 			# Zieladresse fuer Double Bounces{{{
@@ -287,7 +285,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e 2bounce_notice_recipient=""
 			fi
 			#}}}
-			conf_haupt_menue 2bounce_notice_recipient
+			conf_main_menu 2bounce_notice_recipient
 			;;
 		alias_maps)
 			# Tabellen fuer Mailaliase{{{
@@ -295,7 +293,7 @@ while [ "$gv_Auswahl" ] ; do
 			alias_maps="$MAPS"
 			postconf -e alias_maps="$MAPS"
 			#}}}
-			conf_haupt_menue alias_maps
+			conf_main_menu alias_maps
 			;;
 		alias_database)
 			# Bestimmt, welche Tabelle mit dem Befehl newaliases erzeugt wird.{{{
@@ -303,7 +301,7 @@ while [ "$gv_Auswahl" ] ; do
 			alias_database="$MAPS"
 			postconf -e alias_database="$MAPS"
 			#}}}
-			conf_haupt_menue alias_database alias_database
+			conf_main_menu alias_database alias_database
 			;;
 		allow_mail_to_commands)
 			# Auswahl der Tabellen in denen Mails an Programme umgelenkt werden duerfen{{{
@@ -328,7 +326,7 @@ while [ "$gv_Auswahl" ] ; do
 			#
 			check_gv_Auswahl allow_mail_to_commands "postconf -e allow_mail_to_commands="""
 			#}}}
-			conf_haupt_menue allow_mail_to_commands
+			conf_main_menu allow_mail_to_commands
 			;;
 		allow_mail_to_files)
 			# Auswahl der Tabellen in denen Mails in Dateien umgelenkt werden duerfen{{{
@@ -353,7 +351,7 @@ while [ "$gv_Auswahl" ] ; do
 			#
 			check_gv_Auswahl allow_mail_to_files "postconf -e allow_mail_to_files="""
 			#}}}
-			conf_haupt_menue allow_mail_to_files
+			conf_main_menu allow_mail_to_files
 			;;
 		allow_min_user)
 			# Sollen Mailadressen die mit einem "-" beginnen erlaubt werden{{{
@@ -362,7 +360,7 @@ while [ "$gv_Auswahl" ] ; do
 			allow_min_user="$WERT"
 			postconf -e allow_min_user="$WERT"
 			#}}}
-			conf_haupt_menue allow_min_user
+			conf_main_menu allow_min_user
 			;;
 		allow_percent_hack)
 			# Kontrollieren des umschreiben von mail Adressen{{{
@@ -371,7 +369,7 @@ while [ "$gv_Auswahl" ] ; do
 			allow_percent_hack="$WERT"
 			postconf -e allow_percent_hack="$WERT"
 			#}}}
-			conf_haupt_menue allow_percent_hack
+			conf_main_menu allow_percent_hack
 			;;
 		allow_untrusted_routing)
 			# Sollen Mailadressen mit fremden Mailrouting erlaubt werden{{{
@@ -380,7 +378,7 @@ while [ "$gv_Auswahl" ] ; do
 			allow_untrusted_routing="$WERT"
 			postconf -e allow_untrusted_routing="$WERT"
 			#}}}
-			conf_haupt_menue allow_untrusted_routing
+			conf_main_menu allow_untrusted_routing
 			;;
 		alternate_config_directories)
 			# Pfad zu weiteren Konfigurations Verzeichnissen{{{
@@ -408,7 +406,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e alternate_config_directories=""
 			fi
 			#}}}
-			conf_haupt_menue alternate_config_directories
+			conf_main_menu alternate_config_directories
 			;;
 		always_bcc)
 			# An diesen Account wird von jeder Mail eine Kopie geschickt.{{{
@@ -432,7 +430,7 @@ while [ "$gv_Auswahl" ] ; do
 				done
 			fi
 			#}}}
-			conf_haupt_menue always_bcc
+			conf_main_menu always_bcc
 			;;
 		append_at_myorigin)
 			# Kontrollieren des umschreiben von mail Adressen{{{
@@ -441,7 +439,7 @@ while [ "$gv_Auswahl" ] ; do
 			append_at_myorigin="$WERT"
 			postconf -e append_at_myorigin="$WERT"
 			#}}}
-			conf_haupt_menue append_at_myorigin
+			conf_main_menu append_at_myorigin
 			;;
 		append_dot_mydomain)
 			# Kontrollieren des umschreiben von mail Adressen{{{
@@ -450,7 +448,7 @@ while [ "$gv_Auswahl" ] ; do
 			append_dot_mydomain="$WERT"
 			postconf -e append_dot_mydomain="$WERT"
 			#}}}
-			conf_haupt_menue append_dot_mydomain
+			conf_main_menu append_dot_mydomain
 			;;
 		best_mx_transport)
 			# Weist einer Mail eine neue Transport Methode zu, wenn der Mailserver{{{
@@ -459,7 +457,7 @@ while [ "$gv_Auswahl" ] ; do
 			best_mx_transport="$WERT"
 			postconf -e best_mx_transport="$WERT"
 			#}}}
-			conf_haupt_menue best_mx_transport
+			conf_main_menu best_mx_transport
 			;;
 		biff)
 			# Soll die Zusammenarbeit mit biff aktiviert werden{{{
@@ -468,7 +466,7 @@ while [ "$gv_Auswahl" ] ; do
 			biff="$WERT"
 			postconf -e biff="$WERT"
 			#}}}
-			conf_haupt_menue biff
+			conf_main_menu biff
 			;;
 		body_checks)
 			# Tabelle eine Filterung des Bodies{{{
@@ -476,7 +474,7 @@ while [ "$gv_Auswahl" ] ; do
 			body_checks="$MAPS"
 			postconf -e body_checks="$MAPS"
 			#}}}
-			conf_haupt_menue body_checks
+			conf_main_menu body_checks
 			;;
 		body_checks_size_limit)
 			# Wieviel Mail Text soll im Body, ueberprueft werden.{{{
@@ -486,7 +484,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e body_checks_size_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue body_checks_size_limit
+			conf_main_menu body_checks_size_limit
 			;;
 		bounce_notice_recipient)
 			# Mailadresse fuer Benachrichtigung ueber Double Bounces{{{
@@ -500,7 +498,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e bounce_notice_recipient=""
 			fi
 			#}}}
-			conf_haupt_menue bounce_notice_recipient
+			conf_main_menu bounce_notice_recipient
 			;;
 		bounce_size_limit)
 			# Anzahl an Bytes die bei einem Bounce zurueckgeschickt werden.{{{
@@ -511,7 +509,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e bounce_size_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue bounce_size_limit
+			conf_main_menu bounce_size_limit
 			;;
 		broken_sasl_auth_clients)
 			# Soll der Mailserver, einen anderen Begruessungs Text ausgeben.{{{
@@ -521,7 +519,7 @@ while [ "$gv_Auswahl" ] ; do
 			broken_sasl_auth_clients="$WERT"
 			postconf -e broken_sasl_auth_clients="$WERT"
 			#}}}
-			conf_haupt_menue broken_sasl_auth_clients
+			conf_main_menu broken_sasl_auth_clients
 			;;
 		canonical_maps)
 			# Tabelle fuer canonical{{{
@@ -529,7 +527,7 @@ while [ "$gv_Auswahl" ] ; do
 			canonical_maps="$MAPS"
 			postconf -e canonical_maps="$MAPS"
 			#}}}
-			conf_haupt_menue canonical_maps
+			conf_main_menu canonical_maps
 			;;
 		command_directory)
 			# Verzeichnis zu den Postfix Programmen{{{
@@ -545,7 +543,7 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			conf_haupt_menue command_directory
+			conf_main_menu command_directory
 			;;
 		command_time_limit)
 			# Maximalzeit, die "local" auf ext. Programme wartet{{{
@@ -556,7 +554,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e command_time_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue command_time_limit
+			conf_main_menu command_time_limit
 			;;
 		config_directory)
 			# Konfigurations Verzeichnis einstellen{{{
@@ -570,7 +568,7 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			conf_haupt_menue config_d*
+			conf_main_menu config_d*
 			;;
 		content_filter)
 			# Transport Methode, an die jede Mail verschickt wird{{{
@@ -578,7 +576,7 @@ while [ "$gv_Auswahl" ] ; do
 			content_filter="$WERT"
 			postconf -e content_filter="$WERT"
 			#}}}
-			conf_haupt_menue content_filter
+			conf_main_menu content_filter
 			;;
 		daemon_directory)
 			# Verzeichnis zu den Postfix Modulen{{{
@@ -594,7 +592,7 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			conf_haupt_menue daemon_directory
+			conf_main_menu daemon_directory
 			;;
 		daemon_timeout)
 			# Timeout.{{{
@@ -605,7 +603,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e daemon_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue daemon_timeout
+			conf_main_menu daemon_timeout
 			;;
 		debug_peer_list)
 			# Welche Adressen sollen geloggt werden{{{
@@ -619,7 +617,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e debug_peer_list=""
 			fi
 			#}}}
-			conf_haupt_menue debug_peer_list
+			conf_main_menu debug_peer_list
 			;;
 		debug_peer_level)
 			# Debugging Level auswaehlen{{{
@@ -627,7 +625,7 @@ while [ "$gv_Auswahl" ] ; do
 			debug_peer_level="$WERT"
 			postconf -e debug_peer_level="$WERT"
 			#}}}
-			conf_haupt_menue debug_peer_level
+			conf_main_menu debug_peer_level
 			;;
 		defer_transports)
 			# Mails dieser Transport Methode werden in die Queue gestellt{{{
@@ -636,7 +634,7 @@ while [ "$gv_Auswahl" ] ; do
 			defer_transports="$WERT"
 			postconf -e defer_transports="$WERT"
 			#}}}
-			conf_haupt_menue defer_transports
+			conf_main_menu defer_transports
 			;;
 		delay_notice_recipient)
 			# Mailadresse, die bei Verspaetigungen benachrichtigt werden soll{{{
@@ -650,7 +648,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e delay_notice_recipient=""
 			fi
 			#}}}
-			conf_haupt_menue delay_notice_recipient
+			conf_main_menu delay_notice_recipient
 			;;
 		delay_warning_time)
 			# Zeit bis zur Info, wenn Mail nichtzustellbar{{{
@@ -661,7 +659,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e delay_warning_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue delay_warning_time
+			conf_main_menu delay_warning_time
 			;;
 		deliver_lock_attempts)
 			# Maximal Anzahl fuer Datei-lock Versuche{{{
@@ -672,7 +670,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e deliver_lock_attempts="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue deliver_lock_attempts
+			conf_main_menu deliver_lock_attempts
 			;;
 		deliver_lock_delay)
 			# Wartezeit fuer erneutes zugreifen auf lock Datei{{{
@@ -683,7 +681,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e deliver_lock_delay="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue deliver_lock_delay
+			conf_main_menu deliver_lock_delay
 			;;
 		disable_dns_lookups)
 			# Rechnernamen bei DNS Servern nachschlagen?{{{
@@ -692,7 +690,7 @@ while [ "$gv_Auswahl" ] ; do
 			disable_dns_lookups="$WERT"
 			postconf -e disable_dns_lookups="$WERT"
 			#}}}
-			conf_haupt_menue disable_dns_lookups
+			conf_main_menu disable_dns_lookups
 			;;
 		disable_verp_bounces)
 			# Bounces an VERP Adressen deaktivieren.{{{
@@ -701,7 +699,7 @@ while [ "$gv_Auswahl" ] ; do
 			disable_verp_bounces="$WERT"
 			postconf -e disable_verp_bounces="$WERT"
 			#}}}
-			conf_haupt_menue disable_verp_bounces
+			conf_main_menu disable_verp_bounces
 			;;
 		disable_vrfy_command)
 			# Soll das SMTP Kommando VRFY deaktiviert werden.{{{
@@ -710,7 +708,7 @@ while [ "$gv_Auswahl" ] ; do
 			disable_vrfy_command="$WERT"
 			postconf -e disable_vrfy_command="$WERT"
 			#}}}
-			conf_haupt_menue disable_vrfy_command
+			conf_main_menu disable_vrfy_command
 			;;
 		double_bounce_sender)
 			# Absenderadresse fuer Double Bounces{{{
@@ -724,7 +722,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e double_bounce_sender=""
 			fi
 			#}}}
-			conf_haupt_menue double_bounce_sender
+			conf_main_menu double_bounce_sender
 			;;
 		duplicate_filter_limit)
 			# Maximalzahl der gemerkten Empfaengern in der Adressliste von local und cleanup.{{{
@@ -735,7 +733,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e duplicate_filter_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue duplicate_filter_limit
+			conf_main_menu duplicate_filter_limit
 			;;
 		empty_address_recipient)
 			# Mailadresse fuer fehlende Angaben{{{
@@ -749,7 +747,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e empty_address_recipient="MAILER-DAEMON"
 			fi
 			#}}}
-			conf_haupt_menue empty_address_recipient
+			conf_main_menu empty_address_recipient
 			;;
 		error_notice_recipient)
 			# Mailadresse die bei Fehlern informatiert wird{{{
@@ -763,7 +761,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e error_notice_recipient=""
 			fi
 			#}}}
-			conf_haupt_menue error_notice_recipient
+			conf_main_menu error_notice_recipient
 			;;
 		expand_owner_alias)
 			# Soll bei ausgehenden ML-mails listenname-owner in die echte Mailadr.{{{
@@ -773,7 +771,7 @@ while [ "$gv_Auswahl" ] ; do
 			expand_owner_alias="$WERT"
 			postconf -e expand_owner_alias="$WERT"
 			#}}}
-			conf_haupt_menue expand_owner_alias
+			conf_main_menu expand_owner_alias
 			;;
 		export_environment)
 			# export Variablen an externe Programme{{{
@@ -787,7 +785,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e export_environment="TZ"
 			fi
 			#}}}
-			conf_haupt_menue export_environment
+			conf_main_menu export_environment
 			;;
 		extract_recipient_limit)
 			# Maximale Anzahl der Empfaenger, die Postfix aus dem Header liest.{{{
@@ -798,7 +796,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e extract_recipient_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue extract_recipient_limit
+			conf_main_menu extract_recipient_limit
 			;;
 		fallback_transport)
 			# Standard Transport Methode bei Fehlern{{{
@@ -806,7 +804,7 @@ while [ "$gv_Auswahl" ] ; do
 			fallback_transport="$WERT"
 			postconf -e fallback_transport="$WERT"
 			#}}}
-			conf_haupt_menue fallback_transport
+			conf_main_menu fallback_transport
 			;;
 		fast_flush_domains)
 			# Fuer welche domains soll der Mail Server eine schnellere{{{
@@ -815,7 +813,7 @@ while [ "$gv_Auswahl" ] ; do
 			fast_flush_domains="$MAPS"
 			postconf -e fast_flush_domains="$MAPS"
 			#}}}
-			conf_haupt_menue fast_flush_domains
+			conf_main_menu fast_flush_domains
 			;;
 		fast_flush_purge_time)
 			# Maximale Haltezeit fuer eine leere fast-flush Logdatei{{{
@@ -826,7 +824,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e fast_flush_purge_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue fast_flush_purge_time
+			conf_main_menu fast_flush_purge_time
 			;;
 		fast_flush_refresh_time)
 			# Zeit, nach der die Logdatei fuer ein Ziel neu aufgebaut werden muss{{{
@@ -837,7 +835,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e fast_flush_refresh_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue fast_flush_refresh_time
+			conf_main_menu fast_flush_refresh_time
 			;;
 		fault_injection_code)
 			# aktiviert einen Testmodus{{{
@@ -848,7 +846,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e fault_injection_code="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue fault_injection_code
+			conf_main_menu fault_injection_code
 			;;
 		fork_attempts)
 			# Maximalanzahl der Versuche einen neuen Prozess zu initiieren{{{
@@ -859,7 +857,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e fork_attempts="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue fork_attempts
+			conf_main_menu fork_attempts
 			;;
 		fork_delay)
 			# Wartezeit zwischen 2 Versuchen, einen neuen Prozess zu initiieren{{{
@@ -870,7 +868,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e fork_delay="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue fork_delay
+			conf_main_menu fork_delay
 			;;
 		forward_path)
 			# Dateien/Variablen in denen nach persoehnlichen Weiterleitungen{{{
@@ -885,7 +883,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e forward_path=""
 			fi
 			#}}}
-			conf_haupt_menue forward_path
+			conf_main_menu forward_path
 			;;
 		hash_queue_depth)
 			# Hash-Strukturtiefe{{{
@@ -896,7 +894,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e hash_queue_depth="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue hash_queue_depth
+			conf_main_menu hash_queue_depth
 			;;
 		hash_queue_names)
 			# Warteschlangen in denen ein Hashstruktur aufgebaut werden soll{{{
@@ -933,7 +931,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e hash_queue_names="defer"
 			fi
 			#}}}
-			conf_haupt_menue hash_queue_names
+			conf_main_menu hash_queue_names
 			;;
 		header_checks)
 			# Tabelle mit Filtermustern fuer den Header{{{
@@ -941,7 +939,7 @@ while [ "$gv_Auswahl" ] ; do
 			header_checks="$MAPS"
 			postconf -e header_checks="$MAPS"
 			#}}}
-			conf_haupt_menue header_checks
+			conf_main_menu header_checks
 			;;
 		header_size_limit)
 			# Maximale Laenge des Header.{{{
@@ -952,7 +950,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e header_size_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue header_size_limit
+			conf_main_menu header_size_limit
 			;;
 		home_mailbox)
 			# Mailbox Verzeichnis relativ zum Homeverzeichnis{{{
@@ -966,7 +964,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e home_mailbox=""
 			fi
 			#}}}
-			conf_haupt_menue home_mailbox
+			conf_main_menu home_mailbox
 			;;
 		hopcount_limit)
 			# Maximale Anzahl an passierten Mailservern.{{{
@@ -977,7 +975,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e hopcount_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue hopcount_limit
+			conf_main_menu hopcount_limit
 			;;
 		ignore_mx_lookup_error)
 			# Soll Postfix, sofern eine MX Abfrage kein Ergebnis liefert{{{
@@ -987,7 +985,7 @@ while [ "$gv_Auswahl" ] ; do
 			ignore_mx_lookup_error="$WERT"
 			postconf -e ignore_mx_lookup_error="$WERT"
 			#}}}
-			conf_haupt_menue ignore_mx_lookup_error
+			conf_main_menu ignore_mx_lookup_error
 			;;
 		import_environment)
 			# Variablen die von Postfix eingelesen werden{{{
@@ -1001,7 +999,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e import_environment="TZ MAIL_CONFIG"
 			fi
 			#}}}
-			conf_haupt_menue import_environment
+			conf_main_menu import_environment
 			;;
 		in_flow_delay)
 			# Verzoegerung fuer einkommende Mails{{{
@@ -1012,7 +1010,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e in_flow_delay="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue in_flow_delay
+			conf_main_menu in_flow_delay
 			;;
 		inet_interfaces)
 			# Auf welchen Rechneradressen soll postfix einen Port oeffnen,{{{
@@ -1027,7 +1025,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e inet_interfaces=""
 			fi
 			#}}}
-			conf_haupt_menue inet_interfaces
+			conf_main_menu inet_interfaces
 			;;
 		initial_destination_concurrency)
 			# maximale Anzahl igleichzeitiger Verbindungen{{{
@@ -1040,7 +1038,7 @@ while [ "$gv_Auswahl" ] ; do
 				msgbox "$gv_Attention" "$MSG"
 			fi
 			#}}}
-			conf_haupt_menue initial_destination_concurrency
+			conf_main_menu initial_destination_concurrency
 			;;
 		ipc_idle)
 			# Timeout nach dem die IPC zw. 2 Prozessen beendet wird{{{
@@ -1051,7 +1049,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e ipc_idle="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue ipc_idle
+			conf_main_menu ipc_idle
 			;;
 		ipc_timeout)
 			# genereller Timeout fuer die IPC{{{
@@ -1062,7 +1060,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e ipc_timeout="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue ipc_timeout
+			conf_main_menu ipc_timeout
 			;;
 		line_length_limit)
 			# Maximallaenge einer Zeile in Bytes, danach wird sie umgebrochen.{{{
@@ -1073,7 +1071,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e line_length_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue line_length_limit
+			conf_main_menu line_length_limit
 			;;
 		local_command_shell)
 			# Lokale Shell auswaehlen{{{
@@ -1086,7 +1084,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e local_command_shell=""
 			fi
 			#}}}
-			conf_haupt_menue local_command_shell
+			conf_main_menu local_command_shell
 			;;
 		local_destination_concurrency_limit)
 			# maximale Empfaengeranzahl bei lokaler Mails Zustellung{{{
@@ -1096,7 +1094,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e local_destination_concurrency_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue local_destination_concurrency_limit
+			conf_main_menu local_destination_concurrency_limit
 			;;
 		local_destination_recipient_limit)
 			# maximale Anzahl gleichzeitiger zuzustellender lokaler Mails{{{
@@ -1106,7 +1104,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e local_destination_recipient_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue local_destination_recipient_limit
+			conf_main_menu local_destination_recipient_limit
 			;;
 		local_recipient_maps)
 			# Tabelle mit lokalen Mailadressen, fuer die postfix Mails annehmen soll{{{
@@ -1115,7 +1113,7 @@ while [ "$gv_Auswahl" ] ; do
 			local_recipient_maps="$MAPS"
 			postconf -e local_recipient_maps="$MAPS"
 			#}}}
-			conf_haupt_menue local_recipient_maps
+			conf_main_menu local_recipient_maps
 			;;
 		local_transport)
 			# Transport Methode fuer lokale Mails{{{
@@ -1124,7 +1122,7 @@ while [ "$gv_Auswahl" ] ; do
 			local_transport="${WERT}:\\\$myhostname"
 			postconf -e local_transport="${WERT}:\$myhostname"
 			#}}}
-			conf_haupt_menue local_transport
+			conf_main_menu local_transport
 			;;
 		luser_relay)
 			# unzustellbare mails nicht bouncen sondern weiter verschicken{{{
@@ -1150,7 +1148,7 @@ while [ "$gv_Auswahl" ] ; do
 #				postconf -e luser_relay=""
 #			fi
 			#}}}
-			conf_haupt_menue luser_relay
+			conf_main_menu luser_relay
 			;;
 		maps_rbl_domains)
 			# Domaineingabe fuer RBL Pruefung{{{
@@ -1164,7 +1162,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e maps_rbl_domains=""
 			fi
 			#}}}
-			conf_haupt_menue maps_rbl_domains
+			conf_main_menu maps_rbl_domains
 			;;
 		masquerade_classes)
 			# Bereiche, in denen postfix Mailadressen maskieren soll{{{
@@ -1191,7 +1189,7 @@ while [ "$gv_Auswahl" ] ; do
 			#
 			check_gv_Auswahl masquerade_classes "postconf -e masquerade_classes="""
 			#}}}
-			conf_haupt_menue masquerade_classes
+			conf_main_menu masquerade_classes
 			;;
 		masquerade_domains)
 			# Domains eingeben, die maskiert werden sollen{{{
@@ -1205,7 +1203,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e masquerade_domains=""
 			fi
 			#}}}
-			conf_haupt_menue masquerade_domains
+			conf_main_menu masquerade_domains
 			;;
 		masquerade_exceptions)
 			# Mail Users auswaehlen, der vom masquerading ausgenommen wird{{{
@@ -1213,7 +1211,7 @@ while [ "$gv_Auswahl" ] ; do
 			masquerade_exceptions="$WERT"
 			postconf -e masquerade_exceptions="$WERT"
 			#}}}
-			conf_haupt_menue masquerade_exceptions
+			conf_main_menu masquerade_exceptions
 			;;
 		max_idle)
 			# Idle Zeit fuer Postfix Module{{{
@@ -1223,7 +1221,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e max_idle="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue max_idle
+			conf_main_menu max_idle
 			;;
 		max_use)
 			# Anzahl der maximalen Jobs, fuer Module{{{
@@ -1233,7 +1231,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e max_use="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue max_use
+			conf_main_menu max_use
 			;;
 		maximal_backoff_time)
 			# Maximalzeit nach wieder versucht wird Mail zuzustellen{{{
@@ -1243,7 +1241,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e maximal_backoff_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue maximal_backoff_time
+			conf_main_menu maximal_backoff_time
 			;;
 		maximal_queue_lifetime)
 			# Zeit, nach der aufgegeben wird Mail zuzustellen{{{
@@ -1253,7 +1251,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e maximal_queue_lifetime="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue maximal_queue_lifetime
+			conf_main_menu maximal_queue_lifetime
 			;;
 		message_size_limit)
 			# Maximalgroesse einer Mail.{{{
@@ -1263,7 +1261,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e message_size_limit="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue message_size_limit
+			conf_main_menu message_size_limit
 			;;
 		minimal_backoff_time)
 			# Minimalzeit bevor wieder versucht wird Mail zuzustellen{{{
@@ -1273,7 +1271,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e minimal_backoff_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue minimal_backoff_time
+			conf_main_menu minimal_backoff_time
 			;;
 		mime_header_checks)
 			# Tabelle mit Filtermustern fuer den Mime Header{{{
@@ -1281,7 +1279,7 @@ while [ "$gv_Auswahl" ] ; do
 			mime_header_checks="$MAPS"
 			postconf -e mime_header_checks="$MAPS"
 			#}}}
-			conf_haupt_menue mime_header_checks
+			conf_main_menu mime_header_checks
 			;;
 		mydestination)
 			# Eine Liste von Domains fuer die Postfix der Final Destination.{{{
@@ -1295,7 +1293,7 @@ while [ "$gv_Auswahl" ] ; do
 				no_input_msg
 			fi
 			#}}}
-			conf_haupt_menue mydestination
+			conf_main_menu mydestination
 			;;
 		mydomain)
 			# Fuer welche domain ist dieser Mail Server zustaendig.{{{
@@ -1309,7 +1307,7 @@ while [ "$gv_Auswahl" ] ; do
 				no_input_msg
 			fi
 			#}}}
-			conf_haupt_menue mydomain
+			conf_main_menu mydomain
 			;;
 		myhostname)
 			# hostname des Mailservers{{{
@@ -1322,7 +1320,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e myhostname="`hostname -fqdn`"
 			fi
 			#}}}
-			conf_haupt_menue myhostname
+			conf_main_menu myhostname
 			;;
 		mynetworks)
 			# Tabelle fuer IP-Nummern/Bereiche, die relayen duerfen{{{
@@ -1330,7 +1328,7 @@ while [ "$gv_Auswahl" ] ; do
 			mynetworks="$MAPS"
 			postconf -e mynetworks="$MAPS"
 			#}}}
-			conf_haupt_menue mynetworks
+			conf_main_menu mynetworks
 			;;
 		mynetworks_style)
 			# wie mynetworks, ohne IP-Bereiche{{{
@@ -1351,7 +1349,7 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			#}}}
-			conf_haupt_menue mynetworks_style
+			conf_main_menu mynetworks_style
 			;;
 		myorigin)
 			# Hostname der bei der Erzeugung neuer Mails benutzt wird{{{
@@ -1373,7 +1371,7 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			#}}}
-			conf_haupt_menue myorigin
+			conf_main_menu myorigin
 			;;
 		nested_header_checks)
 			# Tabelle mit Filtermustern der Mailanhaenge Header{{{
@@ -1381,7 +1379,7 @@ while [ "$gv_Auswahl" ] ; do
 			nested_header_checks="$MAPS"
 			postconf -e nested_header_checks="$MAPS"
 			#}}}
-			conf_haupt_menue nested_header_checks
+			conf_main_menu nested_header_checks
 			;;
 		notify_classes)
 			# Bereiche, in denen der Postmaster bei Fehlern informiert wird.{{{
@@ -1408,7 +1406,7 @@ while [ "$gv_Auswahl" ] ; do
 			#
 			check_gv_Auswahl notify_classes "postconf -e notify_classes="""
 			#}}}
-			conf_haupt_menue notify_classes
+			conf_main_menu notify_classes
 			;;
 		owner_request_special)
 			# Soll eine besondere Behandlung fuer die Adressen owner-listenname und{{{
@@ -1418,7 +1416,7 @@ while [ "$gv_Auswahl" ] ; do
 			owner_request_special="$WERT"
 			postconf -e owner_request_special="$WERT"
 			#}}}
-			conf_haupt_menue owner_request_special
+			conf_main_menu owner_request_special
 			;;
 		parent_domain_matches_subdomains)
 			# Parameter, in denen eine Domainangabe automatisch{{{
@@ -1446,7 +1444,7 @@ while [ "$gv_Auswahl" ] ; do
 			#
 			check_gv_Auswahl parent_domain_matches_subdomains "postconf -e parent_domain_matches_subdomains="""
 			#}}}
-			conf_haupt_menue parent_domain_matches_subdomains
+			conf_main_menu parent_domain_matches_subdomains
 			;;
 		permit_mx_backup_networks)
 			# Postfix wird hier angewiesen nur IP-Netze zu relayen,{{{
@@ -1479,7 +1477,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e permit_mx_backup_networks=""
 			fi
 			#}}}
-			conf_haupt_menue permit_mx_backup_networks
+			conf_main_menu permit_mx_backup_networks
 			;;
 		prepend_delivered_header)
 			# In welchen Faellen soll ein "Delivered-To:" Header {{{
@@ -1504,7 +1502,7 @@ while [ "$gv_Auswahl" ] ; do
 			#
 			check_gv_Auswahl prepend_delivered_header "postconf -e prepend_delivered_header="""
 			#}}}
-			conf_haupt_menue prepend_delivered_header
+			conf_main_menu prepend_delivered_header
 			;;
 		process_id_directory)
 			# Verzeichnis fuer Dateien mit Prozess ID's{{{
@@ -1518,7 +1516,7 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			conf_haupt_menue process_id_directory
+			conf_main_menu process_id_directory
 			;;
 		propagate_unmatched_extensions)
 			# In welchen Tabellen sollen auch Mailextensionen beruecksichtigt werden{{{
@@ -1552,7 +1550,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e propagate_unmatched_extensions="canonical, virtual"
 			fi
 			#}}}
-			conf_haupt_menue propagate_unmatched_extensions
+			conf_main_menu propagate_unmatched_extensions
 			;;
 		recipient_bcc_maps)
 			# Tabelle, an die "Blind Carbon-Copy" Mails geschickt werden, wenn{{{
@@ -1561,7 +1559,7 @@ while [ "$gv_Auswahl" ] ; do
 			recipient_bcc_maps="$MAPS"
 			postconf -e recipient_bcc_maps="$MAPS"
 			#}}}
-			conf_haupt_menue recipient_bcc_maps
+			conf_main_menu recipient_bcc_maps
 			;;
 		recipient_canonical_maps)
 			# canonical Tabelle fuer Empfaenger Adressen{{{
@@ -1569,7 +1567,7 @@ while [ "$gv_Auswahl" ] ; do
 			recipient_canonical_maps="$MAPS"
 			postconf -e recipient_canonical_maps="$MAPS"
 			#}}}
-			conf_haupt_menue recipient_canonical_maps
+			conf_main_menu recipient_canonical_maps
 			;;
 		recipient_delimiter)
 			# Trennzeichen zwischen User und Adresserweiterung{{{
@@ -1593,71 +1591,7 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			#}}}
-			conf_haupt_menue recipient_delimiter
-			;;
-		relay_clientcerts)
-			# Tabelle mit Client Zertrifikaten{{{
-			tab_support_wahl "$gv_Auswahl"
-			relay_clientcerts="$MAPS"
-			postconf -e relay_clientcerts="$MAPS"
-			#}}}
-			conf_haupt_menue relay_clientcerts
-			;;
-		relay_destination_concurrency_limit)
-			# Maximalanzahl gleichzeitiger Verbindungen zu einem Ziel{{{
-			number_input -i "$relay_destination_concurrency_limit"
-			if [ "$NUMBER" ] ; then
-				relay_destination_concurrency_limit="$NUMBER"
-				postconf -e relay_destination_concurrency_limit="$NUMBER"
-			fi
-			#}}}
-			conf_haupt_menue relay_destination_concurrency_limit
-			;;
-		relay_destination_recipient_limit)
-			# Maximalanzahl der Empfaenger in einer einzigen Mails{{{
-			# Groesser Empfaengerlisten werden in mehrere Mails aufgeteilt
-			number_input -i "$relay_destination_recipient_limit"
-			if [ "$NUMBER" ] ; then
-				relay_destination_recipient_limit="$NUMBER"
-				postconf -e relay_destination_recipient_limit="$NUMBER"
-			fi
-			#}}}
-			conf_haupt_menue relay_destination_recipient_limit
-			;;
-		relay_domains)
-			# Domains fuer die bzw. von denen postfix relayed{{{
-			tab_support_wahl "$gv_Auswahl"
-			relay_domains="$MAPS"
-			postconf -e relay_domains="$MAPS"
-			#}}}
-			conf_haupt_menue relay_domains
-			;;
-		relayhost)
-			# An welchen Host sollen alle ausgehenden Mails zugestellt werden{{{
-			RELAYHOST_MSG=$(gettext 'Geben Sie den Host an, an den alle ausgehenden Mails geschickt werden soll (Bsp. [smtp.domain.de] , smtp.domain.de:25).')
-			inputbox "$MAINCF_TITLE" "$RELAYHOST_MSG" "$relayhost"
-			if [ "$gv_Auswahl" ] ; then
-				if [ "${(w)#gv_Auswahl}" = 1 ] ; then
-					relayhost="$gv_Auswahl"
-					postconf -e relayhost="$gv_Auswahl"
-				else
-					no_input_msg
-				fi
-			else
-				relayhost=""
-				postconf -e relayhost=""
-			fi
-			#}}}
-			conf_haupt_menue relayhost
-			;;
-		relay_recipient_maps)
-			# Tabelle mit Mailadressen, fuer die postfix Mails annehmen soll.{{{
-			# s. zless STANDARD_CONFIGURATION_README.gz im Dokumentations-Pfad
-			tab_support_wahl "$gv_Auswahl"
-			relay_recipient_maps="$MAPS"
-			postconf -e relay_recipient_maps="$MAPS"
-			#}}}
-			conf_haupt_menue relay_recipient_maps
+			conf_main_menu recipient_delimiter
 			;;
 		relocated_maps)
 			# Tabelle mit relocated Eintraegen{{{
@@ -1665,7 +1599,7 @@ while [ "$gv_Auswahl" ] ; do
 			relocated_maps="$MAPS"
 			postconf -e relocated_maps="$MAPS"
 			#}}}
-			conf_haupt_menue relocated_maps
+			conf_main_menu relocated_maps
 			;;
 		require_home_directory)
 			# Soll die Existenz eines HOME-Verzeichniss erzwungen werden?{{{
@@ -1674,7 +1608,7 @@ while [ "$gv_Auswahl" ] ; do
 			require_home_directory="$WERT"
 			postconf -e require_home_directory="$WERT"
 			#}}}
-			conf_haupt_menue require_home_directory
+			conf_main_menu require_home_directory
 			;;
 		sender_canonical_maps)
 			# canonical Tabelle fuer Sender Adressen{{{
@@ -1682,7 +1616,7 @@ while [ "$gv_Auswahl" ] ; do
 			sender_canonical_maps="$MAPS"
 			postconf -e sender_canonical_maps="$MAPS"
 			#}}}
-			conf_haupt_menue sender_canonical_maps
+			conf_main_menu sender_canonical_maps
 			;;
 		sender_bcc_maps)
 			# Tabelle, an die "Blind Carbon-Copy" Mails geschickt werden, wenn{{{
@@ -1691,7 +1625,7 @@ while [ "$gv_Auswahl" ] ; do
 			sender_bcc_maps="$MAPS"
 			postconf -e sender_bcc_maps="$MAPS"
 			#}}}
-			conf_haupt_menue sender_bcc_maps
+			conf_main_menu sender_bcc_maps
 			;;
 		sendmail_path)
 			# Pfad zum Sendmail Ersatz sendmail{{{
@@ -1708,7 +1642,7 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			fi
 			#}}}
-			conf_haupt_menue sendmail_path
+			conf_main_menu sendmail_path
 			;;
 		service_throttle_time)
 			# Wartezeit fuer ein abgestuerztes Modul bis zum Neustart{{{
@@ -1719,7 +1653,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e service_throttle_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue service_throttle_time
+			conf_main_menu service_throttle_time
 			;;
 		setgid_group)
 			# GroupID fuer die maildrop Queue{{{
@@ -1743,7 +1677,7 @@ while [ "$gv_Auswahl" ] ; do
 				done
 			fi
 			#}}}
-			conf_haupt_menue setgid_group
+			conf_main_menu setgid_group
 			;;
 		soft_bounce)
 			# Soll soft Bounce aktiviert werden?{{{
@@ -1752,7 +1686,7 @@ while [ "$gv_Auswahl" ] ; do
 			soft_bounce="$WERT"
 			postconf -e soft_bounce="$WERT"
 			#}}}
-			conf_haupt_menue soft_bounce
+			conf_main_menu soft_bounce
 			;;
 		stale_lock_time)
 			# Alter, nach denen liegendengebliebene Lockdateien geloescht werden{{{
@@ -1763,7 +1697,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e stale_lock_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue stale_lock_time
+			conf_main_menu stale_lock_time
 			;;
 		strict_rfc821_envelopes)
 			# Soll die korrekte Envelope-Adresse erzwungen werden?{{{
@@ -1772,7 +1706,7 @@ while [ "$gv_Auswahl" ] ; do
 			strict_rfc821_envelopes="$WERT"
 			postconf -e strict_rfc821_envelopes="$WERT"
 			#}}}
-			conf_haupt_menue strict_rfc821_envelopes
+			conf_main_menu strict_rfc821_envelopes
 			;;
 		sun_mailtool_compatibility)
 			# Soll die Zusammenarbeit mit Mailtool aktiviert werden?{{{
@@ -1781,7 +1715,7 @@ while [ "$gv_Auswahl" ] ; do
 			sun_mailtool_compatibility="$WERT"
 			postconf -e sun_mailtool_compatibility="$WERT"
 			#}}}
-			conf_haupt_menue sun_mailtool_compatibility
+			conf_main_menu sun_mailtool_compatibility
 			;;
 		swap_bangpath)
 			# Sollen gebangte Routpfade aus UUCP Verbindungen in eine{{{
@@ -1791,7 +1725,7 @@ while [ "$gv_Auswahl" ] ; do
 			swap_bangpath="$WERT"
 			postconf -e swap_bangpath="$WERT"
 			#}}}
-			conf_haupt_menue swap_bangpath
+			conf_main_menu swap_bangpath
 			;;
 		syslog_facility)
 			# Ausgabekanal fuer Logmeldungen an syslogd{{{
@@ -1805,7 +1739,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e syslog_facility="mail"
 			fi
 			#}}}
-			conf_haupt_menue syslog_facility
+			conf_main_menu syslog_facility
 			;;
 		syslog_name)
 			# Ausgabename von Postfix im syslog {{{
@@ -1820,7 +1754,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e syslog_name="postfix"
 			fi
 			#}}}
-			conf_haupt_menue syslog_name
+			conf_main_menu syslog_name
 			;;
 		transport_maps)
 			# Tabelle mit den Transportwegen{{{
@@ -1828,18 +1762,17 @@ while [ "$gv_Auswahl" ] ; do
 			transport_maps="$MAPS"
 			postconf -e transport_maps="$MAPS"
 			#}}}
-			conf_haupt_menue transport_maps
+			conf_main_menu transport_maps
 			;;
 		transport_retry_time)
 			# Wartezeit, bevor ein gestoerter Transport erneut angesprochen wird{{{
-			#
 			number_input -s "${transport_retry_time%?}"
 			if [ "$NUMBER" ] ; then
 				transport_retry_time="$NUMBER"
 				postconf -e transport_retry_time="$NUMBER"
 			fi
 			#}}}
-			conf_haupt_menue transport_retry_time
+			conf_main_menu transport_retry_time
 			;;
 		undisclosed_recipients_header)
 			# Header, der eingefuegt wird bei keinem Header To{{{
@@ -1853,7 +1786,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e undisclosed_recipients_header=""
 			fi
 			#}}}
-			conf_haupt_menue undisclosed_recipients_header
+			conf_main_menu undisclosed_recipients_header
 			;;
 		verp_delimiter_filter)
 			# Zeichen, die fuer eine Kodierung der Mailadresse bei VERP genutzt{{{
@@ -1883,7 +1816,7 @@ while [ "$gv_Auswahl" ] ; do
 				postconf -e verp_delimiter_filter="+"
 			fi
 			#}}}
-			conf_haupt_menue verp_delimiter_filter
+			conf_main_menu verp_delimiter_filter
 			;;
 		postfix)
 			# postfix, Konfiguration neu einlesen
