@@ -30,7 +30,6 @@ kwmutt_conf() {
 	lv_Smtp_Sendmail=$(gettext 'SMTP-Sendmail')
 	lv_Sort=$(gettext 'Sortierung')
 	lv_Urlview=$(gettext 'urlview')
-	lv_Send=$(gettext 'Versand')
 	#
 	lv_Choice=$(gettext 'Auswahl')
 	lv_Serv_Test=$(gettext 'Server testen')
