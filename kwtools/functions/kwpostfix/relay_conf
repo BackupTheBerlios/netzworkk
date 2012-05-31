@@ -6,12 +6,10 @@ relay_conf() {
 	RELAY_TITLE="${gv_Configuration}::${lv_Relay}"
 	
 	# Bestehende Konfiguration einlesen# {{{
-	set -x
-	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)relay_*} | \
+	print -l ${(R)${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)relay_*}##*_code*} | \
 		sed -e 's#"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
 		s#\$#\\\$#g ; s#$#"#' >${gv_WorkDir}/postfix$$
 	read_file -f ${gv_WorkDir}/postfix$$
-	set +x
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
 	# Funktion (conf_relay_menu), die Weiterleitungs-Parameter einstellen# {{{
