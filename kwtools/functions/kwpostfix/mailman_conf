@@ -1,0 +1,145 @@
+# mailman (?) Konfiguration einstellen{{{
+
+mailman_conf() {
+
+	# Variable
+	MAILMAN_TITLE="${gv_Configuration}::${lv_Mailman}"
+	
+	# Bestehende Konfiguration einlesen# {{{
+	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)mailman_*} | \
+		sed -e 's#\"#\\\"#g ; s# = #="#g ; s# =#="#g ;
+		s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+	read_file -f ${gv_WorkDir}/postfix$$
+	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+	## }}}
+	# Funktion (conf_mailman_menu), die Wiederholungs-Parameter einstellen# {{{
+	##############################################
+	# TODO: Hilfe etc. vorbereitet
+	# mailman_delivery_slot_cost = $default_delivery_slot_cost
+	# mailman_delivery_slot_discount = $default_delivery_slot_discount
+	# mailman_delivery_slot_loan = $default_delivery_slot_loan
+	# mailman_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
+	# mailman_destination_concurrency_limit = $default_destination_concurrency_limit
+	# mailman_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
+	# mailman_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
+	# mailman_destination_rate_delay = $default_destination_rate_delay
+	# mailman_destination_recipient_limit = $default_destination_recipient_limit
+	# mailman_extra_recipient_limit = $default_extra_recipient_limit
+	# mailman_initial_destination_concurrency = $initial_destination_concurrency
+	# mailman_minimum_delivery_slots = $default_minimum_delivery_slots
+	# mailman_recipient_limit = $default_recipient_limit
+	# mailman_recipient_refill_delay = $default_recipient_refill_delay
+	# mailman_recipient_refill_limit = $default_recipient_refill_limit
+	# mailman_time_limit = $command_time_limit
+	##############################################
+	conf_mailman_menu() {
+		MAILMAN_MENU=(mailman_delivery_slot_cost \"\$mailman_delivery_slot_cost\"
+		mailman_delivery_slot_discount \"\$mailman_delivery_slot_discount\"
+		mailman_delivery_slot_loan \"\$mailman_delivery_slot_loan\"
+		mailman_destination_concurrency_failed_cohort_limit \"\$mailman_destination_concurrency_failed_cohort_limit\"
+		mailman_destination_concurrency_limit \"\$mailman_destination_concurrency_limit\"
+		mailman_destination_concurrency_negative_feedback \"\$mailman_destination_concurrency_negative_feedback\"
+		mailman_destination_concurrency_positive_feedback \"\$mailman_destination_concurrency_positive_feedback\"
+		mailman_destination_rate_delay \"\$mailman_destination_rate_delay\"
+		mailman_destination_recipient_limit \"\$mailman_destination_recipient_limit\"
+		mailman_extra_recipient_limit \"\$mailman_extra_recipient_limit\"
+		mailman_initial_destination_concurrency \"\$mailman_initial_destination_concurrency\"
+		mailman_minimum_delivery_slots \"\$mailman_minimum_delivery_slots\"
+		mailman_recipient_limit \"\$mailman_recipient_limit\"
+		mailman_recipient_refill_delay \"\$mailman_recipient_refill_delay\"
+		mailman_recipient_refill_limit \"\$mailman_recipient_refill_limit\"
+		mailman_time_limit \"\$mailman_time_limit\"
+		postfix \"reload\"
+		$gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$MAILMAN_TITLE" "$gv_Menupoint" "$MAILMAN_MENU"
+		else
+			menubox "$MAILMAN_TITLE" "$gv_Menupoint" "$MAILMAN_MENU"
+		fi
+	}
+	## }}}
+	conf_mailman_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help mailman_help
+				conf_mailman_menu
+				;;
+			mailman_delivery_slot_cost)
+				# = $default_delivery_slot_cost
+				conf_mailman_menu mailman_delivery_slot_cost
+				;;
+			mailman_delivery_slot_discount)
+				# = $default_delivery_slot_discount
+				conf_mailman_menu mailman_delivery_slot_discount
+				;;
+			mailman_delivery_slot_loan)
+				# = $default_delivery_slot_loan
+				conf_mailman_menu mailman_delivery_slot_loan
+				;;
+			mailman_destination_concurrency_failed_cohort_limit)
+				# = $default_destination_concurrency_failed_cohort_limit
+				conf_mailman_menu mailman_destination_concurrency_failed_cohort_limit
+				;;
+			mailman_destination_concurrency_limit)
+				# = $default_destination_concurrency_limit
+				conf_mailman_menu mailman_destination_concurrency_limit
+				;;
+			mailman_destination_concurrency_negative_feedback)
+				# = $default_destination_concurrency_negative_feedback
+				conf_mailman_menu mailman_destination_concurrency_negative_feedback
+				;;
+			mailman_destination_concurrency_positive_feedback)
+				# = $default_destination_concurrency_positive_feedback
+				conf_mailman_menu mailman_destination_concurrency_positive_feedback
+				;;
+			mailman_destination_rate_delay)
+				# = $default_destination_rate_delay
+				conf_mailman_menu mailman_destination_rate_delay
+				;;
+			mailman_destination_recipient_limit)
+				# = $default_destination_recipient_limit
+				conf_mailman_menu mailman_destination_recipient_limit
+				;;
+			mailman_extra_recipient_limit)
+				# = $default_extra_recipient_limit
+				conf_mailman_menu mailman_extra_recipient_limit
+				;;
+			mailman_initial_destination_concurrency)
+				# = $initial_destination_concurrency
+				conf_mailman_menu mailman_initial_destination_concurrency
+				;;
+			mailman_minimum_delivery_slots)
+				# = $default_minimum_delivery_slots
+				conf_mailman_menu mailman_minimum_delivery_slots
+				;;
+			mailman_recipient_limit)
+				# = $default_recipient_limit
+				conf_mailman_menu mailman_recipient_limit
+				;;
+			mailman_recipient_refill_delay)
+				# = $default_recipient_refill_delay
+				conf_mailman_menu mailman_recipient_refill_delay
+				;;
+			mailman_recipient_refill_limit)
+				# = $default_recipient_refill_limit
+				conf_mailman_menu mailman_recipient_refill_limit
+				;;
+			mailman_time_limit)
+				# = $command_time_limit
+				conf_mailman_menu mailman_time_limit
+				;;
+			postfix)
+				# postfix, Konfiguration neu einlesen
+				postfix_start_reload
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
