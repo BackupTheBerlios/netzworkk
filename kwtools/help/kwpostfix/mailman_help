@@ -1,0 +1,39 @@
+# mailman_help (?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Mailman}::${gv_Help}"
+MSG=$(gettext 'mailman_delivery_slot_cost:
+
+mailman_delivery_slot_discount:
+
+mailman_delivery_slot_loan:
+
+mailman_destination_concurrency_failed_cohort_limit:
+
+mailman_destination_concurrency_limit:
+
+mailman_destination_concurrency_negative_feedback:
+
+mailman_destination_concurrency_positive_feedback:
+
+mailman_destination_rate_delay:
+
+mailman_destination_recipient_limit:
+
+mailman_extra_recipient_limit:
+
+mailman_initial_destination_concurrency:
+
+mailman_minimum_delivery_slots:
+
+mailman_recipient_limit:
+
+mailman_recipient_refill_delay:
+
+mailman_recipient_refill_limit:
+
+mailman_time_limit:
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
