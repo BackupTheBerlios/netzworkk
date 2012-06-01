@@ -1,0 +1,39 @@
+# ifmail_help (?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Ifmail}::${gv_Help}"
+MSG=$(gettext 'ifmail_delivery_slot_cost:
+
+ifmail_delivery_slot_discount:
+
+ifmail_delivery_slot_loan:
+
+ifmail_destination_concurrency_failed_cohort_limit:
+
+ifmail_destination_concurrency_limit:
+
+ifmail_destination_concurrency_negative_feedback:
+
+ifmail_destination_concurrency_positive_feedback:
+
+ifmail_destination_rate_delay:
+
+ifmail_destination_recipient_limit:
+
+ifmail_extra_recipient_limit:
+
+ifmail_initial_destination_concurrency:
+
+ifmail_minimum_delivery_slots:
+
+ifmail_recipient_limit:
+
+ifmail_recipient_refill_delay:
+
+ifmail_recipient_refill_limit:
+
+ifmail_time_limit:
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
