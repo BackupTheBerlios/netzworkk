@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 27.05.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 31.05.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -61,6 +61,7 @@ lv_Mail=$(gettext 'Mail')
 lv_Lmtp=$(gettext 'LMTP')
 lv_Queue=$(gettext 'Queue/Qmail')
 lv_Relay=$(gettext 'Weiterleitung')
+lv_Retry=$(gettext 'Wiederholung')
 lv_Smtp=$(gettext 'SMTP')
 lv_Smtpd=$(gettext 'SMTPD')
 lv_Tls=$(gettext 'TLS')
@@ -235,8 +236,8 @@ while [ "$gv_Auswahl" ] ; do
 			# virtual_conf
 			#####################################################
 			autoload -U default_conf main_conf konf_menue lmtp_conf lock_art mail_conf \
-				postfix_variable q_conf relay_conf tls_conf smtp_conf smtpd_conf \
-				tab_support_wahl virtual_conf
+				postfix_variable q_conf relay_conf retry_conf tls_conf smtp_conf \
+				smtpd_conf tab_support_wahl virtual_conf
 			#
 			# Funktion (verp_delimiter), um die Trennzeichen einzustellen.# {{{
 			#
@@ -404,9 +405,17 @@ while [ "$gv_Auswahl" ] ; do
 			}
 			#}}}
 			# Funktion konf_menue{{{
+			############################################
+			# TODO: Menue Vorbereitung
+			# CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
+			# 	$lv_Mail \"\" $lv_Lmtp \"\" $lv_Queue \"\"
+			# 	$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
+			# 	$lv_Tls \"\" $lv_Virtual \"\"
+			# 	$gv_Back \"\")
+			############################################
 			CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
 				$lv_Mail \"\" $lv_Lmtp \"\" $lv_Queue \"\"
-				$lv_Relay \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
+				$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
 				$lv_Tls \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
 			konf_menue() {
@@ -459,6 +468,11 @@ while [ "$gv_Auswahl" ] ; do
 						# Relay (Weiterleitung) Einstellungen
 						relay_conf
 						konf_menue $lv_Relay
+						;;
+					$lv_Retry)
+						# Retry (Wiederholung) Einstellungen
+						retry_conf
+						konf_menue $lv_Retry
 						;;
 					$lv_Smtp)
 						# smtp Einstellungen
