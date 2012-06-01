@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 31.05.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 01.06.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -57,7 +57,9 @@ lv_Clear=$(gettext 'Aufraeumen')
 lv_Main=$(gettext 'Haupt')
 lv_Default=$(gettext 'Standard')
 lv_ErrorCodes=$(gettext 'Fehlercodes')
+lv_Ifmail=$(gettext 'IfMail')
 lv_Mail=$(gettext 'Mail')
+lv_Mailman=$(gettext 'Mailman')
 lv_Lmtp=$(gettext 'LMTP')
 lv_Queue=$(gettext 'Queue/Qmail')
 lv_Relay=$(gettext 'Weiterleitung')
@@ -235,7 +237,8 @@ while [ "$gv_Auswahl" ] ; do
 			# Wie zum Bsp. $data_directory fuer tls_conf und
 			# virtual_conf
 			#####################################################
-			autoload -U default_conf main_conf konf_menue lmtp_conf lock_art mail_conf \
+			autoload -U default_conf main_conf konf_menue lmtp_conf lock_art \
+				ifmail_conf mail_conf mailman_conf \
 				postfix_variable q_conf relay_conf retry_conf tls_conf smtp_conf \
 				smtpd_conf tab_support_wahl virtual_conf
 			#
@@ -408,15 +411,16 @@ while [ "$gv_Auswahl" ] ; do
 			############################################
 			# TODO: Menue Vorbereitung
 			# CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
-			# 	$lv_Mail \"\" $lv_Lmtp \"\" $lv_Queue \"\"
+			# 	$lv_Ifmail \"\" $lv_Lmtp \"\" $lv_Mail \"\" $lv_Mailman \"\"
+			# 	$lv_Queue \"\"
 			# 	$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
 			# 	$lv_Tls \"\" $lv_Virtual \"\"
 			# 	$gv_Back \"\")
 			############################################
 			CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
-				$lv_Mail \"\" $lv_Lmtp \"\" $lv_Queue \"\"
-				$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
-				$lv_Tls \"\" $lv_Virtual \"\"
+				$lv_Ifmail \"\" $lv_Lmtp \"\" $lv_Mail \"\" $lv_Mailman \"\"
+			   	$lv_Queue \"\" $lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\"
+				$lv_Smtpd \"\" $lv_Tls \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
 			konf_menue() {
 				if [[ ${#argv} == 1 ]] ; then
@@ -449,15 +453,25 @@ while [ "$gv_Auswahl" ] ; do
 						error_codes_conf
 						konf_menue $lv_ErrorCodes
 						;;
+					$lv_Ifmail)	
+						# IfMail Einstellungen
+						ifmail_conf
+						konf_menue $lv_Ifmail
+						;;
 					$lv_Lmtp)
 						# lmtp Einstellungen
 						lmtp_conf
 						konf_menue $lv_Lmtp
 						;;
-					$lv_Mail)	
+					$lv_Mail)
 						# Mail und Mailbox Einstellungen
 						mail_conf
 						konf_menue $lv_Mail
+						;;
+					$lv_Mailman)
+						# Mailman Einstellungen
+						mailman_conf
+						konf_menue $lv_Mailman
 						;;
 					$lv_Queue)
 						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
