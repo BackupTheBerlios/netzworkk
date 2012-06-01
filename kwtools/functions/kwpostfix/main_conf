@@ -14,7 +14,7 @@ MAINCF_TITLE="${gv_Configuration}::${lv_Main}"
 # Bestehende Konfiguration einlesen{{{
 set -x
 print -l ${(R)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(address_|bsmtp_|default_|error_|ifmail_|lmtp_|mail_|mailbox_|mailman_|milter_|maildrop_|postscreen_|q|relay_|retry_|smtp_|smtpd_|tlsproxy_|tls_|uucp_|virtual_)*} | \
-	sed -e 's#"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
+	sed -e 's#\"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
 	s#\$#\\\$#g ; s#$#"#' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 set +x
@@ -133,7 +133,6 @@ two_bounce_notice_recipient="`postconf -h -c $MAIL_CONFIG 2bounce_notice_recipie
 #syslog_facility="`postconf -h -c $MAIL_CONFIG syslog_facility`"
 #syslog_name="`postconf -h -c $MAIL_CONFIG syslog_name`"
 #transport_maps="`postconf -h -c $MAIL_CONFIG transport_maps`"
-#transport_retry_time="`postconf -h -c $MAIL_CONFIG transport_retry_time`"
 #undisclosed_recipients_header="`postconf -h -c $MAIL_CONFIG undisclosed_recipients_header`"
 #verp_delimiter_filter="`postconf -h -c $MAIL_CONFIG verp_delimiter_filter`"
 #}}}
@@ -251,7 +250,6 @@ conf_main_menu() {
 	syslog_facility \"\$syslog_facility\"
 	syslog_name \"\$syslog_name\"
 	transport_maps \"\$transport_maps\"
-	transport_retry_time \"\$transport_retry_time\"
 	undisclosed_recipients_header \"\$undisclosed_recipients_header\"
 	verp_delimiter_filter \"\$verp_delimiter_filter\"
 	postfix \"reload\"
@@ -1763,16 +1761,6 @@ while [ "$gv_Auswahl" ] ; do
 			postconf -e transport_maps="$MAPS"
 			#}}}
 			conf_main_menu transport_maps
-			;;
-		transport_retry_time)
-			# Wartezeit, bevor ein gestoerter Transport erneut angesprochen wird{{{
-			number_input -s "${transport_retry_time%?}"
-			if [ "$NUMBER" ] ; then
-				transport_retry_time="$NUMBER"
-				postconf -e transport_retry_time="$NUMBER"
-			fi
-			#}}}
-			conf_main_menu transport_retry_time
 			;;
 		undisclosed_recipients_header)
 			# Header, der eingefuegt wird bei keinem Header To{{{

@@ -22,7 +22,7 @@ smtpd_conf() {
 	
 	# Bestehende Konfiguration einlesen# {{{
 	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)smtpd_*} | \
-		sed -e 's#"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
+		sed -e 's#\"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
 		s#\$#\\\$#g ; s#$#"#' | sed -e "s#'#\\\'#g" >${gv_WorkDir}/postfix$$
 	read_file -f ${gv_WorkDir}/postfix$$
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
