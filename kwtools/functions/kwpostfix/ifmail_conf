@@ -1,0 +1,145 @@
+# Ifmail (?) Konfiguration einstellen{{{
+
+ifmail_conf() {
+
+	# Variable
+	IFMAIL_TITLE="${gv_Configuration}::${lv_Ifmail}"
+	
+	# Bestehende Konfiguration einlesen# {{{
+	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)ifmail_*} | \
+		sed -e 's#\"#\\\"#g ; s# = #="#g ; s# =#="#g ;
+		s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+	read_file -f ${gv_WorkDir}/postfix$$
+	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+	## }}}
+	# Funktion (conf_ifmail_menu), die Wiederholungs-Parameter einstellen# {{{
+	##############################################
+	# TODO: Hilfe etc. vorbereitet
+	# ifmail_delivery_slot_cost = $default_delivery_slot_cost
+	# ifmail_delivery_slot_discount = $default_delivery_slot_discount
+	# ifmail_delivery_slot_loan = $default_delivery_slot_loan
+	# ifmail_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
+	# ifmail_destination_concurrency_limit = $default_destination_concurrency_limit
+	# ifmail_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
+	# ifmail_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
+	# ifmail_destination_rate_delay = $default_destination_rate_delay
+	# ifmail_destination_recipient_limit = $default_destination_recipient_limit
+	# ifmail_extra_recipient_limit = $default_extra_recipient_limit
+	# ifmail_initial_destination_concurrency = $initial_destination_concurrency
+	# ifmail_minimum_delivery_slots = $default_minimum_delivery_slots
+	# ifmail_recipient_limit = $default_recipient_limit
+	# ifmail_recipient_refill_delay = $default_recipient_refill_delay
+	# ifmail_recipient_refill_limit = $default_recipient_refill_limit
+	# ifmail_time_limit = $command_time_limit
+	##############################################
+	conf_ifmail_menu() {
+		IFMAIL_MENU=(ifmail_delivery_slot_cost \"\$ifmail_delivery_slot_cost\"
+		ifmail_delivery_slot_discount \"\$ifmail_delivery_slot_discount\"
+		ifmail_delivery_slot_loan \"\$ifmail_delivery_slot_loan\"
+		ifmail_destination_concurrency_failed_cohort_limit \"\$ifmail_destination_concurrency_failed_cohort_limit\"
+		ifmail_destination_concurrency_limit \"\$ifmail_destination_concurrency_limit\"
+		ifmail_destination_concurrency_negative_feedback \"\$ifmail_destination_concurrency_negative_feedback\"
+		ifmail_destination_concurrency_positive_feedback \"\$ifmail_destination_concurrency_positive_feedback\"
+		ifmail_destination_rate_delay \"\$ifmail_destination_rate_delay\"
+		ifmail_destination_recipient_limit \"\$ifmail_destination_recipient_limit\"
+		ifmail_extra_recipient_limit \"\$ifmail_extra_recipient_limit\"
+		ifmail_initial_destination_concurrency \"\$ifmail_initial_destination_concurrency\"
+		ifmail_minimum_delivery_slots \"\$ifmail_minimum_delivery_slots\"
+		ifmail_recipient_limit \"\$ifmail_recipient_limit\"
+		ifmail_recipient_refill_delay \"\$ifmail_recipient_refill_delay\"
+		ifmail_recipient_refill_limit \"\$ifmail_recipient_refill_limit\"
+		ifmail_time_limit \"\$ifmail_time_limit\"
+		postfix \"reload\"
+		$gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$IFMAIL_TITLE" "$gv_Menupoint" "$IFMAIL_MENU"
+		else
+			menubox "$IFMAIL_TITLE" "$gv_Menupoint" "$IFMAIL_MENU"
+		fi
+	}
+	## }}}
+	conf_ifmail_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help ifmail_help
+				conf_ifmail_menu
+				;;
+			ifmail_delivery_slot_cost)
+				# = $default_delivery_slot_cost
+				conf_ifmail_menu ifmail_delivery_slot_cost
+				;;
+			ifmail_delivery_slot_discount)
+				# = $default_delivery_slot_discount
+				conf_ifmail_menu ifmail_delivery_slot_discount
+				;;
+			ifmail_delivery_slot_loan)
+				# = $default_delivery_slot_loan
+				conf_ifmail_menu ifmail_delivery_slot_loan
+				;;
+			ifmail_destination_concurrency_failed_cohort_limit)
+				# = $default_destination_concurrency_failed_cohort_limit
+				conf_ifmail_menu ifmail_destination_concurrency_failed_cohort_limit
+				;;
+			ifmail_destination_concurrency_limit)
+				# = $default_destination_concurrency_limit
+				conf_ifmail_menu ifmail_destination_concurrency_limit
+				;;
+			ifmail_destination_concurrency_negative_feedback)
+				# = $default_destination_concurrency_negative_feedback
+				conf_ifmail_menu ifmail_destination_concurrency_negative_feedback
+				;;
+			ifmail_destination_concurrency_positive_feedback)
+				# = $default_destination_concurrency_positive_feedback
+				conf_ifmail_menu ifmail_destination_concurrency_positive_feedback
+				;;
+			ifmail_destination_rate_delay)
+				# = $default_destination_rate_delay
+				conf_ifmail_menu ifmail_destination_rate_delay
+				;;
+			ifmail_destination_recipient_limit)
+				# = $default_destination_recipient_limit
+				conf_ifmail_menu ifmail_destination_recipient_limit
+				;;
+			ifmail_extra_recipient_limit)
+				# = $default_extra_recipient_limit
+				conf_ifmail_menu ifmail_extra_recipient_limit
+				;;
+			ifmail_initial_destination_concurrency)
+				# = $initial_destination_concurrency
+				conf_ifmail_menu ifmail_initial_destination_concurrency
+				;;
+			ifmail_minimum_delivery_slots)
+				# = $default_minimum_delivery_slots
+				conf_ifmail_menu ifmail_minimum_delivery_slots
+				;;
+			ifmail_recipient_limit)
+				# = $default_recipient_limit
+				conf_ifmail_menu ifmail_recipient_limit
+				;;
+			ifmail_recipient_refill_delay)
+				# = $default_recipient_refill_delay
+				conf_ifmail_menu ifmail_recipient_refill_delay
+				;;
+			ifmail_recipient_refill_limit)
+				# = $default_recipient_refill_limit
+				conf_ifmail_menu ifmail_recipient_refill_limit
+				;;
+			ifmail_time_limit)
+				# = $command_time_limit
+				conf_ifmail_menu ifmail_time_limit
+				;;
+			postfix)
+				# postfix, Konfiguration neu einlesen
+				postfix_start_reload
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
