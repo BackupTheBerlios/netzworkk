@@ -400,9 +400,6 @@ syslog_name: Ausgabename fuer Logmeldungungen an syslogd.
 
 transport_maps: Tabelle mit den Transporteintraegen.
 
-transport_retry_time: Wartezeit, bevor ein ein gestoerter Postfix
-\tTransport erneut angesprochen wird (60s).
-
 undisclosed_recipient_header: Header, der eingefuegt wird, wenn kein
 \tHeader To: in der Mail vorgefunden wird
 \t(To: undisclosed-recipients:;).
