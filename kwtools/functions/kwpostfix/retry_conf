@@ -33,7 +33,8 @@ retry_conf() {
 	# transport_retry_time = 60s
 	##############################################
 	conf_retry_menu() {
-		RETRY_MENU=(retry_delivery_slot_discount \"\$retry_delivery_slot_discount\"
+		RETRY_MENU=(retry_delivery_slot_cost \"\$retry_delivery_slot_cost\"
+		retry_delivery_slot_discount \"\$retry_delivery_slot_discount\"
 		retry_delivery_slot_loan \"\$retry_delivery_slot_loan\"
 		retry_destination_concurrency_failed_cohort_limit \"\$retry_destination_concurrency_failed_cohort_limit\"
 		retry_destination_concurrency_limit \"\$retry_destination_concurrency_limit\"
@@ -63,6 +64,10 @@ retry_conf() {
 			HELP*)	script_help retry_help
 				conf_retry_menu
 				;;
+			retry_delivery_slot_cost)
+				# = $default_delivery_slot_cost
+				conf_retry_menu retry_delivery_slot_cost
+				;;
 			retry_delivery_slot_discount)
 				# = $default_delivery_slot_discount
 				conf_retry_menu retry_delivery_slot_discount
@@ -73,7 +78,7 @@ retry_conf() {
 				;;
 			retry_destination_concurrency_failed_cohort_limit)
 				# = $default_destination_concurrency_failed_cohort_limit
-				conf_retry_menu retry_destination_concurrency_failed_cohort
+				conf_retry_menu retry_destination_concurrency_failed_cohort_limit
 				;;
 			retry_destination_concurrency_limit)
 				# = $default_destination_concurrency_limit
