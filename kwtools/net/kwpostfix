@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 01.06.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 03.06.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -49,6 +49,7 @@ autoload -U transport_methode
 
 # Variablen# {{{
 lv_Quick_Conf=$(gettext 'Kurz-Konfiguration')
+lv_Ext_Conf=$(gettext 'erweiterte Konfiguration')
 lv_Tabs=$(gettext 'Tabellen')
 lv_Main_Cf=$(gettext 'Steuerdatei')
 lv_Clear=$(gettext 'Aufraeumen')
@@ -56,6 +57,7 @@ lv_Clear=$(gettext 'Aufraeumen')
 # Konfiguration
 lv_Main=$(gettext 'Haupt')
 lv_Default=$(gettext 'Standard')
+lv_Error=$(gettext 'Fehler')
 lv_ErrorCodes=$(gettext 'Fehlercodes')
 lv_Ifmail=$(gettext 'IfMail')
 lv_Mail=$(gettext 'Mail')
@@ -67,6 +69,7 @@ lv_Retry=$(gettext 'Wiederholung')
 lv_Smtp=$(gettext 'SMTP')
 lv_Smtpd=$(gettext 'SMTPD')
 lv_Tls=$(gettext 'TLS')
+lv_Uucp=$(gettext 'UUCP')
 lv_Virtual=$(gettext 'Virtual')
 
 lv_Proxy=$(gettext 'Proxy')
@@ -86,7 +89,7 @@ fi
 integer PORT
 
 ## }}}
-# Funktion user_id auswaehlen{{{
+# Funktion (user_id), Benutzer ID auswaehlen{{{
 #
 user_id() {
 unset -- WERT USER_ID_MENU USER_ID_MSG
@@ -110,7 +113,7 @@ if (( $? == 0 )) ; then
 fi
 }
 #}}}
-# Funktion group_id auswaehlen{{{
+# Funktion (group_id), Gruppen ID auswaehlen{{{
 #
 group_id() {
 unset -- WERT GROUP_ID_MENU GROUP_ID_MSG
@@ -135,9 +138,15 @@ if (( $? == 0 )) ; then
 fi
 }
 #}}}
-# Funktion unterstützte Tabellenformate{{{
+# Funktion (tab_support), unterstützte Tabellenformate{{{
 # diese werden unterschiedlich in Variablen gespeichert,
 # da nicht jede Tabelle mit jeden Typ zurecht kommt.
+#
+# TABS_A -
+# TABS_C -
+# TABS_M -
+# TABS_R -
+# TB_Format -
 #
 tab_support() {
 	unset -- TABS TABS_A TABS_C TABS_M TABS_R TB_Format
@@ -179,7 +188,7 @@ tab_support() {
 	fi
 }
 #}}}
-# Funktion postfix_no_start_msg), Nachricht das postfix {{{
+# Funktion (postfix_no_start_msg), Nachricht das postfix {{{
 # nicht richtig gestartet werden konnte, etc.
 #
 postfix_no_start_msg() {
@@ -196,9 +205,174 @@ postfix_start_reload() {
 	fi
 }
 #}}}
+# Funktion (verp_delimiter), um die Trennzeichen einzustellen.# {{{
+#
+# usage: verp_delimiter "$VERP_DELIMETER"
+#
+verp_delimiter() {
+	if [ $# = 1 ] ; then
+		unset -- Value VERP_MENU Delimeter_Plus Delimeter_Gleich Delimeter_Minus
+		typeset -a Value
+		local Value Delimeter_Plus Delimeter_Gleich Delimeter_Minus
+		Value="$1"
+		for v in + = - ; {
+			if [ $v = + ] ; then
+				if [ ! -z ${(M)${Value}##*${v}*} ] ; then
+					Delimeter_Plus="$v \"\" on"
+				else
+					Delimeter_Plus="$v \"\" off"
+				fi
+			fi
+			if [ $v = = ] ; then
+				if [ ! -z ${(M)${Value}##*${v}*} ] ; then
+					Delimeter_Gleich="$v \"\" on"
+				else
+					Delimeter_Gleich="$v \"\" off"
+				fi
+			fi
+			if [ $v = - ] ; then
+				if [ ! -z ${(M)${Value}##*${v}*} ] ; then
+					Delimeter_Minus="$v \"\" on"
+				else
+					Delimeter_Minus="$v \"\" off"
+				fi
+			fi
+		}
+		VERP_MENU="$Delimeter_Plus $Delimeter_Gleich $Delimeter_Minus"
+	else
+		no_para_msg $0
+	fi
+}
+		## }}}
+		# Funktion (tls_file_auswahl), TLS Schlüssel Dateien Auswahl{{{
+tls_file_auswahl() {
+	unset -- WERT TLS_FILE_MENU FORMAT SUFFIX
+	local TLS_FILE_MENU
+	dselect "$MAIL_CONFIG"
+	if [ "$VERZ" ] ; then
+		dselect_check "$VERZ"
+		if [ "$VERZ" ] ; then
+			cd "$VERZ"
+			FORMAT="ASCII"
+			file_filter "$FORMAT" "$SUFFIX"
+			#
+			if [ "$DF_ARRAY_M" ] ; then
+				TLS_FILE_MENU=($DF_ARRAY_M)
+				menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
+				#
+				if [ -n "$gv_Auswahl" ] ; then
+					while [ "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help cert_help
+								menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
+								;;
+							*)	WERT="${VERZ}/${gv_Auswahl}"
+								break
+								;;
+						esac
+					done
+				else
+					WERT=""
+				fi
+			else
+				no_file_msg "$FORMAT"
+			fi
+		fi
+	else
+		no_input_msg
+	fi
+}
+#}}}
+# Funktion ja_nein_tausch{{{
+#######################################
+# TODO:
+# aendern?
+#######################################
+ja_nein_tausch() {
+yesno "$1" "$2"
+if [ $? = 0 ] ; then
+	WERT=yes
+else
+	WERT=no
+fi
+}
+#}}}
+# Funktion (mail_mechanism), welche Mechanismen sind bei Mails erlaubt{{{
+mail_mechanism() {
+	unset -- WERT MECHANISM
+	local MECHANISM
+	U_OPT=k
+	MECHANISM=(noactive \"\" off noanonymous \"\" off nodictionary \"\" off noplaintext \"\" off mutual_auth \"\" off)
+	checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+	#
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help security_options_help
+				U_OPT=k
+				checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+				;;
+			*)	# übernehmen
+				WERT="$gv_Auswahl"
+				break
+				;;
+		esac
+	done
+}
+#}}}
+# Funktion (user_auswahl), User auswählen{{{
+user_auswahl() {
+	unset -- WERT USER_CHOICE_MENU USER_CHOICE_MSG
+	local USER_CHOICE_MENU USER_CHOICE_MSG
+	user_group_check -p
+	#
+	if (( $? == 0 )) ; then
+		USER_CHOICE_MENU=($U_G_ARRAY)
+		USER_CHOICE_MSG=$(gettext 'Waehlen Sie einen Benutzer aus.')
+		menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+		if [ -n "$gv_Auswahl" ] ; then
+			while [ "$gv_Auswahl" ] ; do
+				case "$gv_Auswahl" in
+					HELP*)	script_help share/user_help
+						menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
+						;;
+					*)	# übernehmen
+						WERT="$gv_Auswahl"
+						break
+						;;
+				esac
+			done
+		else
+			WERT=""
+		fi
+	fi
+}
+#}}}
+# Funktion (loglevel), Loglevel auswählen{{{
+loglevel() {
+	unset -- WERT LOGLEVEL_MSG LOGLEVEL_MENU
+	local LOGLEVEL_MSG LOGLEVEL_MENU
+	LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
+	LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
+	menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
+	if [ -n "$gv_Auswahl" ] ; then
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help loglevel_help
+					menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
+					;;
+				*)	WERT="$gv_Auswahl"
+					break
+					;;
+			esac
+		done
+	else
+		gv_Auswahl=0
+	fi
+}
+#}}}
 # Funktion haupt_menue{{{
 MAIN_MENU=($lv_Quick_Conf \"\" $gv_Configuration \"\"
-	$lv_Tabs \"\" $lv_Main_Cf \"\"
+	\"$lv_Ext_Conf\" \"\" $lv_Tabs \"\" $lv_Main_Cf \"\"
 	$lv_Clear \"\" $gv_Exit \"\")
 haupt_menue() {
 	if [[ ${#argv} == 1 ]] ; then
@@ -237,192 +411,18 @@ while [ "$gv_Auswahl" ] ; do
 			# Wie zum Bsp. $data_directory fuer tls_conf und
 			# virtual_conf
 			#####################################################
-			autoload -U default_conf main_conf konf_menue lmtp_conf lock_art \
-				ifmail_conf mail_conf mailman_conf \
-				postfix_variable q_conf relay_conf retry_conf tls_conf smtp_conf \
-				smtpd_conf tab_support_wahl virtual_conf
+			autoload -U default_conf main_conf \
+				lmtp_conf lock_art mail_conf \
+				postfix_variable q_conf relay_conf smtp_conf \
+				smtpd_conf tab_support_wahl tls_conf virtual_conf
 			#
-			# Funktion (verp_delimiter), um die Trennzeichen einzustellen.# {{{
-			#
-			# usage: verp_delimiter "$VERP_DELIMETER"
-			#
-			verp_delimiter() {
-				if [ $# = 1 ] ; then
-					unset -- Value VERP_MENU Delimeter_Plus Delimeter_Gleich Delimeter_Minus
-					typeset -a Value
-					local Value Delimeter_Plus Delimeter_Gleich Delimeter_Minus
-					Value="$1"
-					for v in + = - ; {
-						if [ $v = + ] ; then
-							if [ ! -z ${(M)${Value}##*${v}*} ] ; then
-								Delimeter_Plus="$v \"\" on"
-							else
-								Delimeter_Plus="$v \"\" off"
-							fi
-						fi
-						if [ $v = = ] ; then
-							if [ ! -z ${(M)${Value}##*${v}*} ] ; then
-								Delimeter_Gleich="$v \"\" on"
-							else
-								Delimeter_Gleich="$v \"\" off"
-							fi
-						fi
-						if [ $v = - ] ; then
-							if [ ! -z ${(M)${Value}##*${v}*} ] ; then
-								Delimeter_Minus="$v \"\" on"
-							else
-								Delimeter_Minus="$v \"\" off"
-							fi
-						fi
-					}
-					VERP_MENU="$Delimeter_Plus $Delimeter_Gleich $Delimeter_Minus"
-				else
-					no_para_msg $0
-				fi
-			}
-		## }}}
-			# Funktion tls schlüssel Dateien Auswahl{{{
-			tls_file_auswahl() {
-				unset -- WERT TLS_FILE_MENU FORMAT SUFFIX
-				local TLS_FILE_MENU
-				dselect "$MAIL_CONFIG"
-				if [ "$VERZ" ] ; then
-					dselect_check "$VERZ"
-					if [ "$VERZ" ] ; then
-						cd "$VERZ"
-						FORMAT="ASCII"
-						file_filter "$FORMAT" "$SUFFIX"
-						#
-						if [ "$DF_ARRAY_M" ] ; then
-							TLS_FILE_MENU=($DF_ARRAY_M)
-							menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
-							#
-							if [ -n "$gv_Auswahl" ] ; then
-								while [ "$gv_Auswahl" ] ; do
-									case "$gv_Auswahl" in
-										HELP*)	script_help cert_help
-											menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
-											;;
-										*)	WERT="${VERZ}/${gv_Auswahl}"
-											break
-											;;
-									esac
-								done
-							else
-								WERT=""
-							fi
-						else
-							no_file_msg "$FORMAT"
-						fi
-					fi
-				else
-					no_input_msg
-				fi
-			}
-			#}}}
-			# Funktion ja_nein_tausch{{{
-			#######################################
-			# TODO:
-			# aendern?
-			#######################################
-			ja_nein_tausch() {
-			yesno "$1" "$2"
-			if [ $? = 0 ] ; then
-				WERT=yes
-			else
-				WERT=no
-			fi
-			}
-			#}}}
-			# Funktion, welche Mechanismen sind bei Mails erlaubt{{{
-			mail_mechanism() {
-				unset -- WERT MECHANISM
-				local MECHANISM
-				U_OPT=k
-				MECHANISM=(noactive \"\" off noanonymous \"\" off nodictionary \"\" off noplaintext \"\" off mutual_auth \"\" off)
-				checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
-				#
-				while [ "$gv_Auswahl" ] ; do
-					case "$gv_Auswahl" in
-						HELP*)	script_help security_options_help
-							U_OPT=k
-							checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
-							;;
-						*)	# übernehmen
-							WERT="$gv_Auswahl"
-							break
-							;;
-					esac
-				done
-			}
-			#}}}
-			# User auswählen{{{
-			user_auswahl() {
-				unset -- WERT USER_CHOICE_MENU USER_CHOICE_MSG
-				local USER_CHOICE_MENU USER_CHOICE_MSG
-				user_group_check -p
-				#
-				if (( $? == 0 )) ; then
-					USER_CHOICE_MENU=($U_G_ARRAY)
-					USER_CHOICE_MSG=$(gettext 'Waehlen Sie einen Benutzer aus.')
-					menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
-					if [ -n "$gv_Auswahl" ] ; then
-						while [ "$gv_Auswahl" ] ; do
-							case "$gv_Auswahl" in
-								HELP*)	script_help share/user_help
-									menubox "$gv_Configuration" "$USER_CHOICE_MSG" "$USER_CHOICE_MENU"
-									;;
-								*)	# übernehmen
-									WERT="$gv_Auswahl"
-									break
-									;;
-							esac
-						done
-					else
-						WERT=""
-					fi
-				fi
-			}
-			#}}}
-			# Loglevel auswählen{{{
-			loglevel() {
-				unset -- WERT LOGLEVEL_MSG LOGLEVEL_MENU
-				local LOGLEVEL_MSG LOGLEVEL_MENU
-				LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
-				LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
-				menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
-				if [ -n "$gv_Auswahl" ] ; then
-					while [ "$gv_Auswahl" ] ; do
-						case "$gv_Auswahl" in
-							HELP*)	script_help loglevel_help
-								menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
-								;;
-							*)	WERT="$gv_Auswahl"
-								break
-								;;
-						esac
-					done
-				else
-					gv_Auswahl=0
-				fi
-			}
-			#}}}
 			# Funktion konf_menue{{{
-			############################################
-			# TODO: Menue Vorbereitung
-			# CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
-			# 	$lv_Ifmail \"\" $lv_Lmtp \"\" $lv_Mail \"\" $lv_Mailman \"\"
-			# 	$lv_Queue \"\"
-			# 	$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
-			# 	$lv_Tls \"\" $lv_Virtual \"\"
-			# 	$gv_Back \"\")
-			############################################
-			CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
-				$lv_Ifmail \"\" $lv_Lmtp \"\" $lv_Mail \"\" $lv_Mailman \"\"
-			   	$lv_Queue \"\" $lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\"
+			CONF_MENU=($lv_Main \"\" $lv_Default \"\"
+				$lv_Lmtp \"\" $lv_Mail \"\"
+			   	$lv_Queue \"\" $lv_Relay \"\" $lv_Smtp \"\"
 				$lv_Smtpd \"\" $lv_Tls \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
-			konf_menue() {
+			conf_menu() {
 				if [[ ${#argv} == 1 ]] ; then
 					menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
 				else
@@ -431,82 +431,67 @@ while [ "$gv_Auswahl" ] ; do
 			}
 			#}}}
 			tab_support
-			konf_menue
+			conf_menu
 			while [ "$gv_Auswahl" ] ; do
 				case "$gv_Auswahl" in
 					HELP*) script_help conf_help
-						konf_menue
+						conf_menu
 						;;
 					$lv_Main)
 						# Hauptkonfiguration
 						main_conf
-						konf_menue $lv_Main
+						conf_menu $lv_Main
 						;;
 					$lv_Default)
 						# Default Einstellungen
 						default_conf
-						konf_menue $lv_Default
+						conf_menu $lv_Default
 						;;
 					$lv_ErrorCodes)
 						# Fehlercodes
 						autoload -U error_codes_conf
 						error_codes_conf
-						konf_menue $lv_ErrorCodes
-						;;
-					$lv_Ifmail)	
-						# IfMail Einstellungen
-						ifmail_conf
-						konf_menue $lv_Ifmail
+						conf_menu $lv_ErrorCodes
 						;;
 					$lv_Lmtp)
 						# lmtp Einstellungen
 						lmtp_conf
-						konf_menue $lv_Lmtp
+						conf_menu $lv_Lmtp
 						;;
 					$lv_Mail)
 						# Mail und Mailbox Einstellungen
 						mail_conf
-						konf_menue $lv_Mail
-						;;
-					$lv_Mailman)
-						# Mailman Einstellungen
-						mailman_conf
-						konf_menue $lv_Mailman
+						conf_menu $lv_Mail
 						;;
 					$lv_Queue)
 						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
 						q_conf
-						konf_menue $lv_Queue
+						conf_menu $lv_Queue
 						;;
 					$lv_Relay)
 						# Relay (Weiterleitung) Einstellungen
 						relay_conf
-						konf_menue $lv_Relay
-						;;
-					$lv_Retry)
-						# Retry (Wiederholung) Einstellungen
-						retry_conf
-						konf_menue $lv_Retry
+						conf_menu $lv_Relay
 						;;
 					$lv_Smtp)
 						# smtp Einstellungen
 						smtp_conf
-						konf_menue $lv_Smtp
+						conf_menu $lv_Smtp
 						;;
 					$lv_Smtpd)
 						# smtpd Einstellungen
 						smtpd_conf
-						konf_menue $lv_Smtpd
+						conf_menu $lv_Smtpd
 						;;
 					$lv_Tls)
 						# TLS Einstellungen
 						tls_conf
-						konf_menue $lv_Tls
+						conf_menu $lv_Tls
 						;;
 					$lv_Virtual)
 						# VIRTUAL Einstellungen
 						virtual_conf
-						konf_menue $lv_Virtual
+						conf_menu $lv_Virtual
 						;;
 					$gv_Back)	break
 						;;
@@ -514,6 +499,129 @@ while [ "$gv_Auswahl" ] ; do
 			done
 			#}}}
 			haupt_menue $gv_Configuration
+			;;
+		$lv_Ext_Conf)
+			# fast komplette Konfiguration# {{{
+			#####################################################
+			# TODO:
+			# wegen einigen Daten was vorher einlesen?
+			# Wie zum Bsp. $data_directory fuer tls_conf und
+			# virtual_conf
+			#####################################################
+			autoload -U default_conf error_conf ifmail_conf main_conf \
+				lmtp_conf lock_art mail_conf mailman_conf \
+				postfix_variable q_conf relay_conf retry_conf smtp_conf \
+				smtpd_conf tab_support_wahl tls_conf uucp_conf virtual_conf
+			#
+			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
+			EXT_CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_Error \"\"
+				$lv_ErrorCodes \"\" $lv_Ifmail \"\" $lv_Lmtp \"\"
+				$lv_Mail \"\" $lv_Mailman \"\" $lv_Queue \"\"
+				$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
+				$lv_Tls \"\" $lv_Uucp \"\" $lv_Virtual \"\"
+				$gv_Back \"\")
+			ext_conf_menu() {
+				if [[ ${#argv} == 1 ]] ; then
+					menubox -d "$1" "$lv_Ext_Conf" "$gv_Menupoint" "$EXT_CONF_MENU"
+				else
+					menubox "$lv_Ext_Conf" "$gv_Menupoint" "$EXT_CONF_MENU"
+				fi
+			}
+			## }}}
+			tab_support
+			ext_conf_menu
+			while [ "$gv_Auswahl" ] ; do
+				case "$gv_Auswahl" in
+					HELP*) script_help conf_help
+						ext_conf_menu
+						;;
+					$lv_Main)
+						# Hauptkonfiguration
+						main_conf
+						ext_conf_menu $lv_Main
+						;;
+					$lv_Default)
+						# Default Einstellungen
+						default_conf
+						ext_conf_menu $lv_Default
+						;;
+					$lv_Error)
+						# Fehler Einstellungen
+						error_conf
+						ext_conf_menu $lv_Error
+						;;
+					$lv_ErrorCodes)
+						# Fehlercodes
+						autoload -U error_codes_conf
+						error_codes_conf
+						ext_conf_menu $lv_ErrorCodes
+						;;
+					$lv_Ifmail)	
+						# IfMail Einstellungen
+						ifmail_conf
+						ext_conf_menu $lv_Ifmail
+						;;
+					$lv_Lmtp)
+						# lmtp Einstellungen
+						lmtp_conf
+						ext_conf_menu $lv_Lmtp
+						;;
+					$lv_Mail)
+						# Mail und Mailbox Einstellungen
+						mail_conf
+						ext_conf_menu $lv_Mail
+						;;
+					$lv_Mailman)
+						# Mailman Einstellungen
+						mailman_conf
+						ext_conf_menu $lv_Mailman
+						;;
+					$lv_Queue)
+						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
+						q_conf
+						ext_conf_menu $lv_Queue
+						;;
+					$lv_Relay)
+						# Relay (Weiterleitung) Einstellungen
+						relay_conf
+						ext_conf_menu $lv_Relay
+						;;
+					$lv_Retry)
+						# Retry (Wiederholung) Einstellungen
+						retry_conf
+						ext_conf_menu $lv_Retry
+						;;
+					$lv_Smtp)
+						# smtp Einstellungen
+						smtp_conf
+						ext_conf_menu $lv_Smtp
+						;;
+					$lv_Smtpd)
+						# smtpd Einstellungen
+						smtpd_conf
+						ext_conf_menu $lv_Smtpd
+						;;
+					$lv_Tls)
+						# TLS Einstellungen
+						tls_conf
+						ext_conf_menu $lv_Tls
+						;;
+					$lv_Uucp)
+						# UUCP Einstellungen
+						uucp_conf
+						ext_conf_menu $lv_Uucp
+						;;
+					$lv_Virtual)
+						# VIRTUAL Einstellungen
+						virtual_conf
+						ext_conf_menu $lv_Virtual
+						;;
+					$gv_Back)	break
+						;;
+				esac
+			done
+			## }}}
+			haupt_menue $lv_Ext_Conf
 			;;
 		$lv_Tabs)
 			# Tabellen bearbeiten{{{
@@ -917,7 +1025,7 @@ while [ "$gv_Auswahl" ] ; do
 			haupt_menue $lv_Main_Cf
 			;;
 		$lv_Clear)
-			# loeschen uebrig gebliebener Temporaerer Dateien
+			# loeschen uebrig gebliebener temporaerer Dateien
 			postsuper -p
 			# fuehrt einen Check und eine eventuelle Reperatur der Queue-Struktur
 			# durch, wird beim zurueckspielen von Backups benoetigt.
