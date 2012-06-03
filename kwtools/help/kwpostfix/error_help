@@ -1,0 +1,39 @@
+# error_help (Fehler ?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Error}::${gv_Help}"
+MSG=$(gettext 'error_delivery_slot_cost:
+
+error_delivery_slot_discount:
+
+error_delivery_slot_loan:
+
+error_destination_concurrency_failed_cohort_limit:
+
+error_destination_concurrency_limit:
+
+error_destination_concurrency_negative_feedback:
+
+error_destination_concurrency_positive_feedback:
+
+error_destination_rate_delay:
+
+error_destination_recipient_limit:
+
+error_extra_recipient_limit:
+
+error_initial_destination_concurrency:
+
+error_minimum_delivery_slots:
+
+error_notice_recipient:
+
+error_recipient_limit:
+
+error_recipient_refill_delay:
+
+error_recipient_refill_limit:
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

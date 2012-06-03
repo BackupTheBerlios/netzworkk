@@ -1,0 +1,39 @@
+# uucp_help (?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Uucp}::${gv_Help}"
+MSG=$(gettext 'uucp_delivery_slot_cost:
+
+uucp_delivery_slot_discount:
+
+uucp_delivery_slot_loan:
+
+uucp_destination_concurrency_failed_cohort_limit:
+
+uucp_destination_concurrency_limit:
+
+uucp_destination_concurrency_negative_feedback:
+
+uucp_destination_concurrency_positive_feedback:
+
+uucp_destination_rate_delay:
+
+uucp_destination_recipient_limit:
+
+uucp_extra_recipient_limit:
+
+uucp_initial_destination_concurrency:
+
+uucp_minimum_delivery_slots:
+
+uucp_recipient_limit:
+
+uucp_recipient_refill_delay:
+
+uucp_recipient_refill_limit:
+
+uucp_time_limit:
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
