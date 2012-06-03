@@ -1,0 +1,147 @@
+# error (Fehler ?) Konfiguration einstellen{{{
+
+error_conf() {
+
+	# Variable
+	ERROR_TITLE="${gv_Configuration}::${lv_Error}"
+
+	# Bestehende Konfiguration einlesen# {{{
+	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)error_*} | \
+		sed -e 's#\"#\\\"#g ; s# = #="#g ; s# =#="#g ;
+		s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+	read_file -f ${gv_WorkDir}/postfix$$
+	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+	## }}}
+	# Funktion (conf_error_menu), die Fehler-Parameter einstellen# {{{
+	##############################################
+	# TODO: Hilfe etc. vorbereitet
+	# error_delivery_slot_cost = $default_delivery_slot_cost
+	# error_delivery_slot_discount = $default_delivery_slot_discount
+	# error_delivery_slot_loan = $default_delivery_slot_loan
+	# error_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
+	# error_destination_concurrency_limit = $default_destination_concurrency_limit
+	# error_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
+	# error_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
+	# error_destination_rate_delay = $default_destination_rate_delay
+	# error_destination_recipient_limit = $default_destination_recipient_limit
+	# error_extra_recipient_limit = $default_extra_recipient_limit
+	# error_initial_destination_concurrency = $initial_destination_concurrency
+	# error_minimum_delivery_slots = $default_minimum_delivery_slots
+	# error_notice_recipient = postmaster
+	# error_recipient_limit = $default_recipient_limit
+	# error_recipient_refill_delay = $default_recipient_refill_delay
+	# error_recipient_refill_limit = $default_recipient_refill_limit
+	# error_time_limit = $command_time_limit
+	##############################################
+	conf_error_menu() {
+		ERROR_MENU=(error_delivery_slot_cost \"\$error_delivery_slot_cost\"
+		error_delivery_slot_discount \"\$error_delivery_slot_discount\"
+		error_delivery_slot_loan \"\$error_delivery_slot_loan\"
+		error_destination_concurrency_failed_cohort_limit \"\$error_destination_concurrency_failed_cohort_limit\"
+		error_destination_concurrency_limit \"\$error_destination_concurrency_limit\"
+		error_destination_concurrency_negative_feedback \"\$error_destination_concurrency_negative_feedback\"
+		error_destination_concurrency_positive_feedback \"\$error_destination_concurrency_positive_feedback\"
+		error_destination_rate_delay \"\$error_destination_rate_delay\"
+		error_destination_recipient_limit \"\$error_destination_recipient_limit\"
+		error_extra_recipient_limit \"\$error_extra_recipient_limit\"
+		error_initial_destination_concurrency \"\$error_initial_destination_concurrency\"
+		error_minimum_delivery_slots \"\$error_minimum_delivery_slots\"
+		error_notice_recipient \"\$error_notice_recipient\"
+		error_recipient_limit \"\$error_recipient_limit\"
+		error_recipient_refill_delay \"\$error_recipient_refill_delay\"
+		error_recipient_refill_limit \"\$error_recipient_refill_limit\"
+		error_time_limit \"\$error_time_limit\"
+		postfix \"reload\"
+		$gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$ERROR_TITLE" "$gv_Menupoint" "$ERROR_MENU"
+		else
+			menubox "$ERROR_TITLE" "$gv_Menupoint" "$ERROR_MENU"
+		fi
+	}
+	## }}}
+	conf_error_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help error_help
+				conf_error_menu
+				;;
+			error_delivery_slot_cost)
+				# = $default_delivery_slot_cost
+				conf_error_menu error_delivery_slot_cost
+				;;
+			error_delivery_slot_discount)
+				# = $default_delivery_slot_discount
+				conf_error_menu error_delivery_slot_discount
+				;;
+			error_delivery_slot_loan)
+				# = $default_delivery_slot_loan
+				conf_error_menu error_delivery_slot_loan
+				;;
+			error_destination_concurrency_failed_cohort_limit)
+				# = $default_destination_concurrency_failed_cohort_limit
+				conf_error_menu error_destination_concurrency_failed_cohort_limit
+				;;
+			error_destination_concurrency_limit)
+				# = $default_destination_concurrency_limit
+				conf_error_menu error_destination_concurrency_limit
+				;;
+			error_destination_concurrency_negative_feedback)
+				# = $default_destination_concurrency_negative_feedback
+				conf_error_menu error_destination_concurrency_negative_feedback
+				;;
+			error_destination_concurrency_positive_feedback)
+				# = $default_destination_concurrency_positive_feedback
+				conf_error_menu error_destination_concurrency_positive_feedback
+				;;
+			error_destination_rate_delay)
+				# = $default_destination_rate_delay
+				conf_error_menu error_destination_rate_delay
+				;;
+			error_destination_recipient_limit)
+				# = $default_destination_recipient_limit
+				conf_error_menu error_destination_recipient_limit
+				;;
+			error_extra_recipient_limit)
+				# = $default_extra_recipient_limit
+				conf_error_menu error_extra_recipient_limit
+				;;
+			error_initial_destination_concurrency)
+				# = $initial_destination_concurrency
+				conf_error_menu error_initial_destination_concurrency
+				;;
+			error_minimum_delivery_slots)
+				# = $default_minimum_delivery_slots
+				conf_error_menu error_minimum_delivery_slots
+				;;
+			error_notice_recipient)
+				# = postmaster
+				conf_error_menu error_notice_recipient
+				;;
+			error_recipient_limit)
+				# = $default_recipient_limit
+				conf_error_menu error_recipient_limit
+				;;
+			error_recipient_refill_delay)
+				# = $default_recipient_refill_delay
+				conf_error_menu error_recipient_refill_delay
+				;;
+			error_recipient_refill_limit)
+				# = $default_recipient_refill_limit
+				conf_error_menu error_recipient_refill_limit
+				;;
+			postfix)
+				# postfix, Konfiguration neu einlesen
+				postfix_start_reload
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

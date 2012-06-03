@@ -1,0 +1,145 @@
+# uucp (?) Konfiguration einstellen{{{
+
+uucp_conf() {
+
+	# Variable
+	UUCP_TITLE="${gv_Configuration}::${lv_Uucp}"
+	
+	# Bestehende Konfiguration einlesen# {{{
+	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)uucp_*} | \
+		sed -e 's#\"#\\\"#g ; s# = #="#g ; s# =#="#g ;
+		s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+	read_file -f ${gv_WorkDir}/postfix$$
+	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+	## }}}
+	# Funktion (conf_uucp_menu), die Wiederholungs-Parameter einstellen# {{{
+	##############################################
+	# TODO: Hilfe etc. vorbereitet
+	# uucp_delivery_slot_cost = $default_delivery_slot_cost
+	# uucp_delivery_slot_discount = $default_delivery_slot_discount
+	# uucp_delivery_slot_loan = $default_delivery_slot_loan
+	# uucp_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
+	# uucp_destination_concurrency_limit = $default_destination_concurrency_limit
+	# uucp_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
+	# uucp_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
+	# uucp_destination_rate_delay = $default_destination_rate_delay
+	# uucp_destination_recipient_limit = $default_destination_recipient_limit
+	# uucp_extra_recipient_limit = $default_extra_recipient_limit
+	# uucp_initial_destination_concurrency = $initial_destination_concurrency
+	# uucp_minimum_delivery_slots = $default_minimum_delivery_slots
+	# uucp_recipient_limit = $default_recipient_limit
+	# uucp_recipient_refill_delay = $default_recipient_refill_delay
+	# uucp_recipient_refill_limit = $default_recipient_refill_limit
+	# uucp_time_limit = $command_time_limit
+	##############################################
+	conf_uucp_menu() {
+		UUCP_MENU=(uucp_delivery_slot_cost \"\$uucp_delivery_slot_cost\"
+		uucp_delivery_slot_discount \"\$uucp_delivery_slot_discount\"
+		uucp_delivery_slot_loan \"\$uucp_delivery_slot_loan\"
+		uucp_destination_concurrency_failed_cohort_limit \"\$uucp_destination_concurrency_failed_cohort_limit\"
+		uucp_destination_concurrency_limit \"\$uucp_destination_concurrency_limit\"
+		uucp_destination_concurrency_negative_feedback \"\$uucp_destination_concurrency_negative_feedback\"
+		uucp_destination_concurrency_positive_feedback \"\$uucp_destination_concurrency_positive_feedback\"
+		uucp_destination_rate_delay \"\$uucp_destination_rate_delay\"
+		uucp_destination_recipient_limit \"\$uucp_destination_recipient_limit\"
+		uucp_extra_recipient_limit \"\$uucp_extra_recipient_limit\"
+		uucp_initial_destination_concurrency \"\$uucp_initial_destination_concurrency\"
+		uucp_minimum_delivery_slots \"\$uucp_minimum_delivery_slots\"
+		uucp_recipient_limit \"\$uucp_recipient_limit\"
+		uucp_recipient_refill_delay \"\$uucp_recipient_refill_delay\"
+		uucp_recipient_refill_limit \"\$uucp_recipient_refill_limit\"
+		uucp_time_limit \"\$uucp_time_limit\"
+		postfix \"reload\"
+		$gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$UUCP_TITLE" "$gv_Menupoint" "$UUCP_MENU"
+		else
+			menubox "$UUCP_TITLE" "$gv_Menupoint" "$UUCP_MENU"
+		fi
+	}
+	## }}}
+	conf_uucp_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help uucp_help
+				conf_uucp_menu
+				;;
+			uucp_delivery_slot_cost)
+				# = $default_delivery_slot_cost
+				conf_uucp_menu uucp_delivery_slot_cost
+				;;
+			uucp_delivery_slot_discount)
+				# = $default_delivery_slot_discount
+				conf_uucp_menu uucp_delivery_slot_discount
+				;;
+			uucp_delivery_slot_loan)
+				# = $default_delivery_slot_loan
+				conf_uucp_menu uucp_delivery_slot_loan
+				;;
+			uucp_destination_concurrency_failed_cohort_limit)
+				# = $default_destination_concurrency_failed_cohort_limit
+				conf_uucp_menu uucp_destination_concurrency_failed_cohort_limit
+				;;
+			uucp_destination_concurrency_limit)
+				# = $default_destination_concurrency_limit
+				conf_uucp_menu uucp_destination_concurrency_limit
+				;;
+			uucp_destination_concurrency_negative_feedback)
+				# = $default_destination_concurrency_negative_feedback
+				conf_uucp_menu uucp_destination_concurrency_negative_feedback
+				;;
+			uucp_destination_concurrency_positive_feedback)
+				# = $default_destination_concurrency_positive_feedback
+				conf_uucp_menu uucp_destination_concurrency_positive_feedback
+				;;
+			uucp_destination_rate_delay)
+				# = $default_destination_rate_delay
+				conf_uucp_menu uucp_destination_rate_delay
+				;;
+			uucp_destination_recipient_limit)
+				# = $default_destination_recipient_limit
+				conf_uucp_menu uucp_destination_recipient_limit
+				;;
+			uucp_extra_recipient_limit)
+				# = $default_extra_recipient_limit
+				conf_uucp_menu uucp_extra_recipient_limit
+				;;
+			uucp_initial_destination_concurrency)
+				# = $initial_destination_concurrency
+				conf_uucp_menu uucp_initial_destination_concurrency
+				;;
+			uucp_minimum_delivery_slots)
+				# = $default_minimum_delivery_slots
+				conf_uucp_menu uucp_minimum_delivery_slots
+				;;
+			uucp_recipient_limit)
+				# = $default_recipient_limit
+				conf_uucp_menu uucp_recipient_limit
+				;;
+			uucp_recipient_refill_delay)
+				# = $default_recipient_refill_delay
+				conf_uucp_menu uucp_recipient_refill_delay
+				;;
+			uucp_recipient_refill_limit)
+				# = $default_recipient_refill_limit
+				conf_uucp_menu uucp_recipient_refill_limit
+				;;
+			uucp_time_limit)
+				# = $command_time_limit
+				conf_uucp_menu uucp_time_limit
+				;;
+			postfix)
+				# postfix, Konfiguration neu einlesen
+				postfix_start_reload
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
