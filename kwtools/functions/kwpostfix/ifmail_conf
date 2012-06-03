@@ -12,7 +12,7 @@ ifmail_conf() {
 	read_file -f ${gv_WorkDir}/postfix$$
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
-	# Funktion (conf_ifmail_menu), die Wiederholungs-Parameter einstellen# {{{
+	# Funktion (conf_ifmail_menu), die Ifmail-Parameter einstellen# {{{
 	##############################################
 	# TODO: Hilfe etc. vorbereitet
 	# ifmail_delivery_slot_cost = $default_delivery_slot_cost
