@@ -6,9 +6,13 @@ Kurz-Konfiguration: Bei diesem Menuepunkt, wird das
 \tKonfigurationsprogramm der jeweiligen Distribution
 \tgestartet.
 
-Konfiguration: Konfiguration der main.cf mit fast allen
-\tMoeglichkeiten, die zur Verfuegung stehen. Bei der
-\tEintragung von IPv6 Adressen, diese immer in eckige
+Konfiguration: Konfiguration der am haufigsten genutzten Parameter
+\tvon Postfix.
+
+erweiterte Konfiguration: Konfiguration der main.cf mit fast allen
+\tMoeglichkeiten, die zur Verfuegung stehen.
+
+NOTIZ: Bei der Eintragung von IPv6 Adressen, diese immer in eckige
 \tKlammern \"[]\" stellen, da es sonst zu Komplikationen kommt.
 \tDie IPv6 Adresse besitzt das Zeichen \":\" und der Eintrag
 \ttype:tabelle auch.
