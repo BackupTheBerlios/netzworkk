@@ -1,0 +1,39 @@
+# maildrop_help (?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Maildrop}::${gv_Help}"
+MSG=$(gettext 'maildrop_delivery_slot_cost:
+
+maildrop_delivery_slot_discount:
+
+maildrop_delivery_slot_loan:
+
+maildrop_destination_concurrency_failed_cohort_limit:
+
+maildrop_destination_concurrency_limit:
+
+maildrop_destination_concurrency_negative_feedback:
+
+maildrop_destination_concurrency_positive_feedback:
+
+maildrop_destination_rate_delay:
+
+maildrop_destination_recipient_limit:
+
+maildrop_extra_recipient_limit:
+
+maildrop_initial_destination_concurrency:
+
+maildrop_minimum_delivery_slots:
+
+maildrop_recipient_limit:
+
+maildrop_recipient_refill_delay:
+
+maildrop_recipient_refill_limit:
+
+maildrop_time_limit:
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}

@@ -1,0 +1,39 @@
+# bsmtp_help (?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Bsmtp}::${gv_Help}"
+MSG=$(gettext 'bsmtp_delivery_slot_cost:
+
+bsmtp_delivery_slot_discount:
+
+bsmtp_delivery_slot_loan:
+
+bsmtp_destination_concurrency_failed_cohort_limit:
+
+bsmtp_destination_concurrency_limit:
+
+bsmtp_destination_concurrency_negative_feedback:
+
+bsmtp_destination_concurrency_positive_feedback:
+
+bsmtp_destination_rate_delay:
+
+bsmtp_destination_recipient_limit:
+
+bsmtp_extra_recipient_limit:
+
+bsmtp_initial_destination_concurrency:
+
+bsmtp_minimum_delivery_slots:
+
+bsmtp_recipient_limit:
+
+bsmtp_recipient_refill_delay:
+
+bsmtp_recipient_refill_limit:
+
+bsmtp_time_limit:
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
