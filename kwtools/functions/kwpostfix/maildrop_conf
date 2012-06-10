@@ -1,0 +1,145 @@
+# maildrop (?) Konfiguration einstellen{{{
+
+maildrop_conf() {
+
+	# Variable
+	MAILDROP_TITLE="${gv_Configuration}::${lv_Maildrop}"
+	
+	# Bestehende Konfiguration einlesen# {{{
+	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)maildrop_*} | \
+		sed -e 's#\"#\\\"#g ; s# = #="#g ; s# =#="#g ;
+		s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
+	read_file -f ${gv_WorkDir}/postfix$$
+	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
+	## }}}
+	# Funktion (conf_maildrop_menu), die Mailman-Parameter einstellen# {{{
+	##############################################
+	# TODO: Hilfe etc. vorbereitet
+	# maildrop_delivery_slot_cost = $default_delivery_slot_cost
+	# maildrop_delivery_slot_discount = $default_delivery_slot_discount
+	# maildrop_delivery_slot_loan = $default_delivery_slot_loan
+	# maildrop_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
+	# maildrop_destination_concurrency_limit = $default_destination_concurrency_limit
+	# maildrop_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
+	# maildrop_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
+	# maildrop_destination_rate_delay = $default_destination_rate_delay
+	# maildrop_destination_recipient_limit = $default_destination_recipient_limit
+	# maildrop_extra_recipient_limit = $default_extra_recipient_limit
+	# maildrop_initial_destination_concurrency = $initial_destination_concurrency
+	# maildrop_minimum_delivery_slots = $default_minimum_delivery_slots
+	# maildrop_recipient_limit = $default_recipient_limit
+	# maildrop_recipient_refill_delay = $default_recipient_refill_delay
+	# maildrop_recipient_refill_limit = $default_recipient_refill_limit
+	# maildrop_time_limit = $command_time_limit
+	##############################################
+	conf_maildrop_menu() {
+		MAILDROP_MENU=(maildrop_delivery_slot_cost \"\$maildrop_delivery_slot_cost\"
+		maildrop_delivery_slot_discount \"\$maildrop_delivery_slot_discount\"
+		maildrop_delivery_slot_loan \"\$maildrop_delivery_slot_loan\"
+		maildrop_destination_concurrency_failed_cohort_limit \"\$maildrop_destination_concurrency_failed_cohort_limit\"
+		maildrop_destination_concurrency_limit \"\$maildrop_destination_concurrency_limit\"
+		maildrop_destination_concurrency_negative_feedback \"\$maildrop_destination_concurrency_negative_feedback\"
+		maildrop_destination_concurrency_positive_feedback \"\$maildrop_destination_concurrency_positive_feedback\"
+		maildrop_destination_rate_delay \"\$maildrop_destination_rate_delay\"
+		maildrop_destination_recipient_limit \"\$maildrop_destination_recipient_limit\"
+		maildrop_extra_recipient_limit \"\$maildrop_extra_recipient_limit\"
+		maildrop_initial_destination_concurrency \"\$maildrop_initial_destination_concurrency\"
+		maildrop_minimum_delivery_slots \"\$maildrop_minimum_delivery_slots\"
+		maildrop_recipient_limit \"\$maildrop_recipient_limit\"
+		maildrop_recipient_refill_delay \"\$maildrop_recipient_refill_delay\"
+		maildrop_recipient_refill_limit \"\$maildrop_recipient_refill_limit\"
+		maildrop_time_limit \"\$maildrop_time_limit\"
+		postfix \"reload\"
+		$gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$MAILDROP_TITLE" "$gv_Menupoint" "$MAILDROP_MENU"
+		else
+			menubox "$MAILDROP_TITLE" "$gv_Menupoint" "$MAILDROP_MENU"
+		fi
+	}
+	## }}}
+	conf_maildrop_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help maildrop_help
+				conf_maildrop_menu
+				;;
+			maildrop_delivery_slot_cost)
+				# = $default_delivery_slot_cost
+				conf_maildrop_menu maildrop_delivery_slot_cost
+				;;
+			maildrop_delivery_slot_discount)
+				# = $default_delivery_slot_discount
+				conf_maildrop_menu maildrop_delivery_slot_discount
+				;;
+			maildrop_delivery_slot_loan)
+				# = $default_delivery_slot_loan
+				conf_maildrop_menu maildrop_delivery_slot_loan
+				;;
+			maildrop_destination_concurrency_failed_cohort_limit)
+				# = $default_destination_concurrency_failed_cohort_limit
+				conf_maildrop_menu maildrop_destination_concurrency_failed_cohort_limit
+				;;
+			maildrop_destination_concurrency_limit)
+				# = $default_destination_concurrency_limit
+				conf_maildrop_menu maildrop_destination_concurrency_limit
+				;;
+			maildrop_destination_concurrency_negative_feedback)
+				# = $default_destination_concurrency_negative_feedback
+				conf_maildrop_menu maildrop_destination_concurrency_negative_feedback
+				;;
+			maildrop_destination_concurrency_positive_feedback)
+				# = $default_destination_concurrency_positive_feedback
+				conf_maildrop_menu maildrop_destination_concurrency_positive_feedback
+				;;
+			maildrop_destination_rate_delay)
+				# = $default_destination_rate_delay
+				conf_maildrop_menu maildrop_destination_rate_delay
+				;;
+			maildrop_destination_recipient_limit)
+				# = $default_destination_recipient_limit
+				conf_maildrop_menu maildrop_destination_recipient_limit
+				;;
+			maildrop_extra_recipient_limit)
+				# = $default_extra_recipient_limit
+				conf_maildrop_menu maildrop_extra_recipient_limit
+				;;
+			maildrop_initial_destination_concurrency)
+				# = $initial_destination_concurrency
+				conf_maildrop_menu maildrop_initial_destination_concurrency
+				;;
+			maildrop_minimum_delivery_slots)
+				# = $default_minimum_delivery_slots
+				conf_maildrop_menu maildrop_minimum_delivery_slots
+				;;
+			maildrop_recipient_limit)
+				# = $default_recipient_limit
+				conf_maildrop_menu maildrop_recipient_limit
+				;;
+			maildrop_recipient_refill_delay)
+				# = $default_recipient_refill_delay
+				conf_maildrop_menu maildrop_recipient_refill_delay
+				;;
+			maildrop_recipient_refill_limit)
+				# = $default_recipient_refill_limit
+				conf_maildrop_menu maildrop_recipient_refill_limit
+				;;
+			maildrop_time_limit)
+				# = $command_time_limit
+				conf_maildrop_menu maildrop_time_limit
+				;;
+			postfix)
+				# postfix, Konfiguration neu einlesen
+				postfix_start_reload
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
