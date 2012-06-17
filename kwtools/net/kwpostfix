@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 10.06.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 17.06.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -57,6 +57,7 @@ lv_Clear=$(gettext 'Aufraeumen')
 # Konfiguration
 lv_Main=$(gettext 'Haupt')
 lv_Default=$(gettext 'Standard')
+lv_Address=$(gettext 'Adresspruefung')
 lv_Bsmtp=$(gettext 'Bsmtp')
 lv_Error=$(gettext 'Fehler')
 lv_ErrorCodes=$(gettext 'Fehlercodes')
@@ -66,12 +67,14 @@ lv_Maildrop=$(gettext 'Maildrop')
 lv_Mailman=$(gettext 'Mailman')
 lv_Milter=$(gettext 'Milter')
 lv_Lmtp=$(gettext 'LMTP')
+lv_Postscreen=$(gettext 'Postscreen')
 lv_Queue=$(gettext 'Queue/Qmail')
 lv_Relay=$(gettext 'Weiterleitung')
 lv_Retry=$(gettext 'Wiederholung')
 lv_Smtp=$(gettext 'SMTP')
 lv_Smtpd=$(gettext 'SMTPD')
 lv_Tls=$(gettext 'TLS')
+lv_TlsProxy=$(gettext 'TLS_Proxy')
 lv_Uucp=$(gettext 'UUCP')
 lv_Virtual=$(gettext 'Virtual')
 
@@ -514,21 +517,23 @@ while [ "$gv_Auswahl" ] ; do
 			# TODO:
 			# wegen einigen Daten was vorher einlesen?
 			# Wie zum Bsp. $data_directory fuer tls_conf und
-			# virtual_conf
+			# virtual_conf, wegen auch Variablen Anbietung.
+			# Aussortierung: für nur Erweiterte Konf. und Unterteilung,
+			# siehe error_codes_conf.
 			#####################################################
-			autoload -U bsmtp_conf default_conf error_conf ifmail_conf \
+			autoload -U address_conf bsmtp_conf default_conf error_conf ifmail_conf \
 				lmtp_conf lock_art main_conf mail_conf maildrop_conf \
-				mailman_conf milter_conf postfix_variable q_conf \
-				relay_conf retry_conf smtp_conf \
-				smtpd_conf tab_support_wahl tls_conf uucp_conf virtual_conf
+				mailman_conf milter_conf postscreen_conf postfix_variable q_conf \
+				relay_conf retry_conf smtp_conf smtpd_conf tab_support_wahl \
+				tls_conf tlsproxy_conf uucp_conf virtual_conf
 			#
 			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
-			EXT_CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_Bsmtp \"\"
-				$lv_Error \"\" $lv_ErrorCodes \"\" $lv_Ifmail \"\" $lv_Lmtp \"\"
+			EXT_CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_Address \"\" $lv_Bsmtp \"\"
+				$lv_Error \"\" $lv_Ifmail \"\" $lv_Lmtp \"\"
 				$lv_Mail \"\" $lv_Maildrop \"\" $lv_Mailman \"\" 
-				$lv_Milter \"\" $lv_Queue \"\"
+				$lv_Milter \"\" $lv_Postscreen \"\" $lv_Queue \"\"
 				$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
-				$lv_Tls \"\" $lv_Uucp \"\" $lv_Virtual \"\"
+				$lv_Tls \"\" $lv_TlsProxy \"\" $lv_Uucp \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
 			ext_conf_menu() {
 				if [[ ${#argv} == 1 ]] ; then
@@ -555,8 +560,13 @@ while [ "$gv_Auswahl" ] ; do
 						default_conf
 						ext_conf_menu $lv_Default
 						;;
+					$lv_Address)
+						# Address Einstellungen
+						address_conf
+						ext_conf_menu $lv_Address
+						;;
 					$lv_Bsmtp)
-						# Default Einstellungen
+						# Bsmtp Einstellungen
 						bsmtp_conf
 						ext_conf_menu $lv_Bsmtp
 						;;
@@ -564,12 +574,6 @@ while [ "$gv_Auswahl" ] ; do
 						# Fehler Einstellungen
 						error_conf
 						ext_conf_menu $lv_Error
-						;;
-					$lv_ErrorCodes)
-						# Fehlercodes
-						autoload -U error_codes_conf
-						error_codes_conf
-						ext_conf_menu $lv_ErrorCodes
 						;;
 					$lv_Ifmail)	
 						# IfMail Einstellungen
@@ -601,6 +605,11 @@ while [ "$gv_Auswahl" ] ; do
 						milter_conf
 						ext_conf_menu $lv_Milter
 						;;
+					$lv_Postscreen)
+						# Postscreen Einstellungen
+						postscreen_conf
+						ext_conf_menu $lv_Postscreen
+						;;
 					$lv_Queue)
 						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
 						q_conf
@@ -630,6 +639,11 @@ while [ "$gv_Auswahl" ] ; do
 						# TLS Einstellungen
 						tls_conf
 						ext_conf_menu $lv_Tls
+						;;
+					$lv_TlsProxy)
+						# TLS Proxy Einstellungen
+						tlsproxy_conf
+						ext_conf_menu $lv_TlsProxy
 						;;
 					$lv_Uucp)
 						# UUCP Einstellungen
