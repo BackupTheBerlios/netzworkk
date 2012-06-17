@@ -1,0 +1,74 @@
+# tlsproxy_help (?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_TlsProxy}::${gv_Help}"
+MSG=$(gettext 'tlsproxy_enforce_tls: Standard ist \"$smtpd_enforce_tls\"
+
+tlsproxy_tls_CAfile: Standard ist \"$smtpd_tls_CAfile\"
+
+tlsproxy_tls_CApath: Standard ist \"$smtpd_tls_CApath\"
+
+tlsproxy_tls_always_issue_session_ids:
+\tStandard ist \"$smtpd_tls_always_issue_session_ids\"
+
+tlsproxy_tls_ask_ccert: Standard ist \"$smtpd_tls_ask_ccert\"
+
+tlsproxy_tls_ccert_verifydepth:
+\tStandard ist \"$smtpd_tls_ccert_verifydepth\"
+
+tlsproxy_tls_cert_file: Standard ist \"$smtpd_tls_cert_file\"
+
+tlsproxy_tls_ciphers: Standard ist \"$smtpd_tls_ciphers\"
+
+tlsproxy_tls_dcert_file: Standard ist \"$smtpd_tls_dcert_file\"
+
+tlsproxy_tls_dh1024_param_file:
+\tStandard ist \"$smtpd_tls_dh1024_param_file\"
+
+tlsproxy_tls_dh512_param_file:
+\tStandard ist \"$smtpd_tls_dh512_param_file\"
+
+tlsproxy_tls_dkey_file: Standard ist \"$smtpd_tls_dkey_file\"
+
+tlsproxy_tls_eccert_file: Standard ist \"$smtpd_tls_eccert_file\"
+
+tlsproxy_tls_eckey_file: Standard ist \"$smtpd_tls_eckey_file\"
+
+tlsproxy_tls_eecdh_grade: Standard ist \"$smtpd_tls_eecdh_grade\"
+
+tlsproxy_tls_exclude_ciphers:
+\tStandard ist \"$smtpd_tls_exclude_ciphers\"
+
+tlsproxy_tls_fingerprint_digest:
+\tStandard ist \"$smtpd_tls_fingerprint_digest\"
+
+tlsproxy_tls_key_file: Standard ist \"$smtpd_tls_key_file\"
+
+tlsproxy_tls_loglevel: Standard ist \"$smtpd_tls_loglevel\"
+
+tlsproxy_tls_mandatory_ciphers:
+\tStandard ist \"$smtpd_tls_mandatory_ciphers\"
+
+tlsproxy_tls_mandatory_exclude_ciphers:
+\tStandard ist \"$smtpd_tls_mandatory_exclude_ciphers\"
+
+tlsproxy_tls_mandatory_protocols:
+\tStandard ist \"$smtpd_tls_mandatory_protocols\"
+
+tlsproxy_tls_protocols: Standard ist \"$smtpd_tls_protocols\"
+
+tlsproxy_tls_req_ccert: Standard ist \"$smtpd_tls_req_ccert\"
+
+tlsproxy_tls_security_level:
+\tStandard ist \"$smtpd_tls_security_level\"
+
+tlsproxy_tls_session_cache_timeout:
+\tStandard ist \"$smtpd_tls_session_cache_timeout\"
+
+tlsproxy_use_tls: Standard ist \"$smtpd_use_tls\"
+
+tlsproxy_watchdog_timeout: Standard ist \"10s\"
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
