@@ -3,7 +3,7 @@
 bsmtp_conf() {
 
 	# Variable
-	MAILMAN_TITLE="${gv_Configuration}::${lv_Bsmtp}"
+	BSMTP_TITLE="${gv_Configuration}::${lv_Bsmtp}"
 	
 	# Bestehende Konfiguration einlesen# {{{
 	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)bsmtp_*} | \
@@ -33,7 +33,7 @@ bsmtp_conf() {
 	# bsmtp_time_limit = $command_time_limit
 	##############################################
 	conf_bsmtp_menu() {
-		MAILMAN_MENU=(bsmtp_delivery_slot_cost \"\$bsmtp_delivery_slot_cost\"
+		BSMTP_MENU=(bsmtp_delivery_slot_cost \"\$bsmtp_delivery_slot_cost\"
 		bsmtp_delivery_slot_discount \"\$bsmtp_delivery_slot_discount\"
 		bsmtp_delivery_slot_loan \"\$bsmtp_delivery_slot_loan\"
 		bsmtp_destination_concurrency_failed_cohort_limit \"\$bsmtp_destination_concurrency_failed_cohort_limit\"
@@ -52,9 +52,9 @@ bsmtp_conf() {
 		postfix \"reload\"
 		$gv_Back \"\")
 		if [[ ${#argv} == 1 ]] ; then
-			menubox -d "$1" "$MAILMAN_TITLE" "$gv_Menupoint" "$MAILMAN_MENU"
+			menubox -d "$1" "$BSMTP_TITLE" "$gv_Menupoint" "$BSMTP_MENU"
 		else
-			menubox "$MAILMAN_TITLE" "$gv_Menupoint" "$MAILMAN_MENU"
+			menubox "$BSMTP_TITLE" "$gv_Menupoint" "$BSMTP_MENU"
 		fi
 	}
 	## }}}
