@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 12.05.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 20.06.2012
 #
 # Script: kwnarc, Firewall mittels iptables starten.
 # KWNARC - kwtools Netfilter Automatic Rule Configurator
@@ -8,7 +8,7 @@
 # NARC - Netfilter Automatic Rule Configurator v0.7
 # Copyright (c) 2001, Shane Chen (shane@knowplace.org).
 #
-# Version: 0.0.6
+# Version: 0.0.7
 #
 setopt extendedglob
 
@@ -156,7 +156,7 @@ case "$1" in
 		echo $BOLD"kwnarc$NORMAL (kwtools Netfilter Automatic Rule Configurator)"
 		echo "Displaying current chains:"
 		if [[ -r /proc/net/ip_tables_names ]] ; then
-			for table in `< /proc/net/ip_tables_names(.N)` ; {
+			for table in `< /proc/net/ip_tables_names` ; {
 				$IPTABLES -t $table -L -n | grep Chain \
 				| cut --fields=2 --delimiter=\
 			}
