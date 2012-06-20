@@ -54,7 +54,7 @@ relay_conf() {
 				;;
 			relay_clientcerts)
 				# Tabelle mit Client Zertrifikaten{{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				relay_clientcerts="$MAPS"
 				postconf -e relay_clientcerts="$MAPS"
 				#}}}
@@ -111,7 +111,7 @@ relay_conf() {
 				;;
 			relay_domains)
 				# Domains fuer die bzw. von denen postfix relayed{{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				relay_domains="$MAPS"
 				postconf -e relay_domains="$MAPS"
 				#}}}
@@ -136,7 +136,7 @@ relay_conf() {
 			relay_recipient_maps)
 				# Tabelle mit Mailadressen, fuer die postfix Mails annehmen soll.{{{
 				# s. zless STANDARD_CONFIGURATION_README.gz im Dokumentations-Pfad
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				relay_recipient_maps="$MAPS"
 				postconf -e relay_recipient_maps="$MAPS"
 				#}}}

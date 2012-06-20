@@ -4,11 +4,16 @@
 # dass der eigene Wert (Value) nicht drin vorkommt.
 # Dann zur Auswahl anbieten.
 #
+##############################################
+# TODO: proxy_read_maps doch konfigurieren
+# koennen? Dann neue Funktion.
+##############################################
+#
 # usage: postfix_variable "$Variable" "$Value"
 #
 postfix_variable() {
 	unset -- WERT Var_T
-	local Value
+	local Value Var_T
 	Value="$2"
 	postconf | awk -F' ' /$1/'{print $1,$3}' | while read a b ; do
 		if [ "$b" -a $a != $Value -a $a != proxy_read_maps ] ; then
@@ -21,7 +26,7 @@ postfix_variable() {
 	#
 	while [ "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
-			HELP*)	script_help tab_wert_auswahl_help
+			HELP*)	script_help tab_support_help
 				menubox "$gv_Configuration" "$POSTFIX_VAR_MSG" "$Var_T"
 				;;
 			*)	# Wert übernehmen

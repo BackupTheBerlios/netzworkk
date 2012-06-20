@@ -252,52 +252,52 @@ extra_conf_restrictions() {
 while read a ; do
 	case $a in
 		check_client_access) # Eingabe der Tabelle der Clients
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_client_access.*#check_client_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_helo_access) # Eingabe der Tabelle der Clients
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_helo_access.*#check_helo_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_helo_mx_access) # Eingabe der Tabelle der Clients
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_helo_mx_access.*#check_helo_mx_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_helo_ns_access) # Eingabe der Tabelle der Clients
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_helo_ns_access.*#check_helo_ns_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_recipient_access) # Eingabe der Tabelle der Empfänger
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_recipient_access.*#check_recipient_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_recipient_mx_access) # Eingabe der Tabelle der Empfänger
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_recipient_mx_access.*#check_recipient_mx_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_recipient_ns_access) # Eingabe der Tabelle der Empfänger
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_recipient_ns_access.*#check_recipient_ns_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_sender_access) # Eingabe der Tabelle der Sender
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_sender_access.*#check_sender_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_sender_mx_access) # Eingabe der Tabelle der Sender
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_sender_mx_access.*#check_sender_mx_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;
 		check_sender_ns_access) # Eingabe der Tabelle der Sender
-			tab_support_wahl "$a"
+			tab_support_choice "$a"
 			sed -e "s#^check_sender_ns_access.*#check_sender_ns_access $MAPS#" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
 			mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 			;;

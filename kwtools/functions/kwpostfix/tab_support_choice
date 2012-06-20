@@ -1,8 +1,8 @@
-# Funktion Tabellen Format Auswahl{{{
+# Funktion (tab_support_choice), Tabellen- und deren Format-Auswahl{{{
 #
-# usage: tab_support_wahl $Variable
+# usage: tab_support_choice $Variable
 #
-tab_support_wahl() {
+tab_support_choice() {
 	unset -- MAPS
 	local Choice
 	Choice="$1"
@@ -24,15 +24,15 @@ tab_support_wahl() {
 		#
 		TAB_VALUE_MENU=($gv_Input \"\" $lv_NameAdapt \"\"
 		$lv_VarChoice \"\" $gv_Back \"\")
-		tab_wert_auswahl_menue() {
+		tab_support_menu() {
 			menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$TAB_VALUE_MENU"
 		}
 		#}}}
-		tab_wert_auswahl_menue
+		tab_support_menu
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
-				HELP*)	script_help tab_wert_auswahl_help
-					tab_wert_auswahl_menue
+				HELP*)	script_help tab_support_help
+					tab_support_menu
 					;;
 				$gv_Input)
 					# Datei/Variabl Eingabe# {{{
@@ -181,7 +181,7 @@ tab_support_wahl() {
 											;;
 										unix)
 											# Proxymap unix{{{
-											Unix_Name="passwd.byname \"\" group.byname \"\" $ZURUECK \"\""
+											Unix_Name="passwd.byname \"\" group.byname \"\" $gv_Back \"\""
 											menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$Unix_Name"
 											#
 											while [ "$gv_Auswahl" ] ; do
@@ -239,7 +239,7 @@ tab_support_wahl() {
 								;;
 							un*)
 								# unix{{{
-								Nis_Name="passwd.byname \"\" group.byname \"\" $ZURUECK \"\""
+								Nis_Name="passwd.byname \"\" group.byname \"\" $gv_Back \"\""
 								menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Nis_Name"
 								#
 								while [ "$gv_Auswahl" ] ; do
@@ -278,7 +278,11 @@ tab_support_wahl() {
 					;;
 				$lv_VarChoice)
 					# Für diese Werte die Postfix Variablen generieren{{{
-					Werte="_checks |_database|_maps |mailbox_domains |_limit |alias_domains |rbl_domains |relay_domains |mynetworks |virtual_transport"
+					# ########################
+					# TODO: _limit pruefen
+					# ########################
+					# Werte="_checks |_database |_maps |mailbox_domains |_limit |alias_domains |rbl_domains |relay_domains |mynetworks |virtual_transport "
+					Werte="_checks |_database |_maps |mailbox_domains |alias_domains |rbl_domains |relay_domains |mynetworks |virtual_transport "
 					# Choice ist der eigene Parametername der einzustellen ist.
 					# Dieser wird nicht zur Auswahl angezeigt.
 					postfix_variable $Werte $Choice

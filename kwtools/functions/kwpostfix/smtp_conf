@@ -306,7 +306,7 @@ smtp_conf() {
 				;;
 			smtp_discard_ehlo_keyword_address_maps)
 				# Tabelle EHLO Schluesselwoertern{{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtp_discard_ehlo_keyword_address_maps="$MAPS"
 				postconf -e smtp_discard_ehlo_keyword_address_maps="$MAPS"
 				#}}}
@@ -359,7 +359,7 @@ smtp_conf() {
 				;;
 			smtp_generic_maps)
 				# Tabelle zum umschreiben von lokalen zu globalen Adressen# {{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtp_generic_maps="$MAPS"
 				postconf -e smtp_generic_maps="$MAPS"
 				## }}}
@@ -620,7 +620,7 @@ smtp_conf() {
 			smtp_sasl_password_maps)
 				# Tabelle mit Passwoertern fuer ausgehende{{{
 				# SMTP_AUTH Verbindungen
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtp_sasl_password_maps="$MAPS"
 				postconf -e smtp_sasl_password_maps="$MAPS"
 				#}}}
@@ -846,7 +846,7 @@ smtp_conf() {
 				;;
 			smtp_tls_per_site)
 				# Tabelle fuer die Regeln der TLS Benutzung{{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtp_tls_per_site="$MAPS"
 				postconf -e smtp_tls_per_site="$MAPS"
 				#}}}
@@ -880,7 +880,7 @@ smtp_conf() {
 				;;
 			smtp_tls_session_cache_database)
 				# Tabelle des Session Cache# {{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtp_tls_session_cache_database="$MAPS"
 				postconf -e smtp_tls_session_cache_database="$MAPS"
 				## }}}

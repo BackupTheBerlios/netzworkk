@@ -299,7 +299,7 @@ smtpd_conf() {
 				;;
 			smtpd_discard_ehlo_keyword_address_maps)
 				# Tabelle EHLO Schluesselwoertern{{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtpd_discard_ehlo_keyword_address_maps="$MAPS"
 				postconf -e smtpd_discard_ehlo_keyword_address_maps="$MAPS"
 				#}}}
@@ -668,7 +668,7 @@ smtpd_conf() {
 				;;
 			smtpd_sender_login_maps)
 				# Zugriffstabelle fuer SMTP-AUTH{{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtpd_sender_login_maps="$MAPS"
 				postconf -e smtpd_sender_login_maps="$MAPS"
 				#}}}
@@ -905,7 +905,7 @@ smtpd_conf() {
 				;;
 			smtpd_tls_session_cache_database)
 				# Tabelle des Session Cache# {{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				smtpd_tls_session_cache_database="$MAPS"
 				postconf -e smtpd_tls_session_cache_database="$MAPS"
 				## }}}

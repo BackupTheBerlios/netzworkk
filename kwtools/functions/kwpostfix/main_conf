@@ -287,7 +287,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		alias_maps)
 			# Tabellen fuer Mailaliase{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			alias_maps="$MAPS"
 			postconf -e alias_maps="$MAPS"
 			#}}}
@@ -295,7 +295,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		alias_database)
 			# Bestimmt, welche Tabelle mit dem Befehl newaliases erzeugt wird.{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			alias_database="$MAPS"
 			postconf -e alias_database="$MAPS"
 			#}}}
@@ -468,7 +468,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		body_checks)
 			# Tabelle eine Filterung des Bodies{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			body_checks="$MAPS"
 			postconf -e body_checks="$MAPS"
 			#}}}
@@ -521,7 +521,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		canonical_maps)
 			# Tabelle fuer canonical{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			canonical_maps="$MAPS"
 			postconf -e canonical_maps="$MAPS"
 			#}}}
@@ -807,7 +807,7 @@ while [ "$gv_Auswahl" ] ; do
 		fast_flush_domains)
 			# Fuer welche domains soll der Mail Server eine schnellere{{{
 			# Zustellung einschalten.
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			fast_flush_domains="$MAPS"
 			postconf -e fast_flush_domains="$MAPS"
 			#}}}
@@ -933,7 +933,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		header_checks)
 			# Tabelle mit Filtermustern fuer den Header{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			header_checks="$MAPS"
 			postconf -e header_checks="$MAPS"
 			#}}}
@@ -1107,7 +1107,7 @@ while [ "$gv_Auswahl" ] ; do
 		local_recipient_maps)
 			# Tabelle mit lokalen Mailadressen, fuer die postfix Mails annehmen soll{{{
 			# Unzustellbare werden dann gar nicht erst angenommen.
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			local_recipient_maps="$MAPS"
 			postconf -e local_recipient_maps="$MAPS"
 			#}}}
@@ -1273,7 +1273,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		mime_header_checks)
 			# Tabelle mit Filtermustern fuer den Mime Header{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			mime_header_checks="$MAPS"
 			postconf -e mime_header_checks="$MAPS"
 			#}}}
@@ -1322,7 +1322,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		mynetworks)
 			# Tabelle fuer IP-Nummern/Bereiche, die relayen duerfen{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			mynetworks="$MAPS"
 			postconf -e mynetworks="$MAPS"
 			#}}}
@@ -1373,7 +1373,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		nested_header_checks)
 			# Tabelle mit Filtermustern der Mailanhaenge Header{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			nested_header_checks="$MAPS"
 			postconf -e nested_header_checks="$MAPS"
 			#}}}
@@ -1553,7 +1553,7 @@ while [ "$gv_Auswahl" ] ; do
 		recipient_bcc_maps)
 			# Tabelle, an die "Blind Carbon-Copy" Mails geschickt werden, wenn{{{
 			# der dementsprechende Empfaenger erkannt wird.
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			recipient_bcc_maps="$MAPS"
 			postconf -e recipient_bcc_maps="$MAPS"
 			#}}}
@@ -1561,7 +1561,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		recipient_canonical_maps)
 			# canonical Tabelle fuer Empfaenger Adressen{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			recipient_canonical_maps="$MAPS"
 			postconf -e recipient_canonical_maps="$MAPS"
 			#}}}
@@ -1593,7 +1593,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		relocated_maps)
 			# Tabelle mit relocated Eintraegen{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			relocated_maps="$MAPS"
 			postconf -e relocated_maps="$MAPS"
 			#}}}
@@ -1610,7 +1610,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		sender_canonical_maps)
 			# canonical Tabelle fuer Sender Adressen{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			sender_canonical_maps="$MAPS"
 			postconf -e sender_canonical_maps="$MAPS"
 			#}}}
@@ -1619,7 +1619,7 @@ while [ "$gv_Auswahl" ] ; do
 		sender_bcc_maps)
 			# Tabelle, an die "Blind Carbon-Copy" Mails geschickt werden, wenn{{{
 			# der dementsprechende Sender erkannt wird.
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			sender_bcc_maps="$MAPS"
 			postconf -e sender_bcc_maps="$MAPS"
 			#}}}
@@ -1756,7 +1756,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		transport_maps)
 			# Tabelle mit den Transportwegen{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			transport_maps="$MAPS"
 			postconf -e transport_maps="$MAPS"
 			#}}}

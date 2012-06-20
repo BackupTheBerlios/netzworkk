@@ -439,7 +439,7 @@ lmtp_conf() {
 				;;
 			lmtp_sasl_password_maps)
 				# Tabelle fuer Kennungen/Passwoertern fuer authentifiezierte LMTP Verbindungen{{{
-				tab_support_wahl "$gv_Auswahl"
+				tab_support_choice "$gv_Auswahl"
 				lmtp_sasl_password_maps="$MAPS"
 				postconf -e lmtp_sasl_password_maps="$MAPS"
 				#}}}

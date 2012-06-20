@@ -70,7 +70,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_alias_domains)
 			# Virtual Alias Domains{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			virtual_alias_domains="$MAPS"
 			postconf -e virtual_alias_domains="$MAPS"
 			#}}}
@@ -88,7 +88,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_alias_maps)
 			# Virtual Alias Maps{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			virtual_alias_maps="$MAPS"
 			postconf -e virtual_alias_maps="$MAPS"
 			#}}}
@@ -159,7 +159,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_gid_maps)
 			# Virtual GID Maps{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			virtual_gid_maps="$MAPS"
 			postconf -e virtual_gid_maps="$MAPS"
 			#}}}
@@ -187,7 +187,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_mailbox_domains)
 			# Virtual Mailbox Domains{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			virtual_mailbox_domains="$MAPS"
 			postconf -e virtual_mailbox_domains="$MAPS"
 			#}}}
@@ -213,7 +213,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_mailbox_maps)
 			# Virtual Mailbox Maps{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			virtual_mailbox_maps="$MAPS"
 			postconf -e virtual_mailbox_maps="$MAPS"
 			#}}}
@@ -249,7 +249,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_transport)
 			# Virtual Transport Metode{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			virtual_transport="$MAPS"
 			postconf -e virtual_transport="$MAPS"
 			#}}}
@@ -257,7 +257,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_uid_maps)
 			# Zuordnung von uid zu Mailadressen{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			virtual_uid_maps="$MAPS"
 			postconf -e virtual_uid_maps="$MAPS"
 			#}}}

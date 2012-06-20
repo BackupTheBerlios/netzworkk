@@ -60,7 +60,7 @@ default_conf() {
 				;;
 			default_database_type)
 				# Standard Datenbank Type vergeben.{{{
-				tab_support_wahl -s
+				tab_support_choice -s
 				if [[ -n $MAPS ]] ; then
 					default_database_type="$MAPS"
 					postconf -e default_database_type="$MAPS"

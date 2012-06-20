@@ -98,7 +98,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		mailbox_command_maps)
 			# Tabelle fuer Mailbox Befehle# {{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			mailbox_command_maps="$MAPS"
 			postconf -e mailbox_command_maps="$MAPS"
 			## }}}
@@ -132,7 +132,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		mailbox_transport_maps)
 			# Mailbox Transport Methode - Mapdatei{{{
-			tab_support_wahl "$gv_Auswahl"
+			tab_support_choice "$gv_Auswahl"
 			mailbox_transport_maps="$WERT"
 			postconf -e mailbox_transport_maps="$WERT"
 			#}}}
