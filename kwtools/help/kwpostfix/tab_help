@@ -1,5 +1,5 @@
 # tab_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::Hilfe')
+TITLE="${lv_Tabs}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie die folgenden Tabellen bearbeiten, wenn Sie in der
 der main.cf einen Wert besitzen. Loeschen, anlegen, veraendern und 
 Ansicht der Tabellen stehen zur Verfuegung, sowie die Datenbank neu

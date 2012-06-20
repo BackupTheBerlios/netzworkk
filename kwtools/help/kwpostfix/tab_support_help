@@ -1,5 +1,5 @@
-# tab_wert_auswahl_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::Werte::Auswahl::${gv_Help}')
+# tab_support_help fuer kwpostfix{{{
+TITLE="${lv_Tabs}::${lv_Choice}::${gv_Help}"
 MSG=$(gettext 'Auswahl auf welche Weise Sie diesen Wert konfigurieren wollen.
 
 Eingabe: Alle Eingaben muessen manuell eingegeben werden.

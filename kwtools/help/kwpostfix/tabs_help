@@ -1,5 +1,5 @@
-# tab_wert_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::Werte::Hilfe')
+# tabs_help fuer kwpostfix{{{
+TITLE="${lv_Tabs}::${gv_Configuration}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie vorhandene Konfigurationen zur Bearbeitung
 auswaehlen.')
 #}}}
