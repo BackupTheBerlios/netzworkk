@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 17.06.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 20.06.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -78,6 +78,7 @@ lv_TlsProxy=$(gettext 'TLS_Proxy')
 lv_Uucp=$(gettext 'UUCP')
 lv_Virtual=$(gettext 'Virtual')
 
+lv_Choice=$(gettext 'Auswahl')
 lv_Proxy=$(gettext 'Proxy')
 lv_TableTyp=$(gettext 'Tabellentyp')
 
@@ -419,7 +420,7 @@ while [ "$gv_Auswahl" ] ; do
 			#####################################################
 			autoload -U default_conf lmtp_conf lock_art mail_conf \
 				main_conf milter_conf postfix_variable q_conf \
-				relay_conf smtp_conf smtpd_conf tab_support_wahl \
+				relay_conf smtp_conf smtpd_conf tab_support_choice \
 				tls_conf virtual_conf
 			#
 			# Funktion konf_menue{{{
@@ -524,7 +525,7 @@ while [ "$gv_Auswahl" ] ; do
 			autoload -U address_conf bsmtp_conf default_conf error_conf ifmail_conf \
 				lmtp_conf lock_art main_conf mail_conf maildrop_conf \
 				mailman_conf milter_conf postscreen_conf postfix_variable q_conf \
-				relay_conf retry_conf smtp_conf smtpd_conf tab_support_wahl \
+				relay_conf retry_conf smtp_conf smtpd_conf tab_support_choice \
 				tls_conf tlsproxy_conf uucp_conf virtual_conf
 			#
 			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
