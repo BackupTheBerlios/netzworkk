@@ -20,8 +20,7 @@ tab_support_choice() {
 	if [ "$1" = -s ] ; then
 		MAPS="$gv_Auswahl"
 	else
-		# Funktion tab_wert_auswahl_menue{{{
-		#
+		# Funktion tab_support_menu{{{
 		TAB_VALUE_MENU=($gv_Input \"\" $lv_NameAdapt \"\"
 		$lv_VarChoice \"\" $gv_Back \"\")
 		tab_support_menu() {
@@ -35,7 +34,7 @@ tab_support_choice() {
 					tab_support_menu
 					;;
 				$gv_Input)
-					# Datei/Variabl Eingabe# {{{
+					# Datei/Variablen Eingabe# {{{
 					V_Wert="$(postconf -h $Choice)"
 					INPUT_MSG=$(gettext 'Hier koennen Sie Variablen und/oder Dateien eingeben (Bsp. \$alias_maps \$virtual_mailbox_maps unix:passwd.byname).')
 					inputbox "$TAB_VALUE_TITLE" "$INPUT_MSG" "${V_Wert//\$/\\\$}"
@@ -181,7 +180,8 @@ tab_support_choice() {
 											;;
 										unix)
 											# Proxymap unix{{{
-											Unix_Name="passwd.byname \"\" group.byname \"\" $gv_Back \"\""
+											Unix_Name=(passwd.byname \"\" group.byname \"\"
+												$gv_Back \"\")
 											menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$Unix_Name"
 											#
 											while [ "$gv_Auswahl" ] ; do
@@ -239,7 +239,7 @@ tab_support_choice() {
 								;;
 							un*)
 								# unix{{{
-								Nis_Name="passwd.byname \"\" group.byname \"\" $gv_Back \"\""
+								Nis_Name=(passwd.byname \"\" group.byname \"\" $gv_Back \"\")
 								menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Nis_Name"
 								#
 								while [ "$gv_Auswahl" ] ; do
