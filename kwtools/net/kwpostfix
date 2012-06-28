@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 20.06.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 28.06.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -71,6 +71,7 @@ lv_Postscreen=$(gettext 'Postscreen')
 lv_Queue=$(gettext 'Queue/Qmail')
 lv_Relay=$(gettext 'Weiterleitung')
 lv_Retry=$(gettext 'Wiederholung')
+lv_Scalemail=$(gettext 'Scalemail-backend')
 lv_Smtp=$(gettext 'SMTP')
 lv_Smtpd=$(gettext 'SMTPD')
 lv_Tls=$(gettext 'TLS')
@@ -149,11 +150,11 @@ fi
 # diese werden unterschiedlich in Variablen gespeichert,
 # da nicht jede Tabelle mit jeden Typ zurecht kommt.
 #
-# TABS_A -
-# TABS_C -
-# TABS_M -
-# TABS_R -
-# TB_Format -
+# TABS_A - ohne die Tabellenformate pcre und regexp
+# TABS_C - alle Tabellenformate + cidr
+# TABS_M - alle Tabellenformate
+# TABS_R - nur die Tabellenformate pcre und regexp
+# TB_Format - alle Tabellenformate
 #
 tab_support() {
 	unset -- TABS TABS_A TABS_C TABS_M TABS_R TB_Format
@@ -251,7 +252,7 @@ verp_delimiter() {
 	fi
 }
 		## }}}
-		# Funktion (tls_file_auswahl), TLS Schlüssel Dateien Auswahl{{{
+# Funktion (tls_file_auswahl), TLS Schlüssel Dateien Auswahl{{{
 tls_file_auswahl() {
 	unset -- WERT TLS_FILE_MENU FORMAT SUFFIX
 	local TLS_FILE_MENU
@@ -505,7 +506,9 @@ while [ "$gv_Auswahl" ] ; do
 						virtual_conf
 						conf_menu $lv_Virtual
 						;;
-					$gv_Back)	break
+					$gv_Back)
+						# zurueck
+						break
 						;;
 				esac
 			done
@@ -525,7 +528,8 @@ while [ "$gv_Auswahl" ] ; do
 			autoload -U address_conf bsmtp_conf default_conf error_conf ifmail_conf \
 				lmtp_conf lock_art main_conf mail_conf maildrop_conf \
 				mailman_conf milter_conf postscreen_conf postfix_variable q_conf \
-				relay_conf retry_conf smtp_conf smtpd_conf tab_support_choice \
+				relay_conf retry_conf scalemail-backend_conf smtp_conf \
+				smtpd_conf tab_support_choice \
 				tls_conf tlsproxy_conf uucp_conf virtual_conf
 			#
 			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
@@ -533,8 +537,9 @@ while [ "$gv_Auswahl" ] ; do
 				$lv_Error \"\" $lv_Ifmail \"\" $lv_Lmtp \"\"
 				$lv_Mail \"\" $lv_Maildrop \"\" $lv_Mailman \"\" 
 				$lv_Milter \"\" $lv_Postscreen \"\" $lv_Queue \"\"
-				$lv_Relay \"\" $lv_Retry \"\" $lv_Smtp \"\" $lv_Smtpd \"\"
-				$lv_Tls \"\" $lv_TlsProxy \"\" $lv_Uucp \"\" $lv_Virtual \"\"
+				$lv_Relay \"\" $lv_Retry \"\" $lv_Scalemail \"\"
+				$lv_Smtp \"\" $lv_Smtpd \"\" $lv_Tls \"\"
+				$lv_TlsProxy \"\" $lv_Uucp \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
 			ext_conf_menu() {
 				if [[ ${#argv} == 1 ]] ; then
@@ -626,6 +631,11 @@ while [ "$gv_Auswahl" ] ; do
 						retry_conf
 						ext_conf_menu $lv_Retry
 						;;
+					$lv_Scalemail)
+						# scalemail-backend Einstellungen
+						scalemail-backend_conf
+						ext_conf_menu $lv_Scalemail
+						;;
 					$lv_Smtp)
 						# smtp Einstellungen
 						smtp_conf
@@ -656,7 +666,9 @@ while [ "$gv_Auswahl" ] ; do
 						virtual_conf
 						ext_conf_menu $lv_Virtual
 						;;
-					$gv_Back)	break
+					$gv_Back)
+						# zurueck
+						break
 						;;
 				esac
 			done
