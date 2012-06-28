@@ -1,0 +1,39 @@
+# scalemail-backend_help (?) fuer kwpostfix{{{
+TITLE="${gv_Configuration}::${lv_Scalemail}::${gv_Help}"
+MSG=$(gettext 'scalemail-backend_delivery_slot_cost:
+
+scalemail-backend_delivery_slot_discount:
+
+scalemail-backend_delivery_slot_loan:
+
+scalemail-backend_destination_concurrency_failed_cohort_limit:
+
+scalemail-backend_destination_concurrency_limit:
+
+scalemail-backend_destination_concurrency_negative_feedback:
+
+scalemail-backend_destination_concurrency_positive_feedback:
+
+scalemail-backend_destination_rate_delay:
+
+scalemail-backend_destination_recipient_limit:
+
+scalemail-backend_extra_recipient_limit:
+
+scalemail-backend_initial_destination_concurrency:
+
+scalemail-backend_minimum_delivery_slots:
+
+scalemail-backend_recipient_limit:
+
+scalemail-backend_recipient_refill_delay:
+
+scalemail-backend_recipient_refill_limit:
+
+scalemail-backend_time_limit:
+')
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
