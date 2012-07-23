@@ -23,7 +23,7 @@ default_conf() {
 	## }}}
 	# Funktion conf_default_menue{{{
 	#######################################
-	# TODO: Hilfe ergaenzen fehlt noch default_filter_nexthop
+	# TODO: Hilfe ergaenzen fehlt noch
 	#######################################
 	conf_default_menue() {
 	DEFAULT_MENU=(default_database_type \"\$default_database_type\"
@@ -49,7 +49,11 @@ default_conf() {
 	default_verp_delimiters \"\$default_verp_delimiters\"
 	postfix \"reload\"
 	$gv_Back \"\")
-	menubox "$DEFAULT_TITLE" "$gv_Menupoint" "$DEFAULT_MENU"
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$DEFAULT_TITLE" "$gv_Menupoint" "$DEFAULT_MENU"
+	else
+		menubox "$DEFAULT_TITLE" "$gv_Menupoint" "$DEFAULT_MENU"
+	fi
 	}
 	#}}}
 	conf_default_menue
@@ -173,8 +177,19 @@ default_conf() {
 				conf_default_menue default_extra_recipient_limit
 				;;
 			default_filter_nexthop)
-				# zu welchem Filter (content_filter) springen, <postfix 2.6
-				# war es $myhostname.
+				# zu welchem Filter (content_filter) springen, <postfix 2.6# {{{
+				# war es $myhostname. Bei leer wird der Domainname des
+				# Empfaengers benutzt.
+				FILTER_NEXTHOP_MSG=$(gettext 'Filter:\nFuer Postfix Versionen <=2.6 sollte aus Kompalitaetsgruenden \"\$myhostname\" benutzt werden. Bei spaeteren Versionen wird der Domainname des Empfaengers benutzt, falls dieser Wert leer ist. Sie sollten den Parameter \"content_filter\" konfigurieren und \"default_filter_nexthop\" leer lassen.\n\nSoll die Variable \$myhostname aktiviert werden (ja/nein)?')
+				yesno "$DEFAULT_TITLE" "$FILTER_NEXTHOP_MSG"
+				if [ "$?" = 0 ] ; then
+					default_filter_nexthop="\$myhostname"
+					postconf -e default_filter_nexthop="\$myhostname"
+				else
+					default_filter_nexthop=""
+					postconf -e default_filter_nexthop=""
+				fi
+				## }}}
 				conf_default_menue default_filter_nexthop
 				;;
 			default_minimum_delivery_slots)
@@ -281,7 +296,7 @@ default_conf() {
 				;;
 			default_transport)
 				# Standard Transport Methode{{{
-				transport_methode
+				transport_methode ${default_transport%%:*} ${default_transport##*:}
 				default_transport="$WERT"
 				postconf -e default_transport="$WERT"
 				#}}}

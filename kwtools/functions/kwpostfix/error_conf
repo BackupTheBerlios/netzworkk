@@ -14,7 +14,7 @@ error_conf() {
 	## }}}
 	# Funktion (conf_error_menu), die Fehler-Parameter einstellen# {{{
 	##############################################
-	# TODO: Hilfe und error_notice_recipient fehlen
+	# TODO: Hilfe fehlt
 	##############################################
 	# error_delivery_slot_cost = $default_delivery_slot_cost
 	# error_delivery_slot_discount = $default_delivery_slot_discount
@@ -188,7 +188,17 @@ error_conf() {
 				conf_error_menu error_minimum_delivery_slots
 				;;
 			error_notice_recipient)
-				# = postmaster
+				# = postmaster# {{{
+				ERR_NOTICE_MSG=$(gettext 'Geben Sie bitte einen Benutzer ein, an dem eine Mail geschickt werden soll wenn es zu Fehlern kommt.')
+				inputbox "$gv_Configuration" "$ERR_NOTICE_MSG" $error_notice_recipient
+				if [[ -n $gv_Auswahl ]] ; then
+					error_notice_recipient="$gv_Auswahl"
+					postconf -e error_notice_recipient="$gv_Auswahl"
+				else
+					error_notice_recipient=""
+					postconf -e error_notice_recipient=""
+				fi
+				## }}}
 				conf_error_menu error_notice_recipient
 				;;
 			error_recipient_limit)
