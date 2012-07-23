@@ -1,19 +1,27 @@
 # Funktion transport_methode{{{
 #
-# usage: transport_methode
+# usage: transport_methode OLDMETHODE OLDVALUE
+#
+# Bsp.: transport_methode ${local_transport%%:*} ${local_transport##*:}
 #
 transport_methode() {
-	unset -- WERT MB_TRANS_MENU
+	unset -- WERT MB_TRANS_MENU OldMethode OldValue
+	OldMethode="$1"
+	OldValue="$2"
 	for i in `awk '(/^[^# ][^-]/){print $1}' $MASTER_CF | sort` ; {
 		# Duplikate herausfiltern.
-		if [ -z ${(M)${MB_TRANS_MENU}##${i#*:}} ] ; then
-			MB_TRANS_MENU+=(${i#*:} \"\")
+		if [ -z ${(M)${MB_TRANS_MENU}##${i##*:}} ] ; then
+			MB_TRANS_MENU+=(${i##*:} \"\")
 		fi
 	}
 	#
 	if [ -n "${MB_TRANS_MENU[1]}" ] ; then
 		MB_TRANS_MSG=$(gettext 'Waehlen Sie eine Transport Methode aus.')
-		menubox "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+		if [[ -n $OldMethode ]] ; then
+			menubox -d "$OldMethode" "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+		else
+			menubox "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+		fi
 		#
 		if [ -z "$gv_Auswahl" ] ; then
 			WERT=""
@@ -25,7 +33,14 @@ transport_methode() {
 					menubox "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
 					;;
 				*)	# uebernehmen
-					WERT="$gv_Auswahl"
+					Tmp="$gv_Auswahl"
+					METHODE_MSG=$(gettext 'Falls Sie noch ein paar Einstellungen benoetigen koennen Sie diese hier eintragen. Zum Beispiel bei Auswahl einer Methode zusaetzlich die IP und Portnr. angeben ([127.0.0.1]:10024, \$myhostname).')
+					inputbox "$gv_Configuration" "$METHODE_MSG" "${OldValue//$/\\\$}"
+					if [[ -n $gv_Auswahl ]] ; then
+						WERT="${Tmp}:${gv_Auswahl//$/\$}"
+					else
+						WERT="$Tmp"
+					fi
 					break
 					;;
 			esac
