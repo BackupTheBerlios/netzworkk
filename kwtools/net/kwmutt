@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 01.06.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 22.07.2012
 #
 # Script: kwmutt, konfiguriert den Mail-Client Mutt.
 #
@@ -55,6 +55,7 @@ fi
 GLOBAL_MUTTCONF=/etc/Muttrc
 ORIG_MUTTCONF="${gv_HomePath}/.muttrc"
 MUTTCONF="${gv_HomePath}/.kwtools/kwmuttrc"
+ORIG_MUTT="${gv_HomePath}/.mutt"
 MUTT="${gv_HomePath}/.kwtools/kwmutt"
 #}}}
 # Variablen# {{{
@@ -244,49 +245,85 @@ read_mutt_files() {
 ## }}}
 
 # kwmutt Struktur aufbauen und evtl. ~/.muttrc nach ~/.muttrc-yyyy-mm-dd kopiert.#{{{
-if [[ ! -L $ORIG_MUTTCONF && -f $ORIG_MUTTCONF ]] ; then
-	MSG=$(gettext 'Sie haben eine normale mutt-Konfiguration. Soll diese nach ${gv_HomePath}/.muttrc.kwtools-`date +%Y-%m-%d` gespeichert werden und die neue Konfiguration aktiviert werden?')
-	yesno "$gv_Info" "$MSG"
-	if [ "$?" = 0 ] ; then
-		cp -a "${gv_HomePath}/.muttrc" "${gv_HomePath}/.muttrc.kwtools-`date +%Y-%m-%d`" &>/dev/null
-		# Falls nicht vorhanden das Mutt Verzeichnis erstellen.
-		create_file -d "$MUTT"
-		cp -au "${gv_HomePath}/.muttrc" "${gv_HomePath}/.kwtools/kwmuttrc" &>/dev/null
+MUTTRC_MSG=$(gettext 'Sie haben eine normale muttrc-Konfiguration. Soll diese nach ${gv_HomePath}/.muttrc.kwtools-`date +%Y-%m-%d` gespeichert werden? Die neue Konfiguration wird unter ${gv_HomePath}/.kwtools/kwmuttrc gespeichert.\n\nSoll die neue Konfiguration aktiviert werden (ja/nein)?')
+
+MUTTRC_MSG1=$(gettext 'Der Link $ORIG_MUTTCONF ist falsch und kann neu korrekt gesetzt werden.\n\nSoll dies jetzt geschehen?')
+
+# kwmutt Struktur aufbauen und evtl. ~/.mutt nach ~/.mutt-yyyy-mm-dd kopiert.
+MUTT_MSG=$(gettext 'Sie haben eine normale mutt-Konfiguration. Soll diese nach ${gv_HomePath}/.mutt.kwtools-`date +%Y-%m-%d` gespeichert werden? Die neue Konfiguration wird unter ${gv_HomePath}/.kwtools/kwmutt gespeichert.\n\nSoll die neue Konfiguration aktiviert werden (ja/nein)?')
+
+MUTT_MSG1=$(gettext 'Der Link $ORIG_MUTT ist falsch und kann neu korrekt gesetzt werden.\n\nSoll dies jetzt geschehen?')
+
+EXIT_MSG=$(gettext 'Da kwmutt seine eigene Struktur benoetigt bricht es jetzt ab.')
+
+# auf ~/.muttrc pruefen.
+if [[ -L $ORIG_MUTTCONF ]] ; then
+	Link="`readlink -f $ORIG_MUTTCONF`"
+	# pruefen ob der Link korrekt ist.
+	if [[ "$Link" != "$MUTTCONF" ]] ; then
+		msgbox "$gv_Info" "$MUTTRC_MSG1"
+		# Link loeschen
+		rm -f "$ORIG_MUTTCONF" &>/dev/null
 		# Link von ~/.kwtools/kwmuttrc --> ~/.muttrc anlegen.
 		ln -sf "$MUTTCONF" "$ORIG_MUTTCONF" &>/dev/null
-		# Farben (dunkel kopieren)
-		default_color -d
-		# Standard (un_)autoview Dateien kopieren.
-		cp -au ${DATA_PATH}/${gv_ScriptName}/*autoview "$MUTT" &>/dev/null
-		read_mutt_files
-
-	else
-		MSG=$(gettext 'Da kwmutt seine eigene Struktur benoetigt bricht es jetzt ab.')
-		msgbox "$gv_Attention" "$MSG"
-		exit 0
 	fi
-elif [[ ! -f $MUTTCONF ]] ; then
-	# leeren Link loeschen
-	rm -f "$ORIG_MUTTCONF" &>/dev/null
+elif [[ -f $ORIG_MUTTCONF ]] ; then
+	yesno "$gv_Info" "$MUTTRC_MSG"
+	if [ "$?" = 0 ] ; then
+		cp -a "$ORIG_MUTTCONF" "${gv_HomePath}/.muttrc.kwtools-`date +%Y-%m-%d`" &>/dev/null
+		mv "$ORIG_MUTTCONF" "$MUTTCONF" &>/dev/null
+		# Link von ~/.kwtools/kwmuttrc --> ~/.muttrc anlegen.
+		ln -sf "$MUTTCONF" "$ORIG_MUTTCONF" &>/dev/null
+	fi
+elif [[ ! -L $ORIG_MUTTCONF && ! -f $MUTTCONF ]] ; then
 	autoload kwmutt_muttrc_config
-	
 	# Nachricht das jetzt eine Struktur und kwmuttrc angelegt wird.
-	MSG=$(gettext 'Sie haben keine kwmutt Konfiguration, weshalb jetzt eine Standard Konfiguration angelegt wird.')
+	MSG=$(gettext 'Sie haben keine kwmuttrc Konfiguration, weshalb jetzt eine Standard Konfiguration angelegt wird.')
 	msgbox "$gv_Info" "$MSG"
-
-	# kwtools Mutt Verzeichnis erstellen.
-	create_file -d "$MUTT"
-	# 1. kwmuttrc erstellen.
+	# kwmuttrc erstellen.
 	first_var_muttrc
 	kwmutt_muttrc_config
 	# Link von ~/.kwtools/kwmuttrc --> ~/.muttrc anlegen.
 	ln -sf "$MUTTCONF" "$ORIG_MUTTCONF" &>/dev/null
-	# Farben (dunkel kopieren)
-	default_color -d
-	# Standard (un_)autoview Dateien kopieren.
-	cp -a ${DATA_PATH}/${gv_ScriptName}/*autoview "$MUTT" &>/dev/null
-	read_mutt_files
+else
+	msgbox "$gv_Attention" "$EXIT_MSG"
+	exit 0
 fi
+# auf ~/.mutt pruefen.
+if [[ -L $ORIG_MUTT ]] ; then
+	Link="`readlink -f $ORIG_MUTT`"
+	# pruefen ob der Link korrekt ist.
+	if [[ "$Link" != "$MUTT" ]] ; then
+		msgbox "$gv_Info" "$MUTT_MSG1"
+		# Link loeschen
+		rm -f "$ORIG_MUTT" &>/dev/null
+		create_file -d "$MUTT"
+		# Link von ~/.kwtools/kwmutt --> ~/.mutt anlegen.
+		ln -sf "$MUTT" "$ORIG_MUTT" &>/dev/null
+	fi
+elif [[ -d $ORIG_MUTT ]] ; then
+	yesno "$gv_Info" "$MUTT_MSG"
+	if [ "$?" = 0 ] ; then
+		cp -a "$ORIG_MUTT" "${gv_HomePath}/.mutt.kwtools-`date +%Y-%m-%d`" &>/dev/null
+		mv "$ORIG_MUTT" "$MUTT" &>/dev/null
+		# Link von ~/.kwtools/kwmutt --> ~/.mutt anlegen.
+		ln -sf "$MUTT" "$ORIG_MUTT" &>/dev/null
+	fi
+elif [[ ! -L $ORIG_MUTT ]] ; then
+	create_file -d "$MUTT"
+	# Link von ~/.kwtools/kwmutt --> ~/.mutt anlegen.
+	ln -sf "$MUTT" "$ORIG_MUTT" &>/dev/null
+else
+	msgbox "$gv_Attention" "$EXIT_MSG"
+	exit 0
+fi
+
+# Farben (dunkel kopieren)
+default_color -d
+# Standard (un_)autoview Dateien kopieren.
+cp -au ${DATA_PATH}/${gv_ScriptName}/*autoview "$MUTT" &>/dev/null
+read_mutt_files
+
 #}}}
 
 # Funktion (create_tmp_conf), erzeugt ein temporaere Datei (Muttrc) zum einlesen# {{{
