@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 28.06.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 23.07.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -329,7 +329,7 @@ mail_mechanism() {
 #}}}
 # Funktion (user_auswahl), User auswählen{{{
 user_auswahl() {
-	unset -- WERT USER_CHOICE_MENU USER_CHOICE_MSG
+	unset -- WERT
 	local USER_CHOICE_MENU USER_CHOICE_MSG
 	user_group_check -p
 	#
@@ -357,7 +357,7 @@ user_auswahl() {
 #}}}
 # Funktion (loglevel), Loglevel auswählen{{{
 loglevel() {
-	unset -- WERT LOGLEVEL_MSG LOGLEVEL_MENU
+	unset -- WERT
 	local LOGLEVEL_MSG LOGLEVEL_MENU
 	LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
 	LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
@@ -390,6 +390,62 @@ haupt_menue() {
 	fi
 }
 #}}}
+# Funktion (default_or_input), sollen ein default Wert genommen werden oder# {{{
+# eine Eingabe gemacht werden.
+#
+# usage: default_or_input OLDKEY FUNCTION OPTION VAR
+#
+default_or_input (){
+	if [[ ${#argv} -ge 3 ]] ; then
+		unset -- Value
+		local OldKey Func FuncOpt NewKey Var
+		OldKey="$1"
+		Func="$2"
+		FuncOpt="$3"
+		# Variable 4 pruefen, ob es eine Variable ist oder eine Zahl.
+		case "$4" in
+			\$*) unset -- Var
+				;;
+			*)
+				Var="$4"
+				;;
+		esac
+		# evtl. Standvariable belegen
+		case $OldKey in
+			*_initial_destination_concurrency)
+				NewKey="\$initial_destination_concurrency"
+				;;
+			*_time_limit)
+				NewKey="\$command_time_limit"
+				;;
+			*)
+				NewKey="\$default_${OldKey#*_}"
+				;;
+		esac
+		#
+		TITLE="$gv_Configuration"
+		MSG=$(gettext 'Sis koennen die Standardvariable benutzen oder eine Eingabe machen.\n\nSoll die Standardvariable \"$NewKey\" benutzt werden?')
+		yesno "$TITLE" "$MSG"
+		if [ "$?" = 0 ] ; then
+			# Standardvariable benutzen
+			Value="$NewKey"
+		else
+			# Eingabe
+			set -x
+			$Func $FuncOpt $Var
+			if [[ -n $NUMBER ]] ; then
+				Value="$NUMBER"
+			else
+				unset -- Value
+			fi
+			set +x
+		fi
+	else
+		wrong_parameter_msg $Func
+	fi
+}
+## }}}
+
 ##################################################################
 #
 # Hauptprogramm
@@ -524,20 +580,22 @@ while [ "$gv_Auswahl" ] ; do
 			# virtual_conf, wegen auch Variablen Anbietung.
 			# Aussortierung: für nur Erweiterte Konf. und Unterteilung,
 			# siehe error_codes_conf.
+			# WEITER ausduennen, nur die Erweiterte Konfiguration
+			# (virtual, smtp etc. weg)
 			#####################################################
-			autoload -U address_conf bsmtp_conf default_conf error_conf ifmail_conf \
-				lmtp_conf lock_art main_conf mail_conf maildrop_conf \
+			autoload -U address_conf bsmtp_conf error_conf ifmail_conf \
+				lmtp_conf lock_art mail_conf maildrop_conf \
 				mailman_conf milter_conf postscreen_conf postfix_variable q_conf \
-				relay_conf retry_conf scalemail-backend_conf smtp_conf \
+				retry_conf scalemail-backend_conf smtp_conf \
 				smtpd_conf tab_support_choice \
 				tls_conf tlsproxy_conf uucp_conf virtual_conf
 			#
 			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
-			EXT_CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_Address \"\" $lv_Bsmtp \"\"
+			EXT_CONF_MENU=($lv_Address \"\" $lv_Bsmtp \"\"
 				$lv_Error \"\" $lv_Ifmail \"\" $lv_Lmtp \"\"
 				$lv_Mail \"\" $lv_Maildrop \"\" $lv_Mailman \"\" 
 				$lv_Milter \"\" $lv_Postscreen \"\" $lv_Queue \"\"
-				$lv_Relay \"\" $lv_Retry \"\" $lv_Scalemail \"\"
+				$lv_Retry \"\" $lv_Scalemail \"\"
 				$lv_Smtp \"\" $lv_Smtpd \"\" $lv_Tls \"\"
 				$lv_TlsProxy \"\" $lv_Uucp \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
@@ -555,16 +613,6 @@ while [ "$gv_Auswahl" ] ; do
 				case "$gv_Auswahl" in
 					HELP*) script_help conf_help
 						ext_conf_menu
-						;;
-					$lv_Main)
-						# Hauptkonfiguration
-						main_conf
-						ext_conf_menu $lv_Main
-						;;
-					$lv_Default)
-						# Default Einstellungen
-						default_conf
-						ext_conf_menu $lv_Default
 						;;
 					$lv_Address)
 						# Address Einstellungen
@@ -620,11 +668,6 @@ while [ "$gv_Auswahl" ] ; do
 						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
 						q_conf
 						ext_conf_menu $lv_Queue
-						;;
-					$lv_Relay)
-						# Relay (Weiterleitung) Einstellungen
-						relay_conf
-						ext_conf_menu $lv_Relay
 						;;
 					$lv_Retry)
 						# Retry (Wiederholung) Einstellungen
