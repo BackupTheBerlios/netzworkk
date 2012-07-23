@@ -1382,7 +1382,7 @@ sys_conf() {
 				unset -- $1
 			else
 				unset -- $1
-				$2
+				${=2}
 			fi
 		fi
 	}
@@ -3274,7 +3274,7 @@ file_choice() {
 					gpg "PGP message*"
 					gpgpub "PGP public key block"
 					gzip "gzip compressed data*"
-					iso "ISO 9660 CD-ROM*"
+					iso "*ISO 9660 CD-ROM*"
 					jpg "JPEG image data*"
 					mp3 "Audio file with *MP3 *"
 					mp3adts "MPEG ADTS, layer III*"
