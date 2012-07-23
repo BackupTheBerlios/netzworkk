@@ -23,28 +23,28 @@ default_conf() {
 	## }}}
 	# Funktion conf_default_menue{{{
 	#######################################
-	# TODO: Hilfe etc. vorbereitet, nur noch menue
-	# default_destination_concurrency_failed_cohort_limit = 1
-	# default_destination_concurrency_negative_feedback = 1
-	# default_destination_concurrency_positive_feedback = 1
-	# default_destination_rate_delay = 0s
-	# default_filter_nexthop =
-	# default_recipient_refill_delay = 5s
-	# default_recipient_refill_limit = 100
+	# TODO: Hilfe ergaenzen fehlt noch default_filter_nexthop
 	#######################################
 	conf_default_menue() {
 	DEFAULT_MENU=(default_database_type \"\$default_database_type\"
 	default_delivery_slot_cost \"\$default_delivery_slot_cost\"
 	default_delivery_slot_discount \"\$default_delivery_slot_discount\"
 	default_delivery_slot_loan \"\$default_delivery_slot_loan\"
+	default_destination_concurrency_failed_cohort_limit \"\$default_destination_concurrency_failed_cohort_limit\"
 	default_destination_concurrency_limit \"\$default_destination_concurrency_limit\"
+	default_destination_concurrency_negative_feedback \"\$default_destination_concurrency_negative_feedback\"
+	default_destination_concurrency_positive_feedback \"\$default_destination_concurrency_positive_feedback\"
+	default_destination_rate_delay \"\$default_destination_rate_delay\"
 	default_destination_recipient_limit \"\$default_destination_recipient_limit\"
 	default_extra_recipient_limit \"\$default_extra_recipient_limit\"
+	default_filter_nexthop \"\$default_filter_nexthop\"
 	default_minimum_delivery_slots \"\$default_minimum_delivery_slots\"
 	default_privs \"\$default_privs\"
 	default_process_limit \"\$default_process_limit\"
 	default_rbl_reply \"\$default_rbl_reply\"
 	default_recipient_limit \"\$default_recipient_limit\"
+	default_recipient_refill_delay \"\$default_recipient_refill_delay\"
+	default_recipient_refill_limit \"\$default_recipient_refill_limit\"
 	default_transport \"\$default_transport\"
 	default_verp_delimiters \"\$default_verp_delimiters\"
 	postfix \"reload\"
@@ -102,7 +102,13 @@ default_conf() {
 				conf_default_menue default_delivery_slot_loan
 				;;
 			default_destination_concurrency_failed_cohort_limit)
-				# = 1
+				# = 1# {{{
+				number_input -i $default_destination_concurrency_failed_cohort_limit
+				if [[ -n $NUMBER ]] ; then
+					default_destination_concurrency_failed_cohort_limit="$NUMBER"
+					postconf -e default_destination_concurrency_failed_cohort_limit="$NUMBER"
+				fi
+				## }}}
 				conf_default_menue default_destination_concurrency_failed_cohort_limit
 				;;
 			default_destination_concurrency_limit)
@@ -116,15 +122,33 @@ default_conf() {
 				conf_default_menue default_destination_concurrency_limit
 				;;
 			default_destination_concurrency_negative_feedback)
-				# = 1
+				# = 1# {{{
+				number_input -i $default_destination_concurrency_negative_feedback
+				if [[ -n $NUMBER ]] ; then
+					default_destination_concurrency_negative_feedback="$NUMBER"
+					postconf -e default_destination_concurrency_negative_feedback="$NUMBER"
+				fi
+				## }}}
 				conf_default_menue default_destination_concurrency_negative_feedback
 				;;
 			default_destination_concurrency_positive_feedback)
-				# = 1
+				# = 1# {{{
+				number_input -i $default_destination_concurrency_positive_feedback
+				if [[ -n $NUMBER ]] ; then
+					default_destination_concurrency_positive_feedback="$NUMBER"
+					postconf -e default_destination_concurrency_positive_feedback="$NUMBER"
+				fi
+				## }}}
 				conf_default_menue default_destination_concurrency_positive_feedback
 				;;
 			default_destination_rate_delay)
-				# = 0s
+				# = 0s# {{{
+				number_input -s ${default_destination_rate_delay%?}
+				if [[ -n $NUMBER ]] ; then
+					default_destination_rate_delay="$NUMBER"
+					postconf -e default_destination_rate_delay="$NUMBER"
+				fi
+				## }}}
 				conf_default_menue default_destination_rate_delay
 				;;
 			default_destination_recipient_limit)
@@ -149,7 +173,8 @@ default_conf() {
 				conf_default_menue default_extra_recipient_limit
 				;;
 			default_filter_nexthop)
-				#
+				# zu welchem Filter (content_filter) springen, <postfix 2.6
+				# war es $myhostname.
 				conf_default_menue default_filter_nexthop
 				;;
 			default_minimum_delivery_slots)
@@ -191,20 +216,19 @@ default_conf() {
 				# RBL Einstellungen{{{
 				unset -- RBL_MENU
 				#####################################
-				# TODO:
-				# In der Doku nach veränderten Optionen
-				# nachlesen.
+				# INFO:
+				# Immer in der Doku nach veränderten
+				# Optionen nachlesen (man 5 postconf).
 				#####################################
-				# vorherige Einstellungen quoten
-				print \"${default_rbl_reply}// /\" \"}\" >${gv_WorkDir}/default_conf
-				for i in client client_address client_name helo_name rbl_class \
+				print \"${default_rbl_reply}\" >${gv_WorkDir}/default_conf
+				for i in \$client client_address client_name helo_name rbl_class \
 					rbl_code rbl_domain rbl_reason rbl_what recipient recipient_domain \
 					recipient_name sender sender_domain sender_name name\?text name:text ; {
 					# Pruefen ob die Option schon ausgewaehlt wurde
-					if [ "`print ${(M)$(< ${gv_WorkDir}/default_conf)##\"${i}\"}`" ] ; then
-						RBL_MENU+=($i \"\" on)
+					if [ "`print ${(M)$(< ${gv_WorkDir}/default_conf)##*\"${i}\"*}`" ] ; then
+						RBL_MENU+=(\\\$"${i}" \"\" on)
 					else
-						RBL_MENU+=($i \"\" off)
+						RBL_MENU+=(\\\$"${i}" \"\" off)
 					fi
 				}
 				#
@@ -215,13 +239,13 @@ default_conf() {
 							checklist "$DEFAULT_TITLE" "$gv_Menupoint" "$RBL_MENU" "$default_rbl_reply"
 							;;
 						*)	# übernehmen
-							default_rbl_reply="$gv_Auswahl"
-							postconf -e default_rbl_reply="$gv_Auswahl"
+							default_rbl_reply="${gv_Auswahl//\\/}"
+							postconf -e default_rbl_reply="${gv_Auswahl//\\/}"
 							break
 							;;
 					esac
 				done
-				check_gv_Auswahl default_rbl_reply "postconf -e default_rbl_reply="""
+				check_gv_Auswahl default_rbl_reply "postconf -e default_rbl_reply="
 				#}}}
 				conf_default_menue default_rbl_reply
 				;;
@@ -236,11 +260,23 @@ default_conf() {
 				conf_default_menue default_recipient_limit
 				;;
 			default_recipient_refill_delay)
-				# = 5s
+				# = 5s# {{{
+				number_input -s ${default_recipient_refill_delay%?}
+				if [[ -n $NUMBER ]] ; then
+					default_recipient_refill_delay="$NUMBER"
+					postconf -e default_recipient_refill_delay="$NUMBER"
+				fi
+				## }}}
 				conf_default_menue default_recipient_refill_delay
 				;;
 			default_recipient_refill_limit)
-				# = 100
+				# = 100# {{{
+				number_input -i $default_recipient_refill_limit
+				if [[ -n $NUMBER ]] ; then
+					default_recipient_refill_limit="$NUMBER"
+					postconf -e default_recipient_refill_limit="$NUMBER"
+				fi
+				## }}}
 				conf_default_menue default_recipient_refill_limit
 				;;
 			default_transport)

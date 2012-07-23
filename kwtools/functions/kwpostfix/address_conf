@@ -15,6 +15,7 @@ address_conf() {
 	# Funktion (conf_address_menu), die Adresspruefung-Parameter einstellen# {{{
 	##############################################
 	# TODO: Hilfe etc. vorbereitet
+	##############################################
 	# address_verify_cache_cleanup_interval = 12h
 	# address_verify_default_transport = $default_transport
 	# address_verify_local_transport = $local_transport
@@ -69,6 +70,10 @@ address_conf() {
 		case "$gv_Auswahl" in
 			HELP*)	script_help address_help
 				conf_address_menu
+				;;
+			address_verify_cache_cleanup_interval)
+				# = 12h
+				conf_address_menu address_verify_cache_cleanup_interval
 				;;
 			address_verify_default_transport)
 				# = $default_transport

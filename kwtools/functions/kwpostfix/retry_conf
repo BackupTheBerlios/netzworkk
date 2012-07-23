@@ -14,7 +14,8 @@ retry_conf() {
 	## }}}
 	# Funktion (conf_retry_menu), die Wiederholungs-Parameter einstellen# {{{
 	##############################################
-	# TODO: Hilfe etc. vorbereitet
+	# TODO: Hilfe fehlt
+	##############################################
 	# retry_delivery_slot_cost = $default_delivery_slot_cost
 	# retry_delivery_slot_discount = $default_delivery_slot_discount
 	# retry_delivery_slot_loan = $default_delivery_slot_loan
@@ -65,63 +66,153 @@ retry_conf() {
 				conf_retry_menu
 				;;
 			retry_delivery_slot_cost)
-				# = $default_delivery_slot_cost
+				# = $default_delivery_slot_cost# {{{
+				default_or_input retry_delivery_slot_cost number_input -i $retry_delivery_slot_cost
+				if [[ -n $Value ]] ; then
+					retry_delivery_slot_cost="$Value"
+					postconf -e retry_delivery_slot_cost="$Value"
+				fi
+				#	# }}}
 				conf_retry_menu retry_delivery_slot_cost
 				;;
 			retry_delivery_slot_discount)
-				# = $default_delivery_slot_discount
+				# = $default_delivery_slot_discount# {{{
+				default_or_input retry_delivery_slot_discount number_input -i $retry_delivery_slot_discount
+				if [[ -n $Value ]] ; then
+					retry_delivery_slot_discount="$Value"
+					postconf -e retry_delivery_slot_discount="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_delivery_slot_discount
 				;;
 			retry_delivery_slot_loan)
-				# = $default_delivery_slot_loan
+				# = $default_delivery_slot_loan# {{{
+				default_or_input retry_delivery_slot_loan number_input -i $retry_delivery_slot_loan
+				if [[ -n $Value ]] ; then
+					retry_delivery_slot_loan="$Value"
+					postconf -e retry_delivery_slot_loan="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_delivery_slot_loan
 				;;
 			retry_destination_concurrency_failed_cohort_limit)
-				# = $default_destination_concurrency_failed_cohort_limit
+				# = $default_destination_concurrency_failed_cohort_limit# {{{
+				default_or_input retry_destination_concurrency_failed_cohort_limit number_input -i $retry_destination_concurrency_failed_cohort_limit
+				if [[ -n $Value ]] ; then
+					retry_destination_concurrency_failed_cohort_limit="$Value"
+					postconf -e retry_destination_concurrency_failed_cohort_limit="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_destination_concurrency_failed_cohort_limit
 				;;
 			retry_destination_concurrency_limit)
-				# = $default_destination_concurrency_limit
+				# = $default_destination_concurrency_limit# {{{
+				default_or_input retry_destination_concurrency_limit number_input -i $retry_destination_concurrency_limit
+				if [[ -n $Value ]] ; then
+					retry_destination_concurrency_limit="$Value"
+					postconf -e retry_destination_concurrency_limit="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_destination_concurrency_limit
 				;;
 			retry_destination_concurrency_negative_feedback)
-				# = $default_destination_concurrency_negative_feedback
+				# = $default_destination_concurrency_negative_feedback# {{{
+				default_or_input retry_destination_concurrency_negative_feedback number_input -i $retry_destination_concurrency_negative_feedback
+				if [[ -n $Value ]] ; then
+					retry_destination_concurrency_negative_feedback="$Value"
+					postconf -e retry_destination_concurrency_negative_feedback="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_destination_concurrency_negative_feedback
 				;;
 			retry_destination_concurrency_positive_feedback)
-				# = $default_destination_concurrency_positive_feedback
+				# = $default_destination_concurrency_positive_feedback# {{{
+				default_or_input retry_destination_concurrency_positive_feedback number_input -i $retry_destination_concurrency_positive_feedback
+				if [[ -n $Value ]] ; then
+					retry_destination_concurrency_positive_feedback="$Value"
+					postconf -e retry_destination_concurrency_positive_feedback="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_destination_concurrency_positive_feedback
 				;;
 			retry_destination_rate_delay)
-				# = $default_destination_rate_delay
+				# = $default_destination_rate_delay# {{{
+				default_or_input retry_destination_rate_delay number_input -s ${retry_destination_rate_delay%?}
+				if [[ -n $Value ]] ; then
+					retry_destination_rate_delay="$Value"
+					postconf -e retry_destination_rate_delay="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_destination_rate_delay
 				;;
 			retry_destination_recipient_limit)
-				# = $default_destination_recipient_limit
+				# = $default_destination_recipient_limit# {{{
+				default_or_input retry_destination_recipient_limit number_input -i $retry_destination_recipient_limit
+				if [[ -n $Value ]] ; then
+					retry_destination_recipient_limit="$Value"
+					postconf -e retry_destination_recipient_limit="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_destination_recipient_limit
 				;;
 			retry_extra_recipient_limit)
-				# = $default_extra_recipient_limit
+				# = $default_extra_recipient_limit# {{{
+				default_or_input retry_extra_recipient_limit number_input -i $retry_extra_recipient_limit
+				if [[ -n $Value ]] ; then
+					retry_extra_recipient_limit="$Value"
+					postconf -e retry_extra_recipient_limit="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_extra_recipient_limit
 				;;
 			retry_initial_destination_concurrency)
-				# = $initial_destination_concurrency
+				# = $initial_destination_concurrency# {{{
+				default_or_input retry_initial_destination_concurrency number_input -i $retry_initial_destination_concurrency
+				if [[ -n $Value ]] ; then
+					retry_initial_destination_concurrency="$Value"
+					postconf -e retry_initial_destination_concurrency="$Value"
+				fi
+				## }}}
 				conf_retry_menu retry_initial_destination_concurrency
 				;;
 			retry_minimum_delivery_slots)
-				# = $default_minimum_delivery_slots
+				# = $default_minimum_delivery_slots# {{{
+				default_or_input retry_minimum_delivery_slots number_input -i $retry_minimum_delivery_slots
+				if [[ -n $Value ]] ; then
+					retry_minimum_delivery_slots="$Value"
+					postconf -e retry_minimum_delivery_slots="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_minimum_delivery_slots
 				;;
 			retry_recipient_limit)
-				# = $default_recipient_limit
+				# = $default_recipient_limit# {{{
+				default_or_input retry_recipient_limit number_input -i $retry_recipient_limit
+				if [[ -n $Value ]] ; then
+					retry_recipient_limit="$Value"
+					postconf -e retry_recipient_limit="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_recipient_limit
 				;;
 			retry_recipient_refill_delay)
-				# = $default_recipient_refill_delay
+				# = $default_recipient_refill_delay# {{{
+				default_or_input retry_recipient_refill_delay number_input -s ${retry_recipient_refill_delay%?}
+				if [[ -n $Value ]] ; then
+					retry_recipient_refill_delay="$Value"
+					postconf -e retry_recipient_refill_delay="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_recipient_refill_delay
 				;;
 			retry_recipient_refill_limit)
-				# = $default_recipient_refill_limit
+				# = $default_recipient_refill_limit# {{{
+				default_or_input retry_recipient_refill_limit number_input -i $retry_recipient_refill_limit
+				if [[ -n $Value ]] ; then
+					retry_recipient_refill_limit="$Value"
+					postconf -e retry_recipient_refill_limit="$Value"
+				fi	
+				## }}}
 				conf_retry_menu retry_recipient_refill_limit
 				;;
 			transport_retry_time)
