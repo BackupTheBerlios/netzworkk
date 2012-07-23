@@ -431,14 +431,12 @@ default_or_input (){
 			Value="$NewKey"
 		else
 			# Eingabe
-			set -x
 			$Func $FuncOpt $Var
 			if [[ -n $NUMBER ]] ; then
 				Value="$NUMBER"
 			else
 				unset -- Value
 			fi
-			set +x
 		fi
 	else
 		wrong_parameter_msg $Func
@@ -476,13 +474,13 @@ while [ "$gv_Auswahl" ] ; do
 			# virtual_conf
 			#####################################################
 			autoload -U default_conf lmtp_conf lock_art mail_conf \
-				main_conf milter_conf postfix_variable q_conf \
-				relay_conf smtp_conf smtpd_conf tab_support_choice \
+				main_conf postfix_variable q_conf relay_conf \
+				smtp_conf smtpd_conf tab_support_choice \
 				tls_conf virtual_conf
 			#
 			# Funktion konf_menue{{{
 			CONF_MENU=($lv_Main \"\" $lv_Default \"\"
-				$lv_Lmtp \"\" $lv_Mail \"\" $lv_Milter \"\"
+				$lv_Lmtp \"\" $lv_Mail \"\"
 			   	$lv_Queue \"\" $lv_Relay \"\" $lv_Smtp \"\"
 				$lv_Smtpd \"\" $lv_Tls \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
@@ -526,11 +524,6 @@ while [ "$gv_Auswahl" ] ; do
 						# Mail und Mailbox Einstellungen
 						mail_conf
 						conf_menu $lv_Mail
-						;;
-					$lv_Milter)
-						# Milter Einstellungen
-						milter_conf
-						conf_menu $lv_Milter
 						;;
 					$lv_Queue)
 						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
@@ -576,28 +569,20 @@ while [ "$gv_Auswahl" ] ; do
 			#####################################################
 			# TODO:
 			# wegen einigen Daten was vorher einlesen?
-			# Wie zum Bsp. $data_directory fuer tls_conf und
-			# virtual_conf, wegen auch Variablen Anbietung.
-			# Aussortierung: für nur Erweiterte Konf. und Unterteilung,
-			# siehe error_codes_conf.
-			# WEITER ausduennen, nur die Erweiterte Konfiguration
-			# (virtual, smtp etc. weg)
 			#####################################################
 			autoload -U address_conf bsmtp_conf error_conf ifmail_conf \
-				lmtp_conf lock_art mail_conf maildrop_conf \
-				mailman_conf milter_conf postscreen_conf postfix_variable q_conf \
-				retry_conf scalemail-backend_conf smtp_conf \
-				smtpd_conf tab_support_choice \
-				tls_conf tlsproxy_conf uucp_conf virtual_conf
+				lock_art maildrop_conf mailman_conf milter_conf \
+				postscreen_conf postfix_variable retry_conf \
+				scalemail-backend_conf tab_support_choice \
+				tlsproxy_conf uucp_conf
 			#
 			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
 			EXT_CONF_MENU=($lv_Address \"\" $lv_Bsmtp \"\"
-				$lv_Error \"\" $lv_Ifmail \"\" $lv_Lmtp \"\"
-				$lv_Mail \"\" $lv_Maildrop \"\" $lv_Mailman \"\" 
-				$lv_Milter \"\" $lv_Postscreen \"\" $lv_Queue \"\"
+				$lv_Error \"\" $lv_Ifmail \"\"
+				$lv_Maildrop \"\" $lv_Mailman \"\" 
+				$lv_Milter \"\" $lv_Postscreen \"\"
 				$lv_Retry \"\" $lv_Scalemail \"\"
-				$lv_Smtp \"\" $lv_Smtpd \"\" $lv_Tls \"\"
-				$lv_TlsProxy \"\" $lv_Uucp \"\" $lv_Virtual \"\"
+				$lv_TlsProxy \"\" $lv_Uucp \"\"
 				$gv_Back \"\")
 			ext_conf_menu() {
 				if [[ ${#argv} == 1 ]] ; then
@@ -634,16 +619,6 @@ while [ "$gv_Auswahl" ] ; do
 						ifmail_conf
 						ext_conf_menu $lv_Ifmail
 						;;
-					$lv_Lmtp)
-						# lmtp Einstellungen
-						lmtp_conf
-						ext_conf_menu $lv_Lmtp
-						;;
-					$lv_Mail)
-						# Mail und Mailbox Einstellungen
-						mail_conf
-						ext_conf_menu $lv_Mail
-						;;
 					$lv_Maildrop)
 						# Maildrop Einstellungen
 						maildrop_conf
@@ -664,11 +639,6 @@ while [ "$gv_Auswahl" ] ; do
 						postscreen_conf
 						ext_conf_menu $lv_Postscreen
 						;;
-					$lv_Queue)
-						# queue, qmgr und qmail Protokoll (QMQP) Einstellungen
-						q_conf
-						ext_conf_menu $lv_Queue
-						;;
 					$lv_Retry)
 						# Retry (Wiederholung) Einstellungen
 						retry_conf
@@ -679,21 +649,6 @@ while [ "$gv_Auswahl" ] ; do
 						scalemail-backend_conf
 						ext_conf_menu $lv_Scalemail
 						;;
-					$lv_Smtp)
-						# smtp Einstellungen
-						smtp_conf
-						ext_conf_menu $lv_Smtp
-						;;
-					$lv_Smtpd)
-						# smtpd Einstellungen
-						smtpd_conf
-						ext_conf_menu $lv_Smtpd
-						;;
-					$lv_Tls)
-						# TLS Einstellungen
-						tls_conf
-						ext_conf_menu $lv_Tls
-						;;
 					$lv_TlsProxy)
 						# TLS Proxy Einstellungen
 						tlsproxy_conf
@@ -703,11 +658,6 @@ while [ "$gv_Auswahl" ] ; do
 						# UUCP Einstellungen
 						uucp_conf
 						ext_conf_menu $lv_Uucp
-						;;
-					$lv_Virtual)
-						# VIRTUAL Einstellungen
-						virtual_conf
-						ext_conf_menu $lv_Virtual
 						;;
 					$gv_Back)
 						# zurueck
