@@ -1,4 +1,4 @@
-# bsmtp_help (?) fuer kwpostfix{{{
+# bsmtp_help (Batched SMTP) fuer kwpostfix{{{
 TITLE="${gv_Configuration}::${lv_Bsmtp}::${gv_Help}"
 MSG=$(gettext 'bsmtp_delivery_slot_cost:
 
