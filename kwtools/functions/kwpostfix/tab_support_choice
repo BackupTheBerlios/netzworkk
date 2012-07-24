@@ -11,13 +11,13 @@ tab_support_choice() {
 	lv_NameAdapt=$(gettext 'Namensuebernahme')
 	lv_VarChoice=$(gettext 'Variablenauswahl')
 
-	TAB_VALUE_TITLE="${gv_Configuration}::${lv_TableTyp}::${Choice}"
+	TAB_VALUE_TITLE="${gv_Configuration}::${lv_TableTyp}::${lv_Choice}"
 	
 	# Für den Standard Tabellentyp wird -s (single) benötigt.
 	# Es wird dann nicht weiter nach Tabelle anlegen oder Namen
 	# übernehmen gefragt.
 	#
-	if [ "$1" = -s ] ; then
+	if [[ $Choice == -s ]] ; then
 		MAPS="$gv_Auswahl"
 	else
 		# Funktion tab_support_menu{{{
@@ -39,7 +39,7 @@ tab_support_choice() {
 					INPUT_MSG=$(gettext 'Hier koennen Sie Variablen und/oder Dateien eingeben (Bsp. \$alias_maps \$virtual_mailbox_maps unix:passwd.byname).')
 					inputbox "$TAB_VALUE_TITLE" "$INPUT_MSG" "${V_Wert//\$/\\\$}"
 					if [ "$gv_Auswahl" ] ; then
-						MAPS="$gv_Auswahl"
+						MAPS="${gv_Auswahl//\$/\\\$}"
 					else
 						MAPS=""
 					fi
@@ -80,17 +80,16 @@ tab_support_choice() {
 						MAPS=""
 					fi
 					#
-					while [ "$gv_Auswahl" ] ; do
+					while [[ -n $gv_Auswahl ]] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help tabformat_help
-							format_menue
-							;;
+								format_menue
+								;;
 							envi*)
 								# environ{{{
-								Anz=1
+								unset -- Var
 								printenv | awk -F= '{print $1}' | while read v ; do
-									Var[Anz]="$v \"\""
-									(( Anz++ ))
+									Var+=($v \"\")
 								done
 								#
 								menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Var"
@@ -265,7 +264,7 @@ tab_support_choice() {
 									MAPS="${gv_Auswahl}:/etc/aliases"
 									create_file ${MAPS#*:}
 								else
-									MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${Choice}"
+									MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${Choice//\$/}"
 									create_file ${MAPS#*:}
 								fi
 								#}}}
