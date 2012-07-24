@@ -396,7 +396,7 @@ haupt_menue() {
 # usage: default_or_input OLDKEY FUNCTION OPTION VAR
 #
 default_or_input (){
-	if [[ ${#argv} -ge 3 ]] ; then
+	if [[ ${#argv} -ge 2 ]] ; then
 		unset -- Value
 		local OldKey Func FuncOpt NewKey Var
 		OldKey="$1"
@@ -406,8 +406,11 @@ default_or_input (){
 		case "$4" in
 			\$*) unset -- Var
 				;;
-			*)
+			[0-9]*)
 				Var="$4"
+				;;
+			*)
+				unset -- Var
 				;;
 		esac
 		# evtl. Standvariable belegen
@@ -417,6 +420,9 @@ default_or_input (){
 				;;
 			*_time_limit)
 				NewKey="\$command_time_limit"
+				;;
+			*_checks)
+				NewKey="\$${OldKey#*_}"
 				;;
 			*)
 				NewKey="\$default_${OldKey#*_}"
@@ -430,13 +436,25 @@ default_or_input (){
 			# Standardvariable benutzen
 			Value="$NewKey"
 		else
-			# Eingabe
-			$Func $FuncOpt $Var
-			if [[ -n $NUMBER ]] ; then
-				Value="$NUMBER"
-			else
-				unset -- Value
-			fi
+			case "$Func" in
+				number_input)
+					# Zahlen Eingabe
+					$Func $FuncOpt $Var
+					if [[ -n $NUMBER ]] ; then
+						Value="$NUMBER"
+					else
+						unset -- Value
+					fi
+					;;
+				tab_support_choice)
+					$Func $FuncOpt $Var
+					if [[ -n $MAPS ]] ; then
+						Value="$MAPS"
+					else
+						unset -- Value
+					fi
+					;;
+			esac
 		fi
 	else
 		wrong_parameter_msg $Func
@@ -601,7 +619,7 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					$lv_Address)
 						# Address Einstellungen
-						address_conf
+						#address_conf
 						ext_conf_menu $lv_Address
 						;;
 					$lv_Bsmtp)
@@ -631,12 +649,12 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					$lv_Milter)
 						# Milter Einstellungen
-						milter_conf
+						#milter_conf
 						ext_conf_menu $lv_Milter
 						;;
 					$lv_Postscreen)
 						# Postscreen Einstellungen
-						postscreen_conf
+						#postscreen_conf
 						ext_conf_menu $lv_Postscreen
 						;;
 					$lv_Retry)
@@ -651,7 +669,7 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					$lv_TlsProxy)
 						# TLS Proxy Einstellungen
-						tlsproxy_conf
+						#tlsproxy_conf
 						ext_conf_menu $lv_TlsProxy
 						;;
 					$lv_Uucp)
