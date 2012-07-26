@@ -829,7 +829,14 @@ smtp_conf() {
 				conf_smtp_menu smtp_sasl_auth_cache_name
 				;;
 			smtp_sasl_auth_cache_time)
-				# = 90d
+				# Maximale Alter der smtp_sasl_auth_cache_name Eintraegen# {{{
+				# bis sie geloescht werden. Standard = 90d.
+				number_input -d "${smtp_sasl_auth_cache_time%?}"
+				if [ "$NUMBER" ] ; then
+					smtp_sasl_auth_cache_time="$NUMBER"
+					postconf -e smtp_sasl_auth_cache_time="$NUMBER"
+				fi
+				## }}}
 				conf_smtp_menu smtp_sasl_auth_cache_time
 				;;
 			smtp_sasl_auth_enable)
@@ -843,7 +850,12 @@ smtp_conf() {
 				conf_smtp_menu smtp_sasl_auth_enable
 				;;
 			smtp_sasl_auth_soft_bounce)
-				# = yes
+				# = yes# {{{
+				SMTP_SASL_AUTH_SOFT_BOUNCE_MSG=$(gettext 'Falls eine SMTP-AUTH Identifierzierung mit dem Fehlercode 535 abgelehnt wird kann die Mailzustellung aufgeschoben werden oder die Mail als unzustellbar gekennzeichnet werden.\n\nSoll die Mailzustellung aufgeschoben werden (ja/nein)?.')
+				ja_nein_tausch "$SMTP_TITLE" "$SMTP_SASL_AUTH_SOFT_BOUNCE_MSG"
+				smtp_sasl_auth_soft_bounce="$WERT"
+				postconf -e smtp_sasl_auth_soft_bounce="$WERT"
+				## }}}
 				conf_smtp_menu smtp_sasl_auth_soft_bounce
 				;;
 			smtp_sasl_mechanism_filter)
@@ -919,7 +931,12 @@ smtp_conf() {
 				conf_smtp_menu smtp_sasl_type
 				;;
 			smtp_send_dummy_mail_auth)
-				# = no
+				# = no# {{{
+				SMTP_SEND_DUMMY_MAIL_AUTH_MSG=$(gettext 'Man kann an das MAIL FROM Kommando, bei der SMTP-AUTH Identifierzierung die AUTH=<> Optionen anhaengen.\n\nSoll dies geschehen(ja/nein)?')
+				ja_nein_tausch "$SMTP_TITLE" "$SMTP_SEND_DUMMY_MAIL_AUTH_MSG"
+				smtp_send_dummy_mail_auth="$WERT"
+				postconf -e smtp_send_dummy_mail_auth="$WERT"
+				## }}}
 				conf_smtp_menu smtp_send_dummy_mail_auth
 				;;
 			smtp_send_xforward_command)
@@ -932,7 +949,12 @@ smtp_conf() {
 				conf_smtp_menu smtp_send_xforward_command
 				;;
 			smtp_sender_dependent_authentication)
-				# = no
+				# Standard ist = no.# {{{
+				SMTP_SENDER_DEP_AUTH_MSG=$(gettext 'Hier koennen Sie die Authentifizierung des Postfix Clients mittels SMTP_AUTH aktivieren. Dabei wird der SMTP Cache ausgeschaltet, damit bei Mails von verschiedenen Sendern die richtige Beglaubigung angewendet wird.\n\nSoll die Authentifizierung aktiviert werden (ja/nein)?')
+				ja_nein_tausch "$SMTP_TITLE" "$SMTP_SENDER_DEP_AUTH_MSG"
+				smtp_sender_dependent_authentication="$WERT"
+				postconf -e smtp_sender_dependent_authentication="$WERT"
+				## }}}
 				conf_smtp_menu smtp_sender_dependent_authentication
 				;;
 			smtp_skip_5xx_greeting)
@@ -1032,11 +1054,21 @@ smtp_conf() {
 				conf_smtp_menu smtp_tls_dkey_file
 				;;
 			smtp_tls_eccert_file)
-				#
+				# Datei mit dem Postfix SMTP client ECDSA Zertifikat im PEM Format.# {{{
+				# Diese Datei beinhaltet den Postfix SMTP Client ECDSA privaten Schluessel.
+				# Bsp.: /etc/postfix/ecdsa-ccert.pem
+				tls_file_auswahl 
+				smtp_tls_eccert_file="$WERT"
+				postconf -e smtp_tls_eccert_file="$WERT"
+				## }}}
 				conf_smtp_menu smtp_tls_eccert_file
 				;;
 			smtp_tls_eckey_file)
-				# = $smtp_tls_eccert_file
+				# Standard ist = $smtp_tls_eccert_file# {{{
+				tls_file_auswahl 
+				smtp_tls_eckey_file="${WERT:-\$smtp_tls_eccert_file}"
+				postconf -e smtp_tls_eckey_file="${WERT:-\$smtp_tls_eccert_file}"
+				## }}}
 				conf_smtp_menu smtp_tls_eckey_file
 				;;
 			smtp_tls_enforce_peername)
