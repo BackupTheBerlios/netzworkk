@@ -1349,7 +1349,7 @@ sys_conf() {
 	# usage: blkid_version
 	#
 	blkid_version() {
-		if [ -x "`which blkid`" ] ; then
+		if [[ -x ${commands[blkid]} ]] ; then
 			Blkid_Version=${${(s: :)$(blkid -v)}[4]}
 			if [[ "$Blkid_Version" < 2.16.2 ]] ; then
 				if [[ -x /lib/udev/vol_id ]] ; then
@@ -1381,7 +1381,7 @@ sys_conf() {
 			if [ -z "$2" ] ; then
 				unset -- $1
 			else
-				unset -- $1
+				export ${1}=${2##*=}
 				${=2}
 			fi
 		fi
