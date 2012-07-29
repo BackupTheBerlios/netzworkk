@@ -1,6 +1,8 @@
 # smtp_help fuer kwpostfix{{{
 TITLE="${gv_Configuration}::${lv_Smtp}::${gv_Help}"
-MSG=$(gettext 'smtp_address_preference:
+MSG=$(gettext 'smtp_address_preference: Waehlen Sie das Internet Protokoll aus.
+\tZur Auswahl stehen ipv4, ipv6 und beide zusammen (any). Standard
+\tist \"any\".
 
 smtp_always_send_ehlo: Soll sich Postfix immer als ESMTP-faehiger
 \tServer indentifizieren (ja/nein)
@@ -14,7 +16,8 @@ smtp_bind_address6: IPv6-Adresse, die fuer ausgehende Verbindungen
 \tsinnvollste aus allen IP-Adressen des Servers aus.
 \t(Bsp. 2001:240:5c7:0:250:56ff:fe89:1) 
 
-smtp_body_checks:
+smtp_body_checks: Tabelle, eine Filterung des Bodies beim versenden
+\teiner Mail.
 
 smtp_cname_overrides_servername: Soll das ueberschreiben der Server-
 \tnamen, die der SMTP client zum loggen benutzt, bei DNS CNAME
@@ -96,7 +99,8 @@ smtp_generic_maps: Tabelle die die Umschreibung von lokal gueltigen
 \tAdressen zu global gueltigen Adressen beim versenden uebers
 \tInternet.
 
-smtp_header_checks:
+smtp_header_checks: Tabelle, eine Filterung des Header beim
+\tversenden einer Mail.
 
 smtp_helo_name: Rechnername der in einem SMTP_EHLO oder HELO
 \tKommando gesendet werden soll.
@@ -114,7 +118,8 @@ smtp_line_length_limit: Die maximale Laenge vom Nachrichten Kopf
 smtp_mail_timeout: Timeout nach dem Versand des SMTP-Kommandos
 \tMAIL FROM:
 
-smtp_mime_header_checks:
+smtp_mime_header_checks: Tabelle mit Filtermustern fuer den Mime
+\tHeader beim versenden einer Mail.
 
 smtp_minimum_delivery_slots:
 
@@ -125,18 +130,26 @@ smtp_mx_session_limit: Maximale Anzahl von SMTP Sitzungen pro Zu-
 \tstellung, bevor aufgegeben wird oder die Zustelllung geht
 \tzurueck.
 
-smtp_nested_header_checks:
+smtp_nested_header_checks: Tabelle mit Filtermustern der Mailanhaenge
+\tHeader, beim versenden einer mail.
 
 smtp_never_send_ehlo: Soll sich Postfix nie als ESMTP-faehiger Server
 \tidentifizieren (ja/nein)?
 
-smtp_per_record_deadline:
+smtp_per_record_deadline: Sie koennen das Verhalten der
+\tsmtp_*_timeout Limits veraendern vom Zeitlimit eines Lese- oder
+\tSchreibaufruf zu einem Zeitlimit zum erhalten oder senden einer
+\tkompletten Aufzeichnung (ja/nein). Standard ist nein.
+
+NOTIZ: Falls smtp_per_record_deadline an ist kann ein kurzer Timeout
+\tProbleme mit TLS über langsame Netzwerke verursachen.
 
 smtp_pix_workaround_delay_time: Workaround fuer einen Fehler in Cisco
-\tPIX Firewalls. Fuegt eine Wartezeit vor dem "." ein, der die
+\tPIX Firewalls. Fuegt eine Wartezeit vor dem ".<CR><LF>" ein, der die
 \tDATA-Uebertragung in einer SMTP-Sitzung beendet.
 
-smtp_pix_workaround_maps:
+smtp_pix_workaround_maps: Tabelle mit den entfernten Serveradressen
+\tfuer den Workaround von CISCO PIX Firewalls Bug.
 
 smtp_pix_workaround_threshold_time: Wenn eine Mail laenger als diese
 \tZeit in der Mailqueue liegt, geht Postfix davon aus, dass die
@@ -316,7 +329,7 @@ smtp_tls_session_cache_timeout: Verfallzeit der TLS Sitzungs Cache
 smtp_tls_verify_cert_match:
 
 smtp_use_tls: Soll SMTP-Auth bei ausgehenden Verbindungen benutzt
-\twerden, falls es ein entfernter SMTP Server STARTTLS
+\twerden, falls ein entfernter SMTP Server STARTTLS
 \tanbietet (ja/nein)?
 
 smtp_xforward_timeout: Timeout fuer den SMTP Clienten fuer das

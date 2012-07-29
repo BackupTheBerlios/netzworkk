@@ -244,7 +244,33 @@ smtp_conf() {
 				conf_smtp_menu
 				;;
 			smtp_address_preference)
-				# = any
+				# ipv4, ipv6 oder any, Standard ist = any.# {{{
+				# Funktion (conf_address_pref)# {{{
+				conf_address_pref() {
+					ADDRESS_PREF_MENU=(any \"\" ipv4 \"\" ipv6 \"\")
+					ADDRESS_PREF_MSG=$(gettext 'Waehlen Sie das Internet Protokoll aus.')
+					if [[ ${#argv} == 1 ]] ; then
+						menubox -d "$1" "$SMTP_TITLE" "$ADDRESS_PREF_MSG" "$ADDRESS_PREF_MENU"
+					else
+						menubox "$SMTP_TITLE" "$ADDRESS_PREF_MSG" "$ADDRESS_PREF_MENU"
+					fi
+				}
+				## }}}
+				conf_address_pref
+				while [ -n "$gv_Auswahl" ] ; do
+					case "$gv_Auswahl" in
+						HELP*) script_help smtp_help
+							conf_address_pref
+							;;
+						*)	# Auswahl uebernehmen
+							smtp_address_preference="$gv_Auswahl"
+							postconf -e smtp_address_preference="$gv_Auswahl"
+							break
+							;;
+					esac
+				done
+				check_gv_Auswahl smtp_address_preference "postconf -e smtp_address_preference="any""
+				## }}}
 				conf_smtp_menu smtp_address_preference
 				;;
 			smtp_always_send_ehlo)
@@ -300,7 +326,7 @@ smtp_conf() {
 				conf_smtp_menu smtp_bind_address6
 				;;
 			smtp_body_checks)
-				# Tabelle, eine Filterung des Bodies beim versenden einer mail{{{# {{{
+				# Tabelle, eine Filterung des Bodies beim versenden einer mail# {{{
 				default_or_input smtp_body_checks tab_support_choice $smtp_body_checks
 				if [[ -n $Value ]] ; then
 					smtp_body_checks="$Value"
@@ -575,7 +601,7 @@ smtp_conf() {
 				;;
 			smtp_helo_name)
 				# Rechnername der in einem SMTP_EHLO oder HELO Kommando gesendet werden soll.{{{
-				SMTP_HELO_NAME_MSG=$(gettext 'Geben Sie den Rechnenamen ein der in einem EHLO oder HELO Kommando gesendet werd soll.')
+				SMTP_HELO_NAME_MSG=$(gettext 'Geben Sie den Rechnenamen ein der in einem EHLO oder HELO Kommando gesendet werden soll. Dies kann auch eine Variable sein (z.B.: \$myhostname).')
 				inputbox "$SMTP_TITLE" "$SMTP_HELO_NAME_MSG" "${smtp_helo_name//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
 					smtp_helo_name="${gv_Auswahl//\\/}"
@@ -705,7 +731,12 @@ smtp_conf() {
 				conf_smtp_menu smtp_never_send_ehlo
 				;;
 			smtp_per_record_deadline)
-				# = no
+				# Standard ist = no# {{{
+				SMTP_PER_RECORD_DEADLINE_MSG=$(gettext 'Sie koennen das Verhalten der smtp_*_timeout Limits veraendern vom Zeitlimit eines Lese- oder Schreibaufruf zu einem Zeitlimit zum erhalten oder senden einer kompletten Aufzeichnung.\n\nSoll dies aktiviert werden (ja/nein)?')
+				ja_nein_tausch "$SMTP_TITLE" "$SMTP_PER_RECORD_DEADLINE_MSG"
+				smtp_per_record_deadline="$WERT"
+				postconf -e smtp_per_record_deadline="$WERT"
+				## }}}
 				conf_smtp_menu smtp_per_record_deadline
 				;;
 			smtp_pix_workaround_delay_time)
@@ -811,7 +842,11 @@ smtp_conf() {
 				conf_smtp_menu smtp_recipient_refill_limit
 				;;
 			smtp_reply_filter)
-				# =
+				# Tabelle, eine Filterung .... Standard ist = nichts# {{{
+				tab_support_choice $gv_Auswahl
+				smtp_reply_filter="$MAPS"
+				postconf -e smtp_reply_filter="$MAPS"
+				## }}}
 				conf_smtp_menu smtp_reply_filter
 				;;
 			smtp_rset_timeout)
@@ -825,7 +860,20 @@ smtp_conf() {
 				conf_smtp_menu smtp_rset_timeout
 				;;
 			smtp_sasl_auth_cache_name)
-				#
+				# Einstellung sollte mit proxy: beginnen. Standard ist = nichts# {{{
+				tab_support_choice $gv_Auswahl
+				if [[ -n $MAPS ]] ; then
+					case "$MAPS" in
+						[!proxy:]*)
+							MAPS="proxy:${MAPS}"
+							;;
+						*)	# nichts tun
+							;;
+					esac
+				fi
+				smtp_sasl_auth_cache_name="$MAPS"
+				postconf -e smtp_sasl_auth_cache_name="$MAPS"
+				## }}}
 				conf_smtp_menu smtp_sasl_auth_cache_name
 				;;
 			smtp_sasl_auth_cache_time)
@@ -892,7 +940,7 @@ smtp_conf() {
 				conf_smtp_menu smtp_sasl_password_maps
 				;;
 			smtp_sasl_path)
-				# =
+				# = Datei oder `postconf -A` siehe Internet-Doku
 				conf_smtp_menu smtp_sasl_path
 				;;
 			smtp_sasl_security_options)
@@ -927,7 +975,7 @@ smtp_conf() {
 				conf_smtp_menu smtp_sasl_tls_verified_security_options
 				;;
 			smtp_sasl_type)
-				# = cyrus
+				# = cyrus, siehe postconf -A
 				conf_smtp_menu smtp_sasl_type
 				;;
 			smtp_send_dummy_mail_auth)
