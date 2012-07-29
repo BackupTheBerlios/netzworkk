@@ -1402,7 +1402,8 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			#
-			check_gv_Auswahl notify_classes "postconf -e notify_classes="""
+			NOTIFY_CLASSES='resource software'
+			check_gv_Auswahl notify_classes "postconf -e notify_classes="${NOTIFY_CLASSES// /, }""
 			#}}}
 			conf_main_menu notify_classes
 			;;
