@@ -621,13 +621,15 @@ sys_conf() {
 	#}}}
 	# Funktion (number_input), verschiedene Zahleneingaben (Tage, Byte, ...){{{
 	#
-	# benoetigt die Funktionen check_integer und no_input_msg
+	# benoetigt die Funktionen check_integer, check_number und no_input_msg
 	#
-	# usage: number_input -b | -d | -h | -i | -m | -s | -w ${VAR%?}
+	# usage: number_input [ -b | -d | -h | -i | -m | -s | -w ] ${VAR%?}
 	#        number_input $1 $2 $3
+	#        number_input -a $1 $2 $3
 	#        number_input -D $1 $2 $3
 	#        number_input -z $1 $2 $3
 	#
+	# -a - alle Zeiten, Sekunde, Minute, Stunde, Tag, Woche + eig. Nachricht
 	# -b - Byte
 	# -d - Tag
 	# -D - Laufwerks Groessen (K|k|M|m|G|g|T|t.... beachten.
@@ -644,10 +646,21 @@ sys_conf() {
 		unset -- NUMBER
 		TITLE=$(gettext 'Konfiguration::Zahlen')
 		case $1 in
+			-a)
+				# Alle Zeiten mit Sekunde, Minute, Stunde, Tag, Woche und.# {{{
+				# eigener Nachricht.
+				inputbox "$2" "$3" "$4"
+				if [[ -n $gv_Auswahl ]] ; then
+					check_number "${gv_Auswahl%[smhdw]}" "${gv_Auswahl##*[0-9]}"
+				else
+					no_input_msg
+				fi
+				## }}}
+				;;
 			-b)
 				MSG=$(gettext 'Geben Sie hier bitte eine Zahl, in Byte ein (Bsp. 51200) ein.')
 				inputbox "$TITLE" "$MSG" "$2"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number "${gv_Auswahl// /}"
 				else
 					no_input_msg
@@ -656,7 +669,7 @@ sys_conf() {
 			-d)
 				MSG=$(gettext 'Geben Sie hier bitte eine Zahl, in Tagen (Bsp. 5) ein.')
 				inputbox "$TITLE" "$MSG" "$2"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number "${gv_Auswahl// /}" d
 				else
 					no_input_msg
@@ -665,7 +678,7 @@ sys_conf() {
 			-h)
 				MSG=$(gettext 'Geben Sie hier bitte eine Zahl, in Stunden (Bsp. 4) ein.')
 				inputbox "$TITLE" "$MSG" "$2"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number "${gv_Auswahl// /}" h
 				else
 					no_input_msg
@@ -674,7 +687,7 @@ sys_conf() {
 			-i)
 				MSG=$(gettext 'Geben Sie hier bitte eine Zahl (Bsp. 3) ein.')
 				inputbox "$TITLE" "$MSG" "$2"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number "${gv_Auswahl// /}"
 				else
 					no_input_msg
@@ -683,7 +696,7 @@ sys_conf() {
 			-m)
 				MSG=$(gettext 'Geben Sie hier bitte eine Zahl, in Monaten (Bsp. 1) ein.')
 				inputbox "$TITLE" "$MSG" "$2"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number "${gv_Auswahl// /}" m
 				else
 					no_input_msg
@@ -692,7 +705,7 @@ sys_conf() {
 			-s)
 				MSG=$(gettext 'Geben Sie hier bitte eine Zahl, in Sekunden (Bsp. 300) ein.')
 				inputbox "$TITLE" "$MSG" "$2"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number "${gv_Auswahl// /}" s
 				else
 					no_input_msg
@@ -701,7 +714,7 @@ sys_conf() {
 			-w)
 				MSG=$(gettext 'Geben Sie hier bitte eine Zahl, in Wochen (Bsp. 3) ein.')
 				inputbox "$TITLE" "$MSG" "$2"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number "${gv_Auswahl// /}" w
 				else
 					no_input_msg
@@ -709,15 +722,16 @@ sys_conf() {
 				;;
 			-z)
 				inputbox "$2" "$3" "$4"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					check_number -z "${gv_Auswahl// /}"
 				else
 					no_input_msg
 				fi
 				;;
 			-D)
+				# Laufwerkes Groessen beachten# {{{
 				inputbox "$2" "$3" "$4"
-				if [ "$gv_Auswahl" ] ; then
+				if [[ -n $gv_Auswahl ]] ; then
 					case "$gv_Auswahl" in
 						*[0-9])
 							check_number "$gv_Auswahl"
@@ -737,11 +751,12 @@ sys_conf() {
 				else
 					no_input_msg
 				fi
+				## }}}
 				;;
 			*)
 				inputbox "$1" "$2" "$3"
-				if [ "$gv_Auswahl" ] ; then
-					check_number "${gv_Auswahl// /}"
+				if [[ -n $gv_Auswahl ]] ; then
+					check_number "$gv_Auswahl"
 				else
 					no_input_msg
 				fi
