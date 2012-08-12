@@ -1,15 +1,24 @@
 # tlsproxy_help (?) fuer kwpostfix{{{
 TITLE="${gv_Configuration}::${lv_TlsProxy}::${gv_Help}"
-MSG=$(gettext 'tlsproxy_enforce_tls: Standard ist \"$smtpd_enforce_tls\"
+MSG=$(gettext 'tlsproxy_enforce_tls: Soll SSL/TLS bei eingehenden Verbindungen
+\terzwungen werden (ja/nein)?
+\tStandard ist \"$smtpd_enforce_tls\".
 
-tlsproxy_tls_CAfile: Standard ist \"$smtpd_tls_CAfile\"
+tlsproxy_tls_CAfile: Auswahl der Datei mit den CAs denen dieser 
+\tServer vertraut, fuer die Signatur von Clientzertifikaten. 
+\tStandard ist \"$smtpd_tls_CAfile\".
 
-tlsproxy_tls_CApath: Standard ist \"$smtpd_tls_CApath\"
+tlsproxy_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
+\tausgehende Mails. Diese werden dann mit den Rechten des Mail 
+\tServers gelesen. 
+\tStandard ist \"$smtpd_tls_CApath\".
 
 tlsproxy_tls_always_issue_session_ids:
 \tStandard ist \"$smtpd_tls_always_issue_session_ids\"
 
-tlsproxy_tls_ask_ccert: Standard ist \"$smtpd_tls_ask_ccert\"
+tlsproxy_tls_ask_ccert: Muss beim Server explizit nach einem Client
+\tZertifikat nachgefragt werden (ja/nein)?
+\tStandard ist \"$smtpd_tls_ask_ccert\".
 
 tlsproxy_tls_ccert_verifydepth:
 \tStandard ist \"$smtpd_tls_ccert_verifydepth\"
@@ -63,7 +72,9 @@ tlsproxy_tls_security_level:
 tlsproxy_tls_session_cache_timeout:
 \tStandard ist \"$smtpd_tls_session_cache_timeout\"
 
-tlsproxy_use_tls: Standard ist \"$smtpd_use_tls\"
+tlsproxy_use_tls: Soll dieser Server, fuer eingehende Mails SSL/TLS
+\tVerschluesselung benutzen (ja/nein)?
+\tStandard ist \"$smtpd_use_tls\".
 
 tlsproxy_watchdog_timeout: Standard ist \"10s\"
 ')

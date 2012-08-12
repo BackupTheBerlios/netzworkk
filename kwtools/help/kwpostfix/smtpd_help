@@ -74,6 +74,10 @@ smtpd_end_of_data_restrictions: Optionale Zugriffs Restrictionen
 
 smtpd_enforce_tls: Soll SSL/TLS bei eingehenden Verbindungen
 \terzwungen werden (ja/nein)?
+\tStandard ist nein.
+
+NOTIZ: Seit Version Postfix 2.3 sollten Sie besser den Wert von
+\t\"smtpd_tls_security_level\" einstellen.
 
 smtpd_error_sleep_time: Anzahl in Sekunden vor der Angabe eines SMTP
 \tFehlercodes.
@@ -201,15 +205,18 @@ smtpd_starttls_timeout: Timeout, zum lesen und schreiben waehrend TLS
 smtpd_timeout: Timeout der Inaktivitaet, nachdem smtpd eine Verbindung
 \tabbricht.
 
-smtpd_tls_CAfile: Datei welche das Zertifikat Authority besitzt. 
+smtpd_tls_CAfile: Auswahl der Datei mit den CAs denen dieser 
+\tServer vertraut, fuer die Signatur von Clientzertifikaten. 
 
-smtpd_tls_CApath: Verzeichnis in dem die Zertifikate liegen. Diese
-\twerden dann mit den Rechten des Mail Servers gelesen.
+smtpd_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
+\tausgehende Mails. Diese werden dann mit den Rechten des Mail 
+\tServers gelesen. 
 
 smtpd_tls_always_issue_session_ids:
 
 smtpd_tls_ask_ccert: Muss beim Server explizit nach einem Client
 \tZertifikat nachgefragt werden (ja/nein)?
+\tStandard ist nein.
 
 smtpd_tls_auth_only: Soll nur SSL/TLS bei eingehenden Verbindungen
 \tgenutzt werden (ja/nein)?
@@ -233,9 +240,19 @@ smtpd_tls_dh512_param_file:
 smtpd_tls_dkey_file: Datei (DSA) welche das unterschriebene,
 \tunverschluesselte private Zertifikat besitzt.
 
-smtpd_tls_eccert_file:
+smtpd_tls_eccert_file: Datei mit dem Postfix SMTP Server ECDSA
+\tZertifikat im PEM Format. Diese Datei kann auch den privaten
+\tSchluessel des Postfix SMTP Servers enthalten (siehe auch dem
+\tMenuepunkt \"smtpd_tls_eckey_file\").
 
-smtpd_tls_eckey_file:
+\tZum Beispiel: /etc/postfix/ecdsa-scert.pem
+
+smtpd_tls_eckey_file: Datei mit dem Postfix SMTP Server ECDSA
+\tprivaten Schluessel im PEM Format. Der private Schluessel darf
+\tkeine Passphrase haben und nicht verschluesselt sein.
+\tZum Beispiel: \$smtpd_tls_eccert_file
+
+NOTIZ: Stellen Sie die richtigen Rechte dieser Datei ein!
 
 smtpd_tls_eecdh_grade:
 
@@ -243,10 +260,11 @@ smtpd_tls_exclude_ciphers:
 
 smtpd_tls_fingerprint_digest:
 
-smtpd_tls_key_file: Datei (RSA) welche das unterschriebene,
-\tunverschluesselte private Zertifikat besitzt.
+smtpd_tls_key_file: Datei (RSA) welche den unterschriebenen,
+\tunverschluesselten privaten Schluessel besitzt.
 
-smtpd_tls_loglevel: Loglevel auswaehlen
+smtpd_tls_loglevel: TODO: Ausführlicher gestalten
+\tLoglevel auswaehlen.
 
 smtpd_tls_mandatory_ciphers:
 
@@ -260,7 +278,7 @@ smtpd_tls_received_header: Soll dieser Server ($myhosname), fuer
 \teingehende Mails, die received Zeilen loggen (ja/nein)?
 
 smtpd_tls_req_ccert: Benoetigen SMTP Clients ein Zertifikat
-\t(ja/nein)?
+\t(ja/nein)? Stand ist nein.
 
 smtpd_tls_security_level:
 
@@ -276,7 +294,8 @@ smtpd_tls_wrappermode: Soll die Kompalitaet zu Outlock eingestellt
 \tStellen Sie dies lieber in der master.cf ein.
 
 smtpd_use_tls: Soll SMTP-Auth bei eingehenden Verbindungen benutzt
-\twerden (ja/nein)?')
+\twerden (ja/nein)?
+\tStandard ist nein.')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker
