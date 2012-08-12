@@ -8,7 +8,7 @@ kwpwsafe_open_db() {
 		lv_User=$(gettext 'Benutzernamen')
 		lv_Group=$(gettext 'Gruppe')
 		lv_Group_Create=$(gettext 'Gruppe anlegen')
-		lv_Name=$(gettext 'Namen')
+		lv_Name=$(gettext 'Name')
 		lv_Password_Gen=$(gettext 'Passwort generieren')
 		lv_Notes=$(gettext 'Notiz')
 		#
@@ -69,6 +69,7 @@ ${lv_Notes}:
 					;;
 				$gv_Create)
 					# Eintrag erstellen# {{{
+					unset -- PW_NAME PW_GROUP PW_USER PW_PASSWD PW_NOTES
 					kwpwsafe_db_conf
 					#}}}
 					open_db_menu
