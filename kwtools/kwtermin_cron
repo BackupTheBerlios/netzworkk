@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 12.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 09.08.2012
 #
 # Script: termin_cron, um Termine zu ueberwachen.
-# Version: 0.1.1
+# Version: 0.1.2
 
 trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
 
@@ -156,6 +156,7 @@ while [ "${TerminListe[Anz]}" != "" ] ; do
 			if [ "$WARN_TIME" -eq "$ACT_TIME" ] ; then
 				Act_Termin_Year="${START_DATE[1,4]}"
 				Act_Termin_Month="${START_DATE[5,6]}"
+				Act_Termin_Day="${START_DATE[7,8]}"
 				Update_Termin="${YEAR}${Act_Termin_Month}${Act_Termin_Day}"
 				if [ "$Update_Termin" -le "$Termin_Date" -a "$Update_Termin" -ge "$Termin_Date" ]; then
 					Terminwarnung $MAIL_ADR $*
