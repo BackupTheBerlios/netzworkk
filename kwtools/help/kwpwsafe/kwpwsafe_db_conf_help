@@ -4,7 +4,7 @@ MSG=$(gettext 'Gruppe: Auswahl oder Eingabe einer Gruppe zu der der Eintrag
 \tgehoeren soll. Dies dient zur besseren Uebersicht, ist aber
 \toptional.
 
-Namen: Name des neuen Eintrags.
+Name: Name des neuen Eintrags.
 \tZum Beispiel: Gruppe=haushalt und Name=test -> haushalt.test
 \tName=test -> test
 
