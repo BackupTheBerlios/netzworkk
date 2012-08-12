@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 29.07.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 12.08.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -82,6 +82,12 @@ lv_Virtual=$(gettext 'Virtual')
 lv_Choice=$(gettext 'Auswahl')
 lv_Proxy=$(gettext 'Proxy')
 lv_TableTyp=$(gettext 'Tabellentyp')
+
+# Variablen die von einigen Konfigurationsdateien benutzt werden
+SMTPD_TLS_REQ_CCERT_MSG=$(gettext 'Benoetigen Clients ein Zertifikat (ja/nein)?')
+SMTPD_ENFORCE_TLS_MSG=$(gettext 'Soll SSL/TLS bei eingehenden Verbindungen erzwungen werden (ja/nein)?')
+SMTPD_USE_TLS_MSG=$(gettext 'Soll dieser Server fuer eingehende Mails SSL/TLS Verschluesselung benutzen (ja/nein)?')
+SMTPD_TLS_ASK_CCERT_MSG=$(gettext 'Soll beim Server explizit nach einem Client Zertifikat nachgefragt werden (ja/nein)?')
 
 MAIL_CONFIG="`postconf -h config_directory &>/dev/null`"
 if [ -z "$MAIL_CONFIG" ] ; then
@@ -397,6 +403,7 @@ haupt_menue() {
 #
 default_or_input (){
 	if [[ ${#argv} -ge 2 ]] ; then
+		set -x
 		unset -- Value
 		local OldKey Func FuncOpt NewKey Var
 		OldKey="$1"
@@ -406,7 +413,7 @@ default_or_input (){
 		case "$4" in
 			\$*) unset -- Var
 				;;
-			[0-9]*)
+			[0-9]*|[a-zA-Z]*)
 				Var="$4"
 				;;
 			*)
@@ -424,10 +431,14 @@ default_or_input (){
 			*_checks)
 				NewKey="\$${OldKey#*_}"
 				;;
+			tlsproxy_*)
+				NewKey="\$smtpd_${OldKey#*_}"
+				;;
 			*)
 				NewKey="\$default_${OldKey#*_}"
 				;;
 		esac
+		set +x
 		#
 		TITLE="$gv_Configuration"
 		MSG=$(gettext 'Sis koennen die Standardvariable benutzen oder eine Eingabe machen.\n\nSoll die Standardvariable \"$NewKey\" benutzt werden?')
@@ -437,6 +448,15 @@ default_or_input (){
 			Value="$NewKey"
 		else
 			case "$Func" in
+				ja_nein_tausch|loglevel|tls_file_auswahl)
+					# Ja/Nein Tausch, Loglevel Auswahl (Integer), tls_file_auswahl
+					$Func $FuncOpt $Var
+					if [[ -n $WERT ]] ; then
+						Value="$WERT"
+					else
+						unset -- Value
+					fi
+					;;
 				number_input)
 					# Zahlen Eingabe
 					$Func $FuncOpt $Var
@@ -669,7 +689,7 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					$lv_TlsProxy)
 						# TLS Proxy Einstellungen
-						#tlsproxy_conf
+						tlsproxy_conf
 						ext_conf_menu $lv_TlsProxy
 						;;
 					$lv_Uucp)
