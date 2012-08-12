@@ -327,7 +327,6 @@ smtpd_conf() {
 			smtpd_enforce_tls)
 				# Soll SSL/TLS bei eingehenden Verbindungen{{{
 				# erzwungen werden (yes/no)?
-				SMTPD_ENFORCE_TLS_MSG=$(gettext 'Soll SSL/TLS bei eingehenden Verbindungen erzwungen werden (ja/nein)?')
 				ja_nein_tausch "$SMTPD_TITLE" "$SMTPD_ENFORCE_TLS_MSG"
 				smtpd_enforce_tls="$WERT"
 				postconf -e smtpd_enforce_tls="$WERT"
@@ -719,7 +718,8 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_timeout
 				;;
 			smtpd_tls_CAfile)
-				# Auswahl der TLS Schluessel Dateien{{{
+				# Datei mit den CAs denen dieser Server vertraut, für die Signatur{{{
+				# von Clientzertifikaten.
 				tls_file_auswahl 
 				smtpd_tls_CAfile="$WERT"
 				postconf -e smtpd_tls_CAfile="$WERT"
@@ -747,8 +747,8 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_always_issue_session_ids
 				;;
 			smtpd_tls_ask_ccert)
-				# Fragen welches Certrifikat Clients bekommen (yes/no)?{{{
-				SMTPD_TLS_ASK_CCERT_MSG=$(gettext 'Fragen welches Zertifikat Clients bekommen (ja/nein)?')
+				# Muss beim Server explizit nach einem Client Zertifikat {{{
+				# nachgefragt werden (ja/nein)?
 				ja_nein_tausch "$SMTPD_TITLE" "$SMTPD_TLS_ASK_CCERT_MSG"
 				smtpd_tls_ask_ccert="$WERT"
 				postconf -e smtpd_tls_ask_ccert="$WERT"
@@ -829,11 +829,22 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_dkey_file
 				;;
 			smtpd_tls_eccert_file)
-				# =
+				# Standard ist = leer# {{{
+				# Datei mit dem Postfix SMTP Server ECDSA Zertifikat im PEM Format.
+				# Es beinhaltet den privaten ECDSA Schluessel des Servers.
+				tls_file_auswahl 
+				smtpd_tls_eccert_file="$WERT"
+				postconf -e smtpd_tls_eccert_file="$WERT"
+				## }}}
 				conf_smtpd_menue smtpd_tls_eccert_file
 				;;
 			smtpd_tls_eckey_file)
-				# = $smtpd_tls_eccert_file
+				# = $smtpd_tls_eccert_file# {{{
+				# Datei mit dem Postfix SMTP Server ECDSA privaten Schluessel im PEM Format.
+				default_or_input smtpd_tls_eckey_file tls_file_auswahl 
+				smtpd_tls_eckey_file="$Value"
+				postconf -e smtpd_tls_eckey_file="$Value"
+				## }}}
 				conf_smtpd_menue smtpd_tls_eckey_file
 				;;
 			smtpd_tls_eecdh_grade)
@@ -849,7 +860,8 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_fingerprint_digest
 				;;
 			smtpd_tls_key_file)
-				# Auswahl der TLS Schluessel Dateien{{{
+				# Datei (RSA) welche das unterschriebene unverschluesselte#{{{
+				# private Zertifikat besitzt.
 				tls_file_auswahl 
 				smtpd_tls_key_file="$WERT"
 				postconf -e smtpd_tls_key_file="$WERT"
@@ -892,7 +904,6 @@ smtpd_conf() {
 				;;
 			smtpd_tls_req_ccert)
 				# Benoetigen Clients ein Zertifikat (yes/no)?{{{
-				SMTPD_TLS_REQ_CCERT_MSG=$(gettext 'Benoetigen Clients ein Zertifikat (ja/nein)?')
 				ja_nein_tausch "$SMTPD_TITLE" "$SMTPD_TLS_REQ_CCERT_MSG"
 				smtpd_tls_req_ccert="$WERT"
 				postconf -e smtpd_tls_req_ccert="$WERT"
@@ -900,7 +911,7 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_req_ccert
 				;;
 			smtpd_tls_security_level)
-				# =
+				# Standard ist = leer; Parameter sind none, may, encrypt
 				conf_smtpd_menue smtpd_tls_security_level
 				;;
 			smtpd_tls_session_cache_database)
@@ -932,7 +943,6 @@ smtpd_conf() {
 				;;
 			smtpd_use_tls)
 				# Soll der Mailserver, fuer eingehende mails, TLS benutzen.{{{
-				SMTPD_USE_TLS_MSG=$(gettext 'Soll dieser Server, fuer eingehende Mails, SSL/TLS benutzen (ja/nein)?')
 				ja_nein_tausch "$SMTPD_TITLE" "$SMTPD_USE_TLS_MSG"
 				smtpd_use_tls="$WERT"
 				postconf -e smtpd_use_tls="$WERT"

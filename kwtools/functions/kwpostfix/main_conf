@@ -546,7 +546,6 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		command_time_limit)
 			# Maximalzeit, die "local" auf ext. Programme wartet{{{
-			#
 			number_input -s "${command_time_limit%?}"
 			if [ "$NUMBER" ] ; then
 				command_time_limit="$NUMBER"
