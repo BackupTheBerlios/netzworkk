@@ -535,7 +535,18 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_cert_file
 				;;
 			lmtp_tls_ciphers)
-				# = export
+				# Standard = export# {{{
+				# Auswahl des minimum der Qualitaet der TLS Verschluesselung die der
+				# Postfix Server mit der geeigneten TLS Verschluesselung benutzen soll.
+				tls_ciphers "$lmtp_tls_ciphers"
+				if [[ -n $WERT ]] ; then
+					lmtp_tls_ciphers="$WERT"
+					postconf -e lmtp_tls_ciphers="$WERT"
+				else
+					lmtp_tls_ciphers="export"
+					postconf -e lmtp_tls_ciphers="export"
+				fi
+				## }}}
 				conf_lmtp_menue lmtp_tls_ciphers
 				;;
 			lmtp_tls_dcert_file)
@@ -559,7 +570,19 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_enforce_peername
 				;;
 			lmtp_tls_exclude_ciphers)
-				# =
+				# Standard = # {{{
+				# Liste der Verschluesselung oder Verschluesselungstypen
+				# die von der Postfix SMTP Server Verschluesselungliste
+				# aller TLS Sicherheitslevel ausgeschlossen werden.
+				tls_exclude_ciphers "$lmtp_tls_exclude_ciphers"
+				if [[ -n $WERT ]] ; then
+					lmtp_tls_exclude_ciphers="$WERT"
+					postconf -e lmtp_tls_exclude_ciphers="$WERT"
+				else
+					lmtp_tls_exclude_ciphers=""
+					postconf -e lmtp_tls_exclude_ciphers=""
+				fi
+				## }}}
 				conf_lmtp_menue lmtp_tls_exclude_ciphers
 				;;
 			lmtp_tls_fingerprint_cert_match)
@@ -567,7 +590,16 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_fingerprint_cert_match
 				;;
 			lmtp_tls_fingerprint_digest)
-				# = md5
+				# Client Fingerprint auswaehlen (md5)# {{{
+				# Die Nachricht ueber den Algorithmus zum einrichten eines
+				# entfernten Client-Zertifikates Fingerprints oder den Fingerprint
+				# des oeffentlichen Schluessel fuer die Parameter
+				# check_ccert_access and permit_tls_clientcerts. Der Standard Algorithmus
+				# \"md5\" ist fuer die Rueckwaertskompalitaet mit Postfix Release <=2.5.
+				tls_fingerprint_digest $lmtp_tls_fingerprint_digest
+				lmtp_tls_fingerprint_digest="$WERT"
+				postconf -e lmtp_tls_fingerprint_digest="$WERT"
+				#}}}
 				conf_lmtp_menue lmtp_tls_fingerprint_digest
 				;;
 			lmtp_tls_key_file)
@@ -575,19 +607,59 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_key_file
 				;;
 			lmtp_tls_loglevel)
-				# = 0
+				# Loglevel auswaehlen{{{
+				# Standard = 0
+				loglevel $lmtp_tls_loglevel
+				lmtp_tls_loglevel="$WERT"
+				postconf -e lmtp_tls_loglevel="$WERT"
+				#}}}
 				conf_lmtp_menue lmtp_tls_loglevel
 				;;
 			lmtp_tls_mandatory_ciphers)
-				# = medium
+				# Standard = medium# {{{
+				# Auswahl des minimum der Qualitaet der TLS Verschluesselung die der
+				# Postfix Server mit der geeigneten TLS Verschluesselung benutzen soll.
+				tls_ciphers "$lmtp_tls_mandatory_ciphers"
+				if [[ -n $WERT ]] ; then
+					lmtp_tls_mandatory_ciphers="$WERT"
+					postconf -e lmtp_tls_mandatory_ciphers="$WERT"
+				else
+					lmtp_tls_mandatory_ciphers="medium"
+					postconf -e lmtp_tls_mandatory_ciphers="medium"
+				fi
+				## }}}
 				conf_lmtp_menue lmtp_tls_mandatory_ciphers
 				;;
 			lmtp_tls_mandatory_exclude_ciphers)
-				# =
+				# Standard = # {{{
+				# Liste der Verschluesselung oder Verschluesselungstypen
+				# die von der Postfix SMTP Server Verschluesselungliste
+				# aller TLS Sicherheitslevel ausgeschlossen werden.
+				tls_exclude_ciphers "$lmtp_tls_mandatory_exclude_ciphers"
+				if [[ -n $WERT ]] ; then
+					lmtp_tls_mandatory_exclude_ciphers="$WERT"
+					postconf -e lmtp_tls_mandatory_exclude_ciphers="$WERT"
+				else
+					lmtp_tls_mandatory_exclude_ciphers=""
+					postconf -e lmtp_tls_mandatory_exclude_ciphers=""
+				fi
+				## }}}
 				conf_lmtp_menue lmtp_tls_mandatory_exclude_ciphers
 				;;
 			lmtp_tls_mandatory_protocols)
-				# = SSLv3, TLSv1
+				# Standard = SSLv3, TLSv1# {{{
+				# SSLv1, SSLv2, TLSv1
+				# bei openssl >=1.0.1
+				# SSLv1, SSLv2, TLSv1, TLSv1.1, TLSv1.2
+				tls_protocols "${${${lmtp_tls_mandatory_protocols}//,/}//;/}"
+				if [[ -n $WERT ]] ; then
+					lmtp_tls_mandatory_protocols="$WERT"
+					postconf -e lmtp_tls_mandatory_protocols="$WERT"
+				else
+					lmtp_tls_mandatory_protocols=""
+					postconf -e lmtp_tls_mandatory_protocols=""
+				fi
+				## }}}
 				conf_lmtp_menue lmtp_tls_mandatory_protocols
 				;;
 			lmtp_tls_note_starttls_offer)
@@ -603,7 +675,19 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_policy_maps
 				;;
 			lmtp_tls_protocols)
-				# = !SSLv2
+				# Standard = !SSLv2# {{{
+				# SSLv1, SSLv2, TLSv1
+				# bei openssl >=1.0.1
+				# SSLv1, SSLv2, TLSv1, TLSv1.1, TLSv1.2
+				tls_protocols "${${${lmtp_tls_protocols}//,/}//;/}"
+				if [[ -n $WERT ]] ; then
+					lmtp_tls_protocols="$WERT"
+					postconf -e lmtp_tls_protocols="$WERT"
+				else
+					lmtp_tls_protocols=""
+					postconf -e lmtp_tls_protocols=""
+				fi
+				## }}}
 				conf_lmtp_menue lmtp_tls_protocols
 				;;
 			lmtp_tls_scert_verifydepth)
@@ -615,7 +699,16 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_secure_cert_match
 				;;
 			lmtp_tls_security_level)
-				# =
+				# Standard ist = leer; Parameter sind none, may, encrypt# {{{
+				tls_security_level $lmtp_tls_security_level
+				if [[ -n $WERT ]] ; then
+					lmtp_tls_security_level="$WERT"
+					postconf -e lmtp_tls_security_level="$WERT"
+				else
+					lmtp_tls_security_level=""
+					postconf -e lmtp_tls_security_level=""
+				fi
+				## }}}
 				conf_lmtp_menue lmtp_tls_security_level
 				;;
 			lmtp_tls_session_cache_database)

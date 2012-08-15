@@ -259,11 +259,26 @@ postscreen_conf() {
 				conf_postscreen_menu postscreen_reject_footer
 				;;
 			postscreen_tls_security_level)
-				# = $smtpd_tls_security_level
+				# Standard = $smtpd_tls_security_level# {{{
+				default_or_input postscreen_tls_security_level tls_security_level "" "$postscreen_tls_security_level"
+				if [[ -n $Value ]] ; then
+					postscreen_tls_security_level="$Value"
+					postconf -e postscreen_tls_security_level="$Value"
+				else
+					postscreen_tls_security_level="\$smtpd_tls_security_level"
+					postconf -e postscreen_tls_security_level="\$smtpd_tls_security_level"
+				fi
+				## }}}
 				conf_postscreen_menu postscreen_tls_security_level
 				;;
 			postscreen_use_tls)
-				# = $smtpd_use_tls
+				# Standard = $smtpd_use_tls (no)# {{{
+				default_or_input postscreen_use_tls ja_nein_tausch $POSTSCREEN_TITLE $SMTPD_USE_TLS_MSG
+				if [[ -n $Value ]] ; then
+					postscreen_use_tls="$Value"
+					postconf -e postscreen_use_tls="$Value"
+				fi
+				## }}}
 				conf_postscreen_menu postscreen_use_tls
 				;;
 			postscreen_watchdog_timeout)

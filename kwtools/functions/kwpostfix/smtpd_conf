@@ -29,11 +29,12 @@ smtpd_conf() {
 	## }}}
 	# Funktion conf_smtpd_menue{{{
 	#######################################
-	# TODO: Hilfe etc. vorbereitet, nur noch menue
-	# Auf smtpd_tls_ciphers achten.
+	# TODO: Hilfe etc. vorbereitet, nur noch
+	# menue (einige)
+	#######################################
 	# smtpd_client_new_tls_session_rate_limit = 0
 	# smtpd_client_port_logging = no
-	# smtpd_command_filters:
+	# smtpd_command_filter =
 	# smtpd_delay_open_until_valid_rcpt = yes
 	# smtpd_milters =
 	# smtpd_peername_lookup = yes
@@ -43,20 +44,17 @@ smtpd_conf() {
 	# smtpd_sasl_path = smtpd
 	# smtpd_sasl_type = cyrus
 	# smtpd_service_name = smtpd
-	# smtpd_tls_always_issue_session_ids = yes
-	# smtpd_tls_eccert_file =
-	# smtpd_tls_eckey_file = $smtpd_tls_eccert_file
-	# smtpd_tls_eecdh_grade = strong
-	# smtpd_tls_exclude_ciphers =
-	# smtpd_tls_fingerprint_digest = md5
-	# smtpd_tls_mandatory_ciphers = medium
-	# smtpd_tls_mandatory_exclude_ciphers =
-	# smtpd_tls_mandatory_protocols = SSLv3, TLSv1
-	# smtpd_tls_protocols =
-	# smtpd_tls_security_level =
-	#######################################
-	# wech: smtpd_sasl_application_name \"\$smtpd_sasl_application_name\"
-	#######################################
+	# smtpd_tls_always_issue_session_ids = yes - ok
+	# smtpd_tls_eccert_file = - ok
+	# smtpd_tls_eckey_file = $smtpd_tls_eccert_file - ok
+	# smtpd_tls_eecdh_grade = strong - ok
+	# smtpd_tls_exclude_ciphers = - ok
+	# smtpd_tls_fingerprint_digest = md5 - ok
+	# smtpd_tls_mandatory_ciphers = medium - ok
+	# smtpd_tls_mandatory_exclude_ciphers = - ok
+	# smtpd_tls_mandatory_protocols = SSLv3, TLSv1 - ok
+	# smtpd_tls_protocols = - ok
+	# smtpd_tls_security_level = - ok
 	conf_smtpd_menue() {
 	SMTPD_MENU=(smtpd_authorized_verp_clients \"\$smtpd_authorized_verp_clients\"
 	smtpd_authorized_xclient_hosts \"\$smtpd_authorized_xclient_hosts\"
@@ -108,6 +106,7 @@ smtpd_conf() {
 	smtpd_timeout \"\$smtpd_timeout\"
 	smtpd_tls_CAfile \"\$smtpd_tls_CAfile\"
 	smtpd_tls_CApath \"\$smtpd_tls_CApath\"
+	smtpd_tls_always_issue_session_ids \"\$smtpd_tls_always_issue_session_ids\"
 	smtpd_tls_ask_ccert \"\$smtpd_tls_ask_ccert\"
 	smtpd_tls_auth_only \"\$smtpd_tls_auth_only\"
 	smtpd_tls_ccert_verifydepth \"\$smtpd_tls_ccert_verifydepth\"
@@ -117,10 +116,19 @@ smtpd_conf() {
 	smtpd_tls_dh1024_param_file \"\$smtpd_tls_dh1024_param_file\"
 	smtpd_tls_dh512_param_file \"\$smtpd_tls_dh512_param_file\"
 	smtpd_tls_dkey_file \"\$smtpd_tls_dkey_file\"
+	smtpd_tls_eccert_file \"\$smtpd_tls_eccert_file\"
+	smtpd_tls_eckey_file \"\$smtpd_tls_eckey_file\"
+	smtpd_tls_eecdh_grade \"\$smtpd_tls_eecdh_grade\"
+	smtpd_tls_exclude_ciphers \"\$smtpd_tls_exclude_ciphers\"
 	smtpd_tls_key_file \"\$smtpd_tls_key_file\"
+	smtpd_tls_mandatory_ciphers \"\$smtpd_tls_mandatory_exclude_ciphers\"
+	smtpd_tls_mandatory_exclude_ciphers \"\$smtpd_tls_mandatory_exclude_ciphers\"
+	smtpd_tls_mandatory_protocols \"\$smtpd_tls_mandatory_protocols\"
+	smtpd_tls_protocols \"\$smtpd_tls_protocols\"
 	smtpd_tls_loglevel \"\$smtpd_tls_loglevel\"
 	smtpd_tls_received_header \"\$smtpd_tls_received_header\"
 	smtpd_tls_req_ccert \"\$smtpd_tls_req_ccert\"
+	smtpd_tls_security_level \"\$smtpd_tls_security_level\"
 	smtpd_tls_session_cache_database \"\$smtpd_tls_session_cache_database\"
 	smtpd_tls_session_cache_timeout \"\$smtpd_tls_session_cache_timeout\"
 	smtpd_tls_wrappermode \"\$smtpd_tls_wrappermode\"
@@ -264,20 +272,20 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_client_recipient_rate_limit
 				;;
 			smtpd_client_restrictions)
-				# Restriktions Überpruefungen nach dem Connect des
+				# Restriktions Überpruefungen nach dem Connect des# {{{
 				# Clients
 				restrictions smtpd_client_restrictions
-				#
+				## }}}
 				conf_smtpd_menue smtpd_client_restrictions
 				;;
-			smtpd_command_filters)
+			smtpd_command_filter)
 				# =
-				conf_smtpd_menue smtpd_command_filters
+				conf_smtpd_menue smtpd_command_filter
 				;;
 			smtpd_data_restrictions)
-				# Restriktions Überpruefungen fuer den Inhalt des SMTP DATA Kommando
+				# Restriktions Überpruefungen fuer den Inhalt des SMTP DATA Kommando# {{{
 				restrictions smtpd_data_restrictions
-				#
+				## }}}
 				conf_smtpd_menue smtpd_data_restrictions
 				;;
 			smtpd_delay_open_until_valid_rcpt)
@@ -320,8 +328,9 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_discard_ehlo_keywords
 				;;
 			smtpd_end_of_data_restrictions)
-				# Restriktions Überpruefungen fuer den Inhalt des SMTP END_OF_DATA Kommando
+				# Restriktions Überpruefungen fuer den Inhalt des SMTP END_OF_DATA Kommando# {{{
 				restrictions smtpd_end_of_data_restrictions
+				## }}}
 				conf_smtpd_menue smtpd_end_of_data_restrictions
 				;;
 			smtpd_enforce_tls)
@@ -345,9 +354,10 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_error_sleep_time
 				;;
 			smtpd_etrn_restrictions)
-				# Restriktionen fuer das ETRN Kommando auf die hier
+				# Restriktionen fuer das ETRN Kommando auf die hier# {{{
 				# genannten Hosts
 				restrictions smtpd_etrn_restrictions
+				## }}}
 				conf_smtpd_menue smtpd_etrn_restrictions
 				;;
 			smtpd_forbidden_commands)
@@ -385,8 +395,9 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_helo_required
 				;;
 			smtpd_helo_restrictions)
-				# Restriktionis Pruefungen nach dem HELO Kommando
+				# Restriktionis Pruefungen nach dem HELO Kommando# {{{
 				restrictions smtpd_helo_restrictions
+				## }}}
 				conf_smtpd_menue smtpd_helo_restrictions
 				;;
 			smtpd_history_flush_threshold)
@@ -551,8 +562,9 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_recipient_overshoot_limit
 				;;
 			smtpd_recipient_restrictions)
-				# Restriktionen fuer ausgehende Mail (Relay)
+				# Restriktionen fuer ausgehende Mail (Relay)# {{{
 				restrictions smtpd_recipient_restrictions
+				## }}}
 				conf_smtpd_menue smtpd_recipient_restrictions
 				;;
 			smtpd_reject_footer)
@@ -582,21 +594,6 @@ smtpd_conf() {
 				#
 				conf_smtpd_menue smtpd_restriction_classes
 				;;
-#			smtpd_sasl_application_name)
-#				# Applikationsname fuer die SASL Server Initialisierung{{{
-#				SMTPD_SASL_APP_NAME_MSG=$(gettext 'Geben Sie einen Applikationsnamen fuer die SASL Server Initialisierung genutzt werden soll ein (Bsp. smtpd).')
-#				inputbox "$SMTPD_TITLE" "$SMTPD_SASL_APP_NAME_MSG" "$smtpd_sasl_application_name"
-#				if [ "$gv_Auswahl" ] ; then
-#					smtpd_sasl_application_name="$gv_Auswahl"
-#					postconf -e smtpd_sasl_application_name="$gv_Auswahl"
-#				else
-#					smtpd_sasl_application_name=""
-#					postconf -e smtpd_sasl_application_name=""
-#				fi
-#				#}}}
-#				#
-#				conf_smtpd_menue smtpd_sasl_application_name
-#				;;
 			smtpd_sasl_auth_enable)
 				# SMTP-AUTH, fuer eingehende mails, benutzen?{{{
 				SMTPD_SASL_AUTH_ENABLE_MSG=$(gettext 'SMTP-AUTH, fuer eingehende mails, benutzen (ja/nein)?')
@@ -674,10 +671,10 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_sender_login_maps
 				;;
 			smtpd_sender_restrictions)
-				# Sobald der Mailclient durch MAIL FROM: den Absender bekannt gegeben hat,
+				# Sobald der Mailclient durch MAIL FROM: den Absender bekannt gegeben hat,# {{{
 				# kann postfix die folgenden Überpruefungen durchlaufen.
 				restrictions smtpd_sender_restrictions
-				#
+				## }}}
 				conf_smtpd_menue smtpd_sender_restrictions
 				;;
 			smtpd_service_name)
@@ -743,7 +740,13 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_CApath
 				;;
 			smtpd_tls_always_issue_session_ids)
-				# = yes
+				# Soll der Postfix SMTP Server eine TLS Session ID ausstellen, falls das TLS# {{{
+				# Session Caching deaktiviert ist (ja/nein)?
+				# Standard = yes
+				ja_nein_tausch "$SMTPD_TITLE" "$SMTPD_TLS_ALWAYS_SESSION_ISSUE_IDS_MSG"
+				smtpd_tls_always_issue_session_ids="$WERT"
+				postconf -e smtpd_tls_always_issue_session_ids="$WERT"
+				## }}}
 				conf_smtpd_menue smtpd_tls_always_issue_session_ids
 				;;
 			smtpd_tls_ask_ccert)
@@ -765,9 +768,9 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_auth_only
 				;;
 			smtpd_tls_ccert_verifydepth)
-				# Überpruefungstiefe der Certrifikate{{{
+				# Überpruefungstiefe der Client Zertifikate (9){{{
 				number_input -i "$smtpd_tls_ccert_verifydepth"
-				if [ "$NUMBER" ] ; then
+				if [[ -n $NUMBER ]] ; then
 					smtpd_tls_ccert_verifydepth="$NUMBER"
 					postconf -e smtpd_tls_ccert_verifydepth="$NUMBER"
 				fi
@@ -775,7 +778,7 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_ccert_verifydepth
 				;;
 			smtpd_tls_cert_file)
-				# Auswahl der TLS Schluessel Dateien{{{
+				# Auswahl der TLS Schluessel Datei{{{
 				tls_file_auswahl
 				smtpd_tls_cert_file="$WERT"
 				postconf -e smtpd_tls_cert_file="$WERT"
@@ -783,21 +786,22 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_cert_file
 				;;
 			smtpd_tls_ciphers)
-				# Cipher eintragen, s. man ciphers {{{
-				SMTPD_TLS_CIPHERLIST_MSG=$(gettext 'Geben Sie bitte Ihren Cipher String ein (man ciphers).')
-				inputbox "$SMTPD_TITLE" "$SMTPD_TLS_CIPHERLIST_MSG" "$smtpd_tls_cipherlist"
-				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_tls_ciphers="$gv_Auswahl"
-					postconf -e smtpd_tls_ciphers="$gv_Auswahl"
+				# Standard = export# {{{
+				# Auswahl des minimum der Qualitaet der TLS Verschluesselung die der
+				# Postfix Server mit der geeigneten TLS Verschluesselung benutzen soll.
+				tls_ciphers "$smtpd_tls_ciphers"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_ciphers="$WERT"
+					postconf -e smtpd_tls_ciphers="$WERT"
 				else
-					smtpd_tls_ciphers=""
-					postconf -e smtpd_tls_ciphers=""
+					smtpd_tls_ciphers="export"
+					postconf -e smtpd_tls_ciphers="export"
 				fi
-				#}}}
+				## }}}
 				conf_smtpd_menue smtpd_tls_ciphers
 				;;
 			smtpd_tls_dcert_file)
-				# Auswahl der TLS Schluessel Dateien{{{
+				# Auswahl der TLS Schluessel Datei{{{
 				tls_file_auswahl 
 				smtpd_tls_dcert_file="$WERT"
 				postconf -e smtpd_tls_dcert_file="$WERT"
@@ -805,7 +809,7 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_dcert_file
 				;;
 			smtpd_tls_dh1024_param_file)
-				# Auswahl der dh* Parameter Dateien{{{
+				# Auswahl der dh* Parameter Datei{{{
 				tls_file_auswahl 
 				smtpd_tls_dh1024_param_file="$WERT"
 				postconf -e smtpd_tls_dh1024_param_file="$WERT"
@@ -813,7 +817,7 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_dh1024_param_file
 				;;
 			smtpd_tls_dh512_param_file)
-				# Auswahl der dh* Parameter Dateien{{{
+				# Auswahl der dh* Parameter Datei{{{
 				tls_file_auswahl 
 				smtpd_tls_dh512_param_file="$WERT"
 				postconf -e smtpd_tls_dh512_param_file="$WERT"
@@ -821,7 +825,7 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_dh512_param_file
 				;;
 			smtpd_tls_dkey_file)
-				# Auswahl der TLS Schluessel Dateien{{{
+				# Auswahl der TLS Schluessel Datei{{{
 				tls_file_auswahl 
 				smtpd_tls_dkey_file="$WERT"
 				postconf -e smtpd_tls_dkey_file="$WERT"
@@ -848,15 +852,46 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_eckey_file
 				;;
 			smtpd_tls_eecdh_grade)
-				# = strong
+				# Standard ist = strong; Parameter sind none strong ultra# {{{
+				tls_eecdh_grade "$smtpd_tls_eecdh_grade"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_eecdh_grade="$WERT"
+					postconf -e smtpd_tls_eecdh_grade="$WERT"
+				else
+					smtpd_tls_eecdh_grade=""
+					postconf -e smtpd_tls_eecdh_grade=""
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_tls_eecdh_grade
 				;;
 			smtpd_tls_exclude_ciphers)
-				# =
+				# Standard = # {{{
+				# Liste der Verschluesselung oder Verschluesselungstypen
+				# die von der Postfix SMTP Server Verschluesselungliste
+				# aller TLS Sicherheitslevel ausgeschlossen werden.
+				tls_exclude_ciphers "$smtpd_tls_exclude_ciphers"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_exclude_ciphers="$WERT"
+					postconf -e smtpd_tls_exclude_ciphers="$WERT"
+				else
+					smtpd_tls_exclude_ciphers=""
+					postconf -e smtpd_tls_exclude_ciphers=""
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_tls_exclude_ciphers
 				;;
 			smtpd_tls_fingerprint_digest)
-				# = md5
+				# Client Fingerprint auswaehlen (md5)# {{{
+				# Die Nachricht ueber den Algorithmus zum einrichten eines
+				# entfernten Client-Zertifikates Fingerprints oder den Fingerprint
+				# des oeffentlichen Schluessel fuer die Parameter
+				# check_ccert_access and permit_tls_clientcerts. Der Standard Algorithmus
+				# \"md5\" ist fuer die Rueckwaertskompalitaet mit Postfix Release <=2.5.
+				# Standard = md5
+				tls_fingerprint_digest $smtpd_tls_fingerprint_digest
+				smtpd_tls_fingerprint_digest="$WERT"
+				postconf -e smtpd_tls_fingerprint_digest="$WERT"
+				#}}}
 				conf_smtpd_menue smtpd_tls_fingerprint_digest
 				;;
 			smtpd_tls_key_file)
@@ -870,26 +905,73 @@ smtpd_conf() {
 				;;
 			smtpd_tls_loglevel)
 				# Loglevel auswaehlen{{{
-				loglevel
+				loglevel $smtpd_tls_loglevel
 				smtpd_tls_loglevel="$WERT"
 				postconf -e smtpd_tls_loglevel="$WERT"
 				#}}}
 				conf_smtpd_menue smtpd_tls_loglevel
 				;;
 			smtpd_tls_mandatory_ciphers)
-				# = medium
+				# Standard = medium# {{{
+				# Auswahl des minimum der Qualitaet der TLS Verschluesselung die der
+				# Postfix Server mit der geeigneten TLS Verschluesselung benutzen soll.
+				tls_ciphers "$smtpd_tls_mandatory_ciphers"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_mandatory_ciphers="$WERT"
+					postconf -e smtpd_tls_mandatory_ciphers="$WERT"
+				else
+					smtpd_tls_mandatory_ciphers="medium"
+					postconf -e smtpd_tls_mandatory_ciphers="medium"
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_tls_mandatory_ciphers
 				;;
 			smtpd_tls_mandatory_exclude_ciphers)
-				# =
+				# Standard = # {{{
+				# Liste der Verschluesselung oder Verschluesselungstypen
+				# die von der Postfix SMTP Server Verschluesselungliste
+				# aller TLS Sicherheitslevel ausgeschlossen werden.
+				tls_exclude_ciphers "$smtpd_tls_mandatory_exclude_ciphers"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_mandatory_exclude_ciphers="$WERT"
+					postconf -e smtpd_tls_mandatory_exclude_ciphers="$WERT"
+				else
+					smtpd_tls_mandatory_exclude_ciphers=""
+					postconf -e smtpd_tls_mandatory_exclude_ciphers=""
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_tls_mandatory_exclude_ciphers
 				;;
 			smtpd_tls_mandatory_protocols)
-				# = SSLv3, TLSv1
+				# Standard = SSLv3, TLSv1# {{{
+				# SSLv1, SSLv2, TLSv1
+				# bei openssl >=1.0.1
+				# SSLv1, SSLv2, TLSv1, TLSv1.1, TLSv1.2
+				tls_protocols "${${${smtpd_tls_mandatory_protocols}//,/}//;/}"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_mandatory_protocols="$WERT"
+					postconf -e smtpd_tls_mandatory_protocols="$WERT"
+				else
+					smtpd_tls_mandatory_protocols=""
+					postconf -e smtpd_tls_mandatory_protocols=""
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_tls_mandatory_protocols
 				;;
 			smtpd_tls_protocols)
-				# =
+				# Standard =# {{{
+				# SSLv1, SSLv2, TLSv1
+				# bei openssl >=1.0.1
+				# SSLv1, SSLv2, TLSv1, TLSv1.1, TLSv1.2
+				tls_protocols "${${${smtpd_tls_protocols}//,/}//;/}"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_protocols="$WERT"
+					postconf -e smtpd_tls_protocols="$WERT"
+				else
+					smtpd_tls_protocols=""
+					postconf -e smtpd_tls_protocols=""
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_tls_protocols
 				;;
 			smtpd_tls_received_header)
@@ -911,7 +993,16 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_tls_req_ccert
 				;;
 			smtpd_tls_security_level)
-				# Standard ist = leer; Parameter sind none, may, encrypt
+				# Standard ist = leer; Parameter sind none, may, encrypt# {{{
+				tls_security_level "$smtpd_tls_security_level"
+				if [[ -n $WERT ]] ; then
+					smtpd_tls_security_level="$WERT"
+					postconf -e smtpd_tls_security_level="$WERT"
+				else
+					smtpd_tls_security_level=""
+					postconf -e smtpd_tls_security_level=""
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_tls_security_level
 				;;
 			smtpd_tls_session_cache_database)
