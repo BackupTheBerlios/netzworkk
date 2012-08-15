@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 12.08.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 15.08.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -87,6 +87,7 @@ lv_TableTyp=$(gettext 'Tabellentyp')
 SMTPD_TLS_REQ_CCERT_MSG=$(gettext 'Benoetigen Clients ein Zertifikat (ja/nein)?')
 SMTPD_ENFORCE_TLS_MSG=$(gettext 'Soll SSL/TLS bei eingehenden Verbindungen erzwungen werden (ja/nein)?')
 SMTPD_USE_TLS_MSG=$(gettext 'Soll dieser Server fuer eingehende Mails SSL/TLS Verschluesselung benutzen (ja/nein)?')
+SMTPD_TLS_ALWAYS_SESSION_ISSUE_IDS_MSG=$(gettext 'Soll der Postfix SMTP Server eine TLS Session ID ausstellen, falls das TLS Session Caching deaktiviert ist (ja/nein)?')
 SMTPD_TLS_ASK_CCERT_MSG=$(gettext 'Soll beim Server explizit nach einem Client Zertifikat nachgefragt werden (ja/nein)?')
 
 MAIL_CONFIG="`postconf -h config_directory &>/dev/null`"
@@ -363,27 +364,214 @@ user_auswahl() {
 #}}}
 # Funktion (loglevel), Loglevel auswählen{{{
 loglevel() {
-	unset -- WERT
+	unset -- WERT Log_Value
 	local LOGLEVEL_MSG LOGLEVEL_MENU
 	LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
 	LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
-	menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
+	Log_Value="$1"
+	# Funktion (loglevel_menu)# {{{
+	loglevel_menu() {
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU" $Log_Value
+		else
+			menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU" $Log_Value
+		fi
+	}
+	## }}}
+	loglevel_menu $Log_Value
 	if [ -n "$gv_Auswahl" ] ; then
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
-				HELP*)	script_help loglevel_help
-					menubox "$gv_Configuration" "$LOGLEVEL_MSG" "$LOGLEVEL_MENU"
+				HELP*)	script_help tls_loglevel_help
+					loglevel_menu $Log_Value
 					;;
 				*)	WERT="$gv_Auswahl"
 					break
 					;;
 			esac
 		done
-	else
-		gv_Auswahl=0
 	fi
 }
 #}}}
+# Funktion (tls_protocols), TLS Protokolle auswählen{{{
+tls_protocols() {
+	if [[ ${#argv} == 1 ]] ; then
+		unset -- WERT
+		local TLS_PROTOCOL_MSG TLS_PROTOCOL_MENU
+		OldVar="$1"
+		TLS_PROTOCOL_MSG=$(gettext 'Waehlen Sie die oder das zu unterstuetzende TLS Protokoll aus.')
+		# Openssl Version herrausfinden und vorhandene Werte mit on markieren.
+		generate_is_file "$OldVar"
+		Openssl_Version=${${$(openssl version)[2]}%[a-z]}
+		# Je nach openssl Version gibt es verschiedene unterstuetzte TLS Protokolle
+		# ! - bedeutet Ausschluss.
+		if [[ $Openssl_Version > 1.0.0 ]] ; then
+			is_value "SSLv2 SSLv3 TLSv1 TLSv1.1 TLSv1.2 !SSLv2 !SSLv3 !TLSv1 !TLSv1.1 !TLSv1.2"
+			TLS_PROTOCOL_MENU=($VALUE_ARRAY)
+		else
+			is_value "SSLv2 SSLv3 TLSv1 !SSLv2 !SSLv3 !TLSv1"
+			TLS_PROTOCOL_MENU=($VALUE_ARRAY)
+		fi
+		#
+		checklist "$gv_Configuration" "$TLS_PROTOCOL_MSG" "$TLS_PROTOCOL_MENU" "$OldVar"
+		if [[ -n $gv_Auswahl ]] ; then
+			while [ "$gv_Auswahl" ] ; do
+				case "$gv_Auswahl" in
+					HELP*)	script_help tls_protocols_help
+						checklist "$gv_Configuration" "$TLS_PROTOCOL_MSG" "$TLS_PROTOCOL_MENU" "$OldVar"
+						;;
+					*)	WERT="$gv_Auswahl"
+						break
+						;;
+				esac
+			done
+		fi
+	else
+		no_para_msg $0
+	fi
+}
+#}}}
+# Funktion (tls_security_level), TLS Sicherheitslevel auswählen{{{
+tls_security_level() {
+	unset -- WERT OldVar
+	local TLS_SECURITY_LEVEL_MSG TLS_SECURITY_LEVEL_MENU
+	OldVar="$1"
+	TLS_SECURITY_LEVEL_MSG=$(gettext 'Waehlen Sie ein Sicherheitslevel aus.')
+	TLS_SECURITY_LEVEL_MENU=(none \"\" may \"\" encrypt \"\")
+	# Funktion (tls_security_level_menu)# {{{
+	tls_security_level_menu() {
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$TLS_SECURITY_LEVEL_MSG" "$TLS_SECURITY_LEVEL_MENU" "$OldVar"
+		else
+			menubox "$gv_Configuration" "$TLS_SECURITY_LEVEL_MSG" "$TLS_SECURITY_LEVEL_MENU" "$OldVar"
+		fi
+	}
+	## }}}
+	tls_security_level_menu $OldVar
+	if [[ -n $gv_Auswahl ]] ; then
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help tls_security_level_help
+					tls_security_level_menu $OldVar
+					;;
+				*)	WERT="$gv_Auswahl"
+					break
+					;;
+			esac
+		done
+	fi
+}
+#}}}
+# Funktion (tls_ciphers), Qualitaet der TLS Verschluesselung auswählen{{{
+tls_ciphers() {
+	unset -- WERT OldVar
+	local TLS_CIPHERS_MSG TLS_CIPHERS_MENU
+	OldVar="$1"
+	TLS_CIPHERS_MSG=$(gettext 'Waehlen Sie die Qualitaet der TLS Verschluesselung aus.')
+	TLS_CIPHERS_MENU=(export \"\" low \"\" medium \"\" high \"\" null \"\")
+	# Funktion (tls_ciphers_menu)# {{{
+	tls_ciphers_menu() {
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$TLS_CIPHERS_MSG" "$TLS_CIPHERS_MENU" "$OldVar"
+		else
+			menubox "$gv_Configuration" "$TLS_CIPHERS_MSG" "$TLS_CIPHERS_MENU" "$OldVar"
+		fi
+	}
+	## }}}
+	tls_ciphers_menu $OldVar
+	if [[ -n $gv_Auswahl ]] ; then
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help tls_ciphers_help
+					tls_ciphers_menu $OldVar
+					;;
+				*)	WERT="$gv_Auswahl"
+					break
+					;;
+			esac
+		done
+	fi
+}
+#}}}
+# Funktion (tls_eecdh_grade),  auswählen{{{
+tls_eecdh_grade() {
+	unset -- WERT OldVar
+	local TLS_EECDH_GRADE_MSG TLS_EECDH_GRADE_MENU
+	OldVar="$1"
+	TLS_EECDH_GRADE_MSG=$(gettext 'Waehlen Sie die Sicherheitsstufe fuer ephemeral elliptic-curve Diffie-Hellman (EECDH) Schluessel Austausch aus.')
+	is_value ""
+	TLS_EECDH_GRADE_MENU=(none \"\" strong \"\" ultra \"\")
+	# Funktion (tls_eecdh_grade_menu)# {{{
+	tls_eecdh_grade_menu() {
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$TLS_EECDH_GRADE_MSG" "$TLS_EECDH_GRADE_MENU" "$OldVar"
+		else
+			menubox "$gv_Configuration" "$TLS_EECDH_GRADE_MSG" "$TLS_EECDH_GRADE_MENU" "$OldVar"
+		fi
+	}
+	## }}}
+	tls_eecdh_grade_menu $OldVar
+	if [[ -n $gv_Auswahl ]] ; then
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help tls_eecdh_grade_help
+					tls_eecdh_grade_menu $OldVar
+					;;
+				*)	WERT="$gv_Auswahl"
+					break
+					;;
+			esac
+		done
+	fi
+}
+#}}}
+# Funktion (tls_fingerprint_digest), Digest auswählen{{{
+tls_fingerprint_digest() {
+	unset -- WERT OldVar
+	local TLS_FINGERPRINT_DIGEST_MSG TLS_FINGERPRINT_DIGEST_MENU
+	OldVar="$1"
+	TLS_FINGERPRINT_DIGEST_MSG=$(gettext 'Waehlen Sie den Fingerprint aus, der fuer Client Zertifikate unterstuetzt wird soll (Standard ist md5).')
+	TLS_FINGERPRINT_DIGEST_MENU=(md5 \"\" sha1 \"\" md4 \"\" md2 \"\" ripemd160 \"\")
+	# Funktion (tls_fingerprint_digest_menu)# {{{
+	tls_fingerprint_digest_menu() {
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$TLS_FINGERPRINT_DIGEST_MSG" "$TLS_FINGERPRINT_DIGEST_MENU" "$OldVar"
+		else
+			menubox "$gv_Configuration" "$TLS_FINGERPRINT_DIGEST_MSG" "$TLS_FINGERPRINT_DIGEST_MENU" "$OldVar"
+		fi
+	}
+	## }}}
+	tls_fingerprint_digest_menu $OldVar
+	if [[ -n $gv_Auswahl ]] ; then
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help tls_fingerprint_digest_help
+					tls_fingerprint_digest_menu $OldVar
+					;;
+				*)	WERT="$gv_Auswahl"
+					break
+					;;
+			esac
+		done
+	fi
+}
+#}}}
+# Funktion (tls_exclude_ciphers), Ausschluss von Verschluesselungsmethoden.# {{{
+#
+# Liste der Verschluesselung oder Verschluesselungstypen
+# die von der Postfix SMTP Server Verschluesselungliste
+# aller TLS Sicherheitslevel ausgeschlossen werden.
+#
+tls_exclude_ciphers() {
+	unset -- WERT OldVar
+	OldVar="$1"
+	TLS_EXCLUDE_CIPHERS_MSG=$(gettext 'Tragen Sie hier die Verschluesselungsmethoden ein die vom Postfix Server nicht beachtet werden soll (siehe ).')
+	inputbox "$TITLE" "$TLS_EXCLUDE_CIPHERS_MSG" "$OldVar"
+	if [[ -n $gv_Auswahl ]] ; then
+		WERT="$gv_Auswahl"
+	fi
+}
+## }}}
 # Funktion haupt_menue{{{
 MAIN_MENU=($lv_Quick_Conf \"\" $gv_Configuration \"\"
 	\"$lv_Ext_Conf\" \"\" $lv_Tabs \"\" $lv_Main_Cf \"\"
@@ -403,13 +591,16 @@ haupt_menue() {
 #
 default_or_input (){
 	if [[ ${#argv} -ge 2 ]] ; then
-		set -x
 		unset -- Value
 		local OldKey Func FuncOpt NewKey Var
 		OldKey="$1"
 		Func="$2"
-		FuncOpt="$3"
-		# Variable 4 pruefen, ob es eine Variable ist oder eine Zahl.
+		if [ -n $3 ] ; then
+			FuncOpt="$3"
+		else
+			unset -- FuncOpt
+		fi
+		# Variable 4 pruefen, ob es eine Variable ein Wort oder eine Zahl ist.
 		case "$4" in
 			\$*) unset -- Var
 				;;
@@ -431,14 +622,13 @@ default_or_input (){
 			*_checks)
 				NewKey="\$${OldKey#*_}"
 				;;
-			tlsproxy_*)
+			tlsproxy_*|postscreen_*)
 				NewKey="\$smtpd_${OldKey#*_}"
 				;;
 			*)
 				NewKey="\$default_${OldKey#*_}"
 				;;
 		esac
-		set +x
 		#
 		TITLE="$gv_Configuration"
 		MSG=$(gettext 'Sis koennen die Standardvariable benutzen oder eine Eingabe machen.\n\nSoll die Standardvariable \"$NewKey\" benutzt werden?')
@@ -448,9 +638,10 @@ default_or_input (){
 			Value="$NewKey"
 		else
 			case "$Func" in
-				ja_nein_tausch|loglevel|tls_file_auswahl)
-					# Ja/Nein Tausch, Loglevel Auswahl (Integer), tls_file_auswahl
-					$Func $FuncOpt $Var
+				ja_nein_tausch|loglevel|tls_ciphers|tls_eecdh_grade|tls_exclude_ciphers|tls_file_auswahl|tls_fingerprint_digest|tls_protocols|tls_security_level)
+					# Ja/Nein Tausch, Loglevel Auswahl (Integer), tls_file_auswahl,
+					# tls_protocols
+					$Func $FuncOpt "$Var"
 					if [[ -n $WERT ]] ; then
 						Value="$WERT"
 					else
