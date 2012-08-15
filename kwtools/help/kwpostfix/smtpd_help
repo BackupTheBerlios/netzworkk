@@ -46,7 +46,7 @@ smtpd_client_recipient_rate_limit: Maximale Anzahl von Empfaenger
 smtpd_client_restrictions: Restrictions-Pruefungen direct nach dem
 \tConnect des Clients.
 
-smtpd_command_filters:
+smtpd_command_filter:
 
 smtpd_data_restrictions: Optionale Zugriffs Restrictionen fuer den
 \tSMTP DATA Befehl und seinem Inhalt.
@@ -212,7 +212,11 @@ smtpd_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
 \tausgehende Mails. Diese werden dann mit den Rechten des Mail 
 \tServers gelesen. 
 
-smtpd_tls_always_issue_session_ids:
+smtpd_tls_always_issue_session_ids: Soll der Postfix SMTP Server
+\teine TLS Session ID ausstellen, falls das TLS Session Caching
+\tdeaktiviert ist (ja/nein)? Der Parameter
+\t\"smtpd_tls_session_cache_database\" ist leer.
+\tStandard ist ja.
 
 smtpd_tls_ask_ccert: Muss beim Server explizit nach einem Client
 \tZertifikat nachgefragt werden (ja/nein)?
@@ -221,8 +225,8 @@ smtpd_tls_ask_ccert: Muss beim Server explizit nach einem Client
 smtpd_tls_auth_only: Soll nur SSL/TLS bei eingehenden Verbindungen
 \tgenutzt werden (ja/nein)?
 
-smtpd_tls_ccert_verifydepth: Ueberpruefungstiefe des Client
-\tZertifikat.
+smtpd_tls_ccert_verifydepth: Ueberpruefungstiefe von Client
+\tZertifikaten. Standard ist 9.
 
 smtpd_tls_cert_file: Datei (RSA) welche das unterschriebene
 \tprivate Zertifikat besitzt.
@@ -233,9 +237,13 @@ smtpd_tls_ciphers: Siehe OpenSSL Dokumentation (Bsp. DEFAULT,
 smtpd_tls_dcert_file: Datei (DSA) welche das unterschriebene private
 \tZertifikat besitzt.
 
-smtpd_tls_dh1024_param_file:
+smtpd_tls_dh1024_param_file: Datei (1024 Bit Schluessellaenge) mit
+\tDH (Diffie Hellman) Parameter die dieser Postfix SMTP Server mit
+\EDH benutzen soll.
 
-smtpd_tls_dh512_param_file:
+smtpd_tls_dh512_param_file: Datei (512 Bit Schluessellaenge) mit
+\tDH (Diffie Hellman) Parameter die dieser Postfix SMTP Server mit
+\EDH benutzen soll.
 
 smtpd_tls_dkey_file: Datei (DSA) welche das unterschriebene,
 \tunverschluesselte private Zertifikat besitzt.
@@ -263,16 +271,19 @@ smtpd_tls_fingerprint_digest:
 smtpd_tls_key_file: Datei (RSA) welche den unterschriebenen,
 \tunverschluesselten privaten Schluessel besitzt.
 
-smtpd_tls_loglevel: TODO: Ausführlicher gestalten
-\tLoglevel auswaehlen.
+smtpd_tls_loglevel: Loglevel auswaehlen. Dies aktiviert
+\tzusaetzliches Postfix SMTP Server Logging falls TLS aktiviert ist.
+\tStandard ist 0.
 
 smtpd_tls_mandatory_ciphers:
 
 smtpd_tls_mandatory_exclude_ciphers:
 
-smtpd_tls_mandatory_protocols:
+smtpd_tls_mandatory_protocols: Auswahl der von Postfix zu
+\tunterstuetztende Verschluesselungs Protokolle fuer TLS.
 
-smtpd_tls_protocols:
+smtpd_tls_protocols: Auswahl der von Postfix zu unterstuetztende
+\tVerschluesselungs Protokolle fuer TLS.
 
 smtpd_tls_received_header: Soll dieser Server ($myhosname), fuer
 \teingehende Mails, die received Zeilen loggen (ja/nein)?

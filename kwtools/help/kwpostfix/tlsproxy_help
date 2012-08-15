@@ -13,29 +13,43 @@ tlsproxy_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
 \tServers gelesen. 
 \tStandard ist \"$smtpd_tls_CApath\".
 
-tlsproxy_tls_always_issue_session_ids:
+tlsproxy_tls_always_issue_session_ids: Soll der Postfix SMTP Server
+\teine TLS Session ID ausstellen, falls das TLS Session Caching
+\tdeaktiviert ist (ja/nein)? Der Parameter
+\t\"smtpd_tls_session_cache_database\" ist leer.
 \tStandard ist \"$smtpd_tls_always_issue_session_ids\"
 
 tlsproxy_tls_ask_ccert: Muss beim Server explizit nach einem Client
 \tZertifikat nachgefragt werden (ja/nein)?
 \tStandard ist \"$smtpd_tls_ask_ccert\".
 
-tlsproxy_tls_ccert_verifydepth:
+tlsproxy_tls_ccert_verifydepth: Ueberpruefungstiefe von Client
+\tZertifikaten.
 \tStandard ist \"$smtpd_tls_ccert_verifydepth\"
 
-tlsproxy_tls_cert_file: Standard ist \"$smtpd_tls_cert_file\"
+tlsproxy_tls_cert_file: Datei (RSA) welche das unterschriebene
+\tprivate Zertifikat besitzt.
+\tStandard ist \"$smtpd_tls_cert_file\"
 
 tlsproxy_tls_ciphers: Standard ist \"$smtpd_tls_ciphers\"
 
-tlsproxy_tls_dcert_file: Standard ist \"$smtpd_tls_dcert_file\"
+tlsproxy_tls_dcert_file: Datei (DSA) welche das unterschriebene private
+\tZertifikat besitzt.
+\tStandard ist \"$smtpd_tls_dcert_file\"
 
-tlsproxy_tls_dh1024_param_file:
+tlsproxy_tls_dh1024_param_file: Datei (1024 Bit Schluessellaenge) mit
+\tDH (Diffie Hellman) Parameter die dieser Postfix SMTP Server mit
+\EDH benutzen soll.
 \tStandard ist \"$smtpd_tls_dh1024_param_file\"
 
-tlsproxy_tls_dh512_param_file:
+tlsproxy_tls_dh512_param_file: Datei (512 Bit Schluessellaenge) mit
+\tDH (Diffie Hellman) Parameter die dieser Postfix SMTP Server mit
+\EDH benutzen soll.
 \tStandard ist \"$smtpd_tls_dh512_param_file\"
 
-tlsproxy_tls_dkey_file: Standard ist \"$smtpd_tls_dkey_file\"
+tlsproxy_tls_dkey_file: Datei (DSA) welche das unterschriebene,
+\tunverschluesselte private Zertifikat besitzt.
+\tStandard ist \"$smtpd_tls_dkey_file\"
 
 tlsproxy_tls_eccert_file: Standard ist \"$smtpd_tls_eccert_file\"
 
@@ -49,9 +63,13 @@ tlsproxy_tls_exclude_ciphers:
 tlsproxy_tls_fingerprint_digest:
 \tStandard ist \"$smtpd_tls_fingerprint_digest\"
 
-tlsproxy_tls_key_file: Standard ist \"$smtpd_tls_key_file\"
+tlsproxy_tls_key_file: Datei (RSA) welche den unterschriebenen,
+\tunverschluesselten privaten Schluessel besitzt.
+\tStandard ist \"$smtpd_tls_key_file\"
 
-tlsproxy_tls_loglevel: Standard ist \"$smtpd_tls_loglevel\"
+tlsproxy_tls_loglevel: Loglevel auswaehlen. Dies aktiviert
+\tzusaetzliches Postfix SMTP Server Logging falls TLS aktiviert ist.
+\tStandard ist \"$smtpd_tls_loglevel\".
 
 tlsproxy_tls_mandatory_ciphers:
 \tStandard ist \"$smtpd_tls_mandatory_ciphers\"
@@ -59,10 +77,13 @@ tlsproxy_tls_mandatory_ciphers:
 tlsproxy_tls_mandatory_exclude_ciphers:
 \tStandard ist \"$smtpd_tls_mandatory_exclude_ciphers\"
 
-tlsproxy_tls_mandatory_protocols:
+tlsproxy_tls_mandatory_protocols: Auswahl der von Postfix zu
+\tunterstuetztende Verschluesselungs Protokolle fuer TLS.
 \tStandard ist \"$smtpd_tls_mandatory_protocols\"
 
-tlsproxy_tls_protocols: Standard ist \"$smtpd_tls_protocols\"
+tlsproxy_tls_protocols: Auswahl der von Postfix zu unterstuetztende
+\tVerschluesselungs Protokolle fuer TLS.
+\tStandard ist \"$smtpd_tls_protocols\".
 
 tlsproxy_tls_req_ccert: Standard ist \"$smtpd_tls_req_ccert\"
 

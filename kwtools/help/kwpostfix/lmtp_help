@@ -198,7 +198,8 @@ lmtp_tls_mandatory_ciphers:
 
 lmtp_tls_mandatory_exclude_ciphers:
 
-lmtp_tls_mandatory_protocols:
+lmtp_tls_mandatory_protocols: Auswahl der von Postfix zu
+\tunterstuetztende Verschluesselungs Protokolle fuer TLS.
 
 lmtp_tls_note_starttls_offer:
 
@@ -206,7 +207,8 @@ lmtp_tls_per_site:
 
 lmtp_tls_policy_maps:
 
-lmtp_tls_protocols:
+lmtp_tls_protocols: Loglevel auswaehlen. Dies aktiviert
+\tzusaetzliches Postfix SMTP Server Logging falls TLS aktiviert ist.
 
 lmtp_tls_scert_verifydepth:
 
