@@ -106,8 +106,6 @@ abort_unmodified: Wenn diese Variable auf yes gesetzt ist, wird die
 alias_file: Die Standarddatei, in der Adressbucheintraege
 \tabgespeichert werden, die von der Funktion create-alias angelegt
 \twerden. 
-\tHinweis: Mutt wird diese Datei nicht automatisch einlesen; Sie
-\tmuessen explizit den Befehl source dafuer verwenden.
 \tDefault ist alias_file="~/.mutt/address"
 
 allow_8bit: Kontrolliert, ob 8-bit-Zeichen beim Versenden von Mail
