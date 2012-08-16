@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 22.07.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 16.08.2012
 #
 # Script: kwmutt, konfiguriert den Mail-Client Mutt.
 #
-# Version: 0.0.4
+# Version: 0.0.5
 
 ###################################################################
 # TODO:
@@ -560,9 +560,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_Addressbook)
 			# Adressbuch bearbeiten# {{{
-			if [ -x "$ABOOK_CMD" -a -n "$alias_file" ] ; then
-				abook
-			elif [ -x "$ABOOK_CMD" ] ; then
+			if [ -x "$ABOOK_CMD" -a -n "$query_command" ] ; then
 				abook
 			elif [ -n "$alias_file" ] ; then
 				autoload -U kwmutt_abook
