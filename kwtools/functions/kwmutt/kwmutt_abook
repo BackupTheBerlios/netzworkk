@@ -179,6 +179,9 @@ alias $MAIL_ALIAS $MAIL_ADR"
 								HELP*)	script_help kwmutt_abook_conf_help
 									menubox "$ADDRESSBOOK_TITLE" "$gv_Menupoint" "$CHANGE_MENU"
 									;;
+								$gv_Back)
+									break
+									;;
 								*)
 									# Auswahl uebernehmen
 									ABOOK_VALUE_OLD="$gv_Auswahl"

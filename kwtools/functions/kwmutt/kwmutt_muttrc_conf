@@ -425,7 +425,7 @@ kwmutt_muttrc_conf() {
 				;;
 			query_command)
 				# Kommando fuer die Abfrage externer Adressbuecher.# {{{
-				MSG=$(gettext 'Geben Sie den Befehl zur Abfrage externer Adressbuecher ein.')
+				MSG=$(gettext 'Geben Sie den Befehl zur Abfrage externer Adressbuecher ein Bsp.: abook --mutt-query '%s').')
 				inputbox "$MUTTRC_TITLE" "$MSG" "$query_command"
 				if [ -n "$gv_Auswahl" ] ; then
 					query_command="$gv_Auswahl"
