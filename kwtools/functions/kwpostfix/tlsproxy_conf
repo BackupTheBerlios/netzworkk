@@ -241,7 +241,10 @@ tlsproxy_conf() {
 				conf_tlsproxy_menu tlsproxy_tls_eckey_file
 				;;
 			tlsproxy_tls_eecdh_grade)
-				# Standard = $smtpd_tls_eecdh_grade# {{{
+				# Standard ist = $smtpd_tls_eecdh_grade; Parameter sind none strong ultra# {{{
+				# Auswahl der Sicherheit des Postfix SMTP Server fuer den
+				# ephemeral elliptic-curve Diffie-Hellman (EECDH) Schluessel
+				# Austausch.
 				default_or_input tlsproxy_tls_eecdh_grade tls_eecdh_grade "" "$tlsproxy_tls_eecdh_grade"
 				if [[ -n $Value ]] ; then
 					tlsproxy_tls_eecdh_grade="$Value"
@@ -374,6 +377,7 @@ tlsproxy_conf() {
 				;;
 			tlsproxy_tls_security_level)
 				# Standard = $smtpd_tls_security_level# {{{
+				# Legt fest, ob SSL/TLS benutzt werden darf, kann oder muss.
 				default_or_input tlsproxy_tls_security_level tls_security_level "" "$tlsproxy_tls_security_level"
 				if [[ -n $Value ]] ; then
 					tlsproxy_tls_security_level="$Value"
@@ -406,12 +410,12 @@ tlsproxy_conf() {
 				conf_tlsproxy_menu tlsproxy_use_tls
 				;;
 			tlsproxy_watchdog_timeout)
-				# Standard ist = 10s, gehen aber auch Integer Zahlen mit dem Suffix d(day),# {{{
-				# s(seconds), m(minutes), h(hourly), w(weekly) .
+				# Standard ist = 10s, gehen aber auch Integer Zahlen mit dem Suffix d(days),# {{{
+				# s(seconds), m(minutes), h(hours), w(weeks) .
 				################################################
 				# TODO: *_MSG vervollstaendigen
 				################################################
-				TLSPROXY_WATCHDOG_TIMEOUT_MSG=$(gettext 'Sie koennen eine Integer Zahl in Sekunden, Minuten, Stunden Tagen oder Wochen eingeben. Benutzen Sie die einzelnen Suffixe \"smhdw\".')
+				TLSPROXY_WATCHDOG_TIMEOUT_MSG=$(gettext 'Sie koennen eine Integer Zahl in Sekunden, Minuten, Stunden, Tagen oder Wochen eingeben. Benutzen Sie die einzelnen Suffixe \"smhdw\".')
 				number_input -a "$TLSPROXY_TITLE" "$TLSPROXY_WATCHDOG_TIMEOUT_MSG" $tlsproxy_watchdog_timeout
 				if [[ -n $NUMBER ]] ; then
 					tlsproxy_watchdog_timeout="$NUMBER"
