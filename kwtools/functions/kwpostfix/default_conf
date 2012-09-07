@@ -13,18 +13,8 @@ default_conf() {
 		s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 	read_file -f ${gv_WorkDir}/postfix$$
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-	
-	####################################
-	# Old
-	####################################
-	# postconf -c $MAIL_CONFIG | grep '^default_' | sed -e 's# = #="# ;
-	# s#\$##g ; s#\?#\\\?#g ; s#{#\\\{#g ; s#}#\\\}#g ; s#$#"#' >${gv_WorkDir}/postfix$$
-	
 	## }}}
 	# Funktion conf_default_menue{{{
-	#######################################
-	# TODO: Hilfe ergaenzen fehlt noch
-	#######################################
 	conf_default_menue() {
 	DEFAULT_MENU=(default_database_type \"\$default_database_type\"
 	default_delivery_slot_cost \"\$default_delivery_slot_cost\"
@@ -76,7 +66,7 @@ default_conf() {
 				conf_default_menue default_database_type
 				;;
 			default_delivery_slot_cost)
-				#{{{
+				# Standard = 5 {{{
 				number_input -i "$default_delivery_slot_cost"
 				if [[ -n $NUMBER ]] ; then
 					default_delivery_slot_cost="$NUMBER"
@@ -86,7 +76,7 @@ default_conf() {
 				conf_default_menue default_delivery_slot_cost
 				;;
 			default_delivery_slot_discount)
-				#{{{
+				# Standard = 50 {{{
 				number_input -i "$default_delivery_slot_discount"
 				if [[ -n $NUMBER ]] ; then
 					default_delivery_slot_discount="$NUMBER"
@@ -96,7 +86,7 @@ default_conf() {
 				conf_default_menue default_delivery_slot_discount
 				;;
 			default_delivery_slot_loan)
-				#{{{
+				# Standard = 3 {{{
 				number_input -i "$default_delivery_slot_loan"
 				if [[ -n $NUMBER ]] ; then
 					default_delivery_slot_loan="$NUMBER"
@@ -106,7 +96,7 @@ default_conf() {
 				conf_default_menue default_delivery_slot_loan
 				;;
 			default_destination_concurrency_failed_cohort_limit)
-				# = 1# {{{
+				# Standard = 1# {{{
 				number_input -i $default_destination_concurrency_failed_cohort_limit
 				if [[ -n $NUMBER ]] ; then
 					default_destination_concurrency_failed_cohort_limit="$NUMBER"
@@ -126,7 +116,7 @@ default_conf() {
 				conf_default_menue default_destination_concurrency_limit
 				;;
 			default_destination_concurrency_negative_feedback)
-				# = 1# {{{
+				# Standard = 1# {{{
 				number_input -i $default_destination_concurrency_negative_feedback
 				if [[ -n $NUMBER ]] ; then
 					default_destination_concurrency_negative_feedback="$NUMBER"
@@ -136,7 +126,7 @@ default_conf() {
 				conf_default_menue default_destination_concurrency_negative_feedback
 				;;
 			default_destination_concurrency_positive_feedback)
-				# = 1# {{{
+				# Standard = 1# {{{
 				number_input -i $default_destination_concurrency_positive_feedback
 				if [[ -n $NUMBER ]] ; then
 					default_destination_concurrency_positive_feedback="$NUMBER"
@@ -146,8 +136,8 @@ default_conf() {
 				conf_default_menue default_destination_concurrency_positive_feedback
 				;;
 			default_destination_rate_delay)
-				# = 0s# {{{
-				number_input -s ${default_destination_rate_delay%?}
+				# Standard = 0s# {{{
+				number_input -a "$DEFAULT_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG" ${default_destination_rate_delay%?}
 				if [[ -n $NUMBER ]] ; then
 					default_destination_rate_delay="$NUMBER"
 					postconf -e default_destination_rate_delay="$NUMBER"
@@ -275,7 +265,7 @@ default_conf() {
 				conf_default_menue default_recipient_limit
 				;;
 			default_recipient_refill_delay)
-				# = 5s# {{{
+				# Standard = 5s# {{{
 				number_input -s ${default_recipient_refill_delay%?}
 				if [[ -n $NUMBER ]] ; then
 					default_recipient_refill_delay="$NUMBER"
@@ -285,7 +275,7 @@ default_conf() {
 				conf_default_menue default_recipient_refill_delay
 				;;
 			default_recipient_refill_limit)
-				# = 100# {{{
+				# Standard = 100# {{{
 				number_input -i $default_recipient_refill_limit
 				if [[ -n $NUMBER ]] ; then
 					default_recipient_refill_limit="$NUMBER"
