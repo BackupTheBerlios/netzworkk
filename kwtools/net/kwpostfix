@@ -89,6 +89,8 @@ SMTPD_ENFORCE_TLS_MSG=$(gettext 'Soll SSL/TLS bei eingehenden Verbindungen erzwu
 SMTPD_USE_TLS_MSG=$(gettext 'Soll dieser Server fuer eingehende Mails SSL/TLS Verschluesselung benutzen (ja/nein)?')
 SMTPD_TLS_ALWAYS_SESSION_ISSUE_IDS_MSG=$(gettext 'Soll der Postfix SMTP Server eine TLS Session ID ausstellen, falls das TLS Session Caching deaktiviert ist (ja/nein)?')
 SMTPD_TLS_ASK_CCERT_MSG=$(gettext 'Soll beim Server explizit nach einem Client Zertifikat nachgefragt werden (ja/nein)?')
+DEFAULT_DESTINATION_RATE_DELAY_MSG=$(gettext 'Geben Sie die Zeit ein nach der jeder Mailzustellung wieder an das gleiche Ziel eine Mail versandt werden darf (Standard ist 0s).'
+ )
 
 MAIL_CONFIG="`postconf -h config_directory &>/dev/null`"
 if [ -z "$MAIL_CONFIG" ] ; then
@@ -593,13 +595,15 @@ default_or_input (){
 	if [[ ${#argv} -ge 2 ]] ; then
 		unset -- Value
 		local OldKey Func FuncOpt NewKey Var
+		set -x
 		OldKey="$1"
 		Func="$2"
-		if [ -n $3 ] ; then
+		if [[ -n $3 ]] ; then
 			FuncOpt="$3"
 		else
 			unset -- FuncOpt
 		fi
+		set +x
 		# Variable 4 pruefen, ob es eine Variable ein Wort oder eine Zahl ist.
 		case "$4" in
 			\$*) unset -- Var
@@ -650,7 +654,7 @@ default_or_input (){
 					;;
 				number_input)
 					# Zahlen Eingabe
-					$Func $FuncOpt $Var
+					$Func ${=FuncOpt} $Var
 					if [[ -n $NUMBER ]] ; then
 						Value="$NUMBER"
 					else
