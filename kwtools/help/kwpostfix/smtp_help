@@ -291,7 +291,8 @@ smtp_tls_exclude_ciphers:
 
 smtp_tls_fingerprint_cert_match:
 
-smtp_tls_fingerprint_digest:
+smtp_tls_fingerprint_digest: Auswahl der Methode zur Berechnung
+\tder Fingerprints der Zertifikate.
 
 smtp_tls_key_file: Datei (RSA) welche das unterschriebene,
 \tunverschluesselte private Zertifikat besitzt.
