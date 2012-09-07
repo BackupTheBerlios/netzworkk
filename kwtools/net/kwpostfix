@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 15.08.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 07.09.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -702,13 +702,13 @@ while [ "$gv_Auswahl" ] ; do
 			# Wie zum Bsp. $data_directory fuer tls_conf und
 			# virtual_conf
 			#####################################################
-			autoload -U default_conf lmtp_conf lock_art mail_conf \
+			autoload -U default_conf lmtp_conf lock_art error_codes_conf mail_conf \
 				main_conf postfix_variable q_conf relay_conf \
 				smtp_conf smtpd_conf tab_support_choice \
 				tls_conf virtual_conf
 			#
 			# Funktion konf_menue{{{
-			CONF_MENU=($lv_Main \"\" $lv_Default \"\"
+			CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
 				$lv_Lmtp \"\" $lv_Mail \"\"
 			   	$lv_Queue \"\" $lv_Relay \"\" $lv_Smtp \"\"
 				$lv_Smtpd \"\" $lv_Tls \"\" $lv_Virtual \"\"
