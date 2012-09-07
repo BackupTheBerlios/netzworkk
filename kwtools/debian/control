@@ -194,7 +194,7 @@ Priority: optional
 Architecture: all
 Section: net
 Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), postfix (>=2.9), zsh (>= 4.2.0)
-Suggests: kwtools-bin, postfix-ldap, postfix-mysql, postfix-pgsql, postfix-pcre, sudo
+Suggests: kwtools-bin, postfix-ldap, postfix-mysql, postfix-pcre, postfix-pgsql, sudo
 Description: Network script kwpostfix
  Includes a script which enables management of MTA postfix.
  .
