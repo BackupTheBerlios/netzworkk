@@ -8,15 +8,10 @@ mail_conf() {
 MAIL_TITLE="${gv_Configuration}::${lv_Mail}"
 
 # Bestehende Konfiguration einlesen# {{{
-#########################################
-# TODO: mailbox_command checken
-#########################################
 print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(mail_|mailbox_)*} | \
 	sed -e 's#\"#\\\"#g ; s# = #="#g ; s# =#="#g ;
 	s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
-# Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
-mailbox_command="${${mailbox_command//\"/\\\"}//\$/\\\$}"
 rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 ## }}}
 # Funktion (conf_mail_menue), Parameter fuer alles was mit mail anfaengt{{{
@@ -82,13 +77,14 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		mailbox_command)
 			# Mailbox Kommando{{{
+			# U_OPT wird benoetigt von der Funktion return_check.
 			U_OPT=hk
-			MAILBOX_CMD_MSG=$(gettext 'Geben Sie ein Kommando fuer Mailboxen an (Bsp. /usr/bin/procmail -t -a '"${EXTENSION}"').')
-			inputbox "$MAIL_TITLE" "$MAILBOX_CMD_MSG" "$mailbox_command"
-			if [ "$gv_Auswahl" ] ; then
-				# Quoten von ´"´ und ´$´ - wird zur Darstellung mittels dialog benoetigt.
-				mailbox_command="${${${gv_Auswahl//\\/}//\"/\\\"}//\$/\\\$}"
-				postconf -e mailbox_command="${gv_Auswahl//\\/}"
+			#
+			MAILBOX_CMD_MSG=$(gettext 'Geben Sie ein Kommando ein dass fuer die Einlieferung in die lokalen Mailboxen an (Bsp. /usr/bin/procmail -t -a \"\$EXTENSION\").')
+			inputbox "$MAIL_TITLE" "$MAILBOX_CMD_MSG" "${${mailbox_command//\"/\\\"}//\$/\\\$}"
+			if [[ -n $gv_Auswahl ]] ; then
+				mailbox_command="$gv_Auswahl"
+				postconf -e mailbox_command="$gv_Auswahl"
 			else
 				mailbox_command=""
 				postconf -e mailbox_command=""

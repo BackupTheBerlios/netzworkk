@@ -14,11 +14,6 @@ print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)q*} | \
 read_file -f ${gv_WorkDir}/postfix$$
 rm -rf ${gv_WorkDir}/postfix$$ &>/dev/null
 
-##############################################
-# OLD
-#postconf -c $MAIL_CONFIG | grep '^q' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
-##############################################
-
 ## }}}
 # Funktion conf_queue_menue{{{
 conf_queue_menue() {
@@ -54,7 +49,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_queue_menue
 			;;
 		qmgr_clog_warn_time)
-			#{{{
+			# Standard = 300s{{{
 			number_input -s "${qmgr_clog_warn_time%?}"
 			if [[ -n $NUMBER ]] ; then
 				qmgr_clog_warn_time="$NUMBER"
@@ -64,8 +59,9 @@ while [ "$gv_Auswahl" ] ; do
 			conf_queue_menue qmgr_clog_warn_time
 			;;
 		qmgr_daemon_timeout)
-			#{{{
-			number_input -s "${qmgr_daemon_timeout%?}"
+			# Standard = 1000s{{{
+			QMGR_DAEMON_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout des Postfix Queue Manager Daemon zum behandeln einer Anforderung ein (Standard ist 1000s). Siehe Hilfe.')
+			number_input -a "$QUEUE_TITLE" "$QMGR_DAEMON_TIMEOUT_MSG" "${qmgr_daemon_timeout%?}"
 			if [[ -n $NUMBER ]] ; then
 				qmgr_daemon_timeout="$NUMBER"
 				postconf -e qmgr_daemon_timeout="$NUMBER"
@@ -84,8 +80,9 @@ while [ "$gv_Auswahl" ] ; do
 			conf_queue_menue qmgr_fudge_factor
 			;;
 		qmgr_ipc_timeout)
-			#{{{
-			number_input -s "${qmgr_ipc_timeout%?}"
+			# Standard = 60s{{{
+			QMGR_IPC_TIMEOUT_MSG=$(gettext 'Geben Sie das Zeitlimit fuer den Queue-Manager beim erhalten oder senden bei Informationen ueber einen internen Kanal ein (Standard ist 60s). Siehe Hilfe.')
+			number_input -a "$QUEUE_TITLE" "$QMGR_IPC_TIMEOUT_MSG" "${qmgr_ipc_timeout%?}"
 			if [[ -n $NUMBER ]] ; then
 				qmgr_ipc_timeout="$NUMBER"
 				postconf -e qmgr_ipc_timeout="$NUMBER"
@@ -126,7 +123,7 @@ while [ "$gv_Auswahl" ] ; do
 		qmqpd_authorized_clients)
 			# Welche clients duerfen mit dem qmail Protokoll{{{
 			# postfix kontakten.
-			QMAIL_CLIENTS_MSG=$(gettext 'Geben Sie die Rechner oder IP-Adressen ein, die das Qmail-Protokoll (QMQP) nutzen duerfen.')
+			QMAIL_CLIENTS_MSG=$(gettext 'Geben Sie die Rechner oder IP-Adressen ein, die das Qmail-Protokoll (QMQP) nutzen duerfen. Siehe Hilfe.')
 			inputbox "$QUEUE_TITLE" "$QMAIL_CLIENTS_MSG" "$qmqpd_authorized_clients"
 			if [[ -n $gv_Auswahl ]] ; then
 				# Alle eingebenen IP's ueberpruefen
@@ -146,9 +143,6 @@ while [ "$gv_Auswahl" ] ; do
 			conf_queue_menue qmqpd_authorized_clients
 			;;
 		qmqpd_client_port_logging)
-			########################################
-			# TODO: nachlesen
-			########################################
 			# Port der Qmail Clients loggen (yes/no)?# {{{
 			QMAIL_CLIENT_LOG_MSG=$(gettext 'Sollen die Ports der clients geloggt werden (ja/nein)?')
 			yesno "$QUEUE_TITLE" "$QMAIL_CLIENT_LOG_MSG"
