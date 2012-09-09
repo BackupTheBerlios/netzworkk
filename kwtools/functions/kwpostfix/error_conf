@@ -13,27 +13,6 @@ error_conf() {
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
 	# Funktion (conf_error_menu), die Fehler-Parameter einstellen# {{{
-	##############################################
-	# TODO: Hilfe fehlt
-	##############################################
-	# error_delivery_slot_cost = $default_delivery_slot_cost
-	# error_delivery_slot_discount = $default_delivery_slot_discount
-	# error_delivery_slot_loan = $default_delivery_slot_loan
-	# error_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
-	# error_destination_concurrency_limit = $default_destination_concurrency_limit
-	# error_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
-	# error_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
-	# error_destination_rate_delay = $default_destination_rate_delay
-	# error_destination_recipient_limit = $default_destination_recipient_limit
-	# error_extra_recipient_limit = $default_extra_recipient_limit
-	# error_initial_destination_concurrency = $initial_destination_concurrency
-	# error_minimum_delivery_slots = $default_minimum_delivery_slots
-	# error_notice_recipient = postmaster
-	# error_recipient_limit = $default_recipient_limit
-	# error_recipient_refill_delay = $default_recipient_refill_delay
-	# error_recipient_refill_limit = $default_recipient_refill_limit
-	# error_time_limit = $command_time_limit
-	##############################################
 	conf_error_menu() {
 		ERROR_MENU=(error_delivery_slot_cost \"\$error_delivery_slot_cost\"
 		error_delivery_slot_discount \"\$error_delivery_slot_discount\"
@@ -68,7 +47,7 @@ error_conf() {
 				conf_error_menu
 				;;
 			error_delivery_slot_cost)
-				# = $default_delivery_slot_cost# {{{
+				# Standard = $default_delivery_slot_cost# {{{
 				default_or_input error_delivery_slot_cost number_input -i $error_delivery_slot_cost
 				if [[ -n $Value ]] ; then
 					error_delivery_slot_cost="$Value"
@@ -78,7 +57,7 @@ error_conf() {
 				conf_error_menu error_delivery_slot_cost
 				;;
 			error_delivery_slot_discount)
-				# = $default_delivery_slot_discount# {{{
+				# Standard = $default_delivery_slot_discount# {{{
 				default_or_input error_delivery_slot_discount number_input -i $error_delivery_slot_discount
 				if [[ -n $Value ]] ; then
 					error_delivery_slot_discount="$Value"
@@ -88,7 +67,7 @@ error_conf() {
 				conf_error_menu error_delivery_slot_discount
 				;;
 			error_delivery_slot_loan)
-				# = $default_delivery_slot_loan# {{{
+				# Standard = $default_delivery_slot_loan# {{{
 				default_or_input error_delivery_slot_loan number_input -i $error_delivery_slot_loan
 				if [[ -n $Value ]] ; then
 					error_delivery_slot_loan="$Value"
@@ -98,7 +77,7 @@ error_conf() {
 				conf_error_menu error_delivery_slot_loan
 				;;
 			error_destination_concurrency_failed_cohort_limit)
-				# = $default_destination_concurrency_failed_cohort_limit# {{{
+				# Standard = $default_destination_concurrency_failed_cohort_limit# {{{
 				default_or_input error_destination_concurrency_failed_cohort_limit number_input -i $error_destination_concurrency_failed_cohort_limit
 				if [[ -n $Value ]] ; then
 					error_destination_concurrency_failed_cohort_limit="$Value"
@@ -108,7 +87,7 @@ error_conf() {
 				conf_error_menu error_destination_concurrency_failed_cohort_limit
 				;;
 			error_destination_concurrency_limit)
-				# = $default_destination_concurrency_limit# {{{
+				# Standard = $default_destination_concurrency_limit# {{{
 				default_or_input error_destination_concurrency_limit number_input -i $error_destination_concurrency_limit
 				if [[ -n $Value ]] ; then
 					error_destination_concurrency_limit="$Value"
@@ -118,7 +97,7 @@ error_conf() {
 				conf_error_menu error_destination_concurrency_limit
 				;;
 			error_destination_concurrency_negative_feedback)
-				# = $default_destination_concurrency_negative_feedback# {{{
+				# Standard = $default_destination_concurrency_negative_feedback# {{{
 				default_or_input error_destination_concurrency_negative_feedback number_input -i $error_destination_concurrency_negative_feedback
 				if [[ -n $Value ]] ; then
 					error_destination_concurrency_negative_feedback="$Value"
@@ -128,7 +107,7 @@ error_conf() {
 				conf_error_menu error_destination_concurrency_negative_feedback
 				;;
 			error_destination_concurrency_positive_feedback)
-				# = $default_destination_concurrency_positive_feedback# {{{
+				# Standard = $default_destination_concurrency_positive_feedback# {{{
 				default_or_input error_destination_concurrency_positive_feedback number_input -i $error_destination_concurrency_positive_feedback
 				if [[ -n $Value ]] ; then
 					error_destination_concurrency_positive_feedback="$Value"
@@ -138,8 +117,8 @@ error_conf() {
 				conf_error_menu error_destination_concurrency_positive_feedback
 				;;
 			error_destination_rate_delay)
-				# = $default_destination_rate_delay# {{{
-				default_or_input error_destination_rate_delay number_input -s ${error_destination_rate_delay%?}
+				# Standard = $default_destination_rate_delay# {{{
+				default_or_input error_destination_rate_delay number_input '-a "$ERROR_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' ${error_destination_rate_delay%?}
 				if [[ -n $Value ]] ; then
 					error_destination_rate_delay="$Value"
 					postconf -e error_destination_rate_delay="$Value"
@@ -148,7 +127,7 @@ error_conf() {
 				conf_error_menu error_destination_rate_delay
 				;;
 			error_destination_recipient_limit)
-				# = $default_destination_recipient_limit# {{{
+				# Standard = $default_destination_recipient_limit# {{{
 				default_or_input error_destination_recipient_limit number_input -i $error_destination_recipient_limit
 				if [[ -n $Value ]] ; then
 					error_destination_recipient_limit="$Value"
@@ -158,7 +137,7 @@ error_conf() {
 				conf_error_menu error_destination_recipient_limit
 				;;
 			error_extra_recipient_limit)
-				# = $default_extra_recipient_limit# {{{
+				# Standard = $default_extra_recipient_limit# {{{
 				default_or_input error_extra_recipient_limit number_input -i $error_extra_recipient_limit
 				if [[ -n $Value ]] ; then
 					error_extra_recipient_limit="$Value"
@@ -168,7 +147,7 @@ error_conf() {
 				conf_error_menu error_extra_recipient_limit
 				;;
 			error_initial_destination_concurrency)
-				# = $initial_destination_concurrency# {{{
+				# Standard = $initial_destination_concurrency# {{{
 				default_or_input error_initial_destination_concurrency number_input -i $error_initial_destination_concurrency
 				if [[ -n $Value ]] ; then
 					error_initial_destination_concurrency="$Value"
@@ -178,7 +157,7 @@ error_conf() {
 				conf_error_menu error_initial_destination_concurrency
 				;;
 			error_minimum_delivery_slots)
-				# = $default_minimum_delivery_slots# {{{
+				# Standard = $default_minimum_delivery_slots# {{{
 				default_or_input error_minimum_delivery_slots number_input -i $error_minimum_delivery_slots
 				if [[ -n $Value ]] ; then
 					error_minimum_delivery_slots="$Value"
@@ -188,7 +167,7 @@ error_conf() {
 				conf_error_menu error_minimum_delivery_slots
 				;;
 			error_notice_recipient)
-				# = postmaster# {{{
+				# Standard = postmaster# {{{
 				ERR_NOTICE_MSG=$(gettext 'Geben Sie bitte einen Benutzer ein, an dem eine Mail geschickt werden soll wenn es zu Fehlern kommt.')
 				inputbox "$gv_Configuration" "$ERR_NOTICE_MSG" $error_notice_recipient
 				if [[ -n $gv_Auswahl ]] ; then
@@ -202,7 +181,7 @@ error_conf() {
 				conf_error_menu error_notice_recipient
 				;;
 			error_recipient_limit)
-				# = $default_recipient_limit# {{{
+				# Standard = $default_recipient_limit# {{{
 				default_or_input error_recipient_limit number_input -i $error_recipient_limit
 				if [[ -n $Value ]] ; then
 					error_recipient_limit="$Value"
@@ -212,7 +191,7 @@ error_conf() {
 				conf_error_menu error_recipient_limit
 				;;
 			error_recipient_refill_delay)
-				# = $default_recipient_refill_delay# {{{
+				# Standard = $default_recipient_refill_delay# {{{
 				default_or_input error_recipient_refill_delay number_input -s ${error_recipient_refill_delay%?}
 				if [[ -n $Value ]] ; then
 					error_recipient_refill_delay="$Value"
@@ -222,7 +201,7 @@ error_conf() {
 				conf_error_menu error_recipient_refill_delay
 				;;
 			error_recipient_refill_limit)
-				# = $default_recipient_refill_limit# {{{
+				# Standard = $default_recipient_refill_limit# {{{
 				default_or_input error_recipient_refill_limit number_input -i $error_recipient_refill_limit
 				if [[ -n $Value ]] ; then
 					error_recipient_refill_limit="$Value"

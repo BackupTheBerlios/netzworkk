@@ -13,26 +13,6 @@ bsmtp_conf() {
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
 	# Funktion (conf_bsmtp_menu), die Bsmtp-Parameter einstellen# {{{
-	##############################################
-	# TODO: Hilfe fehlt
-	##############################################
-	# bsmtp_delivery_slot_cost = $default_delivery_slot_cost
-	# bsmtp_delivery_slot_discount = $default_delivery_slot_discount
-	# bsmtp_delivery_slot_loan = $default_delivery_slot_loan
-	# bsmtp_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
-	# bsmtp_destination_concurrency_limit = $default_destination_concurrency_limit
-	# bsmtp_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
-	# bsmtp_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
-	# bsmtp_destination_rate_delay = $default_destination_rate_delay
-	# bsmtp_destination_recipient_limit = $default_destination_recipient_limit
-	# bsmtp_extra_recipient_limit = $default_extra_recipient_limit
-	# bsmtp_initial_destination_concurrency = $initial_destination_concurrency
-	# bsmtp_minimum_delivery_slots = $default_minimum_delivery_slots
-	# bsmtp_recipient_limit = $default_recipient_limit
-	# bsmtp_recipient_refill_delay = $default_recipient_refill_delay
-	# bsmtp_recipient_refill_limit = $default_recipient_refill_limit
-	# bsmtp_time_limit = $command_time_limit
-	##############################################
 	conf_bsmtp_menu() {
 		BSMTP_MENU=(bsmtp_delivery_slot_cost \"\$bsmtp_delivery_slot_cost\"
 		bsmtp_delivery_slot_discount \"\$bsmtp_delivery_slot_discount\"
@@ -137,7 +117,7 @@ bsmtp_conf() {
 				;;
 			bsmtp_destination_rate_delay)
 				# = $default_destination_rate_delay# {{{
-				default_or_input bsmtp_destination_rate_delay number_input -s ${bsmtp_destination_rate_delay%?}
+				default_or_input bsmtp_destination_rate_delay number_input '-a "$BSMTP_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' ${bsmtp_destination_rate_delay%?}
 				if [[ -n $Value ]] ; then
 					bsmtp_destination_rate_delay="$Value"
 					postconf -e bsmtp_destination_rate_delay="$Value"

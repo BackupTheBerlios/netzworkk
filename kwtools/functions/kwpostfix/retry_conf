@@ -13,26 +13,6 @@ retry_conf() {
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
 	# Funktion (conf_retry_menu), die Wiederholungs-Parameter einstellen# {{{
-	##############################################
-	# TODO: Hilfe fehlt
-	##############################################
-	# retry_delivery_slot_cost = $default_delivery_slot_cost
-	# retry_delivery_slot_discount = $default_delivery_slot_discount
-	# retry_delivery_slot_loan = $default_delivery_slot_loan
-	# retry_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
-	# retry_destination_concurrency_limit = $default_destination_concurrency_limit
-	# retry_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
-	# retry_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
-	# retry_destination_rate_delay = $default_destination_rate_delay
-	# retry_destination_recipient_limit = $default_destination_recipient_limit
-	# retry_extra_recipient_limit = $default_extra_recipient_limit
-	# retry_initial_destination_concurrency = $initial_destination_concurrency
-	# retry_minimum_delivery_slots = $default_minimum_delivery_slots
-	# retry_recipient_limit = $default_recipient_limit
-	# retry_recipient_refill_delay = $default_recipient_refill_delay
-	# retry_recipient_refill_limit = $default_recipient_refill_limit
-	# transport_retry_time = 60s
-	##############################################
 	conf_retry_menu() {
 		RETRY_MENU=(retry_delivery_slot_cost \"\$retry_delivery_slot_cost\"
 		retry_delivery_slot_discount \"\$retry_delivery_slot_discount\"
@@ -137,7 +117,7 @@ retry_conf() {
 				;;
 			retry_destination_rate_delay)
 				# = $default_destination_rate_delay# {{{
-				default_or_input retry_destination_rate_delay number_input -s ${retry_destination_rate_delay%?}
+				default_or_input retry_destination_rate_delay number_input '-a "$RETRY_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' ${retry_destination_rate_delay%?}
 				if [[ -n $Value ]] ; then
 					retry_destination_rate_delay="$Value"
 					postconf -e retry_destination_rate_delay="$Value"
