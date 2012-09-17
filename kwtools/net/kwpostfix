@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 09.09.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.09.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -595,7 +595,6 @@ default_or_input (){
 	if [[ ${#argv} -ge 2 ]] ; then
 		unset -- Value
 		local OldKey Func FuncOpt NewKey Var
-		set -x
 		OldKey="$1"
 		Func="$2"
 		if [[ -n $3 ]] ; then
@@ -603,7 +602,6 @@ default_or_input (){
 		else
 			unset -- FuncOpt
 		fi
-		set +x
 		# Variable 4 pruefen, ob es eine Variable ein Wort oder eine Zahl ist.
 		case "$4" in
 			\$*) unset -- Var
