@@ -104,6 +104,12 @@ smtpd_forbidden_commands: Geben Sie die Kommandos ein in welchen
 
 smtpd_hard_error_limit: Anzahl der Fehler in einer SMTP-Sitzung,
 \tnach der Postfix die Verbindung abbricht.
+\tStandard ist 20 oder
+\tStandard ist ${stress?1}${stress:20}.
+
+NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_hard_error_limit\"
+\tbei Stress auf 1 gesetzt wird und nicht der konfigurierte Wert von
+\t20 benutzt werden soll. 
 
 smtpd_helo_required: Muss ein Client das Kommando HELO senden
 \t(ja/nein)?
@@ -113,8 +119,14 @@ smtpd_helo_restrictions: Restrictions-Pruefungen nach dem HELO
 
 smtpd_history_flush_threshold: maximale Kommandos zum debuggen.
 
-smtpd_junk_command_limit: maximale Muell-Kommandos, um Verbindungen
-\toffen zu halten. 
+smtpd_junk_command_limit: maximale Anzahl an Muell-Kommandos, um
+\tVerbindungen offen zu halten. 
+\tStandard ist 100 oder
+\tStandard ist ${stress?1}${stress:100}.
+
+NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_junk_command_limit\"
+\tbei Stress auf 1 gesetzt wird und nicht der konfigurierte Wert von
+\t100 benutzt werden soll. 
 
 smtpd_milters:
 
@@ -133,7 +145,15 @@ smtpd_peername_lookup: Soll Postfix den Reverse-Lookup des Clients
 \taufloesen oder nicht (ja/nein)?
 \tStandard ist ja.
 
-smtpd_per_record_deadline:
+smtpd_per_record_deadline: Schaltet das Verhalten von
+\t\"smtpd_timeout\" vom Zeitlimit fuer das Lesen oder Schreiben auf
+\tdas Senden oder Erhalten von kompletten Mails einer Verbindung.
+\tStandard ist no oder
+\tStandard ist ${stress?yes}${stress:no}.
+
+NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_per_record_deadline\"
+\tbei Stress auf \"yes\" gesetzt wird und nicht der konfigurierte
+\tWert von \"no\" benutzt werden soll. 
 
 smtpd_policy_service_max_idle: Zeit bevor eine unbenutzte Verbindung
 \tvon einem Policy clienten geschlossen wird (Standard: 300s).
@@ -180,7 +200,7 @@ smtpd_reject_unlisted_sender: Soll der SMTP Server Mails mit unbe-
 \tungen spezifiert sind.
 \tStandard ist nein.
 
-smtpd_restriction_classes: defeniert Restrictionsclasses.
+smtpd_restriction_classes: Defeniert Restrictions Classes.
 
 smtpd_sasl_auth_enable: Soll SMTP-Auth auch bei eingehenden
 \tVerbindungen aktiviert werden (ja/nein)?
@@ -219,11 +239,24 @@ smtpd_sender_restrictions: Restrictions nach dem SMTP-Envelope Sender.
 smtpd_soft_error_limit: Anzahl der Fehler in einer SMTP-Sitzung,
 \tnach der Postfix eine Sonderwartezeit einlegt.
 
-smtpd_starttls_timeout: Timeout, zum lesen und schreiben waehrend TLS
-\tgestartet wird.
+smtpd_starttls_timeout: Timeout in Sekunden, zum lesen und schreiben
+\twaehrend TLS gestartet wird.
+\tStandard ist 300s oder
+\tStandard ist ${stress?10}${stress:300}s.
 
-smtpd_timeout: Timeout der Inaktivitaet, nachdem smtpd eine Verbindung
-\tabbricht.
+NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_starttls_timeout\"
+\tbei Stress auf 10s gesetzt wird und nicht der konfigurierte Wert
+\tvon 300s benutzt werden soll. 
+
+smtpd_timeout: Timeout der Inaktivitaet, nachdem smtpd eine
+\tVerbindung abbricht. Zur Auswahl stehen die Suffixe s=Sekunde,
+\tm=Minute, h=Stunde, d=Tag und w=Woche.
+\tStandard ist 300s oder
+\tStandard ist ${stress?10}${stress:300}s.
+
+NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_timeout\" bei
+\tStress auf 10s gesetzt wird und nicht der konfigurierte Wert von
+\t300s benutzt werden soll. 
 
 smtpd_tls_CAfile: Auswahl der Datei mit den CAs denen dieser 
 \tServer vertraut, fuer die Signatur von Clientzertifikaten. 

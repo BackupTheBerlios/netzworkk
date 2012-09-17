@@ -11,15 +11,6 @@ smtpd_conf() {
 	# Variable
 	SMTPD_TITLE="${gv_Configuration}::${lv_Smtpd}"
 
-	####################################
-	# Old
-	####################################
-#	postconf -c $MAIL_CONFIG | grep '^smtpd_' | sed -e 's#"#\\\"#g ; s# = #="# ;
-#		s#$#"# ; s#&#\\\&#g ; s#`#\\\`#g ;
-#		s#\$#\\\$#g ; s#,\t.# #g' | sed -e "s#'#\\\'#g" >${gv_WorkDir}/postfix$$
-#	read_file -f ${gv_WorkDir}/postfix$$
-#	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-#
 	# Funktion (sasl_types), unterstuetzte SASL Types# {{{
 	sasl_types() {
 		#unset -- Sasl_Types Tmp
@@ -64,40 +55,14 @@ smtpd_conf() {
 	## }}}
 	# Funktion conf_smtpd_menue{{{
 	#######################################
-	# TODO: Hilfe etc. vorbereitet, nur noch
-	# menue (einige)
-	#
-	### smtpd_service_name = smtpd - wird nicht genommen
-	#
+	# TODO: folgende Einstellmoeglichkeiten
+	# und Hilfen sind noch nicht fertig.
 	#######################################
-	# smtpd_client_new_tls_session_rate_limit = 0 - ok
-	# smtpd_client_port_logging = no - ok
-	# smtpd_command_filter = - ok
-	# smtpd_delay_open_until_valid_rcpt = yes - ok
-	#
 	# smtpd_milters =
 	# non_smtpd_milters =
-	#
-	# smtpd_peername_lookup = yes - ok
-	#
-	# smtpd_per_record_deadline = ${stress?yes}${stress:no}
 	# smtpd_reject_footer =
 	# smtpd_restriction_classes =
-	#
-	# smtpd_sasl_authenticated_header = no - ok
-	# smtpd_sasl_path = smtpd - ok
-	# smtpd_sasl_type = cyrus - ok
-	# smtpd_tls_always_issue_session_ids = yes - ok
-	# smtpd_tls_eccert_file = - ok
-	# smtpd_tls_eckey_file = $smtpd_tls_eccert_file - ok
-	# smtpd_tls_eecdh_grade = strong - ok
-	# smtpd_tls_exclude_ciphers = - ok
-	# smtpd_tls_fingerprint_digest = md5 - ok
-	# smtpd_tls_mandatory_ciphers = medium - ok
-	# smtpd_tls_mandatory_exclude_ciphers = - ok
-	# smtpd_tls_mandatory_protocols = SSLv3, TLSv1 - ok
-	# smtpd_tls_protocols = - ok
-	# smtpd_tls_security_level = - ok
+	#######################################
 	conf_smtpd_menue() {
 	SMTPD_MENU=(smtpd_authorized_verp_clients \"\$smtpd_authorized_verp_clients\"
 	smtpd_authorized_xclient_hosts \"\$smtpd_authorized_xclient_hosts\"
@@ -127,9 +92,12 @@ smtpd_conf() {
 	smtpd_helo_restrictions \"\$smtpd_helo_restrictions \"
 	smtpd_history_flush_threshold \"\$smtpd_history_flush_threshold\"
 	smtpd_junk_command_limit \"\$smtpd_junk_command_limit\"
+	smtpd_milters \"\$smtpd_milters\"
+	non_smtpd_milters \"\$non_smtpd_milters\"
 	smtpd_noop_commands  \"\$smtpd_noop_commands \"
 	smtpd_null_access_lookup_key \"\$smtpd_null_access_lookup_key\"
 	smtpd_peername_lookup \"\$smtpd_peername_lookup\"
+	smtpd_per_record_deadline \"\$smtpd_per_record_deadline\"
 	smtpd_policy_service_max_idle \"\$smtpd_policy_service_max_idle\"
 	smtpd_policy_service_max_ttl \"\$smtpd_policy_service_max_ttl\"
 	smtpd_policy_service_timeout \"\$smtpd_policy_service_timeout\"
@@ -139,6 +107,7 @@ smtpd_conf() {
 	smtpd_recipient_limit \"\$smtpd_recipient_limit\"
 	smtpd_recipient_overshoot_limit \"\$smtpd_recipient_overshoot_limit\"
 	smtpd_recipient_restrictions \"\$smtpd_recipient_restrictions\"
+	smtpd_reject_footer \"\$smtpd_reject_footer\"
 	smtpd_reject_unlisted_recipient \"\$smtpd_reject_unlisted_recipient\"
 	smtpd_reject_unlisted_sender \"\$smtpd_reject_unlisted_sender\"
 	smtpd_restriction_classes \"\$smtpd_restriction_classes \"
@@ -450,11 +419,13 @@ smtpd_conf() {
 				;;
 			smtpd_hard_error_limit)
 				# Anzahl der Fehler in einer SMTP Sitzung nach der{{{
-				# postfix abbricht.
-				number_input -i "$smtpd_hard_error_limit"
-				if [ "$NUMBER" ] ; then
-					smtpd_hard_error_limit="$NUMBER"
-					postconf -e smtpd_hard_error_limit="$NUMBER"
+				# Postfix abbricht.
+				# Standard ist 20.
+				SMTPD_HARD_ERROR_LIMIT_MSG=$(gettext 'Geben Sie die Anzahl an Fehlern ein, nach der Postfix eine SMTP-Sitzung abbrechen soll (Bsp.: 20 oder \${stress?1}\${stress:20}).')
+				inputbox "$SMTPD_TITLE" "$SMTPD_HARD_ERROR_LIMIT_MSG" "${smtpd_hard_error_limit//\$/\\\$}"
+				if [[ -n $gv_Auswahl ]] ; then
+					smtpd_hard_error_limit="${gv_Auswahl//$/\$}"
+					postconf -e smtpd_hard_error_limit="${gv_Auswahl//$/\$}"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_hard_error_limit
@@ -486,20 +457,24 @@ smtpd_conf() {
 				;;
 			smtpd_junk_command_limit)
 				# Muellkommandos, um Verbindungen offen zu halten/maximal{{{
-				number_input -i "$smtpd_junk_command_limit"
-				if [ "$NUMBER" ] ; then
-					smtpd_junk_command_limit="$NUMBER"
-					postconf -e smtpd_junk_command_limit="$NUMBER"
+				# Standard ist 100.
+				SMTPD_JUNK_COMMAND_LIMIT_MSG=$(gettext 'Geben Sie die maximale Anzahl an Muellkomandos ein um eine Verbindung offen zu halten (Bsp.: 100 oder \${stress?1}\${stress:100}).')
+				inputbox "$SMTPD_TITLE" "$SMTPD_JUNK_COMMAND_LIMIT_MSG" "${smtpd_junk_command_limit//\$/\\\$}"
+				if [[ -n $gv_Auswahl ]] ; then
+					smtpd_junk_command_limit="${gv_Auswahl//$/\$}"
+					postconf -e smtpd_junk_command_limit="${gv_Auswahl//$/\$}"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_junk_command_limit
 				;;
 			smtpd_milters)
-				# =
+				# Standard =
+				hier_ist_noch_nichts smtpd_milters
 				conf_smtpd_menue smtpd_milters
 				;;
 			non_smtpd_milters)
-				# =
+				# Standard =
+				hier_ist_noch_nichts non_smtpd_milters
 				conf_smtpd_menue non_smtpd_milters
 				;;
 			smtpd_noop_commands)
@@ -542,7 +517,15 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_peername_lookup
 				;;
 			smtpd_per_record_deadline)
-				# = ${stress?yes}${stress:no}
+				# Verhalten von smtpd_timeout einstellen.# {{{
+				# Standard = ${stress?yes}${stress:no}
+				SMTPD_PER_RECORD_DEADLINE_MSG=$(gettext 'Soll das Verhalten von \"smtpd_timeout\" vom Zeitlimit fuer das Lesen oder Schreiben auf fuer das Senden oder Erhalten von kompletten Mails, einer Verbindung, gesetzt werden (Bsp.: no oder \${stress?yes}\${stress:no})?')
+				inputbox "$SMTPD_TITLE" "$SMTPD_PER_RECORD_DEADLINE_MSG" "${smtpd_per_record_deadline//\$/\\\$}"
+				if [[ -n $gv_Auswahl ]] ; then
+					smtpd_per_record_deadline="${gv_Auswahl//$/\$}"
+					postconf -e smtpd_per_record_deadline="${gv_Auswahl//$/\$}"
+				fi
+				## }}}
 				conf_smtpd_menue smtpd_per_record_deadline
 				;;
 			smtpd_policy_service_max_idle)
@@ -651,7 +634,8 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_recipient_restrictions
 				;;
 			smtpd_reject_footer)
-				# =
+				# Standard =
+				hier_ist_noch_nichts smtpd_reject_footer
 				conf_smtpd_menue smtpd_reject_footer
 				;;
 			smtpd_reject_unlisted_recipient)
@@ -673,8 +657,9 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_reject_unlisted_sender
 				;;
 			smtpd_restriction_classes)
-				# Definiert Restriktionen Classen =
-				#
+				# Standard =
+				# definiert Restrictionen Classen
+				hier_ist_noch_nichts smtpd_restriction_classes
 				conf_smtpd_menue smtpd_restriction_classes
 				;;
 			smtpd_sasl_auth_enable)
@@ -802,21 +787,25 @@ smtpd_conf() {
 			smtpd_starttls_timeout)
 				# Timeout zwischen lesen und schreiben, whaerend TLS{{{
 				# startet.
-				number_input -s "${smtpd_starttls_timeout%?}"
-				if [ "$NUMBER" ] ; then
-					smtpd_starttls_timeout="$NUMBER"
-					postconf -e smtpd_starttls_timeout="$NUMBER"
+				# Standard ist 300s
+				SMTPD_STARTTLS_MSG=$(gettext 'Geben Sie den Timeout zwischen lesen und schreiben, waehrend TLS startet, ein (Bsp.: 300s oder \${stress?10}\${stress:300}s).')
+				inputbox "$SMTPD_TITLE" "$SMTPD_STARTTLS_MSG" "${smtpd_starttls_timeout//\$/\\\$}"
+				if [[ -n $gv_Auswahl ]] ; then
+					smtpd_starttls_timeout="${gv_Auswahl//$/\$}"
+					postconf -e smtpd_starttls_timeout="${gv_Auswahl//$/\$}"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_starttls_timeout
 				;;
 			smtpd_timeout)
-				# Timeout der Inaktivitaet. nach dem smtpd eine Verbindung{{{
+				# Timeout der Inaktivitaet nach dem smtpd eine Verbindung{{{
 				# abbricht
-				number_input -s "${smtpd_timeout%?}"
-				if [ "$NUMBER" ] ; then
-					smtpd_timeout="$NUMBER"
-					postconf -e smtpd_timeout="$NUMBER"
+				# Standard ist 300s
+				SMTPD_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout bei Inaktivitaet ein, nach dem \"smtpd\" eine Verbindung abbricht (Bsp.: 300s oder \${stress?10}\${stress:300}s).')
+				inputbox "$SMTPD_TITLE" "$SMTPD_TIMEOUT_MSG" "${smtpd_timeout//\$/\\\$}"
+				if [[ -n $gv_Auswahl ]] ; then
+					smtpd_timeout="${gv_Auswahl//$/\$}"
+					postconf -e smtpd_timeout="${gv_Auswahl//$/\$}"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_timeout
