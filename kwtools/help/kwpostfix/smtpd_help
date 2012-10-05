@@ -85,7 +85,7 @@ smtpd_enforce_tls: Soll SSL/TLS bei eingehenden Verbindungen
 \tStandard ist nein.
 
 NOTIZ: Seit Version Postfix 2.3 sollten Sie besser den Wert von
-\t\"smtpd_tls_security_level\" einstellen.
+\t"smtpd_tls_security_level" einstellen.
 
 smtpd_error_sleep_time: Anzahl in Sekunden vor der Angabe eines SMTP
 \tFehlercodes.
@@ -107,7 +107,7 @@ smtpd_hard_error_limit: Anzahl der Fehler in einer SMTP-Sitzung,
 \tStandard ist 20 oder
 \tStandard ist ${stress?1}${stress:20}.
 
-NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_hard_error_limit\"
+NOTIZ: Zeile 2, von Standard, bedeutet das "smtpd_hard_error_limit"
 \tbei Stress auf 1 gesetzt wird und nicht der konfigurierte Wert von
 \t20 benutzt werden soll. 
 
@@ -124,7 +124,7 @@ smtpd_junk_command_limit: maximale Anzahl an Muell-Kommandos, um
 \tStandard ist 100 oder
 \tStandard ist ${stress?1}${stress:100}.
 
-NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_junk_command_limit\"
+NOTIZ: Zeile 2, von Standard, bedeutet das "smtpd_junk_command_limit"
 \tbei Stress auf 1 gesetzt wird und nicht der konfigurierte Wert von
 \t100 benutzt werden soll. 
 
@@ -146,14 +146,14 @@ smtpd_peername_lookup: Soll Postfix den Reverse-Lookup des Clients
 \tStandard ist ja.
 
 smtpd_per_record_deadline: Schaltet das Verhalten von
-\t\"smtpd_timeout\" vom Zeitlimit fuer das Lesen oder Schreiben auf
+\t"smtpd_timeout" vom Zeitlimit fuer das Lesen oder Schreiben auf
 \tdas Senden oder Erhalten von kompletten Mails einer Verbindung.
 \tStandard ist no oder
 \tStandard ist ${stress?yes}${stress:no}.
 
-NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_per_record_deadline\"
-\tbei Stress auf \"yes\" gesetzt wird und nicht der konfigurierte
-\tWert von \"no\" benutzt werden soll. 
+NOTIZ: Zeile 2, von Standard, bedeutet das "smtpd_per_record_deadline"
+\tbei Stress auf "yes" gesetzt wird und nicht der konfigurierte
+\tWert von "no" benutzt werden soll. 
 
 smtpd_policy_service_max_idle: Zeit bevor eine unbenutzte Verbindung
 \tvon einem Policy clienten geschlossen wird (Standard: 300s).
@@ -219,7 +219,7 @@ smtpd_sasl_local_domain: Domain, die bei SMTP-Auth an die
 
 smtpd_sasl_path: Geben Sie den Namen des SASL-Service ein, unter
 \tdem Postfix laeuft. Der SASL_Service wird unter dem Menupoint
-\t\"smtpd_sasl_type\" eingestellt.
+\t"smtpd_sasl_type" eingestellt.
 \tStandard ist smtpd.
 
 smtpd_sasl_security_options: Zulaessige Identifizierungsmethoden bei
@@ -244,7 +244,7 @@ smtpd_starttls_timeout: Timeout in Sekunden, zum lesen und schreiben
 \tStandard ist 300s oder
 \tStandard ist ${stress?10}${stress:300}s.
 
-NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_starttls_timeout\"
+NOTIZ: Zeile 2, von Standard, bedeutet das "smtpd_starttls_timeout"
 \tbei Stress auf 10s gesetzt wird und nicht der konfigurierte Wert
 \tvon 300s benutzt werden soll. 
 
@@ -254,7 +254,7 @@ smtpd_timeout: Timeout der Inaktivitaet, nachdem smtpd eine
 \tStandard ist 300s oder
 \tStandard ist ${stress?10}${stress:300}s.
 
-NOTIZ: Zeile 2, von Standard, bedeutet das \"smtpd_timeout\" bei
+NOTIZ: Zeile 2, von Standard, bedeutet das "smtpd_timeout" bei
 \tStress auf 10s gesetzt wird und nicht der konfigurierte Wert von
 \t300s benutzt werden soll. 
 
@@ -268,7 +268,7 @@ smtpd_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
 smtpd_tls_always_issue_session_ids: Soll der Postfix SMTP Server
 \teine TLS Session ID ausstellen, falls das TLS Session Caching
 \tdeaktiviert ist (ja/nein)? Der Parameter
-\t\"smtpd_tls_session_cache_database\" ist leer.
+\t"smtpd_tls_session_cache_database" ist leer.
 \tStandard ist ja.
 
 smtpd_tls_ask_ccert: Muss beim Server explizit nach einem Client
@@ -279,7 +279,8 @@ smtpd_tls_auth_only: Soll nur SSL/TLS bei eingehenden Verbindungen
 \tgenutzt werden (ja/nein)?
 
 smtpd_tls_ccert_verifydepth: Ueberpruefungstiefe von Client
-\tZertifikaten. Standard ist 9.
+\tZertifikaten.
+\tStandard ist 9.
 
 smtpd_tls_cert_file: Datei (RSA) welche das unterschriebene
 \tprivate Zertifikat besitzt.
@@ -305,21 +306,21 @@ smtpd_tls_dkey_file: Datei (DSA) welche das unterschriebene,
 smtpd_tls_eccert_file: Datei mit dem Postfix SMTP Server ECDSA
 \tZertifikat im PEM Format. Diese Datei kann auch den privaten
 \tSchluessel des Postfix SMTP Servers enthalten (siehe auch dem
-\tMenuepunkt \"smtpd_tls_eckey_file\").
+\tMenuepunkt "smtpd_tls_eckey_file").
 
 \tZum Beispiel: /etc/postfix/ecdsa-scert.pem
 
 smtpd_tls_eckey_file: Datei mit dem Postfix SMTP Server ECDSA
 \tprivaten Schluessel im PEM Format. Der private Schluessel darf
 \tkeine Passphrase haben und nicht verschluesselt sein.
-\tZum Beispiel: \$smtpd_tls_eccert_file
+\tZum Beispiel: $smtpd_tls_eccert_file
 
 NOTIZ: Stellen Sie die richtigen Rechte dieser Datei ein!
 
 smtpd_tls_eecdh_grade: Auswahl der Sicherheit des Postfix SMTP
 \tServer fuer den ephemeral elliptic-curve Diffie-Hellman (EECDH)
 \tSchluessel Austausch.
-\tStandard ist \"strong\".
+\tStandard ist "strong".
 
 smtpd_tls_exclude_ciphers: Liste der Verschluesselung oder
 \tVerschluesselungstypen die von der Postfix SMTP Server
@@ -339,7 +340,7 @@ smtpd_tls_loglevel: Loglevel auswaehlen. Dies aktiviert
 smtpd_tls_mandatory_ciphers: Auswahl des Minimum der Qualitaet
 \tder TLS Verschluesselung die der Postfix Server mit der
 \tgeeigneten TLS Verschluesselung benutzen soll. Zur Auswahl stehen
-\t\"none\", \"strong\" und \"ultra\".
+\t"none", "strong" und "ultra".
 
 smtpd_tls_mandatory_exclude_ciphers: Liste der Verschluesselung
 \toder Verschluesselungstypen die von der Postfix SMTP Server
@@ -361,7 +362,7 @@ smtpd_tls_req_ccert: Muss das SMTP Client Zertifikat
 \tStandard ist nein.
 
 smtpd_tls_security_level: Legt fest, ob SSL/TLS benutzt werden darf,
-\tkann oder muss. Zur Auswahl stehen \"none\" \"may\" \"encrypt\".
+tkann oder muss. Zur Auswahl stehen "none" "may" "encrypt".
 
 smtpd_tls_session_cache_database: Datei die den TLS Sitzungs Cache
 \tdes SMTP Servers enthaelt. Dadurch koennen mehrere SMTP

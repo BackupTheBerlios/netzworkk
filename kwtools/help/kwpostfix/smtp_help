@@ -2,7 +2,7 @@
 TITLE="${gv_Configuration}::${lv_Smtp}::${gv_Help}"
 MSG=$(gettext 'smtp_address_preference: Waehlen Sie das Internet Protokoll aus.
 \tZur Auswahl stehen ipv4, ipv6 und beide zusammen (any). Standard
-\tist \"any\".
+\tist "any".
 
 smtp_always_send_ehlo: Soll sich Postfix immer als ESMTP-faehiger
 \tServer indentifizieren (ja/nein)
@@ -185,7 +185,7 @@ smtp_rset_timeout: Timeout nach Uebertragung des SMTP-Kommandos
 smtp_sasl_auth_cache_name:
 
 smtp_sasl_auth_cache_time: Eingabe des maximalen Alters der
-\t\"smtp_sasl_auth_cache_name\" Eintraegen bis sie geloescht
+\t"smtp_sasl_auth_cache_name" Eintraegen bis sie geloescht
 \twerden. Standard sind 90d (d = Tage).
 
 smtp_sasl_auth_enable:  Soll die Identifizierung ueber SMTP-Auth bei
@@ -197,7 +197,7 @@ smtp_sasl_auth_soft_bounce: Falls eine SMTP-AUTH Identifierzierung
 \twerden (ja/nein).
 
 NOTIZ: Ein ja ueberschreibt die globale Einstellung des
-\tParameters \"soft_bounce\", ein nein nicht.
+\tParameters "soft_bounce", ein nein nicht.
 
 smtp_sasl_mechanism_filter: Einge SMTP Server unterstuetzen
 \tAuthentifizierungsmassnahmen, die obwohl auf den clients
@@ -273,7 +273,7 @@ NOTIZ: Stellen Sie die richtigen Rechte dieser Datei ein!
 smtp_tls_eccert_file: Datei mit dem Postfix SMTP client ECDSA
 \tZertifikat im PEM Format. Diese Datei kann auch den privaten
 \tSchluessel des Postfix SMTP Clienten enthalten (siehe auch dem
-\tMenuepunkt \"smtp_tls_eckey_file\").
+\tMenuepunkt "smtp_tls_eckey_file").
 \tZum Beispiel: /etc/postfix/ecdsa-ccert.pem
 
 smtp_tls_eckey_file: Datei mit dem Postfix SMTP client ECDSA

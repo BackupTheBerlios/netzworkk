@@ -2,7 +2,7 @@
 TITLE="${gv_Configuration}::${lv_Default}::${gv_Help}"
 MSG=$(gettext 'default_database_type: Datenbanktyp den Postfix beim Erzeugen der
 \tDatenbanken benutzt, wenn nichts anderes angegeben wurde.
-\tStandard ist \"hash\".
+\tStandard ist "hash".
 
 default_delivery_slot_cost: Dient dem Postfix Queue Manager zur
 \tBerechnung der optimalen Verteilung von ausgehenden Mails.
@@ -18,7 +18,7 @@ default_delivery_slot_loan: Dient dem Postfix Queue Manager zur
 
 default_destination_concurrency_failed_cohort_limit: Sinkt die Zahl
 \tparalleler Zustellungen an ein Ziel unter diesen Wert, wird das
-\tZiel (voruebergehend) fuer \"tot\" erklaert und aus der Zustellung
+\tZiel (voruebergehend) fuer "tot" erklaert und aus der Zustellung
 \tgenommen.
 \tStandard ist 1.
 
@@ -61,7 +61,7 @@ default_minimum_delivery_slots: Minimale Anzahl von Empfaengern, ab
 \tStandard ist 3.
 
 default_privs: Standard Nutzerrechte fuer nachgeladene Programme.
-\tStandard ist \"nobody\".
+\tStandard ist "nobody".
 
 default_process_limit: Maximale Anzahl gleichzeitiger Prozesse einer
 \tArt, sofern nichts anderes in master.cf angegeben wurde.
@@ -84,12 +84,12 @@ default_recipient_refill_limit: Anzahl der Empfaenger-Slots, die
 
 default_transport: zu benutzende Transport Methode falls nicht
 \tanders angegeben.
-\tStandard ist \"smtp\".
+\tStandard ist "smtp".
 
 default_verp_delimiters: Verp kodiert die Ziel-Adresse im Return-
 \tPath, nuetzlich fuer Mailinglisten. Der Delimiter legt fest,
 \tdurch welche Zeichen dabei "." und "@" ersetzt werden.
-\tStandard ist \"+=\".
+\tStandard ist "+=".
 ')
 #}}}
 ### Modeline {{{

@@ -4,7 +4,7 @@ MSG=$(gettext 'Hier kann man die Rechte der virtualen Mailboxen, durch Gruppen-
 und User-ID, einstellen.
 
 Tabelle:
-nvirtual_gid_maps
+virtual_gid_maps
 virtual_uid_maps
 
 Form:
