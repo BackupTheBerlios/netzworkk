@@ -14,7 +14,7 @@ smtp_conf() {
 	## }}}
 	# Funktion conf_smtp_menu{{{
 	#######################################
-	# TODO: Hilfe fehlt
+	# TODO: Hilfe + einige Einstellungen fehlen
 	#######################################
 	# smtp_address_preference = any
 	# smtp_always_send_ehlo = yes
@@ -570,8 +570,8 @@ smtp_conf() {
 				FALLBACK_RELAY_MSG=$(gettext 'Geben Sie eine optionale Liste von Rechnern an, an die fehlerhafte, unzustellbare Mails weitergeleitet werden sollen.')
 				inputbox "$MAINCF_TITLE" "$FALLBACK_RELAY_MSG" "${smtp_fallback_relay//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtp_fallback_relay="${gv_Auswahl//\\/}"
-					postconf -e smtp_fallback_relay="${gv_Auswahl//\\/}"
+					smtp_fallback_relay="$gv_Auswahl"
+					postconf -e smtp_fallback_relay="$gv_Auswahl"
 				else
 					smtp_fallback_relay=""
 					postconf -e smtp_fallback_relay=""
@@ -602,8 +602,8 @@ smtp_conf() {
 				SMTP_HELO_NAME_MSG=$(gettext 'Geben Sie den Rechnenamen ein der in einem EHLO oder HELO Kommando gesendet werden soll. Dies kann auch eine Variable sein (z.B.: \$myhostname).')
 				inputbox "$SMTP_TITLE" "$SMTP_HELO_NAME_MSG" "${smtp_helo_name//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtp_helo_name="${gv_Auswahl//\\/}"
-					postconf -e smtp_helo_name="${smtp_helo_name//\\/}"
+					smtp_helo_name="$gv_Auswahl"
+					postconf -e smtp_helo_name="$smtp_helo_name"
 				else
 					smtp_helo_name=""
 					postconf -e smtp_helo_name=""

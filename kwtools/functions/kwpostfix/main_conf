@@ -12,7 +12,7 @@ autoload -U no_defer_msg
 MAINCF_TITLE="${gv_Configuration}::${lv_Main}"
 
 # Bestehende Konfiguration einlesen{{{
-print -l ${(R)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(address_|bsmtp_|default_|error_|ifmail_|lmtp_|mail_|mailbox_|mailman_|milter_|maildrop_|postscreen_|q|relay_|retry_|smtp_|smtpd_|tlsproxy_|tls_|uucp_|virtual_)*} | \
+print -l ${(R)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(address_|bsmtp_|default_|error_|ifmail_|lmtp_|mail_|mailbox_|mailman_|milter_|maildrop_|non_smtpd_milters|postscreen_|q|relay_|retry_|smtp_|smtpd_|tlsproxy_|tls_|uucp_|virtual_)*} | \
 	sed -e 's#\"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
 	s#\$#\\\$#g ; s#$#"#' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$

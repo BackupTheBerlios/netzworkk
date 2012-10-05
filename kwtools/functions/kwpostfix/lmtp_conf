@@ -14,11 +14,6 @@ lmtp_conf() {
 	read_file -f ${gv_WorkDir}/postfix$$
 	rm -rf ${gv_WorkDir}/postfix$$ &>/dev/null
 	
-	##############################################
-	# OLD
-	#postconf -c $MAIL_CONFIG | grep '^lmtp_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
-	##############################################
-	
 	## }}}
 	# Funktion conf_lmtp_menue{{{
 	############################################
