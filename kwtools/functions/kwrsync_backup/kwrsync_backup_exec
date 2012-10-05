@@ -433,7 +433,7 @@ kwrsync_backup_exec() {
 					if [ -x "${PREEXEC%% *}" ] ; then
 						${=PREEXEC} | &>> "$LOGFILE"
 					fi
-					# Rotierung			
+					# Rotierung
 					backup_rotate
 					# Snapshot taetigen
 					backup_exec
@@ -444,7 +444,7 @@ kwrsync_backup_exec() {
 					fi
 					;;
 				daily)
-					# Rotierung			
+					# Rotierung
 					backup_rotate
 					#
 					check_rotate_count hourly $ROTATE_COUNT_HOURLY
@@ -456,7 +456,7 @@ kwrsync_backup_exec() {
 					fi
 					;;
 				weekly)
-					# Rotierung			
+					# Rotierung
 					backup_rotate
 					#
 					check_rotate_count daily $ROTATE_COUNT_DAILY
