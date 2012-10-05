@@ -13,55 +13,17 @@ print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)virtual_*} | \
 	s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
 rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
-
-##############################################
-# OLD
-#postconf -c $MAIL_CONFIG | grep '^virtual_' | sed -e 's# = #="#g ; s#\$#\\\$#g ; s#$#"#g' >${gv_WorkDir}/postfix$$
-##############################################
-
 ## }}}
 # Funktion conf_virtual_menu{{{
-#######################################
-# TODO: Hilfe fehlt
-#######################################
-# virtual_alias_domains = $virtual_alias_maps
-# virtual_alias_expansion_limit = 1000
-# virtual_alias_maps = $virtual_maps
-# virtual_alias_recursion_limit = 1000
-# virtual_delivery_slot_cost = $default_delivery_slot_cost
-# virtual_delivery_slot_discount = $default_delivery_slot_discount
-# virtual_delivery_slot_loan = $default_delivery_slot_loan
-# virtual_destination_concurrency_failed_cohort_limit = $default_destination_concurrency_failed_cohort_limit
-# virtual_destination_concurrency_limit = $default_destination_concurrency_limit
-# virtual_destination_concurrency_negative_feedback = $default_destination_concurrency_negative_feedback
-# virtual_destination_concurrency_positive_feedback = $default_destination_concurrency_positive_feedback
-# virtual_destination_rate_delay = $default_destination_rate_delay
-# virtual_destination_recipient_limit = $default_destination_recipient_limit
-# virtual_extra_recipient_limit = $default_extra_recipient_limit
-# virtual_gid_maps =
-# virtual_initial_destination_concurrency = $initial_destination_concurrency
-# virtual_mailbox_base =
-# virtual_mailbox_domains = $virtual_mailbox_maps
-# virtual_mailbox_limit = 51200000
-# virtual_mailbox_lock = fcntl, dotlock
-# virtual_mailbox_maps =
-# virtual_minimum_delivery_slots = $default_minimum_delivery_slots
-# virtual_minimum_uid = 100
-# virtual_recipient_limit = $default_recipient_limit
-# virtual_recipient_refill_delay = $default_recipient_refill_delay
-# virtual_recipient_refill_limit = $default_recipient_refill_limit
-# virtual_transport = virtual
-# virtual_uid_maps =
-#######################################
 conf_virtual_menu() {
 	VIRTUAL_MENU=(virtual_alias_domains \"\$virtual_alias_domains\"
 	virtual_alias_expansion_limit \"\$virtual_alias_expansion_limit\"
 	virtual_alias_maps \"\$virtual_alias_maps\"
+	virtual_alias_recursion_limit \"\$virtual_alias_recursion_limit\"
 	virtual_delivery_slot_cost \"\$virtual_delivery_slot_cost\"
 	virtual_delivery_slot_discount \"\$virtual_delivery_slot_discount\"
 	virtual_delivery_slot_loan \"\$virtual_delivery_slot_loan\"
 	virtual_destination_concurrency_failed_cohort_limit \"\$virtual_destination_concurrency_failed_cohort_limit\"
-	virtual_alias_recursion_limit \"\$virtual_alias_recursion_limit\"
 	virtual_destination_concurrency_limit \"\$virtual_destination_concurrency_limit\"
 	virtual_destination_concurrency_negative_feedback \"\$virtual_destination_concurrency_negative_feedback\"
 	virtual_destination_concurrency_positive_feedback \"\$virtual_destination_concurrency_positive_feedback\"
@@ -99,6 +61,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_alias_domains)
 			# Virtual Alias Domains{{{
+			# Standard = $virtual_alias_maps
 			tab_support_choice "$gv_Auswahl"
 			virtual_alias_domains="$MAPS"
 			postconf -e virtual_alias_domains="$MAPS"
@@ -107,6 +70,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_alias_expansion_limit)
 			# Virtual Alias expansion limit{{{
+			# Standard = 1000
 			number_input -i "$virtual_alias_expansion_limit"
 			if [[ -n $NUMBER ]] ; then
 				virtual_alias_expansion_limit="$NUMBER"
@@ -117,6 +81,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_alias_maps)
 			# Virtual Alias Maps{{{
+			# Standard = $virtual_maps
 			tab_support_choice "$gv_Auswahl"
 			virtual_alias_maps="$MAPS"
 			postconf -e virtual_alias_maps="$MAPS"
@@ -125,6 +90,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_alias_recursion_limit)
 			# Virtual Alias recursion limit{{{
+			# Standard = 1000
 			number_input -i "$virtual_alias_recursion_limit"
 			if [[ -n $NUMBER ]] ; then
 				virtual_alias_recursion_limit="$NUMBER"
@@ -134,7 +100,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_alias_recursion_limit
 			;;
 		virtual_delivery_slot_cost)
-			# = $default_delivery_slot_cost# {{{
+			# Standard = $default_delivery_slot_cost# {{{
 			default_or_input virtual_delivery_slot_cost number_input -i $virtual_delivery_slot_cost
 			if [[ -n $Value ]] ; then
 				virtual_delivery_slot_cost="$Value"
@@ -144,7 +110,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_delivery_slot_cost
 			;;
 		virtual_delivery_slot_discount)
-			# = $default_delivery_slot_discount# {{{
+			# Standard = $default_delivery_slot_discount# {{{
 			default_or_input virtual_delivery_slot_discount number_input -i $virtual_delivery_slot_discount
 			if [[ -n $Value ]] ; then
 				virtual_delivery_slot_discount="$Value"
@@ -154,7 +120,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_delivery_slot_discount
 			;;
 		virtual_delivery_slot_loan)
-			# = $default_delivery_slot_loan# {{{
+			# Standard = $default_delivery_slot_loan# {{{
 			default_or_input virtual_delivery_slot_loan number_input -i $virtual_delivery_slot_loan
 			if [[ -n $Value ]] ; then
 				virtual_delivery_slot_loan="$Value"
@@ -164,7 +130,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_delivery_slot_loan
 			;;
 		virtual_destination_concurrency_failed_cohort_limit)
-			# = $default_destination_concurrency_failed_cohort_limit# {{{
+			# Standard = $default_destination_concurrency_failed_cohort_limit# {{{
 			default_or_input virtual_destination_concurrency_failed_cohort_limit number_input -i $virtual_destination_concurrency_failed_cohort_limit
 			if [[ -n $Value ]] ; then
 				virtual_destination_concurrency_failed_cohort_limit="$Value"
@@ -175,6 +141,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_destination_concurrency_limit)
 			# Maximalanzahl gleichzeitiger Verbindungen zu einem Ziel{{{
+			# Standard = $default_destination_concurrency_limit
 			number_input -i "$virtual_destination_concurrency_limit"
 			if [[ -n $NUMBER ]] ; then
 				virtual_destination_concurrency_limit="$NUMBER"
@@ -184,7 +151,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_destination_concurrency_limit
 			;;
 		virtual_destination_concurrency_negative_feedback)
-			# = $default_destination_concurrency_negative_feedback# {{{
+			# Standard = $default_destination_concurrency_negative_feedback# {{{
 			default_or_input virtual_destination_concurrency_negative_feedback number_input -i $virtual_destination_concurrency_negative_feedback
 			if [[ -n $Value ]] ; then
 				virtual_destination_concurrency_negative_feedback="$Value"
@@ -194,7 +161,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_destination_concurrency_negative_feedback
 			;;
 		virtual_destination_concurrency_positive_feedback)
-			# = $default_destination_concurrency_positive_feedback# {{{
+			# Standard = $default_destination_concurrency_positive_feedback# {{{
 			default_or_input virtual_destination_concurrency_positive_feedback number_input -i $virtual_destination_concurrency_positive_feedback
 			if [[ -n $Value ]] ; then
 				virtual_destination_concurrency_positive_feedback="$Value"
@@ -204,7 +171,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_destination_concurrency_positive_feedback
 			;;
 		virtual_destination_rate_delay)
-			# = $default_destination_rate_delay# {{{
+			# Standard = $default_destination_rate_delay# {{{
 			default_or_input virtual_destination_rate_delay number_input -s ${virtual_destination_rate_delay%?}
 			if [[ -n $Value ]] ; then
 				virtual_destination_rate_delay="$Value"
@@ -216,6 +183,7 @@ while [ "$gv_Auswahl" ] ; do
 		virtual_destination_recipient_limit)
 			# Maximalanzahl der Empfänger in einer einzigen Mails{{{
 			# Grössere Empfängerlisten werden in mehrere Mails aufgeteilt
+			# Standard = $default_destination_recipient_limit
 			number_input -i "$virtual_destination_recipient_limit"
 			if [[ -n $NUMBER ]] ; then
 				virtual_destination_recipient_limit="$NUMBER"
@@ -225,7 +193,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_destination_recipient_limit
 			;;
 		virtual_extra_recipient_limit)
-			# = $default_extra_recipient_limit# {{{
+			# Standard = $default_extra_recipient_limit# {{{
 			default_or_input virtual_extra_recipient_limit number_input -i $virtual_extra_recipient_limit
 			if [[ -n $Value ]] ; then
 				virtual_extra_recipient_limit="$Value"
@@ -243,7 +211,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_gid_maps
 			;;
 		virtual_initial_destination_concurrency)
-			# = $initial_destination_concurrency# {{{
+			# Standard = $initial_destination_concurrency# {{{
 			default_or_input virtual_initial_destination_concurrency number_input -i $virtual_initial_destination_concurrency
 			if [[ -n $Value ]] ; then
 				virtual_initial_destination_concurrency="$Value"
@@ -270,6 +238,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_mailbox_domains)
 			# Virtual Mailbox Domains{{{
+			# Standard = $virtual_mailbox_maps
 			tab_support_choice "$gv_Auswahl"
 			virtual_mailbox_domains="$MAPS"
 			postconf -e virtual_mailbox_domains="$MAPS"
@@ -278,6 +247,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_mailbox_limit)
 			# Max. Groesse (in Bytes) eines Virtual Mailbox User Postfaches{{{
+			# Standard = 51200000
 			number_input -b "$virtual_mailbox_limit"
 			if [[ -n $NUMBER ]] ; then
 				virtual_mailbox_limit="$NUMBER"
@@ -288,6 +258,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_mailbox_lock)
 			# Lock Art auswaehlen{{{
+			# Standard = fcntl, dotlock
 			lock_art "$virtual_mailbox_lock"
 			virtual_mailbox_lock="$WERT"
 			postconf -e virtual_mailbox_lock="$WERT"
@@ -303,7 +274,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_mailbox_maps
 			;;
 		virtual_minimum_delivery_slots)
-			# = $default_minimum_delivery_slots# {{{
+			# Standard = $default_minimum_delivery_slots# {{{
 			default_or_input virtual_minimum_delivery_slots number_input -i $virtual_minimum_delivery_slots
 			if [[ -n $Value ]] ; then
 				virtual_minimum_delivery_slots="$Value"
@@ -314,18 +285,15 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_minimum_uid)
 			# Virtual Minimum user_id{{{
+			# Standard = 100
 			user_id
-			if [[ -z $WERT ]] ; then
-				WERT=100
-			fi
-			#
-			virtual_minimum_uid="$WERT"
-			postconf -e virtual_minimum_uid="$WERT"
+			virtual_minimum_uid="${WERT:-100}"
+			postconf -e virtual_minimum_uid="${WERT:-100}"
 			#}}}
 			conf_virtual_menu virtual_minimum_uid
 			;;
 		virtual_recipient_limit)
-			# = $default_recipient_limit# {{{
+			# Standard = $default_recipient_limit# {{{
 			default_or_input virtual_recipient_limit number_input -i $virtual_recipient_limit
 			if [[ -n $Value ]] ; then
 				virtual_recipient_limit="$Value"
@@ -335,7 +303,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_recipient_limit
 			;;
 		virtual_recipient_refill_delay)
-			# = $default_recipient_refill_delay# {{{
+			# Standard = $default_recipient_refill_delay# {{{
 			default_or_input virtual_recipient_refill_delay number_input -s ${virtual_recipient_refill_delay%?}
 			if [[ -n $Value ]] ; then
 				virtual_recipient_refill_delay="$Value"
@@ -345,7 +313,7 @@ while [ "$gv_Auswahl" ] ; do
 			conf_virtual_menu virtual_recipient_refill_delay
 			;;
 		virtual_recipient_refill_limit)
-			# = $default_recipient_refill_limit# {{{
+			# Standard = $default_recipient_refill_limit# {{{
 			default_or_input virtual_recipient_refill_limit number_input -i $virtual_recipient_refill_limit
 			if [[ -n $Value ]] ; then
 				virtual_recipient_refill_limit="$Value"
@@ -356,6 +324,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_transport)
 			# Virtual Transport Metode{{{
+			# Standard = virtual
 			tab_support_choice "$gv_Auswahl"
 			virtual_transport="$MAPS"
 			postconf -e virtual_transport="$MAPS"

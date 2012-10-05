@@ -1,10 +1,6 @@
 # smtpd Parameter einstellen{{{
 #
 smtpd_conf() {
-	##############################################
-	# TODO: Alle Variablen (Generierung/Benutzung,...
-	# ueberpruefen, siehe smtpd_authorized_verp_clients
-	##############################################
 	# Einschraenkungen/Überpruefungen laden.
 	autoload -U restrictions
 	
@@ -16,7 +12,7 @@ smtpd_conf() {
 		#unset -- Sasl_Types Tmp
 		local Tmp Sasl_Types
 		SMTPD_SASL_TYPE_MSG=$(gettext 'Waehlen Sie bitte ein SASL-Protokoll aus.')
-		# unterstuetzte SASL_Typen herrausfinden
+		# unterstuetzte SASL_Typen herausfinden
 		for i in `postconf -a` ; {
 			Sasl_Types+=($i \"\")
 			if [[ $smtpd_sasl_type == $i ]] ; then
@@ -174,8 +170,8 @@ smtpd_conf() {
 				SMTPD_AUTHORIZED_VERP_CLIENTS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder Domains ein, denen eine VERP Style Zustellung erlaubt werden soll.')
 				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_VERP_CLIENTS_MSG" "${smtpd_authorized_verp_clients//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_authorized_verp_clients="${gv_Auswahl//\\/}"
-					postconf -e smtpd_authorized_verp_clients="${gv_Auswahl//\\/}"
+					smtpd_authorized_verp_clients="$gv_Auswahl"
+					postconf -e smtpd_authorized_verp_clients="$gv_Auswahl"
 				else
 					smtpd_authorized_verp_clients=""
 					postconf -e smtpd_authorized_verp_clients=""
@@ -189,8 +185,8 @@ smtpd_conf() {
 				SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder Domains ein, die das XCLIENT Feature benutzen duerfen.')
 				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG" "${smtpd_authorized_xclient_hosts//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_authorized_xclient_hosts="${gv_Auswahl//\\/}"
-					postconf -e smtpd_authorized_xclient_hosts="${gv_Auswahl//\\/}"
+					smtpd_authorized_xclient_hosts="$gv_Auswahl"
+					postconf -e smtpd_authorized_xclient_hosts="$gv_Auswahl"
 				else
 					smtpd_authorized_xclient_hosts=""
 					postconf -e smtpd_authorized_xclient_hosts=""
@@ -217,8 +213,8 @@ smtpd_conf() {
 				SMTPD_BANNER_MSG=$(gettext 'Geben Sie bitte einen Begruessungtext ein (Bsp. \$myhostname ESMTP \$mail_name)')
 				inputbox "$SMTPD_TITLE" "$SMTPD_BANNER_MSG" "${smtpd_banner//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_banner="${gv_Auswahl//\\/}"
-					postconf -e smtpd_banner="${gv_Auswahl//\\/}"
+					smtpd_banner="$gv_Auswahl"
+					postconf -e smtpd_banner="$gv_Auswahl"
 				else
 					smtpd_banner=""
 					postconf -e smtpd_banner=""
@@ -249,11 +245,11 @@ smtpd_conf() {
 			smtpd_client_event_limit_exceptions)
 				# Clients die von Verbindungsanzahl, -rate oder von# {{{
 				# SMTP Rate Restrictionen ausgenommen werden sollen.
-				SMTPD_CLIENT_EVENT_LIMIT_EXCEPT=$(gettext 'Geben Sie die Clients ein die von der Verbingsanzahl, -rate oder von SMTP benoetigte rate Restriktionen ausgenommen werden sollen (Bsp. \$mynetworks)')
+				SMTPD_CLIENT_EVENT_LIMIT_EXCEPT=$(gettext 'Geben Sie die Clients ein die von der Verbingsanzahl, -rate oder von SMTP benoetigte Rate Restriktionen ausgenommen werden sollen (Bsp. \$mynetworks)')
 				inputbox "$SMTPD_TITLE" "$SMTPD_CLIENT_EVENT_LIMIT_EXCEPT" "${smtpd_client_event_limit_exceptions//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_client_event_limit_exceptions="${gv_Auswahl//\\/}"
-					postconf -e smtpd_client_event_limit_exceptions="${gv_Auswahl//\\/}"
+					smtpd_client_event_limit_exceptions="$gv_Auswahl"
+					postconf -e smtpd_client_event_limit_exceptions="$gv_Auswahl"
 				else
 					smtpd_client_event_limit_exceptions=""
 					postconf -e smtpd_client_event_limit_exceptions=""
@@ -424,8 +420,8 @@ smtpd_conf() {
 				SMTPD_HARD_ERROR_LIMIT_MSG=$(gettext 'Geben Sie die Anzahl an Fehlern ein, nach der Postfix eine SMTP-Sitzung abbrechen soll (Bsp.: 20 oder \${stress?1}\${stress:20}).')
 				inputbox "$SMTPD_TITLE" "$SMTPD_HARD_ERROR_LIMIT_MSG" "${smtpd_hard_error_limit//\$/\\\$}"
 				if [[ -n $gv_Auswahl ]] ; then
-					smtpd_hard_error_limit="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_hard_error_limit="${gv_Auswahl//$/\$}"
+					smtpd_hard_error_limit="$gv_Auswahl"
+					postconf -e smtpd_hard_error_limit="$gv_Auswahl"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_hard_error_limit
@@ -461,8 +457,8 @@ smtpd_conf() {
 				SMTPD_JUNK_COMMAND_LIMIT_MSG=$(gettext 'Geben Sie die maximale Anzahl an Muellkomandos ein um eine Verbindung offen zu halten (Bsp.: 100 oder \${stress?1}\${stress:100}).')
 				inputbox "$SMTPD_TITLE" "$SMTPD_JUNK_COMMAND_LIMIT_MSG" "${smtpd_junk_command_limit//\$/\\\$}"
 				if [[ -n $gv_Auswahl ]] ; then
-					smtpd_junk_command_limit="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_junk_command_limit="${gv_Auswahl//$/\$}"
+					smtpd_junk_command_limit="$gv_Auswahl"
+					postconf -e smtpd_junk_command_limit="$gv_Auswahl"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_junk_command_limit
@@ -522,8 +518,8 @@ smtpd_conf() {
 				SMTPD_PER_RECORD_DEADLINE_MSG=$(gettext 'Soll das Verhalten von \"smtpd_timeout\" vom Zeitlimit fuer das Lesen oder Schreiben auf fuer das Senden oder Erhalten von kompletten Mails, einer Verbindung, gesetzt werden (Bsp.: no oder \${stress?yes}\${stress:no})?')
 				inputbox "$SMTPD_TITLE" "$SMTPD_PER_RECORD_DEADLINE_MSG" "${smtpd_per_record_deadline//\$/\\\$}"
 				if [[ -n $gv_Auswahl ]] ; then
-					smtpd_per_record_deadline="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_per_record_deadline="${gv_Auswahl//$/\$}"
+					smtpd_per_record_deadline="$gv_Auswahl"
+					postconf -e smtpd_per_record_deadline="$gv_Auswahl"
 				fi
 				## }}}
 				conf_smtpd_menue smtpd_per_record_deadline
@@ -567,8 +563,8 @@ smtpd_conf() {
 				SMTPD_PROXY_EHLO_MSG=$(gettext 'Geben Sie bitte den Namen an mit welchem sich der Postfix Server beim senden eines EHLO Befehl an einen Proxy Filter ankuendigen soll (Bsp. \$myhostname).')
 				inputbox "$SMTPD_TITLE" "$SMTPD_PROXY_EHLO_MSG" "${smtpd_proxy_ehlo//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_proxy_ehlo="${gv_Auswahl//\\/}"
-					postconf -e smtpd_proxy_ehlo="${gv_Auswahl//\\/}"
+					smtpd_proxy_ehlo="$gv_Auswahl"
+					postconf -e smtpd_proxy_ehlo="$gv_Auswahl"
 				else
 					smtpd_proxy_ehlo=""
 					postconf -e smtpd_proxy_ehlo=""
@@ -685,8 +681,8 @@ smtpd_conf() {
 				SMTPD_SASL_EXCEPT_NETWORKS_MSG=$(gettext 'Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder .domain ein, denen keine AUTH Unterstuetzung angeboten werden soll.')
 				inputbox "$SMTPD_TITLE" "$SMTPD_AUTHORIZED_XCLIENT_HOSTS_MSG" "${smtpd_sasl_exceptions_networks//\$/\\\$}"
 				if [ -n "$gv_Auswahl" ] ; then
-					smtpd_sasl_exceptions_networks="${gv_Auswahl//\\/}"
-					postconf -e smtpd_sasl_exceptions_networks="${gv_Auswahl//\\/}"
+					smtpd_sasl_exceptions_networks="$gv_Auswahl"
+					postconf -e smtpd_sasl_exceptions_networks="$gv_Auswahl"
 				else
 					smtpd_sasl_exceptions_networks=""
 					postconf -e smtpd_sasl_exceptions_networks=""
@@ -791,8 +787,8 @@ smtpd_conf() {
 				SMTPD_STARTTLS_MSG=$(gettext 'Geben Sie den Timeout zwischen lesen und schreiben, waehrend TLS startet, ein (Bsp.: 300s oder \${stress?10}\${stress:300}s).')
 				inputbox "$SMTPD_TITLE" "$SMTPD_STARTTLS_MSG" "${smtpd_starttls_timeout//\$/\\\$}"
 				if [[ -n $gv_Auswahl ]] ; then
-					smtpd_starttls_timeout="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_starttls_timeout="${gv_Auswahl//$/\$}"
+					smtpd_starttls_timeout="$gv_Auswahl"
+					postconf -e smtpd_starttls_timeout="$gv_Auswahl"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_starttls_timeout
@@ -804,8 +800,8 @@ smtpd_conf() {
 				SMTPD_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout bei Inaktivitaet ein, nach dem \"smtpd\" eine Verbindung abbricht (Bsp.: 300s oder \${stress?10}\${stress:300}s).')
 				inputbox "$SMTPD_TITLE" "$SMTPD_TIMEOUT_MSG" "${smtpd_timeout//\$/\\\$}"
 				if [[ -n $gv_Auswahl ]] ; then
-					smtpd_timeout="${gv_Auswahl//$/\$}"
-					postconf -e smtpd_timeout="${gv_Auswahl//$/\$}"
+					smtpd_timeout="$gv_Auswahl"
+					postconf -e smtpd_timeout="$gv_Auswahl"
 				fi
 				#}}}
 				conf_smtpd_menue smtpd_timeout
