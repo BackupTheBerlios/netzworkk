@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.09.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 05.10.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -567,7 +567,7 @@ tls_fingerprint_digest() {
 tls_exclude_ciphers() {
 	unset -- WERT OldVar
 	OldVar="$1"
-	TLS_EXCLUDE_CIPHERS_MSG=$(gettext 'Tragen Sie hier die Verschluesselungsmethoden ein die vom Postfix Server nicht beachtet werden soll (siehe ).')
+	TLS_EXCLUDE_CIPHERS_MSG=$(gettext 'Tragen Sie hier die Verschluesselungsmethoden ein die vom Postfix Server nicht beachtet werden soll.')
 	inputbox "$TITLE" "$TLS_EXCLUDE_CIPHERS_MSG" "$OldVar"
 	if [[ -n $gv_Auswahl ]] ; then
 		WERT="$gv_Auswahl"
