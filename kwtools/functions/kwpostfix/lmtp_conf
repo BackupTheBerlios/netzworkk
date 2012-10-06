@@ -123,6 +123,7 @@ lmtp_conf() {
 		lmtp_send_xforward_command \"\$lmtp_send_xforward_command\"
 		lmtp_skip_quit_response \"\$lmtp_skip_quit_response\"
 		lmtp_tcp_port \"\$lmtp_tcp_port\"
+		lmtp_tls_key_file \"\$lmtp_tls_key_file\"
 		lmtp_xforward_timeout \"\$lmtp_xforward_timeout\"
 		postfix \"reload\"
 		$gv_Back \"\")
@@ -598,7 +599,11 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_fingerprint_digest
 				;;
 			lmtp_tls_key_file)
-				# = $lmtp_tls_cert_file
+				# Standard = $lmtp_tls_cert_file# {{{
+				default_or_input lmtp_tls_key_file tls_file_auswahl
+				lmtp_tls_key_file="$WERT"
+				postconf -e lmtp_tls_key_file="$WERT"
+				## }}}
 				conf_lmtp_menue lmtp_tls_key_file
 				;;
 			lmtp_tls_loglevel)
@@ -694,8 +699,8 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_secure_cert_match
 				;;
 			lmtp_tls_security_level)
-				# Standard ist = leer; Parameter sind none, may, encrypt# {{{
-				tls_security_level $lmtp_tls_security_level
+				# Standard ist = leer# {{{
+				tls_security_level lmtp $lmtp_tls_security_level
 				if [[ -n $WERT ]] ; then
 					lmtp_tls_security_level="$WERT"
 					postconf -e lmtp_tls_security_level="$WERT"

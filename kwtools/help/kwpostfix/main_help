@@ -86,7 +86,7 @@ command_time_limit: Maximalzeit, die "local" auf externe Programme
 \twartet, danach wird abgebrochen.
 
 content_filter: Transportmethode an die jede Mail weitergeleitet
-\twird.
+\twird. Dies ueberschreibt $transport_maps.
 
 daemon_directory: Pfad zu den Postfix Modulen.
 

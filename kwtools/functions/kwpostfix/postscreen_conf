@@ -260,7 +260,7 @@ postscreen_conf() {
 				;;
 			postscreen_tls_security_level)
 				# Standard = $smtpd_tls_security_level# {{{
-				default_or_input postscreen_tls_security_level tls_security_level "" "$postscreen_tls_security_level"
+				default_or_input postscreen_tls_security_level tls_security_level "postscreen" "$postscreen_tls_security_level"
 				if [[ -n $Value ]] ; then
 					postscreen_tls_security_level="$Value"
 					postconf -e postscreen_tls_security_level="$Value"

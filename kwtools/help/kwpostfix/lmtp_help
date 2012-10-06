@@ -174,32 +174,62 @@ lmtp_tls_cert_file:
 
 lmtp_tls_ciphers:
 
-lmtp_tls_dcert_file:
+lmtp_tls_dcert_file: Datei (DSA) welche das unterschriebene private
+\tZertifikat besitzt.
 
-lmtp_tls_dkey_file:
+lmtp_tls_dkey_file: Datei (DSA) welche das unterschriebene,
+\tunverschluesselte private Zertifikat besitzt.
+\tStandard ist $lmtp_tls_dcert_file.
 
-lmtp_tls_eccert_file:
+lmtp_tls_eccert_file: Datei mit dem Postfix LMTP client ECDSA
+\tZertifikat im PEM Format. Diese Datei kann auch den privaten
+\tSchluessel des Postfix LMTP Clienten enthalten (siehe auch dem
+\tMenuepunkt "lmtp_tls_eckey_file").
+\tZum Beispiel: /etc/postfix/ecdsa-ccert.pem.
 
-lmtp_tls_eckey_file:
+lmtp_tls_eckey_file: Datei mit dem Postfix LMTP client ECDSA
+\tprivaten Schluessel im PEM Format. Der private Schluessel darf
+\tkeine Passphrase haben und nicht verschluesselt sein.
+\tStandard ist $lmtp_tls_eccert_file.
 
-lmtp_tls_enforce_peername:
+NOTIZ: Stellen Sie die richtigen Rechte dieser Datei ein!
 
-lmtp_tls_exclude_ciphers:
+lmtp_tls_enforce_peername: Soll der entfernte LMTP Server die
+\tInformationen, fuer Rechnernamen im Zertifikat suchen
+\t(ja/nein)?
+\tStandard ist ja.
+
+lmtp_tls_exclude_ciphers: Auswahl einer Liste der Verschluesselung
+\toder Verschluesselungstypen die von der Postfix LMTP Client
+\tVerschluesselungliste aller TLS Sicherheitslevel ausgeschlossen
+\twerden.
 
 lmtp_tls_fingerprint_cert_match:
 
-lmtp_tls_fingerprint_digest:
+lmtp_tls_fingerprint_digest: Auswahl der Methode zur Berechnung
+\tder Fingerprints der Zertifikate.
+\tStandard ist md5.
 
-lmtp_tls_key_file:
+lmtp_tls_key_file: Datei (RSA) welche das unterschriebene,
+\tunverschluesselte private Zertifikat besitzt.
+\tStandard ist $lmtp_tls_cert_file.
 
-lmtp_tls_loglevel:
+lmtp_tls_loglevel: Loglevel auswaehlen.
+\tStandard ist 0.
 
-lmtp_tls_mandatory_ciphers:
+lmtp_tls_mandatory_ciphers: Auswahl des Minimum an Qualitaet die
+\tPostfix SMTP Client bei der TLS Verschluesselung benutzen soll.
+\tStandard ist medium.
 
-lmtp_tls_mandatory_exclude_ciphers:
+lmtp_tls_mandatory_exclude_ciphers: Auswahl einer Liste der
+\tVerschluesselung oder Verschluesselungstypen die von der Postfix
+\tLMTP Client Verschluesselungliste aller TLS Sicherheitslevel
+\tausgeschlossen werden.
 
-lmtp_tls_mandatory_protocols: Auswahl der von Postfix zu
-\tunterstuetztende Verschluesselungs Protokolle fuer TLS.
+lmtp_tls_mandatory_protocols: Auswahl der TLS Protokolle die der
+\tPostfix LMTP Client bei der TLS Verschluesselung benutzen oder
+\tausschliessen soll. Das Zeichen "!" schließt das Protokoll aus.
+\tStandard ist !SSLv2.
 
 lmtp_tls_note_starttls_offer:
 
@@ -207,8 +237,10 @@ lmtp_tls_per_site:
 
 lmtp_tls_policy_maps:
 
-lmtp_tls_protocols: Loglevel auswaehlen. Dies aktiviert
-\tzusaetzliches Postfix SMTP Server Logging falls TLS aktiviert ist.
+lmtp_tls_protocols: Auswahl der TLS Protokolle die der Postfix LMTP
+\tClient bei der TLS Verschluesselung benutzen oder ausschliessen
+\tsoll. Das Zeichen "!" schließt das Protokoll aus.
+\tStandard ist !SSLv2.
 
 lmtp_tls_scert_verifydepth:
 

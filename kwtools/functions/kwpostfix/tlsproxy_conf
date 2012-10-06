@@ -13,38 +13,6 @@ tlsproxy_conf() {
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
 	# Funktion (conf_tlsproxy_menu), die tlsproxy-Parameter einstellen# {{{
-	##############################################
-	# TODO: nur noch Hilfe
-	##############################################
-	# tlsproxy_enforce_tls = $smtpd_enforce_tls
-	# tlsproxy_tls_CAfile = $smtpd_tls_CAfile
-	# tlsproxy_tls_CApath = $smtpd_tls_CApath
-	# tlsproxy_tls_always_issue_session_ids = $smtpd_tls_always_issue_session_ids
-	# tlsproxy_tls_ask_ccert = $smtpd_tls_ask_ccert
-	# tlsproxy_tls_ccert_verifydepth = $smtpd_tls_ccert_verifydepth
-	# tlsproxy_tls_cert_file = $smtpd_tls_cert_file
-	# tlsproxy_tls_ciphers = $smtpd_tls_ciphers
-	# tlsproxy_tls_dcert_file = $smtpd_tls_dcert_file
-	# tlsproxy_tls_dh1024_param_file = $smtpd_tls_dh1024_param_file
-	# tlsproxy_tls_dh512_param_file = $smtpd_tls_dh512_param_file
-	# tlsproxy_tls_dkey_file = $smtpd_tls_dkey_file
-	# tlsproxy_tls_eccert_file = $smtpd_tls_eccert_file
-	# tlsproxy_tls_eckey_file = $smtpd_tls_eckey_file
-	# tlsproxy_tls_eecdh_grade = $smtpd_tls_eecdh_grade
-	# tlsproxy_tls_exclude_ciphers = $smtpd_tls_exclude_ciphers
-	# tlsproxy_tls_fingerprint_digest = $smtpd_tls_fingerprint_digest
-	# tlsproxy_tls_key_file = $smtpd_tls_key_file
-	# tlsproxy_tls_loglevel = $smtpd_tls_loglevel
-	# tlsproxy_tls_mandatory_ciphers = $smtpd_tls_mandatory_ciphers
-	# tlsproxy_tls_mandatory_exclude_ciphers = $smtpd_tls_mandatory_exclude_ciphers
-	# tlsproxy_tls_mandatory_protocols = $smtpd_tls_mandatory_protocols
-	# tlsproxy_tls_protocols = $smtpd_tls_protocols
-	# tlsproxy_tls_req_ccert = $smtpd_tls_req_ccert
-	# tlsproxy_tls_security_level = $smtpd_tls_security_level
-	# tlsproxy_tls_session_cache_timeout = $smtpd_tls_session_cache_timeout
-	# tlsproxy_use_tls = $smtpd_use_tls
-	# tlsproxy_watchdog_timeout = 10s
-	##############################################
 	conf_tlsproxy_menu() {
 		TLSPROXY_MENU=(tlsproxy_enforce_tls \"\$tlsproxy_enforce_tls\"
 		tlsproxy_tls_CAfile \"\$tlsproxy_tls_CAfile\"
@@ -378,7 +346,7 @@ tlsproxy_conf() {
 			tlsproxy_tls_security_level)
 				# Standard = $smtpd_tls_security_level# {{{
 				# Legt fest, ob SSL/TLS benutzt werden darf, kann oder muss.
-				default_or_input tlsproxy_tls_security_level tls_security_level "" "$tlsproxy_tls_security_level"
+				default_or_input tlsproxy_tls_security_level tls_security_level "tlsproxy" "$tlsproxy_tls_security_level"
 				if [[ -n $Value ]] ; then
 					tlsproxy_tls_security_level="$Value"
 					postconf -e tlsproxy_tls_security_level="$Value"

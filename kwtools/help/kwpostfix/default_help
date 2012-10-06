@@ -53,7 +53,12 @@ default_extra_recipient_limit: Anzahl der zusaetzlichen Mailadressen
 \tpro Transport-Methode, die der Postfix Queue-Manager einlesen soll.
 \tStandard ist 1000.
 
-default_filter_nexthop:
+default_filter_nexthop: Falls kein content_filter oder bei Filter
+\tAbfragen wurde nicht expliziert ein Ziel angegeben dann benutzen
+\tSie diesen Punkt. Eine Transportmethode an die jede Mail
+\tweitergeleitet wird.
+\tdefault_filter_nexthop = $myhostname fuer Kompalitaet von Postfix
+\tVersion 2.6 und frueher
 
 default_minimum_delivery_slots: Minimale Anzahl von Empfaengern, ab
 \tder der Postfix Queue-Manager besondere Scheduling-Algorithmen auf

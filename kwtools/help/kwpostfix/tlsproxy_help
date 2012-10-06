@@ -116,7 +116,8 @@ tlsproxy_tls_req_ccert: Muss das SMTP Client Zertifikat
 \tStandard ist "$smtpd_tls_req_ccert".
 
 tlsproxy_tls_security_level: Legt fest, ob SSL/TLS benutzt werden darf,
-\tkann oder muss.
+\tkann oder muss. Hier legen Sie das SMTP TLS Sicherheitslevel fuer
+\tden Postfix SMTP Server fest.
 \tStandard ist "$smtpd_tls_security_level".
 
 tlsproxy_tls_session_cache_timeout: Verfallzeit der TLS Session Cache

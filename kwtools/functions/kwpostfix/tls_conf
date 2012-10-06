@@ -136,7 +136,7 @@ tls_conf() {
 					case "$gv_Auswahl" in
 						HELP*)	script_help tls_help
 							U_OPT=k
-							checklist "$TLS_TITLE" "$N_MSG" "$VALUE_ARRAY" "$tls_disable_workarounds"
+							checklist "$TLS_TITLE" "$TLS_DISABLE_WORKAROUND_MSG" "$VALUE_ARRAY" "$tls_disable_workarounds"
 							;;
 						*)	# uebernehmen
 							tls_disable_workarounds="$gv_Auswahl"

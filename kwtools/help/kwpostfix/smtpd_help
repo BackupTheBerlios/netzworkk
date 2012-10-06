@@ -362,7 +362,9 @@ smtpd_tls_req_ccert: Muss das SMTP Client Zertifikat
 \tStandard ist nein.
 
 smtpd_tls_security_level: Legt fest, ob SSL/TLS benutzt werden darf,
-tkann oder muss. Zur Auswahl stehen "none" "may" "encrypt".
+tkann oder muss. Hier legen Sie das SMTP TLS Sicherheitslevel fuer
+\tden Postfix SMTP Server fest. Zur Auswahl stehen "none" "may"
+\t"encrypt".
 
 smtpd_tls_session_cache_database: Datei die den TLS Sitzungs Cache
 \tdes SMTP Servers enthaelt. Dadurch koennen mehrere SMTP
