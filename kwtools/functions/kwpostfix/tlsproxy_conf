@@ -242,7 +242,7 @@ tlsproxy_conf() {
 				;;
 			tlsproxy_tls_fingerprint_digest)
 				# Standard = $smtpd_tls_fingerprint_digest (md5)# {{{
-				default_or_input tlsproxy_tls_fingerprint_digest tls_fingerprint_digest "" $tlsproxy_tls_fingerprint_digest
+				default_or_input tlsproxy_tls_fingerprint_digest tls_fingerprint_digest "tlsproxy_help" $tlsproxy_tls_fingerprint_digest
 				if [[ -n $Value ]] ; then
 					tlsproxy_tls_fingerprint_digest="$Value"
 					postconf -e tlsproxy_tls_fingerprint_digest="$Value"

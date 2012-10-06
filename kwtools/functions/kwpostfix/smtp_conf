@@ -1142,7 +1142,7 @@ smtp_conf() {
 				# check_ccert_access and permit_tls_clientcerts. Der Standard Algorithmus
 				# \"md5\" ist fuer die Rueckwaertskompalitaet mit Postfix Release <=2.5.
 				# Standard = md5
-				tls_fingerprint_digest $smtp_tls_fingerprint_digest
+				tls_fingerprint_digest smtp_help $smtp_tls_fingerprint_digest
 				smtp_tls_fingerprint_digest="$WERT"
 				postconf -e smtp_tls_fingerprint_digest="$WERT"
 				#}}}
