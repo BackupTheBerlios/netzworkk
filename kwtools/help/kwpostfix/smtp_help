@@ -29,12 +29,12 @@ smtp_cname_overrides_servername: Soll das ueberschreiben der Server-
 
 smtp_connect_timeout: Timeout fuer den Aufbau der Verbindung. Wenn
 \tdies "0" ist, wird der Standardwert fuer TCP/IP Verbindungen
-\taus dem Kernel genommen.
+\taus dem Kernel genommen. Zur Auswahl stehen die Suffixe
+\ts=Sekunde, m=Minute, h=Stunde, d=Tag und w=Woche.
 \tStandard ist 30s.
 
 smtp_connection_cache_destinations: Soll die SMTP Verbindung
 \tpermanent gecacht werden (ja/nein)?
-
 smtp_connection_cache_on_demand: Soll die SMTP Verbindung zeitweilig
 \tgecacht werden, wenn ein Ziel ein hohes Mail Aufkommen in
 \tder "active" Warteschlange hat (ja/nein)?
@@ -48,14 +48,19 @@ smtp_connection_cache_time_limit: Zeit die ein unbenutzter SMTP
 \tClient Socket offen gelassen werden soll.
 \tStandard ist 300s.
 
-smtp_data_done_timeout: Timeout nach Uebertragung einer Mail.
+smtp_data_done_timeout: Timeout nach Uebertragung einer Mail. Zur
+\tAuswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde, d=Tag
+\tund w=Woche.
 \tStandard ist 600s.
 
 smtp_data_init_timeout: Timeout nach Absenden des SMTP-Kommandos
-\tDATA.
+\tDATA. Zur Auswahl stehen die Suffixe s=Sekunde, m=Minute,
+\th=Stunde, d=Tag und w=Woche.
 \tStandard ist 120s.
 
-smtp_data_xfer_timeout: Timeout bei Uebertragung einer Mail.
+smtp_data_xfer_timeout: Timeout bei Uebertragung einer Mail. Zur
+\tAuswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde, d=Tag
+\tund w=Woche.
 \tStandard ist 180s.
 
 smtp_defer_if_no_mx_address_found: Soll die Mail Zustellung zurueck-
@@ -141,10 +146,12 @@ smtp_header_checks: Tabelle, eine Filterung des Header beim
 \tversenden einer Mail.
 
 smtp_helo_name: Rechnername der in einem SMTP EHLO oder HELO
-\tKomando gesendet werden soll.
+\tKommando gesendet werden soll.
 \tStandard ist $myhostname.
 
 smtp_helo_timeout: Timeout nach Absenden des Kommandos EHLO/HELO
+\tZur Auswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde,
+\td=Tag und w=Woche.
 \tStandard ist 300s.
 
 smtp_host_lookup: Welchen Mechanismus soll der Client zum nach-
@@ -164,7 +171,8 @@ smtp_line_length_limit: Die maximale Laenge vom Nachrichten Kopf
 \tStandard ist 998.
 
 smtp_mail_timeout: Timeout nach dem Versand des SMTP-Kommandos
-\tMAIL FROM:
+\tMAIL FROM: Zur Auswahl stehen die Suffixe s=Sekunde, m=Minute,
+\th=Stunde, d=Tag und w=Woche.
 \tStandard ist 300s.
 
 smtp_mime_header_checks: Tabelle mit Filtermustern fuer den Mime
@@ -219,6 +227,8 @@ smtp_pix_workarounds: Auswahl von Workarounds fuer die CISCO PIX
 \tStandard ist disable_esmtp,delay_dotcrlf.
 
 smtp_quit_timeout: Timeout nach Uebertragung des Kommandos QUIT.
+\tZur Auswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde,
+\td=Tag und w=Woche.
 \tStandard ist 300s.
 
 smtp_quote_rfc821_envelope: Sollen die Adressen im SMTP MAIL FROM
@@ -232,20 +242,21 @@ smtp_randomize_addresses: Soll die Reihenfolge der Enveloper-Adressen
 \tStandard ist ja.
 
 smtp_rcpt_timeout: Timeout nach Uebertragung des SMTP-Kommandos
-\tRCPT TO:
+\tRCPT TO: Zur Auswahl stehen die Suffixe s=Sekunde, m=Minute,
+\th=Stunde, d=Tag und w=Woche.
 \tStandard ist 300s.
 
 smtp_recipient_limit: Maximalzahl an Empfaenger in einer Mail.
-\tStandard ist $smtp_recipient_limit.
+\tStandard ist $default_recipient_limit.
 
 smtp_recipient_refill_delay: Zeitverzoegerung, nach der der
 \tPostfix Queue-Manager weitere Mailadressen in seine
 \tScheduling-Liste einliest.
-\tStandard ist $smtp_recipient_refill_delay.
+\tStandard ist $default_recipient_refill_delay.
 
 smtp_recipient_refill_limit: Anzahl der Empfaenger-Slots, die
 \tder Postfix Queue-Manager in einem Durchlauf einliest.
-\tStandard ist $smtp_recipient_refill_limit.
+\tStandard ist $default_recipient_refill_limit.
 
 smtp_reply_filter: Tabelle mit Filtern um den Reply Header von
 \tentfernten SMTP Servern zu korrigieren.
@@ -287,13 +298,13 @@ smtp_sasl_mechanism_filter: Einge SMTP Server unterstuetzen
 smtp_sasl_password_maps: Tabelle mit den Passwortdaten fuer ausgehende
 \tSMTP-Auth Verbindungen.
 
-smtp_sasl_security_options: Zulaessige Identifizierungsmethoden bei
-\tausgehenden SMTP-Auth Verbindungen.
-\tStandard ist noplaintext, noanonymous.
-
 smtp_sasl_path: Pfad zum SASL-Socket fuer bestimmete
 \tSASL-Implementationen wie Dovecot. Siehe auch dem Punkt
 \tsmtpd_sasl_type.
+
+smtp_sasl_security_options: Zulaessige Identifizierungsmethoden bei
+\tausgehenden SMTP-Auth Verbindungen.
+\tStandard ist noplaintext, noanonymous.
 
 smtp_sasl_tls_security_options: Zulaessige Identifizierungsmethoden
 \tbei ausgehenden SMTP-Auth Verbindungen die der CLient per TLS
@@ -342,7 +353,7 @@ smtp_starttls_timeout: Timeout, zum lesen und schreiben waehrend TLS
 \tStandard ist 300s.
 
 smtp_tls_CAfile: Auswahl der Datei mit den CAs denen dieser 
-\tServer vertraut, fuer die Signatur von Clientzertifikaten. 
+\tServer vertraut, fuer die Signatur von Client Zertifikaten. 
 
 smtp_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
 \teingehende Mails. Diese werden dann mit den Rechten des Mail 
@@ -351,7 +362,7 @@ smtp_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
 smtp_tls_block_early_mail_reply: Soll versucht werden eine Mail
 \tHjacking Attacke zu erkennen (ja/nein)? Dies basiert auf der
 \tSchwachstelle im TLS Protokoll (CVE-2009-3555), wo ein Angreifer
-\tboeswillige HELO, MAIL, RCPT, DATA Komandos vorab an eine
+\tboeswillige HELO, MAIL, RCPT, DATA Kommandos vorab an eine
 \tPostfix SMTP client TLS Session schickt.
 \tStandard ist nein.
 
@@ -423,7 +434,8 @@ smtp_tls_mandatory_protocols: Auswahl der TLS Protokolle die der
 
 smtp_tls_note_starttls_offer: Soll der Rechnername vom entfernten
 \tSMTP Server geloggt werden, falls TLS nicht fuer diesen
-\tServer aktiviert ist (ja/nein)?)
+\tServer aktiviert ist (ja/nein)?
+\tStandard ist nein.
 
 smtp_tls_per_site: Tabelle fuer die Regeln der TLS Benutzung von
 \tSMTP Clients.
@@ -470,7 +482,9 @@ smtp_use_tls: Soll SMTP-Auth bei ausgehenden Verbindungen benutzt
 \tStandard ist nein.
 
 smtp_xforward_timeout: Timeout fuer den SMTP Clienten fuer das
-\tsenden eines XFORWARD Kommandos und der Antwort vom Server.
+\tsenden eines XFORWARD Kommandos und der Antwort vom Server. Zur
+\tAuswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde, d=Tag
+\tund w=Woche.
 \tStandard ist 300s.
 ')
 #}}}
