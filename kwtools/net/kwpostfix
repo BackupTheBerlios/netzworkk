@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 05.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 06.10.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -106,6 +106,33 @@ fi
 integer PORT
 
 ## }}}
+# Funktion (cert_match)# {{{
+#
+cert_match() {
+	unset -- WERT
+	local OldVar
+	OldVar="$1"
+	generate_is_file ${OldVar//,/}
+	is_value "hostname nexthop dot-nexthop"
+	#
+	SMTP_TLS_FP_CERT_MATCH_MSG=$(gettext 'Waehlen Sie ein oder mehrere Optionen aus, wie die Sicherheitsueberpruefung stattfinden soll.')
+	checklist "$SMTP_TITLE" "$SMTP_TLS_FP_CERT_MATCH_MSG" "$VALUE_ARRAY" "$OldVar"
+	if [[ -n $gv_Auswahl ]] ; then
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)
+					script_help tls_cert_match_help
+					checklist "$SMTP_TITLE" "$SMTP_TLS_FP_CERT_MATCH_MSG" "$VALUE_ARRAY" "$OldVar"
+					;;
+				*)	# uebernehmen
+					WERT="$gv_Auswahl"
+					break
+					;;
+			esac
+		done
+	fi
+}
+# # }}}
 # Funktion (user_id), Benutzer ID auswaehlen{{{
 #
 user_id() {
@@ -280,7 +307,9 @@ tls_file_auswahl() {
 				if [ -n "$gv_Auswahl" ] ; then
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
-							HELP*)	script_help cert_help
+							HELP*)	
+								# TODO: fehlt
+								script_help cert_help
 								menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
 								;;
 							*)	WERT="${VERZ}/${gv_Auswahl}"
@@ -314,19 +343,21 @@ else
 fi
 }
 #}}}
-# Funktion (mail_mechanism), welche Mechanismen sind bei Mails erlaubt{{{
+# Funktion (mail_mechanism), welche Authentifizierungs-Mechanismen sind bei Mails erlaubt{{{
 mail_mechanism() {
-	unset -- WERT MECHANISM
-	local MECHANISM
+	unset -- WERT
+	local OldVar
+	OldVar="$1"
+	generate_is_file ${OldVar//,/}
+	is_value "noactive noanonymous nodictionary noplaintext mutual_auth"
 	U_OPT=k
-	MECHANISM=(noactive \"\" off noanonymous \"\" off nodictionary \"\" off noplaintext \"\" off mutual_auth \"\" off)
-	checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+	checklist "$gv_Configuration" "$gv_Menupoint" "$VALUE_ARRAY" "$OldVar"
 	#
 	while [ "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
 			HELP*)	script_help security_options_help
 				U_OPT=k
-				checklist "$gv_Configuration" "$gv_Menupoint" "$MECHANISM"
+				checklist "$gv_Configuration" "$gv_Menupoint" "$VALUE_ARRAY" "$OldVar"
 				;;
 			*)	# übernehmen
 				WERT="$gv_Auswahl"
@@ -366,8 +397,8 @@ user_auswahl() {
 #}}}
 # Funktion (loglevel), Loglevel auswählen{{{
 loglevel() {
-	unset -- WERT Log_Value
-	local LOGLEVEL_MSG LOGLEVEL_MENU
+	unset -- WERT
+	local LOGLEVEL_MSG LOGLEVEL_MENU Log_Value
 	LOGLEVEL_MSG=$(gettext 'Waehlen Sie ein Level fuer die Logdateien aus.')
 	LOGLEVEL_MENU=$(gettext '0 kein 1 bischen 2 ausfuehrlich 3 "noch ausfuehrlicher" 4 debug')
 	Log_Value="$1"
@@ -395,11 +426,57 @@ loglevel() {
 	fi
 }
 #}}}
+# Funktion (sasl_types), unterstuetzte SASL Types# {{{
+sasl_types() {
+	unset -- WERT
+	local Tmp Sasl_Types OldVar Opt Title Msg
+	Opt="$1"
+	Title="$2"
+	Msg="$3"
+	OldVar="$4"
+	# unterstuetzte SASL_Typen herausfinden
+	for i in `postconf $Opt` ; {
+		Sasl_Types+=($i \"\")
+		if [[ $OldVar == $i ]] ; then
+			Tmp="$i"
+		fi
+	}
+	# Funktion (sasl_types_menu)# {{{
+	sasl_types_menu() {
+		if [[ -n $Tmp ]] ; then
+			menubox -d "$Tmp" "$Title" "$Msg" "$Sasl_Types"
+		else
+			menubox "$Title" "$Msg" "$Sasl_Types"
+		fi
+	}
+	## }}}
+	sasl_types_menu $OldVar
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)
+				case "$Opt"	in
+					-A)
+						script_help smtp_help
+						;;
+					-a)
+						script_help smtpd_help
+						;;
+				esac
+				sasl_types_menu $OldVar
+				;;
+			*)	# übernehmen
+				WERT="$gv_Auswahl"
+				break
+				;;
+		esac
+	done
+}
+## }}}
 # Funktion (tls_protocols), TLS Protokolle auswählen{{{
 tls_protocols() {
 	if [[ ${#argv} == 1 ]] ; then
 		unset -- WERT
-		local TLS_PROTOCOL_MSG TLS_PROTOCOL_MENU
+		local TLS_PROTOCOL_MSG TLS_PROTOCOL_MENU OldVar
 		OldVar="$1"
 		TLS_PROTOCOL_MSG=$(gettext 'Waehlen Sie die oder das zu unterstuetzende TLS Protokoll aus.')
 		# Openssl Version herrausfinden und vorhandene Werte mit on markieren.
@@ -434,12 +511,23 @@ tls_protocols() {
 }
 #}}}
 # Funktion (tls_security_level), TLS Sicherheitslevel auswählen{{{
+#
+# usage: tls_security_level [ lmtp | postscreen | smtp | esmtpd | tlsproxy ] VAR
+#
 tls_security_level() {
-	unset -- WERT OldVar
-	local TLS_SECURITY_LEVEL_MSG TLS_SECURITY_LEVEL_MENU
-	OldVar="$1"
+	unset -- WERT
+	local TLS_SECURITY_LEVEL_MSG TLS_SECURITY_LEVEL_MENU OldVar Opt
+	Opt="$1"
+	OldVar="$2"
 	TLS_SECURITY_LEVEL_MSG=$(gettext 'Waehlen Sie ein Sicherheitslevel aus.')
-	TLS_SECURITY_LEVEL_MENU=(none \"\" may \"\" encrypt \"\")
+	case "$Opt" in
+		lmtp|smtp)
+			TLS_SECURITY_LEVEL_MENU=(none \"\" may \"\" encrypt \"\" fingerprint \"\" secure \"\" verify \"\")
+			;;
+		*)
+			TLS_SECURITY_LEVEL_MENU=(none \"\" may \"\" encrypt \"\")
+			;;
+	esac
 	# Funktion (tls_security_level_menu)# {{{
 	tls_security_level_menu() {
 		if [[ ${#argv} == 1 ]] ; then
@@ -453,7 +541,8 @@ tls_security_level() {
 	if [[ -n $gv_Auswahl ]] ; then
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
-				HELP*)	script_help tls_security_level_help
+				HELP*)
+					script_help tls_security_level_help
 					tls_security_level_menu $OldVar
 					;;
 				*)	WERT="$gv_Auswahl"
@@ -466,8 +555,8 @@ tls_security_level() {
 #}}}
 # Funktion (tls_ciphers), Qualitaet der TLS Verschluesselung auswählen{{{
 tls_ciphers() {
-	unset -- WERT OldVar
-	local TLS_CIPHERS_MSG TLS_CIPHERS_MENU
+	unset -- WERT
+	local TLS_CIPHERS_MSG TLS_CIPHERS_MENU OldVar
 	OldVar="$1"
 	TLS_CIPHERS_MSG=$(gettext 'Waehlen Sie die Qualitaet der TLS Verschluesselung aus.')
 	TLS_CIPHERS_MENU=(export \"\" low \"\" medium \"\" high \"\" null \"\")
@@ -484,7 +573,8 @@ tls_ciphers() {
 	if [[ -n $gv_Auswahl ]] ; then
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
-				HELP*)	script_help tls_ciphers_help
+				HELP*)	
+					script_help tls_ciphers_help
 					tls_ciphers_menu $OldVar
 					;;
 				*)	WERT="$gv_Auswahl"
@@ -497,8 +587,8 @@ tls_ciphers() {
 #}}}
 # Funktion (tls_eecdh_grade),  auswählen{{{
 tls_eecdh_grade() {
-	unset -- WERT OldVar
-	local TLS_EECDH_GRADE_MSG TLS_EECDH_GRADE_MENU
+	unset -- WERT
+	local TLS_EECDH_GRADE_MSG TLS_EECDH_GRADE_MENU OldVar
 	OldVar="$1"
 	TLS_EECDH_GRADE_MSG=$(gettext 'Waehlen Sie die Sicherheitsstufe fuer ephemeral elliptic-curve Diffie-Hellman (EECDH) Schluessel Austausch aus.')
 	is_value ""
@@ -516,7 +606,9 @@ tls_eecdh_grade() {
 	if [[ -n $gv_Auswahl ]] ; then
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
-				HELP*)	script_help tls_eecdh_grade_help
+				HELP*)
+					# TODO:
+					script_help tls_eecdh_grade_help
 					tls_eecdh_grade_menu $OldVar
 					;;
 				*)	WERT="$gv_Auswahl"
@@ -529,10 +621,11 @@ tls_eecdh_grade() {
 #}}}
 # Funktion (tls_fingerprint_digest), Digest auswählen{{{
 tls_fingerprint_digest() {
-	unset -- WERT OldVar
-	local TLS_FINGERPRINT_DIGEST_MSG TLS_FINGERPRINT_DIGEST_MENU
-	OldVar="$1"
-	TLS_FINGERPRINT_DIGEST_MSG=$(gettext 'Waehlen Sie den Fingerprint aus, der fuer Client Zertifikate unterstuetzt wird soll (Standard ist md5).')
+	unset -- WERT
+	local TLS_FINGERPRINT_DIGEST_MSG TLS_FINGERPRINT_DIGEST_MENU OldVar
+	Help="$1"
+	OldVar="$2"
+	TLS_FINGERPRINT_DIGEST_MSG=$(gettext 'Waehlen eine Methode zur Berechnung der Fingerprints der Zertifikate aus (Standard ist md5).')
 	TLS_FINGERPRINT_DIGEST_MENU=(md5 \"\" sha1 \"\" md4 \"\" md2 \"\" ripemd160 \"\")
 	# Funktion (tls_fingerprint_digest_menu)# {{{
 	tls_fingerprint_digest_menu() {
@@ -547,7 +640,8 @@ tls_fingerprint_digest() {
 	if [[ -n $gv_Auswahl ]] ; then
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
-				HELP*)	script_help tls_fingerprint_digest_help
+				HELP*)
+					script_help $Help
 					tls_fingerprint_digest_menu $OldVar
 					;;
 				*)	WERT="$gv_Auswahl"
@@ -565,7 +659,8 @@ tls_fingerprint_digest() {
 # aller TLS Sicherheitslevel ausgeschlossen werden.
 #
 tls_exclude_ciphers() {
-	unset -- WERT OldVar
+	unset -- WERT
+	local OldVar
 	OldVar="$1"
 	TLS_EXCLUDE_CIPHERS_MSG=$(gettext 'Tragen Sie hier die Verschluesselungsmethoden ein die vom Postfix Server nicht beachtet werden soll.')
 	inputbox "$TITLE" "$TLS_EXCLUDE_CIPHERS_MSG" "$OldVar"
@@ -627,6 +722,24 @@ default_or_input (){
 			tlsproxy_*|postscreen_*)
 				NewKey="\$smtpd_${OldKey#*_}"
 				;;
+			lmtp_tls_dkey_file)
+				NewKey="\$lmtp_tls_dcert_file"
+				;;
+			lmtp_tls_eckey_file)
+				NewKey="\$lmtp_tls_eccert_file"
+				;;
+			lmtp_tls_key_file*)
+				NewKey="\$lmtp_tls_cert_file"
+				;;
+			smtp_tls_dkey_file)
+				NewKey="\$smtp_tls_dcert_file"
+				;;
+			smtp_tls_eckey_file)
+				NewKey="\$smtp_tls_eccert_file"
+				;;
+			smtp_tls_key_file)
+				NewKey="\$smtp_tls_cert_file"
+				;;
 			*)
 				NewKey="\$default_${OldKey#*_}"
 				;;
@@ -666,6 +779,9 @@ default_or_input (){
 					else
 						unset -- Value
 					fi
+					;;
+				tls_file_auswahl)
+					$Func
 					;;
 			esac
 		fi
