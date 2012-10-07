@@ -115,7 +115,8 @@ error_codes() {
 				error_codes_conf_menue defer_code
 				;;
 			fault_injection_code)
-				# Standard = 0# {{{
+				# aktiviert einen Testmodus# {{{
+				# Standard = 0
 				error_codes $fault_injection_code
 				if [[ -n $WERT ]] ; then
 					fault_injection_code="$WERT"

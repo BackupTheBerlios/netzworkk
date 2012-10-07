@@ -12,7 +12,7 @@ autoload -U no_defer_msg
 MAINCF_TITLE="${gv_Configuration}::${lv_Main}"
 
 # Bestehende Konfiguration einlesen{{{
-print -l ${(R)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(address_|bsmtp_|default_|error_|ifmail_|lmtp_|mail_|mailbox_|mailman_|milter_|maildrop_|non_smtpd_milters|postscreen_|q|relay_|retry_|smtp_|smtpd_|tlsproxy_|tls_|uucp_|virtual_)*} | \
+print -l ${(R)${(R)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)(address_|bsmtp_|default_|error_|ifmail_|lmtp_|local_|mail_|mailbox_|mailman_|milter_|maildrop_|non_smtpd_milters|postscreen_|q|relay_|retry_|scalemail-backend_|smtp_|smtpd_|tlsproxy_|tls_|uucp_|virtual_)*}##*(reject|defer|injection)_code*} | \
 	sed -e 's#\"#\\\"#g ; s# = #="# ; s# =#="# ; s#&#\\\&#g ; s#`#\\\`#g ;
 	s#\$#\\\$#g ; s#$#"#' >${gv_WorkDir}/postfix$$
 read_file -f ${gv_WorkDir}/postfix$$
@@ -21,121 +21,224 @@ rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 
 two_bounce_notice_recipient="`postconf -h -c $MAIL_CONFIG 2bounce_notice_recipient`"
 #########################################################
-# TODO: Hilfe ergaenzen fehlt
+# TODO: Hilfe ergaenzen fehlt und ne Menge Einstellungen
 #########################################################
-#alias_database="`postconf -h -c $MAIL_CONFIG alias_database`" 
-#alias_maps="`postconf -h -c $MAIL_CONFIG alias_maps`" 
-#allow_mail_to_commands="`postconf -h -c $MAIL_CONFIG allow_mail_to_commands`"
-#allow_mail_to_files="`postconf -h -c $MAIL_CONFIG allow_mail_to_files`"
-#allow_min_user="`postconf -h -c $MAIL_CONFIG allow_min_user`"
-#allow_percent_hack="`postconf -h -c $MAIL_CONFIG allow_percent_hack`" 
-#allow_untrusted_routing="`postconf -h -c $MAIL_CONFIG allow_untrusted_routing`"
-#alternate_config_directories="`postconf -h -c $MAIL_CONFIG alternate_config_directories`"
-#always_bcc="`postconf -h -c $MAIL_CONFIG always_bcc`"
-#append_at_myorigin="`postconf -h -c $MAIL_CONFIG append_at_myorigin`" 
-#append_dot_mydomain="`postconf -h -c $MAIL_CONFIG append_dot_mydomain`" 
-#best_mx_transport="`postconf -h -c $MAIL_CONFIG best_mx_transport`"
-#biff="`postconf -h -c $MAIL_CONFIG biff`"
-#body_checks="`postconf -h -c $MAIL_CONFIG body_checks`" 
-#body_checks_size_limit="`postconf -h -c $MAIL_CONFIG body_checks_size_limit`" 
-#bounce_notice_recipient="`postconf -h -c $MAIL_CONFIG bounce_notice_recipient`"
-#bounce_size_limit="`postconf -h -c $MAIL_CONFIG bounce_size_limit`"
-#broken_sasl_auth_clients="`postconf -h -c $MAIL_CONFIG broken_sasl_auth_clients`"
-#canonical_maps="`postconf -h -c $MAIL_CONFIG canonical_maps`" 
-#command_directory="`postconf -h -c $MAIL_CONFIG command_directory`"
-#command_time_limit="`postconf -h -c $MAIL_CONFIG command_time_limit`"
-#config_directory="`postconf -h -c $MAIL_CONFIG config_directory`"
-#content_filter="`postconf -h -c $MAIL_CONFIG content_filter`"
-#daemon_directory="`postconf -h -c $MAIL_CONFIG daemon_directory`"
-#daemon_timeout="`postconf -h -c $MAIL_CONFIG daemon_timeout`"
-#debug_peer_level="`postconf -h -c $MAIL_CONFIG debug_peer_level`" 
-#debug_peer_list="`postconf -h -c $MAIL_CONFIG debug_peer_list`" 
-#defer_transports="`postconf -h -c $MAIL_CONFIG defer_transports`"
-#delay_notice_recipient="`postconf -h -c $MAIL_CONFIG delay_notice_recipient`"
-#delay_warning_time="`postconf -h -c $MAIL_CONFIG delay_warning_time`"
-#deliver_lock_attempts="`postconf -h -c $MAIL_CONFIG deliver_lock_attempts`"
-#deliver_lock_delay="`postconf -h -c $MAIL_CONFIG deliver_lock_delay`"
-#disable_dns_lookups="`postconf -h -c $MAIL_CONFIG disable_dns_lookups`"
-#disable_verp_bounces="`postconf -h -c $MAIL_CONFIG disable_verp_bounces`"
-#disable_vrfy_command="`postconf -h -c $MAIL_CONFIG disable_vrfy_command`"
-#double_bounce_sender="`postconf -h -c $MAIL_CONFIG double_bounce_sender`"
-#duplicate_filter_limit="`postconf -h -c $MAIL_CONFIG duplicate_filter_limit`"
-#empty_address_recipient="`postconf -h -c $MAIL_CONFIG empty_address_recipient`"
-#error_notice_recipient="`postconf -h -c $MAIL_CONFIG error_notice_recipient`"
-#expand_owner_alias="`postconf -h -c $MAIL_CONFIG expand_owner_alias`"
-#export_environment="`postconf -h -c $MAIL_CONFIG export_environment`"
-#fallback_transport="`postconf -h -c $MAIL_CONFIG fallback_transport`"
-#fast_flush_domains="`postconf -h -c $MAIL_CONFIG fast_flush_domains`" 
-#fast_flush_purge_time="`postconf -h -c $MAIL_CONFIG fast_flush_purge_time`"
-#fast_flush_refresh_time="`postconf -h -c $MAIL_CONFIG fast_flush_refresh_time`"
-#fault_injection_code="`postconf -h -c $MAIL_CONFIG fault_injection_code`"
-#fork_attempts="`postconf -h -c $MAIL_CONFIG fork_attempts`"
-#fork_delay="`postconf -h -c $MAIL_CONFIG fork_delay`"
-#forward_path="`postconf -h -c $MAIL_CONFIG forward_path | sed -e 's#\\$#\\\\$#g'`"
-#hash_queue_depth="`postconf -h -c $MAIL_CONFIG hash_queue_depth`"
-#hash_queue_names="`postconf -h -c $MAIL_CONFIG hash_queue_names`"
-#header_checks="`postconf -h -c $MAIL_CONFIG header_checks`" 
-#header_size_limit="`postconf -h -c $MAIL_CONFIG header_size_limit`"
-#home_mailbox="`postconf -h -c $MAIL_CONFIG home_mailbox`"
-#hopcount_limit="`postconf -h -c $MAIL_CONFIG hopcount_limit`"
-#ignore_mx_lookup_error="`postconf -h -c $MAIL_CONFIG ignore_mx_lookup_error`"
-#import_environment="`postconf -h -c $MAIL_CONFIG import_environment`"
-#in_flow_delay="`postconf -h -c $MAIL_CONFIG in_flow_delay`"
-#inet_interfaces="`postconf -h -c $MAIL_CONFIG inet_interfaces`"
-#initial_destination_concurrency="`postconf -h -c $MAIL_CONFIG initial_destination_concurrency`"
-#ipc_idle="`postconf -h -c $MAIL_CONFIG ipc_idle`"
-#ipc_timeout="`postconf -h -c $MAIL_CONFIG ipc_timeout`"
-#line_length_limit="`postconf -h -c $MAIL_CONFIG line_length_limit`"
-#local_command_shell="`postconf -h -c $MAIL_CONFIG local_command_shell`"
-#local_destination_concurrency_limit="`postconf -h -c $MAIL_CONFIG local_destination_concurrency_limit`" 
-#local_destination_recipient_limit="`postconf -h -c $MAIL_CONFIG local_destination_recipient_limit`" 
-#local_recipient_maps="`postconf -h -c $MAIL_CONFIG local_recipient_maps`" 
-#local_transport="`postconf -h -c $MAIL_CONFIG local_transport`"
-#luser_relay="`postconf -h -c $MAIL_CONFIG luser_relay`"
-#maps_rbl_domains="`postconf -h -c $MAIL_CONFIG maps_rbl_domains`"
-#masquerade_classes="`postconf -h -c $MAIL_CONFIG masquerade_classes`" 
-#masquerade_domains="`postconf -h -c $MAIL_CONFIG masquerade_domains`" 
-#masquerade_exceptions="`postconf -h -c $MAIL_CONFIG masquerade_exceptions`" 
-#max_idle="`postconf -h -c $MAIL_CONFIG max_idle`"
-#max_use="`postconf -h -c $MAIL_CONFIG max_use`"
-#maximal_backoff_time="`postconf -h -c $MAIL_CONFIG maximal_backoff_time`"
-#maximal_queue_lifetime="`postconf -h -c $MAIL_CONFIG maximal_queue_lifetime`"
-#message_size_limit="`postconf -h -c $MAIL_CONFIG message_size_limit`"
-#minimal_backoff_time="`postconf -h -c $MAIL_CONFIG minimal_backoff_time`"
-#mime_header_checks="`postconf -h -c $MAIL_CONFIG mime_header_checks`" 
-#mydestination="`postconf -h -c $MAIL_CONFIG mydestination`" 
-#mydomain="`postconf -h -c $MAIL_CONFIG mydomain`" 
-#myhostname="`postconf -h -c $MAIL_CONFIG myhostname`" 
-#mynetworks_style="`postconf -h -c $MAIL_CONFIG mynetworks_style`"
-#mynetworks="`postconf -h -c $MAIL_CONFIG mynetworks`"
-#myorigin="`postconf -h -c $MAIL_CONFIG myorigin`" 
-#nested_header_checks="`postconf -h -c $MAIL_CONFIG nested_header_checks`" 
-#notify_classes="`postconf -h -c $MAIL_CONFIG notify_classes`"
-#owner_request_special="`postconf -h -c $MAIL_CONFIG owner_request_special`"
-#parent_domain_matches_subdomains="`postconf -h -c $MAIL_CONFIG parent_domain_matches_subdomains`"
-#permit_mx_backup_networks="`postconf -h -c $MAIL_CONFIG permit_mx_backup_networks`"
-#prepend_delivered_header="`postconf -h -c $MAIL_CONFIG prepend_delivered_header`"
-#process_id_directory="`postconf -h -c $MAIL_CONFIG process_id_directory`"
-#propagate_unmatched_extensions="`postconf -h -c $MAIL_CONFIG propagate_unmatched_extensions`"
-#recipient_bcc_maps="`postconf -h -c $MAIL_CONFIG recipient_bcc_maps`" 
-#recipient_canonical_maps="`postconf -h -c $MAIL_CONFIG recipient_canonical_maps`" 
-#recipient_delimiter="`postconf -h -c $MAIL_CONFIG recipient_delimiter`" 
-#relocated_maps="`postconf -h -c $MAIL_CONFIG relocated_maps`" 
-#require_home_directory="`postconf -h -c $MAIL_CONFIG require_home_directory`"
-#sender_bcc_maps="`postconf -h -c $MAIL_CONFIG sender_bcc_maps`" 
-#sender_canonical_maps="`postconf -h -c $MAIL_CONFIG sender_canonical_maps`" 
-#service_throttle_time="`postconf -h -c $MAIL_CONFIG service_throttle_time`"
-#setgid_group="`postconf -h -c $MAIL_CONFIG setgid_group`" 
-#soft_bounce="`postconf -h -c $MAIL_CONFIG soft_bounce`"
-#stale_lock_time="`postconf -h -c $MAIL_CONFIG stale_lock_time`"
-#strict_rfc821_envelopes="`postconf -h -c $MAIL_CONFIG strict_rfc821_envelopes`"
-#sun_mailtool_compatibility="`postconf -h -c $MAIL_CONFIG sun_mailtool_compatibility`"
-#swap_bangpath="`postconf -h -c $MAIL_CONFIG swap_bangpath`"
-#syslog_facility="`postconf -h -c $MAIL_CONFIG syslog_facility`"
-#syslog_name="`postconf -h -c $MAIL_CONFIG syslog_name`"
-#transport_maps="`postconf -h -c $MAIL_CONFIG transport_maps`"
-#undisclosed_recipients_header="`postconf -h -c $MAIL_CONFIG undisclosed_recipients_header`"
-#verp_delimiter_filter="`postconf -h -c $MAIL_CONFIG verp_delimiter_filter`"
+# 2bounce_notice_recipient = postmaster
+# alias_database = hash:/etc/aliases
+# alias_maps = hash:/etc/aliases
+# allow_mail_to_commands = alias, forward
+# allow_mail_to_files = alias, forward
+# allow_min_user = no
+# allow_percent_hack = yes
+# allow_untrusted_routing = no
+# alternate_config_directories =
+# always_add_missing_headers = no
+# always_bcc =
+# anvil_rate_time_unit = 60s
+# anvil_status_update_time = 600s
+# append_at_myorigin = yes
+# append_dot_mydomain = yes
+# application_event_drain_time = 100s
+# authorized_flush_users = static:anyone
+# authorized_mailq_users = static:anyone
+# authorized_submit_users = static:anyone
+# backwards_bounce_logfile_compatibility = yes
+# berkeley_db_create_buffer_size = 16777216
+# berkeley_db_read_buffer_size = 131072
+# best_mx_transport =
+# biff = yes
+# body_checks =
+# body_checks_size_limit = 51200
+# bounce_notice_recipient = postmaster
+# bounce_queue_lifetime = 5d
+# bounce_service_name = bounce
+# bounce_size_limit = 50000
+# bounce_template_file =
+# broken_sasl_auth_clients = no
+# canonical_classes = envelope_sender, envelope_recipient, header_sender, header_recipient
+# canonical_maps =
+# cleanup_service_name = cleanup
+# command_directory = /usr/sbin
+# command_execution_directory =
+# command_expansion_filter = 1234567890!@%-_=+:,./abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+# command_time_limit = 1000s
+# config_directory = /etc/postfix
+# connection_cache_protocol_timeout = 5s
+# connection_cache_service_name = scache
+# connection_cache_status_update_time = 600s
+# connection_cache_ttl_limit = 2s
+# content_filter =
+# cyrus_sasl_config_path =
+# daemon_directory = /usr/lib/postfix
+# daemon_table_open_error_is_fatal = no
+# daemon_timeout = 18000s
+# data_directory = /var/lib/postfix
+# debug_peer_level = 4
+# debug_peer_list = 192.168.0.5
+# debugger_command = PATH=/usr/bin:/usr/X11R6/bin xxgdb $daemon_directory/$process_name $process_id & sleep 5
+# defer_service_name = defer
+# defer_transports =
+# delay_logging_resolution_limit = 2
+# delay_notice_recipient = postmaster
+# delay_warning_time = 0h
+# deliver_lock_attempts = 20
+# deliver_lock_delay = 1s
+# destination_concurrency_feedback_debug = no
+# detect_8bit_encoding_header = yes
+# disable_dns_lookups = yes
+# disable_mime_input_processing = no
+# disable_mime_output_conversion = no
+# disable_verp_bounces = no
+# disable_vrfy_command = no
+# dnsblog_reply_delay = 0s
+# dnsblog_service_name = dnsblog
+# dont_remove = 0
+# double_bounce_sender = double-bounce
+# duplicate_filter_limit = 1000
+# empty_address_default_transport_maps_lookup_key = <>
+# empty_address_recipient = MAILER-DAEMON
+# empty_address_relayhost_maps_lookup_key = <>
+# enable_long_queue_ids = no
+# enable_original_recipient = yes
+# execution_directory_expansion_filter = 1234567890!@%-_=+:,./abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+# expand_owner_alias = no
+# export_environment = TZ MAIL_CONFIG LANG
+# fallback_relay =
+# fallback_transport =
+# fallback_transport_maps =
+# fast_flush_domains = $relay_domains
+# fast_flush_purge_time = 7d
+# fast_flush_refresh_time = 12h
+# flush_service_name = flush
+# fork_attempts = 5
+# fork_delay = 1s
+# forward_expansion_filter = 1234567890!@%-_=+:,./abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+# forward_path = $home/.forward${recipient_delimiter}${extension}, $home/.forward
+# frozen_delivered_to = yes
+# hash_queue_depth = 1
+# hash_queue_names = incoming, active, deferred, bounce, defer, flush, hold, trace
+# header_address_token_limit = 10240
+# header_checks = regexp:/etc/postfix/header_checks
+# header_size_limit = 102400
+# helpful_warnings = yes
+# home_mailbox =
+# hopcount_limit = 50
+# html_directory = /usr/share/doc/postfix/html
+# ignore_mx_lookup_error = no
+# import_environment = MAIL_CONFIG MAIL_DEBUG MAIL_LOGTAG TZ XAUTHORITY DISPLAY
+# in_flow_delay = 1s
+# inet_interfaces = all
+# inet_protocols = all
+# initial_destination_concurrency = 5
+# internal_mail_filter_classes =
+# ipc_idle = 5s
+# ipc_timeout = 3600s
+# ipc_ttl = 1000s
+# line_length_limit = 2048
+# luser_relay =
+# mailq_path = /usr/bin/mailq
+# manpage_directory = /usr/share/man
+# maps_rbl_domains =
+# masquerade_classes = envelope_sender, header_sender, header_recipient
+# masquerade_domains = netzworkk.de
+# masquerade_exceptions = root
+# master_service_disable =
+# max_idle = 100s
+# max_use = 100
+# maximal_backoff_time = 4000s
+# maximal_queue_lifetime = 5d
+# message_reject_characters =
+# message_size_limit = 20480000
+# message_strip_characters =
+# mime_boundary_length_limit = 2048
+# mime_header_checks = $header_checks
+# mime_nesting_limit = 100
+# minimal_backoff_time = 300s
+# multi_instance_directories =
+# multi_instance_enable = no
+# multi_instance_group =
+# multi_instance_name =
+# multi_instance_wrapper =
+# mydestination = suffbook.netzworkk.de, localhost.$mydomain, $mydomain
+# mydomain = netzworkk.de
+# myhostname = suffbook.netzworkk.de
+# mynetworks = hash:/etc/postfix/mynetworks
+# mynetworks_style = subnet
+# myorigin = netzworkk.de
+# nested_header_checks =
+# newaliases_path = /usr/bin/newaliases
+# notify_classes = resource, software
+# owner_request_special = yes
+# parent_domain_matches_subdomains = debug_peer_list, fast_flush_domains, mynetworks, relay_domains
+# permit_mx_backup_networks =
+# pickup_service_name = pickup
+# postmulti_control_commands = reload flush
+# postmulti_start_commands = start
+# postmulti_stop_commands = stop abort drain quick-stop
+# prepend_delivered_header = command, file, forward
+# process_id_directory = pid
+# propagate_unmatched_extensions = canonical, virtual
+# proxy_interfaces =
+# proxy_read_maps = $local_recipient_maps $mydestination $virtual_alias_maps $virtual_alias_domains $virtual_mailbox_maps $virtual_mailbox_domains $relay_recipient_maps $relay_domains $canonical_maps $sender_canonical_maps $recipient_canonical_maps $relocated_maps $transport_maps $mynetworks $sender_bcc_maps $recipient_bcc_maps $smtp_generic_maps $lmtp_generic_maps $alias_maps
+# proxy_write_maps = $smtp_sasl_auth_cache_name $lmtp_sasl_auth_cache_name $address_verify_map $postscreen_cache_map
+# proxymap_service_name = proxymap
+# proxywrite_service_name = proxywrite
+# rbl_reply_maps =
+# readme_directory = /usr/share/doc/postfix
+# receive_override_options =
+# recipient_bcc_maps =
+# recipient_canonical_classes = envelope_recipient, header_recipient
+# recipient_canonical_maps =
+# recipient_delimiter =
+# reject_tempfail_action = defer_if_permit
+# relayhost = [suff1.netzworkk.de]:25
+# relocated_maps =
+# remote_header_rewrite_domain =
+# require_home_directory = no
+# reset_owner_alias = no
+# resolve_dequoted_address = yes
+# resolve_null_domain = no
+# resolve_numeric_domain = no
+# rewrite_service_name = rewrite
+# sample_directory = /etc/postfix
+# send_cyrus_sasl_authzid = no
+# sender_bcc_maps =
+# sender_canonical_classes = envelope_sender, header_sender
+# sender_canonical_maps =
+# sender_dependent_default_transport_maps =
+# sender_dependent_relayhost_maps =
+# sendmail_fix_line_endings = always
+# sendmail_path = /usr/sbin/sendmail
+# service_throttle_time = 60s
+# setgid_group = postdrop
+# show_user_unknown_table_name = yes
+# showq_service_name = showq
+# soft_bounce = no
+# stale_lock_time = 500s
+# stress =
+# strict_7bit_headers = no
+# strict_8bitmime = no
+# strict_8bitmime_body = no
+# strict_mailbox_ownership = yes
+# strict_mime_encoding_domain = no
+# strict_rfc821_envelopes = no
+# sun_mailtool_compatibility = no
+# swap_bangpath = yes
+# syslog_facility = mail
+# syslog_name = postfix
+# tcp_windowsize = 0
+# trace_service_name = trace
+# transport_maps =
+# transport_retry_time = 60s
+# trigger_timeout = 10s
+# undisclosed_recipients_header =
+# unknown_address_tempfail_action = $reject_tempfail_action
+# unknown_helo_hostname_tempfail_action = $reject_tempfail_action
+# unverified_recipient_reject_reason =
+# unverified_recipient_tempfail_action = $reject_tempfail_action
+# unverified_sender_reject_reason =
+# unverified_sender_tempfail_action = $reject_tempfail_action
+# verp_delimiter_filter = +=-
 #}}}
 # Funktion (conf_main_menu), die Haupt-Parameter einstellen{{{
 conf_main_menu() {
@@ -178,14 +281,13 @@ conf_main_menu() {
 	double_bounce_sender \"\$double_bounce_sender\"
 	duplicate_filter_limit \"\$duplicate_filter_limit\"
 	empty_address_recipient \"\$empty_address_recipient\"
-	error_notice_recipient \"\$error_notice_recipient\"
 	expand_owner_alias \"\$expand_owner_alias\"
 	export_environment \"\$export_environment\"
 	fallback_transport \"\$fallback_transport\"
+	fallback_transport_maps \"\$fallback_transport_maps\"
 	fast_flush_domains \"\$fast_flush_domains\"
 	fast_flush_purge_time \"\$fast_flush_purge_time\"
 	fast_flush_refresh_time \"\$fast_flush_refresh_time\"
-	fault_injection_code \"\$fault_injection_code\"
 	fork_attempts \"\$fork_attempts\"
 	fork_delay \"\$fork_delay\"
 	forward_path \"\$forward_path\"
@@ -203,11 +305,6 @@ conf_main_menu() {
 	ipc_idle \"\$ipc_idle\"
 	ipc_timeout \"\$ipc_timeout\"
 	line_length_limit \"\$line_length_limit\"
-	local_command_shell \"\$local_command_shell\"
-	local_destination_concurrency_limit \"\$local_destination_concurrency_limit\"
-	local_destination_recipient_limit \"\$local_destination_recipient_limit\"
-	local_recipient_maps \"\$local_recipient_maps\"
-	local_transport \"\$local_transport\"
 	luser_relay \"\$luser_relay\"
 	maps_rbl_domains \"\$maps_rbl_domains\"
 	masquerade_classes \"\$masquerade_classes\"
@@ -747,20 +844,6 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			conf_main_menu empty_address_recipient
 			;;
-		error_notice_recipient)
-			# Mailadresse die bei Fehlern informatiert wird{{{
-			ERROR_NOTICE_RECIPIENT_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse ein, die bei Fehlern zu benachrichtigen ist (postmaster).')
-			mail_address "$ERROR_NOTICE_RECIPIENT_MSG" "$error_notice_recipient"
-			if [[ -n $gv_Mail_Adr ]] ; then
-				error_notice_recipient="$gv_Mail_Adr"
-				postconf -e error_notice_recipient="$gv_Mail_Adr"
-			else
-				error_notice_recipient=""
-				postconf -e error_notice_recipient=""
-			fi
-			#}}}
-			conf_main_menu error_notice_recipient
-			;;
 		expand_owner_alias)
 			# Soll bei ausgehenden ML-mails listenname-owner in die echte Mailadr.{{{
 			# aufgeloest werden?
@@ -804,6 +887,10 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			conf_main_menu fallback_transport
 			;;
+		fallback_transport_maps)
+			#
+			conf_main_menu fallback_transport_maps
+			;;
 		fast_flush_domains)
 			# Fuer welche domains soll der Mail Server eine schnellere{{{
 			# Zustellung einschalten.
@@ -834,17 +921,6 @@ while [ "$gv_Auswahl" ] ; do
 			fi
 			#}}}
 			conf_main_menu fast_flush_refresh_time
-			;;
-		fault_injection_code)
-			# aktiviert einen Testmodus{{{
-			#
-			number_input -i "$fault_injection_code"
-			if [ "$NUMBER" ] ; then
-				fault_injection_code="$NUMBER"
-				postconf -e fault_injection_code="$NUMBER"
-			fi
-			#}}}
-			conf_main_menu fault_injection_code
 			;;
 		fork_attempts)
 			# Maximalanzahl der Versuche einen neuen Prozess zu initiieren{{{
@@ -1070,56 +1146,6 @@ while [ "$gv_Auswahl" ] ; do
 			fi
 			#}}}
 			conf_main_menu line_length_limit
-			;;
-		local_command_shell)
-			# Lokale Shell auswaehlen{{{
-			list_shell $local_command_shell
-			if [ -n "$gv_Shell" ] ; then
-				local_command_shell="$gv_Shell"
-				postconf -e local_command_shell="$gv_Shell"
-			else
-				local_command_shell=""
-				postconf -e local_command_shell=""
-			fi
-			#}}}
-			conf_main_menu local_command_shell
-			;;
-		local_destination_concurrency_limit)
-			# maximale Empfaengeranzahl bei lokaler Mails Zustellung{{{
-			number_input -i "$local_destination_concurrency_limit"
-			if [ "$NUMBER" ] ; then
-				local_destination_concurrency_limit="$NUMBER"
-				postconf -e local_destination_concurrency_limit="$NUMBER"
-			fi
-			#}}}
-			conf_main_menu local_destination_concurrency_limit
-			;;
-		local_destination_recipient_limit)
-			# maximale Anzahl gleichzeitiger zuzustellender lokaler Mails{{{
-			number_input -i "$local_destination_recipient_limit"
-			if [ "$NUMBER" ] ; then
-				local_destination_recipient_limit="$NUMBER"
-				postconf -e local_destination_recipient_limit="$NUMBER"
-			fi
-			#}}}
-			conf_main_menu local_destination_recipient_limit
-			;;
-		local_recipient_maps)
-			# Tabelle mit lokalen Mailadressen, fuer die postfix Mails annehmen soll{{{
-			# Unzustellbare werden dann gar nicht erst angenommen.
-			tab_support_choice "$gv_Auswahl"
-			local_recipient_maps="$MAPS"
-			postconf -e local_recipient_maps="$MAPS"
-			#}}}
-			conf_main_menu local_recipient_maps
-			;;
-		local_transport)
-			# Transport Methode fuer lokale Mails{{{
-			transport_methode ${local_transport%%:*} ${local_transport##*:}
-			local_transport="$WERT"
-			postconf -e local_transport="$WERT"
-			#}}}
-			conf_main_menu local_transport
 			;;
 		luser_relay)
 			# unzustellbare mails nicht bouncen sondern weiter verschicken{{{

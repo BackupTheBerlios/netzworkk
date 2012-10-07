@@ -448,11 +448,13 @@ lmtp_conf() {
 				is_value "res_defnames res_dnsrch"
 				#
 				LMTP_DNS_RESOLVER_OPTIONS_MSG=$(gettext 'Waehlen Sie ein oder mehrere Optionen fuer den DNS Resolver aus.')
+				U_OPT=k
 				checklist "$LMTP_TITLE" "$LMTP_DNS_RESOLVER_OPTIONS_MSG" "$VALUE_ARRAY"
 				if [[ -n $gv_Auswahl ]] ; then
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help dns_resolver_options_help
+								U_OPT=k
 								checklist "$LMTP_TITLE" "$LMTP_DNS_RESOLVER_OPTIONS_MSG" "$VALUE_ARRAY"
 								;;
 							*)	# uebernehmen
@@ -646,11 +648,13 @@ lmtp_conf() {
 				is_value "disable_esmtp delay_dotcrlf"
 				#
 				LMTP_PIX_WORKAROUNDS_MSG=$(gettext 'Waehlen Sie ein oder mehrere Workarounds fuer die CISCO PIX Firewall aus.')
+				U_OPT=k
 				checklist "$LMTP_TITLE" "$LMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
 				if [[ -n $gv_Auswahl ]] ; then
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help lmtp_pix_workarounds_help
+								U_OPT=k
 								checklist "$LMTP_TITLE" "$LMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
 								;;
 							*)	# uebernehmen

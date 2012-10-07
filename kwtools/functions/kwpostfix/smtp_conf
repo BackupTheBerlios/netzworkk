@@ -440,11 +440,13 @@ smtp_conf() {
 				is_value "res_defnames res_dnsrch"
 				#
 				SMTP_DNS_RESOLVER_OPTIONS_MSG=$(gettext 'Waehlen Sie ein oder mehrere Optionen fuer den DNS Resolver aus.')
+				U_OPT=k
 				checklist "$SMTP_TITLE" "$SMTP_DNS_RESOLVER_OPTIONS_MSG" "$VALUE_ARRAY"
 				if [[ -n $gv_Auswahl ]] ; then
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help dns_resolver_options_help
+								U_OPT=k
 								checklist "$SMTP_TITLE" "$SMTP_DNS_RESOLVER_OPTIONS_MSG" "$VALUE_ARRAY"
 								;;
 							*)	# uebernehmen
@@ -687,11 +689,13 @@ smtp_conf() {
 				is_value "disable_esmtp delay_dotcrlf"
 				#
 				SMTP_PIX_WORKAROUNDS_MSG=$(gettext 'Waehlen Sie ein oder mehrere Workarounds fuer die CISCO PIX Firewall aus.')
+				U_OPT=k
 				checklist "$SMTP_TITLE" "$SMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
 				if [[ -n $gv_Auswahl ]] ; then
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help smtp_pix_workarounds_help
+								U_OPT=k
 								checklist "$SMTP_TITLE" "$SMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
 								;;
 							*)	# uebernehmen

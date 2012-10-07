@@ -78,6 +78,7 @@ tab_support_choice() {
 					format_menue
 					if [ -z "$gv_Auswahl" ] ; then
 						MAPS=""
+						break
 					fi
 					#
 					while [[ -n $gv_Auswahl ]] ; do
