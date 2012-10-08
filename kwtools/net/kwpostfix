@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 06.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 09.10.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -67,6 +67,7 @@ lv_Maildrop=$(gettext 'Maildrop')
 lv_Mailman=$(gettext 'Mailman')
 lv_Milter=$(gettext 'Milter')
 lv_Lmtp=$(gettext 'LMTP')
+lv_Local=$(gettext 'Lokal')
 lv_Postscreen=$(gettext 'Postscreen')
 lv_Queue=$(gettext 'Queue/Qmail')
 lv_Relay=$(gettext 'Weiterleitung')
@@ -84,6 +85,14 @@ lv_Proxy=$(gettext 'Proxy')
 lv_TableTyp=$(gettext 'Tabellentyp')
 
 # Variablen die von einigen Konfigurationsdateien benutzt werden
+SMTP_CONNECT_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout fuer den Aufbau der Verbindung ein (Bsp.: 30s).')
+SMTP_DATA_DONE_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach Uebertragung einer Mail ein (Standard 600s).')
+SMTP_DATA_INIT_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach Absenden des SMTP-Kommandos DATA ein (Standard 120s).')
+SMTP_DATA_XFER_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout bei Uebertragung einer Mail ein (Standard 180s).')
+SMTP_MAIL_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach dem Versand des SMTP-Kommandos MAIL FROM: ein (Standard 300s).')
+SMTP_QUIT_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach der Uebertragung des SMTP-Kommandos QUIT ein (Standard 300s).')
+SMTP_RCPT_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach der Uebertragung des SMTP-Kommandos RCPT TO: ein (Standard 300s).')
+SMTP_XFORWARD_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout fuer den SMTP Clienten fuer das senden des Kommandos XFORWARD und der Antwort vom Server ein (Standard 300s).')
 SMTPD_TLS_REQ_CCERT_MSG=$(gettext 'Benoetigen Clients ein Zertifikat (ja/nein)?')
 SMTPD_ENFORCE_TLS_MSG=$(gettext 'Soll SSL/TLS bei eingehenden Verbindungen erzwungen werden (ja/nein)?')
 SMTPD_USE_TLS_MSG=$(gettext 'Soll dieser Server fuer eingehende Mails SSL/TLS Verschluesselung benutzen (ja/nein)?')
@@ -731,6 +740,9 @@ default_or_input (){
 			lmtp_tls_key_file*)
 				NewKey="\$lmtp_tls_cert_file"
 				;;
+			lmtp_data_*_timeout|lmtp_{mail,quit,rcpt,rset,xforward}_timeout)
+				NewKey="\$smtp_${OldKey#*_}"
+				;;
 			smtp_tls_dkey_file)
 				NewKey="\$smtp_tls_dcert_file"
 				;;
@@ -813,21 +825,24 @@ while [ "$gv_Auswahl" ] ; do
 			haupt_menue $lv_Quick_Conf
 			;;
 		$gv_Configuration)
-			# Konfiguration von main.cf{{{
+			# Konfiguration von main.cf,...{{{
 			#####################################################
 			# TODO:
 			# wegen einigen Daten was vorher einlesen?
 			# Wie zum Bsp. $data_directory fuer tls_conf und
 			# virtual_conf
 			#####################################################
-			autoload -U default_conf lmtp_conf lock_art error_codes_conf mail_conf \
-				main_conf postfix_variable q_conf relay_conf \
+			autoload -U default_conf lmtp_conf local_conf lock_art error_codes_conf \
+				mail_conf main_conf postfix_variable q_conf relay_conf \
 				smtp_conf smtpd_conf tab_support_choice \
 				tls_conf virtual_conf
+			# einige Variablen einlesen, da diese von einigen
+			# Funktionsdateien benoetigt werden.
+			data_directory=$(postconf -h data_directory)
 			#
 			# Funktion konf_menue{{{
 			CONF_MENU=($lv_Main \"\" $lv_Default \"\" $lv_ErrorCodes \"\"
-				$lv_Lmtp \"\" $lv_Mail \"\"
+				$lv_Lmtp \"\" $lv_Local \"\" $lv_Mail \"\"
 			   	$lv_Queue \"\" $lv_Relay \"\" $lv_Smtp \"\"
 				$lv_Smtpd \"\" $lv_Tls \"\" $lv_Virtual \"\"
 				$gv_Back \"\")
@@ -866,6 +881,11 @@ while [ "$gv_Auswahl" ] ; do
 						# lmtp Einstellungen
 						lmtp_conf
 						conf_menu $lv_Lmtp
+						;;
+					$lv_Local)
+						# lokale Zustellung Einstellungen
+						local_conf
+						conf_menu $lv_Local
 						;;
 					$lv_Mail)
 						# Mail und Mailbox Einstellungen
@@ -922,6 +942,9 @@ while [ "$gv_Auswahl" ] ; do
 				postscreen_conf postfix_variable retry_conf \
 				scalemail-backend_conf tab_support_choice \
 				tlsproxy_conf uucp_conf
+			# einige Variablen einlesen, da diese von einigen
+			# Funktionsdateien benoetigt werden.
+			data_directory=$(postconf -h data_directory)
 			#
 			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
 			EXT_CONF_MENU=($lv_Address \"\" $lv_Bsmtp \"\"
@@ -943,7 +966,7 @@ while [ "$gv_Auswahl" ] ; do
 			ext_conf_menu
 			while [ "$gv_Auswahl" ] ; do
 				case "$gv_Auswahl" in
-					HELP*) script_help conf_help
+					HELP*) script_help ext_conf_help
 						ext_conf_menu
 						;;
 					$lv_Address)
