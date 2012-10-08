@@ -21,7 +21,7 @@ luks_extension() {
 			HELP*)	script_help luks_help
 				luks_ext_menu
 				;;
-			$lv_LUKSinfo)
+			$lv_Luksinfo)
 				# Luksinformationen von verschluesselten Laufwerken anzeigen (/etc/crypttab)# {{{
 				INFO_TITLE="${lv_Luks}::${lv_Luksinfo}"
 				checklist "$INFO_TITLE" "$MULTI_BLOCK_DEVICE_MSG" "$MAP_DEV_M"
