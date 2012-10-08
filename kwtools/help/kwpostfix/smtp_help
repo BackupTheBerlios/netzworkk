@@ -149,7 +149,7 @@ smtp_helo_name: Rechnername der in einem SMTP EHLO oder HELO
 \tKommando gesendet werden soll.
 \tStandard ist $myhostname.
 
-smtp_helo_timeout: Timeout nach Absenden des Kommandos EHLO/HELO
+smtp_helo_timeout: Timeout nach Absenden des Kommandos EHLO/HELO.
 \tZur Auswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde,
 \td=Tag und w=Woche.
 \tStandard ist 300s.
@@ -171,7 +171,7 @@ smtp_line_length_limit: Die maximale Laenge vom Nachrichten Kopf
 \tStandard ist 998.
 
 smtp_mail_timeout: Timeout nach dem Versand des SMTP-Kommandos
-\tMAIL FROM: Zur Auswahl stehen die Suffixe s=Sekunde, m=Minute,
+\tMAIL FROM:. Zur Auswahl stehen die Suffixe s=Sekunde, m=Minute,
 \th=Stunde, d=Tag und w=Woche.
 \tStandard ist 300s.
 
@@ -206,7 +206,7 @@ smtp_per_record_deadline: Sie koennen das Verhalten der
 \tStandard ist nein.
 
 NOTIZ: Falls smtp_per_record_deadline an ist kann ein kurzer Timeout
-\tProbleme mit TLS über langsame Netzwerke verursachen.
+\tProbleme mit TLS ueber langsame Netzwerke verursachen.
 
 smtp_pix_workaround_delay_time: Workaround fuer einen Fehler in Cisco
 \tPIX Firewalls. Fuegt eine Wartezeit vor dem ".<CR><LF>" ein, der die
@@ -242,7 +242,7 @@ smtp_randomize_addresses: Soll die Reihenfolge der Enveloper-Adressen
 \tStandard ist ja.
 
 smtp_rcpt_timeout: Timeout nach Uebertragung des SMTP-Kommandos
-\tRCPT TO: Zur Auswahl stehen die Suffixe s=Sekunde, m=Minute,
+\tRCPT TO:. Zur Auswahl stehen die Suffixe s=Sekunde, m=Minute,
 \th=Stunde, d=Tag und w=Woche.
 \tStandard ist 300s.
 

@@ -8,7 +8,7 @@ bsmtp_delivery_slot_cost: Dient dem Postfix Queue Manager zur
 
 bsmtp_delivery_slot_discount: Dient dem Postfix Queue Manager zur
 \tBerechnung der optimalen Verteilung von ausgehenden Mails.
-\tStandard ist \"\$default_delivery_slot_discount\".
+\tStandard ist "\$default_delivery_slot_discount".
 
 bsmtp_delivery_slot_loan: Dient dem Postfix Queue Manager zur
 \tBerechnung der optimalen Verteilung von ausgehenden Mails.

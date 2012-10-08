@@ -228,21 +228,6 @@ ipc_timeout: Genereller Timeout fuer die Inter-Prozess-Kommunikation
 line_length_limit: Maximallaenge einer Zeile in Bytes, danach wird
 \tSie umbrochen (2048).
 
-local_command_shell: Shell, in denen Kommandos ausgefuehrt werden.
-
-local_destination_concurrency_limit: Maximalanzahl gleichzeitig zu-
-\tzustellender lokaler Mails.
-
-local_destination_recipient_limit: Maximale Empfaengeranzahl bei
-\tlokaler Zustellung der Mails. Groessere Empfaengerlisten
-\twerden auf mehrere Mails aufgeteilt.
-
-local_recipient_maps: Tabelle mit lokalen Mailadressen, fuer die
-\tPostfix Mails annehmen soll. Unzustellbare Mails werden gar
-\tnicht erst angenommen.
-
-local_transport: Transportmethode fuer lokale Mails (local).
-
 luser_relay: Unzustellbare Mails werden nicht gebounct, sondern an
 \tdiese Adresse weitergeschickt. die Variablen $user, $shell
 \tetc. sind zulaessig, z. B. $user@test.domain.de. Siehe

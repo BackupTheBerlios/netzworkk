@@ -171,8 +171,10 @@ smtpd_proxy_ehlo: Mit welchem Namen soll der Postfix Server sich selbst
 smtpd_proxy_filter: Rechnername und TCP Port vom mail Proxy Filter
 \tServer (Bsp. hostname:port).
 
-smtpd_proxy_timeout: Timeout fuer die Verbindung zum Proxy Filter
-\t(Standard: 100s).
+smtpd_proxy_timeout: Timeout fuer die Verbindung zum Proxy Filter.
+\tZur Auswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde,
+\td=Tag und w=Woche.
+\tStandard ist 100s.
 
 smtpd_recipient_limit: Maximalanzahl der SMTP-Envelope-Empfaenger in
 \teiner Mail.

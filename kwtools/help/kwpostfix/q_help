@@ -45,10 +45,15 @@ qmqpd_client_port_logging: Soll der TCP-Port der Clients geloggt
 \tStandard ist nein.
 
 qmqpd_error_delay: Wartezeit nach einem Fehler in einer
-\tQMQP-Verbindung.
-\tStandard ist 1.
+\tQMQP-Verbindung. Zur Auswahl stehen die Suffixe s=Sekunde,
+\tm=Minute, h=Stunde, d=Tag und w=Woche.
+\tStandard ist 1s.
 
-qmqpd_timeout: Timeout beim Aufruf des qmqpd.
+qmqpd_timeout: Timeout fuer das Senden und Erhalten von
+\tInformationen. Falls das Lesen oder Schreiben das Zeitlimit
+\tueberschreitet gibt der Postfix QMQP Server auf. Zur Auswahl
+\ŧstehen die Suffixe s=Sekunde, m=Minute, h=Stunde, d=Tag und
+\tw=Woche.
 \tStandard ist 300s.
 
 queue_directory: Pfad zu den Queue Ordnern.
@@ -62,8 +67,9 @@ queue_minfree: Minimaler Plattenplatz in Bytes, der noch frei ist,
 \tansonsten verweigert Postfix die Annahme von Mails.
 \tStandard ist 0.
 
-queue_run_delay: Anzahl der Sekunden, nach denen Postfix die
-\tdeferred-Queue nach zuzustellenden Mails durchsucht.
+queue_run_delay: Zeitintervall, nach dem Postfix die deferred-Queue
+\tnach zuzustellenden Mails durchsucht. Zur Auswahl stehen die
+\tSuffixe s=Sekunde, m=Minute, h=Stunde, d=Tag und w=Woche.
 \tStandard ist 300s.
 ')
 #}}}

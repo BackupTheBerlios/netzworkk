@@ -1,39 +1,27 @@
 # conf_help fuer kwpostfix{{{
 TITLE="${gv_Configuration}::${gv_Help}"
-MSG=$(gettext 'Diese Hilfe ist fuer die erweiterte und die normale Konfiguration
-zustaendig. Alle Menueppunkte die mit default, mail, lmtp, q, smtp,
-smtpd, tls oder virtual anfangen sind unter dem Menuepunkt
-\"Konfiguration\" zu finden. Der Rest \"fast\" aller Einstellungs-
-moeglichkeiten befindet sich unter dem Menuepunkt
-\"erweiterte Konfiguration\".
-
-Ausnahme stellt der Menuepunkt \"Haupt\" dar. Dort ist alles wozu
-\tkein eigener Menuepunkt sich gelohnt hat.
+MSG=$(gettext 'Diese Hilfe ist fuer die normale Konfiguration zustaendig.
+Unter dem Menuepunkt "Haupt" ist alles wozu kein eigener Menuepunkt
+sich gelohnt hat.
 
 Haupt: Einstellung der am haeufigsten gebrauchten Variablen. 
 
 Standard: Standard Einstellungen fuer alle Module konfigurieren. Diese
 \tkoennen aber von anderen Einstellungen ueberschrieben werden.
 
-Fehler: Einstellungen rund um Fehler (?).
-
 Fehlercodes: Hier koennen Sie alle moeglichen Fehlercodes, die Postfix
 \tunterstuetzt, einstellen.
 
-IfMail: Einstellungen rund um Ifmail (?).
-
 LMTP: Einstellungen fuer lmtp (Local Mail Transport Protokoll).
+
+Lokal: Einstellungen fuer die lokale Mail Zustellung.
 
 Mail: Einstellungen fuer mail und Mailboxen.
 
-Mailman: Einstellungen fuer Mailman.
+Queue/Qmail: Einstellungen fuer den qmqpd (Queue Manager Qmail
+\tProtokoll Daemon), der Queue und des qmgr (Queue Managers).
 
-Queue: Einstellungen fuer den qmqpd (Queue Manager Qmail Protokoll
-\tDaemon), der Queue und des qmgr (Queue Managers).
-
-Weiterleitung: Einstellungen rund um Relay (?).
-
-Wiederholung: Einstellungen rund um Retry (?).
+Weiterleitung: Einstellungen rund um Relay.
 
 SMTP: Einstellungen fuer ausgehende mail.
 
@@ -41,9 +29,8 @@ SMTPD: Einstellungen fuer eingehende mail.
 
 TLS: Standard Einstellungen rund um SSL/TLS.
 
-UUCP: Einstellungen rund um uucp (?).
-
-Virtual: Einstellungen fuer die Transport Methode virtual.')
+Virtual: Einstellungen fuer die Transport Methode virtual.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

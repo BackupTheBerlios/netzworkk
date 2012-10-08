@@ -14,7 +14,7 @@ mailbox_command: Programm zum schreiben der Mails in die lokalen
 \tist local.
 
 mailbox_command_maps: Tabelle, um einzelnen Adressen ein anderes
-\t\"mailbox_command\" zuweisen zu koennen.
+\t"mailbox_command" zuweisen zu koennen.
 
 mailbox_delivery_lock: Art des lockens bei lokaler Zustellung in
 \tdie Postfaecher.

@@ -51,6 +51,8 @@ virtual_destination_concurrency_positive_feedback: Bestimmt, wie
 
 virtual_destination_rate_delay: Zeitdauer nach jeder Mailzustellung,
 \tbevor wieder an das gleiche Ziel eine Mail verschickt werden darf.
+\tZur Auswahl stehen die Suffixe s=Sekunde, m=Minute, h=Stunde,
+\td=Tag und w=Woche.
 \tStandard ist "$default_destination_rate_delay".
 
 virtual_destination_recipient_limit: Maximalzahl der Empfaenger in
