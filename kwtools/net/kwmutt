@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 16.08.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 07.10.2012
 #
 # Script: kwmutt, konfiguriert den Mail-Client Mutt.
 #
-# Version: 0.0.5
+# Version: 0.0.6
 
 ###################################################################
 # TODO:
@@ -535,6 +535,9 @@ create_tmp_conf -g "$GLOBAL_MUTTCONF"
 read_file -f "$Muttrc_LogFile"
 create_tmp_conf "$MUTTCONF"
 read_file -f "$gv_LogFile"
+
+# Netz Funktionen einlesen
+net_conf
 
 main_menu
 while [ "$gv_Auswahl" ] ; do
