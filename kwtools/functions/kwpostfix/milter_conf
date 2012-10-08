@@ -73,7 +73,14 @@ milter_conf() {
 				conf_milter_menu milter_connect_macros
 				;;
 			milter_connect_timeout)
-				# = 30s
+				# Timeout fuer den Aufbau der Verbindung{{{
+				# Standard = 30s
+				default_or_input milter_connect_timeout number_input '-a "$MILTER_TITLE" "$SMTP_CONNECT_TIMEOUT_MSG"' "$milter_connect_timeout"
+				if [[ -n $NUMBER ]] ; then
+					milter_connect_timeout="$NUMBER"
+					postconf -e milter_connect_timeout="$NUMBER"
+				fi
+				#}}}
 				conf_milter_menu milter_connect_timeout
 				;;
 			milter_content_timeout)

@@ -133,7 +133,7 @@ local_conf() {
 				;;
 			local_destination_rate_delay)
 				# Standard = $default_destination_rate_delay# {{{
-				default_or_input local_destination_rate_delay number_input '-a "$LOCAL_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' ${local_destination_rate_delay%?}
+				default_or_input local_destination_rate_delay number_input '-a "$LOCAL_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' $local_destination_rate_delay
 				if [[ -n $Value ]] ; then
 					local_destination_rate_delay="$Value"
 					postconf -e local_destination_rate_delay="$Value"

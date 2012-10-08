@@ -236,7 +236,7 @@ smtp_conf() {
 				;;
 			smtp_connect_timeout)
 				# Timeout fuer den Aufbau der Verbindung{{{
-				number_input -a "${smtp_connect_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_CONNECT_TIMEOUT_MSG" "$smtp_connect_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_connect_timeout="$NUMBER"
 					postconf -e smtp_connect_timeout="$NUMBER"
@@ -284,7 +284,7 @@ smtp_conf() {
 				;;
 			smtp_data_done_timeout)
 				# Timeout nach Übertragung der mail {{{
-				number_input -a "${smtp_data_done_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_DATA_DONE_TIMEOUT_MSG" "$smtp_data_done_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_data_done_timeout="$NUMBER"
 					postconf -e smtp_data_done_timeout="$NUMBER"
@@ -294,7 +294,7 @@ smtp_conf() {
 				;;
 			smtp_data_init_timeout)
 				# Timeout nach Absendung des SMTP Komandos DATA{{{
-				number_input -a "${smtp_data_init_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_DATA_INIT_TIMEOUT_MSG" "$smtp_data_init_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_data_init_timeout="$NUMBER"
 					postconf -e smtp_data_init_timeout="$NUMBER"
@@ -304,7 +304,7 @@ smtp_conf() {
 				;;
 			smtp_data_xfer_timeout)
 				# Timeout bei Übertragung einer mail{{{
-				number_input -a "${smtp_data_xfer_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_DATA_XFER_TIMEOUT_MSG" "$smtp_data_xfer_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_data_xfer_timeout="$NUMBER"
 					postconf -e smtp_data_xfer_timeout="$NUMBER"
@@ -393,7 +393,7 @@ smtp_conf() {
 				;;
 			smtp_destination_rate_delay)
 				# Standard = $default_destination_rate_delay# {{{
-				default_or_input smtp_destination_rate_delay number_input -a ${smtp_destination_rate_delay%?}
+				default_or_input smtp_destination_rate_delay number_input '-a "$SMTP_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' $smtp_destination_rate_delay
 				if [[ -n $Value ]] ; then
 					smtp_destination_rate_delay="$Value"
 					postconf -e smtp_destination_rate_delay="$Value"
@@ -529,7 +529,8 @@ smtp_conf() {
 				;;
 			smtp_helo_timeout)
 				# Timeout nach Absendung des SMTP Komandos EHLO/HELO{{{
-				number_input -a "${smtp_helo_timeout%?}"
+				SMTP_HELO_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach Absenden des Kommandos EHLO/HELO ein (Standard 300s).')
+				number_input -a "$SMTP_TITLE" "$SMTP_HELO_TIMEOUT_MSG" "$smtp_helo_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_helo_timeout="$NUMBER"
 					postconf -e smtp_helo_timeout="$NUMBER"
@@ -576,7 +577,7 @@ smtp_conf() {
 				;;
 			smtp_mail_timeout)
 				# Timeout nach Absendung des SMTP Komandos MAIL FROM:{{{
-				number_input -a "${smtp_mail_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_MAIL_TIMEOUT_MSG" "$smtp_mail_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_mail_timeout="$NUMBER"
 					postconf -e smtp_mail_timeout="$NUMBER"
@@ -713,7 +714,7 @@ smtp_conf() {
 				;;
 			smtp_quit_timeout)
 				# Timeout nach Übertragung des SMTP Komandos QUIT{{{
-				number_input -a "${smtp_quit_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_QUIT_TIMEOUT_MSG" "$smtp_quit_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_quit_timeout="$NUMBER"
 					postconf -e smtp_quit_timeout="$NUMBER"
@@ -741,7 +742,7 @@ smtp_conf() {
 				;;
 			smtp_rcpt_timeout)
 				# Timeout nach Übertragung des SMTP Komandos RCPT TO:{{{
-				number_input -a "${smtp_rcpt_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_RCPT_TIMEOUT_MSG" "$smtp_rcpt_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_rcpt_timeout="$NUMBER"
 					postconf -e smtp_rcpt_timeout="$NUMBER"
@@ -1339,7 +1340,7 @@ smtp_conf() {
 				;;
 			smtp_xforward_timeout)
 				# Timeout fuer das senden eines XFORWARD Kommandos {{{
-				number_input -a "${smtp_xforward_timeout%?}"
+				number_input -a "$SMTP_TITLE" "$SMTP_XFORWARD_TIMEOUT_MSG" "$smtp_xforward_timeout"
 				if [ "$NUMBER" ] ; then
 					smtp_xforward_timeout="$NUMBER"
 					postconf -e smtp_xforward_timeout="$NUMBER"

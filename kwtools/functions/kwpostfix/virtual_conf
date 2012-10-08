@@ -172,7 +172,7 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		virtual_destination_rate_delay)
 			# Standard = $default_destination_rate_delay# {{{
-			default_or_input virtual_destination_rate_delay number_input -s ${virtual_destination_rate_delay%?}
+			default_or_input virtual_destination_rate_delay number_input '-a "$VIRTUAL_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' $virtual_destination_rate_delay
 			if [[ -n $Value ]] ; then
 				virtual_destination_rate_delay="$Value"
 				postconf -e virtual_destination_rate_delay="$Value"

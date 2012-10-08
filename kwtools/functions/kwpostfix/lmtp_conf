@@ -240,7 +240,7 @@ lmtp_conf() {
 				;;
 			lmtp_connect_timeout)
 				# Timeout fuer den Aufbau der Verbindung{{{
-				number_input -a "${lmtp_connect_timeout%?}"
+				default_or_input lmtp_connect_timeout number_input '-a "$LMTP_TITLE" "$SMTP_CONNECT_TIMEOUT_MSG"' "$lmtp_connect_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_connect_timeout="$NUMBER"
 					postconf -e lmtp_connect_timeout="$NUMBER"
@@ -291,7 +291,7 @@ lmtp_conf() {
 				;;
 			lmtp_data_done_timeout)
 				# Timeout nach erfolgter Übertragung der mail per LMTP{{{
-				number_input -a "${lmtp_data_done_timeout%?}"
+				default_or_input lmtp_data_done_timeout number_input '-a "$LMTP_TITLE" "$SMTP_DATA_DONE_TIMEOUT_MSG"' "$lmtp_data_done_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_data_done_timeout="$NUMBER"
 					postconf -e lmtp_data_done_timeout="$NUMBER"
@@ -301,7 +301,7 @@ lmtp_conf() {
 				;;
 			lmtp_data_init_timeout)
 				# Timeout nach dem LMTP Kommando DATA{{{
-				number_input -a "${lmtp_data_init_timeout%?}"
+				default_or_input lmtp_data_init_timeout number_input '-a "$LMTP_TITLE" "$SMTP_DATA_INIT_TIMEOUT_MSG"' "$lmtp_data_init_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_data_init_timeout="$NUMBER"
 					postconf -e lmtp_data_init_timeout="$NUMBER"
@@ -311,7 +311,7 @@ lmtp_conf() {
 				;;
 			lmtp_data_xfer_timeout)
 				# Timeout waehrend der Übertragung zu einem LMTP Server{{{
-				number_input -a "${lmtp_data_xfer_timeout%?}"
+				default_or_input lmtp_data_xfer_timeout number_input '-a "$LMTP_TITLE" "$SMTP_DATA_XFER_TIMEOUT_MSG"' "$lmtp_data_xfer_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_data_xfer_timeout="$NUMBER"
 					postconf -e lmtp_data_xfer_timeout="$NUMBER"
@@ -401,7 +401,7 @@ lmtp_conf() {
 				;;
 			lmtp_destination_rate_delay)
 				# Standard = $default_destination_rate_delay# {{{
-				default_or_input lmtp_destination_rate_delay number_input -a ${lmtp_destination_rate_delay%?}
+				default_or_input lmtp_destination_rate_delay number_input '-a "$LMTP_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' $lmtp_destination_rate_delay
 				if [[ -n $Value ]] ; then
 					lmtp_destination_rate_delay="$Value"
 					postconf -e lmtp_destination_rate_delay="$Value"
@@ -524,7 +524,7 @@ lmtp_conf() {
 				;;
 			lmtp_lhlo_timeout)
 				# Timeout nach dem LMTP Kommando LHLO{{{
-				number_input -a "${lmtp_lhlo_timeout%?}"
+				number_input -a "$lmtp_lhlo_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_lhlo_timeout="$NUMBER"
 					postconf -e lmtp_lhlo_timeout="$NUMBER"
@@ -545,7 +545,7 @@ lmtp_conf() {
 				;;
 			lmtp_mail_timeout)
 				# Timeout nach dem LMTP Kommando MAIL FROM:{{{
-				number_input -a "${lmtp_mail_timeout%?}"
+				number_input -a "$lmtp_mail_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_mail_timeout="$NUMBER"
 					postconf -e lmtp_mail_timeout="$NUMBER"
@@ -672,7 +672,7 @@ lmtp_conf() {
 				;;
 			lmtp_quit_timeout)
 				# Timeout nach dem LMTP Kommando QUIT{{{
-				number_input -a "${lmtp_quit_timeout%?}"
+				default_or_input lmtp_quit_timeout number_input '-a "$LMTP_TITLE" "$SMTP_QUIT_TIMEOUT_MSG"' "$lmtp_quit_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_quit_timeout="$NUMBER"
 					postconf -e lmtp_quit_timeout="$NUMBER"
@@ -700,7 +700,7 @@ lmtp_conf() {
 				;;
 			lmtp_rcpt_timeout)
 				# Timeout nach dem LMTP Kommando RCPT TO:{{{
-				number_input -a "${lmtp_rcpt_timeout%?}"
+				default_or_input lmtp_rcpt_timeout number_input '-a "$LMTP_TITLE" "$SMTP_RCPT_TIMEOUT_MSG"' "$lmtp_rcpt_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_rcpt_timeout="$NUMBER"
 					postconf -e lmtp_rcpt_timeout="$NUMBER"
@@ -748,7 +748,7 @@ lmtp_conf() {
 				;;
 			lmtp_rset_timeout)
 				# Timeout nach dem LMTP Kommando RSET{{{
-				number_input -s "${lmtp_rset_timeout%?}"
+				default_or_input lmtp_rset_timeout number_input '-a "$LMTP_TITLE" "$SMTP_RSET_TIMEOUT_MSG"' "$lmtp_rset_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_rset_timeout="$NUMBER"
 					postconf -e lmtp_rset_timeout="$NUMBER"
@@ -1300,7 +1300,7 @@ lmtp_conf() {
 				;;
 			lmtp_xforward_timeout)
 				# LMTP xforward Timeout#{{{
-				number_input -a "${lmtp_xforward_timeout%?}"
+				default_or_input lmtp_xforward_timeout number_input '-a "$LMTP_TITLE" "$SMTP_XFORWARD_TIMEOUT_MSG"' "$lmtp_xforward_timeout"
 				if [[ -n $NUMBER ]] ; then
 					lmtp_xforward_timeout="$NUMBER"
 					postconf -e lmtp_xforward_timeout="$NUMBER"

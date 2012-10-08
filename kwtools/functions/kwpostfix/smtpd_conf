@@ -559,7 +559,8 @@ smtpd_conf() {
 				;;
 			smtpd_proxy_timeout)
 				# Timeout der Verbindung zum Proxy Filter{{{
-				number_input -s "${smtpd_proxy_timeout%?}"
+				SMTPD_PROXY_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout fuer die Verbindung zum Proxy Filter ein.')
+				number_input -a "$SMTPD_TITLE" "$SMTPD_PROXY_TIMEOUT_MSG" "$smtpd_proxy_timeout"
 				if [ "$NUMBER" ] ; then
 					smtpd_proxy_timeout="$NUMBER"
 					postconf -e smtpd_proxy_timeout="$NUMBER"

@@ -60,8 +60,8 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		qmgr_daemon_timeout)
 			# Standard = 1000s{{{
-			QMGR_DAEMON_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout des Postfix Queue Manager Daemon zum behandeln einer Anforderung ein (Standard ist 1000s). Siehe Hilfe.')
-			number_input -a "$QUEUE_TITLE" "$QMGR_DAEMON_TIMEOUT_MSG" "${qmgr_daemon_timeout%?}"
+			QMGR_DAEMON_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout des Postfix Queue Manager Daemon zum behandeln einer Anforderung ein (Standard 1000s).')
+			number_input -a "$QUEUE_TITLE" "$QMGR_DAEMON_TIMEOUT_MSG" "$qmgr_daemon_timeout"
 			if [[ -n $NUMBER ]] ; then
 				qmgr_daemon_timeout="$NUMBER"
 				postconf -e qmgr_daemon_timeout="$NUMBER"
@@ -81,8 +81,8 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		qmgr_ipc_timeout)
 			# Standard = 60s{{{
-			QMGR_IPC_TIMEOUT_MSG=$(gettext 'Geben Sie das Zeitlimit fuer den Queue-Manager beim erhalten oder senden bei Informationen ueber einen internen Kanal ein (Standard ist 60s). Siehe Hilfe.')
-			number_input -a "$QUEUE_TITLE" "$QMGR_IPC_TIMEOUT_MSG" "${qmgr_ipc_timeout%?}"
+			QMGR_IPC_TIMEOUT_MSG=$(gettext 'Geben Sie das Zeitlimit fuer den Queue-Manager beim erhalten oder senden bei Informationen ueber einen internen Kanal ein (Standard 60s).')
+			number_input -a "$QUEUE_TITLE" "$QMGR_IPC_TIMEOUT_MSG" "$qmgr_ipc_timeout"
 			if [[ -n $NUMBER ]] ; then
 				qmgr_ipc_timeout="$NUMBER"
 				postconf -e qmgr_ipc_timeout="$NUMBER"
@@ -123,7 +123,7 @@ while [ "$gv_Auswahl" ] ; do
 		qmqpd_authorized_clients)
 			# Welche clients duerfen mit dem qmail Protokoll{{{
 			# postfix kontakten.
-			QMAIL_CLIENTS_MSG=$(gettext 'Geben Sie die Rechner oder IP-Adressen ein, die das Qmail-Protokoll (QMQP) nutzen duerfen. Siehe Hilfe.')
+			QMAIL_CLIENTS_MSG=$(gettext 'Geben Sie die Rechner oder IP-Adressen ein, die das Qmail-Protokoll (QMQP) nutzen duerfen.')
 			inputbox "$QUEUE_TITLE" "$QMAIL_CLIENTS_MSG" "$qmqpd_authorized_clients"
 			if [[ -n $gv_Auswahl ]] ; then
 				# Alle eingebenen IP's ueberpruefen
@@ -144,27 +144,35 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		qmqpd_client_port_logging)
 			# Port der Qmail Clients loggen (yes/no)?# {{{
+			# Standard = no
 			QMAIL_CLIENT_LOG_MSG=$(gettext 'Sollen die Ports der clients geloggt werden (ja/nein)?')
-			yesno "$QUEUE_TITLE" "$QMAIL_CLIENT_LOG_MSG"
-			if [[ $? = 0 ]] ; then
-				qmqpd_client_port_logging=yes
-				postconf -e qmqpd_client_port_logging=yes
-			else
-				qmqpd_client_port_logging=no
-				postconf -e qmqpd_client_port_logging=no
-			fi
+			ja_nein_tausch "$QUEUE_TITLE" "$QMAIL_CLIENT_LOG_MSG"
+			qmqpd_client_port_logging="$WERT"
+			postconf -e qmqpd_client_port_logging="$WERT"
 			## }}}
 			conf_queue_menue qmqpd_client_port_logging
 			;;
 		qmqpd_error_delay)
 			# Wartezeit nach einem Fehler in einer QMQP Verbindung{{{
-			number_input -s "${qmqpd_error_delay%?}"
+			QMQPD_ERROR_DELAY_MSG=$(gettext 'Geben Sie die Wartezeit nach einem Fehler in einer QMQP-Verbindung ein (Standard 1s).')
+			number_input -a "$QUEUE_TITLE" "$QMQPD_ERROR_DELAY_MSG" "$qmqpd_error_delay"
 			if [[ -n $NUMBER ]] ; then
 				qmqpd_error_delay="$NUMBER"
 				postconf -e qmqpd_error_delay="$NUMBER"
 			fi
 			#}}}
 			conf_queue_menue qmqpd_error_delay
+			;;
+		qmqpd_timeout)
+			# Timeout beim Aufruf des qmqpd{{{
+			QMQPD_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout beim Aufruf des qmqpd ein (Standard 300s).')
+			number_input -a "$QUEUE_TITLE" "$QMQPD_TIMEOUT_MSG" "$qmqpd_timeout"
+			if [[ -n $NUMBER ]] ; then
+				qmqpd_timeout="$NUMBER"
+				postconf -e qmqpd_timeout="$NUMBER"
+			fi
+			#}}}
+			conf_queue_menue qmqpd_timeout
 			;;
 		queue_directory)
 			# Pfad zum Queue Verzeichnis{{{
@@ -202,23 +210,14 @@ while [ "$gv_Auswahl" ] ; do
 		queue_run_delay)
 			# Anzahl der Sek. nach denen postfix die deferred Queue nach{{{
 			# zuzustellenden mails durchsucht
-			number_input -s "${queue_run_delay%?}"
+			QUEUE_RUN_DELAY_MSG=$(gettext 'Geben Sie den Zeitintervall ein, nach dem Postfix die deferred-Queue nach zuzustellenden Mails durchsucht (Standard 300s).')
+			number_input -a "$QUEUE_TITLE" "$QUEUE_RUN_DELAY_MSG" "$queue_run_delay"
 			if [[ -n $NUMBER ]] ; then
 				queue_run_delay="$NUMBER"
 				postconf -e queue_run_delay="$NUMBER"
 			fi
 			#}}}
 			conf_queue_menue queue_run_delay
-			;;
-		qmqpd_timeout)
-			# Timeout beim Aufruf des qmqpd{{{
-			number_input -s "${qmqpd_timeout%?}"
-			if [[ -n $NUMBER ]] ; then
-				qmqpd_timeout="$NUMBER"
-				postconf -e qmqpd_timeout="$NUMBER"
-			fi
-			#}}}
-			conf_queue_menue qmqpd_timeout
 			;;
 		postfix)
 			# postfix, Konfiguration neu einlesen

@@ -117,7 +117,7 @@ mailman_conf() {
 				;;
 			mailman_destination_rate_delay)
 				# = $default_destination_rate_delay# {{{
-				default_or_input mailman_destination_rate_delay number_input '-a "$MAILMAN_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' ${mailman_destination_rate_delay%?}
+				default_or_input mailman_destination_rate_delay number_input '-a "$MAILMAN_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' $mailman_destination_rate_delay
 				if [[ -n $Value ]] ; then
 					mailman_destination_rate_delay="$Value"
 					postconf -e mailman_destination_rate_delay="$Value"

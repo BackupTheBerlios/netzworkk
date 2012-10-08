@@ -137,7 +137,7 @@ default_conf() {
 				;;
 			default_destination_rate_delay)
 				# Standard = 0s# {{{
-				number_input -a "$DEFAULT_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG" ${default_destination_rate_delay%?}
+				number_input -a "$DEFAULT_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG" $default_destination_rate_delay
 				if [[ -n $NUMBER ]] ; then
 					default_destination_rate_delay="$NUMBER"
 					postconf -e default_destination_rate_delay="$NUMBER"

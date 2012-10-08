@@ -117,7 +117,7 @@ ifmail_conf() {
 				;;
 			ifmail_destination_rate_delay)
 				# Standard = $default_destination_rate_delay# {{{
-				default_or_input ifmail_destination_rate_delay number_input '-a "$IFMAIL_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' ${ifmail_destination_rate_delay%?}
+				default_or_input ifmail_destination_rate_delay number_input '-a "$IFMAIL_TITLE" "$DEFAULT_DESTINATION_RATE_DELAY_MSG"' $ifmail_destination_rate_delay
 				if [[ -n $Value ]] ; then
 					ifmail_destination_rate_delay="$Value"
 					postconf -e ifmail_destination_rate_delay="$Value"
