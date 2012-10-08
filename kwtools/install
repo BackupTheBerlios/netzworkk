@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 07.03.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 08.10.2012
 #
 # Script: install, installiert die kwtools Scripts und kompiliert,
 # wenn angegeben alle Funktionen.
@@ -190,7 +190,7 @@ for i in graphic multi net sys utils ; {
 
 # Programme der 1. Ebene installieren
 $INSTALL $INSTALL_EXEC_OPT ./{create.cal.pl,kwholiday,kwtex-cal,kwadmin,kwrsync_cron} $EXEC_PATH
-$INSTALL $INSTALL_EXEC_OPT ./{kwbackup_cron,kwnetcardconf,skeleton-dialog.zsh,kwtermin*} $EXEC_PATH
+$INSTALL $INSTALL_EXEC_OPT ./{kwnetcardconf,skeleton-dialog.zsh,kwtermin*} $EXEC_PATH
 $INSTALL $INSTALL_EXEC_OPT ./{kwcryptsetup,kwecryptfs,kwlosetup,kwrsync_backup_cron} $EXEC_PATH
 
 # Programme der System Ebene installieren
