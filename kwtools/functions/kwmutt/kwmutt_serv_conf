@@ -3,8 +3,7 @@
 # usage: kwmutt_serv_conf
 #
 kwmutt_serv_conf() {
-	autoload -U net_conf check_mail_server parse_mail_host
-	net_conf
+	autoload -U check_mail_server parse_mail_host
 	# Translation Variablen# {{{
 	lv_Conf_Name=$(gettext 'Konfigurations-Name')
 	SERV_DCCDB_MENU=($gv_Display \"\" $gv_Create \"\"
