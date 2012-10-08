@@ -3,14 +3,14 @@
 # nur fuer das erstellen der Programm-Pakete geeignet,
 # nicht fuer den Source-Code.
 #
-# Last-Modified: Fri June 03 08:55:32 2011
+# Last-Modified: Mon Oct 08 08:55:32 2012
 
 setopt shwordsplit extendedglob
 setopt no_nomatch
 
 # Variablen
 DIR=../..
-PACKAGES="kwbackup_cron kwcryptsetup kwecryptfs kwholiday kwlosetup kwnetcardconf kwrsync_backup_cron kwtex-cal kwrsync_cron kwtermin kwtermin_cron"
+PACKAGES="kwcryptsetup kwecryptfs kwholiday kwlosetup kwnetcardconf kwrsync_backup_cron kwtex-cal kwrsync_cron kwtermin kwtermin_cron"
 PACKAGES_DIR="graphic multi net sys utils"
 FUNC_DIR="${DIR}/functions"
 HELP_DIR="${DIR}/help"
