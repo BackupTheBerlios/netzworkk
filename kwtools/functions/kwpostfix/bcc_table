@@ -5,8 +5,12 @@ bcc_table() {
 	autoload -U no_adr_and_recipient_adr_msg
 	# Funktion bcc_menue{{{
 	bcc_menue() {
-		BCC_MENU=$(gettext 'Adresse "$ADR" Empfaenger "$E_ADR" $gv_Save "" $gv_Back ""')
-		menubox "$TABLE_TITLE" "$gv_Menupoint" "$BCC_MENU"
+		BCC_MENU=($lv_Address \"$ADR\" $lv_Recipient \"$E_ADR\" $gv_Save \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$TABLE_TITLE" "$gv_Menupoint" "$BCC_MENU"
+		else
+			menubox "$TABLE_TITLE" "$gv_Menupoint" "$BCC_MENU"
+		fi
 	}
 	#}}}
 	# Funktion bcc_aendern{{{
@@ -17,10 +21,10 @@ bcc_table() {
 			HELP*)	script_help "$TAB_HELP"
 				bcc_menue
 				;;
-			Adr*)
+			$lv_Address)
 				# Adresse waehlen{{{
 				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
-				inputbox "TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
+				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
 						[a-z,A-Z,0-9-._]*@*.*)	ADR="$gv_Auswahl"
@@ -39,9 +43,9 @@ bcc_table() {
 					no_input_msg
 				fi
 				#}}}
-				bcc_menue
+				bcc_menue $lv_Address
 				;;
-			Empf*|Recipient)
+			$lv_Recipient)
 				# Wer soll immer eine BCC Mail erhalten?{{{
 				BCC_ADR_MSG=$(gettext 'Geben Sie hier eine Mailadresse ein (Bsp. user@domain.de).')
 				mail_address "$BCC_ADR_MSG" "$E_ADR"
@@ -51,7 +55,7 @@ bcc_table() {
 					unset -- E_ADR
 				fi
 				#}}}
-				bcc_menue
+				bcc_menue $lv_Recipient
 				;;
 			$gv_Save)
 				# Eintraege speichern{{{
@@ -153,7 +157,7 @@ bcc_table() {
 				#}}}
 				tabellen_menue
 				;;
-			D*)
+			$lv_Db)
 				# Datenbank neu erzeugen und Postfix anweisen
 				# die Einstellungen neu einzulesen
 				db_new_reread "$WAS_IST" "$FILE"

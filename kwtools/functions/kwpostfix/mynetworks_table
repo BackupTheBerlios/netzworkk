@@ -2,9 +2,11 @@
 #
 mynetworks_table() {
 	FILE="$1"
+	#Variablen
+	lv_Host_Net=$(gettext 'Rechner/Netz')
 	# Funktion mynetworks_menue{{{
 	mynetworks_menue() {
-		MYNETWORK_MENU=$(gettext 'Rechner/Netz "$ADR" $gv_Save "" $gv_Back ""')
+		MYNETWORK_MENU=($lv_Host_Net \"$ADR\" $gv_Save \"\" $gv_Back \"\")
 		menubox "$TABLE_TITLE" "$gv_Menupoint" "$MYNETWORK_MENU"
 	}
 	#}}}
@@ -17,7 +19,7 @@ mynetworks_table() {
 			HELP*)	script_help "$TAB_HELP"
 				mynetworks_menue
 				;;
-			Rechner*|Host*)
+			$lv_Host_Net)
 				# IP-Adresse/Netz eingeben{{{
 				IP_NET_MSG=$(gettext 'Geben Sie hier bitte die IP eines Rechners oder eines Netzes ein (Bsp. 192.168.0.1 | 192.168.0.0/24).')
 				inputbox "$TABLE_TITLE" "$IP_NET_MSG" "$ADR"
@@ -135,7 +137,7 @@ mynetworks_table() {
 				#}}}
 				tabellen_menue
 				;;
-			D*)
+			$lv_Db)
 				# Datenbank neu erzeugen und Postfix anweisen die
 				# Einstellungen neu einzulesen
 				db_new_reread "$WAS_IST" "$FILE"

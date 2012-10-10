@@ -5,8 +5,13 @@ transport_table() {
 	autoload -U no_adr_msg
 # Funktion transport_menue{{{
 transport_menue() {
-	TRANSPORT_MENU=$(gettext 'Adresse "$ADR" Transport "$TRANS" Server "$MX_HOST" Port "$PORT" $gv_Save "" $gv_Back ""')
-	menubox "$TABLE_TITLE" "$gv_Menupoint" "$TRANSPORT_MENU"
+	TRANSPORT_MENU=($lv_Address \"$ADR\" $lv_Transport \"$TRANS\"
+	$lv_Server \"$MX_HOST\" $lv_Port \"$PORT\" $gv_Save \"\" $gv_Back \"\")
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$TABLE_TITLE" "$gv_Menupoint" "$TRANSPORT_MENU"
+	else
+		menubox "$TABLE_TITLE" "$gv_Menupoint" "$TRANSPORT_MENU"
+	fi
 }
 #}}}
 # Funktion transport_aendern{{{
@@ -23,7 +28,7 @@ while [ "$gv_Auswahl" ] ; do
 		HELP*)	script_help "$TAB_HELP"
 			transport_menue
 			;;
-		Adress*)
+		$lv_Address)
 			# Adresse waehlen{{{
 			ADRESS_MSG=$(gettext 'Geben Sie entweder eine Mailadresse, Domain, oder Subdomain ein fuer die Postfix Mail annehmen soll (Bsp. domain.de | .subdomain.de).')
 			inputbox "$TABLE_TITLE" "$ADRESS_MSG" "$ADR"
@@ -42,11 +47,11 @@ while [ "$gv_Auswahl" ] ; do
 				no_input_msg
 			fi
 			#}}}
-			transport_menue
+			transport_menue $lv_Address
 			;;
-		Transport)
+		$lv_Transport)
 			# Transport Methode waehlen{{{
-			transport_methode
+			transport_methode "${TRANS%%:*}" "${TRANS##*:}"
 			if [ "$WERT" = error ] ; then
 				ERROR_MSG=$(gettext 'Geben Sie einen Text fuer den Transportweg \"error\" ein.')
 				inputbox "$TABLE_TITLE" "$ERROR_MSG" "${TRANS#*:}"
@@ -60,9 +65,9 @@ while [ "$gv_Auswahl" ] ; do
 				TRANS="$WERT"
 			fi
 			#}}}
-			transport_menue
+			transport_menue $lv_Transport
 			;;
-		Server)
+		$lv_Server)
 			# Server eingeben{{{
 			if [ "${TRANS%:*}" != error ] ; then
 				SERVER_MSG=$(gettext 'Geben Sie hier bitte einen, Mail Servernamen ein (Bsp. mx.domain.de | 192.168.0.1).')
@@ -84,9 +89,9 @@ while [ "$gv_Auswahl" ] ; do
 				no_server_port_msg
 			fi
 			#}}}
-			transport_menue
+			transport_menue $lv_Server
 			;;
-		Port)
+		$lv_Port)
 			# Port vergeben{{{
 			if [ "${TRANS%:*}" != error ] ; then
 				TRANSPORT_PORT_MSG=$(gettext 'Geben Sie hier einen Port fuer den Transport ($TRANS) ein (Bsp. 25).')
@@ -105,7 +110,7 @@ while [ "$gv_Auswahl" ] ; do
 				no_server_port_msg
 			fi
 			#}}}
-			transport_menue
+			transport_menue $lv_Port
 			;;
 		$gv_Save)
 			# Eintraege speichern{{{
@@ -242,7 +247,7 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			tabellen_menue
 			;;
-		D*)
+		$lv_Db)
 			# Datenbank neu erzeugen und Postfix anweisen
 			# die Einstellungen neu einzulesen
 			db_new_reread "$WAS_IST" "$FILE"

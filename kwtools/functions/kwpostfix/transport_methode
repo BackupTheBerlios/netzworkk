@@ -17,30 +17,43 @@ transport_methode() {
 	#
 	if [ -n "${MB_TRANS_MENU[1]}" ] ; then
 		MB_TRANS_MSG=$(gettext 'Waehlen Sie eine Transport Methode aus.')
-		if [[ -n $OldMethode ]] ; then
-			menubox -d "$OldMethode" "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
-		else
-			menubox "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
-		fi
-		#
+		# Funktion transport_methode_menu# {{{
+		transport_methode_menu() {
+			if [[ ${#argv} == 1 ]] ; then
+				menubox -d "$1" "$lv_Transportmethode" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+			else
+				menubox "$lv_Transportmethode" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+			fi
+		}
+		## }}}
 		if [ -z "$gv_Auswahl" ] ; then
 			WERT=""
 		fi
 		#
+		transport_methode_menu $OldMethode
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
 				HELP*)	script_help mailbox_transport_help
-					menubox "$gv_Configuration" "$MB_TRANS_MSG" "$MB_TRANS_MENU"
+					transport_methode_menu $OldMethode
 					;;
 				*)	# uebernehmen
 					Tmp="$gv_Auswahl"
-					METHODE_MSG=$(gettext 'Falls Sie noch ein paar Einstellungen benoetigen koennen Sie diese hier eintragen. Zum Beispiel bei Auswahl einer Methode zusaetzlich die IP und Portnr. angeben ([127.0.0.1]:10024, \$myhostname).')
-					inputbox "$gv_Configuration" "$METHODE_MSG" "${OldValue//$/\\\$}"
-					if [[ -n $gv_Auswahl ]] ; then
-						WERT="${Tmp}:${gv_Auswahl//$/\$}"
-					else
-						WERT="$Tmp"
-					fi
+					case "$HASH_TAB" in
+						*_table)
+							# Wird eine Funktion aufgerufen die die Lookup
+							# Tabellen konfiguriert wird nur der ausgewaehlte
+							# Wert uebernommen.
+							WERT="$Tmp"	;;
+						*)
+							METHODE_MSG=$(gettext 'Falls Sie noch ein paar Einstellungen benoetigen koennen Sie diese hier eintragen. Zum Beispiel bei Auswahl einer Methode zusaetzlich die IP und Portnr. angeben ([127.0.0.1]:10024, \$myhostname).')
+							inputbox "$gv_Configuration" "$METHODE_MSG" "${OldValue//$/\\\$}"
+							if [[ -n $gv_Auswahl ]] ; then
+								WERT="${Tmp}:${gv_Auswahl//$/\$}"
+							else
+								WERT="$Tmp"
+							fi
+						;;
+					esac
 					break
 					;;
 			esac

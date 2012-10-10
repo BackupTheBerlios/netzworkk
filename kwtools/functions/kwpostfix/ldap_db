@@ -1,8 +1,19 @@
 # Funktion, SQL Datenbanken{{{
 ldap_db() {
+	###########################################
+	# TODO: SSL/TLS und SASL fehlen
+	###########################################
 	unset -- FILE
 	FILE="$2"
-	LDAP_CONF_TITLE=$(gettext 'Konfiguration::LDAP_Tabelle')
+	lv_Attr=$(gettext 'Attribute')
+	lv_Port=$(gettext 'Port')
+	lv_Search_Base=$(gettext 'Suchbasis')
+	lv_Timeout=$(gettext 'Zeitlimit')
+	lv_Ldap_Filter=$(gettext 'LDAP-Filter')
+	lv_Ldap_Tab=$(gettext 'LDAP_Tabelle')
+	#
+	LDAP_CONF_TITLE="${gv_Configuration}::${lv_Ldap_Tab}"
+
 	# Funktion Schlüsseldatei einlesen{{{
 	#
 	read_werte() {
@@ -105,8 +116,17 @@ ldap_db() {
 	#}}}
 	# Funktion ldap_conf_menu{{{
 	ldap_conf_menue() {
-		LDAP_CONF_MENU=$(gettext 'Datei "$FILE" Benutzer "$DB_User" Passwort "$PASSPHRASE1" Port "$Port" Rechner "$DB_Host" Suchbasis "$Search_Base" Timeout "$Timeout" LDAP-Filter "$Ldap_Filter" Attribute "$Attribute" $gv_Save "" $gv_Back ""')
-		menubox "$LDAP_CONF_TITLE" "$gv_Menupoint" "$LDAP_CONF_MENU"
+		LDAP_CONF_MENU=($gv_Filename \"$FILE\" -------------------- \"\"
+		$gv_User \"$DB_User\"
+		$lv_Password \"$PASSPHRASE1\" $lv_Port \"$Port\" $gv_Host \"$DB_Host\"
+		$lv_Search_Base \"$Search_Base\" $lv_Timeout \"$Timeout\"
+		$lv_Ldap_Filter \"$Ldap_Filter\" $lv_Attr \"$Attribute\"
+		$gv_Save \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$LDAP_CONF_TITLE" "$gv_Menupoint" "$LDAP_CONF_MENU"
+		else
+			menubox "$LDAP_CONF_TITLE" "$gv_Menupoint" "$LDAP_CONF_MENU"
+		fi
 	}
 	#}}}
 	read_werte $FILE
@@ -117,7 +137,11 @@ ldap_db() {
 			HELP*)	script_help "$TAB_HELP"
 				ldap_conf_menu
 				;;
-			Attribute)
+			$gv_Filename|---*)
+				# Dateinamen Anzeige
+				ldap_conf_menu $gv_Filename
+				;;
+			$lv_Attr)
 				# Attribute der Verzeichnisse, die Dns oder URLs enthalten.{{{
 				ATTRIBUTE_MSG=$(gettext 'Geben Sie die Attribute der Verzeichnisse ein, die DNs oder URLs enthalten (Bsp. mail).')
 				inputbox "$LDAP_CONF_TITLE" "$ATTRIBUTE_MSG" "$Attribute"
@@ -127,17 +151,13 @@ ldap_db() {
 					unset -- Attribute
 				fi
 				#}}}
-				ldap_conf_menu
+				ldap_conf_menu $lv_Attr
 				;;
-			Datei|File)
-				# Dateinamen Anzeige
-				ldap_conf_menu
-				;;
-			Benutzer|User) # DB_user
+			$gv_User) # DB_user
 				db_user
-				ldap_conf_menu
+				ldap_conf_menu $gv_User
 				;;
-			LDAP*)
+			$lv_Ldap_Filter)
 				# LDAP-Filter mit dem das LDAP-Verzeichnis durchsucht wird.{{{
 				# (Bsp. query_filter = (&(mail=%s)(paid_up=true))
 				U_OPT=regexp
@@ -149,13 +169,13 @@ ldap_db() {
 					unset -- Ldap_Filter
 				fi
 				#}}}
-				ldap_conf_menu
+				ldap_conf_menu $lv_Ldap_Filter
 				;;
-			Pa*) # DB Passwort
+			$lv_Password) # DB Passwort
 				db_passwd
-				ldap_conf_menu
+				ldap_conf_menu $lv_Password
 				;;
-			Port)
+			$lv_Port)
 				# Porteingabe{{{
 				PORT_MSG=$(gettext 'Geben Sie den Port des LDAP-Servers ein. Standard ist Port 389.')
 				number_input "$LDAP_CONF_TITLE" "$PORT_MSG" "$Port"
@@ -165,19 +185,19 @@ ldap_db() {
 					Port=389
 				fi
 				#}}}
-				ldap_conf_menu
+				ldap_conf_menu $lv_Port
 				;;
-			Re*|Ho*)	# Datenbankhost
+			$gv_Host)	# Datenbankhost
 				db_host
-				ldap_conf_menu
+				ldap_conf_menu $gv_Host
 				;;
-			Suchbasis|Search*) # zu verwendete LDAP-Suchbasis
+			$lv_Search_Base) # zu verwendete LDAP-Suchbasis
 				search_base
-				ldap_conf_menu
+				ldap_conf_menu $lv_Search_Base
 				;;
-			Ti*)
+			$lv_Timeout)
 				# Timeout{{{
-				TIMEOUT_MSG=$(gettext 'Geben Sie den Timout bei einer Verbindungsanfrage ein. Standard ist 10 Sekunden.')
+				TIMEOUT_MSG=$(gettext 'Geben Sie den Timout bei einer Verbindungsanfrage ein. Standard ist 10 = 10 Sekunden.')
 				number_input "$LDAP_CONF_TITLE" "$TIMEOUT_MSG" "$Timeout"
 				if [ "$NUMBER" ] ; then
 					Timeout="$NUMBER"
@@ -185,7 +205,7 @@ ldap_db() {
 					Timeout=10
 				fi
 				#}}}
-				ldap_conf_menu
+				ldap_conf_menu $lv_Timeout
 				;;
 			$gv_Save)	
 				# speichern{{{

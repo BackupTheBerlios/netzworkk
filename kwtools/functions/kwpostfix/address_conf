@@ -3,7 +3,7 @@
 address_conf() {
 
 	# Variable
-	ADDRESS_TITLE="${gv_Configuration}::${lv_Address}"
+	ADDRESS_TITLE="${gv_Configuration}::${lv_Address_Verify}"
 	
 	# Bestehende Konfiguration einlesen# {{{
 	print -l ${(M)${(f)"$(postconf -c $MAIL_CONFIG)"}##(#s)address_*} | \
@@ -73,79 +73,79 @@ address_conf() {
 				;;
 			address_verify_cache_cleanup_interval)
 				# = 12h
-				conf_address_menu address_verify_cache_cleanup_interval
+				conf_address_menu $address_verify_cache_cleanup_interval
 				;;
 			address_verify_default_transport)
 				# = $default_transport
-				conf_address_menu address_verify_default_transport
+				conf_address_menu $address_verify_default_transport
 				;;
 			address_verify_local_transport)
 				# = $local_transport
-				conf_address_menu address_verify_local_transport
+				conf_address_menu $address_verify_local_transport
 				;;
 			address_verify_map)
 				# = btree:$data_directory/verify_cache
-				conf_address_menu address_verify_map
+				conf_address_menu $address_verify_map
 				;;
 			address_verify_negative_cache)
 				# = yes
-				conf_address_menu address_verify_negative_cache
+				conf_address_menu $address_verify_negative_cache
 				;;
 			address_verify_negative_expire_time)
 				# = 3d
-				conf_address_menu address_verify_negative_expire_time
+				conf_address_menu $address_verify_negative_expire_time
 				;;
 			address_verify_negative_refresh_time)
 				# = 3h
-				conf_address_menu address_verify_negative_refresh_time
+				conf_address_menu $address_verify_negative_refresh_time
 				;;
 			address_verify_poll_count)
 				# = ${stress?1}${stress:3}
-				conf_address_menu address_verify_poll_count
+				conf_address_menu $address_verify_poll_count
 				;;
 			address_verify_poll_delay)
 				# = 3s
-				conf_address_menu address_verify_poll_delay
+				conf_address_menu $address_verify_poll_delay
 				;;
 			address_verify_positive_expire_time)
 				# = 31d
-				conf_address_menu address_verify_positive_expire_time
+				conf_address_menu $address_verify_positive_expire_time
 				;;
 			address_verify_positive_refresh_time)
 				# = 7d
-				conf_address_menu address_verify_positive_refresh_time
+				conf_address_menu $address_verify_positive_refresh_time
 				;;
 			address_verify_relay_transport)
 				# = $relay_transport
-				conf_address_menu address_verify_relay_transport
+				conf_address_menu $address_verify_relay_transport
 				;;
 			address_verify_relayhost)
 				# = $relayhost
-				conf_address_menu address_verify_relayhost
+				conf_address_menu $address_verify_relayhost
 				;;
 			address_verify_sender)
 				# = $double_bounce_sender
-				conf_address_menu address_verify_sender
+				conf_address_menu $address_verify_sender
 				;;
 			address_verify_sender_dependent_default_transport_maps)
 				# = $sender_dependent_default_transport_maps
-				conf_address_menu address_verify_sender_dependent_default_tr
+				conf_address_menu $address_verify_sender_dependent_default_tr
 				;;
 			address_verify_sender_dependent_relayhost_maps)
 				# = $sender_dependent_relayhost_maps
-				conf_address_menu address_verify_sender_dependent_relayhost_maps
+				conf_address_menu $address_verify_sender_dependent_relayhost_maps
 				;;
 			address_verify_sender_ttl)
 				# = 0s
-				conf_address_menu address_verify_sender_ttl
+				conf_address_menu $address_verify_sender_ttl
 				;;
 			address_verify_transport_maps)
 				# = $transport_maps
-				conf_address_menu address_verify_transport_maps
+				conf_address_menu $address_verify_transport_maps
 				;;
 			address_verify_virtual_transport)
 				# = $virtual_transport
-				conf_address_menu address_verify_virtual_transport
+				conf_address_menu $address_verify_virtual_transport
 				;;
 			postfix)
 				# postfix, Konfiguration neu einlesen

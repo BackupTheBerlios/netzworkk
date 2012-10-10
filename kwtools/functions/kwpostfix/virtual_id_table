@@ -5,8 +5,13 @@ virtual_id_table() {
 	autoload -U no_adr_and_recipient_adr_msg
 	# Funktion virtual_id_menue{{{
 	virtual_id_menue() {
-		VIRTUAL_ID_MENU=$(gettext 'Adresse "$ADR" ID "$ID" $gv_Save "" $gv_Back ""')
-		menubox "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_ID_MENU"
+		VIRTUAL_ID_MENU=($lv_Address \"$ADR\" $lv_Id \"$ID\"
+		$gv_Save \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_ID_MENU"
+		else
+			menubox "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_ID_MENU"
+		fi
 	}
 	#}}}
 	# Funktion virtual_id_aendern{{{
@@ -17,15 +22,17 @@ virtual_id_table() {
 			HELP*)	script_help "$TAB_HELP"
 				virtual_id_menue
 				;;
-			Adr*)
+			$lv_Address)
 				# Empfaenger Adresse eingeben{{{
 				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
-				inputbox "TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
+				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
 						[a-z,A-Z,0-9-._]*@*.*)	ADR="$gv_Auswahl"
 							;;
 						@*.*)	ADR="$gv_Auswahl"
+							;;
+						[a-z,A-Z,0-9-._]*)	ADR="$gv_Auswahl"
 							;;
 						*)
 							unset -- ADR
@@ -37,9 +44,9 @@ virtual_id_table() {
 					no_input_msg
 				fi
 				#}}}
-				virtual_id_menue
+				virtual_id_menue $lv_Address
 				;;
-			ID)
+			$lv_Id)
 				# Gruppen/User-ID waehlen{{{
 				# Je nachdem welche virtual_*_table konfiguriert
 				# werden soll; einmal fuer User und einmal fuer
@@ -65,7 +72,7 @@ virtual_id_table() {
 						;;
 				esac
 				#}}}
-				virtual_id_menue
+				virtual_id_menue $lv_Id
 				;;
 			$gv_Save)
 				# Eintraege speichern{{{
@@ -167,7 +174,7 @@ virtual_id_table() {
 				#}}}
 				tabellen_menue
 				;;
-			D*)
+			$lv_Db)
 				# Datenbank neu erzeugen und Postfix anweisen
 				# die Einstellungen neu einzulesen
 				db_new_reread "$WAS_IST" "$FILE"

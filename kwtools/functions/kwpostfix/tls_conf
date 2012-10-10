@@ -237,8 +237,7 @@ tls_conf() {
 				;;
 			tls_preempt_cipherlist)
 				# Standard = no# {{{
-				TLS_PREEMPT_CIPHERLIST_MSG=$(gettext 'Soll das Verschluesselungverfahren des
-\tPostfix SMTP Servers benutzt werden oder das des Clients? Standard ist nein.')
+				TLS_PREEMPT_CIPHERLIST_MSG=$(gettext 'Soll das Verschluesselungverfahren des Postfix SMTP Servers benutzt werden oder das des Clients? Standard ist nein.')
 				ja_nein_tausch "$TLS_TITLE" "$TLS_PREEMPT_CIPHERLIST_MSG"
 				if [[ -n $WERT ]] ; then
 					tls_preempt_cipherlist="$WERT"

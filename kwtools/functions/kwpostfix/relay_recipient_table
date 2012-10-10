@@ -5,7 +5,7 @@ relay_recipient_table() {
 	autoload -U no_adr_msg
 	# Funktion relay_recipient_menue{{{
 	relay_recipient_menue() {
-		RECIPIENT_MENU=$(gettext 'Adresse "$ADR" $gv_Save "" $gv_Back ""')
+		RECIPIENT_MENU=($lv_Address \"$ADR\" $gv_Save \"\" $gv_Back \"\")
 		menubox "$TABLE_TITLE" "$gv_Menupoint" "$RECIPIENT_MENU"
 	}
 	#}}}
@@ -17,10 +17,10 @@ relay_recipient_table() {
 			HELP*)	script_help "$TAB_HELP"
 				relay_recipient_menue
 				;;
-			Adr*)
+			$lv_Address)
 				# Adresse waehlen{{{
 				ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse oder domain ein (Bsp. @domain.de | user@domain.de).')
-				inputbox "TABLE_TITLE" "$ADR_MSG" "$ADR"
+				inputbox "$TABLE_TITLE" "$ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
 						[a-z,A-Z,0-9]*[a-z,A-Z,0-9-._]*@*.*|@*.*)	ADR="$gv_Auswahl"
@@ -73,7 +73,7 @@ relay_recipient_table() {
 				;;
 			$gv_Create)
 				# Werte anlegen
-				unset -- DOMAIN ADR E_ADR AENDERN_ADR
+				unset -- ADR AENDERN_ADR
 				relay_recipient_aendern
 				tabellen_menue
 				;;
@@ -131,7 +131,7 @@ relay_recipient_table() {
 				#}}}
 				tabellen_menue
 				;;
-			D*)
+			$lv_Db)
 				# Datenbank neu erzeugen und Postfix anweisen
 				# die Einstellungen neu einzulesen
 				db_new_reread "$WAS_IST" "$FILE"

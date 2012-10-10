@@ -1,10 +1,16 @@
 # Funktion kwpostfix_action{{{
+#
 # usage: kwpostfix_action
+#
 kwpostfix_action() {
 	case "$TAB" in
-		*access)	AK_MENU=(all-numeric \"\" DISCARD \"\" DUNNO \"\" HOLD \"\" OK \"\" REJECT \"\" 4/5XX \"\")
+		*access)
+			AK_MENU=(all-numeric \"\" DISCARD \"\" DUNNO \"\"
+				HOLD \"\" OK \"\" REJECT \"\" 4/5XX \"\")
 			;;
-		*)	AK_MENU=(DISCARD \"\" HOLD \"\" IGNORE \"\" OK \"\" REJECT \"\" WARN \"\" 4/5XX \"\")
+		*)	
+			AK_MENU=(DISCARD \"\" HOLD \"\" IGNORE \"\" OK \"\"
+				REJECT \"\" WARN \"\" 4/5XX \"\")
 			;;
 	esac
 	AK_MSG=$(gettext 'Waehlen Sie eine Aktion aus.')

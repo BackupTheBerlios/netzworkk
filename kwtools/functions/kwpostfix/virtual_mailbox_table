@@ -8,8 +8,13 @@ virtual_mailbox_table() {
 	if [ "$Ist_Wert" ] ; then
 		# Funktion virtual_mailbox_menue{{{
 		virtual_mailbox_menue() {
-			VIRTUAL_MB_MENU=$(gettext 'Adresse "$ADR" Empfaenger "$E_ADR" $gv_Save "" $gv_Back ""')
-			menubox "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_MB_MENU"
+			VIRTUAL_MB_MENU=($lv_Address \"$ADR\" $lv_Recipient \"$E_ADR\"
+			$gv_Save \"\" $gv_Back \"\")
+			if [[ ${#argv} == 1 ]] ; then
+				menubox -d "$1" "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_MB_MENU"
+			else
+				menubox "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_MB_MENU"
+			fi
 		}
 		#}}}
 		# Funktion virtual_mailbox_aendern{{{
@@ -20,10 +25,10 @@ virtual_mailbox_table() {
 				HELP*)	script_help "$TAB_HELP"
 					virtual_mailbox_menue
 					;;
-				Adr*)
+				$lv_Address)
 					# Adresse waehlen{{{
 					FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse oder domain ein (Bsp. @domain.de | user@domain.de).')
-					inputbox "TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
+					inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 					if [ "$gv_Auswahl" ] ; then
 						case "$gv_Auswahl" in
 							[a-z,A-Z,0-9-._]*@*.*|@*.*)	ADR="$gv_Auswahl"
@@ -38,9 +43,9 @@ virtual_mailbox_table() {
 						no_input_msg
 					fi
 					#}}}
-					virtual_mailbox_menue
+					virtual_mailbox_menue $lv_Address
 					;;
-				Empf*|Recipient)
+				$lv_Recipient)
 					# Mailbox relativ zum Pfad vom Parameter "$virtual_mailbox_base"{{{
 					#
 					# Ist die Variable Ist_Wert (virtual_mailbox_base) belegt?
@@ -50,7 +55,7 @@ virtual_mailbox_table() {
 
 Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 						#
-						inputbox "TABLE_TITLE" "$RECIPIENT_ADR_MSG" "$E_ADR"
+						inputbox "$TABLE_TITLE" "$RECIPIENT_ADR_MSG" "$E_ADR"
 						if [ "$gv_Auswahl" ] ; then
 							case "$gv_Auswahl" in
 								[a-z,A-Z,0-9]*[a-z,A-Z,0-9-_./]*)
@@ -73,7 +78,7 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 						msgbox "$gv_Info" "$MSG"
 					fi
 					#}}}
-					virtual_mailbox_menue
+					virtual_mailbox_menue $lv_Recipient
 					;;
 				$gv_Save)
 					# Eintraege speichern{{{
@@ -176,7 +181,7 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 					#}}}
 					tabellen_menue
 					;;
-				D*)
+				$lv_Db)
 					# Datenbank neu erzeugen und Postfix anweisen
 					# die Einstellungen neu einzulesen
 					db_new_reread "$WAS_IST" "$FILE"

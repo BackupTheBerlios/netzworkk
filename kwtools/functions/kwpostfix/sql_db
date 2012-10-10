@@ -1,9 +1,30 @@
 # Funktion, SQL Datenbanken{{{
 sql_db() {
+	###########################################
+	# TODO: neue Abfrage Schnittstelle einbauen.
+	###########################################
+	#
+	# Variablen
+	lv_Where_Field=$(gettext 'Quellfeld')
+	lv_Select_Field=$(gettext 'Zielfeld')
+	lv_Conditions=$(gettext 'Konditionen')
+	lv_Function=$(gettext 'Funktion')
+	#
+	FIELD_MSG=$(gettext 'Geben Sie den Spaltennamen der Tabelle, der den zu behandelten Eintrag mapt, ein.')
+
 	# Funktion sql_conf_menu{{{
 	sql_conf_menue() {
-		SQL_CONF_MENU=$(gettext 'Datei "$FILE" Benutzer "$DB_User" Passwort "$PASSPHRASE1" Datenbank "$DB_Name" Tabelle "$Table" Source_Feld "$Where_Field" Ziel_Feld "$Select_Field" Konditionen "$Kond" Funktion "$Func" Rechner "$DB_Host" $gv_Save "" $gv_Back ""')
-		menubox "$SQL_CONF_TITLE" "$gv_Menupoint" "$SQL_CONF_MENU"
+		SQL_CONF_MENU=($gv_Filename \"$FILE\" ------------------- \"\"
+		$gv_User \"$DB_User\" $lv_Password \"$PASSPHRASE1\" $lv_Db \"$DB_Name\"
+		$lv_Tab \"$Table\" $lv_Where_Field \"$Where_Field\"
+		$lv_Select_Field \"$Select_Field\" $lv_Conditions \"$Kond\"
+		$lv_Function \"$Func\" $gv_Host \"$DB_Host\" $gv_Save \"\"
+		$gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$SQL_CONF_TITLE" "$gv_Menupoint" "$SQL_CONF_MENU"
+		else
+			menubox "$SQL_CONF_TITLE" "$gv_Menupoint" "$SQL_CONF_MENU"
+		fi
 	}
 	#}}}
 	# Funktion Schlüsseldatei einlesen{{{
@@ -101,7 +122,7 @@ sql_db() {
 	# Konditionen{{{
 	db_condition()
 	{
-		KONDITION_MSG=$(gettext 'Geben Sie die Kondition fuer die Tabelle der Datenbank ein.')
+		KONDITION_MSG=$(gettext 'Geben Sie die zusaetzlichen Konditionen fuer die Abfrage der Datenbank ein. Siehe man 5 pgsql_table/mysql_table.')
 		inputbox "$SQL_CONF_TITLE" "$KONDITION_MSG" "$Kond"
 		if [ "$gv_Auswahl" ] ; then
 			Kond="$gv_Auswahl"
@@ -135,8 +156,7 @@ sql_db() {
 	# Funktion Tabellenname, der den Mapeintrag enthaelt.{{{
 	# (Bsp.: select_field=destination, where_field=alias)
 	select_field() {
-		SELECT_FIELD_MSG=$(gettext 'Geben Sie den Spaltennamen der Tabelle, der den zu behandelten Eintrag mapt, ein.')
-		inputbox "$SQL_CONF_TITLE" "$SELECT_FIELD_MSG" "$Select_Field"
+		inputbox "$SQL_CONF_TITLE" "$FIELD_MSG" "$Select_Field"
 		if [ "$gv_Auswahl" ] ; then
 			Select_Field="$gv_Auswahl"
 		else
@@ -147,8 +167,7 @@ sql_db() {
 	# Funktion Tabellenname, der den zu behandelten Eintrag enthaelt, eingeben{{{
 	# (Bsp.: select_field=destination, where_field=alias, )
 	where_field() {
-		WHERE_FIELD_MSG=$(gettext 'Geben Sie den Spaltennamen der Tabelle, der den zu behandelten Eintrag mapt, ein.')
-		inputbox "$SQL_CONF_TITLE" "$WHERE_FIELD_MSG" "$Where_Field"
+		inputbox "$SQL_CONF_TITLE" "$FIELD_MSG" "$Where_Field"
 		if [ "$gv_Auswahl" ] ; then
 			Where_Field="$gv_Auswahl"
 		else
@@ -178,46 +197,46 @@ sql_db() {
 				HELP*)	script_help "$TAB_HELP"
 					sql_conf_menue
 					;;
-				Datei*|Fi*)
+				$gv_Filename|---*)
 					# Dateinamen Anzeige
-					sql_conf_menue
+					sql_conf_menue $gv_Filename
 					;;
-				Daten*|Data*) # Datenbankname
+				$lv_Db) # Datenbankname
 					db_name
-					sql_conf_menue
+					sql_conf_menue $lv_Db
 					;;
-				Be*|Us*) # DB_user
+				$gv_User) # DB_user
 					db_user
-					sql_conf_menue
+					sql_conf_menue $gv_User
 					;;
-				Pa*) # DB Passwort
+				$lv_Password) # DB Passwort
 					db_passwd
-					sql_conf_menue
+					sql_conf_menue $lv_Password
 					;;
-				Ta*)	# DB_Tabelle
+				$lv_Tab)	# DB_Tabelle
 					db_table
-					sql_conf_menue
+					sql_conf_menue $lv_Tab
 					;;
-				Re*|Ho*)	# Datenbankhost
+				$gv_Host)	# Datenbankhost
 					db_host
-					sql_conf_menue
+					sql_conf_menue $gv_Host
 					;;
-				Source_*)	# Where_Field
+				$lv_Where_Field)	# Where_Field
 					where_field
-					sql_conf_menue
+					sql_conf_menue $lv_Where_Field
 					;;
-				Ziel_*|Destination_*)	# Select_Field
+				$lv_Select_Fied)	# Select_Field
 					select_field
-					sql_conf_menue
+					sql_conf_menue $lv_Select_Fied
 					;;
-				K*|C*)
+				$lv_Conditions)
 					# Konditionen
 					db_condition
-					sql_conf_menue
+					sql_conf_menue $lv_Conditions
 					;;
-				Fu*)
+				$lv_Function)
 					db_function
-					sql_conf_menue
+					sql_conf_menue $lv_Function
 					;;
 				$gv_Save)	
 					# speichern{{{
@@ -247,14 +266,16 @@ sql_db() {
 		mysql)
 			unset -- FILE
 			FILE="$2"
-			SQL_CONF_TITLE=$(gettext 'Konfiguration::Mysql_Tabelle')
+			lv_Mysql_Tab=$(gettext 'Mysql_Tabelle')
+			SQL_CONF_TITLE="${gv_Configuration}::${lv_Mysql_Tab}"
 			read_werte $FILE
 			sql_conf
 			;;
 		pgsql)
 			unset -- FILE
 			FILE="$2"
-			SQL_CONF_TITLE=$(gettext 'Konfiguration::Postgresql_Tabelle')
+			lv_Pgsql_Tab=$(gettext 'Postgresql_Tabelle')
+			SQL_CONF_TITLE="${gv_Configuration}::${lv_Pgsql_Tab}"
 			read_werte $FILE
 			sql_conf
 			;;

@@ -186,7 +186,7 @@ mailman_conf() {
 				conf_mailman_menu mailman_recipient_refill_delay
 				;;
 			mailman_recipient_refill_limit)
-				# = $default_recipient_refill_limit# {{{
+				# Standard = $default_recipient_refill_limit# {{{
 				default_or_input mailman_recipient_refill_limit number_input -i $mailman_recipient_refill_limit
 				if [[ -n $Value ]] ; then
 					mailman_recipient_refill_limit="$Value"
@@ -196,7 +196,7 @@ mailman_conf() {
 				conf_mailman_menu mailman_recipient_refill_limit
 				;;
 			mailman_time_limit)
-				# = $command_time_limit# {{{
+				# Standard = $command_time_limit# {{{
 				default_or_input mailman_time_limit number_input -s ${mailman_time_limit%?}
 				if [[ -n $Value ]] ; then
 					mailman_time_limit="$Value"

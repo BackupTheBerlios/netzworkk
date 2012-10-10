@@ -6,8 +6,13 @@ virtual_alias_table() {
 	integer Anz Anz1
 	# Funktion virtual_alias_menue{{{
 	virtual_alias_menue() {
-		VIRTUAL_ALIAS_MENU=$(gettext 'Virtual_domain "$DOMAIN" Adresse "$ADR" Empfaenger "$E_ADR" $gv_Save "" $gv_Back ""')
-		menubox "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_ALIAS_MENU"
+		VIRTUAL_ALIAS_MENU=($lv_Domain \"$DOMAIN\" $lv_Address \"$ADR\"
+		$lv_Recipient \"$E_ADR\" $gv_Save \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_ALIAS_MENU"
+		else
+			menubox "$TABLE_TITLE" "$gv_Menupoint" "$VIRTUAL_ALIAS_MENU"
+		fi
 	}
 	#}}}
 	# Funktion virtual_alias_aendern{{{
@@ -18,7 +23,7 @@ virtual_alias_table() {
 			HELP*)	script_help "$TAB_HELP"
 				virtual_alias_menue
 				;;
-			V*)	#
+			$lv_Domain)
 				# Fuer welche Domain soll Postfix die Mails{{{
 				# annehmen.
 				#
@@ -38,9 +43,9 @@ virtual_alias_table() {
 					no_input_msg
 				fi
 				#}}}
-				virtual_alias_menue
+				virtual_alias_menue $lv_Domain
 				;;
-			Adr*)
+			$lv_Address)
 				# Adresse waehlen{{{
 				#
 				# Funktion check_virtual_domain_msg# {{{
@@ -104,7 +109,7 @@ virtual_alias_table() {
 				#}}}
 				#
 				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
-				inputbox "TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
+				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
 						[a-z,A-Z,0-9]*[a-z,A-Z,0-9_-.]*@*.*)	ADR="$gv_Auswahl"
@@ -128,14 +133,14 @@ virtual_alias_table() {
 					no_input_msg
 				fi
 				#}}}
-				virtual_alias_menue
+				virtual_alias_menue $lv_Address
 				;;
-			Empf*|Recipient)
+			$lv_Recipient)
 				# Wohin soll die Mail umgeleitet werden? Es koennen{{{
 				# auch mehrere Empfaenger angegeben werden.
 				#
 				RECIPIENT_ADR_MSG=$(gettext 'Geben Sie hier 1 oder mehrere Mailadressen, durch 1 Komma getrennt, ein (Bsp. user1@domain.de, user2@domain.de).')
-				inputbox "TABLE_TITLE" "$RECIPIENT_ADR_MSG" "$E_ADR"
+				inputbox "$TABLE_TITLE" "$RECIPIENT_ADR_MSG" "$E_ADR"
 				#
 				# Pruefen, ob alle Adressen getrennt durch ein Komma
 				# sind.
@@ -175,7 +180,7 @@ virtual_alias_table() {
 					no_input_msg
 				fi
 				#}}}
-				virtual_alias_menue
+				virtual_alias_menue $lv_Recipient
 				;;
 			$gv_Save)
 				# Eintraege speichern{{{
@@ -302,7 +307,7 @@ virtual_alias_table() {
 				#}}}
 				tabellen_menue
 				;;
-			D*)
+			$lv_Db)
 				# Datenbank neu erzeugen und Postfix anweisen die
 				# Einstellungen neu einzulesen
 				db_new_reread "$WAS_IST" "$FILE"

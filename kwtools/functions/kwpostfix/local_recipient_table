@@ -5,7 +5,7 @@ local_recipient_table() {
 	autoload -U no_adr_msg
 	# Funktion local_recipient_menue{{{
 	local_recipient_menue() {
-		LOCAL_RECIPIENT_MENU=$(gettext 'Adresse "$ADR" $gv_Save "" $gv_Back ""')
+		LOCAL_RECIPIENT_MENU=($lv_Address \"$ADR\" $gv_Save \"\" $gv_Back \"\")
 		menubox "$TABLE_TITLE" "$gv_Menupoint" "$LOCAL_RECIPIENT_MENU"
 	}
 	#}}}
@@ -17,10 +17,10 @@ local_recipient_table() {
 			HELP*)	script_help "$TAB_HELP"
 				local_recipient_menue
 				;;
-			Adr*)
+			$lv_Address)
 				# Adresse waehlen{{{
 				ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
-				inputbox "TABLE_TITLE" "$ADR_MSG" "$ADR"
+				inputbox "$TABLE_TITLE" "$ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
 						[a-z,A-Z,0-9]*[a-z,A-Z,0-9-._]*@*.*)	ADR="$gv_Auswahl"
@@ -135,7 +135,7 @@ local_recipient_table() {
 				#}}}
 				tabellen_menue
 				;;
-			D*)
+			$lv_Db)
 				# Datenbank neu erzeugen und Postfix anweisen
 				# die Einstellungen neu einzulesen
 				db_new_reread "$WAS_IST" "$FILE"

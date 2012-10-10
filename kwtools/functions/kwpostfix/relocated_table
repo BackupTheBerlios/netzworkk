@@ -5,8 +5,13 @@ relocated_table() {
 	autoload -U no_adr_and_recipient_adr_msg
 	# Funktion relocated_menue{{{
 	relocated_menue() {
-		RELOCATED_MENU=$(gettext 'Adresse "$ADR" Empfaenger "$E_ADR" $gv_Save "" $gv_Back ""')
-		menubox "$TABLE_TITLE" "$gv_Menupoint" "$RELOCATED_MENU"
+		RELOCATED_MENU=($lv_Address \"$ADR\" $lv_Recipient \"$E_ADR\"
+		$gv_Save \"\" $gv_Back \"\")
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$TABLE_TITLE" "$gv_Menupoint" "$RELOCATED_MENU"
+		else
+			menubox "$TABLE_TITLE" "$gv_Menupoint" "$RELOCATED_MENU"
+		fi
 	}
 	#}}}
 	# Funktion relocated_aendern{{{
@@ -17,13 +22,13 @@ relocated_table() {
 			HELP*)	script_help "$TAB_HELP"
 				relocated_menue
 				;;
-			Adr*)
+			$lv_Address)
 				# Adresse waehlen{{{
 				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
-				inputbox "TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
+				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
-						[a-z,A-Z,0-9-._]*@*.*)	ADR="$gv_Auswahl"
+						[a-z,A-Z,0-9-._]*@*.*|[a-z,A-Z,0-9-._]*)	ADR="$gv_Auswahl"
 							;;
 						@*.*)	ADR="$gv_Auswahl"
 							;;
@@ -37,9 +42,9 @@ relocated_table() {
 					no_input_msg
 				fi
 				#}}}
-				relocated_menue
+				relocated_menue $lv_Address
 				;;
-			Empf*|Recipient)
+			$lv_Recipient)
 				# Wer ist wo hingezogen?{{{
 				RECIPIENT_ADR_MSG=$(gettext 'Geben Sie hier eine Mailadresse ein (Bsp. user@domain.de).')
 				mail_address "$RECIPIENT_ADR_MSG" "$E_ADR"
@@ -49,7 +54,7 @@ relocated_table() {
 					unset -- E_ADR
 				fi
 				#}}}
-				relocated_menue
+				relocated_menue $lv_Recipient
 				;;
 			$gv_Save)
 				# Eintraege speichern{{{
@@ -151,7 +156,7 @@ relocated_table() {
 				#}}}
 				tabellen_menue
 				;;
-			D*)
+			$lv_Db)
 				# Datenbank neu erzeugen und Postfix anweisen
 				# die Einstellungen neu einzulesen
 				db_new_reread "$WAS_IST" "$FILE"
