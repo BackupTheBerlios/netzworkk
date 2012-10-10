@@ -1,11 +1,11 @@
 # access_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::access::Hilfe')
+TITLE="${lv_Tabs}::access::${gv_Help}"
 MSG=$(gettext 'NOTIZ: Lesen Sie dazu bitte die Datei
 /usr/share/doc/postfix-doc/examples/access.gz
 
 Tabellen:
 *access
-\t
+
 Adresse: Dies koennen User, IP-Adressen/-Netze, etc. sein.
 # alle so beginnenden IP-Nummern
 192.168.0.

@@ -1,5 +1,5 @@
 # virtual_alias_mb_domains_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::virtual_alias_mb_domains::Hilfe')
+TITLE="${lv_Tabs}::virtual_alias_mb_domains::${gv_Help}"
 MSG=$(gettext 'Hier kann man die Domains einstellen fuer die Postfix die Mail
 Adressen aliasen soll.
 
@@ -9,7 +9,7 @@ Tabelle:
 virtual_alias_domains
 virtual_mailbox_domains
 
-Form:
+Format:
 # alle Mails dieser Domain werden aliased.
 domain.de\tanything
 

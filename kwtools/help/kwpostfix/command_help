@@ -1,5 +1,5 @@
-# command_help fuer kwpostfix{{{
-TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
+# command_help (master.cf) fuer kwpostfix{{{
+TITLE="${lv_Master_Cf}::${gv_Configuration}::${gv_Help}"
 MSG=$(gettext 'Auswahl eines Postfix eigenen Daemons.')
 #}}}
 ### Modeline {{{

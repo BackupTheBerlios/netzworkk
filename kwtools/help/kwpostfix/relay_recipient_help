@@ -1,5 +1,5 @@
 # relay_recipient_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::relay_recipient::Hilfe')
+TITLE="${lv_Tabs}::relay_recipient::${gv_Help"
 MSG=$(gettext 'Hier kann man Postfix einstellen, fuer welche gueltigen Empfaenger
 Adressen, er Mails aus den Domains in $relay_domains annehmen soll.
 Falls der Admin das nicht weiss, lassen Sie den Parameter
@@ -9,7 +9,7 @@ ein Wildcard "@domain.de x" anlegen.
 Tabellen:
 relay_recipient_maps
 
-Form:
+Format:
 # Fuer diese Domain werden werden beliebige Mails angenommen.
 @domain.de\tx
 # Fuer diesen Mailadresse werden Mails angenommen.

@@ -1,7 +1,7 @@
 # regexp_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::regexp::Hilfe')
+TITLE="${lv_Tabs}::regexp::${gv_Help}"
 MSG=$(gettext 'Zeichenkette: Regulaeren Ausdruck eingeben (Bsp.: /RA/Flags |
-\t!/RA/Flags). man 5 regexp_table
+\t!/RA/Flags). Siehe man 5 regexp_table.
 
 Flags: i = REG_ICASE (ingnore case), i ist Standard.
 \tx = REG_EXTENDED (erweiterte Ausdruecke), x ist Standard.
@@ -11,7 +11,7 @@ Aktion: DISCARD = behauptet erfolgreiche Zustellung und loescht die
 \tMail stillschweigend. Der angepasste Header/Body...
 \twird mit dem optionalen Text geloggt.
 \tHOLD = Haelt die Nachricht in der Warteschlange fest. Mit dem
-\tKommando postcat kann man Sie z.B. ueberpruefen. Der
+\tKommando postcat kann man sie z.B. ueberpruefen. Der
 \tangepasste Header/Body... und der optionale Text
 \twerden geloggt.
 \tIGNORE = Loescht stillschweigend den Nachrichten Header/Body...

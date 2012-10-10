@@ -1,5 +1,5 @@
 # master_aendern_help fuer kwpostfix{{{
-TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
+TITLE="${lv_Master_Cf}::${gv_Configuration}::${gv_Help}"
 MSG=$(gettext 'Service: Hier vergibt man einen sinnvollen Namen (Programm) fuer den
 \tService. Man wird dabei gefragt, ob der Rechnername voran
 \tgestellt werden soll. Sie koennen auch eine Portnummer
@@ -37,7 +37,8 @@ Befehl: Kommando das ausgefuehrt werden soll, wenn ein Service
 
 Argumente: Argumente die dem Befehl mituebergeben werden soll.
 \tLesen Sie dazu die Dokumentation von Postfix und dem
-\tdementsprechenden Programm welches zum Einsatz kommt.')
+\tdementsprechenden Programm welches zum Einsatz kommt.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

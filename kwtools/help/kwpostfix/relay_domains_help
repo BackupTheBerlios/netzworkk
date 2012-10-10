@@ -1,12 +1,12 @@
 # relay_domains_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::relay_domains::Hilfe')
-MSG=$(gettext 'Hier kann man Postfix einstellen fuer welche Domains er zustendig
-ist.
+TITLE="${lv_Tabs}::relay_domains::${gv_Help}"
+MSG=$(gettext 'Hier kann man einstellen fuer welche Rechner oder Domains der
+Postfix Server zustendig ist.
 
 Tabellen:
 relay_domains
 
-Form:
+Format:
 domain.de\t:
 host\t\t:
 

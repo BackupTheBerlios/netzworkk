@@ -1,5 +1,5 @@
 # mail_transport_help fuer kwpostfix{{{
-TITLE=$(gettext 'Transportmethoden::Hilfe')
+TITLE="${lv_Transportmethode}::${gv_Help}"
 MSG=$(gettext 'Hier kann man die vorhandenen Transportmethoden von Postfix
 auswaehlen.')
 #}}}

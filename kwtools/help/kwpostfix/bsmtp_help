@@ -58,7 +58,7 @@ bsmtp_initial_destination_concurrency: Bestimmt, wieviele Mails
 bsmtp_minimum_delivery_slots: Minimale Anzahl von Empfaengern, ab
 \tder der Postfix Queue-Manager besondere Scheduling-Algorithmen auf
 \tdie Mail anwendet.
-ßtStandard ist "$default_minimum_delivery_slots".
+\tStandard ist "$default_minimum_delivery_slots".
 
 bsmtp_recipient_limit: Maximalzahl an Empfaenger in einer Mail.
 \tStandard ist "$default_recipient_limit".
@@ -72,7 +72,8 @@ bsmtp_recipient_refill_limit: Anzahl der Empfaenger-Slots, die
 \tder Postfix Queue-Manager in einem Durchlauf einliest.
 \tStandard ist "$default_recipient_refill_limit".
 
-bsmtp_time_limit:
+bsmtp_time_limit: Maximalzeit, die "local" auf externe Programme
+\twartet, danach wird abgebrochen.
 ')
 #}}}
 ### Modeline {{{

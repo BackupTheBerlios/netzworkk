@@ -1,5 +1,5 @@
 # local_recipient_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::local_recipient::Hilfe')
+TITLE="${lv_Tabs}::local_recipient::${gv_Help}"
 MSG=$(gettext 'Hier kann man Postfix einstellen fuer welche lokalen Empfaenger
 Adressen er Mails annehmen soll. Lokaler Empfaenger ist wenn die
 Doamin auf einen der Werte von $mydestination, $inet_interfaces
@@ -11,7 +11,7 @@ Mailadresse eingegeben werden (user@domain.de).
 Tabellen:
 local_recipient_maps
 
-Form:
+Format:
 # Fuer diese Domain werden Mails lokal eingeliefert.
 @domain.de\t:
 # Fuer diesen User werden Mails lokal eingeliefert.

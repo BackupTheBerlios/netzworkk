@@ -1,5 +1,5 @@
 # master_wert_help fuer kwpostfix{{{
-TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
+TITLE="${lv_Master_Cf}::${gv_Configuration}::${gv_Help}"
 MSG=$(gettext '-: Heisst das der Standard aus der globalen Konfiguration main.cf
 \tbenutzt wird.
 

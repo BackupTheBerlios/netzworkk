@@ -72,7 +72,8 @@ scalemail-backend_recipient_refill_limit: Anzahl der Empfaenger-Slots, die
 \tder Postfix Queue-Manager in einem Durchlauf einliest.
 \tStandard ist "$default_recipient_refill_limit".
 
-scalemail-backend_time_limit:
+scalemail-backend_time_limit: Maximalzeit, die "local" auf externe
+\tProgramme wartet, danach wird abgebrochen.
 ')
 #}}}
 ### Modeline {{{

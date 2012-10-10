@@ -1,6 +1,6 @@
 # master_service_help fuer kwpostfix{{{
-TITLE=$(gettext 'Steuerdatei::Konfiguration::Hilfe')
-MSG=$(gettext 'Auswahl eines Services zur weiteren Bearbeitung.')
+TITLE="${lv_Master_Cf}::${gv_Configuration}::${gv_Help}"
+MSG=$(gettext 'Auswahl eines Service zur weiteren Bearbeitung.')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

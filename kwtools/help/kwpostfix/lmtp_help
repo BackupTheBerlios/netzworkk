@@ -421,7 +421,7 @@ lmtp_tls_mandatory_exclude_ciphers: Auswahl einer Liste der
 
 lmtp_tls_mandatory_protocols: Auswahl der TLS Protokolle die der
 \tPostfix LMTP Client bei der TLS Verschluesselung benutzen oder
-\tausschliessen soll. Das Zeichen "!" schließt das Protokoll aus.
+\tausschliessen soll. Das Zeichen "!" schliesst das Protokoll aus.
 \tStandard ist !SSLv2.
 
 lmtp_tls_note_starttls_offer: Soll der Rechnername vom entfernten
@@ -436,7 +436,7 @@ lmtp_tls_policy_maps:
 
 lmtp_tls_protocols: Auswahl der TLS Protokolle die der Postfix LMTP
 \tClient bei der TLS Verschluesselung benutzen oder ausschliessen
-\tsoll. Das Zeichen "!" schließt das Protokoll aus.
+\tsoll. Das Zeichen "!" schliesst das Protokoll aus.
 \tStandard ist !SSLv2.
 
 lmtp_tls_scert_verifydepth: Ueberpruefungstiefe des Server

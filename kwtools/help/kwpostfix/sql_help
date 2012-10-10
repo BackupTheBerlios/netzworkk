@@ -1,9 +1,13 @@
 # sql_help fuer kwpostfix{{{
-TITLE=$(gettext 'SQL-Datenbank::Hilfe')
+TITLE="${lv_Db}::${gv_Help}"
 MSG=$(gettext 'Hier kann man, falls mit einkompiliert, Mysql und Postgresql
 konfigurieren.
 
-Datei: Dateiname, kann nicht veraendert werden.
+NOTIZ: Hier wird noch die alte Schnittstelle benutzt. Diese ist
+\tmittlerweile veraltet.
+
+Datei: Dateiname, kann nicht veraendert werden. Dient nur zur
+\tAnzeige.
 
 Datenbank: Name der Datenbank eingeben.
 
@@ -17,16 +21,16 @@ Tabelle: Datenbank Tabellenname eingeben.
 Rechner: Rechner, auf denen die Datennbank laeuft. Dies koennen auch
 \tmehrere sein, getrennt durch ein Leerzeichen.
 
-Source_Feld: Dies ist der Spaltenname der Tabelle, der den zu be-
+Quelleld: Dies ist der Spaltenname der Tabelle, der den zu be-
 \thandelten Eintrag enthaelt.
 
-Ziel_Feld: Dies ist der Spaltenname der Tabelle, der den zu be-
+Zielfeld: Dies ist der Spaltenname der Tabelle, der den zu be-
 \thandelten Eintrag mapt.
 
-Konditionen:
+Konditionen: Eingabe von zusaetzlichen Konditionen.
 
 Funktion: Datenbank Funktion, dann braucht man nicht Tabelle,
-\tSource_Feld, Ziel_Feld und Konditionen eingeben.')
+\tQuellfeld, Zielfeld und Konditionen eingeben.')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

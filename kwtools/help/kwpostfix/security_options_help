@@ -1,5 +1,5 @@
 # security_options_help fuer kwpostfix{{{
-TITLE=$(gettext 'Mail-Authentifizierung::Hilfe')
+TITLE="${lv_Mail_Auth}::${gv_Help}"
 MSG=$(gettext 'noactive: Verhindert aktive (non-dictionary) Attacken.
 
 noanonymous: Verhindert Anonymous-Logins

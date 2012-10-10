@@ -5,7 +5,7 @@ MSG=$(gettext 'check_{client,helo,recipient,sender}_access typ:mapname:
 \tHelo Angabe in einer access Tabelle mit einem OK oder REJECT
 \tbelegt ist. Im Normalfall erlaubt Postfix jede dieser An-
 \tgaben. Ueber eine access Tabelle lassen sich gezielt einzelne
-\tAdressen oder Hosts blocken.
+\tAdressen oder Rechner blocken.
 
 check_{helo,recipient,sender}_mx_access typ:mabname:
 \tPruefen, ob der MX-Record der Domain des Clientnamens bzw.

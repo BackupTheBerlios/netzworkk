@@ -1,5 +1,5 @@
 # virtual_alias_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::virtual_alias::Hilfe')
+TITLE="${lv_Tabs}::virtual_alias::${gv_Help}"
 MSG=$(gettext 'Hier kann man den Empfaenger Adressen einen Alias geben, an dem
 dann die Mail gesendet wird.
 
@@ -23,8 +23,7 @@ user\totheruser@domain.de
 
 NOTIZ: Das "anything" steht fuer die Konformitaet der Tabelle.
 
-Virtual_Domain: Eingabe einer Domain fuer die Postfix Mail annehmen
-\tsoll.
+Domain: Eingabe einer Domain fuer die Postfix Mail annehmen soll.
 
 Adresse: Eingabe eines lokalen oder virtuellen Empfaenger deren
 \tMail umgeleitet werden soll. Dies koennen auch Domains

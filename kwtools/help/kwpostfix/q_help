@@ -15,7 +15,7 @@ qmgr_fudge_factor: Prozentsatz an Resourcen, den ausgehende Mails
 \tStandard ist 100.
 
 qmgr_ipc_timeout: Das Zeitlimit fuer den Queue-Manager beim erhalten
-\toder senden bei Informationen ueber einen internen Kanal. Dies 
+\toder senden von Informationen ueber einen internen Kanal. Dies 
 \that den Zweck bei bestimmten Situationen die Operation zu
 \twiederholen oder abzubrechen. Zur Auswahl stehen die Suffixe
 \ts=Sekunde, m=Minute, h=Stunde, d=Tag und w=Woche.
@@ -25,7 +25,7 @@ qmgr_message_active_limit: Maximalzahl gleichzeitiger Mails in der
 \tactive-Queue.
 \tStandard ist 20000.
 
-qmgr_message_recipient_limit: Maximal Groesse der Verwaltungstabelle
+qmgr_message_recipient_limit: Maximale Groesse der Verwaltungstabelle
 \tdes qmgr.
 \tStandard ist 20000.
 
@@ -36,12 +36,12 @@ qmgr_message_recipient_minimum: Minimale Groesse der
 qmqpd_authorized_clients: Postfix unterstuetzt auch das Protokoll
 \tQMQP, das eigentlich zum MTA qmail gehoert. Die in diesem
 \tParameter angegebenen Rechner duerfen Postfix mit QMQP kontakten.
-\tDas Zeichen ! negiert den Eintrag.
+\tDas Zeichen "!" negiert den Eintrag.
 \tBeispiel:
 \t!192.168.0.1 192.168.0.0/24
 
 qmqpd_client_port_logging: Soll der TCP-Port der Clients geloggt
-\twerden (yes/no)?
+\twerden (ja/nein)?
 \tStandard ist nein.
 
 qmqpd_error_delay: Wartezeit nach einem Fehler in einer

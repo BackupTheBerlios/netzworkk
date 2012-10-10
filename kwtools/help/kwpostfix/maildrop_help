@@ -72,7 +72,8 @@ maildrop_recipient_refill_limit: Anzahl der Empfaenger-Slots, die
 \tder Postfix Queue-Manager in einem Durchlauf einliest.
 \tStandard ist "$default_recipient_refill_limit".
 
-maildrop_time_limit:
+maildrop_time_limit: Maximalzeit, die "local" auf externe Programme
+\twartet, danach wird abgebrochen.
 ')
 #}}}
 ### Modeline {{{

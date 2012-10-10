@@ -1,12 +1,12 @@
 # transport_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::transport::Hilfe')
+TITLE="${lv_Tabs}::${lv_Transport}::${gv_Help}"
 MSG=$(gettext 'Hier kann man die Transportmethoden von Postfix einstellen.
 
 Tabelle:
 transport_maps
 virtual_transport
 
-Form:
+Format:
 # schickt die Mails per UUCP weiter an den Host uuucpgate
 uucptest.de\tuucp:uucpgate
 # Mails an diese Domain werden direkt auf mail.domain.de

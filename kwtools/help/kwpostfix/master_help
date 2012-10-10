@@ -1,5 +1,5 @@
 # master_help fuer kwpostfix{{{
-TITLE=$(gettext 'Steuerdatei::Hilfe')
+TITLE="${lv_Master_Cf}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie die Steuerdatei master.cf von Postfix
 konfigurieren.
 
@@ -12,7 +12,8 @@ veraendern: Vorhandenen Prozess aendern.
 loeschen: Vorhandenen Prozess loeschen
 
 Postfix reload: Postfix mitteilen das es seine Konfiguration neu
-\teinlesen soll.')
+\teinlesen soll.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

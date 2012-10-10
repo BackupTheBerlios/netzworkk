@@ -3,7 +3,8 @@ TITLE=$(gettext 'LDAP-Datenbank::Hilfe')
 MSG=$(gettext 'Hier kann man, falls mit einkompiliert, die Unterstuetzung fuer
 LDAP konfigurieren.
 
-Datei: Dateiname, kann nicht veraendert werden.
+Datei: Dateiname, kann nicht veraendert werden. Dient nur zur
+\tAnzeige.
 
 Benutzer: Anmeldenam am LDAP-Server (z.B. postfix).
 

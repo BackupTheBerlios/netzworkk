@@ -1,12 +1,13 @@
 # mynetworks_help fuer kwpostfix{{{
-TITLE=$(gettext 'Tabellen::mynetworks::Hilfe')
-MSG=$(gettext 'Hier kann man Postfix einstellen fuer welches Netz/Host es
-zustendig ist, und von deren Clients Mail angenommen werden.
+TITLE="${lv_Tabs}::mynetworks::${gv_Help}"
+MSG=$(gettext 'Hier kann man einstellen fuer welchen Rechner oder fuer welches
+Netz der Pstfix Server zustendig ist, und von deren Clients Mail
+angenommen werden.
 
 Tabellen:
 mynetworks
 
-Form:
+Format:
 192.168.0.0/24\t\t\t:
 127.0.0.1\t\t\t:
 [fe80::2e0:7dff:fe83:be3a]/64\t:
