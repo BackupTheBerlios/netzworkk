@@ -83,7 +83,7 @@ server_conf() {
 							REMOTE_USER[Anz1]=""
 							DST[Anz1]="$3"
 							RSYNC_ARGS[Anz1]="$4"
-							HOSTNAME[Anz1]="${2%:*}"
+							# HOSTNAME[Anz1]="${2%:*}"
 							;;
 					esac
 					(( Anz++ ))
