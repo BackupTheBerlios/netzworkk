@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 09.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 11.10.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -51,13 +51,14 @@ autoload -U transport_methode
 lv_Quick_Conf=$(gettext 'Kurz-Konfiguration')
 lv_Ext_Conf=$(gettext 'erweiterte Konfiguration')
 lv_Tabs=$(gettext 'Tabellen')
-lv_Main_Cf=$(gettext 'Steuerdatei')
+lv_Tab=$(gettext 'Tabelle')
+lv_Master_Cf=$(gettext 'Steuerdatei')
 lv_Clear=$(gettext 'Aufraeumen')
 
 # Konfiguration
 lv_Main=$(gettext 'Haupt')
 lv_Default=$(gettext 'Standard')
-lv_Address=$(gettext 'Adresspruefung')
+lv_Address_Verify=$(gettext 'Adresspruefung')
 lv_Bsmtp=$(gettext 'Bsmtp')
 lv_Error=$(gettext 'Fehler')
 lv_ErrorCodes=$(gettext 'Fehlercodes')
@@ -83,6 +84,25 @@ lv_Virtual=$(gettext 'Virtual')
 lv_Choice=$(gettext 'Auswahl')
 lv_Proxy=$(gettext 'Proxy')
 lv_TableTyp=$(gettext 'Tabellentyp')
+
+# Tabellen
+lv_Address=$(gettext 'Adresse')
+lv_Recipient=$(gettext 'Empfaenger')
+lv_Local_Recipient=$(gettext 'lokaler Empfaenger')
+lv_Other_Recipient=$(gettext 'anderer Empfaenger')
+lv_Db=$(gettext 'Datenbank')
+lv_Db_Create_Reload=$(gettext 'neu erzeugen/postfix reload')
+lv_Domain=$(gettext 'Domain')
+lv_Id=$(gettext 'ID')
+lv_Flags=$(gettext 'Flags')
+lv_Action=$(gettext 'Aktion')
+lv_Mail_Auth=$(gettext 'Mail-Authentifizierung')
+lv_Password=$(gettext 'Passwort')
+lv_Port=$(gettext 'Port')
+lv_Server=$(gettext 'Server')
+lv_Text=$(gettext 'Text')
+lv_Transport=$(gettext 'Transport')
+lv_Transportmethode=$(gettext 'Transport Methode')
 
 # Variablen die von einigen Konfigurationsdateien benutzt werden
 SMTP_CONNECT_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout fuer den Aufbau der Verbindung ein (Bsp.: 30s).')
@@ -680,7 +700,7 @@ tls_exclude_ciphers() {
 ## }}}
 # Funktion haupt_menue{{{
 MAIN_MENU=($lv_Quick_Conf \"\" $gv_Configuration \"\"
-	\"$lv_Ext_Conf\" \"\" $lv_Tabs \"\" $lv_Main_Cf \"\"
+	\"$lv_Ext_Conf\" \"\" $lv_Tabs \"\" $lv_Master_Cf \"\"
 	$lv_Clear \"\" $gv_Exit \"\")
 haupt_menue() {
 	if [[ ${#argv} == 1 ]] ; then
@@ -1106,7 +1126,7 @@ while [ "$gv_Auswahl" ] ; do
 			# Funktion Tabellen Ansicht{{{
 			tab_ansicht() {
 				awk '(!/^#/){print}' $FILE >${gv_LogFile}$$
-				if [ `wc -l <${gv_LogFile}$$` = 0 ] ; then
+				if (( `wc -l <${gv_LogFile}$$` == 0 )) ; then
 					rm -f ${gv_LogFile}$$ &>/dev/null
 					no_entry_msg
 				else
@@ -1120,9 +1140,6 @@ while [ "$gv_Auswahl" ] ; do
 			#
 			tab_search() {
 				unset -- TABLE TAB_IND Wert
-				local Anz
-				integer Anz
-				Anz=0
 				for i in alias_maps body_checks canonical_maps fast_flush_domains \
 					header_checks lmtp_sasl_password_maps local_recipient_maps \
 					mailbox_command_maps mynetworks \
@@ -1155,9 +1172,8 @@ while [ "$gv_Auswahl" ] ; do
 										*)
 											if [ -z ${(M)${TABLE}##${Wert##*/}} ] ; then
 												create_file "$Wert"
-												(( Anz++ ))
-												TABLE[Anz]="${${Wert##*/}%,} \"\""
-												TAB_IND[Anz]="${Tab_Format}:${Wert%,}"
+												TABLE+=(${${Wert##*/}%,} \"\")
+												TAB_IND+=(${Tab_Format}:${Wert%,})
 											fi
 											;;
 									esac
@@ -1171,11 +1187,15 @@ while [ "$gv_Auswahl" ] ; do
 			# Funktion tab_menue{{{
 			tab_menue() {
 				unset -- FILE HASH_TAB TAB_HELP WAS_IST
-				if [ "$TABLE" ] ; then
-					TAB_TITLE=$(gettext 'Tabellen')
+				if [[ -n $TABLE ]] ; then
+					TAB_TITLE="$lv_Tabs"
 					TAB_MSG=$(gettext 'Waehlen Sie eine Tabelle zur Bearbeitung aus.')
 					TAB_MENU=($TABLE $gv_Back \"\")
-					menubox "$TAB_TITLE" "$TAB_MSG" "$TAB_MENU"
+					if [[ ${#argv} == 1 ]] ; then
+						menubox -d "$1" "$TAB_TITLE" "$TAB_MSG" "$TAB_MENU"
+					else
+						menubox "$TAB_TITLE" "$TAB_MSG" "$TAB_MENU"
+					fi
 				else
 					MSG=$(gettext 'Es sind keine Tabellen vorhanden. Sie muessen erst welche erstellen.')
 					msgbox "$gv_Attention" "$MSG"
@@ -1184,26 +1204,23 @@ while [ "$gv_Auswahl" ] ; do
 			}
 			#}}}
 			# Funktion tabellen_menue{{{
-			TABLE_MENU=$(gettext '$gv_Display "" $gv_Create "" $gv_Change "" $gv_Delete "" Datenbank "neu erzeugen/postfix reload" $gv_Back ""')
+			TABLE_MENU=($gv_Display \"\" $gv_Create \"\" $gv_Change \"\"
+			$gv_Delete \"\" $lv_Db \"$lv_Db_Create_Reload\" $gv_Back \"\")
 			tabellen_menue() {
-				TABLE_TITLE=$(gettext 'Tabellen::${TAB}')
+				TABLE_TITLE="${lv_Tabs}::${TAB}"
 				menubox "$TABLE_TITLE" "$gv_Menupoint" "$TABLE_MENU"
 			}
 			#}}}
 			# Funktion Schlüssel/Wert Auswahl{{{
 			key_value() {
 				unset -- AUSWAHL AUSWAHL_MULTI
-				local Anz
-				integer Anz
-				Anz=0
 				awk '(!/^#/){print}' $1 | sed -e 's#\"#\\\"#g ; s#\\\.#\\\\\\.#g ; 
 					s#\\\s#\\\\\\s#g' | \
 				while read ALL ; do
-					if [ "$ALL" ] ; then
-						(( Anz++ ))
-						AUSWAHL_E[Anz]="${ALL%%/[ixm]*}/"
-						AUSWAHL[Anz]="${(qq)ALL} \"\""
-						AUSWAHL_MULTI[Anz]="${(qq)ALL} \"\" off"
+					if [[ -n $ALL ]] ; then
+						AUSWAHL_E+=(${ALL%%/[ixm]*}/)
+						AUSWAHL+=(${(qq)ALL} \"\")
+						AUSWAHL_MULTI+=(${(qq)ALL} \"\" off)
 					fi
 				done
 			}
@@ -1234,8 +1251,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*virtual_alias_domains* | *virtual_mailbox_domains*)
 						# Tabelle, fuer welche Domains Postfix Mailadressen aliasen{{{
@@ -1247,8 +1265,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*virtual_alias_maps*)
 						# Tabelle zum umschreiben/weiterleiten von Mailadressen, auch unter{{{
@@ -1260,8 +1279,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*alias*)
 						# Tabelle für die Zuweisung von lokalen Mails an andere Empfänger{{{
@@ -1272,8 +1292,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*[rs]*_bcc*)
 						# Tabelle, wer soll eine Bcc Mail erhalten{{{
@@ -1284,8 +1305,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*checks*)
 						# Tabelle für die Filterung des Bodies/Headers.{{{
@@ -1297,8 +1319,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}[(fr)*${gv_Auswahl}]}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*canonical*)
 						# Tabelle zum umwandeln von Empfänger- und Absenderadressen{{{
@@ -1310,8 +1333,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*local_recipient*)
 						# Tabelle fuer lokale Empfaenger{{{
@@ -1322,8 +1346,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*mynetworks*)
 						# Tabelle, IP-Adressen und IP-Bereiche die relayen dürfen.{{{
@@ -1334,8 +1359,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*relay_domains*)
 						# Tabelle, Domains für die bzw. von denen postfix relayed{{{
@@ -1346,8 +1372,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*relay_recipient*)
 						# Tabelle, fuer die Mailadressen zur Annahme aus Internet/Netzen{{{
@@ -1358,8 +1385,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*relocated*)
 						# Tabelle für Empfänger verzogen{{{
@@ -1370,8 +1398,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*smtpd_sender_login*)
 						# Tabelle für SASL Login Benutzernamen{{{
@@ -1382,8 +1411,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*transport*)
 						# transport Tabelle, für die Regelung der Transportmethode{{{
@@ -1395,8 +1425,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*virtual_mailbox_maps*)
 						# Tabelle fuer die Mailboxen relativ zu dem Parameter{{{
@@ -1408,8 +1439,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					*virtual_[gu]id_maps*)
 						# Tabelle, fuer die Zuordnung von mailboxen zu UID oder GID{{{
@@ -1420,8 +1452,9 @@ while [ "$gv_Auswahl" ] ; do
 						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
 						TAB="$gv_Auswahl"
 						tab_change
-						tab_menue
+						unset -- HASH_TAB
 						#}}}
+						tab_menue $TAB
 						;;
 					$gv_Back)
 						unset -- TABLE
@@ -1436,11 +1469,11 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			haupt_menue $lv_Tabs
 			;;
-		$lv_Main_Cf)
+		$lv_Master_Cf)
 			# Konfiguration der master.cf
 			autoload -U master_conf
 			master_conf
-			haupt_menue $lv_Main_Cf
+			haupt_menue $lv_Master_Cf
 			;;
 		$lv_Clear)
 			# loeschen uebrig gebliebener temporaerer Dateien
