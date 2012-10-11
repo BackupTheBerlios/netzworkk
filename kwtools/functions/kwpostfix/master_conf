@@ -39,7 +39,7 @@ master_conf() {
 	master_aendern_menue() {
 		MASTER_CHANGE_MENU=($lv_Service \"$SERVICE\" $lv_Typ \"$TYPE\"
 		$lv_Privat \"$PRIVATE\" $lv_Unpriv \"$UNPRIV\" $lv_Chroot \"$CHROOT\"
-		$lv_Wakeup \"$WAKEUP\" $lv_Max_Process \"$MAXPROC\" $lv_Cmd \"$COMMAND\"
+		$lv_Wakeup \"$WAKEUP\" \"$lv_Max_Process\" \"$MAXPROC\" $lv_Cmd \"$COMMAND\"
 		$lv_Args \"$ARGS\" $gv_Save \"\" $gv_Back \"\")
 		if [[ ${#argv} == 1 ]] ; then
 			menubox -d "$1" "$MASTER_CONF_TITLE" "$gv_Menupoint" "$MASTER_CHANGE_MENU"
