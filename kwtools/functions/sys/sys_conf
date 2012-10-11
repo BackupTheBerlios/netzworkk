@@ -4692,8 +4692,10 @@ kernel_choice() {
 	#
 	# Sperrt Devices (locken), benoetigt die Funktion create_file.
 	#
-	# usage: lock (-r) "$DEVICES"
-	# -r = loeschen
+	# usage: lock [ -r ][ -s | nichts ] "$DEVICES"
+	# -r - lockfile loeschen
+	# -s - Scriptname locken
+	# nichts - Device locken
 	#
 	lock() {
 		case $1 in
@@ -4704,12 +4706,35 @@ kernel_choice() {
 					rm -f /var/tmp/${i##*/}.lock &>/dev/null
 				}
 				;;
-			*)	# lock anlegen
+			-s)	# Script lock anlegen
+				for i in $2 ; {
+					if [ -e /var/tmp/${i##*/}.lock ] ; then
+						if [[ -n $gv_Terminal ]] ; then
+							MSG=$(gettext '$i wird gerade benutzt. Versuchen Sie es spaeter nochmal.')
+							msgbox "$gv_Attention" "$MSG"
+							break 2
+						else
+							exit 0
+						fi
+					else
+						create_file "/var/tmp/${i##*/}.lock"
+					fi
+				}
+				;;
+			*)	# Device lock anlegen
 				for i in $1 ; {
 					if [ -e /var/tmp/${i##*/}.lock ] ; then
 						MSG=$(gettext 'Das Device wird gerade benutzt. Versuchen Sie es spaeter nochmal.')
-						msgbox "$gv_Attention" "$MSG"
-						break 2
+						if [[ -n $gv_Terminal ]] ; then
+							msgbox "$gv_Attention" "$MSG"
+							break 2
+						else
+							$ERROR
+							print
+							print "$MSG"
+							print
+							$NORMAL
+						fi
 					else
 						create_file "/var/tmp/${i##*/}.lock"
 					fi
@@ -5268,14 +5293,21 @@ kernel_choice() {
 					Prog="$2"
 					# pruefen, ob Programm ausfuehrbar ist.
 					if [ -x "`which $Prog`" ] ; then
-						setterm -clear
-						setterm -inversescreen on
-						eval "$Prog" "$3"
-						if [ "$?" != 0 ] ; then
-							prog_failure
+						if [[ -n $gv_Terminal ]] ; then
+							setterm -clear
+							setterm -inversescreen on
+							eval "$Prog" "$3"
+							if [ "$?" != 0 ] ; then
+								prog_failure
+							fi
+							setterm -inversescreen off
+							setterm -clear
+						else
+							eval "$Prog" "$3"
+							if [ "$?" != 0 ] ; then
+								prog_failure
+							fi
 						fi
-						setterm -inversescreen off
-						setterm -clear
 					else
 						# Wenn nicht gibts ne Fehlermeldung.
 						no_prog_exec_msg "$Prog"
@@ -5286,8 +5318,12 @@ kernel_choice() {
 					Prog="$2"
 					# pruefen, ob Programm ausfuehrbar ist.
 					if [ -x "`which $Prog`" ] ; then
-						setterm -clear
-						eval "$Prog" "$3"
+						if [[ -n $gv_Terminal ]] ; then
+							setterm -clear
+							eval "$Prog" "$3"
+						else
+							eval "$Prog" "$3"
+						fi
 					else
 						# Wenn nicht gibts ne Fehlermeldung.
 						no_prog_exec_msg "$Prog"
@@ -5297,10 +5333,17 @@ kernel_choice() {
 					# pruefen, ob Programm ausfuehrbar ist.
 					Prog="$1"
 					if [ -x "`which $Prog`" ] ; then
-						setterm -clear
-						eval "$Prog" "$2"
-						if [ "$?" != 0 ] ; then
-							prog_failure
+						if [[ -n $gv_Terminal ]] ; then
+							setterm -clear
+							eval "$Prog" "$2"
+							if [ "$?" != 0 ] ; then
+								prog_failure
+							fi
+						else
+							eval "$Prog" "$2"
+							if [ "$?" != 0 ] ; then
+								prog_failure
+							fi
 						fi
 					else
 						# Wenn nicht gibts ne Fehlermeldung.
@@ -5761,12 +5804,12 @@ search_fdisks() {
 	# Da bekommt dialog kein Fenster hin oder es ist ziehmlich gequetscht.
 	# 
 	if [ $COLUMNS -le 79 -o $LINES -le 20 ] ; then
-		print $ERROR
-		print
 		MSG=$(gettext "Ihre Bildschirmaufloesung ist zu klein (${COLUMNS}x${LINES}). Um vernuenftig arbeiten zu koennen, benoetigen Sie mindestens 80x20, besser 80x40. Druecken Sie jetzt ENTER.")
+		$ERROR
+		print
 		print "$MSG"
 		print
-		print $NORMAL
+		$NORMAL
 		read
 		exit 0
 	fi	
@@ -6334,11 +6377,20 @@ no_option_msg() {
 	# Funktion (no_prog_exec_msg){{{
 	#
 	# usage: no_prog_exec_msg Programm
+	#
 	no_prog_exec_msg() {
-		if [ "$#" = 1 ] ; then
+		if [[ ${#argv} == 1 ]] ; then
 			Prog="$1"
-			MSG=$(gettext 'Kann das/die Script(s)/Programm(e) ($Prog) nicht finden oder ausfuehren. Stellen Sie sicher das es/sie installiert ist/sind.')
-			msgbox "$gv_Attention" "$MSG"
+			MSG=$(gettext 'Kann das/die Script(s)/Programm(e) ($Prog) nicht finden oder\nausfuehren. Stellen Sie sicher das es/sie installiert ist/sind.')
+			if [[ -n $gv_Terminal ]] ; then
+				msgbox "$gv_Attention" "$MSG"
+			else
+				$ERROR
+				print
+				print "$MSG"
+				print
+				$NORMAL
+			fi
 		else
 			no_para_msg $0
 		fi

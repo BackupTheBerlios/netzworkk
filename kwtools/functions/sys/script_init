@@ -187,9 +187,9 @@ if [ "$1" != -o ] ; then
 	#
 	# dialog Einstellungen.
 	#
-	#check_home_conf_dir
-	if [ -x "`which dialog 2>/dev/null`" ]; then
-		Dialog="`which dialog`"
+	check_home_conf_dir
+	if [[ -x ${commands[dialog]} ]]; then
+		Dialog="${commands[dialog]}"
 		gv_WorkDir="`mktemp -d ${TMP_PATH}/script_init_XXXXXX`"
 		DialogReDirect="2>${gv_WorkDir}/auswahl"
 		# Dialog Versionscheck fuer die Widgets progressbox und dselect
@@ -197,7 +197,7 @@ if [ "$1" != -o ] ; then
 		dialog_version
         # Dialog einstellen
         if [ ! -f ${gv_HomePath}/.dialogrc ] ; then
-            dialog --create-rc ${gv_HomePath}/.dialogrc
+            $Dialog --create-rc ${gv_HomePath}/.dialogrc
             sed -e 's#^use_colors.*#use_colors = ON# ;
 				s#^title_color.*#title_color = (RED,WHITE,ON)# ;
 				s#^tag_color.*#tag_color = (BLUE,WHITE,ON)# ;
