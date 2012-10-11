@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 09.08.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 11.10.2012
 #
-# Script: termin_cron, um Termine zu ueberwachen.
-# Version: 0.1.2
+# Script: kwtermin_cron, um Termine zu ueberwachen.
+# Version: 0.1.3
 
 trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
 
@@ -33,7 +33,9 @@ autoload -U script_init
 # Scriptinitialisierung
 script_init -o
 
-#
+# Dieses Cron Script locken.
+lock -s $gv_ScriptName
+
 # Wenn eine ~/.kwtools/kwplanerrc Datei vorhanden ist einlesen.
 #
 read_file kwplanerrc
@@ -177,6 +179,9 @@ while [ "${TerminListe[Anz]}" != "" ] ; do
 	esac
 	(( Anz++ ))
 done
+
+# Lockfile loeschen
+lock -r $gv_ScriptName
 
 exit 0
 ### Modeline {{{

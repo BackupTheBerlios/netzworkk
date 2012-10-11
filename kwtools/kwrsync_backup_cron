@@ -1,16 +1,11 @@
 #!/bin/zsh
 #
-# kwrsync_backup_cron
+# Autor: Kai Wilke <kiste@netzworkk.de> 11.10.2012
 #
-# Developed by Kai Wilke <kiste@netzworkk.de>
-# Copyright (c) 2002-2012 Netzworkk
-# Licensed under terms of GNU General Public License.
-# All rights reserved.
-#
-# Description: kwrsync_backup_cron, make a snapshot from local and remote hosts
+# Script: kwrsync_backup_cron, make a snapshot from local and remote hosts
 # per crontab.
 #
-# Version: 0.1.1
+# Version: 0.1.2
 #
 
 trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -43,6 +38,9 @@ fi
 autoload -U script_init
 # Scriptinitialisierung
 script_init -o
+
+# Dieses Cron Script locken.
+lock -s $gv_ScriptName
 
 # Option for kwrsync_backup_exec
 case "$1" in
@@ -136,6 +134,9 @@ $MSG"
 		exit 1
 	fi
 fi
+
+# Lockfile loeschen
+lock -r $gv_ScriptName
 
 exit 0
 ### Modeline {{{
