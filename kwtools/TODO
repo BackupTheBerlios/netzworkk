@@ -11,6 +11,10 @@ Bis Version 0.8.6
 
 Bis Version 0.8.5
 * Bug fixing.
+* dialog Option --default-item weiter integrieren.
+  Dient zur schnelleren Handhabung, z. B. koennen die vorher
+  ausgewaehlten Menuepunkte markiert werden. kwpostfix und
+  Funktion yesno.
 * kwrsync_backup neue Features einfügen.
 * kwrsync neue Features einfügen.
 

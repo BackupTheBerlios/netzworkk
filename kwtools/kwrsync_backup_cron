@@ -1,14 +1,14 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 11.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 15.10.2012
 #
 # Script: kwrsync_backup_cron, make a snapshot from local and remote hosts
 # per crontab.
 #
-# Version: 0.1.2
+# Version: 0.1.3
 #
 
-trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+trap 'rm -rf $gv_WorkDir &>/dev/null ; lock -r $gv_ScriptName' EXIT INT
 
 gv_ScriptName=${0##*/}
 

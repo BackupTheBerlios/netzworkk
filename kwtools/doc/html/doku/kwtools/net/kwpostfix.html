@@ -7,7 +7,7 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2010-03-10">
+        <meta name="date" content="2012-10-12">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
 	<meta name="Robots" content="index,follow">
@@ -45,7 +45,7 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#quickly">1 Quickly-Konfiguration</a></p></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#quickly">1 Kurz-Konfiguration</a></p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -55,17 +55,27 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#Tabellen">3 Tabellen</a></p></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#ext_conf">3 erweiterte Konfiguration</a></p></td>
                         <td></td>
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#master">4 Steuerdatei</a></p></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#Tabellen">4 Tabellen</a></p></td>
                         <td></td>
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#aufr&auml;umen">5 Aufr&auml;umen</a></p></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#master">5 Steuerdatei</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#aufr&auml;umen">6 Aufr&auml;umen</a></p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><p><img src="../../../images/trans.gif" width="0" height="1"><a href="kwpostfix.html#links">7 Links</a></p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -75,7 +85,7 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h3><a name=quickly></a>1 Quickly-Konfiguration</a></h3>
+                        <td vAlign=top><h3><a name=quickly></a>1 Kurz-Konfiguration</a></h3>
 				<p>Hier werden die Distributionsspezifischen Administrationstools verwendet.<br>
 				<b>Notiz:</b> Zur Zeit gehen nur Debian und SuSE (SuSE = yast2 mail | Debian =
 				dpkg-reconfigure postfix).</p></td>
@@ -89,9 +99,9 @@
                 <tr>
                         <td></td>
                         <td vAlign=top><h3><a name=main></a>2 Konfiguration</a></h3>
-				<p>Die Konfiguration ist in Haupt, Standard, Fehlercodes, Mail,
-				LMTP, Queue, SMTP, SMTPD, TLS und Virtual unterteilt, sodas die
-				Konfiguration etwas &uuml;bersichtlicher ist.</p></td>
+				<p>Die Konfiguration ist in Haupt, Standard, Fehlercodes, LMTP,
+				Lokal, Mail, Queue/Qmail, Weiterleitung, SMTP, SMTPD, TLS und Virtual
+				unterteilt, sodas die Konfiguration etwas &uuml;bersichtlicher ist.</p></td>
                         <td></td>
                 </tr>
                 <tr>
@@ -101,7 +111,20 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h3><a name=Tabellen></a>3 Tabellen</a></h3>
+                        <td vAlign=top><h3><a name=ext_conf></a>3 erweiterte Konfiguration</a></h3>
+				<p>Die Konfiguration ist in Adresspr&uuml;fung, Bsmtp, Fehler, IfMail,
+				Maildrop, Mailman, Milter, Postscreen, Wiederholung,Scalemail-backend,
+				TLS_Proxy und UUCP unterteilt.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=Tabellen></a>4 Tabellen</a></h3>
 				<p>Hier kann man die einzelnen Tabellen konfigurieren, die man in der main.cf
 				eingestellt hat. kwpostfix unterst&uuml;tzt alle Tabellentypen 
 				(ldap,hash,*sql,...).</p></td>
@@ -114,7 +137,7 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h3><a name=master></a>4 Steuerdateien</a></h3>
+                        <td vAlign=top><h3><a name=master></a>5 Steuerdatei</a></h3>
 				<p>Hier kann man die master.cf konfigurieren.</p></td>
                         <td></td>
                 </tr>
@@ -125,9 +148,20 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><h3><a name=aufr&auml;umen></a>5 Aufr&auml;umen</a></h3>
+                        <td vAlign=top><h3><a name=aufr&auml;umen></a>6 Aufr&auml;umen</a></h3>
 				<p>Hier werden &uuml;berfl&uuml;ssige tempor&auml;re Dateien gel&ouml;scht und
 				gegebenfalls die Queue-Struktur repariert.</p></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><br><hr><br></td>
+                        <td></td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td vAlign=top><h3><a name=links></a>7 Links</a></h3>
+				<p></p></td>
                         <td></td>
                 </tr>
                 <tr>

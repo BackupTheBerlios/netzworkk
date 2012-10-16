@@ -360,7 +360,7 @@ smtp_tls_CApath: Verzeichnis in dem die Zertifikate liegen, fuer
 \tServers gelesen.
 
 smtp_tls_block_early_mail_reply: Soll versucht werden eine Mail
-\tHjacking Attacke zu erkennen (ja/nein)? Dies basiert auf der
+\tHijacking Attacke zu erkennen (ja/nein)? Dies basiert auf der
 \tSchwachstelle im TLS Protokoll (CVE-2009-3555), wo ein Angreifer
 \tboeswillige HELO, MAIL, RCPT, DATA Kommandos vorab an eine
 \tPostfix SMTP client TLS Session schickt.
@@ -429,7 +429,7 @@ smtp_tls_mandatory_exclude_ciphers: Auswahl einer Liste der
 
 smtp_tls_mandatory_protocols: Auswahl der TLS Protokolle die der
 \tPostfix SMTP Client bei der TLS Verschluesselung benutzen oder
-\tausschliessen soll. Das Zeichen "!" schließt das Protokoll aus.
+\tausschliessen soll. Das Zeichen "!" schliesst das Protokoll aus.
 \tStandard ist !SSLv2.
 
 smtp_tls_note_starttls_offer: Soll der Rechnername vom entfernten
@@ -444,7 +444,7 @@ smtp_tls_policy_maps:
 
 smtp_tls_protocols: Auswahl der TLS Protokolle die der Postfix SMTP
 \tClient bei der TLS Verschluesselung benutzen oder ausschliessen
-\tsoll. Das Zeichen "!" schließt das Protokoll aus.
+\tsoll. Das Zeichen "!" schliesst das Protokoll aus.
 \tStandard ist !SSLv2.
 
 smtp_tls_scert_verifydepth: Ueberpruefungstiefe des Server
@@ -460,7 +460,7 @@ smtp_tls_secure_cert_match: Auswahl der Strategie wie der Postfix
 smtp_tls_security_level: Legt fest ob, ob SSL/TLS benutzt werden
 \tdarf, kann oder muss. Hier legen Sie das SMTP TLS Sicherheits-
 \tlevel fuer den Postfix SMTP Client fest. Zur Auswahl stehen
-\t"none" "may" "encrypt" "fingerprint" "secure" "verify".
+\t"none", "may", "encrypt", "fingerprint", "secure" und "verify".
 
 smtp_tls_session_cache_database: Datei die den TLS Sitzungs Cache
 \tfuer SMTP Clients enthaelt. Dadurch koennen mehrere SMTP

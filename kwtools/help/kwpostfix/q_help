@@ -51,8 +51,8 @@ qmqpd_error_delay: Wartezeit nach einem Fehler in einer
 
 qmqpd_timeout: Timeout fuer das Senden und Erhalten von
 \tInformationen. Falls das Lesen oder Schreiben das Zeitlimit
-\tueberschreitet gibt der Postfix QMQP Server auf. Zur Auswahl
-\ŧstehen die Suffixe s=Sekunde, m=Minute, h=Stunde, d=Tag und
+\tueberschreitet gibt der Postfix QMQP Server auf. Zur Auswahl 
+\tstehen die Suffixe s=Sekunde, m=Minute, h=Stunde, d=Tag und
 \tw=Woche.
 \tStandard ist 300s.
 

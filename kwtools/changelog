@@ -1,3 +1,24 @@
+kwtools (0.8.5-4) unstable; urgency=low
+  * all *_cron scripts updateted (lock -r in line "trap '...'").
+
+ -- Kai Wilke <kiste@netzworkk.de>  Thu, 11 Oct 2012 15:24:34 +0100
+ 
+kwtools (0.8.5-3) unstable; urgency=low
+  * Function: update sys_conf (prog_check,file_filter,lock,...).
+  * Function: lock implemented to all Cron Scripts.
+  * kwpwsafe: Menu new sort.
+  * kwtermin: better sort.
+  * kwtermin_cron: Variable "Act_Termin_Day" lacked.
+  * kwmutt: menupoint (extended configuration) bug fixed.
+  * kwmutt: menupoint addressbook bug fixed (alias_file or abook).
+  * kwpostfix: add dialog option --default-item.
+  * kwpostfix: new functions and help for address, bsmtp, maildrop,
+    mailman, milter, postscreen, relay, retry, proxy, scalemail-backend,
+    tlsproxy, uucp.
+  * kwrsync_backup: Bugfixing - read Configuration.
+
+ -- Kai Wilke <kiste@netzworkk.de>  Thu, 11 Oct 2012 15:24:34 +0100
+ 
 kwtools (0.8.5-2) unstable; urgency=low
   * kwauth: Menupoint PAM is static now.
   * kwuser: new Option - --multi.
@@ -17,7 +38,7 @@ kwtools (0.8.5-1) unstable; urgency=low
     daily, weekly and mounthly, extended configuration,...
   * vim setup in files (functions, help, scripts).
   * bugfix: Function mount_check.
-  * script install updateted.
+  * script install updated.
 
  -- Kai Wilke <kiste@netzworkk.de>  Sun, 04 Mar 2012 13:37:52 +0100
  

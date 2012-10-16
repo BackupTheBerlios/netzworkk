@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 11.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 12.10.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -828,7 +828,10 @@ default_or_input (){
 # Hauptprogramm
 #
 ##################################################################
-#
+
+# Rechte fuer Dateien bei der Erstellung.
+umask 022
+
 net_conf
 haupt_menue
 while [ "$gv_Auswahl" ] ; do
@@ -967,7 +970,7 @@ while [ "$gv_Auswahl" ] ; do
 			data_directory=$(postconf -h data_directory)
 			#
 			# Funktion (ext_conf_menu), erweitertes (fast komplettes) Menue# {{{
-			EXT_CONF_MENU=($lv_Address \"\" $lv_Bsmtp \"\"
+			EXT_CONF_MENU=($lv_Address_Verify \"\" $lv_Bsmtp \"\"
 				$lv_Error \"\" $lv_Ifmail \"\"
 				$lv_Maildrop \"\" $lv_Mailman \"\" 
 				$lv_Milter \"\" $lv_Postscreen \"\"
@@ -989,7 +992,7 @@ while [ "$gv_Auswahl" ] ; do
 					HELP*) script_help ext_conf_help
 						ext_conf_menu
 						;;
-					$lv_Address)
+					$lv_Address_Verify)
 						# Address Einstellungen
 						#address_conf
 						hier_ist_noch_nichts address_conf

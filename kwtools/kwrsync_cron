@@ -1,13 +1,13 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 11.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.10.2012
 #
-# Script: kwrsync_cron, führt eine syncronisation von Verzeichnissen
+# Script: kwrsync_cron, führt eine Syncronisation von Verzeichnissen
 #         aus. (cron)
 #
-# Version: 0.1.1
+# Version: 0.1.2
 
-trap 'rm -rf $gv_WorkDir &>/dev/null' EXIT INT
+trap 'rm -rf $gv_WorkDir &>/dev/null ; lock -r $gv_ScriptName' EXIT INT
 
 gv_ScriptName=${0##*/}
 

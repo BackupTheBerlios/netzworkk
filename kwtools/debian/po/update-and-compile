@@ -3,7 +3,7 @@
 # nur fuer das erstellen der Programm-Pakete geeignet,
 # nicht fuer den Source-Code.
 #
-# Last-Modified: Mon Oct 08 08:55:32 2012
+# Last-Modified: Thu Oct 11 15:41:32 2012
 
 setopt shwordsplit extendedglob
 setopt no_nomatch
@@ -20,7 +20,7 @@ set -e
 
 # 1. Level Scripts
 for i in $PACKAGES ; {
-	if grep script_help ${DIR}/${i} >/dev/null ; then
+	if grep script_help ${DIR}/${i}(.) >/dev/null ; then
 		if [ -d "${FUNC_DIR}/${i##*/}" -a -d "${HELP_DIR}/${i##*/}" ] ; then
 			print $i
 			xgettext -L Shell -o ${i##*/}/${i##*/}.pot ${DIR}/${i} ${FUNC_DIR}/${i##*/}/* ${HELP_DIR}/${i##*/}/*
