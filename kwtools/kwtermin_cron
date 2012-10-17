@@ -90,14 +90,16 @@ Termin_Date="$Date"
 DAY="${Date[7,8]}"
 MONTH="${Date[5,6]}"
 YEAR="${Date[1,4]}"
+Error=$(gettext 'Fehler:')
 TerminMsg=$(gettext 'Termin am')
-NoTerminList=$(gettext '${gv_ScriptName}: Kann Termin-Liste nicht oeffnen ($TerminFile).')
+NoTerminList=$(gettext 'Kann Termin-Liste nicht oeffnen ($TerminFile).')
 
-if [ ! -r "$TerminFile" ]; then
-  print "$NoTerminList"
-fi
 if [ -z "$MAIL_ADR" ] ; then
 	MAIL_ADR="$USER@localhost"
+fi
+if [ ! -r "$TerminFile" ]; then
+	mail -s "$Error $gv_ScriptName" $MAIL_ADR <<< "$NoTerminList"
+	exit 0
 fi
 
 IFS=$'\r'
