@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Author: Kai Wilke <kiste@netzworkk.de>, 13.04.2011
+# Author: Kai Wilke <kiste@netzworkk.de>, 17.10.2012
 #
 # Script: kwadmin ist eine Oberfläche für verschiedene Scripte, die
 # die Arbeit mit Linux erleichtern sollen.
-# Version: 0.3.0
+# Version: 0.3.1
 
 trap 'setterm -inversescreen off ; setterm -reset ; 
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT

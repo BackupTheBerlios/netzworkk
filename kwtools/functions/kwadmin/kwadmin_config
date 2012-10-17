@@ -14,7 +14,7 @@ kwadmin_config() {
 KWTOOLS_PATH=\"$KWTOOLS_PATH\"
 
 # Standard temporaeres Verzeichnis
-TMP_PATH=\"${TMP_PATH}\"
+TMP_PATH=\"${TMP_PATH/\\\$/\$}\"
 
 # Spracheauswahl (zur Zeit geht nur de=deutsch)
 LANGUAGE=\"$LANGUAGE\"
