@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.10.2012
 #
 # Script: kwnetstat, zeigt einige nuetzliche Informationen
 #		  ueber das Netzwerk an.
 #
-# Version: 0.2.13
+# Version: 0.2.14
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -43,14 +43,31 @@ if [ -z "$PROGS" ] ; then
 fi
 
 # Variablen
-TITLE_MENU=$(gettext 'a alles off C "Routing Information vom Cache" off
-	e "Zusatzinfos" off F "Routing Information vom FIB" off
-   	g "IPv6/IPv4 Gruppenmitgliedschaften" off i "Tabelle aller Netzwerkverbindugen" off
-   	l "lauschende Sockets" off M "Masquerade Verbindungen" off
-   	n "Anzeige numerischer Adressen" off o "Zeitgeber bestehender Verbindungen" off
-   	p "PID und Programmname" off r Routingtabelle off s Statistik off
-   	t "nur bestehende tcp Verbindungen" off u "nur bestehende udp Verbindungen" off
-   	w "nur raw Verbindungen" off x "nur unix domain Sockets" off')
+lv_All=$(gettext 'alles')
+lv_RIvC=$(gettext 'Routing Information vom Cache')
+lv_ExtraInfo=$(gettext 'Zusatzinfos')
+lv_RIvFIB=$(gettext 'Routing Information vom FIB')
+lv_IPvGroups=$(gettext 'IPv6/IPv4 Gruppenmitgliedschaften')
+lv_NetTable=$(gettext 'Tabelle aller Netzwerkverbindugen')
+lv_LaunchSocket=$(gettext 'lauschende Sockets')
+lv_NetMask=$(gettext 'Masquerade Verbindungen')
+lv_DisplayNumAddress=$(gettext 'Anzeige numerischer Adressen')
+lv_Timers=$(gettext 'Zeitgeber bestehender Verbindungen')
+lv_Pid=$(gettext 'PID und Programmname')
+lv_RouteTable=$(gettext 'Routingtabelle')
+lv_Statistics=$(gettext 'Statistik')
+lv_Tcp=$(gettext 'nur bestehende tcp Verbindungen')
+lv_Udp=$(gettext 'nur bestehende udp Verbindungen')
+lv_Raw=$(gettext 'nur raw Verbindungen')
+lv_UnixDomainSockets=$(gettext 'nur unix domain Sockets')
+
+
+
+TITLE_MENU=(a $lv_All off C \"$lv_RIvC\" off e \"$lv_ExtraInfo\" off
+	F \"$lv_RIvFIB\" off g \"$lv_IPvGroups\" off i \"$lv_NetTable\" off
+   	l \"$lv_LaunchSocket\" off M \"$lv_NetMask\" off n \"$lv_DisplayNumAddress\" off
+	o \"$lv_Timers\" off p \"$lv_Pid\" off r $lv_RouteTable off s $lv_Statistics off
+   	t \"$lv_Tcp\" off u \"$lv_Udp\" off w \"$lv_Raw\" off x \"$lv_UnixDomainSockets\" off)
 # Funktion Hauptmenue{{{
 haupt_menue() {
 	# Variable U_OPT: Dadurch werden die leerzeichen zwischen den 
