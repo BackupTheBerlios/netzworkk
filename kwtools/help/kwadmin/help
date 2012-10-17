@@ -6,8 +6,8 @@ konfigurieren und natuerlich auch ausfuehren.
 
 kwadmin ist in einzelne Bereiche unterteilt, wie System, Netzwerk,
 etc.. In diese Bereiche gelangt man nur, wenn das dementsprechende
-Modul-Paket installiert ist. Sonst werden Sie auch nicht zur 
-Auswahl angeboten.
+Paket installiert ist. Sonst werden Sie auch nicht zur Auswahl
+angeboten.
 
 Anders ist das bei einer Installation aus den Sourcen 
 (kwtools-Versionsnr.tgz), mittels dem Script install. Dann stehen 
@@ -16,23 +16,26 @@ benoetigten Pakete installiert sind. Lesen Sie dazu bitte die Datei
 INSTALL.
 
 Fuer die Konfiguration von kwadmin und dadurch auch wesentliche
-Teile, die andere Scripts benoetigen, benoetigt man root Rechte.
+Teile, die andere Scripte benoetigen, benoetigt man root Rechte.
 
-Folgende Modul-Pakete stehen zur Auswahl:
+Folgende Pakete stehen zur Auswahl:
 kwtools-bin - kwadmin.
 kwtools-common: Allgemeine Funktionen die alle kwtools Scripte benutzen.
 kwtools-doc: Dokumentation zu allen Scripts und Funktionen.
 kwtools-graphic: Grafik Scripte.
 kwtools-multi: Multimedia Scripte.
+kwtools-multi-xmms2: Frontend fuer den xmms2 Client.
+kwtools-multi-xmms2d: Frontend fuer den xmms2d Server.
 kwtools-net: Netzwerk Scripte.
 kwtools-net-djbdns: Script fuer Bernsteins DNS server.
 kwtools-net-mutt: Scripts fuer mutt (mail client).
 kwtools-net-narc: Scripts fuer Netfilter (iptables).
-kwtools-net-openmosix: Script um openmosix cluster zu konfigurieren.
 kwtools-net-postfix: Script um den MTA postfix zu konfigurieren/verwalten.
 kwtools-sys: System Scripte.
 kwtools-sys-crypt: Scripte zum managen von verschluesselten Laufwerken/Containern.
 kwtools-sys-fuse: Script zum managen von Laufwerken ueber FUSE.
+kwtools-sys-grub: Script zum managen vom Bootloader grub.
+kwtools-sys-grub2: Script zum managen vom Bootloader grub2.
 kwtools-sys-kwpasswd: Script zum Passwort aendern (NIS,passwd).
 kwtools-sys-lvm: Script fuer LVM1/LVM2.
 kwtools-sys-parted: Script zum managen der Festplatten Partitionen.
@@ -40,6 +43,7 @@ kwtools-sys-quota: Script zum managen von quota.
 kwtools-sys-raid: Script fuer Software RAID.
 kwtools-utils: Scripte fuer den taeglichen Bedarf.
 kwtools-utils-pim: Scripte fuer das Personal Informations Management.
+kwtools-utils-ssl: Script zum managen von CAs .
 ')
 #}}}
 ### Modeline {{{

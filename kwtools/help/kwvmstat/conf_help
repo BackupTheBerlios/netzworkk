@@ -1,7 +1,6 @@
 # conf_help fuer kwvmstat{{{
 TITLE="${gv_Configuration}::${gv_Help}"
-MSG=$(gettext 'Hier koennen Sie einige Optionen fuer kwvmstat
-einrichten.
+MSG=$(gettext 'Hier koennen Sie einige Optionen fuer kwvmstat einrichten.
 
 Anzahl: Geben Sie hier die Anzahl der Aktualisierungen ein.
 \t0 geht nicht, nichts ist endlos.

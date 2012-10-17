@@ -15,8 +15,9 @@ m - Anzeige slabinfo.
 p - Statistik ueber Partitionen. Benoetigt "root" Rechte.
 s - Anzeige von verschiedenen Speicher Statistiken.
 
-NOTIZ: Option "p" wird nur angezeigt wenn man als "root" kwvmstat
-aufruft.')
+NOTIZ: Die Optionen "p" und "m" werden nur angezeigt wenn man als
+\t"root" kwvmstat aufruft.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker
