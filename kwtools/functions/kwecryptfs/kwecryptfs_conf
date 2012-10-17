@@ -66,12 +66,12 @@ kwecryptfs_conf() {
 				# Welcher Chiffrierungstyp soll verwendet werden?# {{{
 				CIPHER_MSG=$(gettext 'Waehlen Sie einen Chiffrierungstyp aus. Standard ist aes.')
 				CIPHER_MENU=(aes \"\" arc4 \"\" blowfish \"\" cast5 \"\" cast6 \"\" des3_ede \"\" twofish \"\")
-				menubox "$gv_Configuration" "$CIPHER_MSG" "$CIPHER_MENU"
+				menubox -d "${CIPHER:-aes}" "$gv_Configuration" "$CIPHER_MSG" "$CIPHER_MENU"
 				# Auswahl anbieten
 				while [ -n "$gv_Auswahl" ] ; do
 					case "$gv_Auswahl" in
 						HELP*)	script_help conf_help
-							menubox "$gv_Configuration" "$CIPHER_MSG" "$CIPHER_MENU"
+							menubox -d "${CIPHER:-aes}" "$gv_Configuration" "$CIPHER_MSG" "$CIPHER_MENU"
 							;;
 						*)
 							# Auswahl uebernehmen
@@ -104,14 +104,14 @@ kwecryptfs_conf() {
 				conf_menu $lv_Mountverz
 				;;
 			$lv_Keysize)
-				# Schluesselgroesse eingeben# {{{
+				# Schluesselgroesse auswaehlen# {{{
 				KEY_SIZE_MSG=$(gettext 'Waehlen Sie bitte die Groesse des Schluessels aus. Standard ist 16.')
 				KEY_SIZE_MENU=(16 \"\" 24 \"\" 32 \"\")
-				menubox "$gv_Configuration" "$KEY_SIZE_MSG" "$KEY_SIZE_MENU"
+				menubox -d "${KEY_SIZE:-16}" "$gv_Configuration" "$KEY_SIZE_MSG" "$KEY_SIZE_MENU"
 				while [ "$gv_Auswahl" ] ; do
 					case "$gv_Auswahl" in
 						HELP*)	script_help conf_help
-							menubox "$gv_Configuration" "$KEY_SIZE_MSG" "$KEY_SIZE_MENU"
+							menubox -d "${KEY_SIZE:-16}" "$gv_Configuration" "$KEY_SIZE_MSG" "$KEY_SIZE_MENU"
 							;;
 						*)	# Wert uebernehmen
 							KEY_SIZE="$gv_Auswahl"

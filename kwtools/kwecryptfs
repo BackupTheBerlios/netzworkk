@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 11.05.2011
+# Autor: Kai Wilke  <kiste@netzworkk.de> 16.10.2012
 #
 # Script: kwecryptfs, erstellt ein verschluesseltes Dateisystem
 #         ueber einem Verzeichnis.
 #
-# Version: 0.0.3
+# Version: 0.0.4
 
 # Ausfuehren von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -49,7 +49,7 @@ if [ ! -z "$NO_PROGS" ] ; then
 fi
 
 kernel_release
-if [ "$gv_K_Minor" -lt 6 -a "$gv_K_S_Minor" -lt 24 ] ; then
+if [[ "${gv_K_Release%%-*}" < 2.6.24 ]] ; then
 	MSG=$(gettext 'Ihr Kernel ($gv_K_Release) ist zu alt fuer kwecryptfs.')
     msgbox "$gv_Attention" "$MSG"
     exit 0
