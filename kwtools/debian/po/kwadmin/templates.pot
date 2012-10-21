@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 16:12+0200\n"
+"POT-Creation-Date: 2012-10-20 10:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,24 +21,28 @@ msgstr ""
 msgid "Waehlen Sie ein Programm aus."
 msgstr ""
 
-#: ../../kwadmin:44
+#: ../../kwadmin:40
 msgid "Grafik"
 msgstr ""
 
-#: ../../kwadmin:45
+#: ../../kwadmin:41
 msgid "Multimedia"
 msgstr ""
 
-#: ../../kwadmin:46
+#: ../../kwadmin:42
 msgid "Netzwerk"
 msgstr ""
 
-#: ../../kwadmin:47
+#: ../../kwadmin:43
 msgid "System"
 msgstr ""
 
-#: ../../kwadmin:48
+#: ../../kwadmin:44
 msgid "Dienstprogramme"
+msgstr ""
+
+#: ../../kwadmin:45
+msgid "Paketsystem"
 msgstr ""
 
 #: ../../functions/kwadmin/kwadmin_conf:8
@@ -88,7 +92,7 @@ msgstr ""
 #, sh-format
 msgid ""
 "Geben Sie hier ein temporaeres Verzeichnis ein indem alle Benutzer ausser "
-"root ihre temporaeren Dateien anlegen duerfen ($HOME/tmp oder /var/tmp)."
+"root ihre temporaeren Dateien anlegen duerfen (\\$HOME/tmp oder /var/tmp)."
 msgstr ""
 
 #: ../../help/kwadmin/graphic_help:3
@@ -114,8 +118,8 @@ msgid ""
 "\n"
 "kwadmin ist in einzelne Bereiche unterteilt, wie System, Netzwerk,\n"
 "etc.. In diese Bereiche gelangt man nur, wenn das dementsprechende\n"
-"Modul-Paket installiert ist. Sonst werden Sie auch nicht zur \n"
-"Auswahl angeboten.\n"
+"Paket installiert ist. Sonst werden Sie auch nicht zur Auswahl\n"
+"angeboten.\n"
 "\n"
 "Anders ist das bei einer Installation aus den Sourcen \n"
 "(kwtools-Versionsnr.tgz), mittels dem Script install. Dann stehen \n"
@@ -124,24 +128,27 @@ msgid ""
 "INSTALL.\n"
 "\n"
 "Fuer die Konfiguration von kwadmin und dadurch auch wesentliche\n"
-"Teile, die andere Scripts benoetigen, benoetigt man root Rechte.\n"
+"Teile, die andere Scripte benoetigen, benoetigt man root Rechte.\n"
 "\n"
-"Folgende Modul-Pakete stehen zur Auswahl:\n"
+"Folgende Pakete stehen zur Auswahl:\n"
 "kwtools-bin - kwadmin.\n"
 "kwtools-common: Allgemeine Funktionen die alle kwtools Scripte benutzen.\n"
 "kwtools-doc: Dokumentation zu allen Scripts und Funktionen.\n"
 "kwtools-graphic: Grafik Scripte.\n"
 "kwtools-multi: Multimedia Scripte.\n"
+"kwtools-multi-xmms2: Frontend fuer den xmms2 Client.\n"
+"kwtools-multi-xmms2d: Frontend fuer den xmms2d Server.\n"
 "kwtools-net: Netzwerk Scripte.\n"
 "kwtools-net-djbdns: Script fuer Bernsteins DNS server.\n"
 "kwtools-net-mutt: Scripts fuer mutt (mail client).\n"
 "kwtools-net-narc: Scripts fuer Netfilter (iptables).\n"
-"kwtools-net-openmosix: Script um openmosix cluster zu konfigurieren.\n"
 "kwtools-net-postfix: Script um den MTA postfix zu konfigurieren/verwalten.\n"
 "kwtools-sys: System Scripte.\n"
 "kwtools-sys-crypt: Scripte zum managen von verschluesselten Laufwerken/"
 "Containern.\n"
 "kwtools-sys-fuse: Script zum managen von Laufwerken ueber FUSE.\n"
+"kwtools-sys-grub: Script zum managen vom Bootloader grub.\n"
+"kwtools-sys-grub2: Script zum managen vom Bootloader grub2.\n"
 "kwtools-sys-kwpasswd: Script zum Passwort aendern (NIS,passwd).\n"
 "kwtools-sys-lvm: Script fuer LVM1/LVM2.\n"
 "kwtools-sys-parted: Script zum managen der Festplatten Partitionen.\n"
@@ -149,6 +156,7 @@ msgid ""
 "kwtools-sys-raid: Script fuer Software RAID.\n"
 "kwtools-utils: Scripte fuer den taeglichen Bedarf.\n"
 "kwtools-utils-pim: Scripte fuer das Personal Informations Management.\n"
+"kwtools-utils-ssl: Script zum managen von CAs .\n"
 msgstr ""
 
 #: ../../help/kwadmin/kw_conf_help:3
@@ -187,10 +195,6 @@ msgstr ""
 msgid ""
 "Hauptsaechlich ist zur Zeit nur deutsch vorhanden. Englisch ist in\n"
 "wenigen Teilen vorhanden, oder in Arbeit."
-msgstr ""
-
-#: ../../help/kwadmin/kw_package_help:2
-msgid "Konfiguration::Paketsystem::Hilfe"
 msgstr ""
 
 #: ../../help/kwadmin/kw_package_help:3

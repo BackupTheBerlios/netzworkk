@@ -1,17 +1,17 @@
 # kwgpgcrypt english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2002-2012
 # This file is distributed under the same license as the kwtools-utils package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kwgpgcrypt-0.0.7\n"
+"Project-Id-Version: kwgpgcrypt-0.0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 03:12+0200\n"
-"PO-Revision-Date: 2011-04-13 03:14+0200\n"
+"POT-Creation-Date: 2012-10-20 09:55+0200\n"
+"PO-Revision-Date: 2012-10-20 10:04+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
-"Language-Team: \n"
-"Language: \n"
+"Language-Team: Kai Wilke <kiste@netzworkk.de>\n"
+"Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -52,7 +52,7 @@ msgstr "sign/encrypt"
 msgid "entschluesseln"
 msgstr "decrypt"
 
-#: ../../utils/kwgpgcrypt:76
+#: ../../utils/kwgpgcrypt:80
 msgid ""
 "Es ist schon ein privater Schluessel vorhanden. Soll ein neuer erzeugt "
 "werden (ja/nein)? Bedenken Sie das Sie erst alle alten verschluesselten "
@@ -63,7 +63,7 @@ msgstr ""
 "you that you first to decrypt the all old files and directorys before create "
 "new Key."
 
-#: ../../utils/kwgpgcrypt:97
+#: ../../utils/kwgpgcrypt:101
 msgid ""
 "Sie haben noch keinen Schluessel erzeugt. Dies wird jetzt getan. Machen Sie "
 "in der Zeit etwas auf dem PC damit der Schluessel ordentlich verschluesselt "
@@ -85,9 +85,9 @@ msgid ""
 msgstr ""
 
 #: ../../functions/kwgpgcrypt/gpgcrypt:70
-#, sh-format
-msgid "$DIR ist kein Verzeichnis."
-msgstr "$DIR is not directory."
+#, fuzzy, sh-format
+msgid "Unter $DIR sind keine Verzeichnisse."
+msgstr "Under $DIR are not directories."
 
 #: ../../functions/kwgpgcrypt/gpgcrypt:82
 msgid "Dateiauswahl"
@@ -105,56 +105,57 @@ msgstr "It is no de/encrypted files present."
 #: ../../functions/kwgpgcrypt/gpgcrypt_conf:7
 #, fuzzy
 msgid "Standard_Schluessel_ID_lang"
-msgstr "Configuration::Default_Key_ID"
+msgstr "Default_Key_ID_long"
 
 #: ../../functions/kwgpgcrypt/gpgcrypt_conf:8
 #, fuzzy
 msgid "Standard_Schluessel_ID"
-msgstr "Configuration::Default_Key_ID"
+msgstr "Default_Key_ID"
 
 #: ../../functions/kwgpgcrypt/gpgcrypt_conf:9
 #, fuzzy
 msgid "Schluessel_Server"
-msgstr "Key_Management"
+msgstr "Key_Server"
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:34
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:38
 msgid "Protokoll"
 msgstr "Protocol"
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:35
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:39
 msgid "Port"
 msgstr "Port"
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:36
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:40
 msgid "Mailadresse"
 msgstr "Mailaddress"
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:67
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:71
 msgid "Waehlen Sie hier das Protokoll aus, welches benutzt werden soll."
 msgstr "Please select the protocol to used."
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:84
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:88
 #, fuzzy
 msgid ""
 "Geben Sie hier bitte einen Schluesselserver ein (z. B. wwwkeys.de.pgp.net)."
-msgstr "Please to enter a key server (wwwkeys.de.pgp.net)."
+msgstr "Please to enter a key server (f. E. wwwkeys.de.pgp.net)."
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:96
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:100
 #, fuzzy
 msgid ""
 "Geben Sie hier bitte einen E-Mail Schluesselserver ein (z. B. pgp-public-"
 "keys@keys.pgp.net)."
-msgstr "Please to enter a key server (wwwkeys.de.pgp.net)."
+msgstr "Please to enter a E-Mail key server (f. E. pgp-public-"
+"keys@keys.pgp.net)."
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:108
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:112
 msgid "Geben Sie bitte den Port fuer den Schluesselserver ein."
 msgstr "Please to enter a port for the key server."
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:128
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:132
 msgid "Sie muessen erst einen Schluesselserver angeben."
 msgstr "You must to specify a key server first."
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:157
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:161
 #, fuzzy
 msgid ""
 "Sie muessen mindestens den Menuepunkt Standard_Schluessel_ID mit einem Wert "
@@ -280,7 +281,6 @@ msgstr ""
 msgid ""
 "Hier kann man sich eine ID aller eigenen Schluessel aussuchen mit\n"
 "dem man standardmaessig signiert, verschluessselt etc..\n"
-"#}}}\n"
 msgstr ""
 
 #: ../../help/kwgpgcrypt/import_help:3
@@ -296,7 +296,7 @@ msgstr ""
 msgid ""
 "Hier koennen Sie einen oeffentlichen Schluessel zur weiteren\n"
 "Bearbeitung auswaehlen."
-msgstr "Please select a public key."
+msgstr ""
 
 #: ../../help/kwgpgcrypt/keyserv_help:3
 msgid ""

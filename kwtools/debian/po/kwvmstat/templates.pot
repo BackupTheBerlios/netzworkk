@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 01:44+0200\n"
+"POT-Creation-Date: 2012-10-20 10:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgid "Festplatten Statistik"
 msgstr ""
 
 #: ../../utils/kwvmstat:54
-msgid "Anzeige der Festplattentabelle"
+msgid "Summe Festplatten Statistik"
 msgstr ""
 
 #: ../../utils/kwvmstat:55
@@ -53,18 +53,18 @@ msgstr ""
 msgid "verschiedene Statistiken"
 msgstr ""
 
-#: ../../utils/kwvmstat:78
+#: ../../utils/kwvmstat:82
 msgid ""
 "Sie koennen fuer die Aktualisierungen nicht die 0 vergeben. Es wird jetzt "
 "eine Endlos Anzeige gestartet. Mit STRG+C koennen Sie die Anzeige beenden. "
 "Ansonsten konfigurieren Sie kwvmstat."
 msgstr ""
 
-#: ../../utils/kwvmstat:90
+#: ../../utils/kwvmstat:94
 msgid "Sie benoetigen einen Kernel >= Version 2.6.0."
 msgstr ""
 
-#: ../../utils/kwvmstat:151
+#: ../../utils/kwvmstat:163
 msgid "Es sind keine Partitionen zum anzeigen vorhanden."
 msgstr ""
 
@@ -90,8 +90,7 @@ msgstr ""
 
 #: ../../help/kwvmstat/conf_help:3
 msgid ""
-"Hier koennen Sie einige Optionen fuer kwvmstat\n"
-"einrichten.\n"
+"Hier koennen Sie einige Optionen fuer kwvmstat einrichten.\n"
 "\n"
 "Anzahl: Geben Sie hier die Anzahl der Aktualisierungen ein.\n"
 "\\t0 geht nicht, nichts ist endlos.\n"
@@ -120,6 +119,6 @@ msgid ""
 "p - Statistik ueber Partitionen. Benoetigt \"root\" Rechte.\n"
 "s - Anzeige von verschiedenen Speicher Statistiken.\n"
 "\n"
-"NOTIZ: Option \"p\" wird nur angezeigt wenn man als \"root\" kwvmstat\n"
-"aufruft."
+"NOTIZ: Die Optionen \"p\" und \"m\" werden nur angezeigt wenn man als\n"
+"\\t\"root\" kwvmstat aufruft.\n"
 msgstr ""

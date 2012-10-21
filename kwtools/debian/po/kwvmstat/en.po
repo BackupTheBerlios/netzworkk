@@ -1,17 +1,17 @@
 # kwvmstat english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2002-2012
 # This file is distributed under the same license as the kwtools-utils package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kwvmstat-0.2.9\n"
+"Project-Id-Version: kwvmstat-0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 01:44+0200\n"
-"PO-Revision-Date: 2011-04-13 01:54+0200\n"
+"POT-Creation-Date: 2012-10-20 10:27+0200\n"
+"PO-Revision-Date: 2012-10-20 10:38+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
-"Language-Team: \n"
-"Language: \n"
+"Language-Team: Kai Wilke <kiste@netzworkk.de>\n"
+"Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,19 +27,20 @@ msgstr "in and active memory"
 #: ../../utils/kwvmstat:52
 #, fuzzy
 msgid "Anzeige v. in/aktiver Speicher"
-msgstr "in and active memory"
+msgstr "Display in/active memory"
 
 #: ../../utils/kwvmstat:53
 msgid "Festplatten Statistik"
 msgstr "Disk statistics"
 
 #: ../../utils/kwvmstat:54
-msgid " Summe Festplatten Statistik"
-msgstr "summary disk statistics"
+#, fuzzy
+msgid "Festplatten Aktivitaet"
+msgstr "Disks activity"
 
 #: ../../utils/kwvmstat:55
-msgid "Partition Statistik"
-msgstr "Partition statistics"
+msgid "Partitions Statistik"
+msgstr "Partitions statistics"
 
 #: ../../utils/kwvmstat:56
 msgid "Forksanzahl seit boot"
@@ -51,20 +52,20 @@ msgstr "Display slabinfo"
 
 #: ../../utils/kwvmstat:58
 msgid "verschiedene Statistiken"
-msgstr ""
+msgstr "various statistics"
 
-#: ../../utils/kwvmstat:78
+#: ../../utils/kwvmstat:82
 msgid ""
 "Sie koennen fuer die Aktualisierungen nicht die 0 vergeben. Es wird jetzt "
 "eine Endlos Anzeige gestartet. Mit STRG+C koennen Sie die Anzeige beenden. "
 "Ansonsten konfigurieren Sie kwvmstat."
 msgstr ""
 
-#: ../../utils/kwvmstat:90
+#: ../../utils/kwvmstat:94
 msgid "Sie benoetigen einen Kernel >= Version 2.6.0."
 msgstr "You need kernel >= 2.6.0."
 
-#: ../../utils/kwvmstat:151
+#: ../../utils/kwvmstat:163
 msgid "Es sind keine Partitionen zum anzeigen vorhanden."
 msgstr ""
 
@@ -90,8 +91,7 @@ msgstr ""
 
 #: ../../help/kwvmstat/conf_help:3
 msgid ""
-"Hier koennen Sie einige Optionen fuer kwvmstat\n"
-"einrichten.\n"
+"Hier koennen Sie einige Optionen fuer kwvmstat einrichten.\n"
 "\n"
 "Anzahl: Geben Sie hier die Anzahl der Aktualisierungen ein.\n"
 "\\t0 geht nicht, nichts ist endlos.\n"
@@ -120,6 +120,6 @@ msgid ""
 "p - Statistik ueber Partitionen. Benoetigt \"root\" Rechte.\n"
 "s - Anzeige von verschiedenen Speicher Statistiken.\n"
 "\n"
-"NOTIZ: Option \"p\" wird nur angezeigt wenn man als \"root\" kwvmstat\n"
-"aufruft."
+"NOTIZ: Die Optionen \"p\" und \"m\" werden nur angezeigt wenn man als\n"
+"\\t\"root\" kwvmstat aufruft.\n"
 msgstr ""

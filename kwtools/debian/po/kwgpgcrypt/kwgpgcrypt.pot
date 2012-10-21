@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 03:12+0200\n"
+"POT-Creation-Date: 2012-10-20 09:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "entschluesseln"
 msgstr ""
 
-#: ../../utils/kwgpgcrypt:76
+#: ../../utils/kwgpgcrypt:80
 msgid ""
 "Es ist schon ein privater Schluessel vorhanden. Soll ein neuer erzeugt "
 "werden (ja/nein)? Bedenken Sie das Sie erst alle alten verschluesselten "
@@ -61,7 +61,7 @@ msgid ""
 "Sie einen neuen erstellen."
 msgstr ""
 
-#: ../../utils/kwgpgcrypt:97
+#: ../../utils/kwgpgcrypt:101
 msgid ""
 "Sie haben noch keinen Schluessel erzeugt. Dies wird jetzt getan. Machen Sie "
 "in der Zeit etwas auf dem PC damit der Schluessel ordentlich verschluesselt "
@@ -84,7 +84,7 @@ msgstr ""
 
 #: ../../functions/kwgpgcrypt/gpgcrypt:70
 #, sh-format
-msgid "$DIR ist kein Verzeichnis."
+msgid "Unter $DIR sind keine Verzeichnisse."
 msgstr ""
 
 #: ../../functions/kwgpgcrypt/gpgcrypt:82
@@ -111,42 +111,42 @@ msgstr ""
 msgid "Schluessel_Server"
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:34
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:38
 msgid "Protokoll"
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:35
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:39
 msgid "Port"
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:36
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:40
 msgid "Mailadresse"
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:67
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:71
 msgid "Waehlen Sie hier das Protokoll aus, welches benutzt werden soll."
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:84
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:88
 msgid ""
 "Geben Sie hier bitte einen Schluesselserver ein (z. B. wwwkeys.de.pgp.net)."
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:96
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:100
 msgid ""
 "Geben Sie hier bitte einen E-Mail Schluesselserver ein (z. B. pgp-public-"
 "keys@keys.pgp.net)."
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:108
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:112
 msgid "Geben Sie bitte den Port fuer den Schluesselserver ein."
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:128
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:132
 msgid "Sie muessen erst einen Schluesselserver angeben."
 msgstr ""
 
-#: ../../functions/kwgpgcrypt/gpgcrypt_conf:157
+#: ../../functions/kwgpgcrypt/gpgcrypt_conf:161
 msgid ""
 "Sie muessen mindestens den Menuepunkt Standard_Schluessel_ID mit einem Wert "
 "belegen."
@@ -267,6 +267,11 @@ msgid ""
 "Hier kann man sich eine ID aller eigenen Schluessel aussuchen mit\n"
 "dem man standardmaessig signiert, verschluessselt etc..\n"
 "#}}}\n"
+"### Modeline {{{\n"
+"### vim:ft=zsh:foldmethod=marker\n"
+"### vim:set "
+"ts=4:                                                                               \n"
+"### }}}\n"
 msgstr ""
 
 #: ../../help/kwgpgcrypt/import_help:3

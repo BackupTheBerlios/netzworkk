@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-16 16:46+0200\n"
+"POT-Creation-Date: 2012-10-20 10:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../net/kwnetstat:46
-msgid ""
-"a alles off C \"Routing Information vom Cache\" off\n"
-"\te \"Zusatzinfos\" off F \"Routing Information vom FIB\" off\n"
-"   \tg \"IPv6/IPv4 Gruppenmitgliedschaften\" off i \"Tabelle aller "
-"Netzwerkverbindugen\" off\n"
-"   \tl \"lauschende Sockets\" off M \"Masquerade Verbindungen\" off\n"
-"   \tn \"Anzeige numerischer Adressen\" off o \"Zeitgeber bestehender "
-"Verbindungen\" off\n"
-"   \tp \"PID und Programmname\" off r Routingtabelle off s Statistik off\n"
-"   \tt \"nur bestehende tcp Verbindungen\" off u \"nur bestehende udp "
-"Verbindungen\" off\n"
-"   \tw \"nur raw Verbindungen\" off x \"nur unix domain Sockets\" off"
+msgid "alles"
+msgstr ""
+
+#: ../../net/kwnetstat:47
+msgid "Routing Information vom Cache"
+msgstr ""
+
+#: ../../net/kwnetstat:48
+msgid "Zusatzinfos"
+msgstr ""
+
+#: ../../net/kwnetstat:49
+msgid "Routing Information vom FIB"
+msgstr ""
+
+#: ../../net/kwnetstat:50
+msgid "IPv6/IPv4 Gruppenmitgliedschaften"
+msgstr ""
+
+#: ../../net/kwnetstat:51
+msgid "Tabelle aller Netzwerkverbindugen"
+msgstr ""
+
+#: ../../net/kwnetstat:52
+msgid "lauschende Sockets"
+msgstr ""
+
+#: ../../net/kwnetstat:53
+msgid "Masquerade Verbindungen"
+msgstr ""
+
+#: ../../net/kwnetstat:54
+msgid "Anzeige numerischer Adressen"
+msgstr ""
+
+#: ../../net/kwnetstat:55
+msgid "Zeitgeber bestehender Verbindungen"
+msgstr ""
+
+#: ../../net/kwnetstat:56
+msgid "PID und Programmname"
+msgstr ""
+
+#: ../../net/kwnetstat:57
+msgid "Routingtabelle"
+msgstr ""
+
+#: ../../net/kwnetstat:58
+msgid "Statistik"
+msgstr ""
+
+#: ../../net/kwnetstat:59
+msgid "nur bestehende tcp Verbindungen"
+msgstr ""
+
+#: ../../net/kwnetstat:60
+msgid "nur bestehende udp Verbindungen"
+msgstr ""
+
+#: ../../net/kwnetstat:61
+msgid "nur raw Verbindungen"
+msgstr ""
+
+#: ../../net/kwnetstat:62
+msgid "nur unix domain Sockets"
 msgstr ""
 
 #: ../../help/kwnetstat/help:3

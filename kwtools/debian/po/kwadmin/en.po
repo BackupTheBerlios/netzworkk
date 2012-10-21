@@ -1,17 +1,17 @@
 # kwadmin english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2002-2012
 # This file is distributed under the same license as the kwtools-bin package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kwadmin-0.3.0\n"
+"Project-Id-Version: kwadmin-0.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 00:30+0200\n"
-"PO-Revision-Date: 2011-04-13 00:31+0200\n"
+"POT-Creation-Date: 2012-10-20 10:51+0200\n"
+"PO-Revision-Date: 2012-10-20 10:54+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
-"Language-Team: \n"
-"Language: \n"
+"Language-Team: Kai Wilke <kiste@netzworkk.de>\n"
+"Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,25 +20,29 @@ msgstr ""
 msgid "Waehlen Sie ein Programm aus."
 msgstr "Select a program."
 
-#: ../../kwadmin:44
+#: ../../kwadmin:40
 msgid "Grafik"
 msgstr "Graphic"
 
-#: ../../kwadmin:45
+#: ../../kwadmin:41
 msgid "Multimedia"
 msgstr "Multimedia"
 
-#: ../../kwadmin:46
+#: ../../kwadmin:42
 msgid "Netzwerk"
 msgstr "Network"
 
-#: ../../kwadmin:47
+#: ../../kwadmin:43
 msgid "System"
 msgstr "System"
 
-#: ../../kwadmin:48
+#: ../../kwadmin:44
 msgid "Dienstprogramme"
 msgstr "Utils"
+
+#: ../../kwadmin:45
+msgid "Paketsystem"
+msgstr "Packagesystem"
 
 #: ../../functions/kwadmin/kwadmin_conf:8
 msgid "kwtoolsverz."
@@ -87,7 +91,7 @@ msgstr "${gv_Configuration}::temporary directory"
 #, sh-format
 msgid ""
 "Geben Sie hier ein temporaeres Verzeichnis ein indem alle Benutzer ausser "
-"root ihre temporaeren Dateien anlegen duerfen ($HOME/tmp oder /var/tmp)."
+"root ihre temporaeren Dateien anlegen duerfen (\\$HOME/tmp oder /var/tmp)."
 msgstr ""
 
 #: ../../help/kwadmin/graphic_help:3
@@ -113,8 +117,8 @@ msgid ""
 "\n"
 "kwadmin ist in einzelne Bereiche unterteilt, wie System, Netzwerk,\n"
 "etc.. In diese Bereiche gelangt man nur, wenn das dementsprechende\n"
-"Modul-Paket installiert ist. Sonst werden Sie auch nicht zur \n"
-"Auswahl angeboten.\n"
+"Paket installiert ist. Sonst werden Sie auch nicht zur Auswahl\n"
+"angeboten.\n"
 "\n"
 "Anders ist das bei einer Installation aus den Sourcen \n"
 "(kwtools-Versionsnr.tgz), mittels dem Script install. Dann stehen \n"
@@ -123,24 +127,27 @@ msgid ""
 "INSTALL.\n"
 "\n"
 "Fuer die Konfiguration von kwadmin und dadurch auch wesentliche\n"
-"Teile, die andere Scripts benoetigen, benoetigt man root Rechte.\n"
+"Teile, die andere Scripte benoetigen, benoetigt man root Rechte.\n"
 "\n"
-"Folgende Modul-Pakete stehen zur Auswahl:\n"
+"Folgende Pakete stehen zur Auswahl:\n"
 "kwtools-bin - kwadmin.\n"
 "kwtools-common: Allgemeine Funktionen die alle kwtools Scripte benutzen.\n"
 "kwtools-doc: Dokumentation zu allen Scripts und Funktionen.\n"
 "kwtools-graphic: Grafik Scripte.\n"
 "kwtools-multi: Multimedia Scripte.\n"
+"kwtools-multi-xmms2: Frontend fuer den xmms2 Client.\n"
+"kwtools-multi-xmms2d: Frontend fuer den xmms2d Server.\n"
 "kwtools-net: Netzwerk Scripte.\n"
 "kwtools-net-djbdns: Script fuer Bernsteins DNS server.\n"
 "kwtools-net-mutt: Scripts fuer mutt (mail client).\n"
 "kwtools-net-narc: Scripts fuer Netfilter (iptables).\n"
-"kwtools-net-openmosix: Script um openmosix cluster zu konfigurieren.\n"
 "kwtools-net-postfix: Script um den MTA postfix zu konfigurieren/verwalten.\n"
 "kwtools-sys: System Scripte.\n"
 "kwtools-sys-crypt: Scripte zum managen von verschluesselten Laufwerken/"
 "Containern.\n"
 "kwtools-sys-fuse: Script zum managen von Laufwerken ueber FUSE.\n"
+"kwtools-sys-grub: Script zum managen vom Bootloader grub.\n"
+"kwtools-sys-grub2: Script zum managen vom Bootloader grub2.\n"
 "kwtools-sys-kwpasswd: Script zum Passwort aendern (NIS,passwd).\n"
 "kwtools-sys-lvm: Script fuer LVM1/LVM2.\n"
 "kwtools-sys-parted: Script zum managen der Festplatten Partitionen.\n"
@@ -148,6 +155,7 @@ msgid ""
 "kwtools-sys-raid: Script fuer Software RAID.\n"
 "kwtools-utils: Scripte fuer den taeglichen Bedarf.\n"
 "kwtools-utils-pim: Scripte fuer das Personal Informations Management.\n"
+"kwtools-utils-ssl: Script zum managen von CAs .\n"
 msgstr ""
 
 #: ../../help/kwadmin/kw_conf_help:3
@@ -188,6 +196,14 @@ msgid ""
 "wenigen Teilen vorhanden, oder in Arbeit."
 msgstr ""
 
+#: ../../help/kwadmin/kw_package_help:3
+msgid ""
+"Hier koennen Sie Ihr Paketmanagementsystem auswaehlen.\n"
+"dpkg - Debian, grml,...\n"
+"rpm - OpenSuSE, CentOS,...\n"
+"tar - Sourcen"
+msgstr ""
+
 #: ../../help/kwadmin/multi_help:3
 msgid ""
 "Hier koennen Sie einzelne Programme/Scripte aufrufen, die Ihnen die\n"
@@ -195,6 +211,13 @@ msgid ""
 "\n"
 "Dies sind Scripte, die Dialog basiert, alle Optionen und Parameter\n"
 "den Programmen uebergeben."
+msgstr ""
+
+#: ../../help/kwadmin/multi_kwfilm2film_help:2
+msgid ""
+"kwfilm2film: Konvertiert Viedeo Filme in andere Formate. Es benutzt\n"
+"\\tdazu transcode und mplex. Man kann aus diesem Script auch\n"
+"\\tkwvcdburn aufrufen um Video-CDs zu erstellen."
 msgstr ""
 
 #: ../../help/kwadmin/multi_kwrecord_help:2
@@ -219,6 +242,15 @@ msgstr ""
 msgid ""
 "kwvcdburn: Hiermit kann man MPEG Dateien in Video-CD Dateien\n"
 "\\tkonvertieren und brennen."
+msgstr ""
+
+#: ../../help/kwadmin/multi_kwvdvdburn_help:2
+msgid ""
+"kwvdvdburn: Hiermit kann man MPEG Video Stream Dateien in Viedeo\n"
+"\\tDVD Dateien konvertieren und brennen. Die Video DVD\n"
+"\\tVerzeichnisstruktur wird dabei angelegt. Die MPEG Video\n"
+"\\tStream Dateien kann man mit kwfilm2film, zum Beispiel\n"
+"\\tanlegen."
 msgstr ""
 
 #: ../../help/kwadmin/multi_kwxmms2d_help:2
@@ -432,12 +464,6 @@ msgid ""
 "persoenlichen Dingen und Anzeigen."
 msgstr ""
 
-#: ../../help/kwadmin/utils_kwbackup_help:2
-msgid ""
-"kwbackup: Sicherung der Systemverzeichnisse und Verzeichnisse Ihrer\n"
-"\\tWahl. Entweder per crontab oder manuell."
-msgstr ""
-
 #: ../../help/kwadmin/utils_kwgpgcrypt_help:2
 msgid ""
 "kwgpgcrypt: Mit diesem Script kann man einzelne Dateien oder ganze\n"
@@ -460,6 +486,12 @@ msgstr ""
 msgid ""
 "kwpwsafe: Mit diesem Script koennen Sie Ihre Passwoerter\n"
 "\\tverwalten."
+msgstr ""
+
+#: ../../help/kwadmin/utils_kwssl2_help:2
+msgid ""
+"kwssl2: Mit diesem Script koennen Sie SSL Zertifikate erstellen,\n"
+"\\tsignieren etc."
 msgstr ""
 
 #: ../../help/kwadmin/utils_kwvmstat_help:2
