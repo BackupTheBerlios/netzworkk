@@ -179,6 +179,10 @@ sys_conf() {
 	#
 	fselect() {
 		unset -- Tmp_File
+		# vorherigen Wert speichern.
+		if [ -n "$1" ] ; then
+			V_WERT="$1"
+		fi
 		Tmp_File="${1/\~/$HOME}"
 		if [ -f "$Tmp_File" -o -d "${Tmp_File}" ] ; then
 			F_DIR="${(qq)Tmp_File}"
@@ -3150,6 +3154,7 @@ $TIME test -x $Prog_Wahl_X && $Sudo $Prog_Wahl_X"
 file_choice() {
 	if [ $# -ge 2 ] ; then
 		unset -- WERT
+		VAR="$3"
 		dselect "$1"
 		if [ "$VERZ" ] ; then
 			dselect_check "$VERZ"
