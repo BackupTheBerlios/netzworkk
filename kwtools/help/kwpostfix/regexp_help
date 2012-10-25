@@ -1,7 +1,7 @@
 # regexp_help fuer kwpostfix{{{
 TITLE="${lv_Tabs}::regexp::${gv_Help}"
-MSG=$(gettext 'Zeichenkette: Regulaeren Ausdruck eingeben (Bsp.: /RA/Flags |
-\t!/RA/Flags). Siehe man 5 regexp_table.
+MSG=$(gettext 'Zeichenkette: Regulaeren Ausdruck eingeben. Beispiel: /RA/Flags |
+\t!/RA/Flags. Siehe man 5 regexp_table.
 
 Flags: i = REG_ICASE (ingnore case), i ist Standard.
 \tx = REG_EXTENDED (erweiterte Ausdruecke), x ist Standard.
@@ -24,7 +24,8 @@ Aktion: DISCARD = behauptet erfolgreiche Zustellung und loescht die
 \tWARN zu einem REJECT oder zu DISCARD.
 \t4/5XX = Fehlercode und optionalen Text senden.
 
-Text: Antworttext (optional)')
+Text: Antworttext (optional).
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

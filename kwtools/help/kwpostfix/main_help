@@ -382,6 +382,7 @@ syslog_facility: Ausgabekanal fuer Logmeldungungen an syslogd (mail).
 \tSiehe man 5 syslog.conf.
 
 syslog_name: Ausgabename fuer Logmeldungungen an syslogd.
+\tStandard ist ${multi_instance_name:postfix}${multi_instance_name?$multi_instance_name}.
 
 transport_maps: Tabelle mit den Transporteintraegen.
 

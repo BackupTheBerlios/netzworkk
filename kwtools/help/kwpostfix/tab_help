@@ -5,10 +5,10 @@ der main.cf einen Wert besitzen. Loeschen, anlegen, veraendern und
 Ansicht der Tabellen stehen zur Verfuegung, sowie die Datenbank neu
 erstellen.
 
-In einigen Tabellen werden Regulaere Ausdruecke (RA) unterstuetzt
-(Beispiel: /regexp/flags | !/regexp/flags ). flags sind i 
-(REG_ICASE), x (REG_EXTENDED), m (REG_NEWLINE). m wird noch nicht
-unterstuetzt, die anderen beiden sind Standard.
+In einigen Tabellen werden Regulaere Ausdruecke (RA) unterstuetzt.
+Beispiel: /regexp/flags | !/regexp/flags. flags sind i
+(REG_ICASE), x (REG_EXTENDED), m (REG_NEWLINE).
+Standard sind ix.
 
 *access: Definiert selektive Zugriffsrechte zum Einliefern von Mails
 \tbasieren auf Absender, Empfaenger oder Hostnamen. RA werden

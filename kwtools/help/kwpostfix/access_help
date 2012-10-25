@@ -1,5 +1,5 @@
 # access_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::access::${gv_Help}"
+TITLE="${SUBTAB}::${gv_Help}"
 MSG=$(gettext 'NOTIZ: Lesen Sie dazu bitte die Datei
 /usr/share/doc/postfix-doc/examples/access.gz
 
@@ -33,7 +33,8 @@ Action: Dies sind Aktionen die auf eine bestimmte Adresse
 \tDISCARD, DUNNO, HOLD, REJECT, 4/5xx. Die 4/5xx sind Fehler-
 \tcodes in Zahlen.
 
-Text: Text der auf eine Aktion zurueckgesendet werden soll.')
+Text: Text der auf eine Aktion zurueckgesendet werden soll.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

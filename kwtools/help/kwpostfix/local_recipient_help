@@ -1,9 +1,10 @@
 # local_recipient_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::local_recipient::${gv_Help}"
-MSG=$(gettext 'Hier kann man Postfix einstellen fuer welche lokalen Empfaenger
-Adressen er Mails annehmen soll. Lokaler Empfaenger ist wenn die
-Doamin auf einen der Werte von $mydestination, $inet_interfaces
-oder $proxy_interfaces passt.
+TITLE="${TAB}::${gv_Help}"
+MSG=$(gettext 'Hier kann man Postfix einstellen welche Mailadressen lokal sind.
+Lokaler Empfaenger ist wenn die Domain auf einen der Werte von
+$mydestination, $inet_interfaces oder $proxy_interfaces passt.
+Gibt es keinen lokalen Empfaenger so wird die Mail nicht
+angenommen.
 
 Bei regulaeren Tabellentypen (regexp,pcre) muss die volle lokale
 Mailadresse eingegeben werden (user@domain.de).
@@ -20,7 +21,8 @@ user\t\t:
 user@domain.de\t:
 
 NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
-\tTabellen.')
+\tTabellen.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker
