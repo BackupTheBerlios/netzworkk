@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 20.10.2012
 #
 # Script: kwnetstat, zeigt einige nuetzliche Informationen
 #		  ueber das Netzwerk an.
@@ -47,14 +47,14 @@ lv_All=$(gettext 'alles')
 lv_RIvC=$(gettext 'Routing Information vom Cache')
 lv_ExtraInfo=$(gettext 'Zusatzinfos')
 lv_RIvFIB=$(gettext 'Routing Information vom FIB')
-lv_IPvGroups=$(gettext 'IPv6/IPv4 Gruppenmitgliedschaften')
+lv_IPvGroups=$(gettext 'IPv6/IPv4 Multicast Gruppenmitgliedschaften')
 lv_NetTable=$(gettext 'Tabelle aller Netzwerkverbindugen')
 lv_LaunchSocket=$(gettext 'lauschende Sockets')
 lv_NetMask=$(gettext 'Masquerade Verbindungen')
 lv_DisplayNumAddress=$(gettext 'Anzeige numerischer Adressen')
 lv_Timers=$(gettext 'Zeitgeber bestehender Verbindungen')
 lv_Pid=$(gettext 'PID und Programmname')
-lv_RouteTable=$(gettext 'Routingtabelle')
+lv_RouteTable=$(gettext 'Routingtabellen')
 lv_Statistics=$(gettext 'Statistik')
 lv_Tcp=$(gettext 'nur bestehende tcp Verbindungen')
 lv_Udp=$(gettext 'nur bestehende udp Verbindungen')
