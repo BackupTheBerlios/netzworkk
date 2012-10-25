@@ -393,9 +393,14 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		alias_database)
 			# Bestimmt, welche Tabelle mit dem Befehl newaliases erzeugt wird.{{{
-			tab_support_choice "$gv_Auswahl"
-			alias_database="$MAPS"
-			postconf -e alias_database="$MAPS"
+			default_or_input alias_database fselect "$alias_database"
+			if [[ -n $Value ]] ; then
+				alias_database="$Value"
+				postconf -e alias_database="$Value"
+			else
+				alias_database="\$alias_maps"
+				postconf -e alias_database="\$alias_maps"
+			fi
 			#}}}
 			conf_main_menu alias_database alias_database
 			;;
@@ -1769,13 +1774,13 @@ while [ "$gv_Auswahl" ] ; do
 			# Ausgabename von Postfix im syslog {{{
 			#
 			SYSLOG_NAME_MSG=$(gettext 'Geben Sie einen Namen ein, der in der Ausgabe von Postfix an den Syslogd erscheint (postfix).')
-			inputbox "$MAINCF_TITLE" "$SYSLOG_NAME_MSG" "$syslog_name"
+			inputbox "$MAINCF_TITLE" "$SYSLOG_NAME_MSG" "${syslog_name//\$/\\\$}"
 			if [ "$gv_Auswahl" ] ; then
-				syslog_name="$gv_Auswahl"
-				postconf -e syslog_name="$gv_Auswahl"
+				syslog_name="${gv_Auswahl//\\/}"
+				postconf -e syslog_name="${gv_Auswahl//\\/}"
 			else
-				syslog_name="postfix"
-				postconf -e syslog_name="postfix"
+				syslog_name='${multi_instance_name:postfix}${multi_instance_name?$multi_instance_name}'
+				postconf -e syslog_name='${multi_instance_name:postfix}${multi_instance_name?$multi_instance_name}'
 			fi
 			#}}}
 			conf_main_menu syslog_name

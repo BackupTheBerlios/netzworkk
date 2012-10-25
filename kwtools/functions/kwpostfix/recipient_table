@@ -39,16 +39,16 @@ recipient_table() {
 				;;
 			$gv_Save)
 				# Eintraege speichern{{{
-				# xyz in der 2. Spalte wird nicht ausgewertet
+				# ":" in der 2. Spalte wird nicht ausgewertet
 				# und dient nur zur Einhaltung der Syntax von
 				# lookup Tabellen.
 				if [ "$ADR" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}.*#${ADR}	xyz#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}.*#${ADR}	:#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
-						>> $FILE$$ <<< "$ADR	xyz"
+						>> $FILE$$ <<< "$ADR	:"
 						mv $FILE$$ $FILE
 					fi
 				else

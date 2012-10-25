@@ -11,7 +11,7 @@ tab_support_choice() {
 	lv_NameAdapt=$(gettext 'Namensuebernahme')
 	lv_VarChoice=$(gettext 'Variablenauswahl')
 
-	TAB_VALUE_TITLE="${gv_Configuration}::${lv_TableTyp}::${lv_Choice}"
+	TAB_VALUE_TITLE="${lv_TableTyp}::${lv_Choice}"
 	
 	# Für den Standard Tabellentyp wird -s (single) benötigt.
 	# Es wird dann nicht weiter nach Tabelle anlegen oder Namen

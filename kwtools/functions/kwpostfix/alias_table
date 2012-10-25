@@ -61,14 +61,14 @@ alias_table() {
 				inputbox "$TABLE_TITLE" "$OTHER_USER_MSG" "$EXT_ADR"
 				if [ "${(w)#gv_Auswahl}" -gt 1 ] ; then
 					case "$gv_Auswahl" in
-						*,\ *[^,])
+						[a-zA-Z0-9]*,\ [a-zA-Z0-9]*[^,])
 							EXT_ADR="$gv_Auswahl"
 							;;
 						*)	no_input_msg
 							;;
 					esac
 				elif [ "${(w)#gv_Auswahl}" = 1 ] ; then
-					EXT_ADR="$gv_Auswahl"
+					EXT_ADR="${gv_Auswahl%,}"
 				else
 					no_input_msg
 				fi
