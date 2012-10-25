@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 20.10.2012
 #
 # Script: kwvmstat, zeigt verschiedene Statistiken
 #         des virtuellen Speichers (man 1 vmstat).
@@ -51,8 +51,8 @@ MEMORY=$(gettext 'Arbeitspeicher')
 IN_ACTIVE=$(gettext 'in und aktiver Arbeitsspeicher')
 lv_Display=$(gettext 'Anzeige v. in/aktiver Speicher')
 lv_Diskstat=$(gettext 'Festplatten Statistik')
-lv_Display_Parttable=$(gettext 'Summe Festplatten Statistik')
-lv_Partstat=$(gettext 'Partition Statistik')
+lv_Display_Parttable=$(gettext 'Festplatten Aktivitaet')
+lv_Partstat=$(gettext 'Partitions Statistik')
 lv_Forks=$(gettext 'Forksanzahl seit boot')
 lv_Display_Slab=$(gettext 'Anzeige von slabinfo')
 lv_Other_Stat=$(gettext 'verschiedene Statistiken')

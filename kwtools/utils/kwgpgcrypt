@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 13.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 18.10.2012
 #
 # Script: kwgpgcrypt, ent/verschluesselt Dateien oder ganze Verzeichnisse.
-# Version: 0.0.7
+# Version: 0.0.8
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -62,7 +62,11 @@ MAIN_MENU=($gv_Configuration \"\" $lv_Key_Manage \"\" $lv_Sign \"\"
 	$lv_Encrypt \"\" $lv_Sign_Encrypt \"\" $lv_Decrypt \"\" $gv_Exit \"\")
 # Funktion haupt_menue{{{
 haupt_menue() {
-	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	if [[ ${#argv} == 1 ]] ; then
+		menubox -d "$1" "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	else
+		menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
+	fi
 }
 #}}}
 # privaten Schluessel erzeugen (pub_create){{{
@@ -219,8 +223,8 @@ parse_opt() {
 #
 pub_new_create
 # Seit Version 1.2.5-3 benutzt gnupg die Options Datei gpg.conf
-Version=${${${(s: :)${(M)${(f)"$(gpg --help)"}[(r)gpg*]}}[3]}//./}
-if [ "$Version" -le 125 ] ; then
+Version=${${(s: :)${(M)${(f)"$(gpg --help)"}[(r)gpg*]}}[3]}
+if [[ $Version < 1.2.5-3 ]] ; then
 	PGP_OPTIONS="${PGP_HOME}/options"
 else
 	PGP_OPTIONS="${PGP_HOME}/gpg.conf"
@@ -240,38 +244,37 @@ while [ "$gv_Auswahl" ] ; do
 			# Konfiguration, wie  keyserver ....
 			autoload -U gpgcrypt_conf gpgcrypt_config
 			gpgcrypt_conf
-			haupt_menue
+			haupt_menue $gv_Configuration
 			;;
 		$lv_Key_Manage)
 			# Schluessel Management
 			autoload -U key_manage
 			key_manage
-			haupt_menue
+			haupt_menue $lv_Key_Manage
 			;;
 		$lv_Sign)
 			# Auswahl an Dateien oder ganze Verzeichnisse signieren.
-			#
 			ACTION=sign
 			dir_file_choice gpgcrypt
-			haupt_menue
+			haupt_menue $lv_Sign
 			;;
 		$lv_Encrypt)
 			# Auswahl an Dateien oder ganze Verzeichnisse verschluesseln
 			ACTION=crypt
 			dir_file_choice gpgcrypt
-			haupt_menue
+			haupt_menue $lv_Encrypt
 			;;
 		$lv_Sign_Encrypt)
 			# Auswahl an Dateien oder ganze Verzeichnisse signieren und verschluesseln
 			ACTION=both
 			dir_file_choice gpgcrypt
-			haupt_menue
+			haupt_menue $lv_Sign_Encrypt
 			;;
 		$lv_Decrypt)
 			# Auswahl an Dateien oder ganze Verzeichnisse entschluesseln
 			ACTION=decrypt
 			dir_file_choice gpgcrypt
-			haupt_menue
+			haupt_menue $lv_Decrypt
 			;;
 		$gv_Exit)	break
 			;;
