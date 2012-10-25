@@ -1,5 +1,5 @@
 # kw_package_help fuer kwadmin{{{
-TITLE=$(gettext 'Konfiguration::Paketsystem::Hilfe')
+TITLE="${gv_Configuration}::${lv_Packagesystem}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie Ihr Paketmanagementsystem auswaehlen.
 dpkg - Debian, grml,...
 rpm - OpenSuSE, CentOS,...
