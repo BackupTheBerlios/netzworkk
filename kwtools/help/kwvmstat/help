@@ -12,7 +12,7 @@ d - Statistik ueber Festplatten.
 D - Anzeige der Festplattentabelle
 f - Nummer der forks seit boot.
 m - Anzeige slabinfo.
-p - Statistik ueber Partitionen. Benoetigt "root" Rechte.
+p - Statistik ueber Partitionen.
 s - Anzeige von verschiedenen Speicher Statistiken.
 
 NOTIZ: Die Optionen "p" und "m" werden nur angezeigt wenn man als
