@@ -11,7 +11,11 @@ gpgcrypt_conf() {
 	# Funktion konf_menue{{{
 	konf_menue() {
 		MENU=($lv_Default_Keyid_Long \"$TRUSTED_KEY\" --------------------------- \"\" $lv_Keyserv \"$KEY_SERV_ALL\" $lv_Default_Keyid \"$DEFAULT_KEY\" $gv_Save \"\" $gv_Back \"\")
-		menubox "$gv_Configuration" "$gv_Menupoint" "$MENU"
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$MENU"
+		else
+			menubox "$gv_Configuration" "$gv_Menupoint" "$MENU"
+		fi
 	}
 	#}}}
 	konf_menue
@@ -135,7 +139,7 @@ gpgcrypt_conf() {
 					esac
 				done
 				#}}}
-				konf_menue
+				konf_menue $lv_Keyserv
 				;;
 			$lv_Default_Keyid)
 				# Standard_Schluessel_ID auswaehlen, mit der unterschrieben wird.# {{{
@@ -143,10 +147,10 @@ gpgcrypt_conf() {
 				autoload -U gpg_getkeys_id
 				gpg_getkeys_id
 				#}}}
-				konf_menue
+				konf_menue $lv_Default_Keyid
 				;;
 			$lv_Default_Keyid_Long)
-				konf_menue
+				konf_menue $lv_Default_Keyid_Long
 				;;
 			$gv_Save)
 				# Konfiguration speichern

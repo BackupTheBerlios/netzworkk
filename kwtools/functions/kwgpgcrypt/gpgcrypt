@@ -67,7 +67,7 @@ gpgcrypt_action() {
 				esac
 			done
 		else
-			MSG=$(gettext '$DIR ist kein Verzeichnis.')
+			MSG=$(gettext 'Unter $DIR sind keine Verzeichnisse.')
 			msgbox "$gv_Attention" "$MSG"
 		fi
 		#}}}
