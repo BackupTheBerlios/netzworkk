@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 12.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 26.10.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -715,6 +715,8 @@ haupt_menue() {
 #
 # usage: default_or_input OLDKEY FUNCTION OPTION VAR
 #
+# Functions: siehe weiter unten die case-Schleife.
+#
 default_or_input (){
 	if [[ ${#argv} -ge 2 ]] ; then
 		unset -- Value
@@ -730,7 +732,7 @@ default_or_input (){
 		case "$4" in
 			\$*) unset -- Var
 				;;
-			[0-9]*|[a-zA-Z]*)
+			[0-9]*|[/a-zA-Z]*)
 				Var="$4"
 				;;
 			*)
@@ -748,8 +750,8 @@ default_or_input (){
 			*_checks)
 				NewKey="\$${OldKey#*_}"
 				;;
-			tlsproxy_*|postscreen_*)
-				NewKey="\$smtpd_${OldKey#*_}"
+			alias_database)
+				NewKey="\$alias_maps"
 				;;
 			lmtp_tls_dkey_file)
 				NewKey="\$lmtp_tls_dcert_file"
@@ -772,6 +774,9 @@ default_or_input (){
 			smtp_tls_key_file)
 				NewKey="\$smtp_tls_cert_file"
 				;;
+			tlsproxy_*|postscreen_*)
+				NewKey="\$smtpd_${OldKey#*_}"
+				;;
 			*)
 				NewKey="\$default_${OldKey#*_}"
 				;;
@@ -785,6 +790,14 @@ default_or_input (){
 			Value="$NewKey"
 		else
 			case "$Func" in
+				fselect)
+					$Func $FuncOpt
+					if [[ -n $gv_Auswahl ]] ; then
+						Value="$gv_Auswahl"
+					else
+						unset -- Value
+					fi
+					;;
 				ja_nein_tausch|loglevel|tls_ciphers|tls_eecdh_grade|tls_exclude_ciphers|tls_file_auswahl|tls_fingerprint_digest|tls_protocols|tls_security_level)
 					# Ja/Nein Tausch, Loglevel Auswahl (Integer), tls_file_auswahl,
 					# tls_protocols
@@ -1068,11 +1081,13 @@ while [ "$gv_Auswahl" ] ; do
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
 				flags_choice kwpostfix_action ldap_db \
-				local_recipient_table mynetworks_table relay_domains_table \
-				relay_recipient_table regexp_table relocated_table smtpd_sender_login_table \
+				mynetworks_table relay_domains_table \
+				recipient_table regexp_table relocated_table \
 				sql_db transport_table virtual_alias_table virtual_alias_mb_domains_table \
 				virtual_id_table virtual_mailbox_table db_new_reread
 			#
+			TAB_TITLE="$lv_Tabs"
+			TAB_MSG=$(gettext 'Waehlen Sie eine Tabelle zur Bearbeitung aus.')
 			TABLE_ENTRY_MSG=$(gettext 'Waehlen Sie einen Tabelleneintrag aus.')
 			# Funktion tab_change{{{
 			#
@@ -1140,67 +1155,133 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			# Funktion tab_search{{{
 			# sucht nach vorhandenen Werten für die Lookup Tabellen.
+			# der in main.cf angegeben Tabellen
 			#
 			tab_search() {
-				unset -- TABLE TAB_IND Wert
-				for i in alias_maps body_checks canonical_maps fast_flush_domains \
-					header_checks lmtp_sasl_password_maps local_recipient_maps \
-					mailbox_command_maps mynetworks \
-					mime_header_checks nested_header_checks recipient_bcc_maps \
+				unset -- SUB_TABLE SUB_TABLE_E TABLE_E TAB_IND Wert
+				typeset -xA TAB_IND SUB_TABLE_E
+				integer Anz
+				Anz=0
+				setopt localoptions globsubst
+				for tab in alias_maps body_checks canonical_maps fast_flush_domains \
+					header_checks lmtp_body_checks lmtp_sasl_password_maps \
+					lmtp_header_checks lmtp_mime_header_checks lmtp_nested_header_checks \
+					local_recipient_maps \
+					mailbox_command_maps milter_header_checks mime_header_checks mynetworks \
+					nested_header_checks recipient_bcc_maps \
 					recipient_canonical_maps relay_clientcerts relay_domains \
-					relocated_maps sender_bcc_maps sender_canonical_maps \
-					smtp_sasl_password_maps \
+					relay_recipient_maps relocated_maps sender_bcc_maps sender_canonical_maps \
+					smtp_body_checks smtp_header_checks smtp_mime_header_checks \
+					smtp_nested_header_checks smtp_sasl_password_maps \
 					smtpd_client_restrictions smtpd_data_restrictions \
-					smtpd_etrn_restrictions smtpd_helo_restrictions \
-					smtpd_sender_login_maps \
-					smtpd_sender_restrictions smtpd_recipient_restrictions \
+					smtpd_end_of_data_restrictions smtpd_etrn_restrictions \
+					smtpd_helo_restrictions \
+					smtpd_recipient_restrictions smtpd_sender_login_maps \
+					smtpd_sender_restrictions \
 					transport_maps virtual_alias_domains \
 					virtual_alias_maps virtual_gid_maps virtual_mailbox_domains \
 					virtual_mailbox_maps virtual_uid_maps \
 					virtual_transport ; {
-					# Der in main.cf angegeben Tabellen
-					setopt localoptions globsubst
-					print -l ${(M)$(postconf -h -c $MAIL_CONFIG ${i})##*${TB_Format}*} | \
-					while read a ; do
-						Tab_Format=${${a%:*}#*:}
-						Wert=${a##*:}
-						if [ "$Wert" -a "$Tab_Format" ] ; then
-							case "$Tab_Format" in
-								environ|nis|static|tcp|unix)
-									;;
-								*)
-									# Tabellen
-									case "$Wert" in
-										\"\$* | \$*) ;;
-										*)
-											if [ -z ${(M)${TABLE}##${Wert##*/}} ] ; then
-												create_file "$Wert"
-												TABLE+=(${${Wert##*/}%,} \"\")
-												TAB_IND+=(${Tab_Format}:${Wert%,})
+					#
+					case "$tab" in
+						*_restrictions)
+							print ${${(M)${(f)"$(postconf -h -c $MAIL_CONFIG $tab)"}##*_access*}//,/} | \
+								tr ' ' '\n' | while read a ; do
+								case "$a" in
+									check_*_access)
+										# Haupttabellenmenue
+										if [ -z ${(M)${TABLE_E}##${tab}} ] ; then
+											TABLE_E+=($tab \"\")
+										fi
+										(( Anz++ ))
+										SUB_TABLE[Anz]=($a)
+										;;
+									*)
+										# Sub-Tabellenmenue
+										if [ -n "${(M)${a}#${TB_Format}:*}" ] ; then
+											Tab_Format=${${a%:*}#*:}
+											Wert=${a##*:}
+											if [ "$Wert" -a "$Tab_Format" ] ; then
+												case "$Tab_Format" in
+													environ|nis|static|tcp|unix)
+														;;
+													*)
+														# Tabellen
+														case "$Wert" in
+															\"\$* | \$*) ;;
+															*)
+																SUB_TABLE_E+=($tab "${SUB_TABLE[Anz]} \"\"")
+																TAB_IND+=($tab "${SUB_TABLE[Anz]} ${Tab_Format}:${Wert}")
+																create_file "$Wert"
+																;;
+														esac
+														;;
+												esac
 											fi
+										fi
+										;;
+								esac
+							done
+							;;
+						*)
+							print -l ${(M)$(postconf -h -c $MAIL_CONFIG ${tab})##*${TB_Format}*} | \
+							while read a ; do
+								Tab_Format=${${a%:*}#*:}
+								Wert=${${a##*:}%,}
+								if [ "$Wert" -a "$Tab_Format" ] ; then
+									case "$Tab_Format" in
+										environ|nis|static|tcp|unix)
+											;;
+										*)
+											# Tabellen
+											case "$Wert" in
+												\"\$* | \$*) ;;
+												*)
+													if [ -z ${(M)${TABLE_E}##${tab}} ] ; then
+														TABLE_E+=($tab \"\")
+														TAB_IND+=($tab ${Tab_Format}:${Wert})
+														create_file "$Wert"
+													fi
+													;;
+											esac
 											;;
 									esac
-									;;
-							esac
-						fi
-					done
+								fi
+							done
+							;;
+					esac
 				}
 			}
 			#}}}
 			# Funktion tab_menue{{{
 			tab_menue() {
 				unset -- FILE HASH_TAB TAB_HELP WAS_IST
-				if [[ -n $TABLE ]] ; then
-					TAB_TITLE="$lv_Tabs"
-					TAB_MSG=$(gettext 'Waehlen Sie eine Tabelle zur Bearbeitung aus.')
-					TAB_MENU=($TABLE $gv_Back \"\")
+				if [[ -n ${TABLE_E[1]} ]] ; then
+					TAB_MENU=($TABLE_E $gv_Back \"\")
 					if [[ ${#argv} == 1 ]] ; then
 						menubox -d "$1" "$TAB_TITLE" "$TAB_MSG" "$TAB_MENU"
 					else
 						menubox "$TAB_TITLE" "$TAB_MSG" "$TAB_MENU"
 					fi
 				else
-					MSG=$(gettext 'Es sind keine Tabellen vorhanden. Sie muessen erst welche erstellen.')
+					MSG=$(gettext 'Es sind keine Tabellen vorhanden. Sie muessen erst welche in der Konfiguration einstellen.')
+					msgbox "$gv_Attention" "$MSG"
+					unset -- gv_Auswahl
+				fi
+			}
+			#}}}
+			# Funktion sub_tab_menu{{{
+			sub_tab_menu() {
+				unset -- FILE HASH_TAB TAB_HELP WAS_IST
+				if [[ -n ${SUB_TABLE_E[$TAB]} ]] ; then
+					SUB_TAB_MENU=(${SUB_TABLE_E[$TAB]} $gv_Back \"\")
+					if [[ ${#argv} == 1 ]] ; then
+						menubox -d "$1" "$TAB_TITLE" "$TAB_MSG" "$SUB_TAB_MENU"
+					else
+						menubox "$TAB_TITLE" "$TAB_MSG" "$SUB_TAB_MENU"
+					fi
+				else
+					MSG=$(gettext 'Es sind keine Restrictions Tabellen vorhanden. Sie muessen erst welche in der Konfiguration einstellen.')
 					msgbox "$gv_Attention" "$MSG"
 					unset -- gv_Auswahl
 				fi
@@ -1233,6 +1314,8 @@ while [ "$gv_Auswahl" ] ; do
 			tab_search
 			tab_menue
 			##################################
+			# INFO: Reihenfolge beachten!
+			##################################
 			# TODO:
 			# Neue maps sind hinzugekommen und
 			# muessen noch angelegt werden,
@@ -1243,216 +1326,253 @@ while [ "$gv_Auswahl" ] ; do
 					HELP*)	script_help tab_help
 						tab_menue
 						;;
-					*access*)
-						# Tabelle, defeniert selektive Zugriffsrechte zum{{{
-						# Einliefern von Mails, basierend auf Absender, Empfänger
-						# oder Hostnamen
+					*restrictions)
+						# Restrictions Tabellen# {{{
 						#
-						TAB_HELP="access_help"
-						HASH_TAB="access_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						# Die Variable TAB wird auch von der Funktion
+						# sub_tab_menu benoetigt.
 						TAB="$gv_Auswahl"
-						tab_change
-						unset -- HASH_TAB
-						#}}}
+						sub_tab_menu
+						while [[ -n $gv_Auswahl ]] ; do
+							case $gv_Auswahl in
+								HELP*)	script_help tab_help
+									sub_tab_menu $SUBTAB
+									;;
+								*_access)
+									# Tabelle, defeniert selektive Zugriffsrechte zum{{{
+									# Einliefern von Mails, basierend auf Absender, Empfänger
+									# oder Hostnamen.
+									SUBTAB="$gv_Auswahl"
+									TAB_HELP="access_help"
+									HASH_TAB="access_table"
+									Tmp="${${TAB_IND[$TAB]}#*_access }"
+									WAS_IST="${${Tmp}%:*}"
+									FILE="${${Tmp}#*:}"
+									tab_change
+									unset -- HASH_TAB
+									#}}}
+									sub_tab_menu $SUBTAB
+									;;
+								*)
+									unset -- SUB_TABLE_E SUBTAB
+									break
+									;;
+							esac
+						done
+						## }}}
 						tab_menue $TAB
 						;;
-					*virtual_alias_domains* | *virtual_mailbox_domains*)
+					virtual_alias_domains | virtual_mailbox_domains)
 						# Tabelle, fuer welche Domains Postfix Mailadressen aliasen{{{
 						# soll.
-						#
 						TAB_HELP="virtual_alias_mb_domains_help"
 						HASH_TAB="virtual_alias_mb_domains_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*virtual_alias_maps*)
+					virtual_alias_maps)
 						# Tabelle zum umschreiben/weiterleiten von Mailadressen, auch unter{{{
 						# Berücksichtigung der domain.
-						#
 						TAB_HELP="virtual_alias_help"
 						HASH_TAB="virtual_alias_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*alias*)
+					alias_maps)
 						# Tabelle für die Zuweisung von lokalen Mails an andere Empfänger{{{
+						#
+						# alias_maps
 						#
 						TAB_HELP="alias_help"
 						HASH_TAB="alias_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*[rs]*_bcc*)
+					*bcc_maps)
 						# Tabelle, wer soll eine Bcc Mail erhalten{{{
+						#
+						# recipient_bcc_maps, sender_bcc_maps
 						#
 						TAB_HELP="bcc_help"
 						HASH_TAB="bcc_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*checks*)
+					*_checks)
 						# Tabelle für die Filterung des Bodies/Headers.{{{
-						# hier kommt "[(fr)]" zum Einsatz das sonst bei header_checks
-						# auch mime_header_checks gefunden wird.
 						#
-						TAB_HELP="regexp_help"
-						WAS_IST=${${(M)${TAB_IND}[(fr)*${gv_Auswahl}]}%:*}
-						FILE=${${(M)${TAB_IND}[(fr)*${gv_Auswahl}]}#*:}
+						# body_checks, header_checks, lmtp_body_checks,
+						# lmtp_header_checks, lmtp_mime_header_checks,
+						# lmtp_nested_header_checks, milter_header_checks,
+						# mime_header_checks, nested_header_checks, smtp_body_checks,
+						# smtp_header_checks, smtp_mime_header_checks,
+						# smtp_nested_header_checks
+						#
+						#TAB_HELP="regexp_help"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*canonical*)
+					*canonical_maps)
 						# Tabelle zum umwandeln von Empfänger- und Absenderadressen{{{
-						# im SMTP_Enveloper und Mailheader
+						# im SMTP_Enveloper und Mailheader.
+						#
+						# canonical_maps, recipient_canonical_maps, sender_canonical_maps
 						#
 						TAB_HELP="canonical_help"
 						HASH_TAB="canonical_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*local_recipient*)
-						# Tabelle fuer lokale Empfaenger{{{
+					*recipient_maps)
+						# Tabelle fuer local/relay Empfaenger{{{
 						#
-						TAB_HELP="local_recipient_help"
-						HASH_TAB="local_recipient_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						# local_recipient_table, relay_recipient_maps
+						#
+						TAB_HELP="${gv_Auswahl%_maps}_help"
+						HASH_TAB="recipient_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*mynetworks*)
+					mynetworks)
 						# Tabelle, IP-Adressen und IP-Bereiche die relayen dürfen.{{{
+						#
+						# mynetworks
 						#
 						TAB_HELP="mynetworks_help"
 						HASH_TAB="mynetworks_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*relay_domains*)
+					fast_flush_domains|relay_domains)
 						# Tabelle, Domains für die bzw. von denen postfix relayed{{{
 						#
-						TAB_HELP="relay_domains_help"
-						HASH_TAB="relay_domains_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
-						TAB="$gv_Auswahl"
-						tab_change
-						unset -- HASH_TAB
-						#}}}
-						tab_menue $TAB
-						;;
-					*relay_recipient*)
-						# Tabelle, fuer die Mailadressen zur Annahme aus Internet/Netzen{{{
+						# fast_flush_domains, relay_domains
 						#
-						TAB_HELP="relay_recipient_help"
-						HASH_TAB="relay_recipient_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						case $gv_Auswahl in
+							fast_flush_domains)
+								TAB_HELP="fast_flush_domains_help"
+								;;
+							relay_domains)
+								TAB_HELP="relay_domains_help"
+								;;
+						esac
+						HASH_TAB="relay_domains_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*relocated*)
+					relocated_maps)
 						# Tabelle für Empfänger verzogen{{{
+						#
+						# relocated_maps
 						#
 						TAB_HELP="relocated_help"
 						HASH_TAB="relocated_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*smtpd_sender_login*)
+					smtpd_sender_login_maps)
 						# Tabelle für SASL Login Benutzernamen{{{
+						# TODO:
+						# smtpd_sender_login_maps
 						#
 						TAB_HELP="smtpd_sender_login_help"
-						HASH_TAB="local_recipient_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						HASH_TAB="recipient_table"
+						#HASH_TAB="*_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*transport*)
+					*transport_maps)
 						# transport Tabelle, für die Regelung der Transportmethode{{{
 						# von domains, mailadressen
 						#
 						TAB_HELP="transport_help"
 						HASH_TAB="transport_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*virtual_mailbox_maps*)
+					virtual_mailbox_maps)
 						# Tabelle fuer die Mailboxen relativ zu dem Parameter{{{
 						# virtual_mailbox_base = PATH
 						#
 						TAB_HELP="virtual_mailbox_help"
 						HASH_TAB="virtual_mailbox_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
 						;;
-					*virtual_[gu]id_maps*)
+					virtual_[gu]id_maps)
 						# Tabelle, fuer die Zuordnung von mailboxen zu UID oder GID{{{
+						#
+						# virtual_gid_maps, virtual_uid_maps
 						#
 						TAB_HELP="virtual_id_help"
 						HASH_TAB="virtual_id_table"
-						WAS_IST=${${(M)${TAB_IND}##*${gv_Auswahl}}%:*}
-						FILE=${${(M)${TAB_IND}##*${gv_Auswahl}}#*:}
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
 						unset -- HASH_TAB
@@ -1460,7 +1580,7 @@ while [ "$gv_Auswahl" ] ; do
 						tab_menue $TAB
 						;;
 					$gv_Back)
-						unset -- TABLE
+						unset -- TABLE_E
 						break
 						;;
 					*)	
