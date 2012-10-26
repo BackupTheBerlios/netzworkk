@@ -6,14 +6,16 @@ Falls der Admin das nicht weiss, lassen Sie den Parameter
 relay_recipient_maps leer, oder Sie muessen ein Wildcard
 "@domain.de :" anlegen.
 
-Tabellen:
+Tabelle:
 relay_recipient_maps
 
 Format:
+# Fuer diese Mailadresse werden Mails angenommen.
+user@domain.de\t:
+# Fuer diesen Benutzer werden Mails angenommen.
+user\t\t:
 # Fuer diese Domain werden werden beliebige Mails angenommen.
 @domain.de\t:
-# Fuer diesen Mailadresse werden Mails angenommen.
-user@domain.de\t:
 
 NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
 \tTabellen.')

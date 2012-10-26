@@ -9,16 +9,16 @@ angenommen.
 Bei regulaeren Tabellentypen (regexp,pcre) muss die volle lokale
 Mailadresse eingegeben werden (user@domain.de).
 
-Tabellen:
+Tabelle:
 local_recipient_maps
 
 Format:
+# Fuer diese Mailadresse werden Mails lokal eingeliefert.
+user@domain.de\t:
+# Fuer diesen Benutzer werden Mails lokal eingeliefert.
+user\t\t:
 # Fuer diese Domain werden Mails lokal eingeliefert.
 @domain.de\t:
-# Fuer diesen User werden Mails lokal eingeliefert.
-user\t\t:
-# Fuer diesen Mailadresse werden Mails lokal eingeliefert.
-user@domain.de\t:
 
 NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
 \tTabellen.

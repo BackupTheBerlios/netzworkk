@@ -1,5 +1,5 @@
 # regexp_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::regexp::${gv_Help}"
+TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Zeichenkette: Regulaeren Ausdruck eingeben. Beispiel: /RA/Flags |
 \t!/RA/Flags. Siehe man 5 regexp_table.
 

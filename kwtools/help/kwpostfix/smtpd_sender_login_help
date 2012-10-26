@@ -1,23 +1,20 @@
 # smtpd_sender_login_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::smtpd_sender_login::${gv_Help}"
+TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Lookup Tabbelle mit den SASL Login Namen, die Besitzer der Sender
 (MAIL FROM) Adresse sind.
+Dieser Lookup geht nur wenn die Domain auf eins der Muster, in
+den Parametern von, $myorigin, $mydestination, $inet_interfaces
+oder $proxy_interfaces passt.
 
-Tabellen:
+Tabelle:
 smtpd_sender_login_maps
 
 Format:
-# hoechste Prioritaet
-user@domain.de\t:
-# Dieser Lookup geht nur wenn die Domain auf eins der Muster, in
-# den Parametern von, $myorigin, $mydestination, $inet_interfaces
-# oder $proxy_interfaces passt.
-user\t\t:
-# kleinste Prioritaet
-@domain.de\t:
-
-NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
-\tTabellen.')
+# Diese Absender Adressen werden vorhandenen SASL Accounts
+# zugeliefert.
+user@domain.de\tuser
+user@domain.de\tuser,otheruser
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker

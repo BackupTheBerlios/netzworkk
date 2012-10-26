@@ -4,7 +4,7 @@ MSG=$(gettext 'NOTIZ: Lesen Sie dazu bitte die Datei
 /usr/share/doc/postfix-doc/examples/access.gz
 
 Tabellen:
-*access
+*_access
 
 Adresse: Dies koennen User, IP-Adressen/-Netze, etc. sein.
 # alle so beginnenden IP-Nummern
