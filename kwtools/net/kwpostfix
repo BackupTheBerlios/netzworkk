@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 26.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 30.10.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -1083,7 +1083,8 @@ while [ "$gv_Auswahl" ] ; do
 				flags_choice kwpostfix_action ldap_db \
 				mynetworks_table relay_domains_table \
 				recipient_table regexp_table relocated_table \
-				sql_db transport_table virtual_alias_table virtual_alias_mb_domains_table \
+				smtpd_sender_login_table sql_db transport_table \
+				virtual_alias_table virtual_alias_mb_domains_table \
 				virtual_id_table virtual_mailbox_table db_new_reread
 			#
 			TAB_TITLE="$lv_Tabs"
@@ -1326,68 +1327,6 @@ while [ "$gv_Auswahl" ] ; do
 					HELP*)	script_help tab_help
 						tab_menue
 						;;
-					*restrictions)
-						# Restrictions Tabellen# {{{
-						#
-						# Die Variable TAB wird auch von der Funktion
-						# sub_tab_menu benoetigt.
-						TAB="$gv_Auswahl"
-						sub_tab_menu
-						while [[ -n $gv_Auswahl ]] ; do
-							case $gv_Auswahl in
-								HELP*)	script_help tab_help
-									sub_tab_menu $SUBTAB
-									;;
-								*_access)
-									# Tabelle, defeniert selektive Zugriffsrechte zum{{{
-									# Einliefern von Mails, basierend auf Absender, Empfänger
-									# oder Hostnamen.
-									SUBTAB="$gv_Auswahl"
-									TAB_HELP="access_help"
-									HASH_TAB="access_table"
-									Tmp="${${TAB_IND[$TAB]}#*_access }"
-									WAS_IST="${${Tmp}%:*}"
-									FILE="${${Tmp}#*:}"
-									tab_change
-									unset -- HASH_TAB
-									#}}}
-									sub_tab_menu $SUBTAB
-									;;
-								*)
-									unset -- SUB_TABLE_E SUBTAB
-									break
-									;;
-							esac
-						done
-						## }}}
-						tab_menue $TAB
-						;;
-					virtual_alias_domains | virtual_mailbox_domains)
-						# Tabelle, fuer welche Domains Postfix Mailadressen aliasen{{{
-						# soll.
-						TAB_HELP="virtual_alias_mb_domains_help"
-						HASH_TAB="virtual_alias_mb_domains_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
-						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
-						TAB="$gv_Auswahl"
-						tab_change
-						unset -- HASH_TAB
-						#}}}
-						tab_menue $TAB
-						;;
-					virtual_alias_maps)
-						# Tabelle zum umschreiben/weiterleiten von Mailadressen, auch unter{{{
-						# Berücksichtigung der domain.
-						TAB_HELP="virtual_alias_help"
-						HASH_TAB="virtual_alias_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
-						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
-						TAB="$gv_Auswahl"
-						tab_change
-						unset -- HASH_TAB
-						#}}}
-						tab_menue $TAB
-						;;
 					alias_maps)
 						# Tabelle für die Zuweisung von lokalen Mails an andere Empfänger{{{
 						#
@@ -1453,21 +1392,6 @@ while [ "$gv_Auswahl" ] ; do
 						#}}}
 						tab_menue $TAB
 						;;
-					*recipient_maps)
-						# Tabelle fuer local/relay Empfaenger{{{
-						#
-						# local_recipient_table, relay_recipient_maps
-						#
-						TAB_HELP="${gv_Auswahl%_maps}_help"
-						HASH_TAB="recipient_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
-						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
-						TAB="$gv_Auswahl"
-						tab_change
-						unset -- HASH_TAB
-						#}}}
-						tab_menue $TAB
-						;;
 					mynetworks)
 						# Tabelle, IP-Adressen und IP-Bereiche die relayen dürfen.{{{
 						#
@@ -1505,6 +1429,21 @@ while [ "$gv_Auswahl" ] ; do
 						#}}}
 						tab_menue $TAB
 						;;
+					*recipient_maps)
+						# Tabelle fuer local/relay Empfaenger{{{
+						#
+						# local_recipient_maps, relay_recipient_maps
+						#
+						TAB_HELP="${gv_Auswahl%_maps}_help"
+						HASH_TAB="recipient_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
+						tab_menue $TAB
+						;;
 					relocated_maps)
 						# Tabelle für Empfänger verzogen{{{
 						#
@@ -1520,14 +1459,49 @@ while [ "$gv_Auswahl" ] ; do
 						#}}}
 						tab_menue $TAB
 						;;
+					*restrictions)
+						# Restrictions Tabellen# {{{
+						#
+						# Die Variable TAB wird auch von der Funktion
+						# sub_tab_menu benoetigt.
+						TAB="$gv_Auswahl"
+						sub_tab_menu
+						while [[ -n $gv_Auswahl ]] ; do
+							case $gv_Auswahl in
+								HELP*)	script_help tab_help
+									sub_tab_menu $SUBTAB
+									;;
+								*_access)
+									# Tabelle, defeniert selektive Zugriffsrechte zum{{{
+									# Einliefern von Mails, basierend auf Absender, Empfänger
+									# oder Hostnamen.
+									SUBTAB="$gv_Auswahl"
+									TAB_HELP="access_help"
+									HASH_TAB="access_table"
+									Tmp="${${TAB_IND[$TAB]}#*_access }"
+									WAS_IST="${${Tmp}%:*}"
+									FILE="${${Tmp}#*:}"
+									tab_change
+									unset -- HASH_TAB
+									#}}}
+									sub_tab_menu $SUBTAB
+									;;
+								*)
+									unset -- SUB_TABLE_E SUBTAB
+									break
+									;;
+							esac
+						done
+						## }}}
+						tab_menue $TAB
+						;;
 					smtpd_sender_login_maps)
 						# Tabelle für SASL Login Benutzernamen{{{
-						# TODO:
+						#
 						# smtpd_sender_login_maps
 						#
 						TAB_HELP="smtpd_sender_login_help"
-						HASH_TAB="recipient_table"
-						#HASH_TAB="*_table"
+						HASH_TAB="smtpd_sender_login_table"
 						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
@@ -1542,6 +1516,32 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="transport_help"
 						HASH_TAB="transport_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
+						tab_menue $TAB
+						;;
+					virtual_alias_domains | virtual_mailbox_domains)
+						# Tabelle, fuer welche Domains Postfix Mailadressen aliasen{{{
+						# soll.
+						TAB_HELP="virtual_alias_mb_domains_help"
+						HASH_TAB="virtual_alias_mb_domains_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
+						tab_menue $TAB
+						;;
+					virtual_alias_maps)
+						# Tabelle zum umschreiben/weiterleiten von Mailadressen, auch unter{{{
+						# Berücksichtigung der domain.
+						TAB_HELP="virtual_alias_help"
+						HASH_TAB="virtual_alias_table"
 						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
