@@ -10,7 +10,7 @@ Tabelle:
 smtpd_sender_login_maps
 
 Format:
-# Diese Absender Adressen werden einem oder mehreren SASL Accounts
+# Diese Absender Adressen werden einem oder mehreren SASL Logins
 # zugeordnet und dadurch authentifiziert.
 #
 # hoehste Prioritaet.
