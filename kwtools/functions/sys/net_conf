@@ -545,7 +545,7 @@ net_conf() {
 			MSG="$1"
 			VALUE="$2"
 		else
-			MSG=$(gettext 'Geben Sie bitte eine Mail Adresse an, an dem die Action gemailt werden soll (name@domain.de).')
+			MSG=$(gettext 'Geben Sie bitte eine Mail Adresse an, an dem die Action gemailt werden soll (user@domain.de).')
 			VALUE="$1"
 		fi
 		inputbox "$TITLE" "$MSG" "$VALUE"

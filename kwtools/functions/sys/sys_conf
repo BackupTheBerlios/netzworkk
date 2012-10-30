@@ -3681,7 +3681,7 @@ file_choice() {
 			gv_IsValue_File="$gv_LogFile"
 			rm -rf $gv_IsValue_File &>/dev/null
 			for i in ${=1} ; {
-				>> $gv_IsValue_File <<< "${i}${2}"
+				>> $gv_IsValue_File <<< "${i}${2} "
 			}
 		else
 			no_para_msg $0
@@ -4537,8 +4537,8 @@ is_value() {
 		local Is
 		for i in ${=Values} ; {
 			if [ -f "$gv_IsValue_File" ] ; then
-				Is="`print ${(u)${(M)${(f)"$(< $gv_IsValue_File)"}##$i*}}`"
-				if [ "${Is%% *}" = "$i" ] ; then
+				Is="`print ${(u)${(M)${(f)"$(< $gv_IsValue_File)"}##$i *}}`"
+				if [[ ${Is%% *} == $i ]] ; then
 					VALUE_ARRAY+=(${(qq)i} \"\" on)
 				else
 					VALUE_ARRAY+=(${(qq)i} \"\" off)
@@ -4546,7 +4546,6 @@ is_value() {
 			else
 				VALUE_ARRAY+=(${(qq)i} \"\" off)
 			fi
-			(( Anz++ ))
 		}
 	else
 		no_para_msg $0
