@@ -23,7 +23,7 @@ recipient_table() {
 				inputbox "$TABLE_TITLE" "$ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
-						[a-zA-Z0-9]*[a-zA-Z0-9-._]*@*.*|@*.*)	ADR="$gv_Auswahl"
+						[a-zA-Z0-9]*@*.*|@*.*)	ADR="$gv_Auswahl"
 							;;
 						*)
 							unset -- ADR
