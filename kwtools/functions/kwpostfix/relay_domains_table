@@ -22,7 +22,7 @@ relay_domains_table() {
 				;;
 			$lv_Host_Domain)
 				# Hosts/Domains eingeben{{{
-				HOST_DOMAIN_MSG=$(gettext 'Geben Sie den Namen eines Rechners oder einer Domain ein (Bsp. host1.domain.de | domain.de).')
+				HOST_DOMAIN_MSG=$(gettext 'Geben Sie den Namen eines Rechners oder einer Domain ein (Bsp. host.domain.de | domain.de).')
 				inputbox "$TABLE_TITLE" "$HOST_DOMAIN_MSG" "$ADR"
 				if [[ ${(w)#gv_Auswahl} == 1 ]] ; then
 					ADR="$gv_Auswahl"

@@ -77,7 +77,7 @@ alias_table() {
 				;;
 			$gv_Save)
 				# Einstellungen speichern{{{
-				if [ "$ADR" -a "$EXT_ADR" ] ; then
+				if [ -n "$ADR" -a -n "$EXT_ADR" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
 						sed -e "s#^${AENDERN_ADR}:.*${AENDERN_ADR1}#${ADR}:	${EXT_ADR}#" $FILE >$FILE$$
 						mv $FILE$$ $FILE

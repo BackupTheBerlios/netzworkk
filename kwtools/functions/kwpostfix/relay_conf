@@ -50,7 +50,7 @@ relay_conf() {
 				conf_relay_menu
 				;;
 			relay_clientcerts)
-				# Tabelle mit Client Zertrifikaten{{{
+				# Tabelle mit Client Zertifikaten Fingerprints{{{
 				tab_support_choice "$gv_Auswahl"
 				relay_clientcerts="$MAPS"
 				postconf -e relay_clientcerts="$MAPS"
