@@ -14,10 +14,12 @@ local_recipient_maps
 
 Format:
 # Fuer diese Mailadresse werden Mails lokal eingeliefert.
+# hoehste Prioritaet.
 user@domain.de\t:
 # Fuer diesen Benutzer werden Mails lokal eingeliefert.
 user\t\t:
 # Fuer diese Domain werden Mails lokal eingeliefert.
+# niedrigste Prioritaet.
 @domain.de\t:
 
 NOTIZ: Das Zeichen ":" steht nur fuer die Konformitaet der 
