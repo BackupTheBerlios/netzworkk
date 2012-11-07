@@ -1,0 +1,167 @@
+# Funktion mailbox_command_table{{{
+#
+mailbox_command_table() {
+	FILE="$1"
+	# Funktion mailbox_command_menu{{{
+	mailbox_command_menu() {
+		MAILBOX_COMMAND_MENU=($gv_User \"$ADR\" $lv_Cmd \"$CMD\"
+		$gv_Save \"\" $gv_Back \"\")
+		menubox "$TABLE_TITLE" "$gv_Menupoint" "$MAILBOX_COMMAND_MENU"
+	}
+	#}}}
+	# Funktion mailbox_command_aendern{{{
+	#
+	mailbox_command_aendern() {
+	mailbox_command_menu
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help "$TAB_HELP"
+				mailbox_command_menu
+				;;
+			$gv_User)
+				# Username eingeben{{{
+				USER_MSG=$(gettext 'Geben Sie den Namen Benutzers ein.')
+				inputbox "$TABLE_TITLE" "$USER_MSG" "$ADR"
+				if [[ ${(w)#gv_Auswahl} == 1 ]] ; then
+					ADR="$gv_Auswahl"
+				else
+					unset -- ADR
+					no_input_msg
+				fi
+				#}}}
+				mailbox_command_menu
+				;;
+			$lv_Cmd)
+				# Befehl eingeben{{{
+				CMD_MSG=$(gettext 'Geben Sie einen Befehl fuer den jeweiligen Benutzer ein (Bsp.: /usr/bin/procmail -t -a "$EXTENSION" "$USER").')
+				U_OPT=regexp
+				inputbox "$TABLE_TITLE" "$CMD_MSG" "$CMD"
+				if [ "$gv_Auswahl" ] ; then
+					CMD="${${gv_Auswahl//\$/\\\$}//\"/\\\"}"
+				fi
+				#}}}
+				mailbox_command_menu
+				;;
+			$gv_Save)
+				# Einstellungen speichern{{{
+				#
+				if [ -n "$ADR" -a -n "$CMD" ] ; then
+					if [ -n "$AENDERN_ADR" -a -n "$AENDERN_ADR1" ] ; then
+					################################
+					# TODO: Test
+						sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1//\\/}#${ADR}\t${CMD//\\/}#" $FILE >$FILE$$
+						mv $FILE$$ $FILE
+					else
+						grep -v "^${ADR}[[:space:]]${CMD//\\/}" $FILE >$FILE$$
+						>> $FILE$$ <<< "${ADR}\t${CMD//\\/}"
+						mv $FILE$$ $FILE
+					fi
+					break
+				else
+					MSG=$(gettext 'Sie muessen erst einen Benutzer und den dazugehoerigen Befehl eingeben.')
+					msgbox "$gv_Attention" "$MSG"
+					mailbox_command_menu
+				fi
+				#}}}
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+	}
+	#}}}
+	#
+	tabellen_menue
+	while [ "$gv_Auswahl" ] ; do
+		case "$gv_Auswahl" in
+			HELP*)	script_help tab_help
+				tabellen_menue
+				;;
+			$gv_Display)
+				# Ansicht der Einträge
+				tab_ansicht
+				tabellen_menue
+				;;
+			$gv_Create)
+				# Werte anlegen
+				unset -- ADR AENDERN_ADR AENDERN_ADR1 CMD
+				mailbox_command_aendern
+				tabellen_menue
+				;;
+			$gv_Change)
+				# Einträge verändern{{{
+				key_value "$FILE"
+				if [[ -n ${AUSWAHL[1]} ]] ; then
+					CHANGE_MENU=($AUSWAHL)
+					U_OPT=regexp
+					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+					while [ "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help tab_wert_help
+								U_OPT=regexp
+								menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
+								;;
+							*)	#
+								# Auswahl aendern
+								ADR="${${=gv_Auswahl}[1]}"
+								CMD="${${${${=gv_Auswahl}[2,$]}//\$/\\\$}//\"/\\\"}"
+								AENDERN_ADR="$ADR"
+								AENDERN_ADR1="$CMD"
+								mailbox_command_aendern
+								break
+								;;
+						esac
+					done
+				else
+					no_entry_msg
+				fi
+				#}}}
+				tabellen_menue
+				;;
+			$gv_Delete)
+				# Eintraege loeschen{{{
+				key_value "$FILE"
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
+					DEL_MENU=($AUSWAHL_MULTI)
+					###########################################
+					# TODO: $gv_LogFile$$ richtig auswerten!
+					# U_OPT? - also return_check, und ueberhaupt
+					# Gedanken machen (zu viele Zeichen, wie \\\).
+					U_OPT=no_regexp
+					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+					while [ "$gv_Auswahl" ] ; do
+						case "$gv_Auswahl" in
+							HELP*)	script_help kwpostfix_del_help
+								U_OPT=no_regexp
+								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
+								;;	
+							*)	# Löschen
+								while read ADR Cmd REST ; do
+									grep -v "^${ADR/\"/}[[:space:]]${Cmd}" $FILE >$FILE$$
+									mv $FILE$$ $FILE
+								done < $gv_LogFile$$
+								break
+								;;
+						esac
+					done
+				else
+					no_entry_msg
+				fi
+				#}}}
+				tabellen_menue
+				;;
+			$lv_Db)
+				# Datenbank neu erzeugen und Postfix anweisen die Einstellungen neu einzulesen
+				db_new_reread "$WAS_IST" "$FILE"
+				break
+				;;
+			$gv_Back)	break
+				;;
+		esac
+	done
+}
+#}}}
+### Modeline {{{
+### vim:ft=zsh:foldmethod=marker
+### vim:set ts=4:                                                                               
+### }}}
