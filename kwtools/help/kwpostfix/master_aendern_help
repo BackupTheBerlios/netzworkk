@@ -35,7 +35,7 @@ Max_Prozesse: Maximale Anzahl an Prozessen, die simultan fuer
 Befehl: Kommando das ausgefuehrt werden soll, wenn ein Service
 \taufgerufen wird.
 
-Argumente: Argumente die dem Befehl mituebergeben werden soll.
+Argumente: Argumente die dem Befehl mit uebergeben werden soll.
 \tLesen Sie dazu die Dokumentation von Postfix und dem
 \tdementsprechenden Programm welches zum Einsatz kommt.
 ')

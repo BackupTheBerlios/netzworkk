@@ -48,7 +48,10 @@ lmtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 \tfuer authentifizierte LMTP_verbindungen.
 
 mailbox_command_maps: Tabelle um einzelnen Adressen ein anderes
-\tmailbox_command zuweisen zu koennen.
+\tMailbox Kommando zum einliefern Ihrer Mails zuweisen zu koennen.
+
+mailbox_transport_maps: Tabelle fuer die Regelung der
+\tTransportmethode fuer einzelne Empfaenger.
 
 milter_header_checks: Tabelle fuer die Filterung des Nachrichten
 \tHeaders der von der Milter Anwendung produziert wird. RA
@@ -116,7 +119,8 @@ virtual_mailbox_domains: Standard ist $virtual_alias_maps. Braucht
 virtual_mailbox: Tabelle mit den Zuordnungen von Mailadresse zum
 \tPostfach.
 
-virtual_transport: Tabelle fuer die Regelung der Transport Methode.
+virtual_transport: Tabelle fuer die Regelung der Transportmethode
+\tvirtual.
 
 virtual_uid_maps: Tabelle fuer die Zuordnung der UID zu Mailadressen
 \tfuer die Transportmethode virtual.')
