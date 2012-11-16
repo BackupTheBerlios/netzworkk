@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 30.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.11.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -87,6 +87,7 @@ lv_TableTyp=$(gettext 'Tabellentyp')
 
 # Tabellen
 lv_Address=$(gettext 'Adresse')
+lv_Cmd=$(gettext 'Befehl')
 lv_Recipient=$(gettext 'Empfaenger')
 lv_Local_Recipient=$(gettext 'lokaler Empfaenger')
 lv_Other_Recipient=$(gettext 'anderer Empfaenger')
@@ -1080,7 +1081,7 @@ while [ "$gv_Auswahl" ] ; do
 		$lv_Tabs)
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
-				flags_choice kwpostfix_action ldap_db \
+				flags_choice kwpostfix_action ldap_db mailbox_command_table \
 				mynetworks_table relay_clientcerts_table relay_domains_table \
 				recipient_table regexp_table relocated_table \
 				smtpd_sender_login_table sql_db transport_table \
@@ -1406,6 +1407,22 @@ while [ "$gv_Auswahl" ] ; do
 								;;
 						esac
 						HASH_TAB="relay_domains_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
+						tab_menue $TAB
+						;;
+					mailbox_command_maps)
+						# Tabelle, mit den Benutzereigenen Kommandos zum{{{
+						# einliefern ihrer Mail.
+						#
+						# mailbox_command_maps
+						#
+						TAB_HELP="mailbox_command_help"
+						HASH_TAB="mailbox_command_table"
 						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
