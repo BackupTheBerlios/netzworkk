@@ -44,18 +44,19 @@ recipient_table() {
 				# lookup Tabellen.
 				if [ "$ADR" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}.*#${ADR}	:#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}.*#${ADR}\t:#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
 						>> $FILE$$ <<< "$ADR	:"
 						mv $FILE$$ $FILE
 					fi
+					break
 				else
 					no_adr_msg
+					recipient_menue
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -83,7 +84,7 @@ recipient_table() {
 			$gv_Change)
 				# Eintraege aendern{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
@@ -93,7 +94,7 @@ recipient_table() {
 								;;
 							*)
 								# Auswahl aendern
-								ADR=${${gv_Auswahl}[1]}
+								ADR=${${=gv_Auswahl}[1]}
 								AENDERN_ADR="$ADR"
 								recipient_aendern
 								break
@@ -109,7 +110,7 @@ recipient_table() {
 			$gv_Delete)
 				# Eintraege loeschen{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
@@ -120,8 +121,8 @@ recipient_table() {
 								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 								;;	
 							*)	# Loeschen
-								while read ADRESS ; do
-									grep -v "^${ADRESS// /.*}" $FILE >$FILE$$
+								while read ADRESS REST ; do
+									grep -v "^${ADRESS}[[:space:]]${REST}" $FILE >$FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

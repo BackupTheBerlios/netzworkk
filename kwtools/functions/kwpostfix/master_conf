@@ -1,7 +1,8 @@
 # Funktion Konfiguration der master.cf{{{
 #
 master_conf() {
-	# Variablen
+
+	# Variablen# {{{
 	lv_Service=$(gettext 'Service')
 	lv_Typ=$(gettext 'Typ')
 	lv_Privat=$(gettext 'Privat')
@@ -9,9 +10,8 @@ master_conf() {
 	lv_Chroot=$(gettext 'Chroot')
 	lv_Wakeup=$(gettext 'Aufwachzeit')
 	lv_Max_Process=$(gettext 'Max Prozesse')
-	lv_Cmd=$(gettext 'Befehl')
 	lv_Args=$(gettext 'Argumente')
-
+	## }}}
 	# Funktion master_menue{{{
 	MASTER_CONF_TITLE="${gv_Configuration}::master.cf"
 	MASTER_CONF_MENU=($gv_Display \"\" $gv_Create \"\" $gv_Change \"\"
@@ -72,7 +72,7 @@ master_conf() {
 		done
 	}
 	#}}}
-	# Funktion, mastercf_args{{{
+	# Funktion mastercf_args{{{
 	#
 	mastercf_args() {
 		# Pruefen ob es Argumente zu Befehlen gibt, wenn ja einfuegen.
@@ -267,37 +267,43 @@ master_conf() {
 					B_MSG=$(gettext 'Waehlen Sie einen postfix daemon aus.')
 					if [ -d /usr/lib/postfix ] ; then
 						pushd /usr/lib/postfix
-						Anz=0
 						for i in `print *~*post*~*.cf(.xN)` ; {
-							(( Anz++ ))
-							B_MENU[Anz]="$i \"\""
+							B_MENU+=( $i \"\" )
 						}
 						popd
 					elif [ -d /usr/local/lib/postfix ] ; then
 						pushd /usr/local/lib/postfix
-						Anz=0
 						for i in `print *~*post*~*.cf(.xN)` ; {
-							(( Anz++ ))
-							B_MENU[Anz]="$i \"\""
+							B_MENU+=( $i \"\" )
 						}
 						popd
 					fi
 					# Standard Befehle
+					#################################################
+					# INFO: überarbeiten?
+					#################################################
 					if [ -z "${B_MENU[1]}" ] ; then
 						B_MENU=(bounce \"\" cleanup \"\" defer \"\" error \"\" flush \"\"
 							lmtp \"\" local \"\" nqmgr \"\" pickup \"\" pipe \"\" proxymap \"\"
 							qmgr \"\" qmqpd \"\" showq \"\" smtp \"\" smtpd \"\"
 							trivial-rewrite \"\")
-					else
-						B_MENU=($B_MENU)
 					fi
 					#
-					menubox "$MASTER_CONF_TITLE" "$B_MSG" "$B_MENU"
+					# Funktion command_menu# {{{
 					#
+					command_menu() {
+						if [[ ${#argv} == 1 ]] ; then
+							menubox -d "$1" "$MASTER_CONF_TITLE" "$B_MSG" "$B_MENU"
+						else
+							menubox "$MASTER_CONF_TITLE" "$B_MSG" "$B_MENU"
+						fi
+					}
+					## }}}
+					command_menu $COMMAND
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help command_help
-								menubox "$MASTER_CONF_TITLE" "$B_MSG" "$B_MENU"
+								command_menu $COMMAND
 								;;
 							*)	# MAXPROC Wert ueberpruefen
 								COMMAND="$gv_Auswahl"
@@ -322,7 +328,7 @@ master_conf() {
 					;;
 				$lv_Args)
 					# Argumente zum Befehl eingeben{{{
-					unset -- Option
+					unset -- Option Tmp
 					U_OPT=regexp
 					# Erst den BackSlash (\) entfernen und spaeter wieder hinzufuegen,
 					# damit der BackSlash nicht immer wieder hinzu gefuegt wird.
@@ -338,12 +344,14 @@ master_conf() {
 									;;
 								*)
 									(( Anz++ ))
-									ARGS[Anz]="${Option}${i}"
+									Tmp[Anz]="${Option}${i}"
 									unset -- Option
 									;;
 							esac
 						}
 					fi
+					#
+					ARGS="$Tmp"
 					#}}}
 					master_aendern_menue $lv_Args
 					;;

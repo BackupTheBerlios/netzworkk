@@ -34,19 +34,20 @@ virtual_alias_mb_domains_table() {
 				# Einstellungen speichern{{{
 				if [ "$DOMAIN" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}.*#${DOMAIN}	anything#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}[[:space:]].*#${DOMAIN}\tanything#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${DOMAIN}[[:space:]]" $FILE >$FILE$$
 						>> $FILE$$ <<< "$DOMAIN	anything"
 						mv $FILE$$ $FILE
 					fi
+					break
 				else
 					MSG=$(gettext 'Sie muessen erst einen Domainnamen eingeben (Bsp. domain.de).')
 					msgbox "$gv_Attention" "$MSG"
+					virtual_alias_mb_domain_menue
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -78,7 +79,7 @@ virtual_alias_mb_domains_table() {
 				# Einträge verändern{{{
 				#
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
@@ -89,7 +90,7 @@ virtual_alias_mb_domains_table() {
 							*)	#
 								# Auswahl verändern
 								#
-								DOMAIN=${${gv_Auswahl}[1]}
+								DOMAIN=${${=gv_Auswahl}[1]}
 								AENDERN_ADR="$DOMAIN"
 								virtual_alias_mb_domain_aendern
 								break
@@ -106,7 +107,7 @@ virtual_alias_mb_domains_table() {
 				# Einträge löschen{{{
 				#
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
@@ -117,8 +118,8 @@ virtual_alias_mb_domains_table() {
 								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 								;;	
 							*)	# Löschen
-								while read ADRESS ; do
-									grep -v "^${ADRESS// /.*}" $FILE >$FILE$$
+								while read ADRESS REST ; do
+									grep -v "^${ADRESS}[[:space:]]${REST}" $FILE >$FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

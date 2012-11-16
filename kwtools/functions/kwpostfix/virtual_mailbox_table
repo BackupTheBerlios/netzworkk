@@ -5,7 +5,7 @@ virtual_mailbox_table() {
 	autoload -U no_adr_and_recipient_adr_msg
 	unset -- Ist_Wert
 	Ist_Wert=$(postconf -h virtual_mailbox_base)
-	if [ "$Ist_Wert" ] ; then
+	if [[ -n $Ist_Wert ]] ; then
 		# Funktion virtual_mailbox_menue{{{
 		virtual_mailbox_menue() {
 			VIRTUAL_MB_MENU=($lv_Address \"$ADR\" $lv_Recipient \"$E_ADR\"
@@ -27,11 +27,11 @@ virtual_mailbox_table() {
 					;;
 				$lv_Address)
 					# Adresse waehlen{{{
-					FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse oder domain ein (Bsp. @domain.de | user@domain.de).')
+					FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse oder Domain ein (Bsp. @domain.de | user@domain.de).')
 					inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 					if [ "$gv_Auswahl" ] ; then
 						case "$gv_Auswahl" in
-							[a-z,A-Z,0-9-._]*@*.*|@*.*)	ADR="$gv_Auswahl"
+							[a-zA-Z0-9]*[-._]*@*.*|@*.*)	ADR="$gv_Auswahl"
 								;;
 							*)
 								unset -- ADR
@@ -58,11 +58,11 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 						inputbox "$TABLE_TITLE" "$RECIPIENT_ADR_MSG" "$E_ADR"
 						if [ "$gv_Auswahl" ] ; then
 							case "$gv_Auswahl" in
-								[a-z,A-Z,0-9]*[a-z,A-Z,0-9-_./]*)
+								[a-zA-Z0-9]*[a-zA-Z0-9-_./]*)
 									# Verzeichnisse checken
 									dselect_check -c "${Ist_Wert}/${gv_Auswahl}"
 									if [ "$VERZ" ] ; then
-										E_ADR[ANZ]="$gv_Auswahl"
+										E_ADR="$gv_Auswahl"
 									fi
 									;;
 								*)	unset -- E_ADR
@@ -85,18 +85,19 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 					#
 					if [ "$ADR" -a "$E_ADR" ] ; then
 						if [ "$AENDERN_ADR" ] ; then
-							sed -e "s#^${AENDERN_ADR}.*${AENDERN_ADR1}#${ADR}	${E_ADR}#" $FILE >$FILE$$
+							sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1}#${ADR}\t${E_ADR}#" $FILE >$FILE$$
 							mv $FILE$$ $FILE
 						else
 							grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
 							>> $FILE$$ <<< "$ADR	$E_ADR"
 							mv $FILE$$ $FILE
 						fi
+						break
 					else
 						no_adr_and_recipient_adr_msg
+						virtual_mailbox_menue
 					fi
 					#}}}
-					break
 					;;
 				$gv_Back)	break
 					;;
@@ -124,7 +125,7 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 				$gv_Change)
 					# Eintraege aendern{{{
 					key_value "$FILE"
-					if [ "$AUSWAHL" ] ; then
+					if [[ -n ${AUSWAHL[1]} ]] ; then
 						CHANGE_MENU=($AUSWAHL)
 						menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 						while [ "$gv_Auswahl" ] ; do
@@ -134,11 +135,8 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 									;;
 								*)
 									# Auswahl aendern
-									print "$gv_Auswahl" | \
-									while read ADRESSE REST ; do
-										ADR="$ADRESSE"
-										E_ADR="$REST"
-									done
+									ADR="${${=gv_Auswahl}[1]}"
+									E_ADR="${${=gv_Auswahl}[2]}"
 									AENDERN_ADR="$ADR"
 									AENDERN_ADR1="$E_ADR"
 									#
@@ -156,7 +154,7 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 				$gv_Delete)
 					# Eintraege loeschen{{{
 					key_value "$FILE"
-					if [ "$AUSWAHL_MULTI" ] ; then
+					if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 						DEL_MENU=($AUSWAHL_MULTI)
 						U_OPT=no
 						checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
@@ -167,8 +165,8 @@ Der Parameter "virtual_mailbox_base" besitzt den Wert: $Ist_Wert')
 									checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 									;;	
 								*)	# Loeschen
-									while read ADRESS ; do
-										grep -v "^${ADRESS// /.*}" $FILE >$FILE$$
+									while read ADRESS REST ; do
+										grep -v "^${ADRESS}[[:space:]]${REST}" $FILE >$FILE$$
 										mv $FILE$$ $FILE
 									done < $gv_LogFile$$
 									break

@@ -47,13 +47,11 @@ mailbox_command_table() {
 				#
 				if [ -n "$ADR" -a -n "$CMD" ] ; then
 					if [ -n "$AENDERN_ADR" -a -n "$AENDERN_ADR1" ] ; then
-					################################
-					# TODO: Test
 						sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1//\\/}#${ADR}\t${CMD//\\/}#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${ADR}[[:space:]]${CMD//\\/}" $FILE >$FILE$$
-						>> $FILE$$ <<< "${ADR}\t${CMD//\\/}"
+						>> $FILE$$ <<< "${ADR}	${CMD//\\/}"
 						mv $FILE$$ $FILE
 					fi
 					break
@@ -122,12 +120,10 @@ mailbox_command_table() {
 				# Eintraege loeschen{{{
 				key_value "$FILE"
 				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
-					DEL_MENU=($AUSWAHL_MULTI)
-					###########################################
-					# TODO: $gv_LogFile$$ richtig auswerten!
-					# U_OPT? - also return_check, und ueberhaupt
-					# Gedanken machen (zu viele Zeichen, wie \\\).
+					# Variable U_OPT=no_regexp nachschauen in der
+					# Sub-Funktion von der Funktionsdatei sys_conf.
 					U_OPT=no_regexp
+					DEL_MENU=($AUSWAHL_MULTI)
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in

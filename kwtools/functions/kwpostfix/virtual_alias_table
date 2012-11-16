@@ -28,10 +28,10 @@ virtual_alias_table() {
 				# annehmen.
 				#
 				VIRTUAL_DOMAIN_MSG=$(gettext 'Geben Sie hier eine virtuelle domain ein (Bsp. domain.de).')
-				inputbox "TABLE_TITLE" "$VIRTUAL_DOMAIN_MSG" "$DOMAIN"
+				inputbox "$TABLE_TITLE" "$VIRTUAL_DOMAIN_MSG" "$DOMAIN"
 				if [ "${(w)#gv_Auswahl}" = 1 ] ; then
 					case "$gv_Auswahl" in
-						[a-z,A-Z,0-9]*.*)	DOMAIN="$gv_Auswahl"
+						[a-zA-Z0-9]*.*)	DOMAIN="$gv_Auswahl"
 							unset -- ADR E_ADR
 							;;
 						*)	unset -- DOMAIN
@@ -74,10 +74,10 @@ virtual_alias_table() {
 						while read a b REST ; do
 							case "$a" in
 								proxy)
-									Tab_Type="${b}"
+									Tab_Type="$b"
 									File="$REST"
 									;;
-								\$[a-z,A-Z]*) # keine Variablen bearbeiten
+								\$[a-zA-Z0-9]*) # keine Variablen bearbeiten
 									unset -- Tab_Type
 									;;
 								*)
@@ -112,13 +112,13 @@ virtual_alias_table() {
 				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
-						[a-z,A-Z,0-9]*[a-z,A-Z,0-9_-.]*@*.*)	ADR="$gv_Auswahl"
+						[a-zA-Z0-9]*[_-.]*@*.*)	ADR="$gv_Auswahl"
 							check_virtual_domain
 							;;
 						@*.*)	ADR="$gv_Auswahl"
 							check_virtual_domain
 							;;
-						[a-z,A-Z,0-9]*[a-z,A-Z,0-9_-.]*)	ADR="$gv_Auswahl"
+						[a-zA-Z0-9]*[_-.]*)	ADR="$gv_Auswahl"
 							if [ -z "$DOMAIN" ] ; then
 								check_virtual_domain_msg
 							fi
@@ -187,7 +187,7 @@ virtual_alias_table() {
 				#
 				if [ "$DOMAIN" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}#${DOMAIN}#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}[[:space:]].*#${DOMAIN}\tanything#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${DOMAIN}[[:space:]]" $FILE >$FILE$$
@@ -205,12 +205,13 @@ virtual_alias_table() {
 						>> $FILE$$ <<< "$ADR	$E_ADR"
 						mv $FILE$$ $FILE
 					fi
+					break
 				else
 					MSG=$(gettext 'Sie muessen erst eine virtuelle Domain oder eine Adresse und eine Empfaengeradresse eingeben, bevor Sie was speichern koennen.')
 					msgbox "$gv_Attention" "$MSG"
+					virtual_alias_menue
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -238,7 +239,7 @@ virtual_alias_table() {
 			$gv_Change)
 				# Eintraege veraendern{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
@@ -264,7 +265,7 @@ virtual_alias_table() {
 								#
 								if [ "$DOMAIN" ] ; then
 									AENDERN_ADR="$DOMAIN"
-								elif [ "$ADR" -a "E_ADR" ] ; then
+								elif [ "$ADR" -a "$E_ADR" ] ; then
 									AENDERN_ADR="$ADR"
 									AENDERN_ADR1="$E_ADR"
 								fi
@@ -282,7 +283,7 @@ virtual_alias_table() {
 			$gv_Delete)
 				# Eintraege loeschen{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
@@ -293,8 +294,8 @@ virtual_alias_table() {
 								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 								;;	
 							*)	# Loeschen
-								while read ADRESS ; do
-									grep -v "^${ADRESS// /.*}" $FILE >$FILE$$
+								while read ADRESS REST ; do
+									grep -v "^${ADRESS}[[:space:]]${REST}" $FILE >$FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

@@ -79,18 +79,19 @@ alias_table() {
 				# Einstellungen speichern{{{
 				if [ -n "$ADR" -a -n "$EXT_ADR" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}:.*${AENDERN_ADR1}#${ADR}:	${EXT_ADR}#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}:[[:space:]]${AENDERN_ADR1}#${ADR}:\t${EXT_ADR}#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
-						grep -v "^$ADR:" $FILE >$FILE$$
-						>> $FILE$$ <<< "$ADR: $EXT_ADR"
+						grep -v "^${ADR}:" $FILE >$FILE$$
+						>> $FILE$$ <<< "${ADR}: $EXT_ADR"
 						mv $FILE$$ $FILE
 					fi
+					break
 				else
 					no_adr_and_adr_msg
+					alias_menue
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -118,7 +119,7 @@ alias_table() {
 			$gv_Change)
 				# Eintraege aendern{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
@@ -126,13 +127,10 @@ alias_table() {
 							HELP*)	script_help tab_wert_help
 								menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 								;;
-							*)	#
+							*)
 								# Auswahl veraendern
-								print "${(s,:,)${gv_Auswahl}}" | \
-								while read ADRESSE REST ; do
-									ADR="$ADRESSE"
-									EXT_ADR="$REST"
-								done
+								ADR="${${${=gv_Auswahl}[1]}%:}"
+								EXT_ADR="${${=gv_Auswahl}[2,$]}"
 								AENDERN_ADR="$ADR"
 								AENDERN_ADR1="$EXT_ADR"
 								#
@@ -151,7 +149,7 @@ alias_table() {
 				# Eintraege loeschen{{{
 				#
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
@@ -163,7 +161,7 @@ alias_table() {
 								;;	
 							*)	# Loeschen
 								while read ADRESS REST ; do
-									grep -v "^${ADRESS%?:}" ${FILE} >$FILE$$
+									grep -v "^${ADRESS}[[:space:]]${REST}" $FILE >$FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

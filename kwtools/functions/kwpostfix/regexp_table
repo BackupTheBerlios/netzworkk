@@ -93,28 +93,30 @@ regexp_table() {
 					# Einstellungen speichern{{{
 					if [ "$STRING" -a "$ACTION" -a "$TEXT" ] ; then
 						if [ "$AENDERN_ADR" ] ; then
-							sed -e "s#^${(qq)AENDERN_ADR}.*#${STRING}${FLAGS}	$ACTION ${TEXT}#" $FILE >$FILE$$
+							sed -e "s#^${(qq)AENDERN_ADR}.*#${STRING}${FLAGS} $ACTION ${TEXT}#" $FILE >$FILE$$
 							mv $FILE$$ $FILE
 						else
 							grep -v "^${STRING}${FLAGS}[[:space:]]${ACTION}" $FILE >$FILE$$
-							>> $FILE$$ <<< "${STRING}${FLAGS}	$ACTION $TEXT"
+							>> $FILE$$ <<< "${STRING}${FLAGS} $ACTION $TEXT"
 							mv $FILE$$ $FILE
 						fi
+						break
 					elif [ "$STRING" -a "$ACTION" ] ; then
 						if [ "$AENDERN_ADR" ] ; then
-							sed -e "s#^${AENDERN_ADR}.*#${STRING}${FLAGS}	$ACTION#" $FILE >$FILE$$
+							sed -e "s#^${AENDERN_ADR}.*#${STRING}${FLAGS} ${ACTION}#" $FILE >$FILE$$
 							mv $FILE$$ $FILE
 						else
 							grep -v "^${STRING}${FLAGS}[[:space:]]${ACTION}" $FILE >$FILE$$
-							>> $FILE$$ <<< "${STRING}${FLAGS}	$ACTION"
+							>> $FILE$$ <<< "${STRING}${FLAGS} $ACTION"
 							mv $FILE$$ $FILE
 						fi
+						break
 					else
 						MSG=$(gettext 'Sie muessen erst die Menuepunkte Zeichenkette und Aktion belegen. Text ist optional.')
 						msgbox "$gv_Attention" "$MSG"
+						regexp_menue
 					fi
 					#}}}
-					break
 					;;
 				$gv_Back)	break
 					;;
@@ -142,7 +144,7 @@ regexp_table() {
 			$gv_Change)
 				# Einträge verändern{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					U_OPT=regexp
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
@@ -186,7 +188,7 @@ regexp_table() {
 			$gv_Delete)
 				# Einträge löschen{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=regexp
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"

@@ -41,19 +41,20 @@ mynetworks_table() {
 				#
 				if [ "$ADR" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}.*#${ADR}	:#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}.*#${ADR}\t:#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
 						>> $FILE$$ <<< "$ADR	:"
 						mv $FILE$$ ${FILE}
 					fi
+					break
 				else
 					MSG=$(gettext 'Sie muessen erst eine IP Adresse oder eine IP fuer das Netz eingeben.')
 					msgbox "$gv_Attention" "$MSG"
+					mynetworks_menue
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -85,7 +86,7 @@ mynetworks_table() {
 				# Einträge verändern{{{
 				#
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHOICE_MENU=($AUSWAHL)
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHOICE_MENU"
 					while [ "$gv_Auswahl" ] ; do
@@ -95,7 +96,7 @@ mynetworks_table() {
 								;;
 							*)	#
 								# Auswahl verändern
-								ADR=${${(ws,:,)gv_Auswahl}[1]}
+								ADR=${${=gv_Auswahl}[1]}
 								AENDERN_ADR="$ADR"
 								mynetworks_aendern
 								break
@@ -112,7 +113,7 @@ mynetworks_table() {
 				# Einträge löschen{{{
 				#
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					CHOICE_MULTI_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$CHOICE_MULTI_MENU"
@@ -123,8 +124,8 @@ mynetworks_table() {
 								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$CHOICE_MULTI_MENU"
 								;;	
 							*)	# Löschen
-								while read ADRESS ; do
-									grep -v "^${ADRESS%// /.*}" $FILE > $FILE$$
+								while read ADRESS REST ; do
+									grep -v "^${ADRESS}[[:space:]]${REST}" $FILE > $FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

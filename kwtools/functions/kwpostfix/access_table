@@ -122,19 +122,20 @@ access_table() {
 				fi
 				if [ "$ADR" -a "$ACTION" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR// /.*}.*#${ADR}	${ACTION} ${TXT}#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR// /.*}.*#${ADR} ${ACTION} ${TXT}#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
 						>> $FILE$$ <<< "$ADR $ACTION $TXT"
 						mv $FILE$$ $FILE
 					fi
+					break
 				else
 					MSG=$(gettext 'Sie muessen mindestens die Menuepunkte Adresse und Aktion belegen.')
 					msgbox "$gv_Attention" "$MSG"
+					access_menue
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -155,15 +156,15 @@ access_table() {
 				;;
 			$gv_Create)
 				# Werte anlegen
-				unset -- ADR CODE ACTION TEXT AENDERN_ADR
+				unset -- ADR ACTION TEXT AENDERN_ADR
 				access_aendern
 				tabellen_menue
 				;;
 			$gv_Change)
 				# Eintraege aendern{{{
-				unset ADR CODE ACTION TEXT
+				unset -- ADR ACTION TEXT
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					U_OPT=regexp
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
@@ -198,7 +199,7 @@ access_table() {
 				# Einträge löschen{{{
 				#
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"

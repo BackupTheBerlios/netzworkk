@@ -33,9 +33,9 @@ canonical_table() {
 						case "$gv_Auswahl" in
 							@*.*)	ADR="$gv_Auswahl"
 								;;
-							[a-z,A-Z,0-9]*@*.*)	ADR="$gv_Auswahl"
+							[a-zA-Z0-9]*[-_.]*@*.*)	ADR="$gv_Auswahl"
 								;;
-							[a-z,A-Z,0-9]*!@*)	ADR="$gv_Auswahl"
+							[a-zA-Z0-9]*[-_.]*!@*)	ADR="$gv_Auswahl"
 								;;
 							*)
 								unset -- ADR
@@ -57,7 +57,7 @@ canonical_table() {
 						case "$gv_Auswahl" in
 							@*.*)	E_ADR="$gv_Auswahl"
 								;;
-							*@*.*)	E_ADR="$gv_Auswahl"
+							[a-zA-Z0-9]*[-_.]*@*.*)	E_ADR="$gv_Auswahl"
 								;;
 							*)	
 								no_input_msg
@@ -73,18 +73,19 @@ canonical_table() {
 					# Einstellungen speichern{{{
 					if [ "$ADR" -a "$E_ADR" ] ; then
 						if [ "$AENDERN_ADR" ] ; then
-							sed -e "s#^${AENDERN_ADR}.*${AENDERN_ADR1}#${ADR}	${E_ADR}#" $FILE >$FILE$$
+							sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1}#${ADR}\t${E_ADR}#" $FILE >$FILE$$
 							mv $FILE$$ $FILE
 						else
 							grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
 							>> $FILE$$ <<< "$ADR	$E_ADR"
 							mv $FILE$$ $FILE
 						fi
+						break
 					else
 						no_adr_and_adr_msg
+						canonical_menue
 					fi
 					#}}}
-					break
 					;;
 				$gv_Back)	break
 					;;
@@ -112,7 +113,7 @@ canonical_table() {
 			$gv_Change)
 				# Einträge verändern{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
@@ -122,11 +123,8 @@ canonical_table() {
 								;;
 							*)
 								# Auswahl verändern
-								print "$gv_Auswahl" | \
-								while read ADRESSE REST ; do
-									ADR="$ADRESSE"
-									E_ADR="$REST"
-								done
+								ADR="${${=gv_Auswahl}[1]}"
+								E_ADR="${${=gv_Auswahl}[2]}"
 								AENDERN_ADR="$ADR"
 								AENDERN_ADR1="$E_ADR"
 								#
@@ -144,7 +142,7 @@ canonical_table() {
 			$gv_Delete)
 				# Einträge löschen{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
@@ -155,8 +153,8 @@ canonical_table() {
 								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 								;;	
 							*)	# Löschen
-								while read ADRESS ; do
-									grep -v "^${ADRESS// /.*}" $FILE >$FILE$$
+								while read ADRESS REST ; do
+									grep -v "^${ADRESS}[[:space:]]${REST}" $FILE >$FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

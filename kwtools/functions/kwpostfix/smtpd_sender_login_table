@@ -27,10 +27,9 @@ smtpd_sender_login_table() {
 				SENDER_MSG=$(gettext 'Geben Sie bitte eine Mail Adresse ein die einem oder mehreren Empfaenger zugeordnet werden soll (user@domain.de).')
 				inputbox "$TABLE_TITLE" "$SENDER_MSG" "$ADR"
 				case "$gv_Auswahl" in
-					[a-zA-Z0-9]*@[a-zA-Z0-9]*)
+					[a-zA-Z0-9][-._]*@[a-zA-Z0-9]*)
 						# uebernehmen
-						echo \"ADR="${${#gv_Auswahl[@]}//,/}"\"
-						ADR="${${#gv_Auswahl[@]}//,/}"
+						ADR="$gv_Auswahl"
 						;;
 					*)
 						unset -- ADR
@@ -42,7 +41,7 @@ smtpd_sender_login_table() {
 				;;
 			$lv_Recipient)
 				# gueltige Empfaenger zur Senderadresse eingeben.# {{{
-				USER_INPUT_MSG=$(gettext 'Waehen Sie einen oder mehrere lokale Benutzer aus zu denen die Mailadresse gehoert.')
+				USER_INPUT_MSG=$(gettext 'Geben Sie einen oder mehrere lokale Benutzer ein zu denen die Mailadresse gehoert, getrennt durch ein Komma (Bsp.: user1, user2).')
 				inputbox "$TABLE_TITLE" "$USER_INPUT_MSG" "$LOCAL_USER"
 				if [[ -n $gv_Auswahl ]] ; then
 					LOCAL_USER="${gv_Auswahl%,}"
@@ -56,19 +55,20 @@ smtpd_sender_login_table() {
 				# Einstellungen speichern{{{
 				if [ "$ADR" -a "$LOCAL_USER" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}.*${AENDERN_ADR1}#${ADR}	${LOCAL_USER}#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1}#${ADR}\t${LOCAL_USER}#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
-						grep -v "^$ADR" $FILE >$FILE$$
+						grep -v "^${ADR}" $FILE >$FILE$$
 						>> $FILE$$ <<< "$ADR	$LOCAL_USER"
 						mv $FILE$$ $FILE
 					fi
+					break
 				else
-					MSG=$(gettext 'Sie muessen erst eine Sender Adresse (MAIL FROM) und einen oder mehrere Dazugehoerige Empfaenger eingeben.')
+					MSG=$(gettext 'Sie muessen erst eine Sender Adresse (MAIL FROM) und einen oder mehrere dazugehoerige Empfaenger eingeben.')
 					msgbox "$gv_Attention" "$MSG"
+					smtpd_sender_login_menu
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -106,11 +106,8 @@ smtpd_sender_login_table() {
 								;;
 							*)	#
 								# Auswahl veraendern
-								print "${=gv_Auswahl}" | \
-								while read ADRESSE REST ; do
-									ADR="$ADRESSE"
-									LOCAL_USER="$REST"
-								done
+								ADR="${${=gv_Auswahl}[1]}"
+								LOCAL_USER="${${=gv_Auswahl}[2,$]}"
 								AENDERN_ADR="$ADR"
 								AENDERN_ADR1="$LOCAL_USER"
 								#
@@ -143,7 +140,7 @@ smtpd_sender_login_table() {
 								# durch die Variable U_OPT=no in der
 								# Datei $gv_LogFile$$.
 								while read ADRESS REST ; do
-									grep -v "^${ADRESS}.*${REST}" ${FILE} >$FILE$$
+									grep -v "^${ADRESS}[[:space:]]${REST}" ${FILE} >$FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

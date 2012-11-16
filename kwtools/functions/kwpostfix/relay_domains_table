@@ -38,18 +38,19 @@ relay_domains_table() {
 				#
 				if [ "$ADR" ] ; then
 					if [ "$AENDERN_ADR" ] ; then
-						sed -e "s#^${AENDERN_ADR}.*#${ADR}	:#" $FILE >$FILE$$
+						sed -e "s#^${AENDERN_ADR}.*#${ADR}\t:#" $FILE >$FILE$$
 						mv $FILE$$ $FILE
 					else
 						grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
 						>> $FILE$$ <<< "$ADR	:"
 						mv $FILE$$ $FILE
 					fi
+					break
 				else
 					no_host_or_domain_msg
+					relay_domain_menue
 				fi
 				#}}}
-				break
 				;;
 			$gv_Back)	break
 				;;
@@ -78,7 +79,7 @@ relay_domains_table() {
 			$gv_Change)
 				# Einträge verändern{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL" ] ; then
+				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
@@ -88,7 +89,7 @@ relay_domains_table() {
 								;;
 							*)	#
 								# Auswahl aendern
-								ADR=${${gv_Auswahl}[1]}
+								ADR=${${=gv_Auswahl}[1]}
 								AENDERN_ADR="$ADR"
 								relay_domain_aendern
 								break
@@ -104,7 +105,7 @@ relay_domains_table() {
 			$gv_Delete)
 				# Eintraege loeschen{{{
 				key_value "$FILE"
-				if [ "$AUSWAHL_MULTI" ] ; then
+				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
 					DEL_MENU=($AUSWAHL_MULTI)
 					U_OPT=no
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
@@ -115,8 +116,8 @@ relay_domains_table() {
 								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 								;;	
 							*)	# Löschen
-								while read ADRESS ; do
-									grep -v "^${ADRESS// /.*}" $FILE >$FILE$$
+								while read ADRESS REST ; do
+									grep -v "^${ADRESS}[[:space:]]${REST}" $FILE >$FILE$$
 									mv $FILE$$ $FILE
 								done < $gv_LogFile$$
 								break

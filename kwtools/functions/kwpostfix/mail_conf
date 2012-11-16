@@ -80,7 +80,7 @@ while [ "$gv_Auswahl" ] ; do
 			# U_OPT wird benoetigt von der Funktion return_check.
 			U_OPT=hk
 			#
-			MAILBOX_CMD_MSG=$(gettext 'Geben Sie ein Kommando ein dass fuer die Einlieferung in die lokalen Mailboxen an (Bsp. /usr/bin/procmail -t -a \"\$EXTENSION\").')
+			MAILBOX_CMD_MSG=$(gettext 'Geben Sie ein Kommando ein, dass fuer die Einlieferung in die lokalen Mailboxen zustaendig ist (Bsp. /usr/bin/procmail -t -a \"\$EXTENSION\").')
 			inputbox "$MAIL_TITLE" "$MAILBOX_CMD_MSG" "${${mailbox_command//\"/\\\"}//\$/\\\$}"
 			if [[ -n $gv_Auswahl ]] ; then
 				mailbox_command="$gv_Auswahl"
