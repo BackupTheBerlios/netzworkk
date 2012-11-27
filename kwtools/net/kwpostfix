@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.11.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 27.11.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -87,6 +87,7 @@ lv_TableTyp=$(gettext 'Tabellentyp')
 
 # Tabellen
 lv_Address=$(gettext 'Adresse')
+lv_Action=$(gettext 'Aktion')
 lv_Cmd=$(gettext 'Befehl')
 lv_Recipient=$(gettext 'Empfaenger')
 lv_Local_Recipient=$(gettext 'lokaler Empfaenger')
@@ -94,9 +95,9 @@ lv_Other_Recipient=$(gettext 'anderer Empfaenger')
 lv_Db=$(gettext 'Datenbank')
 lv_Db_Create_Reload=$(gettext 'neu erzeugen/postfix reload')
 lv_Domain=$(gettext 'Domain')
-lv_Id=$(gettext 'ID')
 lv_Flags=$(gettext 'Flags')
-lv_Action=$(gettext 'Aktion')
+lv_Host_Domain=$(gettext 'Rechner/Domain')
+lv_Id=$(gettext 'ID')
 lv_Mail_Auth=$(gettext 'Mail-Authentifizierung')
 lv_Password=$(gettext 'Passwort')
 lv_Port=$(gettext 'Port')
@@ -218,16 +219,25 @@ fi
 #
 # TABS_A - ohne die Tabellenformate pcre und regexp
 # TABS_C - alle Tabellenformate + cidr
+# TABS_D - Tabellenformate, Tabellen die im Verzeichnis /var/lib/postfix
+#          liegen sollten.
 # TABS_M - alle Tabellenformate
 # TABS_R - nur die Tabellenformate pcre und regexp
 # TB_Format - alle Tabellenformate
 #
 tab_support() {
-	unset -- TABS TABS_A TABS_C TABS_M TABS_R TB_Format
+	unset -- TABS TABS_A TABS_C TABS_D TABS_M TABS_R TB_Format
 	for i in `print ${(uo)$(postconf -m)}` ; {
 		TABS+=($i)
 		case $i in
-			btree|cdb|dbm|hash|ldap|mysql|nis|pgsql|sdbm)
+			btree|cdb|dbm|hash|sdbm)
+				# Hashbasierte Tabellen und Datenbanken.
+				TABS_A+=($i \"\")
+				TABS_C+=($i \"\")
+				TABS_D+=($i \"\")
+				TABS_M+=($i \"\")
+				;;
+			ldap|mysql|nis|pgsql)
 				# Hashbasierte Tabellen und Datenbanken.
 				TABS_A+=($i \"\")
 				TABS_C+=($i \"\")
@@ -247,6 +257,7 @@ tab_support() {
 				# proxy wird ueberall gespeichert (man 8 proxymap).
 				TABS_A+=($i \"\")
 				TABS_C+=($i \"\")
+				TABS_D+=($i \"\")
 				TABS_M+=($i \"\")
 				TABS_R+=($i \"\")
 				;;
@@ -1082,7 +1093,8 @@ while [ "$gv_Auswahl" ] ; do
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
 				flags_choice kwpostfix_action ldap_db mailbox_command_table \
-				mynetworks_table relay_clientcerts_table relay_domains_table \
+				mynetworks_table sasl_password_table relay_clientcerts_table \
+				relay_domains_table \
 				recipient_table regexp_table relocated_table \
 				smtpd_sender_login_table sql_db transport_table \
 				virtual_alias_table virtual_alias_mb_domains_table \
@@ -1526,6 +1538,21 @@ while [ "$gv_Auswahl" ] ; do
 							esac
 						done
 						## }}}
+						tab_menue $TAB
+						;;
+					*_sasl_password_maps)
+						# Tabelle fuer {{{
+						#
+						# {l,s}mtp_sasl_password_maps
+						#
+						TAB_HELP="${gv_Auswahl%_maps}_help"
+						HASH_TAB="sasl_password_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
 						tab_menue $TAB
 						;;
 					smtpd_sender_login_maps)
