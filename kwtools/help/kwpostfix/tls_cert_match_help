@@ -1,5 +1,5 @@
 # tls_cert_match_help fuer kwpostfix{{{
-TITLE=$(gettext 'TLS Cert Match::Hilfe')
+TITLE="TLS Cert Match::${gv_Help}"
 MSG=$(gettext 'nexthop: Match against the next-hop domain, which is either the
 \trecipient domain, or the transport next-hop configured for the
 \tdomain stripped of any optional socket type prefix, enclosing
@@ -10,7 +10,8 @@ MSG=$(gettext 'nexthop: Match against the next-hop domain, which is either the
 \tThis strategy is suitable for use with the "secure" policy. Case
 \tis ignored.
 
-dot-nexthop: As above, but match server certificate names that are subdomains of the next-hop domain. Case is ignored.
+dot-nexthop: As above, but match server certificate names that are
+\tsubdomains of the next-hop domain. Case is ignored.
 
 hostname: Match against the hostname of the server, often obtained
 \tvia an unauthenticated DNS MX lookup. For LMTP delivery via
