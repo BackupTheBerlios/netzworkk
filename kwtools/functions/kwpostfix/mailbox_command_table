@@ -120,15 +120,15 @@ mailbox_command_table() {
 				# Eintraege loeschen{{{
 				key_value "$FILE"
 				if [[ -n ${AUSWAHL_MULTI[1]} ]] ; then
-					# Variable U_OPT=no_regexp nachschauen in der
+					# Variable U_OPT=regexp_file nachschauen in der
 					# Sub-Funktion von der Funktionsdatei sys_conf.
-					U_OPT=no_regexp
+					U_OPT=regexp_file
 					DEL_MENU=($AUSWAHL_MULTI)
 					checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help kwpostfix_del_help
-								U_OPT=no_regexp
+								U_OPT=regexp_file
 								checklist "$TABLE_TITLE" "$gv_Delete_MSG" "$DEL_MENU"
 								;;	
 							*)	# Löschen
