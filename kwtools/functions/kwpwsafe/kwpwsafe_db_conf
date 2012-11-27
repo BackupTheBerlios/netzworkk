@@ -14,8 +14,8 @@ kwpwsafe_db_conf() {
 	## }}}
 	# Funktion (kwpwsafe_db_conf_menu)# {{{
 	kwpwsafe_db_conf_menu() {
-		KWPWSAFE_DB_CF_MENU=($lv_Group \"$PW_GROUP\" $lv_Name \"$PW_NAME\"
-		$lv_User \"$PW_USER\" $lv_Password \"$PW_PASSWD\"
+		KWPWSAFE_DB_CF_MENU=($gv_Group \"$PW_GROUP\" $lv_Name \"$PW_NAME\"
+		$gv_User \"$PW_USER\" $gv_Passwd \"$PW_PASSWD\"
 		\"$lv_Password_Gen\" \"\" $lv_Notes \"$PW_NOTES\"
 		$gv_Save \"\" $gv_Back \"\")
 		if [[ ${#argv} == 1 ]] ; then
@@ -31,7 +31,7 @@ kwpwsafe_db_conf() {
 			HELP*)	script_help kwpwsafe_db_conf_help
 				kwpwsafe_db_conf_menu
 				;;
-			$lv_Group)
+			$gv_Group)
 				# Gruppe auswaehlen/anlegen# {{{
 				read_pwsafe_entry "$DB_FILE"
 				# menu
@@ -86,7 +86,7 @@ kwpwsafe_db_conf() {
 					esac 
 				done
 				## }}}
-				kwpwsafe_db_conf_menu $lv_Group
+				kwpwsafe_db_conf_menu $gv_Group
 				;;
 			$lv_Name)
 				# Name eingeben# {{{
@@ -117,7 +117,7 @@ kwpwsafe_db_conf() {
 				## }}}
 				kwpwsafe_db_conf_menu $lv_Name
 				;;
-			$lv_User)
+			$gv_User)
 				# UserName eingeben# {{{
 				MSG=$(gettext 'Geben Sie den Namen des Benutzers ein (z.B. Loginname).')
 				inputbox "$OPEN_DB_TITLE" "$MSG" "$PW_USER"
@@ -127,9 +127,9 @@ kwpwsafe_db_conf() {
 					PW_USER=""
 				fi
 				## }}}
-				kwpwsafe_db_conf_menu $lv_User
+				kwpwsafe_db_conf_menu $gv_User
 				;;
-			$lv_Password)
+			$gv_Passwd)
 				# Passwort eingeben# {{{
 				MSG=$(gettext 'Geben Sie ein Passwort ein. Nehmen Sie am besten unterschiedliche Zeichen in Gross- und Kleinschreibung und .')
 				inputbox "$OPEN_DB_TITLE" "$MSG" "$PW_PASSWD"
@@ -139,7 +139,7 @@ kwpwsafe_db_conf() {
 					PW_PASSWD="" 
 				fi
 				## }}}
-				kwpwsafe_db_conf_menu $lv_Password
+				kwpwsafe_db_conf_menu $gv_Passwd
 				;;
 			"$lv_Password_Gen")
 				# Passwort generieren# {{{

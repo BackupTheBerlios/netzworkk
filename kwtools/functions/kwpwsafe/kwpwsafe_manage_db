@@ -47,9 +47,13 @@ kwpwsafe_manage_db() {
 		# Funktion (create_db_menu)# {{{
 		create_db_menu() {
 			CREATE_DB_MENU=(\"$lv_Db_Name\" \"$CR_PWSAFE\"
-			\"$lv_Password\" \"$DB_PASSWD1\" $gv_Save \"\"
+			\"$gv_Passwd\" \"$DB_PASSWD1\" $gv_Save \"\"
 			\"$gv_Back\" \"\")
-			menubox "$MANAGE_TITLE" "$gv_Menupoint" "$CREATE_DB_MENU"
+			if [[ ${#argv} == 1 ]] ; then
+				menubox -d "$1" "$MANAGE_TITLE" "$gv_Menupoint" "$CREATE_DB_MENU"
+			else
+				menubox "$MANAGE_TITLE" "$gv_Menupoint" "$CREATE_DB_MENU"
+			fi
 		}
 		## }}}
 		create_db_menu
@@ -75,9 +79,9 @@ kwpwsafe_manage_db() {
 						CR_PWSAFE=""
 					fi
 					## }}}
-					create_db_menu
+					create_db_menu $lv_Db_Name
 					;;
-				$lv_Password)
+				$gv_Passwd)
 					# Passwort eingeben# {{{
 					# Funktion (passwd_db_menu)# {{{
 					passwd_db_menu() {
@@ -125,7 +129,7 @@ kwpwsafe_manage_db() {
 						esac
 					done
 					## }}}
-					create_db_menu
+					create_db_menu $gv_Passwd
 					;;
 				$gv_Save)
 					# Pruefen ob Datenbank-Name und Passwort eingegeben sind# {{{
@@ -162,13 +166,14 @@ expect eof"
 						unset -- DB_PASSWD CR_PWSAFE
 						break
 					else
-						MSG=$(gettext 'Sie muessen erst die Menuepunkte $lv_Db_Name und $lv_Password mit einem Wert belegen.')
+						MSG=$(gettext 'Sie muessen erst die Menuepunkte $lv_Db_Name und $gv_Passwd mit einem Wert belegen.')
 						msgbox "$gv_Info" "$MSG"
 						create_db_menu
 					fi
 					## }}}
 					;;
-				$gv_Back)	# zurueck ohne speichern
+				$gv_Back)
+					# zurueck ohne speichern
 					# Variablen loeschen
 					unset -- DB_PASSWD CR_PWSAFE
 					break

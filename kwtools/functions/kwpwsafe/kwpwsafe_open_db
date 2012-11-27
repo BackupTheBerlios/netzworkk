@@ -5,8 +5,6 @@ kwpwsafe_open_db() {
 	if [ -n "$DB_PASS" ] ; then
 		autoload -U kwpwsafe_db_conf
 		#
-		lv_User=$(gettext 'Benutzernamen')
-		lv_Group=$(gettext 'Gruppe')
 		lv_Group_Create=$(gettext 'Gruppe anlegen')
 		lv_Name=$(gettext 'Name')
 		lv_Password_Gen=$(gettext 'Passwort generieren')
@@ -45,9 +43,9 @@ kwpwsafe_open_db() {
 									read_pwsafe_data "$DB_FILE" "$gv_Auswahl"
 									if [ -n "$PW_NAME" -o -n "$PW_GROUP" ] ; then
 										MSG="${lv_Name}:	$PW_NAME
-${lv_Group}:	$PW_GROUP
-${lv_User}:	$PW_USER
-${lv_Password}:	$PW_PASSWD
+${gv_Group}:	$PW_GROUP
+${gv_User}:	$PW_USER
+${gv_Passwd}:	$PW_PASSWD
 ${lv_Notes}:
 `print $PW_NOTES | tr '\012' '\n'`"
 										msgbox "$OPEN_DB_TITLE" "$MSG"
