@@ -7,7 +7,7 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2012-10-11">
+        <meta name="date" content="2012-11-27">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
 	<meta name="Robots" content="index,follow">
@@ -1495,8 +1495,10 @@
 			Dialogboxen. Bei dem R&uuml;ckgabewert 0 wird entsprechend der Option "U_OPT"
 			die Variable "gv_Auswahl" belegt, bei 1 oder 255 wird falls vorhanden der vorherige
 			Wert benutzt, bei 2 wird eine Hilfedatei angezeig. Man muss im Vorfeld die Option
-			"U_OPT" mit den Werten "-", "hk", "k", "no", "ok" oder "regexp" belegen. Diese wird automatisch 
+			"U_OPT" mit den Werten "-", "hk", "k", "no", "ok", "regexp" oder "regexp_file"
+			belegen. Diese wird automatisch 
 			wieder gel&ouml;scht, wenn die Funktion beendet wurde.<br>
+			U_OPT:<br>
 			- - Apostrophe werden zwischen den W&ouml;rtern gel&ouml;scht, Leerzeichen
 			bleiben nicht erhalten.<br>
 			hk - Hochkommata werden zwischen den Werten gel&ouml;scht.<br>
@@ -1507,6 +1509,11 @@
 			ok - Bis auf das letzte Wort bekommt jedes Wort 1 Komma angeh&auml;ngt, keine
 			Leerzeichen.<br>
 			regexp - Alles wird so eingelesen, wie gespeichert. Heisst mit Apostrophe, etc ....<br>
+			regexp_file - Alles wird so eingelesen wie gespeichert und etwas anders
+			in eine Datei geschrieben. Heisst mit Apostrophe ausser:
+			Apostroph+Leerzeichen+Apostroph wird ersetzt durch nur ein EOL-Zeichen.
+			Datei in die geschrieben wird heisst $gv_LogFile$$ und wird von der
+			Funktion <a href="script_init.html#script_init">script_init</a> belegt.<br>
 			<b><font color="darkYellow">Variable</font></b><br>
 			gv_Auswahl - Variable die die ausgew&auml;hlten Werte enth&auml;lt.<br>
 			</p></td>
