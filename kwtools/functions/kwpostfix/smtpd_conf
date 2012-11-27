@@ -275,6 +275,8 @@ smtpd_conf() {
 				;;
 			smtpd_command_filter)
 				# Standard =# {{{
+				############################
+				# TODO: *_table fehlt noch
 				tab_support_choice "$gv_Auswahl"
 				smtpd_command_filter="$MAPS"
 				postconf -e smtpd_command_filter="$MAPS"
@@ -311,6 +313,8 @@ smtpd_conf() {
 				;;
 			smtpd_discard_ehlo_keyword_address_maps)
 				# Tabelle EHLO Schluesselwoertern{{{
+				####################################
+				# TODO: EHLO schluesselwoerter silent-discard, dsn, starttls,...
 				tab_support_choice "$gv_Auswahl"
 				smtpd_discard_ehlo_keyword_address_maps="$MAPS"
 				postconf -e smtpd_discard_ehlo_keyword_address_maps="$MAPS"
@@ -1071,6 +1075,8 @@ smtpd_conf() {
 				;;
 			smtpd_tls_session_cache_database)
 				# Tabelle des Session Cache# {{{
+				################################
+				# TODO: Namensuebernahme nach /var/lib/postfix/smtpd_scache
 				tab_support_choice "$gv_Auswahl"
 				smtpd_tls_session_cache_database="$MAPS"
 				postconf -e smtpd_tls_session_cache_database="$MAPS"
