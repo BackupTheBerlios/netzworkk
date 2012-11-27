@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 17.06.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 27.11.2012
 #
 # Script: kwraid, Konfiguriert und kreiert Software RAID Systeme.
-# Version: 0.3.5
+# Version: 0.3.6
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -107,7 +107,6 @@ lv_Program=$(gettext 'Programm')
 lv_Hostname=$(gettext 'Rechnername')
 lv_Create=$(gettext 'Standard Erstellung')
 lv_Owner=$(gettext 'Besitzer')
-lv_Group=$(gettext 'Gruppe')
 lv_Mode=$(gettext 'Rechte')
 lv_Auto=$(gettext 'Device Erstellung')
 lv_Metadata=$(gettext 'Metadaten')

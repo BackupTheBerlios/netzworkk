@@ -58,7 +58,7 @@ raid_create_conf() {
 	create_menu() {
 		if [[ $CREATE_OPT == config ]] ; then
 			# Menue fuer die Konfiguration
-			CREATE_MENU=($lv_Owner \"$CR_OWNER\" $lv_Group \"$CR_GROUP\"
+			CREATE_MENU=($lv_Owner \"$CR_OWNER\" $gv_Group \"$CR_GROUP\"
 			$lv_Mode \"$CR_MODE\" \"$lv_Auto\" \"$CR_AUTO\" $lv_Metadata \"$CR_META\"
 			\"$lv_Symlinks\" \"$CR_SYM\" $gv_Save \"\" $gv_Back \"\")
 		else
@@ -381,7 +381,7 @@ raid_create_conf() {
 				## }}}
 				create_menu $lv_Owner
 				;;
-			$lv_Group)
+			$gv_Group)
 				# Gruppe des neu creierten ARRAY# {{{
 				user_group_check -g
 				if [ "$?" = 0 ] ; then
@@ -401,7 +401,7 @@ raid_create_conf() {
 					done
 				fi
 				## }}}
-				create_menu $lv_Group
+				create_menu $gv_Group
 				;;
 			$lv_Mode)
 				# Rechte des neu creierten ARRAY# {{{
