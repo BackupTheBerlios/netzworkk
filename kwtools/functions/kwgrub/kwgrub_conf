@@ -5,17 +5,20 @@ kwgrub_conf() {
 	default_grub
 	# Funktion default_konf_menue{{{
 	lv_Display_Menu=$(gettext 'Menue_anzeigen')
-	lv_Password=$(gettext 'Password')
 	lv_Splash=$(gettext 'Splash')
 	lv_Default_Boot=$(gettext 'Standard_Boot')
 	lv_Keyboard=$(gettext 'Tastatur')
 	lv_Timeout=$(gettext 'Timeout')
 	#
 	default_konf_menue() {
-		CONF_MENU=($lv_Display_Menu \"$HIDDENMENU\" $lv_Password \"$PASS\"
+		CONF_MENU=($lv_Display_Menu \"$HIDDENMENU\" $gv_Passwd \"$PASS\"
 		$lv_Splash \"$SPLASH\" $lv_Default_Boot \"$DEFAULT_BOOT\"
 		$lv_Keyboard \"$TAST\" $lv_Timeout \"$TIMEOUT\" $gv_Save \"\" $gv_Back \"\")
-		menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+		else
+			menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
+		fi
 	}
 	#}}}
 	# Funktion splashimage auswählen{{{
@@ -60,9 +63,9 @@ kwgrub_conf() {
 					HIDDENMENU=no
 				fi
 				## }}}
-				default_konf_menue
+				default_konf_menue $lv_Display_Menu
 				;;
-			$lv_Password)
+			$gv_Passwd)
 				# Passwort (md5) eingeben{{{
 				#
 				PASSWD_MSG=$(gettext 'Geben Sie ein Passwort fuer das Bootmenue ein.')
@@ -89,7 +92,7 @@ EOT
 					fi
 				fi
 				#}}}
-				default_konf_menue
+				default_konf_menue $gv_Passwd
 				;;
 			$lv_Splash)
 				# Splash Bild auswaehlen# {{{
@@ -102,7 +105,7 @@ EOT
 					splash_auswahl
 				fi
 				## }}}
-				default_konf_menue
+				default_konf_menue $lv_Splash
 				;;
 			$lv_Default_Boot)
 				# Standard Boot Konfiguration auswaehlen{{{
@@ -147,7 +150,7 @@ EOT
 					DEFAULT_BOOT=0
 				fi
 				#}}}
-				default_konf_menue
+				default_konf_menue $lv_Default_Boot
 				;;
 			$lv_Keyboard)
 				# Tastaturbelegung auswaehlen deutsch oder englisch{{{
@@ -167,7 +170,7 @@ EOT
 					esac
 				done
 				#}}}
-				default_konf_menue
+				default_konf_menue $lv_Keyboard
 				;;
 			$lv_Timeout)
 				# Timeout festlegen{{{
@@ -193,7 +196,7 @@ EOT
 					TIMEOUT=10
 				fi
 				#}}}
-				default_konf_menue
+				default_konf_menue $lv_Timeout
 				;;
 			$gv_Save)
 				# Einstellungen speichern
