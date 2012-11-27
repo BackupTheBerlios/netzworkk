@@ -9,11 +9,13 @@ wvdialconf_input() {
 	lv_Speed=$(gettext 'Geschwindigkeit')
 	lv_Init=$(gettext 'Init')
 	lv_Modem=$(gettext 'Modem')
-	lv_Password=$(gettext 'Passwort')
 	lv_Telephone=$(gettext 'Telefon')
 	#
 	wvdialconf_input_menu() {
-		CONF_MENU=($lv_Username \"$USER_NAME\" $lv_Speed \"$SPEED\" $lv_Init \"$INIT\" ${lv_Init}1 \"$INIT1\" ${lv_Init}2 \"$INIT2\" ${lv_Init}3 \"$INIT3\" $lv_Modem \"$MODEM\" $lv_Password \"$PASS\" $lv_Telephone \"$PHONE\" $gv_Save \"\" $gv_Back \"\")
+		CONF_MENU=($lv_Username \"$USER_NAME\" $lv_Speed \"$SPEED\"
+		$lv_Init \"$INIT\" ${lv_Init}1 \"$INIT1\" ${lv_Init}2 \"$INIT2\"
+		${lv_Init}3 \"$INIT3\" $lv_Modem \"$MODEM\" $gv_Passwd \"$PASS\"
+		$lv_Telephone \"$PHONE\" $gv_Save \"\" $gv_Back \"\")
 		if [[ ${#argv} == 1 ]] ; then
 			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
 		else
@@ -120,7 +122,7 @@ wvdialconf_input() {
 				## }}}
 				wvdialconf_input_menu $lv_Modem
 				;;
-			$lv_Password)
+			$gv_Passwd)
 				# Passwort eingeben# {{{
 				PASSWD_MSG=$(gettext 'Geben Sie das Passwort fuer diese Verbindung ein.')
 				inputbox "$gv_Configuration" "$PASSWD_MSG" "$PASS"
@@ -130,7 +132,7 @@ wvdialconf_input() {
 					PASS=""
 				fi
 				## }}}
-				wvdialconf_input_menu $lv_Password
+				wvdialconf_input_menu $lv_Passwd
 				;;
 			$lv_Telephone)
 				# Telefonnummer eingeben# {{{
@@ -152,6 +154,7 @@ wvdialconf_input() {
 				else
 					wvdial_config -c "$DIAL_CONF_CHAPTER"
 				fi
+				unset -- PASS
 				break
 				;;
 			$gv_Back)	break

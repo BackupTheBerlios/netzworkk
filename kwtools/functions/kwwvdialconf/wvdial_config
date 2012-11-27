@@ -20,7 +20,7 @@ wvdial_config() {
 			-i)
 				# neue Konfiguration anlegen# {{{
 				DIAL_CONF_CHAPTER="$2"
-				if [ -n "$INIT" -a -n "PHONE" -a -n "$MODEM" ] ; then
+				if [ -n "$INIT" -a -n "$PHONE" -a -n "$MODEM" ] ; then
 					if [ -n "$DIAL_CONF_CHAPTER" ] ; then
 						# addieren
 						>> "$WVDIAL_CONF" <<< "
@@ -47,7 +47,7 @@ Password = $PASS"
 			-c)
 				# Konfiguration veraendern# {{{
 				DIAL_CONF_CHAPTER="${${2/\[/\\[}/\]/\\]}"
-				if [ -n "$INIT" -a -n "PHONE" -a -n "$MODEM" ] ; then
+				if [ -n "$INIT" -a -n "$PHONE" -a -n "$MODEM" ] ; then
 					if [ -n "$DIAL_CONF_CHAPTER" ] ; then
 						awk '/^\[Dialer/{if(/'"$DIAL_CONF_CHAPTER"'/){found=1}else{found=0}}
                 {if(!found){print}}END{print "'"$2"'\n\
