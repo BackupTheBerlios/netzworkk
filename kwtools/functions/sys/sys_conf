@@ -288,7 +288,7 @@ sys_conf() {
 	#        MSG - Die MESSAGE wird aus
 	#        	*/locale/${LANGUAGE}/LC_MESSAGES/gv_ScriptName.mo gelesen,
 	#              oder aus der Funktion script_init.
-	#        Wenn $INIT mit uebergeben wird kann dieser Wert,
+	#        Wenn $INIT mit uebergeben wird, kann dieser Wert
 	#        bei einem Abbruch erhalten werden.
 	#
 	inputbox() {
@@ -5550,7 +5550,7 @@ kernel_choice() {
 	# U_OPT=k Bis auf das letzte Wort bekommt jedes Wort 1 Komma und 1 Leerzeichen angehaengt.
 	# U_OPT=no Werte in Datei schreiben und Leerzeile loeschen und
 	#          Apostrophe+Leerzeichen in neue Zeilen umwandeln.
-	# U_OPT=no_regexp Alles wird so eingelesen wie gespeichert und etwas anders
+	# U_OPT=regexp_file Alles wird so eingelesen wie gespeichert und etwas anders
 	#          in eine Datei geschrieben. Heisst mit Apostrophe ausser
 	#          Apostroph+Leerzeichen+Apostroph wird ersetzt durch nur ein EOL-Zeichen.
 	# U_OPT=ok Bis auf das letzte Wort bekommt jedes Wort 1 Komma angehaengt, keine Leerzeichen.
@@ -5564,8 +5564,6 @@ kernel_choice() {
 				elif [ "$U_OPT" = no ] ; then
 					gv_Auswahl="`< ${DialogReDirect##*>} | tr -t '\" ' '\n' | grep -v '^ *$' | tee ${gv_LogFile}$$`"
 					#gv_Auswahl="${Tmp//\" /\"\\\n}"
-				elif [ "$U_OPT" = no_regexp ] ; then
-					gv_Auswahl="`print $(< ${DialogReDirect##*>}) | sed -e 's#\" \"#\n#g' | tee ${gv_LogFile}$$`"
 				elif [ "$U_OPT" = hk ] ; then
 					gv_Auswahl=${$(< ${DialogReDirect##*>})//\'/}
 				elif [ "$U_OPT" = k ] ; then
@@ -5584,6 +5582,8 @@ kernel_choice() {
 					done
 				elif [ "$U_OPT" = regexp ] ; then
 					gv_Auswahl=$(< ${DialogReDirect##*>})
+				elif [ "$U_OPT" = regexp_file ] ; then
+					gv_Auswahl="`print $(< ${DialogReDirect##*>}) | sed -e 's#\" \"#\n#g' | tee ${gv_LogFile}$$`"
 				else
 					gv_Auswahl=${$(< ${DialogReDirect##*>})//\"/}
 				fi
