@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 11.08.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 27.11.2012
 #
 # Script: kwpwsafe, Frontend zur Verwaltung der Passwoerter mit dem Programm
 #         pwsafe.
 #
-# Version: 0.0.6
+# Version: 0.0.7
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -63,7 +63,6 @@ lv_Db=$(gettext 'Datenbank')
 lv_Create_Db=$(gettext 'Datenbank erstellen')
 lv_Change_Pw_Db=$(gettext 'Passwort aendern')
 lv_Open_Db=$(gettext 'Datenbank oeffnen')
-lv_Password=$(gettext 'Passwort')
 lv_Manage_Db=$(gettext 'Datenbank verwalten')
 DB_MSG=$(gettext 'Waehlen Sie eine Datenbank aus.')
 INCORRECT_PW_MSG=$(gettext 'Sie haben das falsche Passwort eingegeben.')
