@@ -177,6 +177,11 @@ sys_conf() {
 	# usage: fselect [ "/Pfad/Datei" | nichts ]
 	# Bei nichts wird das HOME verzeichnis genommen.
 	#
+	# Wird dieser Funktion eine /Pfad/Datei uebergeben
+	# wird dieser Wert in der Variable V_WERT gespeichert.
+	# Diese Variable wird von der Funktion return_check
+	# ausgewertet (vorheriger Wert).
+	#
 	fselect() {
 		unset -- Tmp_File
 		# vorherigen Wert speichern.
