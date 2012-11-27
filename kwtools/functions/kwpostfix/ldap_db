@@ -118,7 +118,7 @@ ldap_db() {
 	ldap_conf_menue() {
 		LDAP_CONF_MENU=($gv_Filename \"$FILE\" -------------------- \"\"
 		$gv_User \"$DB_User\"
-		$lv_Password \"$PASSPHRASE1\" $lv_Port \"$Port\" $gv_Host \"$DB_Host\"
+		$gv_Passwd \"$PASSPHRASE1\" $lv_Port \"$Port\" $gv_Host \"$DB_Host\"
 		$lv_Search_Base \"$Search_Base\" $lv_Timeout \"$Timeout\"
 		$lv_Ldap_Filter \"$Ldap_Filter\" $lv_Attr \"$Attribute\"
 		$gv_Save \"\" $gv_Back \"\")
@@ -171,9 +171,9 @@ ldap_db() {
 				#}}}
 				ldap_conf_menu $lv_Ldap_Filter
 				;;
-			$lv_Password) # DB Passwort
+			$gv_Passwd) # DB Passwort
 				db_passwd
-				ldap_conf_menu $lv_Password
+				ldap_conf_menu $gv_Passwd
 				;;
 			$lv_Port)
 				# Porteingabe{{{
