@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 07.04.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 27.11.2012
 #
 # Script: kwuser, legt an, aendert und loescht User
-# Version: 1.0.0
+# Version: 1.0.1
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -58,7 +58,7 @@ autoload -U check_special_character
 # zsh module datetime fuer strftime laden
 zsh_modload -i datetime
 
-# variablen
+# Variablen
 USERPASS_FILE="/root/passwd"
 PASS_FILE="${gv_WorkDir}/passwd.txt"
 CONF_USER_TITLE=$(gettext 'Konfiguration::Benutzer')
@@ -67,15 +67,12 @@ CREATE_MSG=$(gettext 'Geben Sie hier bitte einen Benutzer Namen ohne Sonderzeich
 lv_Prefix=$(gettext 'Prefix')
 lv_Prefix_Home=$(gettext 'Prefix_Homeverz.')
 lv_Count=$(gettext 'Anzahl')
-lv_Group=$(gettext 'Gruppe')
 lv_Groups=$(gettext 'Gruppen')
 lv_Comment=$(gettext 'Kommentar')
 lv_Shell=$(gettext 'Shell')
 lv_Home=$(gettext 'Home')
-lv_User=$(gettext 'Benutzer')
 lv_Password_Gen=$(gettext 'Passwort generieren')
 lv_User_Id=$(gettext 'Benutzer_ID')
-lv_Password=$(gettext 'Passwort')
 lv_Expire=$(gettext 'Verfallsdatum')
 lv_Inactive=$(gettext 'inaktiv_nach_Verfallsdatum')
 lv_Per_Prefix=$(gettext 'per Prefix')
@@ -97,19 +94,19 @@ user_konf_menue() {
 	if [ ! -z "$gv_Opt" -a "$CHANGE_USER" = no ] ; then
 		CONF_MENU=($lv_Prefix \"$P_PREFIX\"
 		$lv_Prefix_Home \"${P_HOME:-/home}\"
-		$lv_Count \"${P_COUNT:-100}\" $lv_Group \"$NGROUP\"
+		$lv_Count \"${P_COUNT:-100}\" $gv_Group \"$NGROUP\"
 		$lv_Groups \"$NGROUPS\"
 		$lv_Comment \"$COMMENT\" $lv_Shell \"$U_SHELL\"
 		$lv_Expire \"$EXPIRE\"
 	   	$lv_Inactive \"$INACTIVE\"
 		$gv_Save \"\" $gv_Back \"\")
 	else
-		CONF_MENU=($lv_User \"$NUSER\" $lv_User_Id \"$NUSER_ID\"
-		$lv_Group \"$NGROUP\"
+		CONF_MENU=($gv_User \"$NUSER\" $lv_User_Id \"$NUSER_ID\"
+		$gv_Group \"$NGROUP\"
 		$lv_Groups \"$NGROUPS\" $lv_Comment \"$COMMENT\"
 		$lv_Shell \"$U_SHELL\"
 	   	$lv_Home \"$HOME_V\"
-		$lv_Password \"$gv_Star_Passphrase\"
+		$gv_Passwd \"$gv_Star_Passphrase\"
 		\"$lv_Password_Gen\" \"\" $lv_Expire \"$EXPIRE\"
 		$lv_Inactive \"$INACTIVE\"
 		$gv_Save \"\" $gv_Back \"\")
@@ -533,7 +530,7 @@ user_konf() {
 				script_help conf_help
 				user_konf_menue	
 				;;
-			$lv_User)
+			$gv_User)
 				# vorhandene Usernamen aendern{{{
 				inputbox "$CONF_USER_TITLE" "$CREATE_MSG" "$NUSER_OLD"
 				if [ "$gv_Auswahl" ] ; then
@@ -552,7 +549,7 @@ user_konf() {
 					fi
 				fi
 				#}}}
-				user_konf_menue	$lv_User
+				user_konf_menue	$gv_User
 				;;
 			$lv_User_Id)
 				# User ID aendern{{{
@@ -580,13 +577,13 @@ user_konf() {
 				#}}}
 				user_konf_menue	$lv_User_Id
 				;;
-			$lv_Group)
+			$gv_Group)
 				# Gruppe aendern, bestimmen{{{
 				#
 				if [ -n "$NUSER" -o -n "$P_PREFIX" ] ; then
 					user_group_check -g
 					if [ "$?" = 0 ] ; then
-						GROUP_TITLE=(${gv_Configuration}::${lv_Group})
+						GROUP_TITLE=(${gv_Configuration}::${gv_Group})
 						GROUP_MSG=$(gettext 'Waehlen Sie hier Ihre Hauptgruppe aus.')
 						menubox "$GROUP_TITLE" "$GROUP_MSG" "$U_G_ARRAY"
 						#
@@ -623,7 +620,7 @@ user_konf() {
 					no_user_choice_msg
 				fi
 				#}}}
-				user_konf_menue	$lv_Group
+				user_konf_menue	$gv_Group
 				;;
 			$lv_Groups)
 				# Gruppen Zugehoerigkeit auswaehlen{{{
@@ -749,7 +746,7 @@ user_konf() {
 				#}}}
 				user_konf_menue	$lv_Home
 				;;
-			$lv_Password)
+			$gv_Passwd)
 				# Passwort eingeben #{{{
 				# Sicherheit ueber alles:)
 				PASSWD_MSG=$(gettext 'Geben Sie hier bitte ein Passwort fuer den Benutzer ($NUSER) ein und wiederholen es anschliessend.')
@@ -760,7 +757,7 @@ user_konf() {
 					no_user_choice_msg
 				fi
 				#}}}
-				user_konf_menue	$lv_Password
+				user_konf_menue	$gv_Passwd
 				;;
 			"$lv_Password_Gen")
 				# Passwort generieren# {{{
@@ -1026,7 +1023,7 @@ while [ "$gv_Auswahl" ] ; do
 			# Funktion (del_choice_menu). Auswahl ob nach Prefix oder Benutzer# {{{
 			# geloescht werden soll.
 			#
-			DEL_TITLE=(${lv_User}::${gv_Delete})
+			DEL_TITLE=(${gv_User}::${gv_Delete})
 			DEL_CHOICE_MENU=(\"$lv_Per_Prefix\" \"\" \"$lv_Per_Name\" \"\" $gv_Back \"\")
 			#
 			del_choice_menu() {

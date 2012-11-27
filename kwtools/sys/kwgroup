@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 13.03.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 27.11.2012
 #
 # Script: kwgroup, anlegen, aendern und loeschen von Gruppen.
-# Version: 0.2.5
+# Version: 0.2.6
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -47,11 +47,9 @@ root_check
 autoload -U check_special_character
 
 # Variablen
-lv_Group=$(gettext 'Gruppe')
 lv_Group_Id=$(gettext 'Gruppen_ID')
-lv_Password=$(gettext 'Passwort')
 #
-GROUP_TITLE=(${gv_Configuration}::${lv_Group})
+GROUP_TITLE=(${gv_Configuration}::${gv_Group})
 CREATE_MSG=$(gettext 'Geben Sie hier bitte einen Gruppen Namen, ohne Sonderzeichen ein.')
 # Funktion no_group_choice_msg{{{
 #
@@ -68,7 +66,8 @@ haupt_menue() {
 #}}}
 # Funktion group_konf_menue{{{
 group_konf_menue() {
-	CONF_MENU=($lv_Group \"$NGROUP\" $lv_Group_Id \"$NGROUP_ID\" $lv_Password \"$gv_Star_Passphrase\" $gv_Save \"\" $gv_Back \"\")
+	CONF_MENU=($gv_Group \"$NGROUP\" $lv_Group_Id \"$NGROUP_ID\"
+	$gv_Passwd \"$gv_Star_Passphrase\" $gv_Save \"\" $gv_Back \"\")
 	menubox "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
 }
 #}}}
@@ -109,7 +108,7 @@ group_konf() {
 				script_help conf_help
 				group_konf_menue	
 				;;
-			$lv_Group)
+			$gv_Group)
 				# Gruppe anlegen oder aendern.{{{
 				#
 				inputbox "$GROUP_TITLE" "$CREATE_MSG" "$NGROUP_OLD"
@@ -122,9 +121,9 @@ group_konf() {
 					fi
 				fi
 				#}}}
-				group_konf_menue	
+				group_konf_menue $gv_Group
 				;;
-			$lv_Group_Id)	
+			$lv_Group_Id)
 				# Gruppen_ID eingeben{{{
 				GROUP_ID_TITLE=(${gv_Configuration}::${lv_Group_Id})
 				GROUP_ID_MSG=$(gettext 'Geben Sie bitte hier die Gruppen ID Nummer ein. Diese muss Integer sein.')
@@ -143,9 +142,9 @@ group_konf() {
 					fi
 				fi
 				#}}}
-				group_konf_menue
+				group_konf_menue $lv_Group_Id
 				;;
-			$lv_Password)
+			$gv_Passwd)
 				# Passwort eingeben {{{
 				PASSWD_MSG=$(gettext 'Geben Sie hier bitte ein Passwort fuer die Gruppe ($NGROUP) ein und wiederholen es anschliessend.')
 				if [ "$NGROUP" ] ; then
@@ -154,7 +153,7 @@ group_konf() {
 					no_group_choice_msg
 				fi
 				#}}}
-				group_konf_menue	
+				group_konf_menue $gv_Passwd
 				;;
 			$gv_Save)
 				# Gruppe anlegen oder veraendern{{{
@@ -265,7 +264,7 @@ while [ "$gv_Auswahl" ] ; do
 			user_group_check -g
 			if [ "$?" = 0 ] ; then
 				DEL_MENU=($U_G_ARRAY_M)
-				DEL_TITLE=(${lv_Group}::${gv_Delete})
+				DEL_TITLE=(${gv_Group}::${gv_Delete})
 				DEL_MSG=$(gettext 'Waehlen Sie ein oder mehrere Gruppen zum loeschen aus.')
 				checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
 				#
