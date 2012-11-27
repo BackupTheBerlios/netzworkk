@@ -3,8 +3,7 @@
 relay_domains_table() {
 	FILE="$1"
 	autoload -U no_host_or_domain_msg
-	# Variablen
-	lv_Host_Domain=$(gettext 'Rechner/Domain')
+
 	# Funktion relay_domain_menue{{{
 	relay_domain_menue() {
 		RELAY_DOMAIN_MENU=($lv_Host_Domain \"$ADR\" $gv_Save \"\" $gv_Back \"\")

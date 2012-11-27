@@ -421,7 +421,7 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_destination_recipient_limit
 				;;
 			lmtp_discard_lhlo_keyword_address_maps)
-				# Tabelle EHLO Schluesselwoertern{{{
+				# Tabelle EHLO Schluesselwoertern die ignoriert werden sollen{{{
 				tab_support_choice "$gv_Auswahl"
 				smtp_discard_ehlo_keyword_address_maps="$MAPS"
 				postconf -e smtp_discard_ehlo_keyword_address_maps="$MAPS"
@@ -491,6 +491,8 @@ lmtp_conf() {
 				;;
 			lmtp_generic_maps)
 				# Tabelle zum umschreiben von lokalen zu globalen Adressen# {{{
+				#########################
+				# TODO
 				tab_support_choice "$gv_Auswahl"
 				lmtp_generic_maps="$MAPS"
 				postconf -e lmtp_generic_maps="$MAPS"
@@ -625,6 +627,8 @@ lmtp_conf() {
 			lmtp_pix_workaround_maps)
 				# Standard ist leer. Indiziert entfernte Mailserver mit# {{{
 				# CISCO PIX firewall bugs.
+				###############################
+				# TODO
 				tab_support_choice "$gv_Auswahl"
 				lmtp_pix_workaround_maps="$MAPS"
 				postconf -e lmtp_pix_workaround_maps="$MAPS"
@@ -740,6 +744,8 @@ lmtp_conf() {
 				;;
 			lmtp_reply_filter)
 				# Tabelle, eine Filterung .... Standard ist = nichts# {{{
+				##############################
+				# TODO
 				tab_support_choice $gv_Auswahl
 				lmtp_reply_filter="$MAPS"
 				postconf -e lmtp_reply_filter="$MAPS"
@@ -757,14 +763,13 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_rset_timeout
 				;;
 			lmtp_sasl_auth_cache_name)
-				# Einstellung sollte mit proxy: beginnen. Standard ist = nichts# {{{
+				# Einstellung muss mit proxy: beginnen.# {{{
+				# Bsp.: Standard ist /var/lib/postfix/name.
 				tab_support_choice $gv_Auswahl
 				if [[ -n $MAPS ]] ; then
 					case "$MAPS" in
 						[!proxy:]*)
 							MAPS="proxy:${MAPS}"
-							;;
-						*)	# nichts tun
 							;;
 					esac
 				fi
@@ -829,7 +834,8 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_sasl_mechanism_filter
 				;;
 			lmtp_sasl_password_maps)
-				# Tabelle fuer Kennungen/Passwoertern fuer authentifiezierte LMTP Verbindungen{{{
+				# Tabelle fuer Kennungen/Passwoertern{{{
+				# fuer authentifiezierte LMTP Verbindungen.
 				tab_support_choice "$gv_Auswahl"
 				lmtp_sasl_password_maps="$MAPS"
 				postconf -e lmtp_sasl_password_maps="$MAPS"
@@ -1094,7 +1100,8 @@ lmtp_conf() {
 			lmtp_tls_fingerprint_cert_match)
 				# Eingabe von Fingerprints
 				###########################################
-				# TODO: Gehen auch Maps?
+				# TODO: inputbox, geht aber auch ueber
+				# Map = *_tls_policy_maps
 				###########################################
 				# autoload -U tls_fingerprint_cert_match
 				# tls_fingerprint_cert_match
@@ -1189,6 +1196,8 @@ lmtp_conf() {
 				;;
 			lmtp_tls_per_site)
 				# Tabelle fuer die Regeln der TLS Benutzung{{{
+				##############################
+				# TODO: ist schwer davon abzuraten - entfernen (nein bisher)?
 				tab_support_choice "$gv_Auswahl"
 				lmtp_tls_per_site="$MAPS"
 				postconf -e lmtp_tls_per_site="$MAPS"
@@ -1198,6 +1207,8 @@ lmtp_conf() {
 			lmtp_tls_policy_maps)
 				# Tabelle mit den Policies fuer das Versenden von mails# {{{
 				# (LMTP_AUTH)
+				##############################
+				# TODO
 				tab_support_choice "$gv_Auswahl"
 				lmtp_tls_policy_maps="$MAPS"
 				postconf -e lmtp_tls_policy_maps="$MAPS"
@@ -1258,7 +1269,8 @@ lmtp_conf() {
 				conf_lmtp_menue lmtp_tls_security_level
 				;;
 			lmtp_tls_session_cache_database)
-				# Tabelle des Session Cache# {{{
+				# Ort der Tabelle des Session Cache# {{{
+				# Bsp.: Standard ist /var/lib/postfix/name.
 				tab_support_choice "$gv_Auswahl"
 				lmtp_tls_session_cache_database="$MAPS"
 				postconf -e lmtp_tls_session_cache_database="$MAPS"

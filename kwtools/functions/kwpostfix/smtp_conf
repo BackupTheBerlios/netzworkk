@@ -799,7 +799,8 @@ smtp_conf() {
 				conf_smtp_menu smtp_rset_timeout
 				;;
 			smtp_sasl_auth_cache_name)
-				# Einstellung sollte mit proxy: beginnen. Standard ist = nichts# {{{
+				# Einstellung muss mit proxy: beginnen.# {{{
+				# Standard ist nichts.
 				tab_support_choice $gv_Auswahl
 				if [[ -n $MAPS ]] ; then
 					case "$MAPS" in
@@ -873,7 +874,7 @@ smtp_conf() {
 				;;
 			smtp_sasl_password_maps)
 				# Tabelle mit Passwoertern fuer ausgehende{{{
-				# SMTP_AUTH Verbindungen
+				# SMTP_AUTH Verbindungen.
 				tab_support_choice "$gv_Auswahl"
 				smtp_sasl_password_maps="$MAPS"
 				postconf -e smtp_sasl_password_maps="$MAPS"
