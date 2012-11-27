@@ -1,15 +1,15 @@
 # Funktion (tab_support_choice), Tabellen- und deren Format-Auswahl{{{
 #
 # usage: tab_support_choice $Variable
+# Variable - Parameter der eingestellt werden soll (lookup Table)
 #
 tab_support_choice() {
 	unset -- MAPS
-	local Choice
+	local Choice OldVar
 	Choice="$1"
 	autoload -U password_display different_passwd
 	
 	lv_NameAdapt=$(gettext 'Namensuebernahme')
-	lv_VarChoice=$(gettext 'Variablenauswahl')
 
 	TAB_VALUE_TITLE="${lv_TableTyp}::${lv_Choice}"
 	
@@ -20,9 +20,12 @@ tab_support_choice() {
 	if [[ $Choice == -s ]] ; then
 		MAPS="$gv_Auswahl"
 	else
+		# vorherigen Wert speichern.
+		OldVar="$(postconf -h $Choice)"
+		#
 		# Funktion tab_support_menu{{{
-		TAB_VALUE_MENU=($gv_Input \"\" $lv_NameAdapt \"\"
-		$lv_VarChoice \"\" $gv_Back \"\")
+		TAB_VALUE_MENU=($gv_None \"\" $gv_Input \"\" $lv_NameAdapt \"\"
+		$gv_Back \"\")
 		tab_support_menu() {
 			menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$TAB_VALUE_MENU"
 		}
@@ -33,11 +36,15 @@ tab_support_choice() {
 				HELP*)	script_help tab_support_help
 					tab_support_menu
 					;;
+				$gv_None)
+					# nichts, Parameter Werte loeschen
+					MAPS=""
+					break
+					;;
 				$gv_Input)
 					# Datei/Variablen Eingabe# {{{
-					V_Wert="$(postconf -h $Choice)"
 					INPUT_MSG=$(gettext 'Hier koennen Sie Variablen und/oder Dateien eingeben (Bsp. \$alias_maps \$virtual_mailbox_maps unix:passwd.byname).')
-					inputbox "$TAB_VALUE_TITLE" "$INPUT_MSG" "${V_Wert//\$/\\\$}"
+					inputbox "$TAB_VALUE_TITLE" "$INPUT_MSG" "${OldVar//\$/\\\$}"
 					if [ "$gv_Auswahl" ] ; then
 						MAPS="${gv_Auswahl//\$/\\\$}"
 					else
@@ -50,34 +57,50 @@ tab_support_choice() {
 					# Namensuebernahme{{{
 					# Funktion format_menue{{{
 					# TABS_A - ohne die Tabellenformate pcre und regexp
+					# TABS_D - Tabellenformate, Tabellen die im Verzeichnis /var/lib/postfix
+					#          liegen sollten.
 					# TABS_C - alle Tabellenformate + cidr
 					# TABS_M - alle Tabellenformate
 					# TABS_R - nur die Tabellenformate pcre und regexp
+					#
+					# Die Variable TABS_WAHL wird fuer die Auswahl des Tabelleformats "proxy"
+					# benoetigt.
+					#
+					# }
 					TABFORMAT_MSG=$(gettext 'Waehlen Sie das Tabellenformat aus.')
 					format_menue() {
-					case "$Choice" in
-						*checks)
-							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_R"
-							TABS_WAHL="$TABS_R"
-							;;
-						*access)
-							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_C"
-							TABS_WAHL="$TABS_C"
-							;;
-						smtpd_sender_login_maps|local_recipient_maps|relay_recipient_maps)
-							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_A"
-							TABS_WAHL="$TABS_A"
-							;;
-						*)
-							menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_M"
-							TABS_WAHL="$TABS_M"
-							;;
-					esac
+						case "$Choice" in
+							*checks)
+								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_R"
+								TABS_WAHL="$TABS_R"
+								;;
+							*access)
+								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_C"
+								TABS_WAHL="$TABS_C"
+								;;
+							smtpd_sender_login_maps|*_recipient_maps)
+								# smtpd_sender_login_maps, local_recipient_maps,
+								# relay_recipient_maps
+								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_A"
+								TABS_WAHL="$TABS_A"
+								;;
+							address_verify_map|postscreen_cache_map|*_sasl_auth_cache_name|*_tls_session_cache_database)
+								# address_verify_map, postscreen_cache_map,
+								# {lmtp,smtp}_sasl_auth_cache_name,
+								# {lmtp,smtp,smtpd}_tls_session_cache_database
+								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_D"
+								TABS_WAHL="$TABS_D"
+								;;
+							*)
+								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_M"
+								TABS_WAHL="$TABS_M"
+								;;
+						esac
 					}
 					#}}}
 					format_menue
 					if [ -z "$gv_Auswahl" ] ; then
-						MAPS=""
+						MAPS="$OldVar"
 						break
 					fi
 					#
@@ -85,6 +108,10 @@ tab_support_choice() {
 						case "$gv_Auswahl" in
 							HELP*)	script_help tabformat_help
 								format_menue
+								if [ -z "$gv_Auswahl" ] ; then
+									MAPS="$OldVar"
+									break
+								fi
 								;;
 							envi*)
 								# environ{{{
@@ -116,8 +143,8 @@ tab_support_choice() {
 								else
 									MAPS="${gv_Auswahl}:${Choice}"
 								fi
-								break
 								#}}}
+								break
 								;;
 							ldap)
 								# LDAP Datenbanken{{{
@@ -126,8 +153,8 @@ tab_support_choice() {
 								fi
 								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
 								create_file ${MAPS##*:}
-								break
 								#}}}
+								break
 								;;
 							proxy)
 								# proxymap Konfiguration{{{
@@ -135,7 +162,7 @@ tab_support_choice() {
 								Tabwahl="$gv_Auswahl"
 								TAB_Proxy_S=${TABS_WAHL//proxy \"\"/}
 								# Tabellentype Auswahl fuer proxy
-								TAB_VALUE_PROXY_TITLE="${gv_Configuration}::${lv_TableTyp}::proxymap"
+								TAB_VALUE_PROXY_TITLE="${gv_Configuration}::${lv_TableTyp}::${lv_Proxy}"
 								menubox "$TAB_VALUE_PROXY_TITLE" "$gv_Menupoint" "$TAB_Proxy_S"
 								while [ "$gv_Auswahl" ] ; do
 									case "$gv_Auswahl" in
@@ -200,19 +227,44 @@ tab_support_choice() {
 											#}}}
 											;;
 										*)
-											# alle anderten Tabellentypen
+											# alle anderen Tabellentypen
 											if [ "$Choice" = alias_database ] ; then
 												Choice=alias_maps
 											fi
-											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${Choice}"
+											# Einige Tabellen sollten standardmaessig in
+											# den Verzeichnissen /var/lib/postfix oder
+											# /etc/postfix/sasl liegen.
+											case "$Choice" in
+												address_verify_map|postscreen_cache_map|*_sasl_auth_cache_name|*_tls_session_cache_database)
+													if [[ -n $data_directory ]] ; then
+														SAVE_PATH="$data_directory"
+													else
+														SAVE_PATH="/var/lib/postfix"
+														create_file -d $SAVE_PATH
+													fi
+													MAPS="${Tabwahl}:${Proxy_Map}:${SAVE_PATH}/${Choice}"
+													;;
+												*_sasl_password_maps)
+													SAVE_PATH="${MAIL_CONFIG}/sasl"
+													create_file -d $SAVE_PATH
+													MAPS="${Tabwahl}:${Proxy_Map}:${SAVE_PATH}/${Choice}"
+													create_file ${MAPS##*:}
+													# umask sicher setzen
+													chmod 600 ${MAPS##*:}
+													;;
+												*)
+													MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${Choice}"
+													create_file ${MAPS##*:}
+													;;
+											esac
 											;;
 									esac
 								else
 									unset -- MAPS
 									no_input_msg
 								fi
-								break
 								#}}}
+								break
 								;;
 							*sql)
 								# SQL Datenbanken{{{
@@ -221,8 +273,8 @@ tab_support_choice() {
 								fi
 								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
 								create_file ${MAPS##*:}
-								break
 								#}}}
+								break
 								;;
 							static)
 								# static{{{
@@ -237,7 +289,7 @@ tab_support_choice() {
 								#}}}
 								break
 								;;
-							un*)
+							unix)
 								# unix{{{
 								Nis_Name=(passwd.byname \"\" group.byname \"\" $gv_Back \"\")
 								menubox "$TAB_VALUE_TITLE" "$gv_Menupoint" "$Nis_Name"
@@ -258,16 +310,38 @@ tab_support_choice() {
 								#}}}
 								break
 								;;
-							*)	#
+							*)
 								# Auswahl übernehmen{{{
 								#
 								if [ "$Choice" = alias_maps -o "$Choice" = alias_database ] ; then
 									MAPS="${gv_Auswahl}:/etc/aliases"
 									create_file ${MAPS#*:}
-								else
-									MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${Choice//\$/}"
-									create_file ${MAPS#*:}
 								fi
+								# Einige Tabellen sollten standardmaessig in den Verzeichnissen
+								# /var/lib/postfix oder /etc/postfix/sasl liegen.
+								case "$Choice" in
+									address_verify_map|postscreen_cache_map|*_sasl_auth_cache_name|*_tls_session_cache_database)
+										if [[ -n $data_directory ]] ; then
+											SAVE_PATH="$data_directory"
+										else
+											SAVE_PATH="/var/lib/postfix"
+											create_file -d $SAVE_PATH
+										fi
+										MAPS="${gv_Auswahl}:${SAVE_PATH}/${Choice}"
+										;;
+									*_sasl_password_maps)
+										SAVE_PATH="${MAIL_CONFIG}/sasl"
+										create_file -d $SAVE_PATH
+										MAPS="${gv_Auswahl}:${SAVE_PATH}/${Choice}"
+										create_file ${MAPS##*:}
+										# umask sicher setzen
+										chmod 600 ${MAPS##*:}
+										;;
+									*)
+										MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${Choice}"
+										create_file ${MAPS##*:}
+										;;
+								esac
 								#}}}
 								break
 								;;
@@ -276,25 +350,9 @@ tab_support_choice() {
 					break
 					#}}}
 					;;
-				$lv_VarChoice)
-					# Für diese Werte die Postfix Variablen generieren{{{
-					# ########################
-					# TODO: _limit pruefen
-					# ########################
-					# Werte="_checks |_database |_maps |mailbox_domains |_limit |alias_domains |rbl_domains |relay_domains |mynetworks |virtual_transport "
-					Werte="_checks |_database |_maps |mailbox_domains |alias_domains |rbl_domains |relay_domains |mynetworks |virtual_transport "
-					# Choice ist der eigene Parametername der einzustellen ist.
-					# Dieser wird nicht zur Auswahl angezeigt.
-					postfix_variable $Werte $Choice
-					if [ "$WERT" ] ; then
-						MAPS="\$${WERT}"
-					else
-						unset -- MAPS
-					fi
-					break
-					#}}}
-					;;
 				$gv_Back)
+					# alten Wert behalten
+					MAPS="$OldVar"
 					break
 					;;
 			esac
