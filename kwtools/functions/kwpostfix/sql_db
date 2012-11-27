@@ -15,7 +15,7 @@ sql_db() {
 	# Funktion sql_conf_menu{{{
 	sql_conf_menue() {
 		SQL_CONF_MENU=($gv_Filename \"$FILE\" ------------------- \"\"
-		$gv_User \"$DB_User\" $lv_Password \"$PASSPHRASE1\" $lv_Db \"$DB_Name\"
+		$gv_User \"$DB_User\" $gv_Passwd \"$PASSPHRASE1\" $lv_Db \"$DB_Name\"
 		$lv_Tab \"$Table\" $lv_Where_Field \"$Where_Field\"
 		$lv_Select_Field \"$Select_Field\" $lv_Conditions \"$Kond\"
 		$lv_Function \"$Func\" $gv_Host \"$DB_Host\" $gv_Save \"\"
@@ -88,12 +88,12 @@ sql_db() {
 		PASSWD_MSG=$(gettext 'Geben Sie bitte das Passwort fuer die Datenbank ein.')
 		PASSWD_MSG1=$(gettext 'Geben Sie bitte erneut das Passwort fuer die Datenbank ein.')
 		password "$SQL_CONF_TITLE" "$PASSWD_MSG" 5
-		if [ "$PASSPHRASE" ] ; then
+		if [ -n "$PASSPHRASE" ] ; then
 			PASS1="$PASSPHRASE"
 			password "$SQL_CONF_TITLE" "$PASSWD_MSG1" 5
 			if [ "$PASSPHRASE" ] ; then
 				PASS2="$PASSPHRASE"
-				if [ "$PASS1" = "$PASS2" ] ; then
+				if [[ $PASS1 == $PASS2 ]] ; then
 					Pass="$PASSPHRASE"
 					password_display "$Pass"
 					PASSPHRASE1="$gv_Star_Passphrase"
@@ -104,7 +104,6 @@ sql_db() {
 				fi
 			fi
 		fi
-		#
 	}
 	#}}}
 	# Tabellenname{{{
@@ -209,9 +208,9 @@ sql_db() {
 					db_user
 					sql_conf_menue $gv_User
 					;;
-				$lv_Password) # DB Passwort
+				$gv_Passwd) # DB Passwort
 					db_passwd
-					sql_conf_menue $lv_Password
+					sql_conf_menue $gv_Passwd
 					;;
 				$lv_Tab)	# DB_Tabelle
 					db_table
