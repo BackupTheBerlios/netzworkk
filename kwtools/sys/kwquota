@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 06.02.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 27.11.2012
 #
 # Script: kwquota, Frontend fuer quota und xfs_quota
 #
-# Version: 0.0.8
+# Version: 0.0.9
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -147,10 +147,9 @@ CONF_MENU="$gv_Create \"\" $gv_Change \"\" $gv_Delete \"\" $gv_Back \"\""
 #
 lv_Drives=$(gettext 'Laufwerke')
 lv_Warn=$(gettext 'Warnung')
-lv_User=$(gettext 'Benutzer')
-lv_Group=$(gettext 'Gruppe')
 lv_Project=$(gettext 'Projekt')
-MAIN_MENU=($gv_Display \"\" $gv_Configuration \"\" $lv_Drives \"\" $lv_Warn \"\" $gv_Exit \"\")
+MAIN_MENU=($gv_Display \"\" $gv_Configuration \"\"
+	$lv_Drives \"\" $lv_Warn \"\" $gv_Exit \"\")
 #
 main_menu() {
 	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"

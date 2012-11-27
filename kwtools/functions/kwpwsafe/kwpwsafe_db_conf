@@ -51,7 +51,7 @@ kwpwsafe_db_conf() {
 									PW_GROUP="$gv_Auswahl" 
 								else
 									# Nachricht, Name schon vorhanden 
-									MSG=$(gettext 'Die $lv_Group $gv_Auswahl ist schon vorhanden. Nehmen Sie eine andere.')
+									MSG=$(gettext 'Die $gv_Group $gv_Auswahl ist schon vorhanden. Nehmen Sie eine andere.')
 									PW_GROUP="" 
 									msgbox "$gv_Info" "$MSG"
 								fi
@@ -70,7 +70,7 @@ kwpwsafe_db_conf() {
 									PW_GROUP="$gv_Auswahl" 
 								else
 									# Nachricht, Gruppe.Name schon vorhanden.
-									MSG=$(gettext 'Der $lv_Group ${gv_Auswahl}.${PW_NAME} ist schon vorhanden. Nehmen Sie eine andere $lv_Group oder ${lv_Name}.')
+									MSG=$(gettext 'Der $gv_Group ${gv_Auswahl}.${PW_NAME} ist schon vorhanden. Nehmen Sie eine andere $gv_Group oder ${lv_Name}.')
 									PW_GROUP="" 
 									msgbox "$gv_Info" "$MSG"
 								fi

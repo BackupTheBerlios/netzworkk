@@ -1,5 +1,11 @@
 kwtools (0.8.5-4) unstable; urgency=low
   * all *_cron scripts updateted (lock -r in line "trap '...'").
+  * kwnetstat - Bugfixing Hauptmenu
+  * kwvmstat - Option -m only user root
+  * kwecryptfs - Support for Kernel >=3
+  * kwadmin - Bugfixing in Configuration (Tmp directory)
+  * Functions: fselect/file_choice - support for previous Value.
+  * kwpostfix: Bugfixing and extended.
 
  -- Kai Wilke <kiste@netzworkk.de>  Thu, 11 Oct 2012 15:24:34 +0100
  

@@ -24,7 +24,7 @@ kwuser_conf() {
 	# Funktion (kwuser_conf_menu)# {{{
 	#
 	kwuser_conf_menu() {
-		KW_CONF_MENU=($lv_Group \"$KW_NGROUP\"
+		KW_CONF_MENU=($gv_Group \"$KW_NGROUP\"
 	   	$lv_Groups \"$KW_NGROUPS\" $lv_Shell \"${U_SHELL:-/bin/bash}\"
 		$lv_Pass_Length \"$PASSWD_LENGTH\"
 		$lv_Encrypt \"$ENCRYPT_METHOD\"
@@ -48,12 +48,12 @@ kwuser_conf() {
 				script_help kwuser_conf_help
 				kwuser_conf_menu
 				;;
-			$lv_Group)
+			$gv_Group)
 				# Gruppe bestimmen{{{
 				#
 				user_group_check -g
 				if [ "$?" = 0 ] ; then
-					KW_GROUP_TITLE=(${gv_Configuration}::${lv_Group})
+					KW_GROUP_TITLE=(${gv_Configuration}::${gv_Group})
 					KW_GROUP_MSG=$(gettext 'Waehlen Sie die Hauptgruppe fuer die zu erstellenden Benutzer aus.')
 					menubox "$KW_GROUP_TITLE" "$KW_GROUP_MSG" "$U_G_ARRAY"
 					#
@@ -71,7 +71,7 @@ kwuser_conf() {
 					done
 				fi
 				#}}}
-				kwuser_conf_menu $lv_Group
+				kwuser_conf_menu $gv_Group
 				;;
 			$lv_Groups)
 				# Gruppen fuer Benutzer denen er angehoeren soll.# {{{

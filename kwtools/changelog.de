@@ -1,5 +1,11 @@
 kwtools (0.8.5-4) unstable; urgency=low
   * alle *_cron Scripte upgedatet (lock -r in Zeile "trap '...'").
+  * kwnetstat - Hauptmenue funktionierte nicht
+  * kwvmstat - Option -m nur fuer den Benutzer root
+  * kwecryptfs - Support auch f. Kernel >=3
+  * kwadmin - Bug in der Konfiguration des Tmp-Verzeichnis
+  * Functions: fselect/file_choice - Support fuer vorherigen Wert.
+  * kwpostfix: Bugs gefixt und  erweitert.
 
  -- Kai Wilke <kiste@netzworkk.de>  Thu, 11 Oct 2012 15:24:34 +0100
  

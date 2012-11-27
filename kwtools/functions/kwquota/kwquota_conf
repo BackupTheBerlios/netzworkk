@@ -19,16 +19,16 @@ kwquota_conf() {
 	read_choice_data() {
 		unset -- PROJ_CREATE
 		if [ "`wc -l < $USER_LOGFILE`" -gt 1 -a "`wc -l < $GROUP_LOGFILE`" -gt 1 ] ; then
-			CHOICE_MENU=($lv_User \"\" $lv_Group \"\" $gv_Back \"\")
+			CHOICE_MENU=($gv_User \"\" $gv_Group \"\" $gv_Back \"\")
 			menubox "$UG_WHAT_TITLE" "$gv_Menupoint" "$CHOICE_MENU"
 			while [ -n "$gv_Auswahl" ] ; do
 				case "$gv_Auswahl" in
 					HELP*)	script_help ugp_help
 							menubox "$UG_WHAT_TITLE" "$gv_Menupoint" "$CHOICE_MENU"
 						;;
-					$lv_User)
+					$gv_User)
 						# uebernehmen
-						C_TITLE=(${UG_WHAT_TITLE}::${lv_User})
+						C_TITLE=(${UG_WHAT_TITLE}::${gv_User})
 						WHAT_QUOTA=User
 						QU_OPT=-u
 						case "$QFS" in
@@ -37,9 +37,9 @@ kwquota_conf() {
 						esac
 						return 0
 						;;
-					$lv_Group)
+					$gv_Group)
 						# uebernehmen
-						C_TITLE=(${UG_WHAT_TITLE}::${lv_Group})
+						C_TITLE=(${UG_WHAT_TITLE}::${gv_Group})
 						WHAT_QUOTA=Group
 						QU_OPT=-g
 						case "$QFS" in
@@ -52,7 +52,7 @@ kwquota_conf() {
 				esac
 			done
 		elif [ "`wc -l < $USER_LOGFILE`" -gt 1 ] ; then
-			C_TITLE=(${UG_WHAT_TITLE}::${lv_User})
+			C_TITLE=(${UG_WHAT_TITLE}::${gv_User})
 			WHAT_QUOTA=User
 			QU_OPT=-u
 			case "$QFS" in
@@ -60,7 +60,7 @@ kwquota_conf() {
 				ext[23]|reiserfs|jfs)	read_data "$USER_LOGFILE"	;;
 			esac
 		elif [ "`wc -l < $GROUP_LOGFILE`" -gt 1 ] ; then
-			C_TITLE=(${UG_WHAT_TITLE}::${lv_Group})
+			C_TITLE=(${UG_WHAT_TITLE}::${gv_Group})
 			WHAT_QUOTA=Group
 			QU_OPT=-g
 			case "$QFS" in
