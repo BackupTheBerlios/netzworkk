@@ -27,7 +27,7 @@ virtual_alias_table() {
 				# Fuer welche Domain soll Postfix die Mails{{{
 				# annehmen.
 				#
-				VIRTUAL_DOMAIN_MSG=$(gettext 'Geben Sie hier eine virtuelle domain ein (Bsp. domain.de).')
+				VIRTUAL_DOMAIN_MSG=$(gettext 'Geben Sie hier eine virtuelle Domain ein (Bsp. domain.de).')
 				inputbox "$TABLE_TITLE" "$VIRTUAL_DOMAIN_MSG" "$DOMAIN"
 				if [ "${(w)#gv_Auswahl}" = 1 ] ; then
 					case "$gv_Auswahl" in
@@ -108,7 +108,7 @@ virtual_alias_table() {
 				}
 				#}}}
 				#
-				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
+				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine Domain ein (Bsp. user | @domain.de | user@domain.de).')
 				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
@@ -118,7 +118,7 @@ virtual_alias_table() {
 						@*.*)	ADR="$gv_Auswahl"
 							check_virtual_domain
 							;;
-						[a-zA-Z0-9]*[_-.]*)	ADR="$gv_Auswahl"
+						[a-zA-Z0-9]*[_-.]*!@*)	ADR="$gv_Auswahl"
 							if [ -z "$DOMAIN" ] ; then
 								check_virtual_domain_msg
 							fi

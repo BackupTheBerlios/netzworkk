@@ -2,7 +2,7 @@
 #
 virtual_id_table() {
 	FILE="$1"
-	autoload -U no_adr_and_recipient_adr_msg
+	autoload -U general_first_address no_adr_and_recipient_adr_msg
 	# Funktion virtual_id_menue{{{
 	virtual_id_menue() {
 		VIRTUAL_ID_MENU=($lv_Address \"$ADR\" $lv_Id \"$ID\"
@@ -23,27 +23,8 @@ virtual_id_table() {
 				virtual_id_menue
 				;;
 			$lv_Address)
-				# Empfaenger Adresse eingeben{{{
-				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
-				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
-				if [ "$gv_Auswahl" ] ; then
-					case "$gv_Auswahl" in
-						[a-zA-Z0-9]*[-._]*@*.*)	ADR="$gv_Auswahl"
-							;;
-						@*.*)	ADR="$gv_Auswahl"
-							;;
-						[a-zA-Z0-9]*[-._]*)	ADR="$gv_Auswahl"
-							;;
-						*)
-							unset -- ADR
-							no_input_msg
-							;;
-					esac
-				else
-					unset -- ADR
-					no_input_msg
-				fi
-				#}}}
+				# Empfaenger Adresse eingeben
+				general_first_address
 				virtual_id_menue $lv_Address
 				;;
 			$lv_Id)

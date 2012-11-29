@@ -39,7 +39,7 @@ access_table() {
 			$lv_Address)
 				# Adresse auswählen{{{
 				U_OPT=regexp
-				ADR_MSG=$(gettext 'Geben Sie bitte eine Mailadresse, User, IP, domain, ... ein (Bsp. user@ | @domain.de | user@domain.de | 192.168. | 192.168.0.1 ).')
+				ADR_MSG=$(gettext 'Geben Sie bitte eine Mailadresse, User, IP, Domain, ... ein (Bsp. user@ | @domain.de | user@domain.de | 192.168. | 192.168.0.1 ).')
 				inputbox "$TABLE_TITLE" "$ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					if [ "$CIDR" = Yes ] ; then

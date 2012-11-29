@@ -19,7 +19,7 @@ recipient_table() {
 				;;
 			$lv_Address)
 				# Adresse waehlen{{{
-				ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse oder domain ein (Bsp. @domain.de | user@domain.de).')
+				ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse oder Domain ein (Bsp. @domain.de | user@domain.de).')
 				inputbox "$TABLE_TITLE" "$ADR_MSG" "$ADR"
 				if [ "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in

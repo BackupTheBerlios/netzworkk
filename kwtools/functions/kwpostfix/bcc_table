@@ -2,7 +2,7 @@
 #
 bcc_table() {
 	FILE="$1"
-	autoload -U no_adr_and_recipient_adr_msg
+	autoload -U general_first_address no_adr_and_recipient_adr_msg
 	# Funktion bcc_menue{{{
 	bcc_menue() {
 		BCC_MENU=($lv_Address \"$ADR\" $lv_Recipient \"$E_ADR\" $gv_Save \"\" $gv_Back \"\")
@@ -22,27 +22,8 @@ bcc_table() {
 				bcc_menue
 				;;
 			$lv_Address)
-				# Adresse waehlen{{{
-				FIRST_ADR_MSG=$(gettext 'Geben Sie hier bitte eine Mailadresse, User oder eine domain ein (Bsp. user | @domain.de | user@domain.de).')
-				inputbox "$TABLE_TITLE" "$FIRST_ADR_MSG" "$ADR"
-				if [ "$gv_Auswahl" ] ; then
-					case "$gv_Auswahl" in
-						[a-zA-Z0-9]*[-._]*@*.*)	ADR="$gv_Auswahl"
-							;;
-						@*.*)	ADR="$gv_Auswahl"
-							;;
-						[a-zA-Z0-9]*[._-]*!@*)	ADR="$gv_Auswahl"
-							;;
-						*)
-							unset -- ADR
-							no_input_msg
-							;;
-					esac
-				else
-					unset -- ADR
-					no_input_msg
-				fi
-				#}}}
+				# Adresse eingeben.
+				general_first_address
 				bcc_menue $lv_Address
 				;;
 			$lv_Recipient)

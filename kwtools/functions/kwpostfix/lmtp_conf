@@ -491,8 +491,7 @@ lmtp_conf() {
 				;;
 			lmtp_generic_maps)
 				# Tabelle zum umschreiben von lokalen zu globalen Adressen# {{{
-				#########################
-				# TODO
+				# localhost.localdomain.de -> host.domain.de
 				tab_support_choice "$gv_Auswahl"
 				lmtp_generic_maps="$MAPS"
 				postconf -e lmtp_generic_maps="$MAPS"
