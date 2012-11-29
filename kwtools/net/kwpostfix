@@ -1560,7 +1560,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						# {l,s}mtp_sasl_password_maps
 						#
-						TAB_HELP="${gv_Auswahl%_maps}_help"
+						TAB_HELP="sasl_password_help"
 						HASH_TAB="sasl_password_table"
 						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
