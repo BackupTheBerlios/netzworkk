@@ -34,6 +34,11 @@ header_checks: Tabelle fuer die Filterung des Headers. RA werden
 lmtp_body_checks: Tabelle fuer die Filterung des Bodies bei der
 \tTransportmethode LMTP. RA werden unterstuetzt.
 
+lmtp_generic_maps: Tabelle um lokale Adressen in internationale
+\tAdressen umzuschreiben, bei der Transportmethode LMTP.
+\tBsp. irgendeine virtuelle Adresse:
+\tlocaldomain.local.de -> host.domain.de.
+
 lmtp_header_checks: Tabelle fuer die Filterung des Headers bei der
 \tTransportmethode LMTP. RA werden unterstuetzt.
 
@@ -86,6 +91,11 @@ sender_canonical_maps: Tabelle zum umwandeln vom Absender im
 
 smtp_body_checks: Tabelle fuer die Filterung des Bodies bei der
 \tTransportmethode SMTP. RA werden unterstuetzt.
+
+smtp_generic_maps: Tabelle um lokale Adressen in internationale
+\tAdressen umzuschreiben, bei der Transportmethode SMTP.
+\tBsp. irgendeine virtuelle Adresse:
+\tlocaldomain.local.de -> host.domain.de.
 
 smtp_header_checks: Tabelle fuer die Filterung des Headers bei der
 \tTransportmethode SMTP. RA werden unterstuetzt.
