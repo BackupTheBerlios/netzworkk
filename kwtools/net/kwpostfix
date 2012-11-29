@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 27.11.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 29.11.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -1091,7 +1091,7 @@ while [ "$gv_Auswahl" ] ; do
 		$lv_Tabs)
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
-				flags_choice kwpostfix_action ldap_db mailbox_command_table \
+				flags_choice generic_table kwpostfix_action ldap_db mailbox_command_table \
 				mynetworks_table sasl_password_table relay_clientcerts_table \
 				relay_domains_table \
 				recipient_table regexp_table relocated_table \
@@ -1418,6 +1418,22 @@ while [ "$gv_Auswahl" ] ; do
 								;;
 						esac
 						HASH_TAB="relay_domains_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
+						tab_menue $TAB
+						;;
+					*generic_maps)
+						# Tabelle, lokale Mailadressen in globale Mailadressen umschreiben{{{
+						# localhost.localdomain.de -> host.domain.de
+						#
+						# lmtp_generic_maps, smtp_generic_maps
+						#
+						TAB_HELP="generic_help"
+						HASH_TAB="generic_table"
 						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
