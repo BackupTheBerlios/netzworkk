@@ -1,15 +1,17 @@
 Version *
 * kwxen-tools, kwcyrus, kwsquid in Angriff nehmen?
 * evtl. zsh Kalendersystem fuer Termine oder mailsystem benutzen?
-
-Bis Version 0.9.*
-* altes Script kwdvdburn wieder aufleben lassen?
-* kwpostfix neue Optionen weiter implementieren?
 * mehrere tinydns server nebeneinander einrichten?
 
-Bis Version 0.8.7
+Bis Version 1.0.*
+
+Bis Version 0.9.*
 * kwssl2 weiterentwickeln.
-* dialog Option in Funktion yesno integrieren.
+* altes Script kwdvdburn wieder aufleben lassen?
+* kwpostfix neue Optionen weiter implementieren?
+
+Bis Version 0.8.7
+* dialog Option --default-item in Funktion yesno integrieren.
 
 Bis Version 0.8.6
 * Bug fixing.
