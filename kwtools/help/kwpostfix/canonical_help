@@ -1,22 +1,22 @@
 # canonical_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::canonical::${gv_Help}"
+TITLE="${lv_Tabs}::${lv_Canonical}::${gv_Help}"
 MSG=$(gettext 'Hier kann man Mailadressen, Domains und lokale Benutzer Accounts
 eingeben, deren Empfaenger- und Absenderadressen im SMTP-Envelope
 und Mailheader geaendert werden sollen. Und natuerlich in welche 
 Adresse Sie umgewandelt werden soll.
 
 Tabellen:
-canonical_maps siehe oben
-sender_canonical_maps wandelt nur Absenderadressen
-recipient_canonical_maps wandelt nur Empfaengeradressen
+canonical_maps siehe oben.
+sender_canonical_maps wandelt nur Absenderadressen um.
+recipient_canonical_maps wandelt nur Empfaengeradressen um.
 
 Format:
-# wandelt lokalen Nutzeraccount
+# Wandelt lokale Nutzeraccounts um.
 user\t\t\tanderer-user@domain.de
-# wandelt pauschal alle Adressen mit dieser Domain
+# Wandelt pauschal alle Adressen mit dieser Domain um.
 @user.domain.de\t\tuser@domain.de
 @testsrv.domain.de\t@domain.de
-# wandelt pauschal diese auch externe
+# Wandelt pauschal diese auch in externe um.
 user@domain.de\t\tanderer-user@domain.de')
 #}}}
 ### Modeline {{{
