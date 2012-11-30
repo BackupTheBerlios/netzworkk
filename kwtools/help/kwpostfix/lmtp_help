@@ -139,7 +139,7 @@ lmtp_extra_recipient_limit: Anzahl der zusaetzlichen Mailadressen
 
 lmtp_generic_maps: Tabelle die die Umschreibung von lokal gueltigen
 \tAdressen zu global gueltigen Adressen beim versenden uebers
-\tInternet.
+\tInternet beinhaltet.
 
 lmtp_header_checks: Tabelle, eine Filterung des Header beim
 \tversenden einer Mail.

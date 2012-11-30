@@ -140,7 +140,7 @@ smtp_fallback_relay: Liste von optionalen Rechnernamen, an welchen
 
 smtp_generic_maps: Tabelle die die Umschreibung von lokal gueltigen
 \tAdressen zu global gueltigen Adressen beim versenden uebers
-\tInternet.
+\tInternet beinhaltet.
 
 smtp_header_checks: Tabelle, eine Filterung des Header beim
 \tversenden einer Mail.

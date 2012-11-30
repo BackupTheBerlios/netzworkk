@@ -87,7 +87,7 @@ relay_transport: Standard-Transportmethode fuer alle Domains in
 
 relayhost: Host, an den alle ausgehenden Mails zugestellt werden,
 \tstatt diese an den MX-Host zu senden. Zum Beispiel:
-\t[address], [address]:port, domain oder host.
+\t[address], [address]:port, Domain oder Host.
 ')
 #}}}
 ### Modeline {{{
