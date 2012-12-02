@@ -1,5 +1,5 @@
 # virtual_alias_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::virtual_alias::${gv_Help}"
+TITLE="${lv_Tabs}::${lv_Virtual_Alias}::${gv_Help}"
 MSG=$(gettext 'Hier kann man den Empfaenger Adressen einen Alias geben, an dem
 dann die Mail gesendet wird.
 

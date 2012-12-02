@@ -1,5 +1,5 @@
 # relocated_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::relocated::${gv_Help}"
+TITLE="${lv_Tabs}::${lv_Relocated}::${gv_Help}"
 MSG=$(gettext 'Hier kann man die Mailadresse einstellen, welche umgezogen ist.
 
 Tabelle:

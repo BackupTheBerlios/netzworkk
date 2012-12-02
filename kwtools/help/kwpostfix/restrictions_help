@@ -1,5 +1,5 @@
 # restrictions_help fuer kwpostfix{{{
-TITLE=$(gettext 'Konfiguration::restrictions::Hilfe')
+TITLE="${gv_Configuration}::${lv_Restrictions}::${gv_Help}"
 MSG=$(gettext 'check_{client,helo,recipient,sender}_access typ:mapname:
 \tPruefen, ob die Absender-, Empfaenger-, Hostname- bzw. die
 \tHelo Angabe in einer access Tabelle mit einem OK oder REJECT

@@ -1,5 +1,5 @@
 # tls_ciphers_help fuer kwpostfix{{{
-TITLE=$(gettext 'TLS Qualitaet::Hilfe')
+TITLE="${lv_Tls Qualitaet}::${gv_Help}"
 MSG=$(gettext 'Eine ausfuehrliche Beschreibung steht in man 5 postconf.
 
 export: Schaltet den Grad "EXPORT" oder bessere OpenSSL Verschluesselung ein.

@@ -1,5 +1,5 @@
 # mynetworks_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::mynetworks::${gv_Help}"
+TITLE="${lv_Tabs}::${lv_Mynetworks}::${gv_Help}"
 MSG=$(gettext 'Hier kann man einstellen fuer welchen Rechner oder fuer welches
 Netz der Pstfix Server zustendig ist, und von deren Clients Mail
 angenommen werden.

@@ -1,5 +1,5 @@
 # tls_security_level_help fuer kwpostfix{{{
-TITLE=$(gettext 'TLS Sicherheitslevel::Hilfe')
+TITLE="${lv_Tls_Security_level}::${gv_Help}"
 MSG=$(gettext 'Eine ausfuehrliche Beschreibung steht in man 5 postconf.
 
 none: Es wird kein TLS benutzt.
