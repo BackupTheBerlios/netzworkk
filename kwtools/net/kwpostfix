@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 29.11.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 02.12.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -78,6 +78,8 @@ lv_Smtp=$(gettext 'SMTP')
 lv_Smtpd=$(gettext 'SMTPD')
 lv_Tls=$(gettext 'TLS')
 lv_TlsProxy=$(gettext 'TLS_Proxy')
+lv_Tls_Qualitaet=$(gettext 'TLS Qualitaet')
+lv_Tls_Security_level=$(gettext 'TLS Sicherheitslevel')
 lv_Uucp=$(gettext 'UUCP')
 lv_Virtual=$(gettext 'Virtual')
 
@@ -1177,14 +1179,21 @@ while [ "$gv_Auswahl" ] ; do
 				Anz=0
 				setopt localoptions globsubst
 				for tab in alias_maps body_checks canonical_maps fast_flush_domains \
-					header_checks lmtp_body_checks lmtp_sasl_password_maps \
-					lmtp_header_checks lmtp_mime_header_checks lmtp_nested_header_checks \
+					header_checks \
+					lmtp_body_checks lmtp_generic_maps \
+					lmtp_header_checks lmtp_mime_header_checks \
+					lmtp_nested_header_checks lmtp_sasl_password_maps \
 					local_recipient_maps \
-					mailbox_command_maps milter_header_checks mime_header_checks mynetworks \
-					nested_header_checks recipient_bcc_maps \
-					recipient_canonical_maps relay_clientcerts relay_domains \
-					relay_recipient_maps relocated_maps sender_bcc_maps sender_canonical_maps \
-					smtp_body_checks smtp_header_checks smtp_mime_header_checks \
+					mailbox_command_maps \
+					milter_header_checks mime_header_checks \
+					mynetworks \
+					nested_header_checks \
+					recipient_bcc_maps recipient_canonical_maps \
+					relay_clientcerts relay_domains relay_recipient_maps \
+					relocated_maps \
+					sender_bcc_maps sender_canonical_maps \
+					smtp_body_checks smtp_generic_maps \
+					smtp_header_checks smtp_mime_header_checks \
 					smtp_nested_header_checks smtp_sasl_password_maps \
 					smtpd_client_restrictions smtpd_data_restrictions \
 					smtpd_end_of_data_restrictions smtpd_etrn_restrictions \
@@ -1428,7 +1437,7 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					*generic_maps)
 						# Tabelle, lokale Mailadressen in globale Mailadressen umschreiben{{{
-						# localhost.localdomain.de -> host.domain.de
+						# localdomain.local -> host.domain.de
 						#
 						# lmtp_generic_maps, smtp_generic_maps
 						#
