@@ -15,8 +15,8 @@ lmtp_conf() {
 	rm -rf ${gv_WorkDir}/postfix$$ &>/dev/null
 	
 	## }}}
-	# Funktion conf_lmtp_menue{{{
-	conf_lmtp_menue() {
+	# Funktion conf_lmtp_menu{{{
+	conf_lmtp_menu() {
 		LMTP_MENU=(smtp_address_preference \"\$smtp_address_preference\"
 		lmtp_assume_final \"\$lmtp_assume_final\"
 		lmtp_bind_address \"\$lmtp_bind_address\"
@@ -130,11 +130,11 @@ lmtp_conf() {
 		fi
 	}
 	#}}}
-	conf_lmtp_menue
+	conf_lmtp_menu
 	while [ "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
 			HELP*)	script_help lmtp_help
-				conf_lmtp_menue
+				conf_lmtp_menu
 				;;
 			lmtp_address_preference)
 				# ipv4, ipv6 oder any, Standard ist = any.# {{{
@@ -165,7 +165,7 @@ lmtp_conf() {
 				done
 				check_gv_Auswahl lmtp_address_preference "postconf -e lmtp_address_preference="any""
 				## }}}
-				conf_lmtp_menue lmtp_address_preference
+				conf_lmtp_menu lmtp_address_preference
 				;;
 			lmtp_assume_final)
 				# Standard = no# {{{
@@ -174,7 +174,7 @@ lmtp_conf() {
 				lmtp_assume_final="$WERT"
 				postconf -e lmtp_assume_final="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_assume_final
+				conf_lmtp_menu lmtp_assume_final
 				;;
 			lmtp_bind_address)
 				# Welche IPv4 Adresse soll fuer ausgehende{{{
@@ -195,7 +195,7 @@ lmtp_conf() {
 					postconf -e lmtp_bind_address=""
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_bind_address
+				conf_lmtp_menu lmtp_bind_address
 				;;
 			lmtp_bind_address6)
 				# Welche IPv6 Adresse soll fuer ausgehende{{{
@@ -216,7 +216,7 @@ lmtp_conf() {
 					postconf -e lmtp_bind_address6=""
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_bind_address6
+				conf_lmtp_menu lmtp_bind_address6
 				;;
 			lmtp_body_checks)
 				# Tabelle, eine Filterung des Bodies beim versenden einer mail# {{{
@@ -226,7 +226,7 @@ lmtp_conf() {
 					postconf -e lmtp_body_checks="$Value"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_body_checks
+				conf_lmtp_menu lmtp_body_checks
 				;;
 			lmtp_cname_overrides_servername)
 				# Ueberschreiben von Servernamen bei CNAME records erlauben{{{
@@ -236,7 +236,7 @@ lmtp_conf() {
 				lmtp_cname_overrides_servername="$WERT"
 				postconf -e lmtp_cname_overrides_servername="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_cname_overrides_servername
+				conf_lmtp_menu lmtp_cname_overrides_servername
 				;;
 			lmtp_connect_timeout)
 				# Timeout fuer den Aufbau der Verbindung{{{
@@ -246,7 +246,7 @@ lmtp_conf() {
 					postconf -e lmtp_connect_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_connect_timeout
+				conf_lmtp_menu lmtp_connect_timeout
 				;;
 			lmtp_connection_cache_destinations)
 				# permanentes LMTP Verbindungscaching einschalten{{{
@@ -255,7 +255,7 @@ lmtp_conf() {
 				lmtp_connection_cache_destinations="$WERT"
 				postconf -e lmtp_connection_cache_destinations="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_connection_cache_destinations
+				conf_lmtp_menu lmtp_connection_cache_destinations
 				;;
 			lmtp_connection_cache_on_demand)
 				# Zeitweiliges LMTP Verbindungscaching einschalten{{{
@@ -265,7 +265,7 @@ lmtp_conf() {
 				lmtp_connection_cache_on_demand="$WERT"
 				postconf -e lmtp_connection_cache_on_demand="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_connection_cache_on_demand
+				conf_lmtp_menu lmtp_connection_cache_on_demand
 				;;
 			lmtp_connection_cache_time_limit)
 				# Zeit die ein unbenutzter LMTP Client Socket offen gelassen werden soll{{{
@@ -276,7 +276,7 @@ lmtp_conf() {
 					postconf -e lmtp_connection_cache_time_limit="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_connection_cache_time_limit
+				conf_lmtp_menu lmtp_connection_cache_time_limit
 				;;
 			lmtp_connection_reuse_time_limit)
 				# Zeit zum neubenutzen des Cache bevor die LMTP Sitzung geschlossen wird{{{
@@ -287,7 +287,7 @@ lmtp_conf() {
 					postconf -e lmtp_connection_reuse_time_limit="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_connection_reuse_time_limit
+				conf_lmtp_menu lmtp_connection_reuse_time_limit
 				;;
 			lmtp_data_done_timeout)
 				# Timeout nach erfolgter Übertragung der mail per LMTP{{{
@@ -297,7 +297,7 @@ lmtp_conf() {
 					postconf -e lmtp_data_done_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_data_done_timeout
+				conf_lmtp_menu lmtp_data_done_timeout
 				;;
 			lmtp_data_init_timeout)
 				# Timeout nach dem LMTP Kommando DATA{{{
@@ -307,7 +307,7 @@ lmtp_conf() {
 					postconf -e lmtp_data_init_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_data_init_timeout
+				conf_lmtp_menu lmtp_data_init_timeout
 				;;
 			lmtp_data_xfer_timeout)
 				# Timeout waehrend der Übertragung zu einem LMTP Server{{{
@@ -317,7 +317,7 @@ lmtp_conf() {
 					postconf -e lmtp_data_xfer_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_data_xfer_timeout
+				conf_lmtp_menu lmtp_data_xfer_timeout
 				;;
 			lmtp_defer_if_no_mx_address_found)
 				# Zurueckstellung von mails wenn ein MX record nicht aufgeloest werden kann# {{{
@@ -327,7 +327,7 @@ lmtp_conf() {
 				lmtp_defer_if_no_mx_address_found="$WERT"
 				postconf -e lmtp_defer_if_no_mx_address_found="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_defer_if_no_mx_address_found
+				conf_lmtp_menu lmtp_defer_if_no_mx_address_found
 				;;
 			lmtp_delivery_slot_cost)
 				# Standard = $default_delivery_slot_cost# {{{
@@ -337,7 +337,7 @@ lmtp_conf() {
 					postconf -e lmtp_delivery_slot_cost="$Value"
 				fi
 				#	# }}}
-				conf_lmtp_menue lmtp_delivery_slot_cost
+				conf_lmtp_menu lmtp_delivery_slot_cost
 				;;
 			lmtp_delivery_slot_discount)
 				# Standard = $default_delivery_slot_discount# {{{
@@ -347,7 +347,7 @@ lmtp_conf() {
 					postconf -e lmtp_delivery_slot_discount="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_delivery_slot_discount
+				conf_lmtp_menu lmtp_delivery_slot_discount
 				;;
 			lmtp_delivery_slot_loan)
 				# Standard = $default_delivery_slot_loan# {{{
@@ -357,7 +357,7 @@ lmtp_conf() {
 					postconf -e lmtp_delivery_slot_loan="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_delivery_slot_loan
+				conf_lmtp_menu lmtp_delivery_slot_loan
 				;;
 			lmtp_destination_concurrency_failed_cohort_limit)
 				# Standard = $default_destination_concurrency_failed_cohort_limit# {{{
@@ -367,7 +367,7 @@ lmtp_conf() {
 					postconf -e lmtp_destination_concurrency_failed_cohort_limit="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_destination_concurrency_failed_cohort_limit
+				conf_lmtp_menu lmtp_destination_concurrency_failed_cohort_limit
 				;;
 			lmtp_destination_concurrency_limit)
 				# Standard = $default_destination_concurrency_limit# {{{
@@ -377,7 +377,7 @@ lmtp_conf() {
 					postconf -e lmtp_destination_concurrency_limit="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_destination_concurrency_limit
+				conf_lmtp_menu lmtp_destination_concurrency_limit
 				;;
 			lmtp_destination_concurrency_negative_feedback)
 				# Standard = $default_destination_concurrency_negative_feedback# {{{
@@ -387,7 +387,7 @@ lmtp_conf() {
 					postconf -e lmtp_destination_concurrency_negative_feedback="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_destination_concurrency_negative_feedback
+				conf_lmtp_menu lmtp_destination_concurrency_negative_feedback
 				;;
 			lmtp_destination_concurrency_positive_feedback)
 				# Standard = $default_destination_concurrency_positive_feedback# {{{
@@ -397,7 +397,7 @@ lmtp_conf() {
 					postconf -e lmtp_destination_concurrency_positive_feedback="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_destination_concurrency_positive_feedback
+				conf_lmtp_menu lmtp_destination_concurrency_positive_feedback
 				;;
 			lmtp_destination_rate_delay)
 				# Standard = $default_destination_rate_delay# {{{
@@ -407,7 +407,7 @@ lmtp_conf() {
 					postconf -e lmtp_destination_rate_delay="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_destination_rate_delay
+				conf_lmtp_menu lmtp_destination_rate_delay
 				;;
 			lmtp_destination_recipient_limit)
 				# max. Anzahl der Empfaenger in einer mail{{{
@@ -418,7 +418,7 @@ lmtp_conf() {
 					postconf -e lmtp_destination_recipient_limit="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_destination_recipient_limit
+				conf_lmtp_menu lmtp_destination_recipient_limit
 				;;
 			lmtp_discard_lhlo_keyword_address_maps)
 				# Tabelle EHLO Schluesselwoertern die ignoriert werden sollen{{{
@@ -426,7 +426,7 @@ lmtp_conf() {
 				smtp_discard_ehlo_keyword_address_maps="$MAPS"
 				postconf -e smtp_discard_ehlo_keyword_address_maps="$MAPS"
 				#}}}
-				conf_lmtp_menue lmtp_discard_lhlo_keyword_address_maps
+				conf_lmtp_menu lmtp_discard_lhlo_keyword_address_maps
 				;;
 			lmtp_discard_lhlo_keywords)
 				# EHLO Schluesselwoertern{{{
@@ -440,7 +440,7 @@ lmtp_conf() {
 					postconf -e lmtp_discard_ehlo_keywords=""
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_discard_lhlo_keywords
+				conf_lmtp_menu lmtp_discard_lhlo_keywords
 				;;
 			lmtp_dns_resolver_options)
 				# DNS Resolver Optionen# {{{
@@ -468,7 +468,7 @@ lmtp_conf() {
 				# 
 				check_gv_Auswahl lmtp_dns_resolver_options "postconf -e lmtp_dns_resolver_options="""
 				## }}}
-				conf_lmtp_menue lmtp_dns_resolver_options
+				conf_lmtp_menu lmtp_dns_resolver_options
 				;;
 			lmtp_enforce_tls)
 				# SSL/TLS fuer den Versand erzwingen{{{
@@ -491,7 +491,7 @@ lmtp_conf() {
 				;;
 			lmtp_generic_maps)
 				# Tabelle zum umschreiben von lokalen zu globalen Adressen# {{{
-				# localhost.localdomain.de -> host.domain.de
+				# localdomain.local -> host.domain.de
 				tab_support_choice "$gv_Auswahl"
 				lmtp_generic_maps="$MAPS"
 				postconf -e lmtp_generic_maps="$MAPS"
@@ -521,7 +521,7 @@ lmtp_conf() {
 					postconf -e lmtp_helo_name=""
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_lhlo_name
+				conf_lmtp_menu lmtp_lhlo_name
 				;;
 			lmtp_lhlo_timeout)
 				# Timeout nach dem LMTP Kommando LHLO{{{
@@ -531,7 +531,7 @@ lmtp_conf() {
 					postconf -e lmtp_lhlo_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_lhlo_timeout
+				conf_lmtp_menu lmtp_lhlo_timeout
 				;;
 			lmtp_line_length_limit)
 				# LMTP Line Laenge einstellen{{{
@@ -542,7 +542,7 @@ lmtp_conf() {
 					postconf -e lmtp_line_length_limit="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_line_length_limit
+				conf_lmtp_menu lmtp_line_length_limit
 				;;
 			lmtp_mail_timeout)
 				# Timeout nach dem LMTP Kommando MAIL FROM:{{{
@@ -552,7 +552,7 @@ lmtp_conf() {
 					postconf -e lmtp_mail_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_mail_timeout
+				conf_lmtp_menu lmtp_mail_timeout
 				;;
 			lmtp_mime_header_checks)
 				# Tabelle mit Filtermustern fuer den Mime Header beim versenden einer mail# {{{
@@ -562,7 +562,7 @@ lmtp_conf() {
 					postconf -e lmtp_mime_header_checks="$Value"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_mime_header_checks
+				conf_lmtp_menu lmtp_mime_header_checks
 				;;
 			lmtp_minimum_delivery_slots)
 				# Standard = $default_minimum_delivery_slots# {{{
@@ -572,7 +572,7 @@ lmtp_conf() {
 					postconf -e lmtp_minimum_delivery_slots="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_minimum_delivery_slots
+				conf_lmtp_menu lmtp_minimum_delivery_slots
 				;;
 			lmtp_mx_address_limit)
 				# Max. Anzahl von MX IP Adressen{{{
@@ -582,7 +582,7 @@ lmtp_conf() {
 					postconf -e lmtp_mx_address_limit="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_mx_address_limit
+				conf_lmtp_menu lmtp_mx_address_limit
 				;;
 			lmtp_mx_session_limit)
 				# Max. Anzahl von MX IP Adressen{{{
@@ -592,7 +592,7 @@ lmtp_conf() {
 					postconf -e lmtp_mx_session_limit="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_mx_session_limit
+				conf_lmtp_menu lmtp_mx_session_limit
 				;;
 			lmtp_nested_header_checks)
 				# Tabelle mit Filtermustern der Mailanhaenge Header, beim versenden einer mail# {{{
@@ -602,7 +602,7 @@ lmtp_conf() {
 					postconf -e lmtp_nested_header_checks="$Value"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_nested_header_checks
+				conf_lmtp_menu lmtp_nested_header_checks
 				;;
 			lmtp_per_record_deadline)
 				# Standard = no# {{{
@@ -611,7 +611,7 @@ lmtp_conf() {
 				lmtp_per_record_deadline="$WERT"
 				postconf -e lmtp_per_record_deadline="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_per_record_deadline
+				conf_lmtp_menu lmtp_per_record_deadline
 				;;
 			lmtp_pix_workaround_delay_time)
 				# Wartezeit fuer einen Fehler in CISCO PIX Firewalls{{{
@@ -621,7 +621,7 @@ lmtp_conf() {
 					postconf -e lmtp_pix_workaround_delay_time="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_pix_workaround_delay_time
+				conf_lmtp_menu lmtp_pix_workaround_delay_time
 				;;
 			lmtp_pix_workaround_maps)
 				# Standard ist leer. Indiziert entfernte Mailserver mit# {{{
@@ -632,7 +632,7 @@ lmtp_conf() {
 				lmtp_pix_workaround_maps="$MAPS"
 				postconf -e lmtp_pix_workaround_maps="$MAPS"
 				## }}}
-				conf_lmtp_menue lmtp_pix_workaround_maps
+				conf_lmtp_menu lmtp_pix_workaround_maps
 				;;
 			lmtp_pix_workaround_threshold_time)
 				# Wartezeit einer mail in der Queue, bevor postfix{{{
@@ -643,7 +643,7 @@ lmtp_conf() {
 					postconf -e lmtp_pix_workaround_threshold_time="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_pix_workaround_threshold_time
+				conf_lmtp_menu lmtp_pix_workaround_threshold_time
 				;;
 			lmtp_pix_workarounds)
 				# Standard = disable_esmtp,delay_dotcrlf# {{{
@@ -671,7 +671,7 @@ lmtp_conf() {
 				# 
 				check_gv_Auswahl lmtp_pix_workarounds "postconf -e lmtp_pix_workarounds="""
 				## }}}
-				conf_lmtp_menue lmtp_pix_workarounds
+				conf_lmtp_menu lmtp_pix_workarounds
 				;;
 			lmtp_quit_timeout)
 				# Timeout nach dem LMTP Kommando QUIT{{{
@@ -681,7 +681,7 @@ lmtp_conf() {
 					postconf -e lmtp_quit_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_quit_timeout
+				conf_lmtp_menu lmtp_quit_timeout
 				;;
 			lmtp_quote_rfc821_envelope)
 				# Sollen die Adressen im LMTP MAIL FROM und RCPT TO Kommando gequotet werden# {{{
@@ -690,7 +690,7 @@ lmtp_conf() {
 				lmtp_quote_rfc821_envelope="$WERT"
 				postconf -e lmtp_quote_rfc821_envelope="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_quote_rfc821_envelope
+				conf_lmtp_menu lmtp_quote_rfc821_envelope
 				;;
 			lmtp_randomize_addresses)
 				# Reihenfolge der envelope Adressen mixen?{{{
@@ -699,7 +699,7 @@ lmtp_conf() {
 				lmtp_randomize_addresses="$WERT"
 				postconf -e lmtp_randomize_addresses="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_randomize_addresses
+				conf_lmtp_menu lmtp_randomize_addresses
 				;;
 			lmtp_rcpt_timeout)
 				# Timeout nach dem LMTP Kommando RCPT TO:{{{
@@ -709,7 +709,7 @@ lmtp_conf() {
 					postconf -e lmtp_rcpt_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_rcpt_timeout
+				conf_lmtp_menu lmtp_rcpt_timeout
 				;;
 			lmtp_recipient_limit)
 				# Standard = $default_recipient_limit# {{{
@@ -719,7 +719,7 @@ lmtp_conf() {
 					postconf -e lmtp_recipient_limit="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_recipient_limit
+				conf_lmtp_menu lmtp_recipient_limit
 				;;
 			lmtp_recipient_refill_delay)
 				# Standard = $default_recipient_refill_delay# {{{
@@ -729,7 +729,7 @@ lmtp_conf() {
 					postconf -e lmtp_recipient_refill_delay="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_recipient_refill_delay
+				conf_lmtp_menu lmtp_recipient_refill_delay
 				;;
 			lmtp_recipient_refill_limit)
 				# Standard = $default_recipient_refill_limit# {{{
@@ -739,7 +739,7 @@ lmtp_conf() {
 					postconf -e lmtp_recipient_refill_limit="$Value"
 				fi	
 				## }}}
-				conf_lmtp_menue lmtp_recipient_refill_limit
+				conf_lmtp_menu lmtp_recipient_refill_limit
 				;;
 			lmtp_reply_filter)
 				# Tabelle, eine Filterung .... Standard ist = nichts# {{{
@@ -749,7 +749,7 @@ lmtp_conf() {
 				lmtp_reply_filter="$MAPS"
 				postconf -e lmtp_reply_filter="$MAPS"
 				## }}}
-				conf_lmtp_menue lmtp_reply_filter
+				conf_lmtp_menu lmtp_reply_filter
 				;;
 			lmtp_rset_timeout)
 				# Timeout nach dem LMTP Kommando RSET{{{
@@ -759,7 +759,7 @@ lmtp_conf() {
 					postconf -e lmtp_rset_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_rset_timeout
+				conf_lmtp_menu lmtp_rset_timeout
 				;;
 			lmtp_sasl_auth_cache_name)
 				# Einstellung muss mit proxy: beginnen.# {{{
@@ -775,7 +775,7 @@ lmtp_conf() {
 				lmtp_sasl_auth_cache_name="$MAPS"
 				postconf -e lmtp_sasl_auth_cache_name="$MAPS"
 				## }}}
-				conf_lmtp_menue lmtp_sasl_auth_cache_name
+				conf_lmtp_menu lmtp_sasl_auth_cache_name
 				;;
 			lmtp_sasl_auth_cache_time)
 				# Maximale Alter der lmtp_sasl_auth_cache_name Eintraegen# {{{
@@ -786,7 +786,7 @@ lmtp_conf() {
 					postconf -e lmtp_sasl_auth_cache_time="$NUMBER"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_sasl_auth_cache_time
+				conf_lmtp_menu lmtp_sasl_auth_cache_time
 				;;
 			lmtp_sasl_auth_enable)
 				# LMTP-AUTH beim Versand ueber LMTP aktivieren?{{{
@@ -795,7 +795,7 @@ lmtp_conf() {
 				lmtp_sasl_auth_enable="$WERT"
 				postconf -e lmtp_sasl_auth_enable="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_sasl_auth_enable
+				conf_lmtp_menu lmtp_sasl_auth_enable
 				;;
 			lmtp_sasl_auth_soft_bounce)
 				# Standard = yes# {{{
@@ -804,7 +804,7 @@ lmtp_conf() {
 				lmtp_sasl_auth_soft_bounce="$WERT"
 				postconf -e lmtp_sasl_auth_soft_bounce="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_sasl_auth_soft_bounce
+				conf_lmtp_menu lmtp_sasl_auth_soft_bounce
 				;;
 			lmtp_sasl_mechanism_filter)
 				# Auswahl der zu beruecksichtigen SASL Mechanismen# {{{
@@ -830,7 +830,7 @@ lmtp_conf() {
 				#
 				check_gv_Auswahl lmtp_sasl_mechanism_filter "postconf -e lmtp_sasl_mechanism_filter="""
 				## }}}
-				conf_lmtp_menue lmtp_sasl_mechanism_filter
+				conf_lmtp_menu lmtp_sasl_mechanism_filter
 				;;
 			lmtp_sasl_password_maps)
 				# Tabelle fuer Kennungen/Passwoertern{{{
@@ -839,7 +839,7 @@ lmtp_conf() {
 				lmtp_sasl_password_maps="$MAPS"
 				postconf -e lmtp_sasl_password_maps="$MAPS"
 				#}}}
-				conf_lmtp_menue lmtp_sasl_password_maps
+				conf_lmtp_menu lmtp_sasl_password_maps
 				;;
 			lmtp_sasl_path)
 				# Standard = # {{{
@@ -857,7 +857,7 @@ lmtp_conf() {
 					postconf -e lmtp_sasl_path=""
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_sasl_path
+				conf_lmtp_menu lmtp_sasl_path
 				;;
 			lmtp_sasl_security_options)
 				# Authentifizierungs Methoden{{{
@@ -867,7 +867,7 @@ lmtp_conf() {
 					postconf -e lmtp_sasl_security_options="$WERT"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_sasl_security_options
+				conf_lmtp_menu lmtp_sasl_security_options
 				;;
 			lmtp_sasl_tls_security_options)
 				# zulaessige LMTP-AUTH Identifierzierungsmethoden,{{{
@@ -882,7 +882,7 @@ lmtp_conf() {
 					postconf -e lmtp_sasl_tls_security_options="\$lmtp_sasl_security_options"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_sasl_tls_security_options
+				conf_lmtp_menu lmtp_sasl_tls_security_options
 				;;
 			lmtp_sasl_tls_verified_security_options)
 				# Standard = $lmtp_sasl_tls_security_options# {{{
@@ -895,7 +895,7 @@ lmtp_conf() {
 					postconf -e lmtp_sasl_tls_verified_security_options="\$lmtp_sasl_tls_security_options"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_sasl_tls_verified_security_options
+				conf_lmtp_menu lmtp_sasl_tls_verified_security_options
 				;;
 			lmtp_sasl_type)
 				# Standard = cyrus, siehe postconf -A# {{{
@@ -909,7 +909,7 @@ lmtp_conf() {
 					postconf -e lmtp_sasl_type="cyrus"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_sasl_type
+				conf_lmtp_menu lmtp_sasl_type
 				;;
 			lmtp_send_dummy_mail_auth)
 				# Standard = no# {{{
@@ -918,7 +918,7 @@ lmtp_conf() {
 				lmtp_send_dummy_mail_auth="$WERT"
 				postconf -e lmtp_send_dummy_mail_auth="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_send_dummy_mail_auth
+				conf_lmtp_menu lmtp_send_dummy_mail_auth
 				;;
 			lmtp_send_xforward_command)
 				# XFORWARD Komando senden{{{
@@ -927,7 +927,7 @@ lmtp_conf() {
 				lmtp_send_xforward_command="$WERT"
 				postconf -e lmtp_send_xforward_command="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_send_xforward_command
+				conf_lmtp_menu lmtp_send_xforward_command
 				;;
 			lmtp_sender_dependent_authentication)
 				# Standard ist = no.# {{{
@@ -936,7 +936,7 @@ lmtp_conf() {
 				lmtp_sender_dependent_authentication="$WERT"
 				postconf -e lmtp_sender_dependent_authentication="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_sender_dependent_authentication
+				conf_lmtp_menu lmtp_sender_dependent_authentication
 				;;
 			lmtp_skip_5xx_greeting)
 				# Begruessungstext bei LMTP_Code 5xx{{{
@@ -946,7 +946,7 @@ lmtp_conf() {
 				lmtp_skip_5xx_greeting="$WERT"
 				postconf -e lmtp_skip_5xx_greeting="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_skip_5xx_greeting
+				conf_lmtp_menu lmtp_skip_5xx_greeting
 				;;
 			lmtp_skip_quit_response)
 				# Beenden einer LMTP Sitzung nach dem QUIT Kommando, ohne auf Antwort zu warten?{{{
@@ -955,7 +955,7 @@ lmtp_conf() {
 				lmtp_skip_quit_response="$WERT"
 				postconf -e lmtp_skip_quit_response="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_skip_quit_response
+				conf_lmtp_menu lmtp_skip_quit_response
 				;;
 			lmtp_starttls_timeout)
 				# Timeout von starttls{{{
@@ -965,7 +965,7 @@ lmtp_conf() {
 					postconf -e lmtp_starttls_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_starttls_timeout
+				conf_lmtp_menu lmtp_starttls_timeout
 				;;
 			lmtp_tcp_port)
 				# lmtp TCP Port vergeben{{{
@@ -976,7 +976,7 @@ lmtp_conf() {
 					postconf -e lmtp_tcp_port="$NUMBER"
 				fi
 				#}}}
-			 	conf_lmtp_menue lmtp_tcp_port
+			 	conf_lmtp_menu lmtp_tcp_port
 				;;
 			lmtp_tls_CAfile)
 				# Datei mit den CAs denen dieser Server vertraut, für die Signatur#{{{
@@ -985,7 +985,7 @@ lmtp_conf() {
 				lmtp_tls_CAfile="$WERT"
 				postconf -e lmtp_tls_CAfile="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_CAfile
+				conf_lmtp_menu lmtp_tls_CAfile
 				;;
 			lmtp_tls_CApath)
 				# Verzeichnis in dem die Zertifikate liegen, fuer#{{{
@@ -1003,7 +1003,7 @@ lmtp_conf() {
 					fi
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_tls_CApath
+				conf_lmtp_menu lmtp_tls_CApath
 				;;
 			lmtp_tls_block_early_mail_reply)
 				# Standard = no# {{{
@@ -1012,7 +1012,7 @@ lmtp_conf() {
 				lmtp_tls_block_early_mail_reply="$WERT"
 				postconf -e lmtp_tls_block_early_mail_reply="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_tls_block_early_mail_reply
+				conf_lmtp_menu lmtp_tls_block_early_mail_reply
 				;;
 			lmtp_tls_cert_file)
 				# Auswahl der TLS Schluessel Dateien{{{
@@ -1020,7 +1020,7 @@ lmtp_conf() {
 				lmtp_tls_cert_file="$WERT"
 				postconf -e lmtp_tls_cert_file="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_cert_file
+				conf_lmtp_menu lmtp_tls_cert_file
 				;;
 			lmtp_tls_ciphers)
 				# Standard = export# {{{
@@ -1035,7 +1035,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_ciphers="export"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_ciphers
+				conf_lmtp_menu lmtp_tls_ciphers
 				;;
 			lmtp_tls_dcert_file)
 				# Auswahl der TLS Schluessel Dateien{{{
@@ -1043,7 +1043,7 @@ lmtp_conf() {
 				lmtp_tls_dcert_file="$WERT"
 				postconf -e lmtp_tls_dcert_file="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_dcert_file
+				conf_lmtp_menu lmtp_tls_dcert_file
 				;;
 			lmtp_tls_dkey_file)
 				# Auswahl der TLS Schluessel Dateien{{{
@@ -1051,7 +1051,7 @@ lmtp_conf() {
 				lmtp_tls_dkey_file="$WERT"
 				postconf -e lmtp_tls_dkey_file="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_dkey_file
+				conf_lmtp_menu lmtp_tls_dkey_file
 				;;
 			lmtp_tls_eccert_file)
 				# Datei mit dem Postfix LMTP client ECDSA Zertifikat im PEM Format.# {{{
@@ -1061,7 +1061,7 @@ lmtp_conf() {
 				lmtp_tls_eccert_file="$WERT"
 				postconf -e lmtp_tls_eccert_file="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_tls_eccert_file
+				conf_lmtp_menu lmtp_tls_eccert_file
 				;;
 			lmtp_tls_eckey_file)
 				# Standard ist = $lmtp_tls_eccert_file# {{{
@@ -1069,7 +1069,7 @@ lmtp_conf() {
 				lmtp_tls_eckey_file="$WERT"
 				postconf -e lmtp_tls_eckey_file="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_tls_eckey_file
+				conf_lmtp_menu lmtp_tls_eckey_file
 				;;
 			lmtp_tls_enforce_peername)
 				# lmtp_tls_enforce_peername aktivieren{{{
@@ -1078,7 +1078,7 @@ lmtp_conf() {
 				lmtp_tls_enforce_peername="$WERT"
 				postconf -e lmtp_tls_enforce_peername="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_enforce_peername
+				conf_lmtp_menu lmtp_tls_enforce_peername
 				;;
 			lmtp_tls_exclude_ciphers)
 				# Standard = # {{{
@@ -1094,7 +1094,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_exclude_ciphers=""
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_exclude_ciphers
+				conf_lmtp_menu lmtp_tls_exclude_ciphers
 				;;
 			lmtp_tls_fingerprint_cert_match)
 				# Eingabe von Fingerprints
@@ -1105,7 +1105,7 @@ lmtp_conf() {
 				# autoload -U tls_fingerprint_cert_match
 				# tls_fingerprint_cert_match
 				hier_ist_noch_nichts lmtp_tls_fingerprint_cert_match
-				conf_lmtp_menue lmtp_tls_fingerprint_cert_match
+				conf_lmtp_menu lmtp_tls_fingerprint_cert_match
 				;;
 			lmtp_tls_fingerprint_digest)
 				# Client Fingerprint auswaehlen (md5)# {{{
@@ -1118,7 +1118,7 @@ lmtp_conf() {
 				lmtp_tls_fingerprint_digest="$WERT"
 				postconf -e lmtp_tls_fingerprint_digest="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_fingerprint_digest
+				conf_lmtp_menu lmtp_tls_fingerprint_digest
 				;;
 			lmtp_tls_key_file)
 				# Standard = $lmtp_tls_cert_file# {{{
@@ -1126,7 +1126,7 @@ lmtp_conf() {
 				lmtp_tls_key_file="$WERT"
 				postconf -e lmtp_tls_key_file="$WERT"
 				## }}}
-				conf_lmtp_menue lmtp_tls_key_file
+				conf_lmtp_menu lmtp_tls_key_file
 				;;
 			lmtp_tls_loglevel)
 				# Loglevel auswaehlen{{{
@@ -1135,7 +1135,7 @@ lmtp_conf() {
 				lmtp_tls_loglevel="$WERT"
 				postconf -e lmtp_tls_loglevel="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_loglevel
+				conf_lmtp_menu lmtp_tls_loglevel
 				;;
 			lmtp_tls_mandatory_ciphers)
 				# Standard = medium# {{{
@@ -1150,7 +1150,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_mandatory_ciphers="medium"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_mandatory_ciphers
+				conf_lmtp_menu lmtp_tls_mandatory_ciphers
 				;;
 			lmtp_tls_mandatory_exclude_ciphers)
 				# Standard = # {{{
@@ -1166,7 +1166,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_mandatory_exclude_ciphers=""
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_mandatory_exclude_ciphers
+				conf_lmtp_menu lmtp_tls_mandatory_exclude_ciphers
 				;;
 			lmtp_tls_mandatory_protocols)
 				# Standard = SSLv3, TLSv1# {{{
@@ -1182,7 +1182,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_mandatory_protocols=""
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_mandatory_protocols
+				conf_lmtp_menu lmtp_tls_mandatory_protocols
 				;;
 			lmtp_tls_note_starttls_offer)
 				# lmtp_tls_note_starttls_offer aktivieren{{{
@@ -1191,7 +1191,7 @@ lmtp_conf() {
 				lmtp_tls_note_starttls_offer="$WERT"
 				postconf -e lmtp_tls_note_starttls_offer="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_tls_note_starttls_offer
+				conf_lmtp_menu lmtp_tls_note_starttls_offer
 				;;
 			lmtp_tls_per_site)
 				# Tabelle fuer die Regeln der TLS Benutzung{{{
@@ -1201,7 +1201,7 @@ lmtp_conf() {
 				lmtp_tls_per_site="$MAPS"
 				postconf -e lmtp_tls_per_site="$MAPS"
 				#}}}
-				conf_lmtp_menue lmtp_tls_per_site
+				conf_lmtp_menu lmtp_tls_per_site
 				;;
 			lmtp_tls_policy_maps)
 				# Tabelle mit den Policies fuer das Versenden von mails# {{{
@@ -1212,7 +1212,7 @@ lmtp_conf() {
 				lmtp_tls_policy_maps="$MAPS"
 				postconf -e lmtp_tls_policy_maps="$MAPS"
 				## }}}
-				conf_lmtp_menue lmtp_tls_policy_maps
+				conf_lmtp_menu lmtp_tls_policy_maps
 				;;
 			lmtp_tls_protocols)
 				# Standard = !SSLv2# {{{
@@ -1228,7 +1228,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_protocols=""
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_protocols
+				conf_lmtp_menu lmtp_tls_protocols
 				;;
 			lmtp_tls_scert_verifydepth)
 				# lmtp_tls_scert_verifydepth{{{
@@ -1238,7 +1238,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_scert_verifydepth="$WERT"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_tls_scert_verifydepth
+				conf_lmtp_menu lmtp_tls_scert_verifydepth
 				;;
 			lmtp_tls_secure_cert_match)
 				# Wie soll der Client die Server Zertifikate überprüfen# {{{
@@ -1252,7 +1252,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_secure_cert_match="nexthop"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_secure_cert_match
+				conf_lmtp_menu lmtp_tls_secure_cert_match
 				;;
 			lmtp_tls_security_level)
 				# Standard ist = leer# {{{
@@ -1265,7 +1265,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_security_level=""
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_security_level
+				conf_lmtp_menu lmtp_tls_security_level
 				;;
 			lmtp_tls_session_cache_database)
 				# Ort der Tabelle des Session Cache# {{{
@@ -1274,7 +1274,7 @@ lmtp_conf() {
 				lmtp_tls_session_cache_database="$MAPS"
 				postconf -e lmtp_tls_session_cache_database="$MAPS"
 				## }}}
-				conf_lmtp_menue lmtp_tls_session_cache_database
+				conf_lmtp_menu lmtp_tls_session_cache_database
 				;;
 			lmtp_tls_session_cache_timeout)
 				# lmtp_tls_session_cache_timeout{{{
@@ -1284,7 +1284,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_session_cache_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_tls_session_cache_timeout
+				conf_lmtp_menu lmtp_tls_session_cache_timeout
 				;;
 			lmtp_tls_verify_cert_match)
 				# Wie soll der Client die Server Zertifikate überprüfen# {{{
@@ -1298,7 +1298,7 @@ lmtp_conf() {
 					postconf -e lmtp_tls_verifiy_cert_match="hostname"
 				fi
 				## }}}
-				conf_lmtp_menue lmtp_tls_verify_cert_match
+				conf_lmtp_menu lmtp_tls_verify_cert_match
 				;;
 			lmtp_use_tls)
 				# tls fuer eingehende Verbindungen aktivieren{{{
@@ -1307,7 +1307,7 @@ lmtp_conf() {
 				lmtp_use_tls="$WERT"
 				postconf -e lmtp_use_tls="$WERT"
 				#}}}
-				conf_lmtp_menue lmtp_use_tls
+				conf_lmtp_menu lmtp_use_tls
 				;;
 			lmtp_xforward_timeout)
 				# LMTP xforward Timeout#{{{
@@ -1317,7 +1317,7 @@ lmtp_conf() {
 					postconf -e lmtp_xforward_timeout="$NUMBER"
 				fi
 				#}}}
-				conf_lmtp_menue lmtp_xforward_timeout
+				conf_lmtp_menu lmtp_xforward_timeout
 				;;
 			postfix)
 				# postfix, Konfiguration neu einlesen

@@ -2,8 +2,11 @@
 #
 mynetworks_table() {
 	FILE="$1"
-	#Variablen
+	# Variable fuer das Menue
 	lv_Host_Net=$(gettext 'Rechner/Netz')
+	# Variable fuer die Hilfe
+	lv_Mynetworks=$(gettext 'mynetworks')
+
 	# Funktion mynetworks_menue{{{
 	mynetworks_menue() {
 		MYNETWORK_MENU=($lv_Host_Net \"$ADR\" $gv_Save \"\" $gv_Back \"\")

@@ -2,9 +2,12 @@
 #
 virtual_mailbox_table() {
 	FILE="$1"
+	# Variable fuer die Hilfe
+	lv_Virtual_Mailbox=$(gettext 'virtual_mailbox')
 	autoload -U no_adr_and_recipient_adr_msg
 	unset -- Ist_Wert
 	Ist_Wert=$(postconf -h virtual_mailbox_base)
+
 	if [[ -n $Ist_Wert ]] ; then
 		# Funktion virtual_mailbox_menue{{{
 		virtual_mailbox_menue() {

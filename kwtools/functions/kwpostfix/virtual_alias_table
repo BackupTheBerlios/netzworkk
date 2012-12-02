@@ -2,8 +2,11 @@
 #
 virtual_alias_table() {
 	FILE="$1"
+	# Variable fuer die Hilfe
+	lv_Virtual_Alias=$(gettext 'virtual_alias')
 	local Anz Anz1
 	integer Anz Anz1
+
 	# Funktion virtual_alias_menue{{{
 	virtual_alias_menue() {
 		VIRTUAL_ALIAS_MENU=($lv_Domain \"$DOMAIN\" $lv_Address \"$ADR\"

@@ -5,7 +5,7 @@
 #
 tab_support_choice() {
 	unset -- MAPS
-	local Choice OldVar
+	local Choice
 	Choice="$1"
 	autoload -U password_display different_passwd
 	
@@ -21,7 +21,7 @@ tab_support_choice() {
 		MAPS="$gv_Auswahl"
 	else
 		# vorherigen Wert speichern.
-		OldVar="$(postconf -h $Choice)"
+		MAPS="$(postconf -h $Choice)"
 		#
 		# Funktion tab_support_menu{{{
 		TAB_VALUE_MENU=($gv_None \"\" $gv_Input \"\" $lv_NameAdapt \"\"

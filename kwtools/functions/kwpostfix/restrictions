@@ -11,6 +11,8 @@ restrictions() {
 	local Anz Anz1 Nr Nr1
 	integer Anz Anz1 Nr Nr1
 	RESTRICT="$1"
+	# Variable fuer die Hilfe
+	lv_Restrictions=$(gettext 'restrictions')
 	#
 	# Verfügbare Restrictions{{{
 	#
