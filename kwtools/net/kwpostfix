@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 02.12.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 15.12.2012
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -107,7 +107,11 @@ lv_Text=$(gettext 'Text')
 lv_Transport=$(gettext 'Transport')
 lv_Transportmethode=$(gettext 'Transport Methode')
 
+# Variable fuer die Hilfe der Tabellen
+lv_Pix_Workarounds=$(gettext 'PIX Workarounds')
+
 # Variablen die von einigen Konfigurationsdateien benutzt werden
+DEFAULT_DESTINATION_RATE_DELAY_MSG=$(gettext 'Geben Sie die Zeit ein nach der jeder Mailzustellung wieder an das gleiche Ziel eine Mail versandt werden darf (Standard ist 0s).')
 SMTP_CONNECT_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout fuer den Aufbau der Verbindung ein (Bsp.: 30s).')
 SMTP_DATA_DONE_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach Uebertragung einer Mail ein (Standard 600s).')
 SMTP_DATA_INIT_TIMEOUT_MSG=$(gettext 'Geben Sie den Timeout nach Absenden des SMTP-Kommandos DATA ein (Standard 120s).')
@@ -121,8 +125,6 @@ SMTPD_ENFORCE_TLS_MSG=$(gettext 'Soll SSL/TLS bei eingehenden Verbindungen erzwu
 SMTPD_USE_TLS_MSG=$(gettext 'Soll dieser Server fuer eingehende Mails SSL/TLS Verschluesselung benutzen (ja/nein)?')
 SMTPD_TLS_ALWAYS_SESSION_ISSUE_IDS_MSG=$(gettext 'Soll der Postfix SMTP Server eine TLS Session ID ausstellen, falls das TLS Session Caching deaktiviert ist (ja/nein)?')
 SMTPD_TLS_ASK_CCERT_MSG=$(gettext 'Soll beim Server explizit nach einem Client Zertifikat nachgefragt werden (ja/nein)?')
-DEFAULT_DESTINATION_RATE_DELAY_MSG=$(gettext 'Geben Sie die Zeit ein nach der jeder Mailzustellung wieder an das gleiche Ziel eine Mail versandt werden darf (Standard ist 0s).'
- )
 
 MAIL_CONFIG="`postconf -h config_directory &>/dev/null`"
 if [ -z "$MAIL_CONFIG" ] ; then
@@ -1094,10 +1096,10 @@ while [ "$gv_Auswahl" ] ; do
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
 				flags_choice generic_table kwpostfix_action ldap_db mailbox_command_table \
-				mynetworks_table sasl_password_table relay_clientcerts_table \
+				mynetworks_table pix_workarounds_tables relay_clientcerts_table \
 				relay_domains_table \
 				recipient_table regexp_table relocated_table \
-				smtpd_sender_login_table sql_db transport_table \
+				sasl_password_table smtpd_sender_login_table sql_db transport_table \
 				virtual_alias_table virtual_alias_mb_domains_table \
 				virtual_id_table virtual_mailbox_table db_new_reread
 			#
@@ -1183,7 +1185,7 @@ while [ "$gv_Auswahl" ] ; do
 					lmtp_body_checks lmtp_generic_maps \
 					lmtp_header_checks lmtp_mime_header_checks \
 					lmtp_nested_header_checks lmtp_sasl_password_maps \
-					local_recipient_maps \
+					lmtp_pix_workaround_maps local_recipient_maps \
 					mailbox_command_maps \
 					milter_header_checks mime_header_checks \
 					mynetworks \
@@ -1194,7 +1196,8 @@ while [ "$gv_Auswahl" ] ; do
 					sender_bcc_maps sender_canonical_maps \
 					smtp_body_checks smtp_generic_maps \
 					smtp_header_checks smtp_mime_header_checks \
-					smtp_nested_header_checks smtp_sasl_password_maps \
+					smtp_nested_header_checks smtp_pix_workaround_maps \
+					smtp_sasl_password_maps \
 					smtpd_client_restrictions smtpd_data_restrictions \
 					smtpd_end_of_data_restrictions smtpd_etrn_restrictions \
 					smtpd_helo_restrictions \
@@ -1482,6 +1485,21 @@ while [ "$gv_Auswahl" ] ; do
 						#}}}
 						tab_menue $TAB
 						;;
+					*pix_workaround_maps)
+						# Tabelle, Zieladressen fuer PIX Workarounds{{{
+						#
+						# lmtp_pix_workaround_maps, smtp_pix_workaround_maps
+						#
+						TAB_HELP="pix_workarounds_help"
+						HASH_TAB="pix_workarounds_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
+						tab_menue $TAB
+						;;
 					*recipient_maps)
 						# Tabelle fuer local/relay Empfaenger{{{
 						#
@@ -1565,7 +1583,7 @@ while [ "$gv_Auswahl" ] ; do
 						tab_menue $TAB
 						;;
 					*_sasl_password_maps)
-						# Tabelle fuer {{{
+						# Tabelle fuer SASL Passwoerter{{{
 						#
 						# {l,s}mtp_sasl_password_maps
 						#
