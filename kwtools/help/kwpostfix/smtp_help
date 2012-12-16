@@ -214,7 +214,7 @@ smtp_pix_workaround_delay_time: Workaround fuer einen Fehler in Cisco
 \tStandard ist 10s.
 
 smtp_pix_workaround_maps: Tabelle mit den entfernten Serveradressen
-\tfuer den Workaround von CISCO PIX Firewalls Bugs.
+\tfuer die die PIX Workarounds gelten sollen.
 
 smtp_pix_workaround_threshold_time: Wenn eine Mail laenger als diese
 \tZeit in der Mailqueue liegt, geht Postfix davon aus, dass die
@@ -222,8 +222,8 @@ smtp_pix_workaround_threshold_time: Wenn eine Mail laenger als diese
 \tan, um den Fehler auszugleichen.
 \tStandard ist 500s.
 
-smtp_pix_workarounds: Auswahl von Workarounds fuer die CISCO PIX
-\tFirewall Bugs die im Postfix SMTP Client implementiert sind.
+smtp_pix_workarounds: Auswahl von Workarounds fuer die (CISCO) PIX
+\tFirewall Bugs die der Postfix SMTP Client ausgleichen soll.
 \tStandard ist disable_esmtp,delay_dotcrlf.
 
 smtp_quit_timeout: Timeout nach Uebertragung des Kommandos QUIT.

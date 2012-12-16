@@ -206,7 +206,7 @@ lmtp_pix_workaround_delay_time: Workaround fuer einen Fehler in Cisco
 \tStandard ist 10s.
 
 lmtp_pix_workaround_maps: Tabelle mit den entfernten Serveradressen
-\tfuer den Workaround von CISCO PIX Firewalls Bugs.
+\tfuer die die PIX Workarounds gelten sollen.
 
 lmtp_pix_workaround_threshold_time: Wenn eine Mail laenger als diese
 \tZeit in der Mailqueue liegt, geht Postfix davon aus, dass die
@@ -214,8 +214,8 @@ lmtp_pix_workaround_threshold_time: Wenn eine Mail laenger als diese
 \tan, um den Fehler auszugleichen.
 \tStandard ist 500s.
 
-lmtp_pix_workarounds: Auswahl von Workarounds fuer die CISCO PIX
-\tFirewall Bugs die im Postfix LMTP Client implementiert sind.
+lmtp_pix_workarounds: Auswahl von Workarounds fuer die (CISCO) PIX
+\tFirewall Bugs die der Postfix LMTP Client ausgleichen soll.
 \tStandard ist disable_esmtp,delay_dotcrlf.
 
 lmtp_quit_timeout: Timeout nach dem LMTP Kommando QUIT. Zur Auswahl

@@ -49,6 +49,9 @@ lmtp_nested_header_checks: Tabelle fuer die Filterung des Headers
 \teiner angehaengten Nachricht, bei der Transportmethode LMTP. RA
 \twerden unterstuetzt.
 
+lmtp_pix_workaround_maps: Tabelle mit Zieladressen, bei denen die
+\tPIX Workarounds aktiviert werden sollen.
+
 lmtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 \tfuer authentifizierte LMTP Verbindungen.
 
@@ -106,6 +109,9 @@ smtp_mime_header_checks: Tabelle fuer die Filterung des Mime
 smtp_nested_header_checks: Tabelle fuer die Filterung des Headers
 \teiner angehaengten Nachricht, bei der Transportmethode SMTP. RA
 \twerden unterstuetzt.
+
+smtp_pix_workaround_maps: Tabelle mit Zieladressen, bei denen die
+\tPIX Workarounds aktiviert werden sollen.
 
 smtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 \tfuer authentifizierte SMTP Verbindungen.
