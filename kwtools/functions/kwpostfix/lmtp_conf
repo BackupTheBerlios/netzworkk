@@ -220,11 +220,9 @@ lmtp_conf() {
 				;;
 			lmtp_body_checks)
 				# Tabelle, eine Filterung des Bodies beim versenden einer mail# {{{
-				default_or_input lmtp_body_checks tab_support_choice $lmtp_body_checks
-				if [[ -n $Value ]] ; then
-					lmtp_body_checks="$Value"
-					postconf -e lmtp_body_checks="$Value"
-				fi
+				default_or_input lmtp_body_checks tab_support_choice "$gv_Auswahl" $lmtp_body_checks
+				lmtp_body_checks="$Value"
+				postconf -e lmtp_body_checks="$Value"
 				## }}}
 				conf_lmtp_menu lmtp_body_checks
 				;;
@@ -421,7 +419,9 @@ lmtp_conf() {
 				conf_lmtp_menu lmtp_destination_recipient_limit
 				;;
 			lmtp_discard_lhlo_keyword_address_maps)
-				# Tabelle EHLO Schluesselwoertern die ignoriert werden sollen{{{
+				# Tabelle mit EHLO Schluesselwoertern die ignoriert werden sollen{{{
+				##########################
+				# TODO
 				tab_support_choice "$gv_Auswahl"
 				smtp_discard_ehlo_keyword_address_maps="$MAPS"
 				postconf -e smtp_discard_ehlo_keyword_address_maps="$MAPS"
@@ -500,11 +500,9 @@ lmtp_conf() {
 				;;
 			lmtp_header_checks)
 				# Tabelle, eine Filterung des Header beim versenden einer mail# {{{
-				default_or_input lmtp_header_checks tab_support_choice $lmtp_header_checks
-				if [[ -n $Value ]] ; then
-					lmtp_header_checks="$Value"
-					postconf -e lmtp_header_checks="$Value"
-				fi
+				default_or_input lmtp_header_checks tab_support_choice "$gv_Auswahl" $lmtp_header_checks
+				lmtp_header_checks="$Value"
+				postconf -e lmtp_header_checks="$Value"
 				## }}}
 				conf_lmtp_menu lmtp_header_checks
 				;;
@@ -556,11 +554,9 @@ lmtp_conf() {
 				;;
 			lmtp_mime_header_checks)
 				# Tabelle mit Filtermustern fuer den Mime Header beim versenden einer mail# {{{
-				default_or_input lmtp_mime_header_checks tab_support_choice $lmtp_mime_header_checks
-				if [[ -n $Value ]] ; then
-					lmtp_mime_header_checks="$Value"
-					postconf -e lmtp_mime_header_checks="$Value"
-				fi
+				default_or_input lmtp_mime_header_checks tab_support_choice "$gv_Auswahl" $lmtp_mime_header_checks
+				lmtp_mime_header_checks="$Value"
+				postconf -e lmtp_mime_header_checks="$Value"
 				## }}}
 				conf_lmtp_menu lmtp_mime_header_checks
 				;;
@@ -596,11 +592,9 @@ lmtp_conf() {
 				;;
 			lmtp_nested_header_checks)
 				# Tabelle mit Filtermustern der Mailanhaenge Header, beim versenden einer mail# {{{
-				default_or_input lmtp_nested_header_checks tab_support_choice $lmtp_nested_header_checks
-				if [[ -n $Value ]] ; then
-					lmtp_nested_header_checks="$Value"
-					postconf -e lmtp_nested_header_checks="$Value"
-				fi
+				default_or_input lmtp_nested_header_checks tab_support_choice "$gv_Auswahl" $lmtp_nested_header_checks
+				lmtp_nested_header_checks="$Value"
+				postconf -e lmtp_nested_header_checks="$Value"
 				## }}}
 				conf_lmtp_menu lmtp_nested_header_checks
 				;;
@@ -624,10 +618,8 @@ lmtp_conf() {
 				conf_lmtp_menu lmtp_pix_workaround_delay_time
 				;;
 			lmtp_pix_workaround_maps)
-				# Standard ist leer. Indiziert entfernte Mailserver mit# {{{
-				# CISCO PIX firewall bugs.
-				###############################
-				# TODO
+				# Standard ist leer. Tabelle fuer die PIX Workarounds# {{{
+				# ((CISCO) PIX Firewall Bugs).
 				tab_support_choice "$gv_Auswahl"
 				lmtp_pix_workaround_maps="$MAPS"
 				postconf -e lmtp_pix_workaround_maps="$MAPS"
@@ -647,29 +639,12 @@ lmtp_conf() {
 				;;
 			lmtp_pix_workarounds)
 				# Standard = disable_esmtp,delay_dotcrlf# {{{
-				generate_is_file ${lmtp_pix_workarounds//,/}
-				is_value "disable_esmtp delay_dotcrlf"
-				#
-				LMTP_PIX_WORKAROUNDS_MSG=$(gettext 'Waehlen Sie ein oder mehrere Workarounds fuer die CISCO PIX Firewall aus.')
-				U_OPT=k
-				checklist "$LMTP_TITLE" "$LMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
-				if [[ -n $gv_Auswahl ]] ; then
-					while [ "$gv_Auswahl" ] ; do
-						case "$gv_Auswahl" in
-							HELP*)	script_help lmtp_pix_workarounds_help
-								U_OPT=k
-								checklist "$LMTP_TITLE" "$LMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
-								;;
-							*)	# uebernehmen
-								lmtp_pix_workarounds="$gv_Auswahl"
-								postconf -e lmtp_pix_workarounds="$gv_Auswahl"
-								break
-								;;
-						esac
-					done
-				fi
-				# 
-				check_gv_Auswahl lmtp_pix_workarounds "postconf -e lmtp_pix_workarounds="""
+				# Aktiviert einzelne PIX Workarounds, um Bugs in (CISCO)
+				# PIX-Proxys auszugleichen.
+				autoload -U pix_workarounds
+				pix_workarounds "$LMTP_TITLE" "$lmtp_pix_workarounds"
+				lmtp_pix_workarounds="$VALUE"
+				postconf -e lmtp_pix_workarounds="$VALUE"
 				## }}}
 				conf_lmtp_menu lmtp_pix_workarounds
 				;;
@@ -745,7 +720,7 @@ lmtp_conf() {
 				# Tabelle, eine Filterung .... Standard ist = nichts# {{{
 				##############################
 				# TODO
-				tab_support_choice $gv_Auswahl
+				tab_support_choice $gv_Auswahl 
 				lmtp_reply_filter="$MAPS"
 				postconf -e lmtp_reply_filter="$MAPS"
 				## }}}

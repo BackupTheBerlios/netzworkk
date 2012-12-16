@@ -78,7 +78,7 @@ tab_support_choice() {
 								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_C"
 								TABS_WAHL="$TABS_C"
 								;;
-							smtpd_sender_login_maps|*_recipient_maps)
+							smtpd_sender_login_maps|*_pix_workaround_maps|*_recipient_maps)
 								# smtpd_sender_login_maps, local_recipient_maps,
 								# relay_recipient_maps
 								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_A"

@@ -217,11 +217,9 @@ smtp_conf() {
 				;;
 			smtp_body_checks)
 				# Tabelle, eine Filterung des Bodies beim versenden einer mail# {{{
-				default_or_input smtp_body_checks tab_support_choice $smtp_body_checks
-				if [[ -n $Value ]] ; then
-					smtp_body_checks="$Value"
-					postconf -e smtp_body_checks="$Value"
-				fi
+				default_or_input smtp_body_checks tab_support_choice "$gv_Auswahl" $smtp_body_checks
+				smtp_body_checks="$Value"
+				postconf -e smtp_body_checks="$Value"
 				## }}}
 				conf_smtp_menu smtp_body_checks
 				;;
@@ -505,11 +503,9 @@ smtp_conf() {
 				;;
 			smtp_header_checks)
 				# Tabelle, eine Filterung des Header beim versenden einer mail# {{{
-				default_or_input smtp_header_checks tab_support_choice $smtp_header_checks
-				if [[ -n $Value ]] ; then
-					smtp_header_checks="$Value"
-					postconf -e smtp_header_checks="$Value"
-				fi
+				default_or_input smtp_header_checks tab_support_choice "$gv_Auswahl" $smtp_header_checks
+				smtp_header_checks="$Value"
+				postconf -e smtp_header_checks="$Value"
 				## }}}
 				conf_smtp_menu smtp_header_checks
 				;;
@@ -587,11 +583,9 @@ smtp_conf() {
 				;;
 			smtp_mime_header_checks)
 				# Tabelle mit Filtermustern fuer den Mime Header beim versenden einer mail# {{{
-				default_or_input smtp_mime_header_checks tab_support_choice $smtp_mime_header_checks
-				if [[ -n $Value ]] ; then
-					smtp_mime_header_checks="$Value"
-					postconf -e smtp_mime_header_checks="$Value"
-				fi
+				default_or_input smtp_mime_header_checks tab_support_choice "$gv_Auswahl" $smtp_mime_header_checks
+				smtp_mime_header_checks="$Value"
+				postconf -e smtp_mime_header_checks="$Value"
 				## }}}
 				conf_smtp_menu smtp_mime_header_checks
 				;;
@@ -627,11 +621,9 @@ smtp_conf() {
 				;;
 			smtp_nested_header_checks)
 				# Tabelle mit Filtermustern der Mailanhaenge Header, beim versenden einer mail# {{{
-				default_or_input smtp_nested_header_checks tab_support_choice $smtp_nested_header_checks
-				if [[ -n $Value ]] ; then
-					smtp_nested_header_checks="$Value"
-					postconf -e smtp_nested_header_checks="$Value"
-				fi
+				default_or_input smtp_nested_header_checks tab_support_choice "$gv_Auswahl" $smtp_nested_header_checks
+				smtp_nested_header_checks="$Value"
+				postconf -e smtp_nested_header_checks="$Value"
 				## }}}
 				conf_smtp_menu smtp_nested_header_checks
 				;;
@@ -665,8 +657,8 @@ smtp_conf() {
 				conf_smtp_menu smtp_pix_workaround_delay_time
 				;;
 			smtp_pix_workaround_maps)
-				# Standard ist leer. Indiziert entfernte Mailserver mit# {{{
-				# CISCO PIX firewall bugs.
+				# Standard ist leer. Tabelle fuer die PIX Workarounds# {{{
+				# (CISCO) PIX Firewall Bugs.
 				tab_support_choice "$gv_Auswahl"
 				smtp_pix_workaround_maps="$MAPS"
 				postconf -e smtp_pix_workaround_maps="$MAPS"
@@ -686,29 +678,12 @@ smtp_conf() {
 				;;
 			smtp_pix_workarounds)
 				# Standard = disable_esmtp,delay_dotcrlf# {{{
-				generate_is_file ${smtp_pix_workarounds//,/}
-				is_value "disable_esmtp delay_dotcrlf"
-				#
-				SMTP_PIX_WORKAROUNDS_MSG=$(gettext 'Waehlen Sie ein oder mehrere Workarounds fuer die CISCO PIX Firewall aus.')
-				U_OPT=k
-				checklist "$SMTP_TITLE" "$SMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
-				if [[ -n $gv_Auswahl ]] ; then
-					while [ "$gv_Auswahl" ] ; do
-						case "$gv_Auswahl" in
-							HELP*)	script_help smtp_pix_workarounds_help
-								U_OPT=k
-								checklist "$SMTP_TITLE" "$SMTP_PIX_WORKAROUNDS_MSG" "$VALUE_ARRAY"
-								;;
-							*)	# uebernehmen
-								smtp_pix_workarounds="$gv_Auswahl"
-								postconf -e smtp_pix_workarounds="$gv_Auswahl"
-								break
-								;;
-						esac
-					done
-				fi
-				# 
-				check_gv_Auswahl smtp_pix_workarounds "postconf -e smtp_pix_workarounds="""
+				# Aktiviert einzelne PIX Workarounds, um Bugs in (CISCO)
+				# PIX-Proxys auszugleichen.
+				autoload -U pix_workarounds
+				pix_workarounds "$SMTP_TITLE" "$smtp_pix_workarounds"
+				smtp_pix_workarounds="$VALUE"
+				postconf -e smtp_pix_workarounds="$VALUE"
 				## }}}
 				conf_smtp_menu smtp_pix_workarounds
 				;;
