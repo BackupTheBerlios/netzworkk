@@ -1,15 +1,15 @@
 # kwraid english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2002-2012
 # This file is distributed under the same license as the kwtools-sys-raid package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: kwraid-0.3.4\n"
+"Project-Id-Version: kwraid-0.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-03 04:55+0200\n"
-"PO-Revision-Date: 2011-06-03 05:01+0200\n"
+"POT-Creation-Date: 2012-12-17 18:11+0100\n"
+"PO-Revision-Date: 2012-12-17 18:17+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -78,7 +78,7 @@ msgstr "raiddisks"
 #: ../../sys/kwraid:99
 #, fuzzy
 msgid "Laufwerkswechsel"
-msgstr "Driveschange::Help"
+msgstr "Driveschange"
 
 #: ../../sys/kwraid:100
 msgid "Reperatur"
@@ -110,30 +110,26 @@ msgstr "Program"
 
 #: ../../sys/kwraid:108
 msgid "Standard Erstellung"
-msgstr ""
+msgstr "Create default"
 
 #: ../../sys/kwraid:109
 msgid "Besitzer"
 msgstr "Owner"
 
 #: ../../sys/kwraid:110
-msgid "Gruppe"
-msgstr "Group"
-
-#: ../../sys/kwraid:111
 msgid "Rechte"
 msgstr "Access"
 
-#: ../../sys/kwraid:112
+#: ../../sys/kwraid:111
 msgid "Device Erstellung"
-msgstr ""
+msgstr "Create Device"
 
-#: ../../sys/kwraid:113
+#: ../../sys/kwraid:112
 #, fuzzy
 msgid "Metadaten"
 msgstr "Metadata"
 
-#: ../../sys/kwraid:114
+#: ../../sys/kwraid:113
 msgid "symbolische Links"
 msgstr "Symlinks"
 

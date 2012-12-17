@@ -1,14 +1,14 @@
 # kwpwsafe english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2002-2012
 # This file is distributed under the same license as the kwtools-utils package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kwpwsafe-0.0.4\n"
+"Project-Id-Version: kwpwsafe-0.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 00:54+0200\n"
-"PO-Revision-Date: 2011-04-13 00:55+0200\n"
+"POT-Creation-Date: 2012-12-17 18:18+0100\n"
+"PO-Revision-Date: 2012-12-17 18:21+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -22,7 +22,7 @@ msgstr "Database"
 
 #: ../../utils/kwpwsafe:63
 msgid "Datenbank erstellen"
-msgstr "create database"
+msgstr "Create database"
 
 #: ../../utils/kwpwsafe:64
 msgid "Passwort aendern"
@@ -32,27 +32,23 @@ msgstr "Change password"
 msgid "Datenbank oeffnen"
 msgstr "Open database"
 
-#: ../../utils/kwpwsafe:66 ../../functions/kwpwsafe/kwpwsafe_manage_db:16
-msgid "Passwort"
-msgstr "Password"
-
-#: ../../utils/kwpwsafe:67
+#: ../../utils/kwpwsafe:66
 msgid "Datenbank verwalten"
 msgstr "Manage database"
 
-#: ../../utils/kwpwsafe:68
+#: ../../utils/kwpwsafe:67
 msgid "Waehlen Sie eine Datenbank aus."
 msgstr "Select a database."
 
-#: ../../utils/kwpwsafe:69
+#: ../../utils/kwpwsafe:68
 msgid "Sie haben das falsche Passwort eingegeben."
 msgstr ""
 
-#: ../../utils/kwpwsafe:94
+#: ../../utils/kwpwsafe:93
 msgid "Es sind keine Datenbanken vorhanden. Sie muessen erst eine erstellen."
 msgstr ""
 
-#: ../../utils/kwpwsafe:106
+#: ../../utils/kwpwsafe:105
 #, sh-format
 msgid "Geben Sie das Passwort fuer die Datenbank $DB_FILE ein."
 msgstr ""
@@ -79,28 +75,28 @@ msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_db_conf:54
 #, sh-format
-msgid "Die $lv_Group $gv_Auswahl ist schon vorhanden. Nehmen Sie eine andere."
+msgid "Die $gv_Group $gv_Auswahl ist schon vorhanden. Nehmen Sie eine andere."
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_db_conf:73
 #, sh-format
 msgid ""
-"Der $lv_Group ${gv_Auswahl}.${PW_NAME} ist schon vorhanden. Nehmen Sie eine "
-"andere $lv_Group oder ${lv_Name}."
+"Der $gv_Group ${gv_Auswahl}.${PW_NAME} ist schon vorhanden. Nehmen Sie eine "
+"andere $gv_Group oder ${lv_Name}."
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_db_conf:93
-msgid "Geben Sie den Namen des Benutzers ein (z.B. Loginname)."
-msgstr ""
-
-#: ../../functions/kwpwsafe/kwpwsafe_db_conf:105
 msgid "Geben Sie den Namen des Eintrages ein (z.B. haushalt)."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_db_conf:112
-#: ../../functions/kwpwsafe/kwpwsafe_db_conf:121
+#: ../../functions/kwpwsafe/kwpwsafe_db_conf:100
+#: ../../functions/kwpwsafe/kwpwsafe_db_conf:109
 #, sh-format
 msgid "Der $lv_Name $gv_Auswahl ist schon vorhanden. Nehmen Sie einen anderen."
+msgstr ""
+
+#: ../../functions/kwpwsafe/kwpwsafe_db_conf:122
+msgid "Geben Sie den Namen des Benutzers ein (z.B. Loginname)."
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_db_conf:134
@@ -140,6 +136,10 @@ msgstr "create database"
 msgid "Datenbank-Name"
 msgstr "Database-Name"
 
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:16
+msgid "Passwort"
+msgstr "Password"
+
 #: ../../functions/kwpwsafe/kwpwsafe_manage_db:17
 #, fuzzy
 msgid "Passwort wurde erfolgreich geaendert."
@@ -165,48 +165,48 @@ msgstr ""
 msgid "Die Laenge des/der Passworts/Passphrase muss mindestens 6 Zeichen sein."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:63
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:67
 msgid "Geben Sie den Datenbank-Namen ohne Endung (*.dat) ein."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:70
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:74
 #, sh-format
 msgid "Die Datenbank ${gv_Auswahl}.dat ist schon vorhanden."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:84
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:88
 msgid ""
 "Geben Sie ein Passwort ein. Nehmen Sie am besten unterschiedliche Zeichen in "
 "Gross- und Kleinschreibung. Mit den Pfeiltasten koennen Sie zwischen den "
 "Eingabefeldern springen."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:165
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:169
 #, sh-format
 msgid ""
-"Sie muessen erst die Menuepunkte $lv_Db_Name und $lv_Password mit einem Wert "
+"Sie muessen erst die Menuepunkte $lv_Db_Name und $gv_Passwd mit einem Wert "
 "belegen."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:197
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:202
 msgid ""
 "Waehlen Sie eine Datenbank zum exportieren aus. Diese wird im Klartext "
 "gespeichert."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:229
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:234
 msgid ""
 "Waehlen Sie eine Datenbank aus in Sie eine andere Datenbank importieren "
 "moechten."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:245
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:250
 msgid ""
 "Geben Sie hier die Passwoerter fuer die beiden Datenbanken ein. Mit den "
 "Pfeiltasten koennen Sie zwischen den Eingabefeldern springen."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:398
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:403
 msgid ""
 "Geben Sie hier erst das alte Passwort und dann in wiederholter Form das neue "
 "Passwort fuer die Datenbank ein. Mit den Pfeiltasten koennen Sie zwischen "
@@ -214,32 +214,24 @@ msgid ""
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_open_db:8
-#, fuzzy
-msgid "Benutzernamen"
-msgstr "Username"
-
-#: ../../functions/kwpwsafe/kwpwsafe_open_db:9
-msgid "Gruppe"
-msgstr "Group"
-
-#: ../../functions/kwpwsafe/kwpwsafe_open_db:10
 msgid "Gruppe anlegen"
 msgstr "create group"
 
-#: ../../functions/kwpwsafe/kwpwsafe_open_db:11
-msgid "Namen"
-msgstr "Names"
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:9
+#, fuzzy
+msgid "Name"
+msgstr "Name"
 
-#: ../../functions/kwpwsafe/kwpwsafe_open_db:12
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:10
 #, fuzzy
 msgid "Passwort generieren"
 msgstr "Generate password"
 
-#: ../../functions/kwpwsafe/kwpwsafe_open_db:13
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:11
 msgid "Notiz"
 msgstr "Note"
 
-#: ../../functions/kwpwsafe/kwpwsafe_open_db:15
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:13
 #, sh-format
 msgid "Waehlen Sie einen Eintrag aus der Liste der Datenbank $DB_FILE."
 msgstr ""
@@ -277,7 +269,7 @@ msgid ""
 "\\tgehoeren soll. Dies dient zur besseren Uebersicht, ist aber\n"
 "\\toptional.\n"
 "\n"
-"Namen: Name des neuen Eintrags.\n"
+"Name: Name des neuen Eintrags.\n"
 "\\tZum Beispiel: Gruppe=haushalt und Name=test -> haushalt.test\n"
 "\\tName=test -> test\n"
 "\n"

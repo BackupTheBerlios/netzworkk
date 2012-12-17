@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-06 16:33+0100\n"
+"POT-Creation-Date: 2012-12-17 18:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid ""
 "nehmen."
 msgstr ""
 
-#: ../../sys/kwquota:125 ../../sys/kwquota:152
+#: ../../sys/kwquota:125 ../../sys/kwquota:150
 msgid "Projekt"
 msgstr ""
 
@@ -63,15 +63,7 @@ msgstr ""
 msgid "Warnung"
 msgstr ""
 
-#: ../../sys/kwquota:150
-msgid "Benutzer"
-msgstr ""
-
-#: ../../sys/kwquota:151
-msgid "Gruppe"
-msgstr ""
-
-#: ../../sys/kwquota:170
+#: ../../sys/kwquota:169
 #, sh-format
 msgid ""
 "Es sind keine Benutzer/Gruppen/Projekte mit \"quota\", zum $gv_Create, "
@@ -80,49 +72,49 @@ msgid ""
 "und neu starten."
 msgstr ""
 
-#: ../../sys/kwquota:299
+#: ../../sys/kwquota:298
 #, sh-format
 msgid "Dieses Dateisystem ($QFS) wird nicht unterstuetzt."
 msgstr ""
 
-#: ../../sys/kwquota:448
+#: ../../sys/kwquota:447
 #, sh-format
 msgid "Status des Laufwerks ist: $QUOTA_STATE."
 msgstr ""
 
-#: ../../sys/kwquota:465
+#: ../../sys/kwquota:464
 msgid "einschalten"
 msgstr ""
 
-#: ../../sys/kwquota:466
+#: ../../sys/kwquota:465
 msgid "ausschalten"
 msgstr ""
 
-#: ../../sys/kwquota:467
+#: ../../sys/kwquota:466
 msgid "Backup_erstellen"
 msgstr ""
 
-#: ../../sys/kwquota:468
+#: ../../sys/kwquota:467
 msgid "Backup_zurueck"
 msgstr ""
 
-#: ../../sys/kwquota:469
+#: ../../sys/kwquota:468
 msgid "Platz_schaffen"
 msgstr ""
 
-#: ../../sys/kwquota:470
+#: ../../sys/kwquota:469
 msgid "komplett_aus"
 msgstr ""
 
-#: ../../sys/kwquota:538
+#: ../../sys/kwquota:537
 msgid "Es existiert schon eine Backup Datei. Ueberschreiben (ja/nein)?"
 msgstr ""
 
-#: ../../sys/kwquota:565
+#: ../../sys/kwquota:564
 msgid "Es ist kein Backup vorhanden."
 msgstr ""
 
-#: ../../sys/kwquota:589
+#: ../../sys/kwquota:588
 msgid ""
 " Das Quota auf dem Laufwerk komplett ausschalten (ja/nein)?\\n\n"
 "\\n\n"
@@ -130,7 +122,7 @@ msgid ""
 "starten."
 msgstr ""
 
-#: ../../sys/kwquota:606
+#: ../../sys/kwquota:605
 msgid ""
 "Quota wurde komplett ausgestellt. Sie muessen wahrscheinlich den Rechner neu "
 "starten. Sie koennen aber auch ein neu einbinden des Laufwerks versuchen."

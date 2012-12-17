@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-13 02:06+0100\n"
+"POT-Creation-Date: 2012-12-17 18:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,60 +18,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../sys/kwgroup:50
-msgid "Gruppe"
-msgstr ""
-
-#: ../../sys/kwgroup:51
 msgid "Gruppen_ID"
 msgstr ""
 
-#: ../../sys/kwgroup:52
-msgid "Passwort"
-msgstr ""
-
-#: ../../sys/kwgroup:55
+#: ../../sys/kwgroup:53
 msgid "Geben Sie hier bitte einen Gruppen Namen, ohne Sonderzeichen ein."
 msgstr ""
 
-#: ../../sys/kwgroup:59
+#: ../../sys/kwgroup:57
 msgid ""
 "Sie muessen erst eine Gruppe eingeben/auswaehlen, bevor Sie hier etwas "
 "aendern koennen."
 msgstr ""
 
-#: ../../sys/kwgroup:130
+#: ../../sys/kwgroup:129
 msgid ""
 "Geben Sie bitte hier die Gruppen ID Nummer ein. Diese muss Integer sein."
 msgstr ""
 
-#: ../../sys/kwgroup:136
+#: ../../sys/kwgroup:135
 #, sh-format
 msgid ""
 "Diese Gruppen_ID ($NUMBER) ist schon vorhanden. Nehmen Sie bitte eine andere."
 msgstr ""
 
-#: ../../sys/kwgroup:150
+#: ../../sys/kwgroup:149
 #, sh-format
 msgid ""
 "Geben Sie hier bitte ein Passwort fuer die Gruppe ($NGROUP) ein und "
 "wiederholen es anschliessend."
 msgstr ""
 
-#: ../../sys/kwgroup:181
+#: ../../sys/kwgroup:180
 msgid ""
 "Die Gruppen_ID oder Gruppe ist nicht belegt. Geben Sie bitte dort gueltige "
 "Werte ein."
 msgstr ""
 
-#: ../../sys/kwgroup:212
+#: ../../sys/kwgroup:211
 msgid "GruppenName:Passwort:Gruppen_Id:Benutzerliste"
 msgstr ""
 
-#: ../../sys/kwgroup:243
+#: ../../sys/kwgroup:242
 msgid "Waehlen Sie eine Gruppe aus, die Sie aendern moechten."
 msgstr ""
 
-#: ../../sys/kwgroup:269
+#: ../../sys/kwgroup:268
 msgid "Waehlen Sie ein oder mehrere Gruppen zum loeschen aus."
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwpostfix-0.1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 16:12+0200\n"
+"POT-Creation-Date: 2012-11-29 10:31+0100\n"
 "PO-Revision-Date: 2012-10-11 16:45+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
@@ -158,248 +158,259 @@ msgid "Adresse"
 msgstr "Address"
 
 #: ../../net/kwpostfix:90
-msgid "Empfaenger"
-msgstr "Recipient"
-
-#: ../../net/kwpostfix:91
-msgid "lokaler Empfaenger"
-msgstr "local Recipient"
-
-#: ../../net/kwpostfix:92
-msgid "anderer Empfaenger"
-msgstr "other Recipient"
-
-#: ../../net/kwpostfix:93
-msgid "Datenbank"
-msgstr "Database"
-
-#: ../../net/kwpostfix:94
-msgid "neu erzeugen/postfix reload"
-msgstr ""
-
-#: ../../net/kwpostfix:95
-msgid "Domain"
-msgstr "Domain"
-
-#: ../../net/kwpostfix:96
-msgid "ID"
-msgstr "ID"
-
-#: ../../net/kwpostfix:97
-msgid "Flags"
-msgstr "Flags"
-
-#: ../../net/kwpostfix:98
 msgid "Aktion"
 msgstr "Action"
 
+#: ../../net/kwpostfix:91
+msgid "Befehl"
+msgstr "Command"
+
+#: ../../net/kwpostfix:92
+msgid "Empfaenger"
+msgstr "Recipient"
+
+#: ../../net/kwpostfix:93
+msgid "lokaler Empfaenger"
+msgstr "local Recipient"
+
+#: ../../net/kwpostfix:94
+msgid "anderer Empfaenger"
+msgstr "other Recipient"
+
+#: ../../net/kwpostfix:95
+msgid "Datenbank"
+msgstr "Database"
+
+#: ../../net/kwpostfix:96
+msgid "neu erzeugen/postfix reload"
+msgstr ""
+
+#: ../../net/kwpostfix:97
+msgid "Domain"
+msgstr "Domain"
+
+#: ../../net/kwpostfix:98
+msgid "Flags"
+msgstr "Flags"
+
 #: ../../net/kwpostfix:99
+msgid "Rechner/Domain"
+msgstr "Host/Domain"
+
+#: ../../net/kwpostfix:100
+msgid "ID"
+msgstr "ID"
+
+#: ../../net/kwpostfix:101
 msgid "Mail-Authentifizierung"
 msgstr ""
 
-#: ../../net/kwpostfix:100
-msgid "Passwort"
-msgstr "Password"
-
-#: ../../net/kwpostfix:101 ../../functions/kwpostfix/ldap_db:9
+#: ../../net/kwpostfix:102 ../../functions/kwpostfix/ldap_db:9
 msgid "Port"
 msgstr "Port"
 
-#: ../../net/kwpostfix:102
+#: ../../net/kwpostfix:103
 msgid "Server"
 msgstr "Server"
 
-#: ../../net/kwpostfix:103
+#: ../../net/kwpostfix:104
 msgid "Text"
 msgstr "Text"
 
-#: ../../net/kwpostfix:104
+#: ../../net/kwpostfix:105
 msgid "Transport"
 msgstr "Transport"
 
-#: ../../net/kwpostfix:105
+#: ../../net/kwpostfix:106
 msgid "Transport Methode"
 msgstr "Transport methode"
 
-#: ../../net/kwpostfix:108
+#: ../../net/kwpostfix:109
 msgid "Geben Sie den Timeout fuer den Aufbau der Verbindung ein (Bsp.: 30s)."
 msgstr ""
 
-#: ../../net/kwpostfix:109
+#: ../../net/kwpostfix:110
 msgid "Geben Sie den Timeout nach Uebertragung einer Mail ein (Standard 600s)."
 msgstr ""
 
-#: ../../net/kwpostfix:110
+#: ../../net/kwpostfix:111
 msgid ""
 "Geben Sie den Timeout nach Absenden des SMTP-Kommandos DATA ein (Standard "
 "120s)."
 msgstr ""
 
-#: ../../net/kwpostfix:111
+#: ../../net/kwpostfix:112
 msgid "Geben Sie den Timeout bei Uebertragung einer Mail ein (Standard 180s)."
 msgstr ""
 
-#: ../../net/kwpostfix:112
+#: ../../net/kwpostfix:113
 msgid ""
 "Geben Sie den Timeout nach dem Versand des SMTP-Kommandos MAIL FROM: ein "
 "(Standard 300s)."
 msgstr ""
 
-#: ../../net/kwpostfix:113
+#: ../../net/kwpostfix:114
 msgid ""
 "Geben Sie den Timeout nach der Uebertragung des SMTP-Kommandos QUIT ein "
 "(Standard 300s)."
 msgstr ""
 
-#: ../../net/kwpostfix:114
+#: ../../net/kwpostfix:115
 msgid ""
 "Geben Sie den Timeout nach der Uebertragung des SMTP-Kommandos RCPT TO: ein "
 "(Standard 300s)."
 msgstr ""
 
-#: ../../net/kwpostfix:115
+#: ../../net/kwpostfix:116
 msgid ""
 "Geben Sie den Timeout fuer den SMTP Clienten fuer das senden des Kommandos "
 "XFORWARD und der Antwort vom Server ein (Standard 300s)."
 msgstr ""
 
-#: ../../net/kwpostfix:116
+#: ../../net/kwpostfix:117
 msgid "Benoetigen Clients ein Zertifikat (ja/nein)?"
 msgstr ""
 
-#: ../../net/kwpostfix:117
+#: ../../net/kwpostfix:118
 msgid "Soll SSL/TLS bei eingehenden Verbindungen erzwungen werden (ja/nein)?"
 msgstr ""
 
-#: ../../net/kwpostfix:118
+#: ../../net/kwpostfix:119
 msgid ""
 "Soll dieser Server fuer eingehende Mails SSL/TLS Verschluesselung benutzen "
 "(ja/nein)?"
 msgstr ""
 
-#: ../../net/kwpostfix:119
+#: ../../net/kwpostfix:120
 msgid ""
 "Soll der Postfix SMTP Server eine TLS Session ID ausstellen, falls das TLS "
 "Session Caching deaktiviert ist (ja/nein)?"
 msgstr ""
 
-#: ../../net/kwpostfix:120
+#: ../../net/kwpostfix:121
 msgid ""
 "Soll beim Server explizit nach einem Client Zertifikat nachgefragt werden "
 "(ja/nein)?"
 msgstr ""
 
-#: ../../net/kwpostfix:121
+#: ../../net/kwpostfix:122
 msgid ""
 "Geben Sie die Zeit ein nach der jeder Mailzustellung wieder an das gleiche "
 "Ziel eine Mail versandt werden darf (Standard ist 0s)."
 msgstr ""
 
-#: ../../net/kwpostfix:147
+#: ../../net/kwpostfix:148
 msgid ""
 "Waehlen Sie ein oder mehrere Optionen aus, wie die Sicherheitsueberpruefung "
 "stattfinden soll."
 msgstr ""
 
-#: ../../net/kwpostfix:173
+#: ../../net/kwpostfix:174
 msgid "Waehlen Sie eine Benutzer ID aus."
 msgstr "Select you a user ID."
 
-#: ../../net/kwpostfix:198
+#: ../../net/kwpostfix:199
 msgid "Waehlen Sie eine Gruppen ID aus."
 msgstr "Select you a group ID."
 
-#: ../../net/kwpostfix:268
+#: ../../net/kwpostfix:279
 msgid ""
 "Postfix konnte seine Konfiguration nicht neu einlesen beziehungsweise nicht "
 "neu gestartet werden. Berichtigen Sie bitte den Fehler in Ihrer "
 "Konfiguration."
 msgstr ""
 
-#: ../../net/kwpostfix:407
+#: ../../net/kwpostfix:418
 msgid "Waehlen Sie einen Benutzer aus."
 msgstr "Select you a user."
 
-#: ../../net/kwpostfix:431
+#: ../../net/kwpostfix:442
 msgid "Waehlen Sie ein Level fuer die Logdateien aus."
 msgstr ""
 
-#: ../../net/kwpostfix:432
+#: ../../net/kwpostfix:443
 msgid "0 kein 1 bischen 2 ausfuehrlich 3 \"noch ausfuehrlicher\" 4 debug"
 msgstr ""
 
-#: ../../net/kwpostfix:510
+#: ../../net/kwpostfix:521
 msgid "Waehlen Sie die oder das zu unterstuetzende TLS Protokoll aus."
 msgstr ""
 
-#: ../../net/kwpostfix:551
+#: ../../net/kwpostfix:562
 #, fuzzy
 msgid "Waehlen Sie ein Sicherheitslevel aus."
-msgstr "Select you a security level."
+msgstr "Select a security level."
 
-#: ../../net/kwpostfix:590
-#, fuzzy
+#: ../../net/kwpostfix:601
 msgid "Waehlen Sie die Qualitaet der TLS Verschluesselung aus."
 msgstr ""
 
-#: ../../net/kwpostfix:622
+#: ../../net/kwpostfix:633
 msgid ""
 "Waehlen Sie die Sicherheitsstufe fuer ephemeral elliptic-curve Diffie-"
 "Hellman (EECDH) Schluessel Austausch aus."
 msgstr ""
 
-#: ../../net/kwpostfix:657
+#: ../../net/kwpostfix:668
 msgid ""
 "Waehlen eine Methode zur Berechnung der Fingerprints der Zertifikate aus "
 "(Standard ist md5)."
 msgstr ""
 
-#: ../../net/kwpostfix:694
+#: ../../net/kwpostfix:705
 msgid ""
 "Tragen Sie hier die Verschluesselungsmethoden ein die vom Postfix Server "
 "nicht beachtet werden soll."
 msgstr ""
 
-#: ../../net/kwpostfix:781
+#: ../../net/kwpostfix:797
 #, sh-format
 msgid ""
 "Sis koennen die Standardvariable benutzen oder eine Eingabe machen.\\n"
 "\\nSoll die Standardvariable \\\"$NewKey\\\" benutzt werden?"
 msgstr ""
 
-#: ../../net/kwpostfix:1076
+#: ../../net/kwpostfix:1103
+msgid "Waehlen Sie eine Tabelle zur Bearbeitung aus."
+msgstr "Select table to change."
+
+#: ../../net/kwpostfix:1104
 msgid "Waehlen Sie einen Tabelleneintrag aus."
 msgstr "Select a table entry."
 
-#: ../../net/kwpostfix:1115
+#: ../../net/kwpostfix:1143
 #, sh-format
 msgid ""
 "Das Tabellen-Format ($WAS_IST) wird noch nicht, fuer diese Tabelle, von "
 "kwpostfix unterstuetzt."
 msgstr ""
 
-#: ../../net/kwpostfix:1195
-msgid "Waehlen Sie eine Tabelle zur Bearbeitung aus."
-msgstr "Select table to change."
-
-#: ../../net/kwpostfix:1203
-msgid "Es sind keine Tabellen vorhanden. Sie muessen erst welche erstellen."
+#: ../../net/kwpostfix:1280
+msgid ""
+"Es sind keine Tabellen vorhanden. Sie muessen erst welche in der "
+"Konfiguration einstellen."
 msgstr ""
 
-#: ../../functions/kwpostfix/access_table:39
+#: ../../net/kwpostfix:1297
+msgid ""
+"Es sind keine Restrictions Tabellen vorhanden. Sie muessen erst welche in "
+"der Konfiguration einstellen."
+msgstr ""
+
+#: ../../functions/kwpostfix/access_table:42
 msgid ""
 "Geben Sie bitte eine Mailadresse, User, IP, domain, ... ein (Bsp. user@ | "
 "@domain.de | user@domain.de | 192.168. | 192.168.0.1 )."
 msgstr ""
 
-#: ../../functions/kwpostfix/access_table:102
+#: ../../functions/kwpostfix/access_table:105
 #: ../../functions/kwpostfix/regexp_table:79
 msgid ""
 "Geben Sie einen Text ein, der auf einen bestimmten Fehlercode oder Aktion "
 "gesendet werden soll."
 msgstr ""
 
-#: ../../functions/kwpostfix/access_table:130
+#: ../../functions/kwpostfix/access_table:134
 msgid "Sie muessen mindestens die Menuepunkte Adresse und Aktion belegen."
 msgstr ""
 
@@ -416,7 +427,6 @@ msgstr ""
 
 #: ../../functions/kwpostfix/bcc_table:26
 #: ../../functions/kwpostfix/canonical_table:29
-#: ../../functions/kwpostfix/local_recipient_table:22
 #: ../../functions/kwpostfix/relocated_table:27
 #: ../../functions/kwpostfix/virtual_alias_table:111
 #: ../../functions/kwpostfix/virtual_id_table:27
@@ -431,8 +441,7 @@ msgid "Geben Sie hier eine Mailadresse ein (Bsp. user@domain.de)."
 msgstr ""
 
 #: ../../functions/kwpostfix/canonical_table:53
-#: ../../functions/kwpostfix/relay_recipient_table:22
-#: ../../functions/kwpostfix/virtual_mailbox_table:30
+#: ../../functions/kwpostfix/recipient_table:22
 msgid ""
 "Geben Sie hier bitte eine Mailadresse oder domain ein (Bsp. @domain.de | "
 "user@domain.de)."
@@ -524,7 +533,7 @@ msgstr ""
 msgid "Geben Sie bitte erneut das Passwort fuer die Datenbank ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/ldap_db:97 ../../functions/kwpostfix/sql_db:136
+#: ../../functions/kwpostfix/ldap_db:97 ../../functions/kwpostfix/sql_db:135
 msgid ""
 "Geben Sie die Rechnernamen, getrennt durch Leerzeichen, ein auf dem die "
 "Datenbank laeuft."
@@ -617,42 +626,42 @@ msgstr ""
 msgid "SSL/TLS fuer den Versand erzwingen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:513
+#: ../../functions/kwpostfix/lmtp_conf:515
 #, sh-format
 msgid ""
 "Geben Sie den Rechnenamen ein der in einem LHLO Kommando gesendet werden "
 "soll. Dies kann auch eine Variable sein (z.B.: \\$myhostname)."
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:608
+#: ../../functions/kwpostfix/lmtp_conf:610
 msgid ""
 "Sie koennen das Verhalten der lmtp_*_timeout Limits veraendern vom Zeitlimit "
 "eines Lese- oder Schreibaufruf zu einem Zeitlimit zum erhalten oder senden "
 "einer kompletten Aufzeichnung.\\n\\nSoll dies aktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:650
+#: ../../functions/kwpostfix/lmtp_conf:654
 #: ../../functions/kwpostfix/smtp_conf:692
 msgid ""
 "Waehlen Sie ein oder mehrere Workarounds fuer die CISCO PIX Firewall aus."
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:685
+#: ../../functions/kwpostfix/lmtp_conf:689
 msgid ""
 "Sollen die Adressen im LMTP MAIL FROM und RCPT TO Kommando gequotet werden "
 "(ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:694
+#: ../../functions/kwpostfix/lmtp_conf:698
 #: ../../functions/kwpostfix/smtp_conf:736
 msgid "Reihenfolge der envelope Adressen mixen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:789
+#: ../../functions/kwpostfix/lmtp_conf:794
 msgid "LMTP-AUTH beim Versand ueber LMTP aktivieren (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:798
+#: ../../functions/kwpostfix/lmtp_conf:803
 msgid ""
 "Falls eine LMTP-AUTH Identifierzierung mit dem Fehlercode 535 abgelehnt wird "
 "kann die Mailzustellung aufgeschoben werden oder die Mail als unzustellbar "
@@ -660,35 +669,35 @@ msgid ""
 "nein)?."
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:810
-#: ../../functions/kwpostfix/smtp_conf:853
+#: ../../functions/kwpostfix/lmtp_conf:815
+#: ../../functions/kwpostfix/smtp_conf:854
 msgid "Waehlen Sie bitte die Mechanismen die erlaubt werden sollen"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:845
+#: ../../functions/kwpostfix/lmtp_conf:851
 msgid ""
 "Geben Sie den Pfad zum SASL-Socket fuer bestimmete SASL-Implementationen wie "
 "Dovecot ein. Siehe auch dem Punkt lmtp_sasl_type."
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:897
+#: ../../functions/kwpostfix/lmtp_conf:903
 msgid ""
 "Waehlen Sie ein SASL Plugin mit der sich der Postfix LMTP Client "
 "authentifizieren soll aus."
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:911
+#: ../../functions/kwpostfix/lmtp_conf:917
 msgid ""
 "Man kann an das MAIL FROM Kommando, bei der LMTP-AUTH Identifierzierung die "
 "AUTH=<> Optionen anhaengen.\\n\\nSoll dies geschehen(ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:920
-#: ../../functions/kwpostfix/smtp_conf:968
+#: ../../functions/kwpostfix/lmtp_conf:926
+#: ../../functions/kwpostfix/smtp_conf:969
 msgid "Soll ein nicht Standard XFORWARD Kommando gesendet werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:929
+#: ../../functions/kwpostfix/lmtp_conf:935
 msgid ""
 "Hier koennen Sie die Authentifizierung des Postfix Clients mittels LMTP_AUTH "
 "aktivieren. Dabei wird der LMTP Cache ausgeschaltet, damit bei Mails von "
@@ -696,40 +705,40 @@ msgid ""
 "die Authentifizierung aktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:939
+#: ../../functions/kwpostfix/lmtp_conf:945
 msgid ""
 "Begruessungstext bei LMTP_Code 5xx (dauerhafter Fehler) ignorieren (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:948
+#: ../../functions/kwpostfix/lmtp_conf:954
 msgid ""
 "Beenden einer LMTP Sitzung nach dem QUIT Kommando, ohne auf Antwort zu "
 "warten (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:967
+#: ../../functions/kwpostfix/lmtp_conf:973
 msgid "Geben Sie den Port fuer das Protokoll LMTP ein. Standard ist 24."
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:1005
+#: ../../functions/kwpostfix/lmtp_conf:1011
 msgid ""
 "Soll der LMTP Server versuchen eine Mail Hjacking Attacke zu erkennen (ja/"
 "nein)? Dies basiert auf der Schwachstelle im TLS Protokoll (CVE-2009-3555)."
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:1071
+#: ../../functions/kwpostfix/lmtp_conf:1077
 msgid ""
 "Soll der entfernte LMTP Server die Informationen, fuer Rechnernamen im "
 "Zertifikat suchen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:1183
+#: ../../functions/kwpostfix/lmtp_conf:1190
 msgid ""
 "Soll der Rechnername vom entfernten LMTP Server geloggt werden, falls TLS "
 "nicht fuer diesen Server aktiviert ist (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/lmtp_conf:1294
+#: ../../functions/kwpostfix/lmtp_conf:1306
 msgid ""
 "Soll TLS benutzt werden, falls ein entfernter LMTP Server STARTTLS anbietet "
 "(ja/nein)?"
@@ -743,6 +752,22 @@ msgstr "Lock"
 msgid "Waehlen Sie eine oder mehrere Lock Arten aus."
 msgstr ""
 
+#: ../../functions/kwpostfix/mailbox_command_table:23
+#, fuzzy
+msgid "Geben Sie den Namen Benutzers ein."
+msgstr "Select you a user."
+
+#: ../../functions/kwpostfix/mailbox_command_table:36
+#, sh-format
+msgid ""
+"Geben Sie einen Befehl fuer den jeweiligen Benutzer ein (Bsp.: /usr/bin/"
+"procmail -t -a \"$EXTENSION\" \"$USER\")."
+msgstr ""
+
+#: ../../functions/kwpostfix/mailbox_command_table:59
+msgid "Sie muessen erst einen Benutzer und den dazugehoerigen Befehl eingeben."
+msgstr ""
+
 #: ../../functions/kwpostfix/mail_conf:45
 msgid ""
 "Geben Sie den Namen des Mailservers, fuer das Begruessungs Banner ein (Bsp. "
@@ -752,164 +777,164 @@ msgstr ""
 #: ../../functions/kwpostfix/mail_conf:83
 #, sh-format
 msgid ""
-"Geben Sie ein Kommando ein dass fuer die Einlieferung in die lokalen "
-"Mailboxen an (Bsp. /usr/bin/procmail -t -a \\\"\\$EXTENSION\\\")."
+"Geben Sie ein Kommando ein, dass fuer die Einlieferung in die lokalen "
+"Mailboxen zustaendig ist (Bsp. /usr/bin/procmail -t -a \\\"\\$EXTENSION\\\")."
 msgstr ""
 
 #: ../../functions/kwpostfix/main_conf:374
 msgid "Geben Sie eine Zieladresse fuer Double Bounces ein (postmaster)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:454
+#: ../../functions/kwpostfix/main_conf:459
 msgid ""
 "Sollen Mailadressen die mit einem \\\"-\\\" beginnen erlaubt werden (ja/"
 "nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:463
+#: ../../functions/kwpostfix/main_conf:468
 msgid ""
 "Dies kontrolliert das umschreiben von Mail Adressen, der Form user%domain --"
 "> user@domain (ja/nein)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:472
+#: ../../functions/kwpostfix/main_conf:477
 msgid ""
 "Sollen Mailadressen mit doppellten \\\"@\\\" oder \\\"%\\\", die also ein "
 "fremdes Mailrouting beinhalten, erlaubt werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:481
+#: ../../functions/kwpostfix/main_conf:486
 msgid ""
 "Geben Sie bitte weitere Konfigurationsverzeichnisse, getrennt durch ein "
 "Leerzeichen, ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:510
+#: ../../functions/kwpostfix/main_conf:515
 msgid ""
 "Waehlen Sie einen Benutzer aus, an den immer eine geheime Kopie (BCC) "
 "geschickt werden soll."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:533
+#: ../../functions/kwpostfix/main_conf:538
 msgid ""
 "Dies kontrolliert das umschreiben von Mail Adressen, der Form user --> "
 "user@mydomain (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:542
+#: ../../functions/kwpostfix/main_conf:547
 msgid ""
 "Dies kontrolliert das umschreiben von Mail Adressen, der Form user@host --> "
 "user@host.mydomain (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:560
+#: ../../functions/kwpostfix/main_conf:565
 msgid ""
 "Soll die Zusammenarbeit mit biff aktiviert werden, einem Informationstool "
 "ueber neu hereingekommene Mails (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:587
+#: ../../functions/kwpostfix/main_conf:592
 msgid ""
 "Geben Sie eine Mailadresse ein, an die Benachrichtigungen von Bounces gehen "
 "(postmaster)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:613
+#: ../../functions/kwpostfix/main_conf:618
 msgid ""
 "Soll dieser Server einen anderen Begruessungstext,  fuer SMTP-AUTH, ausgeben "
 "(ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:686
+#: ../../functions/kwpostfix/main_conf:691
 #, sh-format
 msgid "In diesem Verzeichnis ($VERZ) liegen keine Postfix Module."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:706
+#: ../../functions/kwpostfix/main_conf:711
 #, sh-format
 msgid ""
 "Geben Sie eine Liste von IPs, Domains, Hostnamen oder Netzmasken ein die "
 "ausfuehrlicher geloggt werden sollen (Bsp.: 192.168.0.0/24 $myhostname)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:736
+#: ../../functions/kwpostfix/main_conf:741
 msgid ""
 "Geben Sie eine Mailadresse ein, die bei Mailverspaetigungen benachrichtigt "
 "wird (postmaster)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:783
+#: ../../functions/kwpostfix/main_conf:788
 msgid ""
 "Sollen die Rechnernamen, der zu versendenen Mails, bei einem DNS Server "
 "nicht nachgeschlagen werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:792
+#: ../../functions/kwpostfix/main_conf:797
 msgid "Sollen Bounces an VERP Adressen deaktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:801
+#: ../../functions/kwpostfix/main_conf:806
 msgid "Soll das SMTP-Kommando VRFY deaktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:810
+#: ../../functions/kwpostfix/main_conf:815
 msgid "Geben Sie eine Absenderadresse fuer Double Bounces ein (double-bounce)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:835
+#: ../../functions/kwpostfix/main_conf:840
 msgid ""
 "Geben Sie eine Mailadresse ein, die bei fehlenden Angaben eingesetzt wird "
 "(MAILER-DAEMON)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:850
+#: ../../functions/kwpostfix/main_conf:855
 msgid ""
 "Soll bei ausgehenden Mailinglistenmails der listenname-owner anhand der "
 "alias Tabelle direkt in die echte Mailadresse aufgeloest werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:859
+#: ../../functions/kwpostfix/main_conf:864
 msgid ""
 "Geben Sie die Variablen ein, die an externe Programme uebergeben werden "
 "sollen."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:950
+#: ../../functions/kwpostfix/main_conf:955
 #, sh-format
 msgid ""
 "Geben Sie Dateien/Variablen ein, in denen nach persoehnlichen "
 "Weiterleitungen eines Nutzers gesucht wird (\\$home/.forward)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:979
+#: ../../functions/kwpostfix/main_conf:984
 msgid ""
 "Waehlen Sie die Warteschlangen aus, in denen ein Hashstruktur aufgebaut "
 "werden soll."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1031
+#: ../../functions/kwpostfix/main_conf:1036
 msgid ""
 "Geben Sie das optionale Mailboxverzeichnis eines Benutzer, relativ zu seinem "
 "Homeverzeichnis, ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1057
+#: ../../functions/kwpostfix/main_conf:1062
 msgid ""
 "Soll Postfix, sofern eine MX Abfrage kein Ergebnis liefert das ganze an den "
 "A-Record schicken (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1066
+#: ../../functions/kwpostfix/main_conf:1071
 msgid "Geben Sie die Variablen ein, die von Postfix eingelesen werden sollen."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1092
+#: ../../functions/kwpostfix/main_conf:1097
 msgid ""
 "Geben Sie die IPs oder Rechnernamen ein auf denen Postfix auf Verbindungen "
 "entgegennimmt, getrennt durch ein Leerzeichen. Lesen Sie die Hilfe dazu."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1111
+#: ../../functions/kwpostfix/main_conf:1116
 #, sh-format
 msgid ""
 "Der Wert von von \\\"initial_destination_concurrency\\\" darf nicht auf "
@@ -917,31 +942,31 @@ msgid ""
 "Mailverkehr blockiert."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1157
+#: ../../functions/kwpostfix/main_conf:1162
 msgid ""
 "Geben Sie eine Mailadresse ein, an die unzustellbare Mails, die nicht "
 "gebounct werden sollen, weitergeleitet werden. Lesen Sie die Hilfe dazu."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1178
+#: ../../functions/kwpostfix/main_conf:1183
 msgid ""
 "Geben Sie eine Liste von Domains an, getrennt durch Komma und Leerzeichen, "
 "die einer RBL Pruefung unterzogen werden sollen."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1196
+#: ../../functions/kwpostfix/main_conf:1201
 msgid ""
 "Waehlen Sie ein oder mehrere Bereiche in denen Postfix Mailadressen "
 "maskieren soll."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1219
+#: ../../functions/kwpostfix/main_conf:1224
 msgid ""
 "Geben Sie die Domains, getrennt durch ein Leerzeichen an, die Sie maskieren "
 "moechten. Lesen Sie bitte die Hilfe dazu."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1310
+#: ../../functions/kwpostfix/main_conf:1315
 #, sh-format
 msgid ""
 "Geben Sie eine Liste von Domains ein fuer die Postfix die Mails lokal "
@@ -949,162 +974,158 @@ msgid ""
 "localhost.\\$mydomain, \\$mydomain)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1324
+#: ../../functions/kwpostfix/main_conf:1329
 msgid ""
 "Geben Sie den Domainnamen ein, fuer den dieser Mail Server zustaendig ist "
 "(Bsp. domain.de)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1358
+#: ../../functions/kwpostfix/main_conf:1363
 msgid ""
 "Waehlen Sie die Bereiche aus die ueber diesen SMTP Server relayen durfen."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1379
+#: ../../functions/kwpostfix/main_conf:1384
 msgid ""
 "Waehlen Sie den Rechnernamen der bei der Erzeugung neuer Mails benutzt "
 "werden soll."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1413
+#: ../../functions/kwpostfix/main_conf:1418
 msgid "Waehlen Sie die Bereiche aus, bei denen der Postmaster informiert wird."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1438
+#: ../../functions/kwpostfix/main_conf:1443
 msgid ""
 "Soll eine besondere Behandlung fuer die Adressen owner-listenname und "
 "listenname-request aktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1452
+#: ../../functions/kwpostfix/main_conf:1457
 msgid ""
 "Waehlen Sie die Paremeter aus in denen ein Domainangabe automatisch auch "
 "deren Subdomain miterfasst."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1477
+#: ../../functions/kwpostfix/main_conf:1482
 msgid ""
 "Geben Sie die IP-Netze ein, fuer die Postfix Mails annimmt/relayed wenn ein "
 "MX-Record auf diese Server zeigt. Es muss der hoechste MX-Host sein, sonst "
 "verweigert Postfix die Annahme (Bsp.: 192.168.0.0/16 192.168.10.0/24)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1494
+#: ../../functions/kwpostfix/main_conf:1499
 msgid ""
 "Achten Sie darauf das \\\"permit_mx_backup\\\" in den \\"
 "\"smtpd_recipient_restrictions\\\" aktiviert ist."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1512
+#: ../../functions/kwpostfix/main_conf:1517
 msgid ""
 "Waehlen Sie die Faelle aus bei denen ein \\\"Delivered-To:\\\" Header "
 "eingefuegt werden soll."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1555
+#: ../../functions/kwpostfix/main_conf:1560
 msgid ""
 "Waehlen Sie die Tabellen aus in denen auch Mailerweiterungen beruecksichtig "
 "werden sollen."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1599
+#: ../../functions/kwpostfix/main_conf:1604
 msgid ""
 "Waehlen Sie ein Trennzeichen aus mit der die Mailerweiterung abgetrennt wird."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1630
+#: ../../functions/kwpostfix/main_conf:1635
 msgid ""
 "Soll die Existenz eines Home Verzeichnisses, eines lokalen Empfaengers "
 "erzwungen werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1664
+#: ../../functions/kwpostfix/main_conf:1669
 #, sh-format
 msgid "In diesem Verzeichnis (\\$VERZ) liegt kein Programm Namens sendmail."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1688
+#: ../../functions/kwpostfix/main_conf:1693
 msgid ""
 "Waehlen Sie eine Gruppe aus, der die \\\"maildrop\\\" Warteschlange gehoert."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1708
+#: ../../functions/kwpostfix/main_conf:1713
 msgid "Soll soft_bounce, zum testen des Servers aktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1728
+#: ../../functions/kwpostfix/main_conf:1733
 msgid ""
 "Soll die korrekte Envelope-Adresse, nach RFC 2821, erzwungen werden (ja/"
 "nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1737
+#: ../../functions/kwpostfix/main_conf:1742
 msgid ""
 "Soll die Zusammenarbeit mit Mailtool von Suns uralt Solaris aktiviert werden "
 "(ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1747
+#: ../../functions/kwpostfix/main_conf:1752
 msgid ""
 "Sollen gebangte Routpfade aus UUCP Verbindungen in eine Domainform "
 "umgeschrieben werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1756
+#: ../../functions/kwpostfix/main_conf:1761
 msgid ""
 "Geben Sie den Ausgabekanal fuer Logmeldungen, an den Syslogd ein (mail,"
 "news,..., man 5 syslog.conf)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1771
+#: ../../functions/kwpostfix/main_conf:1776
 msgid ""
 "Geben Sie einen Namen ein, der in der Ausgabe von Postfix an den Syslogd "
 "erscheint (postfix)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1793
+#: ../../functions/kwpostfix/main_conf:1798
 msgid ""
 "Geben Sie den Header ein der eingefuegt werden soll, wenn kein Header \"To:"
 "\" vorgefunden wird (To: undisclosed-recipients:;)."
 msgstr ""
 
-#: ../../functions/kwpostfix/main_conf:1808
+#: ../../functions/kwpostfix/main_conf:1813
 msgid ""
 "Waehlen Sie die Zeichen die bei der Kodierung von Mail Adressen, bei VERP, "
 "genutzt werden sollen aus."
 msgstr ""
 
-#: ../../functions/kwpostfix/master_conf:5
+#: ../../functions/kwpostfix/master_conf:6
 msgid "Service"
 msgstr "Service"
 
-#: ../../functions/kwpostfix/master_conf:6
+#: ../../functions/kwpostfix/master_conf:7
 msgid "Typ"
 msgstr "Type"
 
-#: ../../functions/kwpostfix/master_conf:7
+#: ../../functions/kwpostfix/master_conf:8
 msgid "Privat"
 msgstr "Private"
 
-#: ../../functions/kwpostfix/master_conf:8
+#: ../../functions/kwpostfix/master_conf:9
 msgid "Unpriviligiert"
 msgstr "Unprivileged"
 
-#: ../../functions/kwpostfix/master_conf:9
+#: ../../functions/kwpostfix/master_conf:10
 msgid "Chroot"
 msgstr ""
 
-#: ../../functions/kwpostfix/master_conf:10
+#: ../../functions/kwpostfix/master_conf:11
 msgid "Aufwachzeit"
 msgstr "Wakeup"
 
-#: ../../functions/kwpostfix/master_conf:11
+#: ../../functions/kwpostfix/master_conf:12
 msgid "Max Prozesse"
 msgstr "Max process"
-
-#: ../../functions/kwpostfix/master_conf:12
-msgid "Befehl"
-msgstr "Command"
 
 #: ../../functions/kwpostfix/master_conf:13
 msgid "Argumente"
@@ -1153,27 +1174,27 @@ msgstr ""
 msgid "Waehlen Sie einen postfix daemon aus."
 msgstr "Select you a postfix daemon."
 
-#: ../../functions/kwpostfix/master_conf:329
+#: ../../functions/kwpostfix/master_conf:335
 msgid ""
 "Geben Sie hier die Argumente fuer den postfix daemon ein. Schauen Sie dazu "
 "in die jeweilige Dokumentation."
 msgstr ""
 
-#: ../../functions/kwpostfix/master_conf:450
+#: ../../functions/kwpostfix/master_conf:458
 msgid ""
 "Sie muessen noch die Menuepunkte Service, Befehl und eventuell Argumente mit "
 "Werten belegen."
 msgstr ""
 
-#: ../../functions/kwpostfix/master_conf:457
+#: ../../functions/kwpostfix/master_conf:465
 msgid "Geben Sie hier einen Namen fuer diesen Service ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/master_conf:522
+#: ../../functions/kwpostfix/master_conf:530
 msgid "Waehlen Sie einen Service aus."
 msgstr "Select you a service."
 
-#: ../../functions/kwpostfix/master_conf:631
+#: ../../functions/kwpostfix/master_conf:639
 #, sh-format
 msgid ""
 "Konnte die Auswahl nicht loeschen. Bitte editieren Sie die Datei \\"
@@ -1190,7 +1211,7 @@ msgid ""
 "192.168.0.1 | 192.168.0.0/24)."
 msgstr ""
 
-#: ../../functions/kwpostfix/mynetworks_table:52
+#: ../../functions/kwpostfix/mynetworks_table:53
 msgid "Sie muessen erst eine IP Adresse oder eine IP fuer das Netz eingeben."
 msgstr ""
 
@@ -1275,10 +1296,37 @@ msgid ""
 "regexp_table)."
 msgstr ""
 
-#: ../../functions/kwpostfix/regexp_table:113
+#: ../../functions/kwpostfix/regexp_table:115
 msgid ""
 "Sie muessen erst die Menuepunkte Zeichenkette und Aktion belegen. Text ist "
 "optional."
+msgstr ""
+
+#: ../../functions/kwpostfix/relay_clientcerts_table:5
+msgid "Fingerprint"
+msgstr ""
+
+#: ../../functions/kwpostfix/relay_clientcerts_table:6
+msgid "Benutzer/Rechner"
+msgstr ""
+
+#: ../../functions/kwpostfix/relay_clientcerts_table:25
+msgid ""
+"Geben Sie den Fingerprint des Zertifikats oder des oeffentlichen Schluessel "
+"des Client ein (Bsp. D7:04:2F:A7:0B:8C:A5:21:FA:31:77:E1:41:8A:EE:80)."
+msgstr ""
+
+#: ../../functions/kwpostfix/relay_clientcerts_table:41
+msgid ""
+"Geben Sie den Namen eines Benutzer oder Rechners, der zum Fingerprint passt, "
+"ein (Bsp.: user oder host.domain.de)."
+msgstr ""
+
+#: ../../functions/kwpostfix/relay_clientcerts_table:65
+#, sh-format
+msgid ""
+"Sie muessen erst die Menuepunkte $lv_Fingerprint und $lv_User_Host mit "
+"Werten belegen."
 msgstr ""
 
 #: ../../functions/kwpostfix/relay_conf:238
@@ -1287,34 +1335,43 @@ msgid ""
 "(Bsp. [smtp.domain.de] , smtp.domain.de:25, [smtp.domain.de]:25)."
 msgstr ""
 
-#: ../../functions/kwpostfix/relay_domains_table:7
-msgid "Rechner/Domain"
-msgstr "Host/Domain"
-
-#: ../../functions/kwpostfix/relay_domains_table:25
+#: ../../functions/kwpostfix/relay_domains_table:24
+#: ../../functions/kwpostfix/sasl_password_table:28
 msgid ""
-"Geben Sie den Namen eines Rechners oder einer Domain ein (Bsp. host1.domain."
+"Geben Sie den Namen eines Rechners oder einer Domain ein (Bsp. host.domain."
 "de | domain.de)."
 msgstr ""
 
-#: ../../functions/kwpostfix/restrictions:18
+#: ../../functions/kwpostfix/restrictions:140
 msgid "Konfiguration::Restrictions"
 msgstr "Configuration::Restrictions"
 
-#: ../../functions/kwpostfix/restrictions:19
+#: ../../functions/kwpostfix/restrictions:141
 msgid "Waehlen Sie Ihre Restrictions aus."
 msgstr "Select your Restrictions."
 
-#: ../../functions/kwpostfix/restrictions:307
+#: ../../functions/kwpostfix/restrictions:200
 msgid ""
 "Bei permit_mx_backup kann optional die Restriction permit_mx_backup_networks "
 "belegt werden (Hauptkonfiguration)."
 msgstr ""
 
-#: ../../functions/kwpostfix/restrictions:313
+#: ../../functions/kwpostfix/restrictions:207
 msgid ""
 "Geben Sie bitte ein oder mehrere RBL-Domains, getrennt durch ein "
 "Leerzeichen, ein (Bsp. relays.ordb.org, list.dsbl.org)"
+msgstr ""
+
+#: ../../functions/kwpostfix/sasl_password_table:40
+msgid "Geben Sie einen Benutzer fuer die Authentifizierung ein."
+msgstr ""
+
+#: ../../functions/kwpostfix/sasl_password_table:52
+msgid "Geben Sie ein Passwort fuer die Authentifizierung ein."
+msgstr ""
+
+#: ../../functions/kwpostfix/sasl_password_table:77
+msgid "Sie muessen alle Menuepunkte mit Werten belegen."
 msgstr ""
 
 #: ../../functions/kwpostfix/smtp_conf:169
@@ -1400,11 +1457,11 @@ msgid ""
 "(ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:832
+#: ../../functions/kwpostfix/smtp_conf:833
 msgid "SMTP-AUTH Identifierzierung aktivieren (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:841
+#: ../../functions/kwpostfix/smtp_conf:842
 msgid ""
 "Falls eine SMTP-AUTH Identifierzierung mit dem Fehlercode 535 abgelehnt wird "
 "kann die Mailzustellung aufgeschoben werden oder die Mail als unzustellbar "
@@ -1412,25 +1469,25 @@ msgid ""
 "nein)?."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:889
+#: ../../functions/kwpostfix/smtp_conf:890
 msgid ""
 "Geben Sie den Pfad zum SASL-Socket fuer bestimmete SASL-Implementationen wie "
 "Dovecot ein. Siehe auch dem Punkt smtp_sasl_type."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:945
+#: ../../functions/kwpostfix/smtp_conf:946
 msgid ""
 "Waehlen Sie ein SASL Plugin mit der sich der Postfix SMTP Client "
 "authentifizieren soll aus."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:959
+#: ../../functions/kwpostfix/smtp_conf:960
 msgid ""
 "Man kann an das MAIL FROM Kommando, bei der SMTP-AUTH Identifierzierung die "
 "AUTH=<> Optionen anhaengen.\\n\\nSoll dies geschehen(ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:977
+#: ../../functions/kwpostfix/smtp_conf:978
 msgid ""
 "Hier koennen Sie die Authentifizierung des Postfix Clients mittels SMTP_AUTH "
 "aktivieren. Dabei wird der SMTP Cache ausgeschaltet, damit bei Mails von "
@@ -1438,34 +1495,34 @@ msgid ""
 "die Authentifizierung aktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:987
+#: ../../functions/kwpostfix/smtp_conf:988
 msgid ""
 "Begruessungstext bei SMTP_Code 5xx (dauerhafter Fehler) ignorieren (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:997
+#: ../../functions/kwpostfix/smtp_conf:998
 msgid "Trennung ohne warten auf Antwort nach dem SMTP Kommando QUIT (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:1043
+#: ../../functions/kwpostfix/smtp_conf:1044
 msgid ""
 "Soll der SMTP Server versuchen eine Mail Hjacking Attacke zu erkennen (ja/"
 "nein)? Dies basiert auf der Schwachstelle im TLS Protokoll (CVE-2009-3555)."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:1109
+#: ../../functions/kwpostfix/smtp_conf:1110
 msgid ""
 "Soll der entfernte SMTP Server die Informationen, fuer Rechnernamen im "
 "Zertifikat suchen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:1223
+#: ../../functions/kwpostfix/smtp_conf:1224
 msgid ""
 "Soll der Rechnername vom entfernten SMTP Server geloggt werden, falls TLS "
 "nicht fuer diesen Server aktiviert ist (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtp_conf:1334
+#: ../../functions/kwpostfix/smtp_conf:1335
 msgid ""
 "Soll TLS benutzt werden, falls ein entfernter SMTP Server STARTTLS anbietet "
 "(ja/nein)?"
@@ -1505,72 +1562,72 @@ msgstr ""
 msgid "Soll der TCP-Port des Clients geloggt werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:292
+#: ../../functions/kwpostfix/smtpd_conf:294
 msgid ""
 "Soll Postfix erst nach dem ersten gueltigen Empfaenger eine Verbindung zum "
 "SMTP-Proxy aufbauen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:305
+#: ../../functions/kwpostfix/smtpd_conf:307
 msgid ""
 "Soll bei einem REJECT, einer Restriktion, nicht sofort abgebrochen werden "
 "(ja/nein)? Siehe Hilfe."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:322
+#: ../../functions/kwpostfix/smtpd_conf:326
 msgid ""
 "Geben Sie eine Liste von EHLO Schluesselwoertern (starttls, auth, ...) die "
 "der SMTP Server nichten senden soll, bei einer EHLO Antwort von einem "
 "entfernten SMTP Client."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:369
+#: ../../functions/kwpostfix/smtpd_conf:373
 msgid ""
 "Geben Sie die Kommandos ein bei den der SMTP Server die Sitzung sofort "
 "beendet (Bsp. CONNECT GET POST), getrennt durch ein Leerzeichen."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:385
+#: ../../functions/kwpostfix/smtpd_conf:389
 msgid ""
 "Geben Sie die Anzahl an Fehlern ein, nach der Postfix eine SMTP-Sitzung "
 "abbrechen soll (Bsp.: 20 oder \\${stress?1}\\${stress:20})."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:396
+#: ../../functions/kwpostfix/smtpd_conf:400
 msgid "Muss ein Client ein HELO senden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:422
+#: ../../functions/kwpostfix/smtpd_conf:426
 msgid ""
 "Geben Sie die maximale Anzahl an Muellkomandos ein um eine Verbindung offen "
 "zu halten (Bsp.: 100 oder \\${stress?1}\\${stress:100})."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:444
+#: ../../functions/kwpostfix/smtpd_conf:448
 msgid ""
 "Geben Sie SMTP-Komandos ein, auf denen postfix zwar ein 250 (OK) ausgibt, "
 "aber keinerlei Aktion taetig."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:459
+#: ../../functions/kwpostfix/smtpd_conf:463
 msgid ""
 "Geben Sie einen Wert ein, nach dem in den Tabellen gesucht wird, wenn eine "
 "Mail keinen Absender hat."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:473
+#: ../../functions/kwpostfix/smtpd_conf:477
 msgid ""
 "Soll Postfix den Reverse-Lookup des Clients aufloesen oder nicht (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:483
+#: ../../functions/kwpostfix/smtpd_conf:487
 msgid ""
 "Soll das Verhalten von \\\"smtpd_timeout\\\" vom Zeitlimit fuer das Lesen "
 "oder Schreiben auf fuer das Senden oder Erhalten von kompletten Mails, einer "
 "Verbindung, gesetzt werden (Bsp.: no oder \\${stress?yes}\\${stress:no})?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:528
+#: ../../functions/kwpostfix/smtpd_conf:532
 #, sh-format
 msgid ""
 "Geben Sie bitte den Namen an mit welchem sich der Postfix Server beim senden "
@@ -1578,86 +1635,104 @@ msgid ""
 "$myhostname)."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:542
+#: ../../functions/kwpostfix/smtpd_conf:546
 msgid "Geben Sie bitte den Rechner und den TCP Port des Proxy Servers ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:562
+#: ../../functions/kwpostfix/smtpd_conf:566
 msgid "Geben Sie den Timeout fuer die Verbindung zum Proxy Filter ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:605
+#: ../../functions/kwpostfix/smtpd_conf:609
 msgid ""
 "Soll der SMTP Server Mails mit unbekannte Empfaenger Adresse verwerfen (ja/"
 "nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:614
+#: ../../functions/kwpostfix/smtpd_conf:618
 msgid ""
 "Soll der SMTP Server Mails mit unbekannte Absender Adresse verwerfen (ja/"
 "nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:629
+#: ../../functions/kwpostfix/smtpd_conf:633
 msgid "SMTP-AUTH, fuer eingehende mails, benutzen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:638
+#: ../../functions/kwpostfix/smtpd_conf:642
 msgid ""
 "Soll Postfix Informationen ueber den SMTP-Auth-Login in die Received-Zeilen "
 "mit aufnehmen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:647
+#: ../../functions/kwpostfix/smtpd_conf:651
 msgid ""
 "Geben Sie bitte eine Liste von Rechnern, IP-Adressen, Netzen oder .domain "
 "ein, denen keine AUTH Unterstuetzung angeboten werden soll."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:662
+#: ../../functions/kwpostfix/smtpd_conf:666
 msgid ""
 "Geben Sie den Domainnamen ein, der an die Nutzererkennung angehaengt wird "
 "(Bsp.: domain.de)."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:680
+#: ../../functions/kwpostfix/smtpd_conf:684
 msgid ""
 "Geben Sie den Namen des SASL-Service ein, unter dem Postfix laeuft (Standard "
 "ist smtpd). Siehe auch dem Punkt smtpd_sasl_type."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:712
+#: ../../functions/kwpostfix/smtpd_conf:716
 #, fuzzy
 msgid "Waehlen Sie ein SASL-Protokoll aus."
 msgstr "Select a SASL-Protocol."
 
-#: ../../functions/kwpostfix/smtpd_conf:754
+#: ../../functions/kwpostfix/smtpd_conf:758
 msgid ""
 "Geben Sie den Timeout zwischen lesen und schreiben, waehrend TLS startet, "
 "ein (Bsp.: 300s oder \\${stress?10}\\${stress:300}s)."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:767
+#: ../../functions/kwpostfix/smtpd_conf:771
 msgid ""
 "Geben Sie den Timeout bei Inaktivitaet ein, nach dem \\\"smtpd\\\" eine "
 "Verbindung abbricht (Bsp.: 300s oder \\${stress?10}\\${stress:300}s)."
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:822
+#: ../../functions/kwpostfix/smtpd_conf:826
 msgid ""
 "Soll dieser Server, fuer eingehende Mails, nur SSL/TLS benutzen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:1043
+#: ../../functions/kwpostfix/smtpd_conf:1047
 #, sh-format
 msgid ""
 "Soll dieser Server ($myhosname), fuer eingehende Mails, die received Zeilen "
 "loggen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwpostfix/smtpd_conf:1093
+#: ../../functions/kwpostfix/smtpd_conf:1099
 msgid ""
 "Soll dieser Server, fuer eingehende Mails, den Wrapper benutzen (ja/nein)?"
+msgstr ""
+
+#: ../../functions/kwpostfix/smtpd_sender_login_table:27
+msgid ""
+"Geben Sie bitte eine Mail Adresse ein die einem oder mehreren Empfaenger "
+"zugeordnet werden soll (user@domain.de)."
+msgstr ""
+
+#: ../../functions/kwpostfix/smtpd_sender_login_table:44
+msgid ""
+"Geben Sie einen oder mehrere lokale Benutzer ein zu denen die Mailadresse "
+"gehoert, getrennt durch ein Komma (Bsp.: user1, user2)."
+msgstr ""
+
+#: ../../functions/kwpostfix/smtpd_sender_login_table:67
+msgid ""
+"Sie muessen erst eine Sender Adresse (MAIL FROM) und einen oder mehrere "
+"dazugehoerige Empfaenger eingeben."
 msgstr ""
 
 #: ../../functions/kwpostfix/sql_db:8
@@ -1686,50 +1761,46 @@ msgstr ""
 msgid "Geben Sie den Namen der Datenbank ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/sql_db:113
+#: ../../functions/kwpostfix/sql_db:112
 msgid "Geben Sie den Tabellennamen der Datenbank ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/sql_db:125
+#: ../../functions/kwpostfix/sql_db:124
 msgid ""
 "Geben Sie die zusaetzlichen Konditionen fuer die Abfrage der Datenbank ein. "
 "Siehe man 5 pgsql_table/mysql_table."
 msgstr ""
 
-#: ../../functions/kwpostfix/sql_db:183
+#: ../../functions/kwpostfix/sql_db:182
 msgid "Geben Sie den Namen der Funktion fuer die Tabelle der Datenbank ein."
 msgstr ""
 
-#: ../../functions/kwpostfix/sql_db:269
+#: ../../functions/kwpostfix/sql_db:268
 #, fuzzy
 msgid "Mysql_Tabelle"
 msgstr "Mysql_Table"
 
-#: ../../functions/kwpostfix/sql_db:277
+#: ../../functions/kwpostfix/sql_db:276
 #, fuzzy
 msgid "Postgresql_Tabelle"
 msgstr "Postgresql_Table"
 
-#: ../../functions/kwpostfix/tab_support_choice:11
+#: ../../functions/kwpostfix/tab_support_choice:12
 msgid "Namensuebernahme"
 msgstr ""
 
-#: ../../functions/kwpostfix/tab_support_choice:12
-msgid "Variablenauswahl"
-msgstr ""
-
-#: ../../functions/kwpostfix/tab_support_choice:39
+#: ../../functions/kwpostfix/tab_support_choice:46
 #, sh-format
 msgid ""
 "Hier koennen Sie Variablen und/oder Dateien eingeben (Bsp. \\$alias_maps \\"
 "$virtual_mailbox_maps unix:passwd.byname)."
 msgstr ""
 
-#: ../../functions/kwpostfix/tab_support_choice:56
+#: ../../functions/kwpostfix/tab_support_choice:70
 msgid "Waehlen Sie das Tabellenformat aus."
 msgstr ""
 
-#: ../../functions/kwpostfix/tab_support_choice:229
+#: ../../functions/kwpostfix/tab_support_choice:281
 msgid ""
 "Geben Sie entweder eine Zahl (5432, z.B. Postgresql Port) oder einen Text "
 "ein. Lesen Sie bitte die Hilfe."
@@ -1838,7 +1909,7 @@ msgstr ""
 msgid "Geben Sie den Namen einer Domain ein (Bsp. domain.de)."
 msgstr ""
 
-#: ../../functions/kwpostfix/virtual_alias_mb_domains_table:45
+#: ../../functions/kwpostfix/virtual_alias_mb_domains_table:46
 msgid "Sie muessen erst einen Domainnamen eingeben (Bsp. domain.de)."
 msgstr ""
 
@@ -1864,10 +1935,16 @@ msgid ""
 "(Bsp. user1@domain.de, user2@domain.de)."
 msgstr ""
 
-#: ../../functions/kwpostfix/virtual_alias_table:209
+#: ../../functions/kwpostfix/virtual_alias_table:210
 msgid ""
 "Sie muessen erst eine virtuelle Domain oder eine Adresse und eine "
 "Empfaengeradresse eingeben, bevor Sie was speichern koennen."
+msgstr ""
+
+#: ../../functions/kwpostfix/virtual_mailbox_table:30
+msgid ""
+"Geben Sie hier bitte eine Mailadresse oder Domain ein (Bsp. @domain.de | "
+"user@domain.de)."
 msgstr ""
 
 #: ../../functions/kwpostfix/virtual_mailbox_table:54
@@ -1886,7 +1963,7 @@ msgid ""
 "Kofiguration von virtual aendern."
 msgstr ""
 
-#: ../../functions/kwpostfix/virtual_mailbox_table:196
+#: ../../functions/kwpostfix/virtual_mailbox_table:194
 msgid ""
 "Sie muessen erst in der VIRTUAL-Konfiguration den Parameter \\"
 "\"virtual_mailbox_base\\\" belegen."
@@ -1898,7 +1975,7 @@ msgid ""
 "/usr/share/doc/postfix-doc/examples/access.gz\n"
 "\n"
 "Tabellen:\n"
-"*access\n"
+"*_access\n"
 "\n"
 "Adresse: Dies koennen User, IP-Adressen/-Netze, etc. sein.\n"
 "# alle so beginnenden IP-Nummern\n"
@@ -1927,7 +2004,7 @@ msgid ""
 "\\tDISCARD, DUNNO, HOLD, REJECT, 4/5xx. Die 4/5xx sind Fehler-\n"
 "\\tcodes in Zahlen.\n"
 "\n"
-"Text: Text der auf eine Aktion zurueckgesendet werden soll."
+"Text: Text der auf eine Aktion zurueckgesendet werden soll.\n"
 msgstr ""
 
 #: ../../help/kwpostfix/address_help:3
@@ -2555,6 +2632,24 @@ msgid ""
 "TLS_Proxy: Einstellungen rund um Tlsproxy.\n"
 "\n"
 "UUCP: Einstellungen rund um uucp.\n"
+msgstr ""
+
+#: ../../help/kwpostfix/fast_flush_domains_help:3
+msgid ""
+"Hier kann man einstellen fuer welche Rechner oder Domains der\n"
+"Postfix Server einen seperaten Queue-Cache aufbauen soll. Diese\n"
+"werden dann bei einem ETRN Kommando schneller aus den Queues geholt\n"
+"und zugestellt.\n"
+"\n"
+"Tabelle:\n"
+"fast_flush_domains\n"
+"\n"
+"Format:\n"
+"domain.de\\t:\n"
+"host\\t\\t:\n"
+"\n"
+"NOTIZ: Das Zeichen \":\" steht nur fuer die Konformitaet der \n"
+"\\tTabellen."
 msgstr ""
 
 #: ../../help/kwpostfix/help:3
@@ -3327,27 +3422,30 @@ msgstr ""
 #: ../../help/kwpostfix/local_recipient_help:3
 #, sh-format
 msgid ""
-"Hier kann man Postfix einstellen fuer welche lokalen Empfaenger\n"
-"Adressen er Mails annehmen soll. Lokaler Empfaenger ist wenn die\n"
-"Doamin auf einen der Werte von $mydestination, $inet_interfaces\n"
-"oder $proxy_interfaces passt.\n"
+"Hier kann man Postfix einstellen welche Mailadressen lokal sind.\n"
+"Lokaler Empfaenger ist wenn die Domain auf einen der Werte von\n"
+"$mydestination, $inet_interfaces oder $proxy_interfaces passt.\n"
+"Gibt es keinen lokalen Empfaenger so wird die Mail nicht\n"
+"angenommen.\n"
 "\n"
 "Bei regulaeren Tabellentypen (regexp,pcre) muss die volle lokale\n"
 "Mailadresse eingegeben werden (user@domain.de).\n"
 "\n"
-"Tabellen:\n"
+"Tabelle:\n"
 "local_recipient_maps\n"
 "\n"
 "Format:\n"
-"# Fuer diese Domain werden Mails lokal eingeliefert.\n"
-"@domain.de\\t:\n"
-"# Fuer diesen User werden Mails lokal eingeliefert.\n"
-"user\\t\\t:\n"
-"# Fuer diesen Mailadresse werden Mails lokal eingeliefert.\n"
+"# Fuer diese Mailadresse werden Mails lokal eingeliefert.\n"
+"# hoehste Prioritaet.\n"
 "user@domain.de\\t:\n"
+"# Fuer diesen Benutzer werden Mails lokal eingeliefert.\n"
+"user\\t\\t:\n"
+"# Fuer diese Domain werden Mails lokal eingeliefert.\n"
+"# niedrigste Prioritaet.\n"
+"@domain.de\\t:\n"
 "\n"
 "NOTIZ: Das Zeichen \":\" steht nur fuer die Konformitaet der \n"
-"\\tTabellen."
+"\\tTabellen.\n"
 msgstr ""
 
 #: ../../help/kwpostfix/lock_help:3
@@ -3451,15 +3549,14 @@ msgid ""
 "mail_owner: Userkennung von Postfix (Bsp.: postfix).\n"
 "\\tStandard ist postfix.\n"
 "\n"
-"mail_spool_directory: Pfad zum Mail spool Verzeichnis\n"
+"mail_spool_directory: Pfad zum Mail spool Verzeichnis.\n"
 "\\tStandard ist /var/mail.\n"
 "\n"
-"mailbox_command: Programm zum schreiben der Mails in die lokalen\n"
-"\\tPostfaecher, beispielsweise durch procmail. Standard von Postfix\n"
-"\\tist local.\n"
+"mailbox_command: Programm mit Argumenten zum Einliefern der Mails\n"
+"\\tin die lokalen Postfaecher, beispielsweise durch procmail.\n"
 "\n"
-"mailbox_command_maps: Tabelle, um einzelnen Adressen ein anderes\n"
-"\\t\"mailbox_command\" zuweisen zu koennen.\n"
+"mailbox_command_maps: Tabelle um einzelnen Adressen ein anderes\n"
+"\\tMailbox Kommando zum einliefern Ihrer Mails zuweisen zu koennen.\n"
 "\n"
 "mailbox_delivery_lock: Art des lockens bei lokaler Zustellung in\n"
 "\\tdie Postfaecher.\n"
@@ -3469,7 +3566,7 @@ msgid ""
 "\\tByte, danach wird gebounct.\n"
 "\\tStandard ist 51200000.\n"
 "\n"
-"mailbox_transport: optionale Transportmethode, bevor eine Mail in\n"
+"mailbox_transport: Optionale Transportmethode, bevor eine Mail in\n"
 "\\tdie Postfaecher einsortiert werden soll.\n"
 "\n"
 "mailbox_transport_maps: Tabelle, fuer die optionale Transport-\n"
@@ -3557,7 +3654,6 @@ msgid ""
 msgstr ""
 
 #: ../../help/kwpostfix/main_help:3
-#, sh-format
 msgid ""
 "In einigen Faellen koennen anstelle von Tabellen auch normale\n"
 "Eintragungen vorgenommen werden. Gibts es viele Eintragungen ist\n"
@@ -3941,6 +4037,8 @@ msgid ""
 "\\tSiehe man 5 syslog.conf.\n"
 "\n"
 "syslog_name: Ausgabename fuer Logmeldungungen an syslogd.\n"
+"\\tStandard ist ${multi_instance_name:postfix}${multi_instance_name?"
+"$multi_instance_name}.\n"
 "\n"
 "transport_maps: Tabelle mit den Transporteintraegen.\n"
 "\n"
@@ -3989,7 +4087,7 @@ msgid ""
 "Befehl: Kommando das ausgefuehrt werden soll, wenn ein Service\n"
 "\\taufgerufen wird.\n"
 "\n"
-"Argumente: Argumente die dem Befehl mituebergeben werden soll.\n"
+"Argumente: Argumente die dem Befehl mit uebergeben werden soll.\n"
 "\\tLesen Sie dazu die Dokumentation von Postfix und dem\n"
 "\\tdementsprechenden Programm welches zum Einsatz kommt.\n"
 msgstr ""
@@ -4268,8 +4366,8 @@ msgstr ""
 
 #: ../../help/kwpostfix/regexp_help:3
 msgid ""
-"Zeichenkette: Regulaeren Ausdruck eingeben (Bsp.: /RA/Flags |\n"
-"\\t!/RA/Flags). Siehe man 5 regexp_table.\n"
+"Zeichenkette: Regulaeren Ausdruck eingeben. Beispiel: /RA/Flags |\n"
+"\\t!/RA/Flags. Siehe man 5 regexp_table.\n"
 "\n"
 "Flags: i = REG_ICASE (ingnore case), i ist Standard.\n"
 "\\tx = REG_EXTENDED (erweiterte Ausdruecke), x ist Standard.\n"
@@ -4292,7 +4390,25 @@ msgid ""
 "\\tWARN zu einem REJECT oder zu DISCARD.\n"
 "\\t4/5XX = Fehlercode und optionalen Text senden.\n"
 "\n"
-"Text: Antworttext (optional)"
+"Text: Antworttext (optional).\n"
+msgstr ""
+
+#: ../../help/kwpostfix/relay_clientcerts_help:3
+msgid ""
+"Hier kann man die Fingerprints der Client Zertifikate oder des\n"
+"oeffentlichen Schluessels dieser einstellen, fuer die der Postfix\n"
+"SMTP-Server mittles der Restriction \"permit_tls_clientcerts\" den\n"
+"Zugriff erlaubt. Fuer eine groessere Kontrolle siehe auch der\n"
+"Restriction Tabelle \"check_ccert_access\" unter dem Konfigurations-\n"
+"punkt \"smtpd_client_restrictions\" in der Sektion fuer SMTP\n"
+"Konfigurationen.\n"
+"\n"
+"Tabelle:\n"
+"relay_clientcerts\n"
+"\n"
+"Format:\n"
+"fingerprint\\thost.domain.de\n"
+"fingerprint\\tuser\n"
 msgstr ""
 
 #: ../../help/kwpostfix/relay_domains_help:3
@@ -4300,7 +4416,7 @@ msgid ""
 "Hier kann man einstellen fuer welche Rechner oder Domains der\n"
 "Postfix Server zustendig ist.\n"
 "\n"
-"Tabellen:\n"
+"Tabelle:\n"
 "relay_domains\n"
 "\n"
 "Format:\n"
@@ -4410,19 +4526,23 @@ msgid ""
 "Hier kann man Postfix einstellen, fuer welche gueltigen Empfaenger\n"
 "Adressen, er Mails aus den Domains in $relay_domains annehmen soll.\n"
 "Falls der Admin das nicht weiss, lassen Sie den Parameter\n"
-"relay_recipient_maps (Hauptkonfiguration) leer, oder Sie muessen\n"
-"ein Wildcard \"@domain.de x\" anlegen.\n"
+"relay_recipient_maps leer, oder Sie muessen ein Wildcard\n"
+"\"@domain.de\" anlegen.\n"
 "\n"
-"Tabellen:\n"
+"Tabelle:\n"
 "relay_recipient_maps\n"
 "\n"
 "Format:\n"
+"# Fuer diese Mailadresse werden Mails angenommen.\n"
+"# hoehste Prioritaet.\n"
+"user@domain.de\\t:\n"
+"# Fuer diesen Benutzer werden Mails angenommen.\n"
+"user\\t\\t:\n"
 "# Fuer diese Domain werden werden beliebige Mails angenommen.\n"
-"@domain.de\\tx\n"
-"# Fuer diesen Mailadresse werden Mails angenommen.\n"
-"user@domain.de\\tx\n"
+"# niedrigste Prioritaet.\n"
+"@domain.de\\t:\n"
 "\n"
-"NOTIZ: Das Zeichen \"x\" steht nur fuer die Konformitaet der \n"
+"NOTIZ: Das Zeichen \":\" steht nur fuer die Konformitaet der \n"
 "\\tTabellen."
 msgstr ""
 
@@ -5227,22 +5347,26 @@ msgstr ""
 msgid ""
 "Lookup Tabbelle mit den SASL Login Namen, die Besitzer der Sender\n"
 "(MAIL FROM) Adresse sind.\n"
+"Dieser Lookup geht nur wenn die Domain auf eins der Muster, in\n"
+"den Parametern von, $myorigin, $mydestination, $inet_interfaces\n"
+"oder $proxy_interfaces passt.\n"
 "\n"
-"Tabellen:\n"
+"Tabelle:\n"
 "smtpd_sender_login_maps\n"
 "\n"
 "Format:\n"
-"# hoechste Prioritaet\n"
-"user@domain.de\\t:\n"
-"# Dieser Lookup geht nur wenn die Domain auf eins der Muster, in\n"
-"# den Parametern von, $myorigin, $mydestination, $inet_interfaces\n"
-"# oder $proxy_interfaces passt.\n"
-"user\\t\\t:\n"
-"# kleinste Prioritaet\n"
-"@domain.de\\t:\n"
-"\n"
-"NOTIZ: Das Zeichen \":\" steht nur fuer die Konformitaet der \n"
-"\\tTabellen."
+"# Diese Absender Adressen werden einem oder mehreren SASL Logins\n"
+"# zugeordnet und dadurch authentifiziert.\n"
+"#\n"
+"# hoehste Prioritaet.\n"
+"user@domain.de\\tuser\n"
+"user@domain.de\\tuser,otheruser\n"
+"# Die Absender Adresse wird in $myorigin, $mydestination,\n"
+"# $inet_interfaces und $proxy_interfaces nachgeschaut.\n"
+"user\\t\\tuser\n"
+"# Diese Domain wird den angegeben Empfaenger Benutzern zugeordnet.\n"
+"# niedrigste Prioritaet.\n"
+"@domain\\tuser\n"
 msgstr ""
 
 #: ../../help/kwpostfix/smtp_help:3
@@ -5859,82 +5983,124 @@ msgid ""
 "Ansicht der Tabellen stehen zur Verfuegung, sowie die Datenbank neu\n"
 "erstellen.\n"
 "\n"
-"In einigen Tabellen werden Regulaere Ausdruecke (RA) unterstuetzt\n"
-"(Beispiel: /regexp/flags | !/regexp/flags ). flags sind i \n"
-"(REG_ICASE), x (REG_EXTENDED), m (REG_NEWLINE). m wird noch nicht\n"
-"unterstuetzt, die anderen beiden sind Standard.\n"
+"In einigen Tabellen werden Regulaere Ausdruecke (RA) unterstuetzt.\n"
+"Beispiele: /regexp/flags, !/regexp/flags.\n"
+"flags sind i (REG_ICASE), x (REG_EXTENDED), m (REG_NEWLINE).\n"
+"Standard sind ix.\n"
 "\n"
-"*access: Definiert selektive Zugriffsrechte zum Einliefern von Mails\n"
-"\\tbasieren auf Absender, Empfaenger oder Hostnamen. RA werden\n"
-"\\tunterstuetzt.\n"
+"check_*_access: Definiert selektive Zugriffsrechte zum Einliefern\n"
+"\\tvon Mails basierend auf Absender, Empfaenger oder Hostnamen. RA\n"
+"\\twerden unterstuetzt.\n"
 "\n"
-"aliases: Zuweisung von lokalen Mails an andere Empfaenger. Ist meist\n"
-"\\tdie Datei /etc/aliases.\n"
+"alias_maps: Zuweisung von lokalen Mails an andere Empfaenger. Ist\n"
+"\\tmeist die Datei /etc/aliases.\n"
 "\n"
 "body_checks: Tabelle fuer die Filterung des Bodies. RA werden\n"
 "\\tunterstuetzt.\n"
 "\n"
-"canonical: Tabelle zum umwandeln von Empfaenger- und Absenderadressen\n"
+"canonical_maps: Tabelle zum umwandeln von Empfaenger und Absender\n"
 "\\tim SMTP-Envelope- und Mailheader.\n"
+"\n"
+"fast_flush_domains: Tabelle, Rechner/Domains fuer die ein seperater\n"
+"\\tQueue-Cache aufgebaut werden soll, damit diese bei einem ETRN\n"
+"\\tKommando scheller aus den Queues geholt und zugestellt werden\n"
+"\\tkoennen.\n"
 "\n"
 "header_checks: Tabelle fuer die Filterung des Headers. RA werden\n"
 "\\tunterstuetzt.\n"
 "\n"
-"lmtp_sasl_password: Tabelle mit den Kennungen/Passwoertern fuer\n"
-"\\tauthentifizierte LMTP_verbindungen.\n"
+"lmtp_body_checks: Tabelle fuer die Filterung des Bodies bei der\n"
+"\\tTransportmethode LMTP. RA werden unterstuetzt.\n"
 "\n"
-"mailbox_command: Tabelle um einzelnen Adressen ein anderes\n"
-"\\tmailbox_command zuweisen zu koennen.\n"
+"lmtp_header_checks: Tabelle fuer die Filterung des Headers bei der\n"
+"\\tTransportmethode LMTP. RA werden unterstuetzt.\n"
 "\n"
-"mynetworks: Tabelle fuer IP-Adressen und IP-Bereiche, die relayen\n"
-"\\tduerfen.\n"
+"lmtp_mime_header_checks: Tabelle fuer die Filterung des Mime\n"
+"\\tHeaders bei der Transportmethode LMTP. RA werden unterstuetzt.\n"
+"\n"
+"lmtp_nested_header_checks: Tabelle fuer die Filterung des Headers\n"
+"\\teiner angehaengten Nachricht, bei der Transportmethode LMTP. RA\n"
+"\\twerden unterstuetzt.\n"
+"\n"
+"lmtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern\n"
+"\\tfuer authentifizierte LMTP Verbindungen.\n"
+"\n"
+"mailbox_command_maps: Tabelle um einzelnen Adressen ein anderes\n"
+"\\tMailbox Kommando zum einliefern Ihrer Mails zuweisen zu koennen.\n"
+"\n"
+"mailbox_transport_maps: Tabelle fuer die Regelung der\n"
+"\\tTransportmethode fuer einzelne Empfaenger.\n"
+"\n"
+"milter_header_checks: Tabelle fuer die Filterung des Nachrichten\n"
+"\\tHeaders der von der Milter Anwendung produziert wird. RA\n"
+"\\twerden unterstuetzt.\n"
 "\n"
 "mime_header_checks: Tabelle fuer die Filterung des Mime Headers. RA\n"
 "\\twerden unterstuetzt.\n"
 "\n"
+"mynetworks: Tabelle fuer IP-Adressen und IP-Bereiche, die relayen\n"
+"\\tduerfen.\n"
+"\n"
 "nested_header_checks: Tabelle fuer die Filterung des Headers einer\n"
-"\\tangehaengeten Nachricht. RA werden unterstuetzt.\n"
+"\\tangehaengten Nachricht. RA werden unterstuetzt.\n"
 "\n"
-"recipient_bcc: Tabelle, wer bekommt eine Bcc (Blind Carbon-Copy) Mail,\n"
-"\\twenn jemand als Empfaenger im Envelope-Header einer Mail steht.\n"
+"recipient_bcc_maps: Tabelle, wer bekommt eine Bcc (Blind Carbon\n"
+"\\tCopy) Mail, wenn jemand als Empfaenger im Envelope-Header einer\n"
+"\\tMail steht.\n"
 "\n"
-"recipient_canonical: Tabelle zum umwandeln von Empfaengeradressen im\n"
+"recipient_canonical_maps: Tabelle zum umwandeln vom Empfaenger im\n"
 "\\tSMTP-Envelope- und Mailheader. \n"
 "\n"
 "relay_domains: Tabelle, Rechner/Domains fuer die bzw. von denen\n"
-"\\tpostfix relayed. \n"
+"\\tpostfix relayed.\n"
 "\n"
-"relocated: Tabelle fuer mailadressen die umgezogen sind.\n"
+"relocated_maps: Tabelle fuer Mailadressen die umgezogen sind.\n"
 "\n"
-"sender_bcc: Tabelle, wer bekommt eine Bcc (Blind Carbon-Copy) Mail,\n"
-"\\twenn jemand als Sender im Envelope-Header einer Mail steht.\n"
+"sender_bcc_maps: Tabelle, wer bekommt eine Bcc (Blind Carbon Copy)\n"
+"\\tMail,wenn jemand als Sender im Envelope-Header einer Mail steht.\n"
 "\n"
-"sender_canonical: Tabelle zum umwandeln von Absenderadressen im\n"
+"sender_canonical_maps: Tabelle zum umwandeln vom Absender im\n"
 "\\tSMTP-Envelope- und Mailheader.\n"
 "\n"
-"smtp_sasl_password: Tabelle mit den Kennungen/Passwoertern fuer\n"
-"\\tauthentifizierte SMTP_verbindungen.\n"
+"smtp_body_checks: Tabelle fuer die Filterung des Bodies bei der\n"
+"\\tTransportmethode SMTP. RA werden unterstuetzt.\n"
 "\n"
-"transport: Tabelle fuer die Regelung der Transport Methode.\n"
+"smtp_header_checks: Tabelle fuer die Filterung des Headers bei der\n"
+"\\tTransportmethode SMTP. RA werden unterstuetzt.\n"
 "\n"
-"virtual_alias_domains: Tabelle fuer die Zuordnung von domains, fuer\n"
-"\\twelche alle Adressen aliased werden, zu anderen domains.\n"
+"smtp_mime_header_checks: Tabelle fuer die Filterung des Mime\n"
+"\\tHeaders bei der Transportmethode SMTP. RA werden unterstuetzt.\n"
 "\n"
-"virtual_alias: Tabelle zum umschreiben/weiterleiten von\n"
-"\\tMailadressen, auch unter Beruecksichtigung der domain.\n"
+"smtp_nested_header_checks: Tabelle fuer die Filterung des Headers\n"
+"\\teiner angehaengten Nachricht, bei der Transportmethode SMTP. RA\n"
+"\\twerden unterstuetzt.\n"
 "\n"
-"virtual_gid: Tabelle fuer die Zuordnung der GID zu Mailadressen\n"
+"smtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern\n"
+"\\tfuer authentifizierte SMTP Verbindungen.\n"
+"\n"
+"smtpd_sender_login_maps: Tabelle mit der Zuordnung vom Absender zu\n"
+"\\tSASL Logins.\n"
+"\n"
+"transport_maps: Tabelle fuer die Regelung der Transport Methode.\n"
+"\n"
+"virtual_alias_domains: Tabelle mit den virtuellen Domains.\n"
+"\n"
+"virtual_alias_maps: Tabelle zum umschreiben/weiterleiten von\n"
+"\\tMailadressen, auch unter Beruecksichtigung der Domain.\n"
+"\n"
+"virtual_gid_maps: Tabelle fuer die Zuordnung der GID zu Mailadressen\n"
 "\\tfuer die Transport Methode virtual.\n"
 "\n"
 "virtual_mailbox_domains: Standard ist $virtual_alias_maps. Braucht\n"
 "\\tman nur zu veraendern, bei vielen Usern.\n"
 "\n"
 "virtual_mailbox: Tabelle mit den Zuordnungen von Mailadresse zum\n"
-"\\tPostfach\n"
+"\\tPostfach.\n"
 "\n"
-"virtual_transport: Tabelle fuer die Regelung der Transport Methode.\n"
+"virtual_transport: Tabelle fuer die Regelung der Transportmethode\n"
+"\\tvirtual.\n"
 "\n"
-"virtual_uid: Tabelle fuer die Zuordnung der UID zu Mailadressen\n"
+"virtual_uid_maps: Tabelle fuer die Zuordnung der UID zu Mailadressen\n"
 "\\tfuer die Transportmethode virtual."
 msgstr ""
 
@@ -5949,19 +6115,20 @@ msgstr ""
 msgid ""
 "Auswahl auf welche Weise Sie diesen Wert konfigurieren wollen.\n"
 "\n"
+"nichts: Der Wert des Parameters wird geloescht.\n"
+"\n"
 "Eingabe: Alle Eingaben muessen manuell eingegeben werden.\n"
 "\n"
 "Namensuebernahme: Zuerst waehlen Sie einen Tabellentyp aus.\n"
-"\\tDanach wird der Name des Konfigurations Parameter angehaengt.\n"
-"\\tBsp.: Tabellentyp hash und Konfigurations Parameter\n"
-"\\tvirtual_uid_maps = hash:${MAIL_CONFIG}/virtual_mailbox_maps\n"
+"\\tDanach wird der Name des Konfigurations Parameters angehaengt.\n"
 "\n"
-"Variablenauswahl: Eine Variable, als Wert, aus vorhandenen\n"
-"\\tVariablen auswaehlen."
-msgstr ""
-
-#: ../../help/kwpostfix/tls_cert_match_help:2
-msgid "TLS Cert Match::Hilfe"
+"\\tBsp.: Der Tabellentyp ist \"hash\" und der Konfigurations Parameter\n"
+"\\tist \"virtual_uid_maps\" dann ist dessen Wert\n"
+"\\t\"hash:${config_directory}/virtual_uid_maps\".\n"
+"\\toder\n"
+"\\tBsp.: Der Tabellentyp ist \"btree\" und der Konfigurations Parameter\n"
+"\\tist \"smtp_tls_session_cache_database\" dann ist dessen Wert\n"
+"\\t\"btree:${data_directory}/smtp_tls_session_cache_database\".\n"
 msgstr ""
 
 #: ../../help/kwpostfix/tls_cert_match_help:3
@@ -5977,8 +6144,8 @@ msgid ""
 "\\tThis strategy is suitable for use with the \"secure\" policy. Case\n"
 "\\tis ignored.\n"
 "\n"
-"dot-nexthop: As above, but match server certificate names that are "
-"subdomains of the next-hop domain. Case is ignored.\n"
+"dot-nexthop: As above, but match server certificate names that are\n"
+"\\tsubdomains of the next-hop domain. Case is ignored.\n"
 "\n"
 "hostname: Match against the hostname of the server, often obtained\n"
 "\\tvia an unauthenticated DNS MX lookup. For LMTP delivery via\n"
@@ -6607,3 +6774,5 @@ msgid ""
 "@domain.de\\tdomain.de/catch-all"
 msgstr ""
 
+#~ msgid "Passwort"
+#~ msgstr "Password"

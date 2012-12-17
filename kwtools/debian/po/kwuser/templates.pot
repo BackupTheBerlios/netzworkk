@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-25 20:57+0100\n"
+"POT-Creation-Date: 2012-12-17 18:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,79 +17,67 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../sys/kwuser:65
+#: ../../sys/kwuser:64
 msgid "Konfiguration::Benutzer"
 msgstr ""
 
-#: ../../sys/kwuser:66
+#: ../../sys/kwuser:65
 msgid "Konfiguration::Massenbenutzer"
 msgstr ""
 
-#: ../../sys/kwuser:67
+#: ../../sys/kwuser:66
 msgid "Geben Sie hier bitte einen Benutzer Namen ohne Sonderzeichen ein."
 msgstr ""
 
-#: ../../sys/kwuser:68
+#: ../../sys/kwuser:67
 msgid "Prefix"
 msgstr ""
 
-#: ../../sys/kwuser:69
+#: ../../sys/kwuser:68
 msgid "Prefix_Homeverz."
 msgstr ""
 
-#: ../../sys/kwuser:70
+#: ../../sys/kwuser:69
 msgid "Anzahl"
 msgstr ""
 
-#: ../../sys/kwuser:71
-msgid "Gruppe"
-msgstr ""
-
-#: ../../sys/kwuser:72
+#: ../../sys/kwuser:70
 msgid "Gruppen"
 msgstr ""
 
-#: ../../sys/kwuser:73
+#: ../../sys/kwuser:71
 msgid "Kommentar"
 msgstr ""
 
-#: ../../sys/kwuser:74
+#: ../../sys/kwuser:72
 msgid "Shell"
 msgstr ""
 
-#: ../../sys/kwuser:75
+#: ../../sys/kwuser:73
 msgid "Home"
 msgstr ""
 
-#: ../../sys/kwuser:76
-msgid "Benutzer"
-msgstr ""
-
-#: ../../sys/kwuser:77
+#: ../../sys/kwuser:74
 msgid "Passwort generieren"
 msgstr ""
 
-#: ../../sys/kwuser:78
+#: ../../sys/kwuser:75
 msgid "Benutzer_ID"
 msgstr ""
 
-#: ../../sys/kwuser:79
-msgid "Passwort"
-msgstr ""
-
-#: ../../sys/kwuser:80
+#: ../../sys/kwuser:76
 msgid "Verfallsdatum"
 msgstr ""
 
-#: ../../sys/kwuser:81
+#: ../../sys/kwuser:77
 msgid "inaktiv_nach_Verfallsdatum"
 msgstr ""
 
-#: ../../sys/kwuser:82
+#: ../../sys/kwuser:78
 msgid "per Prefix"
 msgstr ""
 
-#: ../../sys/kwuser:83
+#: ../../sys/kwuser:79
 msgid "per Name"
 msgstr ""
 

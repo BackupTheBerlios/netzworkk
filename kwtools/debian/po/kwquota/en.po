@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwquota-0.0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-06 16:33+0100\n"
-"PO-Revision-Date: 2011-02-06 16:35+0200\n"
+"POT-Creation-Date: 2012-12-17 18:31+0100\n"
+"PO-Revision-Date: 2011-02-06 18:36+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -35,7 +35,7 @@ msgid ""
 "nehmen."
 msgstr ""
 
-#: ../../sys/kwquota:125 ../../sys/kwquota:152
+#: ../../sys/kwquota:125 ../../sys/kwquota:150
 #, fuzzy
 msgid "Projekt"
 msgstr "Project"
@@ -65,17 +65,7 @@ msgstr "Drives"
 msgid "Warnung"
 msgstr "Warning"
 
-#: ../../sys/kwquota:150
-#, fuzzy
-msgid "Benutzer"
-msgstr "User"
-
-#: ../../sys/kwquota:151
-#, fuzzy
-msgid "Gruppe"
-msgstr "Group"
-
-#: ../../sys/kwquota:170
+#: ../../sys/kwquota:169
 #, sh-format
 msgid ""
 "Es sind keine Benutzer/Gruppen/Projekte mit \"quota\", zum $gv_Create, "
@@ -84,49 +74,49 @@ msgid ""
 "und neu starten."
 msgstr ""
 
-#: ../../sys/kwquota:299
+#: ../../sys/kwquota:298
 #, sh-format
 msgid "Dieses Dateisystem ($QFS) wird nicht unterstuetzt."
 msgstr "This filesystem ($QFS) is not supported."
 
-#: ../../sys/kwquota:448
+#: ../../sys/kwquota:447
 #, sh-format
 msgid "Status des Laufwerks ist: $QUOTA_STATE."
 msgstr "Drive status is: $QUOTA_STATE."
 
-#: ../../sys/kwquota:465
+#: ../../sys/kwquota:464
 msgid "einschalten"
 msgstr "on"
 
-#: ../../sys/kwquota:466
+#: ../../sys/kwquota:465
 msgid "ausschalten"
 msgstr "off"
 
-#: ../../sys/kwquota:467
+#: ../../sys/kwquota:466
 msgid "Backup_erstellen"
 msgstr "Backup_create"
 
-#: ../../sys/kwquota:468
+#: ../../sys/kwquota:467
 msgid "Backup_zurueck"
 msgstr "Backup_restore"
 
-#: ../../sys/kwquota:469
+#: ../../sys/kwquota:468
 msgid "Platz_schaffen"
 msgstr "Clean_Space"
 
-#: ../../sys/kwquota:470
+#: ../../sys/kwquota:469
 msgid "komplett_aus"
 msgstr "complete_off"
 
-#: ../../sys/kwquota:538
+#: ../../sys/kwquota:537
 msgid "Es existiert schon eine Backup Datei. Ueberschreiben (ja/nein)?"
 msgstr ""
 
-#: ../../sys/kwquota:565
+#: ../../sys/kwquota:564
 msgid "Es ist kein Backup vorhanden."
 msgstr "No backup is exited."
 
-#: ../../sys/kwquota:589
+#: ../../sys/kwquota:588
 msgid ""
 " Das Quota auf dem Laufwerk komplett ausschalten (ja/nein)?\\n\n"
 "\\n\n"
@@ -134,7 +124,7 @@ msgid ""
 "starten."
 msgstr ""
 
-#: ../../sys/kwquota:606
+#: ../../sys/kwquota:605
 msgid ""
 "Quota wurde komplett ausgestellt. Sie muessen wahrscheinlich den Rechner neu "
 "starten. Sie koennen aber auch ein neu einbinden des Laufwerks versuchen."
@@ -314,7 +304,7 @@ msgstr "Phone"
 
 #: ../../functions/kwquota/kwquota_warn_conf:20
 msgid "Zeichensatz"
-msgstr ""
+msgstr "Charset"
 
 #: ../../functions/kwquota/kwquota_warn_conf:21
 #, fuzzy
@@ -576,7 +566,7 @@ msgstr ""
 #: ../../help/kwquota/ugp_help:2
 #, fuzzy, sh-format
 msgid "${gv_Configuration}::Auswahl::${gv_Help}"
-msgstr "$gv_Configuration::Choice::Help"
+msgstr "${gv_Configuration}::Choice::${gv_Help}"
 
 #: ../../help/kwquota/ugp_help:3
 msgid ""
@@ -588,7 +578,7 @@ msgstr ""
 #: ../../help/kwquota/warn_conf_help:2
 #, fuzzy, sh-format
 msgid "Warn ${gv_Configuration}::${gv_Help}"
-msgstr "Warning Configuration::Help"
+msgstr "Warning ${gv_Configuration}::${gv_Help}"
 
 #: ../../help/kwquota/warn_conf_help:3
 msgid ""
@@ -674,7 +664,7 @@ msgstr ""
 #: ../../help/kwquota/xfs_drive_help:2
 #, fuzzy, sh-format
 msgid "${gv_Configuration}::Quota Laufwerke::XFS::${gv_Help}"
-msgstr "$gv_Configuration::Quota Drives::XFS::Help"
+msgstr "${gv_Configuration}::Quota Drives::XFS::${gv_Help}"
 
 #: ../../help/kwquota/xfs_drive_help:3
 msgid ""
