@@ -3,8 +3,6 @@
 relocated_table() {
 	FILE="$1"
 	autoload -U general_first_address no_adr_and_recipient_adr_msg
-	# Variable fuer die Hilfe
-	lv_Relocated=$(gettext 'relocated')
 
 	# Funktion relocated_menue{{{
 	relocated_menue() {

@@ -1,5 +1,5 @@
 # virtual_alias_mb_domains_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::${lv_Virtual_Alias_Mb_Domains}::${gv_Help}"
+TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Hier kann man die Domains einstellen fuer die Postfix die Mail
 Adressen aliasen soll.
 

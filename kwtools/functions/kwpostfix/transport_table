@@ -3,6 +3,9 @@
 transport_table() {
 	FILE="$1"
 	autoload -U no_adr_msg
+	# Variable fürs Menue
+	lv_Transport=$(gettext 'Transport')
+
 	# Funktion transport_menue{{{
 	transport_menue() {
 		TRANSPORT_MENU=($lv_Address \"$ADR\" $lv_Transport \"$TRANS\"

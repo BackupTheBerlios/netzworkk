@@ -1,5 +1,5 @@
 # alias_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::${lv_Bcc}::${gv_Help}"
+TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Hier kann man die Mailadresse einstellen, welche eine Bcc Mail bei
 einem dementsprechenden Sender oder Empfaenger bekommt.
 

@@ -3,8 +3,6 @@
 canonical_table() {
 	FILE="$1"
 	autoload -U general_first_address no_adr_and_adr_msg
-	# Variable fuer die Hilfe
-	lv_Canonical=$(gettext 'canonical')
 
 	# funktion canonical_menue{{{
 	#

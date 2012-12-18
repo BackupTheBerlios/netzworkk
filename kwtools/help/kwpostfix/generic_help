@@ -1,5 +1,5 @@
 # generic_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::${lv_Generic}::${gv_Help}"
+TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Hier kann man Mailadressen, Domains und Benutzer eingeben, deren
 Absenderadressen im SMTP-Envelope und Mailheader geaendert werden
 sollen. Diese Aenderungen werden nicht vom Postfix Modul "cleanup"

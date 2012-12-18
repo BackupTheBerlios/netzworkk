@@ -1,5 +1,5 @@
 # virtual_id_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::virtual_[gu]id::${gv_Help}"
+TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Hier kann man die Rechte der virtualen Mailboxen, durch Gruppen-
 und User-ID, einstellen.
 

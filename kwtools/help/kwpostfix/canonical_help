@@ -1,5 +1,5 @@
 # canonical_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::${lv_Canonical}::${gv_Help}"
+TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Hier kann man Mailadressen, Domains und lokale Benutzer Accounts
 eingeben, deren Empfaenger- und Absenderadressen im SMTP-Envelope
 und Mailheader geaendert werden sollen. Und natuerlich in welche 

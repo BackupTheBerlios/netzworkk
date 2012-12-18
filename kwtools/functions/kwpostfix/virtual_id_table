@@ -3,6 +3,7 @@
 virtual_id_table() {
 	FILE="$1"
 	autoload -U general_first_address no_adr_and_recipient_adr_msg
+
 	# Funktion virtual_id_menue{{{
 	virtual_id_menue() {
 		VIRTUAL_ID_MENU=($lv_Address \"$ADR\" $lv_Id \"$ID\"

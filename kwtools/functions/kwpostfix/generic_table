@@ -3,8 +3,6 @@
 generic_table() {
 	FILE="$1"
 	autoload -U general_first_address no_adr_and_adr_msg
-	# Variable fuer die Hilfe
-	lv_Generic=$(gettext 'generic')
 
 	# funktion generic_menue{{{
 	#

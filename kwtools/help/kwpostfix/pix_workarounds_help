@@ -1,5 +1,5 @@
 # pix_workarounds_help fuer kwpostfix{{{
-TITLE="${lv_Tabs}::${lv_Pix_Workarounds}::${gv_Help}"
+TITLE="${lv_Pix_Workarounds}::${gv_Help}"
 MSG=$(gettext 'Hier kann man einstellen fuer welche Zieladresse die PIX
 Workarounds gelten sollen.
 

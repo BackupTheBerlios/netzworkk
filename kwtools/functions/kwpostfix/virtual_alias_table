@@ -2,8 +2,6 @@
 #
 virtual_alias_table() {
 	FILE="$1"
-	# Variable fuer die Hilfe
-	lv_Virtual_Alias=$(gettext 'virtual_alias')
 	local Anz Anz1
 	integer Anz Anz1
 

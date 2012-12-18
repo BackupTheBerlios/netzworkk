@@ -2,8 +2,6 @@
 #
 virtual_alias_mb_domains_table() {
 	FILE="$1"
-	# Variable fuer die Hilfe
-	lv_Virtual_Alias_Mb_Domains=$(gettext 'virtual_alias_mb_domains')
 
 	# Funktion virtual_alias_mb_domain_menue{{{
 	virtual_alias_mb_domain_menue() {
