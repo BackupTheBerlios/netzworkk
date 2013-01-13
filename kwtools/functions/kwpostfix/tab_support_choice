@@ -70,7 +70,7 @@ tab_support_choice() {
 					TABFORMAT_MSG=$(gettext 'Waehlen Sie das Tabellenformat aus.')
 					format_menue() {
 						case "$Choice" in
-							*checks)
+							*checks|*_reply_filter)
 								menubox "$TAB_VALUE_TITLE" "$TABFORMAT_MSG" "$TABS_R"
 								TABS_WAHL="$TABS_R"
 								;;

@@ -1,5 +1,7 @@
 # Funktion für alle *regexp*-Tabellen{{{
 #
+# usage: regexp_table FILE
+#
 regexp_table() {
 	FILE="$1"
 	FLAGS=ix

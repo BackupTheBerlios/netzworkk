@@ -52,6 +52,9 @@ lmtp_nested_header_checks: Tabelle fuer die Filterung des Headers
 lmtp_pix_workaround_maps: Tabelle mit Zieladressen, bei denen die
 \tPIX Workarounds aktiviert werden sollen.
 
+lmtp_reply_filter: Tabelle mit regulaeren Ausdruecken um den REPLY
+\tHeader zu korrigieren.
+
 lmtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 \tfuer authentifizierte LMTP Verbindungen.
 
@@ -112,6 +115,9 @@ smtp_nested_header_checks: Tabelle fuer die Filterung des Headers
 
 smtp_pix_workaround_maps: Tabelle mit Zieladressen, bei denen die
 \tPIX Workarounds aktiviert werden sollen.
+
+smtp_reply_filter: Tabelle mit regulaeren Ausdruecken um den REPLY
+\tHeader zu korrigieren.
 
 smtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 \tfuer authentifizierte SMTP Verbindungen.

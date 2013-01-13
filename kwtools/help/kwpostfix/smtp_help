@@ -405,7 +405,10 @@ smtp_tls_exclude_ciphers: Auswahl einer Liste der Verschluesselung
 \tVerschluesselungliste aller TLS Sicherheitslevel ausgeschlossen
 \twerden.
 
-smtp_tls_fingerprint_cert_match:
+smtp_tls_fingerprint_cert_match: Eingabe einer Liste von
+\tFingerprints der entfernten SMTP Server die akzeptiert werden
+\tsollen. Dafuer muss das TLS Sicherheitslevel auf "fingerprint"
+\tgesetzt werden (smtp_tls_security_level=fingerprint).
 
 smtp_tls_fingerprint_digest: Auswahl der Methode zur Berechnung
 \tder Fingerprints der Zertifikate.

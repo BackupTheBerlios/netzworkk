@@ -397,10 +397,13 @@ lmtp_tls_exclude_ciphers: Auswahl einer Liste der Verschluesselung
 \tVerschluesselungliste aller TLS Sicherheitslevel ausgeschlossen
 \twerden.
 
-lmtp_tls_fingerprint_cert_match:
+lmtp_tls_fingerprint_cert_match: Eingabe einer Liste von
+\tFingerprints der entfernten SMTP Server die akzeptiert werden
+\tsollen. Dafuer muss das TLS Sicherheitslevel auf "fingerprint"
+\tgesetzt werden (lmtp_tls_security_level=fingerprint).
 
 lmtp_tls_fingerprint_digest: Auswahl der Methode zur Berechnung
-\tder Fingerprints der Zertifikate.
+\tder Fingerprints von Zertifikaten.
 \tStandard ist md5.
 
 lmtp_tls_key_file: Datei (RSA) welche das unterschriebene,

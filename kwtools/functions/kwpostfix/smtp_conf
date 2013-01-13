@@ -756,7 +756,8 @@ smtp_conf() {
 				conf_smtp_menu smtp_recipient_refill_limit
 				;;
 			smtp_reply_filter)
-				# Tabelle, eine Filterung .... Standard ist = nichts# {{{
+				# Tabelle, eine Filterung zum korrigieren des Reply Headers# {{{
+				# Standard ist = nichts
 				tab_support_choice $gv_Auswahl
 				smtp_reply_filter="$MAPS"
 				postconf -e smtp_reply_filter="$MAPS"
@@ -1106,13 +1107,15 @@ smtp_conf() {
 				conf_smtp_menu smtp_tls_exclude_ciphers
 				;;
 			smtp_tls_fingerprint_cert_match)
-				# Eingabe von Fingerprints
-				###########################################
-				# TODO: Gehen auch Maps?
-				###########################################
-				# autoload -U tls_fingerprint_cert_match
-				# tls_fingerprint_cert_match
-				hier_ist_noch_nichts smtp_tls_fingerprint_cert_match
+				# Eingabe von Fingerprints# {{{
+				autoload -U tls_fingerprint_cert_match
+				tls_fingerprint_cert_match "$SMTP_TITLE" "$smtp_tls_fingerprint_cert_match"
+				if [ -n "$Value" ] ; then
+					smtp_tls_fingerprint_cert_match="$Value"
+				else
+					smtp_tls_fingerprint_cert_match=""
+				fi
+				## }}}
 				conf_smtp_menu smtp_tls_fingerprint_cert_match
 				;;
 			smtp_tls_fingerprint_digest)
