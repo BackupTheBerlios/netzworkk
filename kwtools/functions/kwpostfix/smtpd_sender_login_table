@@ -101,7 +101,7 @@ smtpd_sender_login_table() {
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
-							HELP*)	script_help tab_wert_help
+							HELP*)	script_help tabs_help
 								menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 								;;
 							*)	#
