@@ -1171,7 +1171,7 @@ lmtp_conf() {
 			lmtp_tls_per_site)
 				# Tabelle fuer die Regeln der TLS Benutzung{{{
 				##############################
-				# TODO: ist schwer davon abzuraten - entfernen (nein bisher)?
+				# INFO: ist schwer von abzuraten.
 				tab_support_choice "$gv_Auswahl"
 				lmtp_tls_per_site="$MAPS"
 				postconf -e lmtp_tls_per_site="$MAPS"

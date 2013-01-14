@@ -73,17 +73,24 @@ transport_table() {
 			$lv_Server)
 				# Server eingeben{{{
 				if [ "${TRANS%:*}" != error ] ; then
-					SERVER_MSG=$(gettext 'Geben Sie hier bitte einen, Mail Servernamen ein (Bsp. mx.domain.de | 192.168.0.1).')
+					SERVER_MSG=$(gettext 'Geben Sie hier bitte einen Mail Servernamen ein (Bsp. mx.domain.de | 192.168.0.1).')
 					inputbox "$TABLE_TITLE" "$SERVER_MSG" "$MX_HOST"
 					if [ "$gv_Auswahl" ] ; then
-						# Server in eckige Klammern stellen?
-						SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
-						yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
-						if [ "$?" = 0 ] ; then
-							MX_HOST="[${gv_Auswahl}]"
-						else
-							MX_HOST="$gv_Auswahl"
-						fi
+						case "$gv_Auswahl" in
+							\[*\])
+								MX_HOST="$gv_Auswahl"
+								;;
+							*)
+								# Server in eckige Klammern stellen?
+								SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
+								yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
+								if [ "$?" = 0 ] ; then
+									MX_HOST="[${gv_Auswahl}]"
+								else
+									MX_HOST="$gv_Auswahl"
+								fi
+								;;
+						esac
 					else
 						unset -- MX_HOST
 						no_input_msg
@@ -180,7 +187,7 @@ transport_table() {
 					menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
-							HELP*)	script_help tab_wert_help
+							HELP*)	script_help tabs_help
 								menubox "$TABLE_TITLE" "$TABLE_ENTRY_MSG" "$CHANGE_MENU"
 								;;
 							*)
