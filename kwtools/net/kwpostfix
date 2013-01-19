@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 13.01.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 18.01.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -1098,7 +1098,8 @@ while [ "$gv_Auswahl" ] ; do
 				mynetworks_table pix_workarounds_tables relay_clientcerts_table \
 				relay_domains_table \
 				recipient_table regexp_table relocated_table \
-				sasl_password_table smtpd_sender_login_table sql_db transport_table \
+				sasl_password_table smtpd_sender_login_table sql_db \
+				tls_per_site_table transport_table \
 				virtual_alias_table virtual_alias_mb_domains_table \
 				virtual_id_table virtual_mailbox_table db_new_reread
 			#
@@ -1190,7 +1191,7 @@ while [ "$gv_Auswahl" ] ; do
 					lmtp_header_checks lmtp_mime_header_checks \
 					lmtp_nested_header_checks lmtp_pix_workaround_maps \
 					lmtp_reply_filter lmtp_sasl_password_maps \
-					local_recipient_maps \
+					lmtp_tls_per_site local_recipient_maps \
 					mailbox_command_maps \
 					milter_header_checks mime_header_checks \
 					mynetworks \
@@ -1202,7 +1203,7 @@ while [ "$gv_Auswahl" ] ; do
 					smtp_body_checks smtp_generic_maps \
 					smtp_header_checks smtp_mime_header_checks \
 					smtp_nested_header_checks smtp_pix_workaround_maps \
-					smtp_reply_filter smtp_sasl_password_maps \
+					smtp_reply_filter smtp_sasl_password_maps smtp_tls_per_site \
 					smtpd_client_restrictions smtpd_data_restrictions \
 					smtpd_end_of_data_restrictions smtpd_etrn_restrictions \
 					smtpd_helo_restrictions \
@@ -1620,6 +1621,21 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="smtpd_sender_login_help"
 						HASH_TAB="smtpd_sender_login_table"
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						#}}}
+						tab_menue $TAB
+						;;
+					*_tls_per_site)
+						# Tabelle fuer die Regeln der TLS Benutzung{{{
+						#
+						# {l,s}mtp_tls_per_site
+						#
+						TAB_HELP="tls_per_site_help"
+						HASH_TAB="tls_per_site_table"
 						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
