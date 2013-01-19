@@ -443,6 +443,9 @@ smtp_tls_note_starttls_offer: Soll der Rechnername vom entfernten
 smtp_tls_per_site: Tabelle fuer die Regeln der TLS Benutzung von
 \tSMTP Clients.
 
+NOTIZ: Es ist eindringlich vom Einsatz dieser Lookup Tabellen
+\tabzuraten. Benutzen Sie besser "smtp_tls_policy_maps".
+
 smtp_tls_policy_maps:
 
 smtp_tls_protocols: Auswahl der TLS Protokolle die der Postfix SMTP

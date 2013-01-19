@@ -435,6 +435,9 @@ lmtp_tls_note_starttls_offer: Soll der Rechnername vom entfernten
 lmtp_tls_per_site: Tabelle fuer die Regeln der TLS Benutzung von
 \tLMTP Clients.
 
+NOTIZ: Es ist eindringlich vom Einsatz dieser Lookup Tabellen
+\tabzuraten. Benutzen Sie besser "lmtp_tls_policy_maps".
+
 lmtp_tls_policy_maps:
 
 lmtp_tls_protocols: Auswahl der TLS Protokolle die der Postfix LMTP

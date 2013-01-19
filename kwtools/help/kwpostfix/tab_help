@@ -58,6 +58,9 @@ lmtp_reply_filter: Tabelle mit regulaeren Ausdruecken um den REPLY
 lmtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 \tfuer authentifizierte LMTP Verbindungen.
 
+lmtp_tls_per_site: Tabelle fuer die Regeln der TLS Benutzung von
+\tSMTP Clients.
+
 mailbox_command_maps: Tabelle um einzelnen Adressen ein anderes
 \tMailbox Kommando zum einliefern Ihrer Mails zuweisen zu koennen.
 
@@ -121,6 +124,9 @@ smtp_reply_filter: Tabelle mit regulaeren Ausdruecken um den REPLY
 
 smtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 \tfuer authentifizierte SMTP Verbindungen.
+
+smtp_tls_per_site: Tabelle fuer die Regeln der TLS Benutzung von
+\tSMTP Clients.
 
 smtpd_sender_login_maps: Tabelle mit der Zuordnung vom Absender zu
 \tSASL Logins.

@@ -32,7 +32,7 @@ tls_per_site_table() {
 				;;
 			$lv_Address)
 				# Server Adresse eingeben{{{
-				ADRESS_MSG=$(gettext 'Geben Sie bitte eine Server Adresse ein (Bsp. server.domain.de | 192.168.0.1).')
+				ADRESS_MSG=$(gettext 'Geben Sie bitte den Rechnernamen des Servers ein (Bsp. server.domain.de).')
 				inputbox "$TABLE_TITLE" "$ADRESS_MSG" "$ADR"
 				if [ -n "$gv_Auswahl" ] ; then
 					case "$gv_Auswahl" in
@@ -41,7 +41,7 @@ tls_per_site_table() {
 							;;
 						*)
 							# Server in eckige Klammern stellen?
-							SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
+							SQUARE_BRACKET=$(gettext 'Soll der Rechnername ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
 							yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
 							if [ "$?" = 0 ] ; then
 								ADR="[${gv_Auswahl}]"

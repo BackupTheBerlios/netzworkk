@@ -419,12 +419,10 @@ lmtp_conf() {
 				conf_lmtp_menu lmtp_destination_recipient_limit
 				;;
 			lmtp_discard_lhlo_keyword_address_maps)
-				# Tabelle mit EHLO Schluesselwoertern die ignoriert werden sollen{{{
-				##########################
-				# TODO
+				# Tabelle mit LHLO Schluesselwoertern die ignoriert werden sollen{{{
 				tab_support_choice "$gv_Auswahl"
-				smtp_discard_ehlo_keyword_address_maps="$MAPS"
-				postconf -e smtp_discard_ehlo_keyword_address_maps="$MAPS"
+				lmtp_discard_lhlo_keyword_address_maps="$MAPS"
+				postconf -e lmtp_discard_lhlo_keyword_address_maps="$MAPS"
 				#}}}
 				conf_lmtp_menu lmtp_discard_lhlo_keyword_address_maps
 				;;
@@ -1181,8 +1179,6 @@ lmtp_conf() {
 			lmtp_tls_policy_maps)
 				# Tabelle mit den Policies fuer das Versenden von mails# {{{
 				# (LMTP_AUTH)
-				##############################
-				# TODO
 				tab_support_choice "$gv_Auswahl"
 				lmtp_tls_policy_maps="$MAPS"
 				postconf -e lmtp_tls_policy_maps="$MAPS"

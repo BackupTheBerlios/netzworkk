@@ -2,7 +2,7 @@
 TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Hier kann man die Transportmethoden von Postfix einstellen.
 
-Tabelle:
+Tabellen:
 transport_maps
 virtual_transport
 
