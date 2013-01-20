@@ -5,11 +5,14 @@
 kwpostfix_action() {
 	case "$TAB" in
 		*access)
-			AK_MENU=(all-numeric \"\" DISCARD \"\" DUNNO \"\"
-				HOLD \"\" OK \"\" REJECT \"\" 4/5XX \"\")
+			AK_MENU=(all-numeric \"\" BCC \"\" DEFER \"\" DEFER_IF_PERMIT \"\"
+				DEFER_IF_REJECT \"\" DISCARD \"\" DUNNO \"\" FILTER \"\"
+				HOLD \"\" OK \"\" PREPEND \"\" REDIRECT \"\" REJECT \"\"
+				WARN \"\" 4/5XX \"\")
 			;;
 		*)	
-			AK_MENU=(DISCARD \"\" HOLD \"\" IGNORE \"\" OK \"\"
+			AK_MENU=(DISCARD \"\" DUNNO \"\" FILTER \"\" HOLD \"\" IGNORE \"\"
+				INFO \"\" OK \"\" PREPEND \"\" REDIRECT \"\" REPLACE \"\"
 				REJECT \"\" WARN \"\" 4/5XX \"\")
 			;;
 	esac
@@ -18,7 +21,8 @@ kwpostfix_action() {
 	#
 	while [ "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
-			HELP*)	script_help regexp_help
+			HELP*)	# Hilfe
+				script_help regexp_pcre_action_help
 				menubox "$TABLE_TITLE" "$AK_MSG" "$AK_MENU"
 				;;
 			4*|5*)

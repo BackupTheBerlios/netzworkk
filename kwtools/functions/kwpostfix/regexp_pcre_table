@@ -57,7 +57,11 @@ regexp_pcre_table() {
 					;;
 				$lv_Flags)
 					# Flags für den RA auswählen
-					flags_choice "$FLAGS"
+					if [[ $WAS_IST == pcre ]] ; then
+						flags_choice -p "$FLAGS"
+					else
+						flags_choice -r "$FLAGS"
+					fi
 					regexp_pcre_menue
 					;;
 				$lv_Action)
