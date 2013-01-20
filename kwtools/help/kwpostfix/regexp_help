@@ -3,28 +3,11 @@ TITLE="${TAB}::${gv_Help}"
 MSG=$(gettext 'Zeichenkette: Regulaeren Ausdruck eingeben. Beispiel: /RA/Flags |
 \t!/RA/Flags. Siehe man 5 regexp_table.
 
-Flags: i = REG_ICASE (ingnore case), i ist Standard.
+Flags:
+\ti = REG_ICASE (ingnore case), i ist Standard.
 \tx = REG_EXTENDED (erweiterte Ausdruecke), x ist Standard.
 \tm = REG_NEWLINE (Multiline), m ist kein Standard 
 
-Aktion: DISCARD = behauptet erfolgreiche Zustellung und loescht die
-\tMail stillschweigend. Der angepasste Header/Body...
-\twird mit dem optionalen Text geloggt.
-\tHOLD = Haelt die Nachricht in der Warteschlange fest. Mit dem
-\tKommando postcat kann man sie z.B. ueberpruefen. Der
-\tangepasste Header/Body... und der optionale Text
-\twerden geloggt.
-\tIGNORE = Loescht stillschweigend den Nachrichten Header/Body...
-\tOK = Laesst weiterhin alle Header/Body... unberuehrt deren 
-\tMuster darauf passen.
-\tREJECT = Ganze Mail abweisen, optionalen Text senden und
-\tloggen.
-\tWARN = Logt den Nachrichten Header/Body... und den optionalen
-\tText. Falls das Muster gut ist, wechselt die Aktion
-\tWARN zu einem REJECT oder zu DISCARD.
-\t4/5XX = Fehlercode und optionalen Text senden.
-
-Text: Antworttext (optional).
 ')
 #}}}
 ### Modeline {{{
