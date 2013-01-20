@@ -128,6 +128,9 @@ smtp_sasl_password_maps: Tabelle mit den Kennungen/Passwoertern
 smtp_tls_per_site: Tabelle fuer die Regeln der TLS Benutzung von
 \tSMTP Clients.
 
+smtpd_command_filter: Tabelle fuer die Umwandlung von Kommandos der
+\tentfernten SMTP Clients
+
 smtpd_sender_login_maps: Tabelle mit der Zuordnung vom Absender zu
 \tSASL Logins.
 
