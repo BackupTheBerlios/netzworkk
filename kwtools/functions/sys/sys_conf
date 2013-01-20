@@ -939,7 +939,7 @@ sys_conf() {
 	#  ../share/kwtools/help/share/HELPFILE
 	#
 	# Beispiele:
-	#       scrip_help HELPFILE HELPFILE
+	#       scrip_help "HELPFILE HELPFILE"
 	#       scrip_help share/HELPFILE
 	#       scrip_help Menuepunkt
 	# 
@@ -948,7 +948,7 @@ sys_conf() {
 	# Menuepunkte sind graphic, multi, net, sys und utils
 	#
 	script_help() {
-		if [ "$#" -ge 1 ] ; then
+		if [ "$#" -eq 1 ] ; then
 			unset -- Elemente
 			# Hilfe fuer kwadmin
 			if [ $gv_ScriptName = kwadmin -a $1 = help ] ; then
