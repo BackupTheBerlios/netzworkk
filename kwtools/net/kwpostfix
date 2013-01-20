@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 18.01.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 20.01.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -218,6 +218,7 @@ fi
 # Funktion (tab_support), unterstützte Tabellenformate{{{
 # diese werden unterschiedlich in Variablen gespeichert,
 # da nicht jede Tabelle mit jeden Typ zurecht kommt.
+# Siehe postconf -m.
 #
 # TABS_A - ohne die Tabellenformate pcre und regexp
 # TABS_C - alle Tabellenformate + cidr
@@ -232,15 +233,15 @@ tab_support() {
 	for i in `print ${(uo)$(postconf -m)}` ; {
 		TABS+=($i)
 		case $i in
-			btree|cdb|dbm|hash|sdbm)
+			btree|cdb|dbm|hash|sdbm|texthash)
 				# Hashbasierte Tabellen und Datenbanken.
 				TABS_A+=($i \"\")
 				TABS_C+=($i \"\")
 				TABS_D+=($i \"\")
 				TABS_M+=($i \"\")
 				;;
-			ldap|mysql|nis|pgsql)
-				# Hashbasierte Tabellen und Datenbanken.
+			ldap|mysql|nis|nisplus|pgsql|sqlite)
+				# Server-basierte Tabellen und Datenbanken.
 				TABS_A+=($i \"\")
 				TABS_C+=($i \"\")
 				TABS_M+=($i \"\")
@@ -1094,10 +1095,11 @@ while [ "$gv_Auswahl" ] ; do
 		$lv_Tabs)
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
-				flags_choice generic_table kwpostfix_action ldap_db mailbox_command_table \
+				command_filter_table flags_choice generic_table \
+				kwpostfix_action ldap_db mailbox_command_table \
 				mynetworks_table pix_workarounds_tables relay_clientcerts_table \
 				relay_domains_table \
-				recipient_table regexp_table relocated_table \
+				recipient_table regexp_pcre_table relocated_table \
 				sasl_password_table smtpd_sender_login_table sql_db \
 				tls_per_site_table transport_table \
 				virtual_alias_table virtual_alias_mb_domains_table \
@@ -1111,12 +1113,10 @@ while [ "$gv_Auswahl" ] ; do
 			# Die Variablen TAB_HELP HASH_TAB WAS_IST FILE TAB muessen belegt sein
 			#
 			# usage: tab_change
+			#####################################
+			# TODO: es fehlen noch nis(plus), memcache, socketmap,...
 			#
 			tab_change() {
-				localoptions Opt
-				if [ "$1" = -f ] ; then
-					Opt="$1"
-				fi
 				case "$WAS_IST" in
 					mysql)
 						TAB_HELP="sql_help"
@@ -1128,7 +1128,12 @@ while [ "$gv_Auswahl" ] ; do
 						autoload -U password password_display different_passwd sql_config
 						sql_db $WAS_IST $FILE
 						;;
-					btree|dbm|hash|proxy|sdbm)
+					sqlite)
+						TAB_HELP="sql_help"
+						autoload -U password password_display different_passwd sql_config
+						sql_db $WAS_IST $FILE
+						;;
+					btree|cdb|dbm|hash|proxy|sdbm|texthash)
 						"$HASH_TAB" "$FILE"
 						;;
 					cidr)
@@ -1153,8 +1158,18 @@ while [ "$gv_Auswahl" ] ; do
 								msgbox "$gv_Attention" "$MSG"
 								;;
 							*)
-								TAB_HELP="regexp_help"
-								regexp_table "$FILE"
+								if [[ $TAB == smtpd_command_filter ]] ; then
+									TAB_HELP="command_filter_help"
+									command_filter_table "$FILE"
+								else
+									if [[ $WAS_IST == regexp ]] ; then
+										TAB_HELP="regexp_help regexp_pcre_action_help"
+										regexp_pcre_table "$FILE"
+									else
+										TAB_HELP="pcre_help regexp_pcre_action_help"
+										regexp_pcre_table "$FILE"
+									fi
+								fi
 								;;
 						esac
 						;;
@@ -1179,6 +1194,10 @@ while [ "$gv_Auswahl" ] ; do
 			# sucht nach vorhandenen Werten für die Lookup Tabellen.
 			# der in main.cf angegeben Tabellen
 			#
+			# usage: tab_search
+			#
+			#####################################
+			# TODO: es fehlen noch nis(plus), memcache, socketmap,...
 			tab_search() {
 				unset -- SUB_TABLE SUB_TABLE_E TABLE_E TAB_IND Wert
 				typeset -xA TAB_IND SUB_TABLE_E
@@ -1204,9 +1223,9 @@ while [ "$gv_Auswahl" ] ; do
 					smtp_header_checks smtp_mime_header_checks \
 					smtp_nested_header_checks smtp_pix_workaround_maps \
 					smtp_reply_filter smtp_sasl_password_maps smtp_tls_per_site \
-					smtpd_client_restrictions smtpd_data_restrictions \
-					smtpd_end_of_data_restrictions smtpd_etrn_restrictions \
-					smtpd_helo_restrictions \
+					smtpd_client_restrictions smtpd_command_filter \
+					smtpd_data_restrictions smtpd_end_of_data_restrictions \
+					smtpd_etrn_restrictions smtpd_helo_restrictions \
 					smtpd_recipient_restrictions smtpd_sender_login_maps \
 					smtpd_sender_restrictions \
 					transport_maps virtual_alias_domains \
@@ -1262,6 +1281,8 @@ while [ "$gv_Auswahl" ] ; do
 								if [ "$Wert" -a "$Tab_Format" ] ; then
 									case "$Tab_Format" in
 										environ|nis|static|tcp|unix)
+											############################
+											# TODO: hier fehlt noch alles
 											;;
 										*)
 											# Tabellen
@@ -1387,7 +1408,7 @@ while [ "$gv_Auswahl" ] ; do
 						#}}}
 						tab_menue $TAB
 						;;
-					*_checks|*_reply_filter)
+					*_checks)
 						# Tabelle für die Filterung des Bodies/Headers,...{{{
 						#
 						# body_checks, header_checks, lmtp_body_checks,
@@ -1397,7 +1418,7 @@ while [ "$gv_Auswahl" ] ; do
 						# smtp_header_checks, smtp_mime_header_checks,
 						# smtp_nested_header_checks
 						#
-						#TAB_HELP="regexp_help"
+						# TAB_HELP="regexp_help"
 						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
@@ -1613,6 +1634,16 @@ while [ "$gv_Auswahl" ] ; do
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
+						;;
+					smtpd_command_filter)
+						# Tabelle fuer smtpd_command_filter# {{{
+						#
+						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
+						TAB="$gv_Auswahl"
+						tab_change
+						unset -- HASH_TAB
+						## }}}
 						;;
 					smtpd_sender_login_maps)
 						# Tabelle für SASL Login Benutzernamen{{{
