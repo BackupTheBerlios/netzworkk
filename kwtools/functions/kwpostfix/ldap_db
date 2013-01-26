@@ -6,7 +6,6 @@ ldap_db() {
 	unset -- FILE
 	FILE="$2"
 	lv_Attr=$(gettext 'Attribute')
-	lv_Port=$(gettext 'Port')
 	lv_Search_Base=$(gettext 'Suchbasis')
 	lv_Timeout=$(gettext 'Zeitlimit')
 	lv_Ldap_Filter=$(gettext 'LDAP-Filter')

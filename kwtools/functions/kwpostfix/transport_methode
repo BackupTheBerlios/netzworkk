@@ -1,17 +1,29 @@
 # Funktion transport_methode{{{
 #
-# usage: transport_methode OLDMETHODE OLDVALUE
-#
-# Bsp.: transport_methode ${local_transport%%:*} ${local_transport##*:}
+# usage: transport_methode [ -e ] OLDMETHODE OLDVALUE
 #
 transport_methode() {
-	unset -- WERT MB_TRANS_MENU OldMethode OldValue
-	OldMethode="$1"
-	OldValue="$2"
+	unset -- WERT MB_TRANS_MENU OldMethode OldValue Opt
+	if [[ $1 == -e ]] ; then
+		Opt="$1"
+		OldMethode="$2"
+		OldValue="$3"
+	else
+		OldMethode="$1"
+		OldValue="$2"
+	fi
 	for i in `awk '(/^[^# ][^-]/){print $1}' $MASTER_CF | sort` ; {
 		# Duplikate herausfiltern.
-		if [ -z ${(M)${MB_TRANS_MENU}##${i##*:}} ] ; then
-			MB_TRANS_MENU+=(${i##*:} \"\")
+		# ohne error
+		if [[ -n $Opt -a ${i##*:} != error ] ; then
+			if [ -z ${(M)${MB_TRANS_MENU}##${i##*:}} ] ; then
+				MB_TRANS_MENU+=(${i##*:} \"\")
+			fi
+		else
+			# mit error
+			if [ -z ${(M)${MB_TRANS_MENU}##${i##*:}} ] ; then
+				MB_TRANS_MENU+=(${i##*:} \"\")
+			fi
 		fi
 	}
 	#
@@ -41,12 +53,13 @@ transport_methode() {
 					case "$HASH_TAB" in
 						*_table)
 							# Wird eine Funktion aufgerufen die die Lookup
-							# Tabellen konfiguriert wird nur der ausgewaehlte
+							# Tabellen konfiguriert, wird nur der ausgewaehlte
 							# Wert uebernommen.
-							WERT="$Tmp"	;;
+							WERT="$Tmp"
+							;;
 						*)
 							METHODE_MSG=$(gettext 'Falls Sie noch ein paar Einstellungen benoetigen koennen Sie diese hier eintragen. Zum Beispiel bei Auswahl einer Methode zusaetzlich die IP und Portnr. angeben ([127.0.0.1]:10024, \$myhostname).')
-							inputbox "$gv_Configuration" "$METHODE_MSG" "${OldValue//$/\\\$}"
+							inputbox "$gv_Configuration" "$METHODE_MSG" "${OldValue//\$/\\\$}"
 							if [[ -n $gv_Auswahl ]] ; then
 								WERT="${Tmp}:${gv_Auswahl//$/\$}"
 							else
