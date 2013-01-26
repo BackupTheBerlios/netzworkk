@@ -1,5 +1,12 @@
-# regexp_pcre_action_help fuer kwpostfix{{{
-MSG=$(gettext 'Aktion:
+# access_action_help fuer kwpostfix{{{
+MSG=$(gettext 'Action:
+\tall-numeric = ein all-numeric Resultat wird behandelt wie ein OK.
+\tBCC user@domain.de = leitet jede Mail an user@domain.de weiter.
+\tDEFER = gibt einen temporaeren Fehler aus (4xx).
+\tDEFER_IF_PERMIT = gibt einen temporaeren Fehler aus (4xx), wenn
+\tdie Mail sonst angenommen wuerde.
+\tDEFER_IF_REJECT = gibt einen temporaeren Fehler aus (4xx), wenn
+\tein spaeterer Check ein fatales REJECT liefern wuerde.
 \tDISCARD = verwirft die Mail an alle Empfaenger, wenn auch nur
 \teiner von ihnen ein DISCARD ausloest; dem CLient wird mittels 250
 \tOK eine erfolgreiche Zustellung vorgegaukelt.
@@ -12,18 +19,12 @@ MSG=$(gettext 'Aktion:
 \tKommando postcat kann man sie z.B. ueberpruefen. Der
 \tangepasste Header/Body... und der optionale Text
 \twerden geloggt.
-\tIGNORE = Loescht stillschweigend den Nachrichten Header/Body...
-\tINFO = Loggt eine "info:" Aufnahme mit optionalen Text TEXT.
 \tOK = erlaubt die Anfrage, laesst weiterhin alle Header/Body...
 \tunberuehrt deren Muster darauf passen.
-\tPREPEND TEXT = fuegt der Mail den angegebenen Text TEXT
-\tvor dem Message Header hinzu. Dieser muss mit einem gueltigen
-\tMessage Header Kennzeichen beginnen.
+\tPREPEND header:value = fuegt der Mail den angegebenen Mail-Header
+\thinzu.
 \tREDIRECT user@domain.de = sendet die Mail an user@domain.de und
 \tverwirft alle anderen angegebenen Empfaenger.
-\tREPLACE = tauscht in der Mail eine Header Zeile mit dem
-\tangegebenen Text TEXT. Dieser TEXT muss mit ein gueltigen Header
-\tKennzeichen beginnen.
 \tREJECT = lehnt die Anfrage mit einem fatalen Fehler 5xx ab.
 \tREJECT TEXT = lehnt die Anfrage ab und gibt den Text TEXT aus.
 \tWARN TEXT = Erzeugt einen Logeintrag mit Informationen zu

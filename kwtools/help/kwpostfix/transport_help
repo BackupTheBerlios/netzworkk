@@ -18,11 +18,17 @@ host.domain.de\tsmtp:[mail.domain.de]:10025
 .domain.de\tsmtp:test.domain.de
 # Diese Domain reichen wir per lmtp weiter
 kundendomain.de\tlmtp:
-# Alle Mails dieses Users werden woanders abgeliefert.
-tux@domain.de\tsmtp:[intern.domain.de]
+# Alle Mails dieses Users werden an outbound-relay.my.domain
+# geliefert.
+tux@domain.de\tsmtp:outbound-relay.my.domain
+# Alle Mails werden an host.domain.de geliefert.
+*\tsmtp:host.domain.de
+# Alle Mails von domain.de werden an gateway.domain.de geliefert.
+domain.de\t:gateway.domain.de
 # Und man kann den Postfix-Error-Mailer als Transportweg einsetzen
 # der erzeugt dann ein Bounce mit Erklaerung:
-aol.de\terror:Tippfehler, die korrekte Domain ist aol.com')
+domain.de\terror:Tippfehler, die korrekte Domain ist domain.com.
+')
 #}}}
 ### Modeline {{{
 ### vim:ft=zsh:foldmethod=marker
