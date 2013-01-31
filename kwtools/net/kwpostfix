@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 20.01.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 30.01.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -98,13 +98,16 @@ lv_Db=$(gettext 'Datenbank')
 lv_Db_Create_Reload=$(gettext 'neu erzeugen/postfix reload')
 lv_Domain=$(gettext 'Domain')
 lv_Flags=$(gettext 'Flags')
+lv_Header=$(gettext 'Headername')
 lv_Host_Domain=$(gettext 'Rechner/Domain')
 lv_Id=$(gettext 'ID')
 lv_Mail_Auth=$(gettext 'Mail-Authentifizierung')
 lv_Port=$(gettext 'Port')
 lv_Server=$(gettext 'Server')
+lv_String=$(gettext 'Zeichenkette')
 lv_Text=$(gettext 'Text')
 lv_Transportmethode=$(gettext 'Transport Methode')
+lv_Transport=$(gettext 'Transport')
 
 # Variable fuer die Hilfe der Tabellen
 lv_Pix_Workarounds=$(gettext 'PIX Workarounds')
@@ -264,7 +267,8 @@ tab_support() {
 				TABS_M+=($i \"\")
 				TABS_R+=($i \"\")
 				;;
-			tcp)	# garnichts machen
+			tcp)
+				# garnichts machen
 				;;
 			*)	# der Rest
 				TABS_M+=($i \"\")
@@ -1098,8 +1102,8 @@ while [ "$gv_Auswahl" ] ; do
 				command_filter_table flags_choice generic_table \
 				kwpostfix_action ldap_db mailbox_command_table \
 				mynetworks_table pix_workarounds_tables relay_clientcerts_table \
-				relay_domains_table \
-				recipient_table regexp_pcre_table relocated_table \
+				relay_domains_table recipient_table regexp_pcre_access_input \
+				regexp_pcre_table relocated_table \
 				sasl_password_table smtpd_sender_login_table sql_db \
 				tls_per_site_table transport_table \
 				virtual_alias_table virtual_alias_mb_domains_table \
@@ -1137,7 +1141,7 @@ while [ "$gv_Auswahl" ] ; do
 						"$HASH_TAB" "$FILE"
 						;;
 					cidr)
-						# cidr wird nur auf die Access Tabelle angewandt.
+						# cidr wird z.Z. nur auf die Access Tabellen angewandt.
 						"$HASH_TAB" -c "$FILE"
 						;;
 					ldap)
@@ -1158,7 +1162,9 @@ while [ "$gv_Auswahl" ] ; do
 								msgbox "$gv_Attention" "$MSG"
 								;;
 							*)
-								if [[ $TAB == smtpd_command_filter ]] ; then
+								if [[ $SUBTAB == *_access ]] ; then
+									"$HASH_TAB" "$FILE"
+								elif [[ $TAB == smtpd_command_filter ]] ; then
 									TAB_HELP="command_filter_help"
 									command_filter_table "$FILE"
 								else
@@ -1324,7 +1330,7 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			# Funktion sub_tab_menu{{{
 			sub_tab_menu() {
-				unset -- FILE HASH_TAB TAB_HELP WAS_IST
+				unset -- FILE HASH_TAB TAB_HELP WAS_IST SUBTAB
 				if [[ -n ${SUB_TABLE_E[$TAB]} ]] ; then
 					SUB_TAB_MENU=(${SUB_TABLE_E[$TAB]} $gv_Back \"\")
 					if [[ ${#argv} == 1 ]] ; then
@@ -1349,12 +1355,11 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			# Funktion Schlüssel/Wert Auswahl{{{
 			key_value() {
-				unset -- AUSWAHL AUSWAHL_MULTI
-				awk '(!/^#/){print}' $1 | sed -e 's#\"#\\\"#g ; s#\\\.#\\\\\\.#g ; 
-					s#\\\s#\\\\\\s#g' | \
+				unset -- AUSWAHL AUSWAHL_MULTI AUSWAHL_E
+				awk '(!/^#/){print}' $1 | sed -e 's#\\#\\\\\\#g ; s#\"#\\\"#g' | \
 				while read ALL ; do
 					if [[ -n $ALL ]] ; then
-						AUSWAHL_E+=(${ALL%%/[ixm]*}/)
+						AUSWAHL_E+=(${(qq)ALL})
 						AUSWAHL+=(${(qq)ALL} \"\")
 						AUSWAHL_MULTI+=(${(qq)ALL} \"\" off)
 					fi
@@ -1601,7 +1606,7 @@ while [ "$gv_Auswahl" ] ; do
 									# Einliefern von Mails, basierend auf Absender, Empfänger
 									# oder Hostnamen.
 									SUBTAB="$gv_Auswahl"
-									TAB_HELP="access_help"
+									TAB_HELP="access_help access_action_help"
 									HASH_TAB="access_table"
 									Tmp="${${TAB_IND[$TAB]}#*_access }"
 									WAS_IST="${${Tmp}%:*}"
