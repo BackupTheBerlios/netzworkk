@@ -21,7 +21,7 @@ MSG=$(gettext 'Action:
 \twerden geloggt.
 \tOK = erlaubt die Anfrage, laesst weiterhin alle Header/Body...
 \tunberuehrt deren Muster darauf passen.
-\tPREPEND header:value = fuegt der Mail den angegebenen Mail-Header
+\tPREPEND header: value = fuegt der Mail den angegebenen Mail-Header
 \thinzu.
 \tREDIRECT user@domain.de = sendet die Mail an user@domain.de und
 \tverwirft alle anderen angegebenen Empfaenger.
