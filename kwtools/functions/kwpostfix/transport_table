@@ -2,14 +2,22 @@
 #
 transport_table() {
 	FILE="$1"
-	autoload -U no_adr_msg
-	# Variable fürs Menue
-	lv_Transport=$(gettext 'Transport')
+	autoload -U no_adr_msg regexp_pcre_access
+	regexp_pcre_access
 
 	# Funktion transport_menue{{{
 	transport_menue() {
-		TRANSPORT_MENU=($lv_Address \"$ADR\" $lv_Transport \"$TRANS\"
-		$lv_Server \"$MX_HOST\" $lv_Port \"$PORT\" $gv_Save \"\" $gv_Back \"\")
+		TRANS="${TRANS:-$OldTrans}"
+		if [[ $TRANS == error ]] ; then
+			TEXT="${TEXT:-$OldText}"
+			TRANSPORT_MENU=($lv_Address \"$ADR\" $lv_Transport \"$TRANS\"
+			$lv_Text \"$TEXT\" $gv_Save \"\" $gv_Back \"\")
+		else
+			HOST="${HOST:-$OldHost}"
+			PORT="${PORT:-$OldPort}"
+			TRANSPORT_MENU=($lv_Address \"$ADR\" $lv_Transport \"$TRANS\"
+			$gv_Host \"$HOST\" $lv_Port \"$PORT\" $gv_Save \"\" $gv_Back \"\")
+		fi
 		if [[ ${#argv} == 1 ]] ; then
 			menubox -d "$1" "$TABLE_TITLE" "$gv_Menupoint" "$TRANSPORT_MENU"
 		else
@@ -19,147 +27,159 @@ transport_table() {
 	#}}}
 	# Funktion transport_aendern{{{
 	transport_aendern() {
-		# Funktion no_server_port_msg# {{{
-		no_server_port_msg() {
-			MSG=$(gettext 'Beim Transportweg \"error\" brauchen Sie keinen Server oder Port angeben.')
-			msgbox "$gv_Attention" "$MSG"
-		}
-		## }}}
-	transport_menue
-	while [ "$gv_Auswahl" ] ; do
-		case "$gv_Auswahl" in
-			HELP*)	script_help "$TAB_HELP"
-				transport_menue
-				;;
-			$lv_Address)
-				# Adresse waehlen{{{
-				ADRESS_MSG=$(gettext 'Geben Sie entweder eine Mailadresse, Domain, oder Subdomain ein fuer die Postfix Mail annehmen soll (Bsp. domain.de | .subdomain.de).')
-				inputbox "$TABLE_TITLE" "$ADRESS_MSG" "$ADR"
-				if [ "$gv_Auswahl" ] ; then
-					case "$gv_Auswahl" in
-						[a-zA-Z0-9]*@*.*)	ADR="$gv_Auswahl"
-							;;
-						[.a-zA-Z0-9]*.*)	ADR="$gv_Auswahl"
-							;;
-						*)	unset -- ADR
-							no_input_msg
-							;;
-					esac
-				else
-					unset -- ADR
-					no_input_msg
-				fi
-				#}}}
-				transport_menue $lv_Address
-				;;
-			$lv_Transport)
-				# Transport Methode waehlen{{{
-				transport_methode "${TRANS%%:*}" "${TRANS##*:}"
-				if [ "$WERT" = error ] ; then
-					ERROR_MSG=$(gettext 'Geben Sie einen Text fuer den Transportweg \"error\" ein.')
-					inputbox "$TABLE_TITLE" "$ERROR_MSG" "${TRANS#*:}"
-					if [ -n "$gv_Auswahl" ] ; then
-						TRANS="${WERT}:${gv_Auswahl}"
-						unset -- MX_HOST PORT
-					else
-						unset -- TRANS
-					fi
-				else
-					TRANS="$WERT"
-				fi
-				#}}}
-				transport_menue $lv_Transport
-				;;
-			$lv_Server)
-				# Server eingeben{{{
-				if [ "${TRANS%:*}" != error ] ; then
-					SERVER_MSG=$(gettext 'Geben Sie hier bitte einen Mail Servernamen ein (Bsp. mx.domain.de | 192.168.0.1).')
-					inputbox "$TABLE_TITLE" "$SERVER_MSG" "$MX_HOST"
+		transport_menue
+		while [ "$gv_Auswahl" ] ; do
+			case "$gv_Auswahl" in
+				HELP*)	script_help "$TAB_HELP"
+					transport_menue
+					;;
+				$lv_Address)
+					# Adresse waehlen{{{
+					ADRESS_MSG=$(gettext 'Geben Sie entweder eine Mailadresse, Domain, oder Subdomain ein fuer die Postfix Mail annehmen soll (Bsp. domain.de | .subdomain.de).')
+					inputbox "$TABLE_TITLE" "$ADRESS_MSG" "$ADR"
 					if [ "$gv_Auswahl" ] ; then
 						case "$gv_Auswahl" in
-							\[*\])
-								MX_HOST="$gv_Auswahl"
+							[a-zA-Z0-9]*@*.*)	ADR="$gv_Auswahl"
 								;;
-							*)
-								# Server in eckige Klammern stellen?
-								SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
-								yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
-								if [ "$?" = 0 ] ; then
-									MX_HOST="[${gv_Auswahl}]"
-								else
-									MX_HOST="$gv_Auswahl"
-								fi
+							[.a-zA-Z0-9]*.*)	ADR="$gv_Auswahl"
+								;;
+							\*)	ADR="$gv_Auswahl"
+								;;
+							*)	unset -- ADR
+								no_input_msg
 								;;
 						esac
 					else
-						unset -- MX_HOST
+						unset -- ADR
 						no_input_msg
 					fi
-				else
-					no_server_port_msg
-				fi
-				#}}}
-				transport_menue $lv_Server
-				;;
-			$lv_Port)
-				# Port vergeben{{{
-				if [ "${TRANS%:*}" != error ] ; then
-					TRANSPORT_PORT_MSG=$(gettext 'Geben Sie hier einen Port fuer den Transport ($TRANS) ein (Bsp. 25).')
-					inputbox "$TABLE_TITLE" "$TRANSPORT_PORT_MSG" "$PORT"
-					if [ "$gv_Auswahl" ] ; then
-						PORT="$gv_Auswahl"
-						if [ "$PORT" = 0 ] ; then
-							no_input_msg
-							unset -- PORT
-						fi
+					#}}}
+					transport_menue $lv_Address
+					;;
+				$lv_Transport)
+					# Transport Methode waehlen{{{
+					transport_methode "${TRANS##:*}" "${TRANS##*:}"
+					if [ "$WERT" = error ] ; then
+						TRANS="$WERT"
+						OldTrans="$TRANS"
+						unset -- HOST PORT
+					elif [ -n "$WERT" ] ; then
+						TRANS="$WERT"
+						OldTrans="$TRANS"
+						unset -- TEXT
 					else
-						unset -- PORT
+						unset -- TRANS
 						no_input_msg
 					fi
-				else
-					no_server_port_msg
-				fi
-				#}}}
-				transport_menue $lv_Port
-				;;
-			$gv_Save)
-				# Eintraege speichern{{{
-				if [ "$ADR" ] ; then
-					if [ "$AENDERN_ADR" ] ; then
-						if [ "${TRANS%:*}" != error ] ; then
-							if [ "$PORT" ] ; then
-								sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1// /.*}.*#${ADR}\t${TRANS}:${MX_HOST}:${PORT}#" $FILE >$FILE$$
-							else
-								sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1// /.*}.*#${ADR}\t${TRANS}:${MX_HOST}#" $FILE >$FILE$$
-							fi
-						else
-							sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1// /.*}.*#${ADR}\t${TRANS}#" $FILE >$FILE$$
-						fi
-						mv $FILE$$ $FILE
-					else
-						grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
-						if [ "${TRANS%:*}" != error ] ; then
-							if [ "$PORT" ] ; then
-								>> $FILE$$ <<< "$ADR	${TRANS}:${MX_HOST}:${PORT}"
-							else
-								>> $FILE$$ <<< "$ADR	${TRANS}:${MX_HOST}"
-							fi
-						else
-							>> $FILE$$ <<< "$ADR	$TRANS"
-						fi
-						mv $FILE$$ $FILE
+					#}}}
+					transport_menue $lv_Transport
+					;;
+				$gv_Host)
+#					# Rechner eingeben{{{
+#					HOST_MSG=$(gettext 'Geben Sie hier bitte einen Rechnernamen oder IP ein (Bsp. host.domain.de | 192.168.0.1).')
+#					inputbox "$TABLE_TITLE" "$HOST_MSG" "$HOST"
+#					if [ "$gv_Auswahl" ] ; then
+#						case "$gv_Auswahl" in
+#							\[*\])
+#								HOST="$gv_Auswahl"
+#								;;
+#							*)
+#								# Server in eckige Klammern stellen?
+#								SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
+#								yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
+#								if [ "$?" = 0 ] ; then
+#									HOST="[${gv_Auswahl}]"
+#								else
+#									HOST="$gv_Auswahl"
+#								fi
+#								;;
+#						esac
+#						OldHost="$HOST"
+#					else
+#						unset -- HOST
+#						no_input_msg
+#					fi
+#					#}}}
+					# Zielrechner fuer Transport eingeben# {{{
+					regexp_pcre_access_host
+					if [ -n "$HOST" ] ; then
+						unset -- TEXT
 					fi
-					break
-				else
-					no_adr_msg
-					transport_menue
-				fi
-				#}}}
-				;;
-			$gv_Back)	break
-				;;
-		esac
-	done
+					## }}}
+					transport_menue $gv_Host
+					;;
+				$lv_Port)
+#					# Port vergeben{{{
+#					PORT_MSG=$(gettext 'Geben Sie hier einen Port fuer den Rechner ein (Bsp. 25).')
+#					inputbox "$TABLE_TITLE" "$PORT_MSG" "$PORT"
+#					if [[ $gv_Auswahl == 0 ]] ; then
+#						no_input_msg
+#						unset -- PORT
+#					else
+#						PORT="$gv_Auswahl"
+#						OldPort="$PORT"
+#					fi
+#					#}}}
+					# Port eingeben# {{{
+					regexp_pcre_access_port
+					if [[ -n $PORT ]] ; then
+						unset -- TEXT
+					fi
+					## }}}
+					transport_menue $lv_Port
+					;;
+				$lv_Text)
+					# Text eingeben{{{
+					regexp_pcre_access_text
+					if [[ -n $WERT ]] ; then
+						TEXT="$WERT"
+						OldText="$TEXT"
+						unset -- HOST PORT
+					else
+						unset -- TEXT
+						no_input_msg
+					fi
+					#}}}
+					transport_menue $lv_Text
+					;;
+				$gv_Save)
+					# Eintraege speichern{{{
+					if [ -n "$ADR" ] ; then
+						if [ "$AENDERN_ADR" ] ; then
+							if [ "$TRANS" != error ] ; then
+								if [ "$PORT" ] ; then
+									sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1// /.*}.*#${ADR}\t${TRANS}:${HOST}:${PORT}#" $FILE >$FILE$$
+								else
+									sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1// /.*}.*#${ADR}\t${TRANS}:${HOST}#" $FILE >$FILE$$
+								fi
+							else
+								sed -e "s#^${AENDERN_ADR}[[:space:]]${AENDERN_ADR1// /.*}.*#${ADR}\t${TRANS}:${TEXT}#" $FILE >$FILE$$
+							fi
+							mv $FILE$$ $FILE
+						else
+							grep -v "^${ADR}[[:space:]]" $FILE >$FILE$$
+							if [ "$TRANS" != error ] ; then
+								if [ "$PORT" ] ; then
+									>> $FILE$$ <<< "$ADR	${TRANS}:${HOST}:${PORT}"
+								else
+									>> $FILE$$ <<< "$ADR	${TRANS}:${HOST}"
+								fi
+							else
+								>> $FILE$$ <<< "$ADR	${TRANS}:${TEXT}"
+							fi
+							mv $FILE$$ $FILE
+						fi
+						break
+					else
+						no_adr_msg
+						transport_menue
+					fi
+					#}}}
+					;;
+				$gv_Back)	break
+					;;
+			esac
+		done
 	}
 	#}}}
 	tabellen_menue
@@ -175,12 +195,15 @@ transport_table() {
 				;;
 			$gv_Create)
 				# Werte anlegen
-				unset -- PORT MX_HOST ADR TRANS AENDERN_ADR AENDERN_ADR1
+				unset -- ADR HOST PORT TEXT TRANS AENDERN_ADR AENDERN_ADR1 OldHost \
+					OldPort OldText
 				transport_aendern
 				tabellen_menue
 				;;
 			$gv_Change)
 				# Eintraege aendern{{{
+				unset -- ADR HOST PORT TEXT TRANS AENDERN_ADR AENDERN_ADR1 OldHost \
+					OldPort OldText
 				key_value "$FILE"
 				if [[ -n ${AUSWAHL[1]} ]] ; then
 					CHANGE_MENU=($AUSWAHL)
@@ -194,29 +217,32 @@ transport_table() {
 								# Auswahl aendern
 								print "${(s.:.)${gv_Auswahl}}" | \
 								while read ADRESSE TRANSP MXHOST REST ; do
-									if [ "${TRANSP%:*}" != error ] ; then
-										ADR="$ADRESSE"
-										TRANS="$TRANSP"
-										MX_HOST="$MXHOST"
-										if [ -n "$REST" ] ; then
-											PORT="$REST"
-										else
-											unset -- PORT
-										fi
-										AENDERN_ADR="$ADR"
-										# Diese Variablen werden veraendert.
-										if [ "$MX_HOST" -a "$PORT" ] ; then
-											AENDERN_ADR1="${TRANS}:${MX_HOST}:${PORT}"
-										elif [ "$MX_HOST" ] ; then
-											AENDERN_ADR1="${TRANS}:${MX_HOST}"
+									ADR="$ADRESSE"
+									TRANS="$TRANSP"
+									if [ "$TRANS" != error ] ; then
+										HOST="$MXHOST"
+										PORT="$REST"
+										unset -- TEXT
+									else
+										TEXT="$MXHOST $REST"
+										unset -- HOST PORT
+									fi
+									AENDERN_ADR="$ADR"
+									# Diese Variablen werden veraendert.
+									if [ "$TRANS" != error ] ; then
+										if [ -n "$HOST" -a -n "$PORT" ] ; then
+											AENDERN_ADR1="${TRANS}:${HOST}:${PORT}"
+										elif [-n "$HOST" ] ; then
+											AENDERN_ADR1="${TRANS}:${HOST}"
 										else
 											AENDERN_ADR1="${TRANS}:"
 										fi
 									else
-										ADR="$ADRESSE"
-										TRANS="${TRANSP}:${MXHOST} ${REST}"
-										AENDERN_ADR="$ADR"
-										AENDERN_ADR1="$TRANS"
+										if [ -n "$TEXT" ] ; then
+											AENDERN_ADR1="${TRANS}:${TEXT}"
+										else
+											AENDERN_ADR1="${TRANS}:"
+										fi
 									fi
 								done
 								transport_aendern

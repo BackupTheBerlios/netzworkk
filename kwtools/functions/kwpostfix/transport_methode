@@ -1,29 +1,15 @@
 # Funktion transport_methode{{{
 #
-# usage: transport_methode [ -e ] OLDMETHODE OLDVALUE
+# usage: transport_methode OLDMETHODE OLDVALUE
 #
 transport_methode() {
-	unset -- WERT MB_TRANS_MENU OldMethode OldValue Opt
-	if [[ $1 == -e ]] ; then
-		Opt="$1"
-		OldMethode="$2"
-		OldValue="$3"
-	else
-		OldMethode="$1"
-		OldValue="$2"
-	fi
+	unset -- WERT MB_TRANS_MENU OldMethode OldValue
+	OldMethode="$1"
+	OldValue="$2"
 	for i in `awk '(/^[^# ][^-]/){print $1}' $MASTER_CF | sort` ; {
 		# Duplikate herausfiltern.
-		# ohne error
-		if [[ -n $Opt -a ${i##*:} != error ] ; then
-			if [ -z ${(M)${MB_TRANS_MENU}##${i##*:}} ] ; then
-				MB_TRANS_MENU+=(${i##*:} \"\")
-			fi
-		else
-			# mit error
-			if [ -z ${(M)${MB_TRANS_MENU}##${i##*:}} ] ; then
-				MB_TRANS_MENU+=(${i##*:} \"\")
-			fi
+		if [ -z ${(M)${MB_TRANS_MENU}##${i##*:}} ] ; then
+			MB_TRANS_MENU+=(${i##*:} \"\")
 		fi
 	}
 	#

@@ -18,12 +18,6 @@ tls_per_site_table() {
 	#}}}
 	# Funktion tls_per_site_aendern{{{
 	tls_per_site_aendern() {
-		# Funktion no_server_port_msg# {{{
-		no_server_port_msg() {
-			MSG=$(gettext 'Beim Transportweg \"error\" brauchen Sie keinen Server oder Port angeben.')
-			msgbox "$gv_Attention" "$MSG"
-		}
-		## }}}
 	tls_per_site_menue
 	while [ "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
