@@ -152,7 +152,7 @@ tab_support_choice() {
 									Choice=alias_maps
 								fi
 								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
-								create_file ${MAPS##*:}
+								check_and_copy_lookup_table "ldap_${Choice}" "${MAPS##*:}"
 								#}}}
 								break
 								;;
@@ -184,16 +184,16 @@ tab_support_choice() {
 												Choice=alias_maps
 											fi
 											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
-											create_file ${MAPS##*:}
+											check_and_copy_lookup_table "ldap_${Choice}" "${MAPS##*:}"
 											#}}}
 											;;
-										*sql)
+										*sql|sqlite)
 											# Proxymap SQL Datenbanken{{{
 											if [ "$Choice" = alias_database ] ; then
 												Choice=alias_maps
 											fi
 											MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
-											create_file ${MAPS##*:}
+											check_and_copy_lookup_table "sql_${Choice}" "${MAPS##*:}"
 											#}}}
 											;;
 										nis)
@@ -227,7 +227,7 @@ tab_support_choice() {
 											#}}}
 											;;
 										*)
-											# alle anderen Tabellentypen
+											# alle anderen Tabellentypen# {{{
 											if [ "$Choice" = alias_database ] ; then
 												Choice=alias_maps
 											fi
@@ -253,10 +253,25 @@ tab_support_choice() {
 													chmod 600 ${MAPS##*:}
 													;;
 												*)
+													# Eventuell vorhandene Beispiel Datei
+													# kopieren, ansonsten wird eine leere
+													# Datei erstellt.
 													MAPS="${Tabwahl}:${Proxy_Map}:${MAIL_CONFIG}/${Choice}"
-													create_file ${MAPS##*:}
+													case "$Tabwahl" in
+														btree|cdb|dbm|hash|sdbm|texthash)
+															Prefix=hash
+															;;
+														pcre|regexp)
+															Prefix=regexp
+															;;
+														*)
+															Prefix="$Tabwahl"
+															;;
+													esac
+													check_and_copy_lookup_table "${Prefix}_${Choice}" "${MAPS##*:}"
 													;;
 											esac
+											## }}}
 											;;
 									esac
 								else
@@ -266,13 +281,16 @@ tab_support_choice() {
 								#}}}
 								break
 								;;
-							*sql)
+							*sql|sqlite)
 								# SQL Datenbanken{{{
 								if [ "$Choice" = alias_database ] ; then
 									Choice=alias_maps
 								fi
+								# Eventuell vorhandene Beispiel Datei
+								# kopieren, ansonsten wird eine leere
+								# Datei erstellt.
 								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
-								create_file ${MAPS##*:}
+								check_and_copy_lookup_table "sql_${Choice}" "${MAPS##*:}"
 								#}}}
 								break
 								;;
@@ -338,8 +356,22 @@ tab_support_choice() {
 										chmod 600 ${MAPS##*:}
 										;;
 									*)
+										# Eventuell vorhandene Beispiel Datei
+										# kopieren, ansonsten wird eine leere
+										# Datei erstellt.
 										MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${Choice}"
-										create_file ${MAPS##*:}
+										case "$gv_Auswahl" in
+											btree|cdb|dbm|hash|sdbm|texthash)
+												Prefix=hash
+												;;
+											pcre|regexp)
+												Prefix=regexp
+												;;
+											*)
+												Prefix="$gv_Auswahl"
+												;;
+										esac
+										check_and_copy_lookup_table "${Prefix}_${Choice}" "${MAPS##*:}"
 										;;
 								esac
 								#}}}
