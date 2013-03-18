@@ -374,6 +374,12 @@ access_table() {
 				access_aendern
 				tabellen_menue
 				;;
+			$gv_Edit)
+				# Eintraege bearbeiten# {{{
+				edit_file "$TABLE_TITLE" "$FILE"
+				## }}}
+				tabellen_menue
+				;;
 			$gv_Change)
 				# Eintraege aendern{{{
 				unset -- ADR ACTION TEXT MAIL TRANS HOST HEADER AENDERN_ADR \

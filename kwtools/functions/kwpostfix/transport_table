@@ -200,6 +200,12 @@ transport_table() {
 				transport_aendern
 				tabellen_menue
 				;;
+			$gv_Edit)
+				# Eintraege bearbeiten# {{{
+				edit_file "$TABLE_TITLE" "$FILE"
+				## }}}
+				tabellen_menue
+				;;
 			$gv_Change)
 				# Eintraege aendern{{{
 				unset -- ADR HOST PORT TEXT TRANS AENDERN_ADR AENDERN_ADR1 OldHost \

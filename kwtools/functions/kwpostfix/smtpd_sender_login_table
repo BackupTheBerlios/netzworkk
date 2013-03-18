@@ -93,6 +93,12 @@ smtpd_sender_login_table() {
 				smtpd_sender_login_aendern
 				tabellen_menue
 				;;
+			$gv_Edit)
+				# Eintraege bearbeiten# {{{
+				edit_file "$TABLE_TITLE" "$FILE"
+				## }}}
+				tabellen_menue
+				;;
 			$gv_Change)
 				# Eintraege aendern{{{
 				key_value "$FILE"

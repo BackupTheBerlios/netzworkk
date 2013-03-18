@@ -116,6 +116,12 @@ alias_table() {
 				alias_aendern
 				tabellen_menue
 				;;
+			$gv_Edit)
+				# Eintraege bearbeiten# {{{
+				edit_file "$TABLE_TITLE" "$FILE"
+				## }}}
+				tabellen_menue
+				;;
 			$gv_Change)
 				# Eintraege aendern{{{
 				key_value "$FILE"
