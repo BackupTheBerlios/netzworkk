@@ -3009,6 +3009,27 @@ $TIME test -x $Prog_Wahl_X && $Sudo $Prog_Wahl_X"
 		fi
 	}
 	#}}}
+	# Funktion (edit_file)# {{{
+	#
+	# usage: edit_file TITLE FILE
+	#
+	edit_file() {
+		if [[ ${#argv} == 2 ]] ; then
+			unset -- EDIT_TITLE EDIT_FILE
+			EDIT_TITLE="$1"
+			EDIT_FILE="$2"
+			if [[ $EDITOR == dialog ]] ; then
+				editbox "$EDIT_TITLE" "$EDIT_FILE"
+			elif [[ -x ${commands[EDITOR]} ]] ; then
+				"$EDITOR" "$EDIT_FILE"
+			else
+				no_editor_msg
+			fi
+		else
+			no_para_msg $0
+		fi
+	}
+	## }}}
 	# Funktion (exec_edit_prog)# {{{
 	#
 	# usage: exec_edit_prog [ TITLE ] FILE
@@ -6251,7 +6272,7 @@ no_backup_path_msg() {
 	#
 	# usage: no_editor_msg
 	no_editor_msg() {
-		MSG=$(gettext 'Sie muessen die Variable EDITOR, mit einem Editor ihrer Wahl belegen (EDITOR=vim).')
+		MSG=$(gettext 'Sie muessen die Variable EDITOR, mit einem Editor ihrer Wahl belegen (Bsp.: EDITOR=vim).')
 		msgbox "$gv_Attention" "$MSG"
 	}
 	#}}}
