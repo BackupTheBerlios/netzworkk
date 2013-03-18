@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 30.01.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 17.03.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -138,6 +138,7 @@ MAIN_CF="${MAIL_CONFIG}/main.cf"
 if [ ! -f "$MAIN_CF" ] ; then
 	create_file "$MAIN_CF"
 fi
+EXAMPLE_DIR="${PREFIX}/share/doc/kwtools-net-postfix/examples"
 # Port als integer deklarieren
 integer PORT
 
@@ -169,6 +170,32 @@ cert_match() {
 	fi
 }
 # # }}}
+# Funktion (check_and_copy_lookup_table), Beispiel-Datei kopieren,# {{{
+# falls vorhanden.
+#
+# usage: check_and_copy_lookup_table EXAMPLE_FILE FILE
+#
+# EXAMPLE_FILE - Beispiel Dateiname
+# FILE         - Postfix Dateiname
+#
+check_and_copy_lookup_table() {
+	local Ex_File File Table_Ex
+	Ex_File="$1"
+	File="$2"
+	if [ ! -e "$File" -o ! -s "$File" ] ; then
+		# Check ob es eine Beispiel-Datei gibt
+		# und wenn ja kopieren.
+		Table_Ex="${EXAMPLE_DIR}/${Ex_File}"
+		if [ -e "$Table_Ex" ] ; then
+			cp -u "$Table_Ex" "$File"
+			chmod 640 "$File"
+		else
+			create_file "$File"
+			chmod 640 "$File"
+		fi
+	fi
+}
+## }}}
 # Funktion (user_id), Benutzer ID auswaehlen{{{
 #
 user_id() {
@@ -1119,23 +1146,26 @@ while [ "$gv_Auswahl" ] ; do
 			# usage: tab_change
 			#####################################
 			# TODO: es fehlen noch nis(plus), memcache, socketmap,...
+			# sql-zusammenlegen?
+			#
+			# WAS_IST -> TAB_FM
 			#
 			tab_change() {
-				case "$WAS_IST" in
+				case "$TAB_FM" in
 					mysql)
 						TAB_HELP="sql_help"
 						autoload -U password password_display different_passwd sql_config
-						sql_db $WAS_IST $FILE
+						sql_db $TAB_FM $FILE
 						;;
 					pgsql)
 						TAB_HELP="sql_help"
 						autoload -U password password_display different_passwd sql_config
-						sql_db $WAS_IST $FILE
+						sql_db $TAB_FM $FILE
 						;;
 					sqlite)
 						TAB_HELP="sql_help"
 						autoload -U password password_display different_passwd sql_config
-						sql_db $WAS_IST $FILE
+						sql_db $TAB_FM $FILE
 						;;
 					btree|cdb|dbm|hash|proxy|sdbm|texthash)
 						"$HASH_TAB" "$FILE"
@@ -1148,7 +1178,7 @@ while [ "$gv_Auswahl" ] ; do
 						#ldap_table
 						TAB_HELP="ldap_help"
 						autoload -U password password_display different_passwd ldap_config
-						ldap_db $WAS_IST $FILE
+						ldap_db $TAB_FM $FILE
 						;;
 					pcre|regexp)
 						case "$TAB" in
@@ -1158,17 +1188,22 @@ while [ "$gv_Auswahl" ] ; do
 								# alias Tabellen haben noch keine Unterstuetzung fuer
 								# regulaere Ausdruecke
 								######################################################
-								MSG=$(gettext 'Das Tabellen-Format ($WAS_IST) wird noch nicht, fuer diese Tabelle, von kwpostfix unterstuetzt.')
+								MSG=$(gettext 'Das Tabellen-Format ($TAB_FM) wird noch nicht, fuer diese Tabelle, von kwpostfix unterstuetzt.')
 								msgbox "$gv_Attention" "$MSG"
 								;;
 							*)
+								set -x
+					
 								if [[ $SUBTAB == *_access ]] ; then
 									"$HASH_TAB" "$FILE"
 								elif [[ $TAB == smtpd_command_filter ]] ; then
 									TAB_HELP="command_filter_help"
 									command_filter_table "$FILE"
+								sleep 4
+								set +x
+								break
 								else
-									if [[ $WAS_IST == regexp ]] ; then
+									if [[ $TAB_FM == regexp ]] ; then
 										TAB_HELP="regexp_help regexp_pcre_action_help"
 										regexp_pcre_table "$FILE"
 									else
@@ -1179,7 +1214,7 @@ while [ "$gv_Auswahl" ] ; do
 								;;
 						esac
 						;;
-					*)	hier_ist_noch_nichts $WAS_IST
+					*)	hier_ist_noch_nichts $TAB_FM
 						;;
 				esac
 			}
@@ -1328,6 +1363,14 @@ while [ "$gv_Auswahl" ] ; do
 				fi
 			}
 			#}}}
+			# Funktion tabellen_menue{{{
+			TABLE_MENU=($gv_Display \"\" $gv_Create \"\" $gv_Edit \"\" $gv_Change \"\"
+				$gv_Delete \"\" $lv_Db \"$lv_Db_Create_Reload\" $gv_Back \"\")
+			tabellen_menue() {
+				TABLE_TITLE="${lv_Tabs}::${TAB}"
+				menubox "$TABLE_TITLE" "$gv_Menupoint" "$TABLE_MENU"
+			}
+			#}}}
 			# Funktion sub_tab_menu{{{
 			sub_tab_menu() {
 				unset -- FILE HASH_TAB TAB_HELP WAS_IST SUBTAB
@@ -1343,14 +1386,6 @@ while [ "$gv_Auswahl" ] ; do
 					msgbox "$gv_Attention" "$MSG"
 					unset -- gv_Auswahl
 				fi
-			}
-			#}}}
-			# Funktion tabellen_menue{{{
-			TABLE_MENU=($gv_Display \"\" $gv_Create \"\" $gv_Change \"\"
-			$gv_Delete \"\" $lv_Db \"$lv_Db_Create_Reload\" $gv_Back \"\")
-			tabellen_menue() {
-				TABLE_TITLE="${lv_Tabs}::${TAB}"
-				menubox "$TABLE_TITLE" "$gv_Menupoint" "$TABLE_MENU"
 			}
 			#}}}
 			# Funktion Schlüssel/Wert Auswahl{{{
@@ -1390,7 +1425,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="alias_help"
 						HASH_TAB="alias_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1405,7 +1440,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="bcc_help"
 						HASH_TAB="bcc_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1424,7 +1459,7 @@ while [ "$gv_Auswahl" ] ; do
 						# smtp_nested_header_checks
 						#
 						# TAB_HELP="regexp_help"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1440,7 +1475,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="canonical_help"
 						HASH_TAB="canonical_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1462,7 +1497,7 @@ while [ "$gv_Auswahl" ] ; do
 								;;
 						esac
 						HASH_TAB="relay_domains_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1478,7 +1513,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="generic_help"
 						HASH_TAB="generic_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1494,7 +1529,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="mailbox_command_help"
 						HASH_TAB="mailbox_command_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1509,7 +1544,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="mynetworks_help"
 						HASH_TAB="mynetworks_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1524,7 +1559,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="pix_workarounds_help"
 						HASH_TAB="pix_workarounds_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1539,7 +1574,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="${gv_Auswahl%_maps}_help"
 						HASH_TAB="recipient_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1555,7 +1590,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="relay_clientcerts_help"
 						HASH_TAB="relay_clientcerts_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1570,7 +1605,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="relocated_help"
 						HASH_TAB="relocated_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1582,7 +1617,7 @@ while [ "$gv_Auswahl" ] ; do
 						# Tabelle fuer reply_filter# {{{
 						# lmtp_reply_filter, smtp_reply_filter
 						#
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1609,7 +1644,7 @@ while [ "$gv_Auswahl" ] ; do
 									TAB_HELP="access_help access_action_help"
 									HASH_TAB="access_table"
 									Tmp="${${TAB_IND[$TAB]}#*_access }"
-									WAS_IST="${${Tmp}%:*}"
+									TAB_FM="${${Tmp}%:*}"
 									FILE="${${Tmp}#*:}"
 									tab_change
 									unset -- HASH_TAB
@@ -1632,7 +1667,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="sasl_password_help"
 						HASH_TAB="sasl_password_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1642,12 +1677,15 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					smtpd_command_filter)
 						# Tabelle fuer smtpd_command_filter# {{{
-						#
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						set -x
+						# Tabellenbearbeitung. Nur Test.
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
+						sleep 5
+						set +x
 						tab_change
-						unset -- HASH_TAB
+#						unset -- HASH_TAB
 						## }}}
 						;;
 					smtpd_sender_login_maps)
@@ -1657,7 +1695,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="smtpd_sender_login_help"
 						HASH_TAB="smtpd_sender_login_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1672,7 +1710,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="tls_per_site_help"
 						HASH_TAB="tls_per_site_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1684,12 +1722,14 @@ while [ "$gv_Auswahl" ] ; do
 						# transport Tabelle, für die Regelung der Transportmethode{{{
 						# von domains, mailadressen
 						#
+						set -x
 						TAB_HELP="transport_help"
 						HASH_TAB="transport_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
+						set +x
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
@@ -1699,7 +1739,7 @@ while [ "$gv_Auswahl" ] ; do
 						# soll.
 						TAB_HELP="virtual_alias_mb_domains_help"
 						HASH_TAB="virtual_alias_mb_domains_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1712,7 +1752,7 @@ while [ "$gv_Auswahl" ] ; do
 						# Berücksichtigung der domain.
 						TAB_HELP="virtual_alias_help"
 						HASH_TAB="virtual_alias_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1726,7 +1766,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="virtual_mailbox_help"
 						HASH_TAB="virtual_mailbox_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
@@ -1741,7 +1781,7 @@ while [ "$gv_Auswahl" ] ; do
 						#
 						TAB_HELP="virtual_id_help"
 						HASH_TAB="virtual_id_table"
-						WAS_IST="${${TAB_IND[$gv_Auswahl]}%:*}"
+						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
