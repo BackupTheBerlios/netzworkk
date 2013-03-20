@@ -155,12 +155,12 @@ kwpwsafe_db_conf() {
 				if [ -n "$PW_NOTES" ] ; then
 					print $PW_NOTES | tr '\012' '\n' >${gv_WorkDir}/notes
 				fi
-				# Mittels der Funktion exec_edit_prog
+				# Mittels der Funktion edit_file
 				# herrausfinden ob ein Editor konfiguriert
 				# wurde oder die dialogbox "editbox" benutzt
 				# werden soll.
 				# Und dann nat. damit die Datei bearbeiten
-				exec_edit_prog "$OPEN_DB_TITLE" ${gv_WorkDir}/notes
+				edit_file "$OPEN_DB_TITLE" ${gv_WorkDir}/notes
 				# Pruefen auf >0 Lines in der Datei sind.
 				if [ "`wc -l < ${gv_WorkDir}/notes`" -gt 0 ] ; then
 					unset -- PW_NOTES
