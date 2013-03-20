@@ -7,7 +7,7 @@
         <meta name="author" content="Kai Wilke / netzworkk.de">
         <meta name="publisher" content="Kai Wilke / netzworkk.de">
         <meta name="copyright" content="Kai Wilke / netzworkk.de">
-        <meta name="date" content="2012-11-27">
+        <meta name="date" content="2013-03-20">
         <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
         <meta name="content-language" content="de">
 	<meta name="Robots" content="index,follow">
@@ -112,7 +112,7 @@
 					<a href="sys.html#dialog_version" target="_self">dialog_version</a><br>
 					<a href="sys.html#dir_file_choice" target="_self">dir_file_choice</a><br>
 					<a href="sys.html#dselect_check" target="_self">dselect_check</a><br>
-					<a href="sys.html#exec_edit_prog" target="_self">exec_edit_prog</a><br>
+					<a href="sys.html#edit_file" target="_self">edit_file</a><br>
 					<a href="sys.html#file_chmod" target="_self">file_chmod</a><br>
 					<a href="sys.html#file_choice" target="_self">file_choice</a><br>
 					<a href="sys.html#file_filter" target="_self">file_filter</a><br>
@@ -992,14 +992,16 @@
                 </tr>
                 <tr>
                         <td></td>
-                        <td vAlign=top><b><a name="exec_edit_prog">exec_edit_prog</a></b>
+                        <td vAlign=top><b><a name="edit_file">edit_file</a></b>
 			<p>Diese Funktion pr&uuml;ft ob die Variable &quot;$EDITOR&quot; belegt ist. Diese
 			wird in der Datei /etc/kwtools/main.cf eingestellt und sollte entweder einen Editor
 			Ihrer Wahl enthalten oder den Wert "dialog" (Bsp. /usr/bin/vim, emacs, joe, dialog,
 			.... dialog ist eine Ausnahme, denn dabei wird die Dialogbox "editbox" verwendet.<br>
-			exec_edit_prog [ TITLE ] FILE<br>
-			TITLE - Variable die den Titel f&uuml;r die Dialogbox <a href="sys.html" target="_self">editbox</a> enth&auml;lt.<br>
-			FILE - Variable die den Dateinamen mit Pfad enth&auml;lt.</p></td>
+			edit_file [ TITLE ] FILE<br>
+			TITLE - Variable die den Titel f&uuml;r die Dialogbox <a href="sys.html" target="_self">editbox</a> enth&auml;lt.
+			Wird kein Titel angegeben wird die globale Variable &quot;gv_Configuration&quot;
+			(Konfiguration) benutzt.<br>
+			FILE - Variable die den Dateinamen mit vollem Pfad enth&auml;lt.</p></td>
                         <td></td>
                 </tr>
                 <tr>
