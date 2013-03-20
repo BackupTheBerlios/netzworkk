@@ -775,13 +775,13 @@ server_conf() {
 							;;
 						$lv_Exclude_File)
 							# Exclude Datei bearbeiten{{{
-							exec_edit_prog "$lv_Exclude_File" "$SERVER_EXCLUDE_FILE"
+							edit_file "$lv_Exclude_File" "$SERVER_EXCLUDE_FILE"
 							#}}}
 							server_conf_menu $lv_Exclude_File
 							;;
 						$lv_Include_File)
 							# Exclude Datei bearbeiten{{{
-							exec_edit_prog "$lv_Include_File" "$SERVER_INCLUDE_FILE"
+							edit_file "$lv_Include_File" "$SERVER_INCLUDE_FILE"
 							#}}}
 							server_conf_menu $lv_Include_File
 							;;
