@@ -125,17 +125,13 @@ kwmutt_conf() {
 				;;
 			$lv_Kbd)
 				# Konfiguration der Tastatur.# {{{
-				# Falls es noch keine Datei gibt eine Beispeildatei
-				# kopieren.
+				# Falls es noch keine Datei gibt wird eine Beispieldatei
+				# kopiert.
 				if [ ! -f "$M_KBD" ] ; then
 					cp "${DATA_PATH}/${gv_ScriptName}/mkbd" "$M_KBD" &>/dev/null
 				fi
 				# editieren
-				if [ "$EDITOR" = dialog ] ; then
-					editbox "$lv_Kbd" "$M_KBD"
-				else
-					"$EDITOR" "$M_KBD"
-				fi
+				edit_file "$lv_Kbd" "$M_KBD"
 				read_mutt_files
 				# # }}}
 				conf_menu $lv_Kbd
