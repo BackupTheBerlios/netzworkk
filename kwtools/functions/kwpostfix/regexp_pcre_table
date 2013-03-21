@@ -10,40 +10,49 @@ regexp_pcre_table() {
 
 	# funktion regexp_pcre_menue{{{
 	regexp_pcre_menue() {
-		U_OPT=regexp
-		case "$ACTION" in
-			FILTER)
-				# mit transport:destination Eingabe
-				TRANS="${TRANS:-$OldTrans}"
-				if [[ $TRANS == error ]] ; then
-					TEXT="${TEXT:-$OldText}"
-					REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
-					$lv_Action \"$ACTION\" $lv_Transport \"$TRANS\" $gv_Host \"$HOST\"
-					$lv_Port \"$PORT\" $gv_Save \"\" $gv_Back \"\")
-				else
-					HOST="${HOST:-$OldHost}"
-					PORT="${PORT:-$OldPort}"
-					REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
-					$lv_Action \"$ACTION\" $lv_Transport \"$TRANS\"
-					$lv_Text \"$TEXT\" $gv_Save \"\" $gv_Back \"\")
-				fi
-				;;
-			PREPEND|REPLACE)
-				# mit Header Text Eingabe
+		case "$TAB" in
+			smtpd_command_filter)
 				TEXT="${TEXT:-$OldText}"
-				REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Action \"$ACTION\"
+				REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
 				$lv_Text \"$TEXT\" $gv_Save \"\" $gv_Back \"\")
 				;;
-			REDIRECT)
-				# mit Mailadressen Eingabe
-				MAIL="${MAIL:-$OldMail}"
-				REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
-				$lv_Action \"$ACTION\" $lv_Mail \"$MAIL\" $gv_Save \"\" $gv_Back \"\")
-				;;
 			*)
-				TEXT="${TEXT:-$OldText}"
-				REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
-				$lv_Action \"$ACTION\" $lv_Text \"$TEXT\" $gv_Save \"\" $gv_Back \"\")
+				U_OPT=regexp
+				case "$ACTION" in
+					FILTER)
+						# mit transport:destination Eingabe
+						TRANS="${TRANS:-$OldTrans}"
+						if [[ $TRANS == error ]] ; then
+							TEXT="${TEXT:-$OldText}"
+							REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
+							$lv_Action \"$ACTION\" $lv_Transport \"$TRANS\" $gv_Host \"$HOST\"
+							$lv_Port \"$PORT\" $gv_Save \"\" $gv_Back \"\")
+						else
+							HOST="${HOST:-$OldHost}"
+							PORT="${PORT:-$OldPort}"
+							REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
+							$lv_Action \"$ACTION\" $lv_Transport \"$TRANS\"
+							$lv_Text \"$TEXT\" $gv_Save \"\" $gv_Back \"\")
+						fi
+						;;
+					PREPEND|REPLACE)
+						# mit Header Text Eingabe
+						TEXT="${TEXT:-$OldText}"
+						REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Action \"$ACTION\"
+						$lv_Text \"$TEXT\" $gv_Save \"\" $gv_Back \"\")
+						;;
+					REDIRECT)
+						# mit Mailadressen Eingabe
+						MAIL="${MAIL:-$OldMail}"
+						REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
+						$lv_Action \"$ACTION\" $lv_Mail \"$MAIL\" $gv_Save \"\" $gv_Back \"\")
+						;;
+					*)
+						TEXT="${TEXT:-$OldText}"
+						REGEXP_PCRE_MENU=($lv_String \"$STRING\" $lv_Flags \"$FLAGS\"
+						$lv_Action \"$ACTION\" $lv_Text \"$TEXT\" $gv_Save \"\" $gv_Back \"\")
+						;;
+				esac
 				;;
 		esac
 		if [[ ${#argv} == 1 ]] ; then
@@ -174,7 +183,7 @@ regexp_pcre_table() {
 					;;
 				$gv_Save)
 					# Einstellungen speichern{{{
-					if [ -n "$STRING" ] ; then
+					if [ -n "$STRING" -a -n "$ACTION" ] ; then
 						case "$ACTION" in
 							OK|DUNNO)
 								# ohne Text# {{{
@@ -286,11 +295,11 @@ regexp_pcre_table() {
 								if [ -n "$TEXT" ] ; then
 									if [ "$AENDERN_ADR" ] ; then
 										grep -Fv "$AENDERN_ADR" $FILE >$FILE$$
-										>> $FILE$$ <<< "${STRING}${FLAGS} $ACTION $TEXT"
+										>> $FILE$$ <<< "${STRING}${FLAGS} $ACTION ${TEXT//\\\$/\$}"
 										mv $FILE$$ $FILE
 									else
 										grep -Fv "$STRING" $FILE >$FILE$$
-										>> $FILE$$ <<< "${STRING}${FLAGS} $ACTION $TEXT"
+										>> $FILE$$ <<< "${STRING}${FLAGS} $ACTION ${TEXT//\\\$/\$}"
 										mv $FILE$$ $FILE
 									fi
 								else
@@ -308,8 +317,25 @@ regexp_pcre_table() {
 								## }}}
 								;;
 						esac
+						break
+					elif [ -n "$STRING" -a -z "$ACTION" ] ; then
+						if [ -n "$TEXT" ] ; then
+							if [ "$AENDERN_ADR" ] ; then
+								grep -Fv "$AENDERN_ADR" $FILE >$FILE$$
+								>> $FILE$$ <<< "${STRING}${FLAGS} ${TEXT//\\\$/\$}"
+								mv $FILE$$ $FILE
+							else
+								grep -Fv "$STRING" $FILE >$FILE$$
+								>> $FILE$$ <<< "${STRING}${FLAGS} ${TEXT//\\\$/\$}"
+								mv $FILE$$ $FILE
+							fi
+						else
+							MSG=$(gettext 'Sie muessen mindestens die Menuepunkte Zeichenkette und Text mit Werten belegen.')
+							msgbox "$gv_Attention" "$MSG"
+						fi
+						break
 					else
-						MSG=$(gettext 'Sie muessen mindestens die Menuepunkte Zeichenkette und Aktion mit Werten belegen.')
+						MSG=$(gettext 'Sie muessen mindestens die Menuepunkte Zeichenkette und Aktion oder Zeichenkette und Text mit Werten belegen.')
 						msgbox "$gv_Attention" "$MSG"
 						regexp_pcre_menue
 					fi
@@ -429,9 +455,19 @@ regexp_pcre_table() {
 											# ohne alles
 											;;
 										*)
-											# Mit Text
-											TEXT="$REST"
-											OldText="$TEXT"
+											case "$TAB" in
+												smtpd_command_filter)
+													# Mit Text ohne Actions
+													TEXT="$ACTION $REST"
+													OldText="$TEXT"
+													unset -- ACTION
+													;;
+												*)
+													# Mit nur Text
+													TEXT="$REST"
+													OldText="$TEXT"
+													;;
+											esac
 											;;
 									esac
 								done

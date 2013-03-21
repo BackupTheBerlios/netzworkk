@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 17.03.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 21.03.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -1192,16 +1192,16 @@ while [ "$gv_Auswahl" ] ; do
 								msgbox "$gv_Attention" "$MSG"
 								;;
 							*)
-								set -x
-					
 								if [[ $SUBTAB == *_access ]] ; then
 									"$HASH_TAB" "$FILE"
 								elif [[ $TAB == smtpd_command_filter ]] ; then
-									TAB_HELP="command_filter_help"
-									command_filter_table "$FILE"
-								sleep 4
-								set +x
-								break
+									if [[ $TAB_FM == regexp ]] ; then
+										TAB_HELP="regexp_help command_filter_help"
+										regexp_pcre_table "$FILE"
+									else
+										TAB_HELP="pcre_help command_filter_help"
+										regexp_pcre_table "$FILE"
+									fi
 								else
 									if [[ $TAB_FM == regexp ]] ; then
 										TAB_HELP="regexp_help regexp_pcre_action_help"
@@ -1677,15 +1677,11 @@ while [ "$gv_Auswahl" ] ; do
 						;;
 					smtpd_command_filter)
 						# Tabelle fuer smtpd_command_filter# {{{
-						set -x
-						# Tabellenbearbeitung. Nur Test.
 						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
-						sleep 5
-						set +x
 						tab_change
-#						unset -- HASH_TAB
+						unset -- HASH_TAB
 						## }}}
 						;;
 					smtpd_sender_login_maps)
