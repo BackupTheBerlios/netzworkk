@@ -104,6 +104,10 @@ tab_support_choice() {
 						break
 					fi
 					#
+					######################
+					# TODO: es fehlen noch fail,
+					# internal, memcache, netinfo
+					# socketmap und tcp
 					while [[ -n $gv_Auswahl ]] ; do
 						case "$gv_Auswahl" in
 							HELP*)	script_help tabformat_help
@@ -136,16 +140,16 @@ tab_support_choice() {
 								#}}}
 								break
 								;;
-							nis)
-								# nis{{{
-								if [ "$Choice" = alias_maps -o "$Choice" = alias_database ] ; then
-									MAPS="${gv_Auswahl}:mail.aliases"
-								else
-									MAPS="${gv_Auswahl}:${Choice}"
-								fi
-								#}}}
-								break
-								;;
+#							fail)
+#								# fail
+#								#
+#								break
+#								;;
+#							internal)
+#								# internal
+#								#
+#								break
+#								;;
 							ldap)
 								# LDAP Datenbanken{{{
 								if [ "$Choice" = alias_database ] ; then
@@ -153,6 +157,26 @@ tab_support_choice() {
 								fi
 								MAPS="${gv_Auswahl}:${MAIL_CONFIG}/${gv_Auswahl}_${Choice}.cf"
 								check_and_copy_lookup_table "ldap_${Choice}" "${MAPS##*:}"
+								#}}}
+								break
+								;;
+#							memcache)
+#								# memcache
+#								#
+#								break
+#								;;
+#							netinfo)
+#								# netinfo
+#								#
+#								break
+#								;;
+							nis)
+								# nis{{{
+								if [ "$Choice" = alias_maps -o "$Choice" = alias_database ] ; then
+									MAPS="${gv_Auswahl}:mail.aliases"
+								else
+									MAPS="${gv_Auswahl}:${Choice}"
+								fi
 								#}}}
 								break
 								;;
@@ -281,6 +305,11 @@ tab_support_choice() {
 								#}}}
 								break
 								;;
+							socketmap)
+								# socketmap
+								#
+								break
+								;;
 							*sql|sqlite)
 								# SQL Datenbanken{{{
 								if [ "$Choice" = alias_database ] ; then
@@ -307,6 +336,11 @@ tab_support_choice() {
 								#}}}
 								break
 								;;
+#							tcp)
+#								# tcp
+#								#
+#								break
+#								;;
 							unix)
 								# unix{{{
 								Nis_Name=(passwd.byname \"\" group.byname \"\" $gv_Back \"\")

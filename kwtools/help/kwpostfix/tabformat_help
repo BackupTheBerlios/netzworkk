@@ -5,6 +5,10 @@ Postfixs Tabellen sind spezifiziert als Typ:Name, wo Typ einer der
 aufgelisteten ist. Die Syntax des Tabellennamen entnehmen Sie der
 Beschreibung zu den Typen.
 
+NOTIZ: Eine Auswahl der folgenden Lookup Tabllen Typen werden von
+\tkwpostfix noch nicht unterstuetzt. fail, internal, memcache,
+\tnetinfo, socketmap und tcp.
+
 btree: Ein sortierter, ausgeglichener Strukturbaum. Dies ist nur
 \tauf Systemen mit Unterstuetzung fuer Berkeley DB Datenbanken
 \tverfuegbar. btree ist schneller als der Tabellentyp hash.
@@ -78,7 +82,7 @@ static (nur lesbar): Eine Tabelle, der immer den Namen als lookup
 \tResultat zurueck gibt. Zum Beispiel, static:foobar bringt immer 
 \tden String foobar als lookup Resultat zurueck.
 
-tcp: Abfrage ueber einem anderen TCP/IP Server. Das Protokoll ist
+tcp: Abfrage ueber einen anderen TCP Server. Das Protokoll ist
 \tbeschrieben in man 5 tcp_table.
 
 texthash (nur lesbar): Dies produziert Resultate aehnlich dem
