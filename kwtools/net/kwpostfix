@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 21.03.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 08.04.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -294,7 +294,9 @@ tab_support() {
 				TABS_M+=($i \"\")
 				TABS_R+=($i \"\")
 				;;
-			tcp)
+			fail|internal|memcache|netinfo|socketmap|tcp)
+				######################
+				# TODO:
 				# garnichts machen
 				;;
 			*)	# der Rest
@@ -1126,7 +1128,7 @@ while [ "$gv_Auswahl" ] ; do
 		$lv_Tabs)
 			# Tabellen bearbeiten{{{
 			autoload -U access_table alias_table bcc_table canonical_table \
-				command_filter_table flags_choice generic_table \
+				flags_choice generic_table \
 				kwpostfix_action ldap_db mailbox_command_table \
 				mynetworks_table pix_workarounds_tables relay_clientcerts_table \
 				relay_domains_table recipient_table regexp_pcre_access_input \
