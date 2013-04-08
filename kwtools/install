@@ -1,10 +1,10 @@
 #!/bin/zsh
-# Autor: Kai Wilke <kiste@netzworkk.de> 08.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 08.04.2013
 #
 # Script: install, installiert die kwtools Scripts und kompiliert,
 # wenn angegeben alle Funktionen.
 #
-# Version: 0.2.4
+# Version: 0.2.5
 #
 setopt shwordsplit extendedglob
 NAME=kwtools
@@ -211,6 +211,9 @@ chmod 0644 ${DOC_PATH}/kwtools-*/**/*(.N)
 # kwrsync_backup examples
 $INSTALL $INSTALL_DIR_OPT ${DOC_PATH}/kwtools-net/examples
 $INSTALL $INSTALL_FILE_OPT ./etc/kwtools/kwrsync_backup.d/* ${DOC_PATH}/kwtools-net/examples
+# kwpostfix examples
+$INSTALL $INSTALL_DIR_OPT ${DOC_PATH}/kwtools-net-postfix/examples
+$INSTALL $INSTALL_FILE_OPT ./etc/postfix/* ${DOC_PATH}/kwtools-net-postfix/examples
 
 # Dokumentation Links erstellen
 echo ""
@@ -219,7 +222,7 @@ echo "beziehungsweise durch Links zu kwtools-common ersetzt."
 echo ""
 pushd $DOC_PATH
 for i in kwtools-{bin,graphic,multi,sys,utils} \
-	kwtools-multi-{xmms2,xmms2d} kwtools-net-{djbdns,postfix} \
+	kwtools-multi-{xmms2,xmms2d} kwtools-net-djbdns \
 	kwtools-sys-{fuse,grub,grub2,kwpasswd,parted,quota,raid,crypt,lvm} \
 	kwtools-utils-ssl ; do
 	if [ -d ${DOC_PATH}/${i} ] ; then
@@ -231,6 +234,7 @@ for i in kwtools-{bin,graphic,multi,sys,utils} \
 done
 popd
 
+# HTML Dokumentation kopieren
 cp $CP_OPT ./doc/html ${DOC_PATH}/kwtools-doc
 chmod -R 0755 ${DOC_PATH}/kwtools-doc/**/*(/N)
 chmod 0644 ${DOC_PATH}/kwtools-doc/**/*(.N)
