@@ -193,7 +193,7 @@ Package: kwtools-net-postfix
 Priority: optional
 Architecture: all
 Section: net
-Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), postfix (>=2.9), zsh (>= 4.2.0)
+Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), postfix (>= 2.9), zsh (>= 4.2.0)
 Suggests: kwtools-bin, postfix-ldap, postfix-mysql, postfix-pcre, postfix-pgsql, sudo
 Description: Network script kwpostfix
  Includes a script which enables management of MTA postfix.
@@ -319,7 +319,7 @@ Section: admin
 Priority: optional
 Architecture: all
 Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), parted (>= 1.7.1-3), zsh (>= 4.2.0)
-Suggests: kwtools-bin, jfsutils, ntfsprogs, reiserfsprogs, reiser4progs, sudo, xfsprogs 
+Suggests: kwtools-bin, jfsutils, ntfs-3g, reiserfsprogs, reiser4progs, sudo, xfsprogs 
 Description: System script kwparted
  Include a frontend script for parted.
  .
@@ -338,7 +338,7 @@ Description: Script to manage quota
  Includes a script (kwquota) to manage quota.
  .
  kwquota: Can display actual quota and manage quota on disk. It
-        supported for ext2/3, and reiserfs user- and group-quota.
+        supported for ext2/3/4, and reiserfs user- and group-quota.
         At the xfs filesystem also supported project-quota.
 Homepage: http://www.netzworkk.de
 
