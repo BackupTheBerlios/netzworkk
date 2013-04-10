@@ -778,7 +778,7 @@ smtpd_conf() {
 			smtpd_tls_CAfile)
 				# Datei mit den CAs denen dieser Server vertraut, für die Signatur{{{
 				# von Clientzertifikaten.
-				tls_file_auswahl 
+				tls_file_choice 
 				smtpd_tls_CAfile="$WERT"
 				postconf -e smtpd_tls_CAfile="$WERT"
 				#}}}
@@ -840,7 +840,7 @@ smtpd_conf() {
 				;;
 			smtpd_tls_cert_file)
 				# Auswahl der TLS Schluessel Datei{{{
-				tls_file_auswahl
+				tls_file_choice
 				smtpd_tls_cert_file="$WERT"
 				postconf -e smtpd_tls_cert_file="$WERT"
 				#}}}
@@ -863,7 +863,7 @@ smtpd_conf() {
 				;;
 			smtpd_tls_dcert_file)
 				# Auswahl der TLS Schluessel Datei{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				smtpd_tls_dcert_file="$WERT"
 				postconf -e smtpd_tls_dcert_file="$WERT"
 				#}}}
@@ -871,7 +871,7 @@ smtpd_conf() {
 				;;
 			smtpd_tls_dh1024_param_file)
 				# Auswahl der dh* Parameter Datei{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				smtpd_tls_dh1024_param_file="$WERT"
 				postconf -e smtpd_tls_dh1024_param_file="$WERT"
 				#}}}
@@ -879,7 +879,7 @@ smtpd_conf() {
 				;;
 			smtpd_tls_dh512_param_file)
 				# Auswahl der dh* Parameter Datei{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				smtpd_tls_dh512_param_file="$WERT"
 				postconf -e smtpd_tls_dh512_param_file="$WERT"
 				#}}}
@@ -887,7 +887,7 @@ smtpd_conf() {
 				;;
 			smtpd_tls_dkey_file)
 				# Auswahl der TLS Schluessel Datei{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				smtpd_tls_dkey_file="$WERT"
 				postconf -e smtpd_tls_dkey_file="$WERT"
 				#}}}
@@ -897,7 +897,7 @@ smtpd_conf() {
 				# Standard ist = leer# {{{
 				# Datei mit dem Postfix SMTP Server ECDSA Zertifikat im PEM Format.
 				# Es beinhaltet den privaten ECDSA Schluessel des Servers.
-				tls_file_auswahl 
+				tls_file_choice 
 				smtpd_tls_eccert_file="$WERT"
 				postconf -e smtpd_tls_eccert_file="$WERT"
 				## }}}
@@ -906,7 +906,7 @@ smtpd_conf() {
 			smtpd_tls_eckey_file)
 				# = $smtpd_tls_eccert_file# {{{
 				# Datei mit dem Postfix SMTP Server ECDSA privaten Schluessel im PEM Format.
-				default_or_input smtpd_tls_eckey_file tls_file_auswahl 
+				default_or_input smtpd_tls_eckey_file tls_file_choice 
 				smtpd_tls_eckey_file="$Value"
 				postconf -e smtpd_tls_eckey_file="$Value"
 				## }}}
@@ -962,7 +962,7 @@ smtpd_conf() {
 			smtpd_tls_key_file)
 				# Datei (RSA) welche das unterschriebene unverschluesselte#{{{
 				# private Zertifikat besitzt.
-				tls_file_auswahl 
+				tls_file_choice 
 				smtpd_tls_key_file="$WERT"
 				postconf -e smtpd_tls_key_file="$WERT"
 				#}}}

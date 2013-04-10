@@ -71,7 +71,7 @@ tlsproxy_conf() {
 				# Standard = $smtpd_tls_CAfile # {{{
 				# Datei mit den CAs denen dieser Server vertraut, für die Signatur
 				# von Clientzertifikaten.
-				default_or_input tlsproxy_tls_CAfile tls_file_auswahl 
+				default_or_input tlsproxy_tls_CAfile tls_file_choice 
 				tlsproxy_tls_CAfile="$Value"
 				postconf -e tlsproxy_tls_CAfile="$Value"
 				## }}}
@@ -133,7 +133,7 @@ tlsproxy_conf() {
 				;;
 			tlsproxy_tls_cert_file)
 				# Standard = $smtpd_tls_cert_file# {{{
-				default_or_input tlsproxy_tls_cert_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_cert_file tls_file_choice 
 				tlsproxy_tls_cert_file="$Value"
 				postconf -e tlsproxy_tls_cert_file="$Value"
 				## }}}
@@ -156,7 +156,7 @@ tlsproxy_conf() {
 				;;
 			tlsproxy_tls_dcert_file)
 				# Standard = $smtpd_tls_dcert_file# {{{
-				default_or_input tlsproxy_tls_dcert_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_dcert_file tls_file_choice 
 				tlsproxy_tls_dcert_file="$Value"
 				postconf -e tlsproxy_tls_dcert_file="$Value"
 				## }}}
@@ -165,7 +165,7 @@ tlsproxy_conf() {
 			tlsproxy_tls_dh1024_param_file)
 				# Standard = $smtpd_tls_dh1024_param_file# {{{
 				# Auswahl der dh* Parameter Datei
-				default_or_input tlsproxy_tls_dh1024_param_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_dh1024_param_file tls_file_choice 
 				tlsproxy_tls_dh1024_param_file="$Value"
 				postconf -e tlsproxy_tls_dh1024_param_file="$Value"
 				## }}}
@@ -174,7 +174,7 @@ tlsproxy_conf() {
 			tlsproxy_tls_dh512_param_file)
 				# Standard = $smtpd_tls_dh512_param_file# {{{
 				# Auswahl der dh* Parameter Datei
-				default_or_input tlsproxy_tls_dh512_param_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_dh512_param_file tls_file_choice 
 				tlsproxy_tls_dh512_param_file="$Value"
 				postconf -e tlsproxy_tls_dh512_param_file="$Value"
 				## }}}
@@ -182,7 +182,7 @@ tlsproxy_conf() {
 				;;
 			tlsproxy_tls_dkey_file)
 				# Standard = $smtpd_tls_dkey_file# {{{
-				default_or_input tlsproxy_tls_dkey_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_dkey_file tls_file_choice 
 				tlsproxy_tls_dkey_file="$Value"
 				postconf -e tlsproxy_tls_dkey_file="$Value"
 				## }}}
@@ -192,7 +192,7 @@ tlsproxy_conf() {
 				# = $smtpd_tls_eccert_file# {{{
 				# Datei mit dem Postfix SMTP Server ECDSA
 				# Zertifikat im PEM Format.
-				default_or_input tlsproxy_tls_eccert_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_eccert_file tls_file_choice 
 				tlsproxy_tls_eccert_file="$Value"
 				postconf -e tlsproxy_tls_eccert_file="$Value"
 				## }}}
@@ -202,7 +202,7 @@ tlsproxy_conf() {
 				# Standard = $smtpd_tls_eckey_file# {{{
 				# Datei mit dem Postfix SMTP Server ECDSA
 				# privaten Schluessel im PEM Format.
-				default_or_input tlsproxy_tls_eckey_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_eckey_file tls_file_choice 
 				tlsproxy_tls_eckey_file="$Value"
 				postconf -e tlsproxy_tls_eckey_file="$Value"
 				## }}}
@@ -254,7 +254,7 @@ tlsproxy_conf() {
 				# Standard ist = $smtpd_tls_key_file#{{{
 				# Datei mit dem Postfix SMTP Server RSA
 				# privaten Schluessel im PEM Format.
-				default_or_input tlsproxy_tls_key_file tls_file_auswahl 
+				default_or_input tlsproxy_tls_key_file tls_file_choice 
 				tlsproxy_tls_key_file="$Value"
 				postconf -e tlsproxy_tls_key_file="$Value"
 				#}}}

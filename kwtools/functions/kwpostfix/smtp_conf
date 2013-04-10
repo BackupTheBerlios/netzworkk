@@ -991,7 +991,7 @@ smtp_conf() {
 			smtp_tls_CAfile)
 				# Datei mit den CAs denen dieser Server vertraut, für die Signatur#{{{
 				# von Clientzertifikaten.
-				tls_file_auswahl 
+				tls_file_choice 
 				smtp_tls_CAfile="$WERT"
 				postconf -e smtp_tls_CAfile="$WERT"
 				#}}}
@@ -1026,7 +1026,7 @@ smtp_conf() {
 				;;
 			smtp_tls_cert_file)
 				# Auswahl der TLS Schluessel Dateien{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				smtp_tls_cert_file="$WERT"
 				postconf -e smtp_tls_cert_file="$WERT"
 				#}}}
@@ -1049,7 +1049,7 @@ smtp_conf() {
 				;;
 			smtp_tls_dcert_file)
 				# Auswahl der TLS Schluessel Dateien{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				smtp_tls_dcert_file="$WERT"
 				postconf -e smtp_tls_dcert_file="$WERT"
 				#}}}
@@ -1057,7 +1057,7 @@ smtp_conf() {
 				;;
 			smtp_tls_dkey_file)
 				# Auswahl der TLS Schluessel Dateien{{{
-				default_or_input smtp_tls_dkey_file tls_file_auswahl 
+				default_or_input smtp_tls_dkey_file tls_file_choice 
 				smtp_tls_dkey_file="$WERT"
 				postconf -e smtp_tls_dkey_file="$WERT"
 				#}}}
@@ -1067,7 +1067,7 @@ smtp_conf() {
 				# Datei mit dem Postfix SMTP client ECDSA Zertifikat im PEM Format.# {{{
 				# Diese Datei beinhaltet den Postfix SMTP Client ECDSA privaten Schluessel.
 				# Bsp.: /etc/postfix/ecdsa-ccert.pem
-				tls_file_auswahl 
+				tls_file_choice 
 				smtp_tls_eccert_file="$WERT"
 				postconf -e smtp_tls_eccert_file="$WERT"
 				## }}}
@@ -1075,7 +1075,7 @@ smtp_conf() {
 				;;
 			smtp_tls_eckey_file)
 				# Standard ist = $smtp_tls_eccert_file# {{{
-				default_or_input smtp_tls_eckey_file tls_file_auswahl 
+				default_or_input smtp_tls_eckey_file tls_file_choice 
 				smtp_tls_eckey_file="$WERT"
 				postconf -e smtp_tls_eckey_file="$WERT"
 				## }}}
@@ -1135,7 +1135,7 @@ smtp_conf() {
 			smtp_tls_key_file)
 				# Auswahl der TLS Schluessel Dateien{{{
 				# Standard = $smtp_tls_cert_file
-				default_or_input smtp_tls_key_file tls_file_auswahl
+				default_or_input smtp_tls_key_file tls_file_choice
 				smtp_tls_key_file="$WERT"
 				postconf -e smtp_tls_key_file="$WERT"
 				#}}}

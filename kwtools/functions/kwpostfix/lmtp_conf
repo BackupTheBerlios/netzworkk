@@ -953,7 +953,7 @@ lmtp_conf() {
 			lmtp_tls_CAfile)
 				# Datei mit den CAs denen dieser Server vertraut, für die Signatur#{{{
 				# von Clientzertifikaten.
-				tls_file_auswahl 
+				tls_file_choice 
 				lmtp_tls_CAfile="$WERT"
 				postconf -e lmtp_tls_CAfile="$WERT"
 				#}}}
@@ -988,7 +988,7 @@ lmtp_conf() {
 				;;
 			lmtp_tls_cert_file)
 				# Auswahl der TLS Schluessel Dateien{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				lmtp_tls_cert_file="$WERT"
 				postconf -e lmtp_tls_cert_file="$WERT"
 				#}}}
@@ -1011,7 +1011,7 @@ lmtp_conf() {
 				;;
 			lmtp_tls_dcert_file)
 				# Auswahl der TLS Schluessel Dateien{{{
-				tls_file_auswahl 
+				tls_file_choice 
 				lmtp_tls_dcert_file="$WERT"
 				postconf -e lmtp_tls_dcert_file="$WERT"
 				#}}}
@@ -1019,7 +1019,7 @@ lmtp_conf() {
 				;;
 			lmtp_tls_dkey_file)
 				# Auswahl der TLS Schluessel Dateien{{{
-				default_or_input lmtp_tls_dkey_file tls_file_auswahl 
+				default_or_input lmtp_tls_dkey_file tls_file_choice 
 				lmtp_tls_dkey_file="$WERT"
 				postconf -e lmtp_tls_dkey_file="$WERT"
 				#}}}
@@ -1029,7 +1029,7 @@ lmtp_conf() {
 				# Datei mit dem Postfix LMTP client ECDSA Zertifikat im PEM Format.# {{{
 				# Diese Datei beinhaltet den Postfix LMTP Client ECDSA privaten Schluessel.
 				# Bsp.: /etc/postfix/ecdsa-ccert.pem
-				tls_file_auswahl 
+				tls_file_choice 
 				lmtp_tls_eccert_file="$WERT"
 				postconf -e lmtp_tls_eccert_file="$WERT"
 				## }}}
@@ -1037,7 +1037,7 @@ lmtp_conf() {
 				;;
 			lmtp_tls_eckey_file)
 				# Standard ist = $lmtp_tls_eccert_file# {{{
-				default_or_input lmtp_tls_eckey_file tls_file_auswahl 
+				default_or_input lmtp_tls_eckey_file tls_file_choice 
 				lmtp_tls_eckey_file="$WERT"
 				postconf -e lmtp_tls_eckey_file="$WERT"
 				## }}}
@@ -1095,7 +1095,7 @@ lmtp_conf() {
 				;;
 			lmtp_tls_key_file)
 				# Standard = $lmtp_tls_cert_file# {{{
-				default_or_input lmtp_tls_key_file tls_file_auswahl
+				default_or_input lmtp_tls_key_file tls_file_choice
 				lmtp_tls_key_file="$WERT"
 				postconf -e lmtp_tls_key_file="$WERT"
 				## }}}
