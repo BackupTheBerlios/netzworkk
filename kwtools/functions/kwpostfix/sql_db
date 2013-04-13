@@ -1,9 +1,5 @@
 # Funktion, SQL Datenbanken{{{
 sql_db() {
-	###########################################
-	# TODO: neue Abfrage Schnittstelle einbauen.
-	###########################################
-	#
 	# Variablen
 	lv_Where_Field=$(gettext 'Quellfeld')
 	lv_Select_Field=$(gettext 'Zielfeld')
@@ -188,7 +184,7 @@ sql_db() {
 		fi
 	}
 	#}}}
-	# Mysql/Postgresql Datenbank Einstellungen{{{
+	# Mysql/Postgresql/Sqlite Datenbank Einstellungen{{{
 	sql_conf() {
 		sql_conf_menue
 		while [ "$gv_Auswahl" ] ; do
@@ -275,6 +271,14 @@ sql_db() {
 			FILE="$2"
 			lv_Pgsql_Tab=$(gettext 'Postgresql_Tabelle')
 			SQL_CONF_TITLE="${gv_Configuration}::${lv_Pgsql_Tab}"
+			read_werte $FILE
+			sql_conf
+			;;
+		sqlite)
+			unset -- FILE
+			FILE="$2"
+			lv_Pgsql_Tab=$(gettext 'Sqlite_Tabelle')
+			SQL_CONF_TITLE="${gv_Configuration}::${lv_Sqlite_Tab}"
 			read_werte $FILE
 			sql_conf
 			;;

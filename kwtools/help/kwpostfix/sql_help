@@ -1,7 +1,7 @@
 # sql_help fuer kwpostfix{{{
 TITLE="${lv_Db}::${gv_Help}"
-MSG=$(gettext 'Hier kann man, falls mit einkompiliert, Mysql und Postgresql
-konfigurieren.
+MSG=$(gettext 'Hier kann man, falls mit einkompiliert, Mysql, Postgresql und
+Sqlite konfigurieren.
 
 NOTIZ: Hier wird noch die alte Schnittstelle benutzt. Diese ist
 \tmittlerweile veraltet.
