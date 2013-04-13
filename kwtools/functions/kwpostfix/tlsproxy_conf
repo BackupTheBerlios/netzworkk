@@ -217,9 +217,6 @@ tlsproxy_conf() {
 				if [[ -n $Value ]] ; then
 					tlsproxy_tls_eecdh_grade="$Value"
 					postconf -e tlsproxy_tls_eecdh_grade="$Value"
-				else
-					tlsproxy_tls_eecdh_grade="\$smtpd_tls_eecdh_grade"
-					postconf -e tlsproxy_tls_eecdh_grade="\$smtpd_tls_eecdh_grade"
 				fi
 				## }}}
 				conf_tlsproxy_menu tlsproxy_tls_eecdh_grade

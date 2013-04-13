@@ -921,9 +921,6 @@ smtpd_conf() {
 				if [[ -n $WERT ]] ; then
 					smtpd_tls_eecdh_grade="$WERT"
 					postconf -e smtpd_tls_eecdh_grade="$WERT"
-				else
-					smtpd_tls_eecdh_grade=""
-					postconf -e smtpd_tls_eecdh_grade=""
 				fi
 				## }}}
 				conf_smtpd_menue smtpd_tls_eecdh_grade
