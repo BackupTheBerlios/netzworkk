@@ -545,7 +545,7 @@ net_conf() {
 			MSG="$1"
 			VALUE="$2"
 		else
-			MSG=$(gettext 'Geben Sie bitte eine Mail Adresse an, an dem die Action gemailt werden soll (user@domain.de).')
+			MSG=$(gettext 'Geben Sie bitte eine oder mehrere Mail Adressen an, an dem die Action gemailt werden soll (z.B. user@domain.de). Getrennt durch ein Leerzeichen.')
 			VALUE="$1"
 		fi
 		inputbox "$TITLE" "$MSG" "$VALUE"
@@ -554,15 +554,15 @@ net_conf() {
 			for i in ${=gv_Auswahl} ; {
 				case "$i" in
 					[a-zA-Z0-9-_.]*@[a-zA-Z0-9-_.]*.[a-z]*)
-						# mail adresse annehmen
+						# Mail Adresse annehmen
 						gv_Mail_Adr+=($i)
 						;;
 					\<[a-zA-Z0-9-_.]*@[a-zA-Z0-9-_.]*.[a-z]*\>*)
-						# mail adresse annehmen
+						# Mail Adresse mit Klammern annehmen
 						gv_Mail_Adr+=($i)
 						;;
 					[a-zA-Z0-9-_.]*)
-						# mail adresse annehmen
+						# Mail adresse annehmen (nur User)
 						gv_Mail_Adr+=($i)
 						;;
 					*)	unset -- gv_Mail_Adr
