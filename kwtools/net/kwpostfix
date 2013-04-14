@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 08.04.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 14.04.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -296,8 +296,7 @@ tab_support() {
 				;;
 			fail|internal|memcache|netinfo|socketmap|tcp)
 				######################
-				# TODO:
-				# garnichts machen
+				# TODO: garnichts machen
 				;;
 			*)	# der Rest
 				TABS_M+=($i \"\")
@@ -365,9 +364,9 @@ verp_delimiter() {
 	fi
 }
 		## }}}
-# Funktion (tls_file_auswahl), TLS Schlüssel Dateien Auswahl{{{
-tls_file_auswahl() {
-	unset -- WERT TLS_FILE_MENU FORMAT SUFFIX
+# Funktion (tls_file_choice), TLS Schlüssel Dateien Auswahl{{{
+tls_file_choice() {
+	unset -- WERT FORMAT SUFFIX
 	local TLS_FILE_MENU
 	dselect "$MAIL_CONFIG"
 	if [ "$VERZ" ] ; then
@@ -385,8 +384,8 @@ tls_file_auswahl() {
 					while [ "$gv_Auswahl" ] ; do
 						case "$gv_Auswahl" in
 							HELP*)	
-								# TODO: fehlt
-								script_help cert_help
+								# Hilfe
+								script_help tls_file_choice_help
 								menubox "$gv_Configuration" "$gv_Menupoint" "$TLS_FILE_MENU"
 								;;
 							*)	WERT="${VERZ}/${gv_Auswahl}"
@@ -408,8 +407,7 @@ tls_file_auswahl() {
 #}}}
 # Funktion ja_nein_tausch{{{
 #######################################
-# TODO:
-# aendern?
+# TODO: aendern?
 #######################################
 ja_nein_tausch() {
 yesno "$1" "$2"
@@ -662,13 +660,12 @@ tls_ciphers() {
 	fi
 }
 #}}}
-# Funktion (tls_eecdh_grade),  auswählen{{{
+# Funktion (tls_eecdh_grade), Sicherheitsstufe f. eecdh Schluessel auswaehlen{{{
 tls_eecdh_grade() {
 	unset -- WERT
 	local TLS_EECDH_GRADE_MSG TLS_EECDH_GRADE_MENU OldVar
 	OldVar="$1"
 	TLS_EECDH_GRADE_MSG=$(gettext 'Waehlen Sie die Sicherheitsstufe fuer ephemeral elliptic-curve Diffie-Hellman (EECDH) Schluessel Austausch aus.')
-	is_value ""
 	TLS_EECDH_GRADE_MENU=(none \"\" strong \"\" ultra \"\")
 	# Funktion (tls_eecdh_grade_menu)# {{{
 	tls_eecdh_grade_menu() {
@@ -684,7 +681,7 @@ tls_eecdh_grade() {
 		while [ "$gv_Auswahl" ] ; do
 			case "$gv_Auswahl" in
 				HELP*)
-					# TODO:
+					# Hilfe
 					script_help tls_eecdh_grade_help
 					tls_eecdh_grade_menu $OldVar
 					;;
@@ -846,8 +843,8 @@ default_or_input (){
 						unset -- Value
 					fi
 					;;
-				ja_nein_tausch|loglevel|tls_ciphers|tls_eecdh_grade|tls_exclude_ciphers|tls_file_auswahl|tls_fingerprint_digest|tls_protocols|tls_security_level)
-					# Ja/Nein Tausch, Loglevel Auswahl (Integer), tls_file_auswahl,
+				ja_nein_tausch|loglevel|tls_ciphers|tls_eecdh_grade|tls_exclude_ciphers|tls_file_choice|tls_fingerprint_digest|tls_protocols|tls_security_level)
+					# Ja/Nein Tausch, Loglevel Auswahl (Integer), tls_file_choice,
 					# tls_protocols
 					$Func $FuncOpt "$Var"
 					if [[ -n $WERT ]] ; then
@@ -873,7 +870,7 @@ default_or_input (){
 						unset -- Value
 					fi
 					;;
-				tls_file_auswahl)
+				tls_file_choice)
 					$Func
 					;;
 			esac
@@ -910,18 +907,15 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$gv_Configuration)
 			# Konfiguration von main.cf,...{{{
-			#####################################################
-			# TODO:
-			# wegen einigen Daten was vorher einlesen?
-			# Wie zum Bsp. $data_directory fuer tls_conf und
-			# virtual_conf
-			#####################################################
 			autoload -U default_conf lmtp_conf local_conf lock_art error_codes_conf \
 				mail_conf main_conf postfix_variable q_conf relay_conf \
 				smtp_conf smtpd_conf tab_support_choice \
 				tls_conf virtual_conf
+			#####################################################
+			# INFO:
 			# einige Variablen einlesen, da diese von einigen
-			# Funktionsdateien benoetigt werden.
+			# Funktionsdateien benoetigt werden wie, tls_conf und
+			# virtual_conf.
 			data_directory=$(postconf -h data_directory)
 			#
 			# Funktion konf_menue{{{
@@ -1017,15 +1011,13 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		$lv_Ext_Conf)
 			# fast komplette Konfiguration# {{{
-			#####################################################
-			# TODO:
-			# wegen einigen Daten was vorher einlesen?
-			#####################################################
 			autoload -U address_conf bsmtp_conf error_conf ifmail_conf \
 				lock_art maildrop_conf mailman_conf milter_conf \
 				postscreen_conf postfix_variable retry_conf \
 				scalemail-backend_conf tab_support_choice \
 				tlsproxy_conf uucp_conf
+			#####################################################
+			# INFO:
 			# einige Variablen einlesen, da diese von einigen
 			# Funktionsdateien benoetigt werden.
 			data_directory=$(postconf -h data_directory)
@@ -1186,7 +1178,7 @@ while [ "$gv_Auswahl" ] ; do
 						case "$TAB" in
 							*alias*)
 								######################################################
-								# TODO:
+								# INFO:
 								# alias Tabellen haben noch keine Unterstuetzung fuer
 								# regulaere Ausdruecke
 								######################################################
@@ -1296,7 +1288,10 @@ while [ "$gv_Auswahl" ] ; do
 											Wert=${a##*:}
 											if [ "$Wert" -a "$Tab_Format" ] ; then
 												case "$Tab_Format" in
-													environ|nis|static|tcp|unix)
+													environ|fail|internal|nis|static|tcp|unix)
+														#######################################
+														# TODO: Vollstaendig? Nein
+														# Siehe Tabellen Support von kwpostfix
 														;;
 													*)
 														# Tabellen
@@ -1323,9 +1318,10 @@ while [ "$gv_Auswahl" ] ; do
 								Wert=${${a##*:}%,}
 								if [ "$Wert" -a "$Tab_Format" ] ; then
 									case "$Tab_Format" in
-										environ|nis|static|tcp|unix)
-											############################
-											# TODO: hier fehlt noch alles
+										environ|fail|internal|nis|static|tcp|unix)
+											#######################################
+											# TODO: Vollstaendig? Nein
+											# Siehe Tabellen Support von kwpostfix
 											;;
 										*)
 											# Tabellen
@@ -1410,10 +1406,8 @@ while [ "$gv_Auswahl" ] ; do
 			##################################
 			# INFO: Reihenfolge beachten!
 			##################################
-			# TODO:
-			# Neue maps sind hinzugekommen und
-			# muessen noch angelegt werden,
-			# oder nicht?
+			# TODO: Neue maps sind hinzugekommen oder
+			# muessen noch angelegt werden.
 			##################################
 			while [ "$gv_Auswahl" ] ; do
 				case "$gv_Auswahl" in
