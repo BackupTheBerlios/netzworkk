@@ -93,6 +93,10 @@ daemon_directory: Pfad zu den Postfix Modulen.
 daemon_timeout: Timeout, nach dem ein nicht antwortender Daemon ge-
 \tkillt und neu gestartet wird.
 
+data_directory: Verzeichnis in dem Postfix seine Daten ablegt. Zum
+\tBeispiel Caches oder pseudo-random Zahlen.
+\tStandard ist /var/lib/postfix.
+
 debug_peer_level: Logstufe, um die im Debug-Modus ausfuehrlicher
 \tgeloggt werden.
 
@@ -328,7 +332,7 @@ prozess_id_directory: Verzeichnis fuer Dateien mit Prozess-IDs, re-
 propagate_unmatched_extension: Legt fest, ob Mailextensions auch in
 \tden hier angegebenen Tabellen beruecksichtigt werden sollen,
 \tsodass je nach Extension unterschiedlich reagiert werden
-\tkann (canonical, virtual_transport).
+\tkann (z.B. canonical, virtual).
 
 recipient_bcc_maps: Tabelle, an die "Blind Carbon-Copy" Mails
 \tgeschickt werden, wenn der dementsprechende Empfaenger
