@@ -3,11 +3,6 @@
 main_conf() {
 autoload -U no_defer_msg
 
-###########################
-# TODO:
-# Variable data_directory fehlt
-###########################
-
 # Variable
 MAINCF_TITLE="${gv_Configuration}::${lv_Main}"
 
@@ -268,6 +263,7 @@ conf_main_menu() {
 	content_filter \"\$content_filter\"
 	daemon_directory \"\$daemon_directory\"
 	daemon_timeout \"\$daemon_timeout\"
+	data_directory \"\$data_directory\"
 	debug_peer_level \"\$debug_peer_level\"
 	debug_peer_list \"\$debug_peer_list\"
 	defer_transports \"\$defer_transports\"
@@ -368,14 +364,11 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		2bounce_notice_recipient)
 			# Zieladresse fuer Double Bounces{{{
-			####################################
-			# TODO: function mail_address benutzen
-			####################################
-			TWO_BOUNCE_NOTICE_RECIPIENT_MSG=$(gettext 'Geben Sie eine Zieladresse fuer Double Bounces ein (postmaster).')
-			inputbox "$MAINCF_TITLE" "$TWO_BOUNCE_NOTICE_RECIPIENT_MSG" "$two_bounce_notice_recipient"
-			if [ "$gv_Auswahl" ] ; then
-				two_bounce_notice_recipient="$gv_Auswahl"
-				postconf -e 2bounce_notice_recipient="$gv_Auswahl"
+			TWO_BOUNCE_NOTICE_RECIPIENT_MSG=$(gettext 'Geben Sie eine Zieladresse fuer Double Bounces ein (z.B. postmaster).')
+			mail_address "$TWO_BOUNCE_NOTICE_RECIPIENT_MSG" "$two_bounce_notice_recipient"
+			if [[ -n $gv_Mail_Adr ]] ; then
+				two_bounce_notice_recipient="$gv_Mail_Adr"
+				postconf -e 2bounce_notice_recipient="$gv_Mail_Adr"
 			else
 				two_bounce_notice_recipient=""
 				postconf -e 2bounce_notice_recipient=""
@@ -705,6 +698,19 @@ while [ "$gv_Auswahl" ] ; do
 			fi
 			#}}}
 			conf_main_menu daemon_timeout
+			;;
+		data_directory)
+			# Auswahl vom Daten Verzeichnis.# {{{
+			dselect "$data_directory"
+			if [[ -n "$VERZ" ]] ; then
+				dselect_check "$VERZ"
+				if [[ -n $VERZ ]] ; then
+					data_directory="$VERZ"
+					postconf -e data_directory="$VERZ"
+				fi
+			fi
+			## }}}
+			conf_main_menu data_directory
 			;;
 		debug_peer_list)
 			# Welche Adressen sollen geloggt werden{{{
@@ -1154,11 +1160,6 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		luser_relay)
 			# unzustellbare mails nicht bouncen sondern weiter verschicken{{{
-			####################################
-			# TODO:
-			# nachschauen ob die function mail_address
-			# benutzt werden kann!
-			####################################
 			LUSER_RELAY_MSG=$(gettext 'Geben Sie eine Mailadresse ein, an die unzustellbare Mails, die nicht gebounct werden sollen, weitergeleitet werden. Lesen Sie die Hilfe dazu.')
 			mail_address "$LUSER_RELAY_MSG" "$luser_relay"
 			if [[ -n $gv_Mail_Adr ]] ; then
@@ -1168,13 +1169,6 @@ while [ "$gv_Auswahl" ] ; do
 				luser_relay=""
 				postconf -e luser_relay=""
 			fi
-#			if [ "$gv_Auswahl" ] ; then
-#				luser_relay="`echo $gv_Auswahl | sed -e 's#\\$#\\\\$#g'`"
-#				postconf -e luser_relay="`echo $gv_Auswahl | sed -e 's#\\$#\\\$#g'`"
-#			else
-#				luser_relay=""
-#				postconf -e luser_relay=""
-#			fi
 			#}}}
 			conf_main_menu luser_relay
 			;;
@@ -1549,12 +1543,8 @@ while [ "$gv_Auswahl" ] ; do
 			;;
 		propagate_unmatched_extensions)
 			# In welchen Tabellen sollen auch Mailextensionen beruecksichtigt werden{{{
-			###################################################
-			# TODO:
-			# Erkennung der vorhandenen Tabellen einbauen.
-			###################################################
 			generate_is_file "${propagate_unmatched_extensions//,/}"
-			is_value "alias canonical forward include virtual"
+			is_value "alias canonical forward generic include virtual"
 			#
 			U_OPT=k
 			PR_MSG=$(gettext 'Waehlen Sie die Tabellen aus in denen auch Mailerweiterungen beruecksichtig werden sollen.')
@@ -1574,7 +1564,7 @@ while [ "$gv_Auswahl" ] ; do
 				esac
 			done
 			#
-			if [ -z "$gv_Auswahl" ] ; then
+			if [ -z "$propagate_unmatched_extensions" ] ; then
 				propagate_unmatched_extensions="canonical, virtual"
 				postconf -e propagate_unmatched_extensions="canonical, virtual"
 			fi

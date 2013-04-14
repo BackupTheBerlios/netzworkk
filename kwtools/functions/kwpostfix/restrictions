@@ -17,7 +17,7 @@ restrictions() {
 	# Verfügbare Restrictions{{{
 	#
 	######################################################################
-	# INO:
+	# INFO:
 	# Restriction: smtpd_relay_restrictions kommt ab Verson 2.10.0 dazu.
 	######################################################################
 	#
@@ -198,8 +198,7 @@ restrictions() {
 	# Bei manchen Restrictions müssen extra Einstellungen{{{
 	# gemacht werden.
 	########################################################
-	# TODO:
-	# Umschreiben, erweitern
+	# TODO: Umschreiben, erweitern
 	########################################################
 	#
 	extra_conf_restrictions() {

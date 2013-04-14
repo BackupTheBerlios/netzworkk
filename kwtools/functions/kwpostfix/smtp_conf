@@ -537,17 +537,33 @@ smtp_conf() {
 			smtp_host_lookup)
 				# Welchen Mechanismus soll der Client zum nachschauen von Rechner{{{
 				# IP Adressen benutzen (Bsp. dns).
-				####################################
-				# TODO: menubox benutzen.
-				SMTP_HOST_LOOKUP_MSG=$(gettext 'Welchen Mechanismus soll der Client zum nachschauen von Rechner IP Adressen benutzen (Bsp. dns; native; dns,native).')
-				inputbox "$SMTP_TITLE" "$SMTP_HOST_LOOKUP_MSG" "$smtp_host_lookup"
-				if [ "$gv_Auswahl" ] ; then
-					smtp_host_lookup="$gv_Auswahl"
-					postconf -e smtp_host_lookup="$gv_Auswahl"
-				else
-					smtp_host_lookup=""
-					postconf -e smtp_host_lookup=""
-				fi
+				# Funktion (smtp_host_lookup_menu)# {{{
+				SMTP_HOST_LOOKUP_MSG=$(gettext 'Welchen Mechanismus soll der Client zum nachschauen von Rechner IP Adressen benutzen (Bsp. dns)')
+				SMTP_HOST_LOOKUP_MENU=(dns \"\" native \"\" dns,native \"\")
+				smtp_host_lookup_menu() {
+					if [[ ${#argv} == 1 ]] ; then
+						menubox -d "$1" "$SMTP_TITLE" "$SMTP_HOST_LOOKUP_MSG" "$SMTP_HOST_LOOKUP_MENU" "$smtp_host_lookup"
+					else
+						menubox "$SMTP_TITLE" "$SMTP_HOST_LOOKUP_MSG" "$SMTP_HOST_LOOKUP_MENU" "$smtp_host_lookup"
+					fi
+				}
+				## }}}
+				smtp_host_lookup_menu "$smtp_host_lookup"
+				while "$gv_Auswahl" ; do
+					case "$gv_Auswahl" in
+						HELP*)
+								# Hilfe
+								script_help smtp_host_lookup_help
+								smtp_host_lookup_menu "$smtp_host_lookup"
+								;;
+							*)
+								# Auswahl uebernehmen.
+								smtp_host_lookup="$gv_Auswahl"
+								postconf -e smtp_host_lookup="$gv_Auswahl"
+								break
+								;;
+					esac
+				done
 				#}}}
 				conf_smtp_menu smtp_host_lookup
 				;;

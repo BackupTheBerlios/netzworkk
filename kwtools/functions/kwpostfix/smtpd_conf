@@ -15,15 +15,6 @@ smtpd_conf() {
 	rm -rf  ${gv_WorkDir}/postfix$$ &>/dev/null
 	## }}}
 	# Funktion conf_smtpd_menue{{{
-	#######################################
-	# TODO: folgende Einstellmoeglichkeiten
-	# und Hilfen sind noch nicht fertig.
-	#######################################
-	# smtpd_milters =
-	# non_smtpd_milters =
-	# smtpd_reject_footer =
-	# smtpd_restriction_classes =
-	#######################################
 	conf_smtpd_menue() {
 	SMTPD_MENU=(smtpd_authorized_verp_clients \"\$smtpd_authorized_verp_clients\"
 	smtpd_authorized_xclient_hosts \"\$smtpd_authorized_xclient_hosts\"
@@ -432,11 +423,15 @@ smtpd_conf() {
 				;;
 			smtpd_milters)
 				# Standard =
+				######################################
+				# TODO: Einstellung fehlt
 				hier_ist_noch_nichts smtpd_milters
 				conf_smtpd_menue smtpd_milters
 				;;
 			non_smtpd_milters)
 				# Standard =
+				######################################
+				# TODO: Einstellung fehlt
 				hier_ist_noch_nichts non_smtpd_milters
 				conf_smtpd_menue non_smtpd_milters
 				;;
@@ -599,6 +594,8 @@ smtpd_conf() {
 				;;
 			smtpd_reject_footer)
 				# Standard =
+				######################################
+				# TODO: Einstellung fehlt
 				hier_ist_noch_nichts smtpd_reject_footer
 				conf_smtpd_menue smtpd_reject_footer
 				;;
@@ -621,8 +618,10 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_reject_unlisted_sender
 				;;
 			smtpd_restriction_classes)
-				# Standard =
 				# definiert Restrictionen Classen
+				# Standard =
+				######################################
+				# TODO: Einstellung fehlt
 				hier_ist_noch_nichts smtpd_restriction_classes
 				conf_smtpd_menue smtpd_restriction_classes
 				;;
