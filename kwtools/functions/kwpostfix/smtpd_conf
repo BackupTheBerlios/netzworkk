@@ -62,6 +62,7 @@ smtpd_conf() {
 	smtpd_reject_footer \"\$smtpd_reject_footer\"
 	smtpd_reject_unlisted_recipient \"\$smtpd_reject_unlisted_recipient\"
 	smtpd_reject_unlisted_sender \"\$smtpd_reject_unlisted_sender\"
+	smtpd_relay_restrictions \"\$smtpd_relay_restrictions\"
 	smtpd_restriction_classes \"\$smtpd_restriction_classes \"
 	smtpd_sasl_auth_enable \"\$smtpd_sasl_auth_enable\"
 	smtpd_sasl_authenticated_header \"\$smtpd_sasl_authenticated_header\"
@@ -587,7 +588,7 @@ smtpd_conf() {
 				conf_smtpd_menue smtpd_recipient_overshoot_limit
 				;;
 			smtpd_recipient_restrictions)
-				# Restriktionen fuer ausgehende Mail (Relay)# {{{
+				# Restriktionen fuer ausgehende Mail (Recipient)# {{{
 				restrictions smtpd_recipient_restrictions
 				## }}}
 				conf_smtpd_menue smtpd_recipient_restrictions
@@ -616,6 +617,12 @@ smtpd_conf() {
 				postconf -e smtpd_reject_unlisted_sender="$WERT"
 				#}}}
 				conf_smtpd_menue smtpd_reject_unlisted_sender
+				;;
+			smtpd_relay_restrictions)
+				# Restriktionen fuer ausgehende Mail (Relay)# {{{
+				restrictions smtpd_relay_restrictions
+				## }}}
+				conf_smtpd_menue smtpd_relay_restrictions
 				;;
 			smtpd_restriction_classes)
 				# definiert Restrictionen Classen
