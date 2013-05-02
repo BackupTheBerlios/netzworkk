@@ -182,7 +182,7 @@ alias_table() {
 				;;
 			$lv_Db)
 				# Datenbank neu einlesen
-				db_new_reread "$WAS_IST" "$FILE"
+				db_new_reread "$TAB_FM" "$FILE"
 				break
 				;;
 			$gv_Back)	break
