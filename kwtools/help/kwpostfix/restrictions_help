@@ -46,10 +46,16 @@ defer_if_permit: Sollten eine der nachfolgenden Pruefungen das
 \tErgebnis PERMIT bringen, wird die Mail dennoch mit einem DEFER
 \tabgewiesen, also einem temporaeren Fehler 4xx.
 
+NOTIZ: Kann man nur manuell vor eine Restriction stellen. Dient
+\tzum testen.
+
 defer_if_reject: Sollten eine der nachfolgenden Pruefungen das
 \tErgebnis REJECT bringen, wird die Mail dennoch mit einem DEFER
 \tabgewiesen, also einem temporaeren Fehler 4xx statt des
 \teigentlichen 5xx.
+
+NOTIZ: Kann man nur manuell vor eine Restriction stellen. Dient
+\tzum testen.
 
 defer_unauth_destination: Liefert ein DEFER, solange nicht
 \tdie Zieladresse in "$relay_domins" vorkommt oder Postfix
@@ -76,7 +82,7 @@ permit_dnswl_client dnswl_domain=d.d.d.d: Akzeptiert die Mail, wenn
 \tverweist.
 
 permit_inet_interfaces: Akzeptiert Mails, wenn die Client IP von
-\t"$inet_interfaces", also dem lokalem Host stammt.
+\t"$inet_interfaces" stammt.
 
 permit_mx_backup: Die Mail wird akzeptiert, wenn ein MX-Record der
 \tEmpfaengerdomain auf unseren Mailserver zeigt und Postfix damit
@@ -124,14 +130,14 @@ permit_tls_all_clientcerts: Erlaubt Mails, wenn das SSL/TLS Client
 \tbekannten CA (Certification Authority) unterschrieben wurde.
 \tDieser Parameter ist gefaehrlich - er erlaubt Mailrelaying fuer
 \talle Clients, die ein beliebiges Zertrifikat vorweisen koennen,
-\tsolange solange dies nur irgendwie gueltig ist!
+\tsolange dies nur irgendwie gueltig ist!
 
 reject: Liefert generell ein REJECT und beendet die Pruefung. Der
 \tClient erhaelt einen fatalen Fehler 5xx.
 
-reject_authenticated_sender_login_mismatch: Enforces the
-\treject_sender_login_mismatch restriction for authenticated
-\tclients only.
+reject_authenticated_sender_login_mismatch: Erzwingt die
+\tRestriction "reject_sender_login_mismatch" um nur Clients zu
+\tauthentifizieren.
 
 reject_invalid_helo_hostname: Liefert ein REJECT, wenn nach dem
 \tHELO/EHLO-Kommando ein Hostname in einer ungueltigen Syntax
@@ -140,7 +146,7 @@ reject_invalid_helo_hostname: Liefert ein REJECT, wenn nach dem
 reject_multi_recipient_bounce: Liefert ein REJECT, wenn die Mail
 \tein Bounce ist, aber mehrere Empfaengeradressen besitzt.
 \tAllerdings koennte es sich dabei auch um einen Spezialfall einer
-\tMail mit der DNS-Anweisung "NTIFY=NEVER" handeln. Da dieser
+\tMail mit der DNS-Anweisung "NOTIFY=NEVER" handeln. Da dieser
 \tParameter wissen muss, wie viele Empfaenger die Mail tatsaechlich
 \that, kann diese Pruefung ausnahmsweise nicht in
 \t"smtpd_recipient_restrictions" stehen, sondern muss in
@@ -230,7 +236,7 @@ reject_unauth_destination: Liefert ein REJECT, solange nicht
 \tPruefung wird beendet und die Mail abgelehnt; der Server ist ab
 \tdiesen Zeitpunkt relayfest.
 \tBei "permit_auth_destination" wuerde hingegen weiter geprueft
-\twerde, ob noch ein anderer Punkt ein OK liefern wuerde!
+\twerden, ob noch ein anderer Punkt ein OK liefern wuerde!
 
 reject_unauth_pipelining: Manche Spam Software sendet SMTP
 \tKommandos, ohne die Return Codes des Mailservers abzuwarten.
@@ -247,13 +253,6 @@ reject_unauthenticated_sender_login_mismatch: Anders als bei
 \tabgelehnt, wenn sich der CLient gar nicht mit SMTP-AUTH
 \tauthentifiziert hat. Ist er jedoch authentifiziert, wird die Mail
 \tangenommen, ganz gleich ob der SASL-Account passt.
-
-reject_unknown_client_hostname: Liefert ein REJECT nicht nur dann,
-\twenn fuer den Client im DNS kein Reverse-Lookup (PTR, kein Name
-\tzur IP Nummer) gesetzt ist, sondern auch dann, wenn bei der
-\tGegenkontrolle fuer den gesetzten Rechnernamen keine bzw. eine
-\tbeliebige andere IP-Nummer gesetzt ist, die Angaben also nicht
-\tuebereinstimmen.
 
 reject_unknown_helo_hostname: Liefert ein REJECT, wenn der fuer den
 \tClient im HELO/EHLO-Kommando angegebene Rechnername im DNS nicht
@@ -273,13 +272,13 @@ reject_unknown_reverse_client_hostname: Liefert ein REJECT, wenn
 
 reject_unlisted_{sender,recipient}: Lehnt Mailadressen ab, die nicht
 \tin der Empfaenger- oder Absenderliste der jeweiligen Adressklasse
-\taufgelistet sind (local_recipient_maps, relay_recipient_maps,
+\taufgelistet sind ("local_recipient_maps", "relay_recipient_maps",
 \tetc.).
 
 reject_unverified_{sender,recipient}: Lehnt Mails mit Absender-
 \toder Empfaengeradresse ab, die von Postfix als nicht zustellbar
 \tverifiziert werden konnten. Dieser Parameter umfasst lokale
-\tMailadressen (macht also reject_unlisted_recipient ueberflessig),
+\tMailadressen (macht also "reject_unlisted_recipient" ueberflessig),
 \tenthaelt aber auch alle externen Mailadressen auf anderen Servern,
 \tdenn diese koennen von Postfix in Echtzeit ueber SMTP auf einem
 \tanderen System verifiziert werden.
@@ -287,12 +286,17 @@ reject_unverified_{sender,recipient}: Lehnt Mails mit Absender-
 sleep: Legt eine Pause ein bevor die naechste Restriction
 \tabgearbeitet wird.
 
+NOTIZ: Kann man nur manuell vor eine Restriction stellen.
+
 warn_if_reject: Wuerde die nachfolgende Pruefung ein REJECT liefern,
 \taendert dieser Parameter das Verhalten von Postfix. Statt
 \tmit einem REJECT aus der Pruefung auszusteigen, wird nur ein
 \tLog Eintrag erzeugt und weiter in der Pruefung fortgefahren.
 \tDamit lassen sich Konfigurationaenderungen leicht testen, ohne
 \tden Verlust von Mails riskieren zu muessen.
+
+NOTIZ: Kann man nur manuell vor eine Restriction stellen. Dient
+\tzum testen.
 ')
 #}}}
 ### Modeline {{{
