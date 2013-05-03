@@ -2,7 +2,7 @@ kwpostfix
 
 Konfiguration: {main,address,milter,postscreen}_{conf,help} vorbereitet.
 
-Restrictions: neue Restrictions und normale Eingabe einfuegen.
+Restrictions: Normale Eingabe einfuegen?
 
 fehlende Tabellentypen:(internal, fail,...).
 cidr bei transport_maps oder auch anderen?
