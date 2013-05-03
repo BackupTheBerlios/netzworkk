@@ -1,8 +1,7 @@
 # Funktion für die Restrictions{{{
 #
 # allen smtpd_*_restriction stehen unterschiedliche und gleiche Restrictions
-# zur Verfügung. Diese werden in den jeweiligen Variablen in der Funktion
-# search_restrict festgehalten.
+# zur Verfuegung.
 #
 # usage: restrictions smtpd_*_restrictions.
 #
@@ -16,162 +15,255 @@ restrictions() {
 	#
 	# Verfügbare Restrictions{{{
 	#
-	######################################################################
-	# INFO:
-	# Restriction: smtpd_relay_restrictions kommt ab Verson 2.10.0 dazu.
-	######################################################################
+	# Verfuegbare Werte in der dementsprechenden Reihenfolge
 	#
-	######################################################################
-	# Restrictions die in allen verfuegbaren Restrictions verwendbar sind:
-	# check_policy_service Servername/tabelle, defer, defer_if_permit, defer_if_reject,
-	# permit, reject_multi_recipient_bounce, reject_plaintext_session,
-	# reject_unauth_pipelining, rejject, sleep Sekunde, warn_if_reject
-	######################################################################
-	# TODO: Funktion extra_conf_restrictions
-	# permit_dnswl_client Wert, permit_rhswl_client Wert, reject_rhsbl_reverse_client Wert,
-	##########################################
-	# reject_unknown_client_hostname, reject_unknown_reverse_client_hostname,
-	# reject_plaintext_session,
-	##########################################
-	# TODO: Funktion extra_conf_restrictions
-	# sleep Sekunden
-	##########################################
-	#
-	# smtpd_helo_restrictions:
-	# reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_rhsbl_helo
-	##########################################
-	# TODO: Funktion extra_conf_restrictions
-	# reject_rhsbl_helo Wert
-	##########################################
-	#
-	# smtpd_recipient_restrictions:
-	# defer_unauth_destination, reject_unlisted_recipient, reject_unverified_recipient
-	#
-	######################################################################
-	# TODO: ueberhaupt
-	# check_policy_service Servername/tabelle (unix:/path/to/server, inet:127.0.0.1:Port
-	######################################################################
-	#
-	#
-	# Verfuegbare Werte
-	#
-	# smtpd_client_restrictions: generic, smtpd_helo_restrictions,
+	# 1. smtpd_client_restrictions: generic, smtpd_helo_restrictions,
 	# 		smtpd_recipient_restrictions, smtpd_sender_restrictions
-	# smtpd_data_restrictions: generic, smtpd_client_restrictions, smtpd_helo_restrictions
+	# 2. smtpd_data_restrictions: generic, smtpd_client_restrictions, smtpd_helo_restrictions
 	# 		smtpd_recipient_restrictions, smtpd_sender_restrictions
-	# smtpd_end_of_data_restrictions: generic, smtpd_client_restrictions, smtpd_helo_restrictions
-	# 		smtpd_recipient_restrictions, smtpd_sender_restrictions
-	# smtpd_etrn_restrictions: generic, smtpd_client_restrictions, smtpd_helo_restrictions
-	# smtpd_helo_restrictions: generic, smtpd_client_restrictions,
+	# 3. smtpd_end_of_data_restrictions: generic, smtpd_client_restrictions,
+	# 		smtpd_helo_restrictions, smtpd_recipient_restrictions, smtpd_sender_restrictions
+	# 4. smtpd_etrn_restrictions: generic, smtpd_client_restrictions, smtpd_helo_restrictions
+	# 5. smtpd_helo_restrictions: generic, smtpd_client_restrictions,
 	#       smtpd_recipient_restrictions, smtpd_sender_restrictions
-	# smtpd_recipient_restrictions: generic, smtpd_client_restrictions, smtpd_helo_restrictions,
-	# 		smtpd_sender_restrictions
-	# smtpd_sender_restrictions: generic,  smtpd_client_restrictions,
-	#       smtpd_helo_restrictions, smtpd_recipient_restrictions,
+	# 6. smtpd_relay_restrictions: generic, smtpd_client_restrictions, smtpd_helo_restrictions,
+	# 		smtpd_recipient_restrictions, smtpd_sender_restrictions
+	# 7. smtpd_recipient_restrictions: generic, smtpd_client_restrictions,
+	# 		smtpd_helo_restrictions, smtpd_sender_restrictions
+	# 8. smtpd_sender_restrictions: generic, smtpd_client_restrictions,
+	#       smtpd_helo_restrictions, smtpd_recipient_restrictions
 	#
-#	R0="check_ccert_access"
-#	R0="check_client_access"
-#	R2="check_client_mx_access"
-#	R3="check_client_ns_access"
-#	R1="check_helo_access"
-#	R2="check_helo_mx_access"
-#	R3="check_helo_ns_access"
-#	R4="check_recipient_access"
-#	R5="check_recipient_mx_access"
-#	R6="check_recipient_ns_access"
-#	R0="check_reverse_client_access"
-#	R2="check_reverse_client_mx_access"
-#	R3="check_reverse_client_ns_access"
-#	R7="check_sender_access"
-#	R8="check_sender_mx_access"
-#	R9="check_sender_ns_access"
-#	R10="defer"
-#	R11="defer_if_permit"
-#	R12="defer_if_reject"
-#	R13="permit"
-#	R14="permit_auth_destination"
-#	R15="permit_mx_backup"
-#	R16="permit_mynetworks"
-#	R18="permit_sasl_authenticated"
-#	R19="permit_tls_all_clientcerts"
-#	R20="permit_tls_clientcerts"
-#	R21="reject"
-#	R22="reject_auth_destination"
-#	R23="reject_authenticated_sender_login_mismatch"
-#	R24="reject_invalid_helo_hostname"
-#	R25="reject_multi_recipient_bounce"
-#	R26="reject_non_fqdn_client_hostname"
-#	R26="reject_non_fqdn_helo_hostname"
-#	R27="reject_non_fqdn_recipient"
-#	R28="reject_non_fqdn_sender"
-#	R29="reject_rbl_client"
-#	R30="reject_rhsbl_client"
-#	R31="reject_rhsbl_recipient"
-#	R32="reject_rhsbl_sender"
-#	R33="reject_sender_login_mismatch"
-#	R34="reject_unknown_client_hostname"
-#	R35="reject_unauth_destination"
-#	R36="reject_unauth_pipelining"
-#	R37="reject_unauthenticated_sender_login_mismatch"
-#	R38="reject_unknown_client_hostname"
-#	R39="reject_unknown_helo_hostname"
-#	R40="reject_unknown_recipient_domain"
-#	R41="reject_unknown_sender_domain"
-#	R42="reject_unlisted_sender"
-#	R43="reject_unverified_sender"
-#	R44="warn_if_reject"
+	# RESTRICTIONS Postfix = 2.10.0# {{{
+	# "check_ccert_access"
+	# "check_client_access"
+	# "check_client_mx_access"
+	# "check_client_ns_access"
+	# "check_helo_access"
+	# "check_helo_mx_access"
+	# "check_helo_ns_access"
+	# "check_policy_service"
+	# "check_recipient_access"
+	# "check_recipient_mx_access"
+	# "check_recipient_ns_access"
+	# "check_reverse_client_hostname_access"
+	# "check_reverse_client_hostname_mx_access"
+	# "check_reverse_client_hostname_ns_access"
+	# "check_sender_access"
+	# "check_sender_mx_access"
+	# "check_sender_ns_access"
+	# "defer"
+	# "defer_if_permit" - muss vor einer Restriction stehen (zum testen)
+	# "defer_if_reject" - muss vor einer Restriction stehen (zum testen)
+	# "defer_unauth_destination"
+	# "permit"
+	# "permit_auth_destination"
+	# "permit_dnswl_client"
+	# "permit_inet_interfaces"
+	# "permit_mx_backup"
+	# "permit_mynetworks"
+	# "permit_rhswl_client"
+	# "permit_sasl_authenticated"
+	# "permit_tls_all_clientcerts"
+	# "permit_tls_clientcerts"
+	# "reject"
+	# "reject_auth_destination"
+	# "reject_authenticated_sender_login_mismatch"
+	# "reject_invalid_helo_hostname"
+	# "reject_multi_recipient_bounce"
+	# "reject_non_fqdn_client_hostname"
+	# "reject_non_fqdn_helo_hostname"
+	# "reject_non_fqdn_recipient"
+	# "reject_non_fqdn_sender"
+	# "reject_plaintext_session"
+	# "reject_rbl_client"
+	# "reject_rhsbl_client"
+	# "reject_rhsbl_helo"
+	# "reject_rhsbl_recipient"
+	# "reject_rhsbl_reverse_client"
+	# "reject_rhsbl_sender"
+	# "reject_sender_login_mismatch"
+	# "reject_unauth_destination"
+	# "reject_unauth_pipelining"
+	# "reject_unauthenticated_sender_login_mismatch"
+	# "reject_unknown_reverse_client_hostname"
+	# "reject_unknown_helo_hostname"
+	# "reject_unknown_recipient_domain"
+	# "reject_unknown_sender_domain"
+	# "reject_unlisted_recipient"
+	# "reject_unlisted_sender"
+	# "reject_unverified_recipient"
+	# "reject_unverified_sender"
+	# "sleep" - muss vor einer Restriction stehen (zum testen)
+	# "warn_if_reject" - muss vor einer Restriction stehen (zum testen)
+	## }}}
 	#
-	R_CLIENT=(reject_unauth_pipelining warn_if_reject check_client_access
-		reject_unauthenticated_sender_login_mismatch permit_sasl_authenticated
-		permit_auth_destination permit_tls_all_clientcerts permit_tls_clientcerts
-		permit_mynetworks reject_rbl_client reject_rhsbl_client reject permit defer)
-	R_DATA=(reject_unauth_pipelining warn_if_reject check_client_access
-		reject_unauthenticated_sender_login_mismatch permit_sasl_authenticated
-		permit_auth_destination permit_tls_all_clientcerts permit_tls_clientcerts
-		permit_mynetworks reject_rbl_client reject_rhsbl_client reject permit defer)
-	R_END_OF_DATA=(reject_unauth_pipelining warn_if_reject check_client_access
-		reject_unauthenticated_sender_login_mismatch permit_sasl_authenticated
-		permit_auth_destination permit_tls_all_clientcerts permit_tls_clientcerts
-		permit_mynetworks reject_rbl_client reject_rhsbl_client reject permit defer)
-	R_ETRN=(reject_unauth_pipelining warn_if_reject check_client_access
-		reject_unauthenticated_sender_login_mismatch permit_sasl_authenticated
-		permit_auth_destination permit_tls_all_clientcerts permit_tls_clientcerts
-		permit_mynetworks reject_rbl_client reject_rhsbl_client reject permit defer)
-	R_HELO=(reject_unauth_pipelining warn_if_reject check_client_access
-		permit_sasl_authenticated permit_auth_destination permit_tls_all_clientcerts
-		permit_tls_clientcerts check_helo_access check_helo_mx_access
-		check_helo_ns_access reject_unknown_client_hostname
-		reject_unauthenticated_sender_login_mismatch check_non_fqdn_client_hostname
-		reject_invalid_helo_hostname permit_mynetworks reject_rbl_client
-		reject_rhsbl_client reject permit defer)
-	R_RECIPIENT=(reject_unauth_pipelining warn_if_reject check_sender_access
-		check_sender_mx_access check_sender_ns_access check_recipient_access
-		check_recipient_mx_access check_recipient_ns_access check_client_access
-		permit_sasl_authenticated permit_auth_destination permit_tls_all_clientcerts
-		permit_tls_clientcerts check_helo_access check_helo_mx_access check_helo_ns_access
-		reject_unknown_recipient_domain reject_unknown_helo_hostname
-		reject_unknown_client_hostname check_non_fqdn_sender check_non_fqdn_recipient
-		check_non_fqdn_client_hostname reject_invalid_helo_hostname permit_mynetworks
-		permit_mx_backup reject_rbl_client reject_rhsbl_client reject_rhsbl_recipient
-		reject_rhsbl_sender reject_unauth_destination reject permit defer)
-	R_RELAY=(reject_unauth_pipelining permit_mynetworks reject) # TODO (alle Restrictions):
-	R_SENDER=(reject_unauth_pipelining warn_if_reject check_sender_access
-		check_sender_mx_access check_sender_ns_access check_client_access
-		permit_sasl_authenticated permit_auth_destination permit_tls_all_clientcerts
-		permit_tls_clientcerts check_helo_access check_helo_mx_access
-		check_helo_ns_access reject_unknown_recipient_domain reject_unknown_client_hostname
-		reject_unauthenticated_sender_login_mismatch check_non_fqdn_sender
-		check_non_fqdn_client_hostname reject_invalid_helo_hostname permit_mynetworks
-		reject_rbl_client reject_rhsbl_client reject_rhsbl_sender reject permit defer)
+		# alle Restrictions# {{{
+	R_ALL=(reject_unauth_pipelining
+		check_client_access
+		check_reverse_client_hostname_access
+		check_helo_access
+		check_sender_access
+		check_recipient_access
+		check_client_mx_access
+		check_reverse_client_hostname_mx_access
+		check_helo_mx_access
+		check_sender_mx_access
+		check_recipient_mx_access
+		check_client_ns_access
+		check_reverse_client_hostname_ns_access
+		check_helo_ns_access
+		check_sender_ns_access
+		check_recipient_ns_access
+		check_ccert_access
+		check_non_fqdn_client_hostname
+		check_non_fqdn_sender
+		check_non_fqdn_recipient
+		reject_unknown_client_hostname
+		reject_unknown_reverse_client_hostname
+		reject_unknown_helo_hostname
+		reject_invalid_helo_hostname
+		reject_unknown_sender_domain
+		reject_unknown_recipient_domain
+		reject_unlisted_sender
+		reject_unlisted_recipient
+		permit_sasl_authenticated
+		permit_mynetworks
+		permit_auth_destination
+		permit_tls_all_clientcerts
+		permit_tls_clientcerts
+		reject_plaintext_session
+		reject_rbl_client
+		reject_rhsbl_client
+		reject_rhsbl_reverse_client
+		reject_rhsbl_helo
+		reject_rhsbl_sender
+		reject_rhsbl_recipient
+		check_policy_service
+		reject_unverified_sender
+		reject_unverified_recipient
+		reject_plaintext_session
+		reject_sender_login_mismatch
+		reject_authenticated_sender_login_mismatch
+		reject_unauthenticated_sender_login_mismatch
+		permit_dnswl_client
+		permit_rhswl_client
+		permit_inet_interfaces
+		permit_mx_backup
+		reject_unauth_destination
+		reject
+		defer
+		defer_unauth_destination
+		permit)
+		## }}}
+		# alle DATA Restrictions# {{{
+	R_DATAS=(reject_unauth_pipelining
+		check_client_access
+		check_reverse_client_hostname_access
+		check_helo_access
+		check_sender_access
+		check_recipient_access
+		check_client_mx_access
+		check_reverse_client_hostname_mx_access
+		check_helo_mx_access
+		check_sender_mx_access
+		check_recipient_mx_access
+		check_client_ns_access
+		check_reverse_client_hostname_ns_access
+		check_helo_ns_access
+		check_sender_ns_access
+		check_recipient_ns_access
+		check_ccert_access
+		check_non_fqdn_client_hostname
+		check_non_fqdn_sender
+		check_non_fqdn_recipient
+		reject_unknown_client_hostname
+		reject_unknown_reverse_client_hostname
+		reject_unknown_helo_hostname
+		reject_invalid_helo_hostname
+		reject_unknown_sender_domain
+		reject_unknown_recipient_domain
+		reject_unlisted_sender
+		reject_unlisted_recipient
+		permit_sasl_authenticated
+		permit_mynetworks
+		permit_auth_destination
+		permit_tls_all_clientcerts
+		permit_tls_clientcerts
+		reject_plaintext_session
+		reject_rbl_client
+		reject_rhsbl_client
+		reject_rhsbl_reverse_client
+		reject_rhsbl_helo
+		reject_rhsbl_sender
+		reject_rhsbl_recipient
+		check_policy_service
+		reject_unverified_sender
+		reject_unverified_recipient
+		reject_plaintext_session
+		reject_multi_recipient_bounce
+		reject_sender_login_mismatch
+		reject_authenticated_sender_login_mismatch
+		reject_unauthenticated_sender_login_mismatch
+		permit_dnswl_client
+		permit_rhswl_client
+		permit_inet_interfaces
+		permit_mx_backup
+		reject_unauth_destination
+		reject
+		defer
+		defer_unauth_destination
+		permit)
+		## }}}
+		# ETRN# {{{
+	R_ETRN=(reject_unauth_pipelining
+		check_client_access
+		check_reverse_client_hostname_access
+		check_helo_access
+		check_client_mx_access
+		check_reverse_client_hostname_mx_access
+		check_helo_mx_access
+		check_client_ns_access
+		check_reverse_client_hostname_ns_access
+		check_helo_ns_access
+		check_ccert_access
+		check_non_fqdn_client_hostname
+		reject_unknown_client_hostname
+		reject_unknown_reverse_client_hostname
+		reject_unknown_helo_hostname
+		reject_invalid_helo_hostname
+		permit_sasl_authenticated
+		permit_mynetworks
+		permit_tls_all_clientcerts
+		permit_tls_clientcerts
+		reject_plaintext_session
+		reject_rbl_client
+		reject_rhsbl_client
+		reject_rhsbl_reverse_client
+		reject_rhsbl_helo
+		check_policy_service
+		permit_dnswl_client
+		permit_rhswl_client
+		permit_inet_interfaces
+		reject
+		defer
+		permit)
+		## }}}
+		#
+		R_CLIENT=($R_ALL)
+		R_DATA=($R_DATAS)
+		R_END_OF_DATA=($R_DATAS)
+		R_HELO=($R_ALL)
+		R_RECIPIENT=($R_ALL)
+		R_RELAY=($R_ALL)
+		R_SENDER=($R_ALL)
 	#}}}
-	#
 	# Funktion restrictions_auswahl{{{
 	#
 	restrictions_auswahl() {
 		unset -- gv_Auswahl
 		local OldVar
 		OldVar="$1"
-		RESTRICT_TITLE=$(gettext 'Konfiguration::Restrictions')
+		RESTRICT_TITLE="${gv_Configuration}::${lv_Restrictions}"
 		RESTRICT_MSG=$(gettext 'Waehlen Sie Ihre Restrictions aus.')
 		checklist "$RESTRICT_TITLE" "$RESTRICT_MSG" "$VALUE_ARRAY" "$OldVar"
 		#
@@ -195,11 +287,8 @@ restrictions() {
 		done
 	}
 	#}}}
-	# Bei manchen Restrictions müssen extra Einstellungen{{{
+	# Funktion (extra_conf_restrictions), Bei manchen Restrictions muessen extra Einstellungen{{{
 	# gemacht werden.
-	########################################################
-	# TODO: Umschreiben, erweitern
-	########################################################
 	#
 	extra_conf_restrictions() {
 	while read a ; do
@@ -227,11 +316,42 @@ restrictions() {
 				mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 				## }}}
 				;;
+			check_policy_service)
+				# Policy Server eingeben# {{{
+				Ps_Name="$a"
+				PS_MSG=$(gettext 'Geben Sie bitte einen Policy Server ein (Bsp. unix:/path/to/server oder inet:127.0.0.1:Port')
+				inputbox "$gv_Configuration" "$PS_MSG" "$PS_VALUE"
+				if [ -n "$gv_Auswahl" ] ; then
+					case "$gv_Auswahl" in
+						inet:*:*|unix:/*/*)
+							PS_VALUE=($gv_Auswahl)
+							Nr=${$(grep -n $Ps_Name ${gv_WorkDir}/restrictions)%:*}
+							(( Nr1=Nr+1 ))
+							sed -n -e "${Nr1},\$p" ${gv_WorkDir}/restrictions \
+								>${gv_WorkDir}/restrictions1
+							sed -e "${Nr},\$d" ${gv_WorkDir}/restrictions \
+								>${gv_WorkDir}/restrictions$$
+							>> ${gv_WorkDir}/restrictions$$ <<< "$Ps_Name $PS_VALUE"
+							< ${gv_WorkDir}/restrictions1 >> ${gv_WorkDir}/restrictions$$
+							mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
+							rm ${gv_WorkDir}/restrictions1 &>/dev/null
+							;;
+						*)	no_input_msg
+							unset -- PS_VALUE
+							;;
+					esac
+				else
+					no_input_msg
+					unset -- PS_VALUE
+				fi
+				## }}}
+				;;
 			permit_mx_backup)
-				# Nachricht das man permit_mx_backup_networks in /etc/main.cf
+				# Nachricht das man permit_mx_backup_networks in /etc/main.cf# {{{
 				# belegen kann.
 				MSG=$(gettext 'Bei permit_mx_backup kann optional die Restriction permit_mx_backup_networks belegt werden (Hauptkonfiguration).')
 				msgbox "$gv_Info" "$MSG"
+				## }}}
 				;;
 			reject_rbl_*|reject_rhsbl_*|permit_dnswl_*|permit_rhswl_*)
 				# Liste von RBL (Realtime Blackhole Lists) und{{{
@@ -240,11 +360,9 @@ restrictions() {
 				RBL_MSG=$(gettext 'Geben Sie bitte ein oder mehrere RBL, RHSBL, DNSWL oder RHSWL Domains, getrennt durch ein Leerzeichen, ein (Bsp. relays.ordb.org, list.dsbl.org=1.2.3.4)')
 				inputbox "$gv_Configuration" "$RBL_MSG" "$RBL"
 				#
-				# Prüfen, ob alle Adressen getrennt durch ein Komma
-				# sind.
-				if [ -n "$gv_Auswahl" ] ; then
+				if [ -n "${gv_Auswahl[1]}" ] ; then
 					unset -- RBL
-					for i in $gv_Auswahl ; {
+					for i in ${=gv_Auswahl} ; {
 						case $i in
 							[a-zA-Z0-9]*[a-zA-Z0-9-_.]*.[a-z]*)
 								RBL+=( $i )
@@ -268,22 +386,38 @@ restrictions() {
 					(( Nr1=Nr+1 ))
 					sed -n -e "${Nr1},\$p" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions1
 					sed -e "${Nr},\$d" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions$$
-					for i in ${=RBL} ; {
-						>> ${gv_WorkDir}/restrictions$$ <<< "$Rbl_Name $i"
-					}
+					>> ${gv_WorkDir}/restrictions$$ <<< "$Rbl_Name $RBL"
 					< ${gv_WorkDir}/restrictions1 >> ${gv_WorkDir}/restrictions$$
 					mv ${gv_WorkDir}/restrictions$$ ${gv_WorkDir}/restrictions
 					rm ${gv_WorkDir}/restrictions1 &>/dev/null
 				fi
 				#}}}
 				;;
-			*)
-				hier_ist_noch_nichts "$extra_conf_restrictions"
-				;;
 		esac
 	done < "${gv_WorkDir}/restrictions"
 	}
 	#}}}
+	# Funktion (check_extra_restriction)# {{{
+	#
+	# usage: check_extra_restriction RESTRICTION
+	check_extra_restriction() {
+		#local Restrict
+		Restrict=($1)
+		case "$Restrict" in
+			check_*_access*|check_policy_service*|reject_rbl_*|reject_rhsbl_*|permit_dnswl_*|permit_rhswl_*)
+				Anz=${(w)#Restrict}
+				if [[ $Anz -gt 1 ]] ; then
+					VALUE=($Restrict)
+				else
+					VALUE=""
+				fi
+				;;
+			*)
+				VALUE="$Restrict"
+				;;
+		esac
+	}
+	## }}}
 	# Funktion restrictions_to_maincf{{{
 	#
 	restrictions_to_maincf() {
@@ -294,7 +428,8 @@ restrictions() {
 			WERT="$(sed -n -e "${Anz}p" ${gv_WorkDir}/restrictions)"
 			# 1. Zeile loeschen und den Wert in den Restrictions einfuegen
 			sed -e "${Anz}d" ${gv_WorkDir}/restrictions >${gv_WorkDir}/restrictions1
-			postconf -e $RESTRICT="${WERT},"
+			check_extra_restriction "$WERT"
+			postconf -e $RESTRICT="${VALUE},"
 			# Zeilennummer der Restrictions in main.cf herausfinden
 			LINE=${${(s,:,)$(grep -n "^$RESTRICT" $MAIN_CF)}[1]}
 			(( LINE=LINE+1 ))
@@ -305,11 +440,14 @@ restrictions() {
 			# Die restlichen Restrictions, mit Komma, einfuegen, ausser
 			# die letzte.
 			while read a ; do
-				(( Anz++ ))
-				if [ "$Anz" -lt "$Anz1" ] ; then
-					>> $MAIN_CF$$ <<< "		${a},"
-				else
-					>> $MAIN_CF$$ <<< "		${a}"
+				check_extra_restriction "$a"
+				if [[ -n ${${=VALUE}[1]} ]] ; then
+					(( Anz++ ))
+					if [ "$Anz" -lt "$Anz1" ] ; then
+						>> $MAIN_CF$$ <<< "		${a},"
+					else
+						>> $MAIN_CF$$ <<< "		${a}"
+					fi
 				fi
 			done < ${gv_WorkDir}/restrictions1
 			# Alles wieder zusammenbauen
@@ -317,7 +455,8 @@ restrictions() {
 			< ${gv_WorkDir}/maincf$$ >> $MAIN_CF
 		else
 			WERT=$(< ${gv_WorkDir}/restrictions) 
-			postconf -e $RESTRICT="$WERT"
+			check_extra_restriction "$WERT"
+			postconf -e $RESTRICT="$VALUE"
 		fi
 	}
 	#}}}
