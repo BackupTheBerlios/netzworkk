@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 14.04.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 03.05.2013
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
 # Version: 0.1.15
@@ -1135,15 +1135,12 @@ while [ "$gv_Auswahl" ] ; do
 			TABLE_ENTRY_MSG=$(gettext 'Waehlen Sie einen Tabelleneintrag aus.')
 			# Funktion tab_change{{{
 			#
-			# Die Variablen TAB_HELP HASH_TAB WAS_IST FILE TAB muessen belegt sein
+			# Die Variablen TAB_HELP HASH_TAB TAB_FM FILE TAB muessen belegt sein
 			#
 			# usage: tab_change
 			#####################################
 			# TODO: es fehlen noch nis(plus), memcache, socketmap,...
 			# sql-zusammenlegen?
-			#
-			# WAS_IST -> TAB_FM
-			#
 			tab_change() {
 				case "$TAB_FM" in
 					mysql)
@@ -1346,7 +1343,7 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			# Funktion tab_menue{{{
 			tab_menue() {
-				unset -- FILE HASH_TAB TAB_HELP WAS_IST
+				unset -- FILE HASH_TAB TAB_HELP TAB_FM
 				if [[ -n ${TABLE_E[1]} ]] ; then
 					TAB_MENU=($TABLE_E $gv_Back \"\")
 					if [[ ${#argv} == 1 ]] ; then
@@ -1371,7 +1368,7 @@ while [ "$gv_Auswahl" ] ; do
 			#}}}
 			# Funktion sub_tab_menu{{{
 			sub_tab_menu() {
-				unset -- FILE HASH_TAB TAB_HELP WAS_IST SUBTAB
+				unset -- FILE HASH_TAB TAB_HELP TAB_FM SUBTAB
 				if [[ -n ${SUB_TABLE_E[$TAB]} ]] ; then
 					SUB_TAB_MENU=(${SUB_TABLE_E[$TAB]} $gv_Back \"\")
 					if [[ ${#argv} == 1 ]] ; then
@@ -1714,14 +1711,12 @@ while [ "$gv_Auswahl" ] ; do
 						# transport Tabelle, für die Regelung der Transportmethode{{{
 						# von domains, mailadressen
 						#
-						set -x
 						TAB_HELP="transport_help"
 						HASH_TAB="transport_table"
 						TAB_FM="${${TAB_IND[$gv_Auswahl]}%:*}"
 						FILE="${${TAB_IND[$gv_Auswahl]}#*:}"
 						TAB="$gv_Auswahl"
 						tab_change
-						set +x
 						unset -- HASH_TAB
 						#}}}
 						tab_menue $TAB
