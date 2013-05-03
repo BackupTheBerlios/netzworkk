@@ -1,14 +1,14 @@
 # kwtools-common english Translation.
-# Copyright (C) 2002-2012
+# Copyright (C) 2002-2013
 # This file is distributed under the same license as the kwtools-common package.
-# Kai Wilke <kiste@netzworkk.de>, 2012.
+# Kai Wilke <kiste@netzworkk.de>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kwtools-common\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-07 23:19+0100\n"
-"PO-Revision-Date: 2012-03-07 23:46+0200\n"
+"POT-Creation-Date: 2013-04-14 15:16+0200\n"
+"PO-Revision-Date: 2013-04-14 15:19+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -396,7 +396,7 @@ msgstr "Copynumber"
 msgid "Volume Name"
 msgstr "Volume Name"
 
-#: ../../functions/sys/multi_conf:261 ../../functions/sys/sys_conf:2098
+#: ../../functions/sys/multi_conf:261 ../../functions/sys/sys_conf:2122
 msgid "Programm"
 msgstr "Program"
 
@@ -436,7 +436,7 @@ msgstr "Multisession"
 #: ../../functions/sys/multi_conf:270
 #, fuzzy
 msgid "brennen"
-msgstr "Burn"
+msgstr "Burning"
 
 #: ../../functions/sys/multi_conf:271
 msgid "on-the-fly"
@@ -616,7 +616,7 @@ msgid ""
 msgstr ""
 
 #: ../../functions/sys/multi_conf:2500
-#, fuzzy, sh-format
+#, sh-format
 msgid ""
 "Die Groesse der Auswahl ($DATA_SIZE) ueberschreitet die Groesse ($IS_SIZE) "
 "der CD-R(W)/DVD-+R(W)/RAM. Wollen Sie einen neuen leeren Rohling einlegen "
@@ -630,7 +630,7 @@ msgid ""
 "des temporaeren Verzeichnisses."
 msgstr ""
 
-#: ../../functions/sys/net_conf:68
+#: ../../functions/sys/net_conf:69
 #, fuzzy
 msgid ""
 "Geben Sie bitte den voll qualifizierten Rechnernamen (FQDN) ein (Bsp.: host."
@@ -638,115 +638,117 @@ msgid ""
 msgstr ""
 "Please to enter the full qualified hostname (FQDN) (f.E. host.domain.de)."
 
-#: ../../functions/sys/net_conf:80
+#: ../../functions/sys/net_conf:81
 #, fuzzy
 msgid "Geben Sie bitte den Rechnernamen ein (Bsp.: host1, host1.domain.de)."
 msgstr "Please to enter the hostname (f.E. host1, host1.domain.de)."
 
-#: ../../functions/sys/net_conf:110
+#: ../../functions/sys/net_conf:111
 #, fuzzy
 msgid "Tragen Sie bitte ihren Proxy ein (host:port)."
 msgstr "Please to enter the proxy (f.E. host:port)."
 
-#: ../../functions/sys/net_conf:127
+#: ../../functions/sys/net_conf:128
 #, fuzzy
 msgid "Tragen Sie bitte ihren Proxy ein (protokoll://host:port)."
 msgstr "Please to enter the proxy (f.E. protocol://host:port)"
 
-#: ../../functions/sys/net_conf:183
+#: ../../functions/sys/net_conf:184
 msgid "Geben Sie bitte die Broadcast Adresse ein (z.B. 192.168.0.255)."
 msgstr "Please to enter the broadcast (f.E. 192.168.0.255)."
 
-#: ../../functions/sys/net_conf:194
+#: ../../functions/sys/net_conf:195
 #, sh-format
 msgid "Diese Broadcast Adresse ($gv_Auswahl) kann man nicht vergeben."
 msgstr "This broadcast address ($gv_Auswahl) is not valid."
 
-#: ../../functions/sys/net_conf:212
+#: ../../functions/sys/net_conf:213
 #, fuzzy
 msgid "Soll das Netzwerk per dhcp konfiguriert werden (ja/nein)?"
 msgstr "Start the network from dhcp (yes/no)?"
 
-#: ../../functions/sys/net_conf:226
+#: ../../functions/sys/net_conf:227
 msgid ""
 "Geben Sie bitte die IP-Adresse fuer den Gateway ein (z.B. 192.168.0.10)."
 msgstr "Please to enter the IP-Address for the gateway (f.E. 192.168.0.10)."
 
-#: ../../functions/sys/net_conf:265
+#: ../../functions/sys/net_conf:266
 #, fuzzy
 msgid "Geben Sie bitte bis zu 3 IP Adressen ein."
 msgstr "Please to enter up to 3 IP Addresses."
 
-#: ../../functions/sys/net_conf:305
+#: ../../functions/sys/net_conf:306
 #, fuzzy
 msgid "Geben Sie bitte den IP-Prefix ein (z.B. 192.168.0)."
 msgstr "Please to enter the IP-Prefix (f.E. 192.168.0)."
 
-#: ../../functions/sys/net_conf:327
+#: ../../functions/sys/net_conf:328
 msgid "Geben Sie bitte die IP Adresse ein (z.B. 192.168.0.1)."
 msgstr "Please to enter the IP Address (f.E. 192.168.0.1)."
 
-#: ../../functions/sys/net_conf:358
+#: ../../functions/sys/net_conf:359
 msgid "Geben Sie bitte bis zu 3 Nameserver Adressen ein (z.B. 194.25.2.129)."
 msgstr "Please to enter up to 3 nameserver IP Addresses (f.E. 194.25.2.129)."
 
-#: ../../functions/sys/net_conf:398
+#: ../../functions/sys/net_conf:399
 #, fuzzy
 msgid "Geben Sie bitte die Netzmaske ein (Bsp.: 255.255.255.0)."
 msgstr "Please to enter the netmask (f.E. 255.255.255.0)."
 
-#: ../../functions/sys/net_conf:408
+#: ../../functions/sys/net_conf:409
 #, sh-format
 msgid "Diese Netzmaske ($gv_Auswahl) kann man nicht vergeben."
 msgstr "This netmask address ($gv_Auswahl) is not valid."
 
-#: ../../functions/sys/net_conf:427
+#: ../../functions/sys/net_conf:428
 #, fuzzy
 msgid "Soll das Interface beim Systemstart gestartet werden (ja/nein)?"
 msgstr "Start the interface from boot process (yes/no)?"
 
-#: ../../functions/sys/net_conf:540
+#: ../../functions/sys/net_conf:543
 msgid "Mail"
 msgstr "Mail"
 
-#: ../../functions/sys/net_conf:545
+#: ../../functions/sys/net_conf:548
+#, fuzzy
 msgid ""
-"Geben Sie bitte eine Mail Adresse an, an dem die Action gemailt werden soll "
-"(name@domain.de)."
-msgstr "Please to enter a mail address for mail the action (name@domain.de)."
+"Geben Sie bitte eine oder mehrere Mail Adressen an, an dem die Action "
+"gemailt werden soll (z.B. user@domain.de). Getrennt durch ein Leerzeichen."
+msgstr "Please to enter a or more mail address for mail the action"
+"(name@domain.de). Separate from a space char."
 
-#: ../../functions/sys/net_conf:709
+#: ../../functions/sys/net_conf:713
 msgid "Die Anzahl der IP-Adressen ist groesser als 3."
 msgstr "The Count of IP Addresses is greater then 3."
 
-#: ../../functions/sys/net_conf:718
+#: ../../functions/sys/net_conf:722
 #, fuzzy
 msgid "Sie muessen erst eine gueltige IP-Adresse eingeben."
 msgstr "You must to enter a valid IP address."
 
-#: ../../functions/sys/net_conf:726
+#: ../../functions/sys/net_conf:730
 msgid "Es ist keine Remote Shell installiert (PATH?)."
 msgstr "No remote shell to installed (PATH?)."
 
-#: ../../functions/sys/net_conf:745
+#: ../../functions/sys/net_conf:749
 #, sh-format
 msgid ""
 "Diese IP ($Ip_Msg) kann man nicht vergeben. Die letzte Zahl muss zwischen 1 "
 "und 254 liegen."
 msgstr ""
 
-#: ../../functions/sys/net_conf:749
+#: ../../functions/sys/net_conf:753
 #, sh-format
 msgid "Dies ist keine gueltige IP-Adresse ($Ip_Msg) fuer das Netzwerk."
 msgstr ""
 
-#: ../../functions/sys/net_conf:753
-#, fuzzy, sh-format
+#: ../../functions/sys/net_conf:757
+#, sh-format
 msgid "Dies ist kein gueltiger IP-Prefix ($Ip_Msg)."
 msgstr ""
 
-#: ../../functions/sys/net_conf:757
-#, fuzzy, sh-format
+#: ../../functions/sys/net_conf:761
+#, sh-format
 msgid "Dies ist keine gueltige IP-Adresse ($Ip_Msg)."
 msgstr ""
 
@@ -802,7 +804,7 @@ msgstr "Display"
 #: ../../functions/sys/script_init:147
 #, fuzzy
 msgid "bearbeiten"
-msgstr "to edit"
+msgstr "edit"
 
 #: ../../functions/sys/script_init:148
 msgid "englisch"
@@ -833,12 +835,12 @@ msgid "Gruppe"
 msgstr "Group"
 
 #: ../../functions/sys/script_init:155
-msgid "Rechner"
-msgstr "Host"
-
-#: ../../functions/sys/script_init:156
 msgid "Hilfe"
 msgstr "Help"
+
+#: ../../functions/sys/script_init:156
+msgid "Rechner"
+msgstr "Host"
 
 #: ../../functions/sys/script_init:157
 msgid "Info"
@@ -889,52 +891,57 @@ msgid "altes Passwort :"
 msgstr "old Password :"
 
 #: ../../functions/sys/script_init:169
+#, fuzzy
+msgid "Passwort"
+msgstr "Password"
+
+#: ../../functions/sys/script_init:170
 msgid "Gruppe\t\t:"
 msgstr "Group\t\t:"
 
-#: ../../functions/sys/script_init:170
+#: ../../functions/sys/script_init:171
 msgid "Passwort::eingeben"
 msgstr "Password::input"
 
-#: ../../functions/sys/script_init:171
+#: ../../functions/sys/script_init:172
 #, fuzzy
 msgid "Benutzer\t\t:"
 msgstr "User\t\t:"
 
-#: ../../functions/sys/script_init:172
+#: ../../functions/sys/script_init:173
 msgid "verkleinern"
 msgstr "reduce"
 
-#: ../../functions/sys/script_init:173
+#: ../../functions/sys/script_init:174
 msgid "speichern"
 msgstr "save"
 
-#: ../../functions/sys/script_init:174
+#: ../../functions/sys/script_init:175
 msgid "start"
 msgstr "start"
 
-#: ../../functions/sys/script_init:175
+#: ../../functions/sys/script_init:176
 msgid "stop"
 msgstr "stop"
 
-#: ../../functions/sys/script_init:176
+#: ../../functions/sys/script_init:177
 msgid "unbekannt"
 msgstr "unknown"
 
-#: ../../functions/sys/script_init:177
+#: ../../functions/sys/script_init:178
 #, fuzzy
 msgid "Benutzer"
 msgstr "User"
 
-#: ../../functions/sys/script_init:178
+#: ../../functions/sys/script_init:179
 msgid "Ja"
 msgstr "Yes"
 
-#: ../../functions/sys/script_init:180
+#: ../../functions/sys/script_init:181
 msgid "\"Sie benoetigen dialog, um dieses Programm\""
 msgstr "\"You need dialog for this\""
 
-#: ../../functions/sys/script_init:181
+#: ../../functions/sys/script_init:182
 #, fuzzy
 msgid "\"benutzen zu koennen. Druecken Sie jetzt ENTER.\""
 msgstr "\"program. Please to press ENTER.\""
@@ -953,21 +960,21 @@ msgstr "Please to enter your date and to verify this."
 msgid "Waehlen Sie bitte das Verzeichnis aus."
 msgstr "Please select a directory."
 
-#: ../../functions/sys/sys_conf:189
+#: ../../functions/sys/sys_conf:198
 #, fuzzy
 msgid "Waehlen Sie bitte das Verzeichnis und dann die Datei aus."
 msgstr "Please select a directory and then the file."
 
-#: ../../functions/sys/sys_conf:251
+#: ../../functions/sys/sys_conf:260
 #, fuzzy
 msgid "Sekunden"
 msgstr "Seconds"
 
-#: ../../functions/sys/sys_conf:252
+#: ../../functions/sys/sys_conf:261
 msgid "Sekunde"
 msgstr "Second"
 
-#: ../../functions/sys/sys_conf:539
+#: ../../functions/sys/sys_conf:548
 #, sh-format
 msgid ""
 "Die Laenge des/der Passworts/Passphrase muss mindestens $MinChar und "
@@ -975,47 +982,47 @@ msgid ""
 "wiederholt werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:556
+#: ../../functions/sys/sys_conf:565
 #, sh-format
 msgid ""
 "Die Laenge des/der Passworts/Passphrase muss mindestens $MinChar Zeichen "
 "sein.\\nSoll die Eingabe der Passphrase wiederholt werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:645
+#: ../../functions/sys/sys_conf:656
 #, fuzzy
 msgid "Konfiguration::Zahlen"
 msgstr "Configuration::Numbers"
 
-#: ../../functions/sys/sys_conf:648
+#: ../../functions/sys/sys_conf:670
 msgid "Geben Sie hier bitte eine Zahl, in Byte ein (Bsp. 51200) ein."
 msgstr "Please to enter a integer Number to byte (f.E. 51200)."
 
-#: ../../functions/sys/sys_conf:657
+#: ../../functions/sys/sys_conf:679
 msgid "Geben Sie hier bitte eine Zahl, in Tagen (Bsp. 5) ein."
 msgstr "Please to enter a integer Number to days (f.E. 5)."
 
-#: ../../functions/sys/sys_conf:666
+#: ../../functions/sys/sys_conf:688
 msgid "Geben Sie hier bitte eine Zahl, in Stunden (Bsp. 4) ein."
 msgstr "Please to enter a integer Number to hours (f.E. 4)."
 
-#: ../../functions/sys/sys_conf:675
+#: ../../functions/sys/sys_conf:697
 msgid "Geben Sie hier bitte eine Zahl (Bsp. 3) ein."
 msgstr "Please to enter a integer Number (f.E. 3)."
 
-#: ../../functions/sys/sys_conf:684
+#: ../../functions/sys/sys_conf:706
 msgid "Geben Sie hier bitte eine Zahl, in Monaten (Bsp. 1) ein."
 msgstr "Please to enter a integer Number to months (f.E. 1)."
 
-#: ../../functions/sys/sys_conf:693
+#: ../../functions/sys/sys_conf:715
 msgid "Geben Sie hier bitte eine Zahl, in Sekunden (Bsp. 300) ein."
 msgstr "Please to enter a integer Number to seconds (f.E. 300)."
 
-#: ../../functions/sys/sys_conf:702
+#: ../../functions/sys/sys_conf:724
 msgid "Geben Sie hier bitte eine Zahl, in Wochen (Bsp. 3) ein."
 msgstr "Please to enter a integer Number to weeks (f.E. 3)."
 
-#: ../../functions/sys/sys_conf:731
+#: ../../functions/sys/sys_conf:754
 msgid ""
 "Sie haben eine falsche Masseinheit angegeben. Es gehen nur k|K|KB|Kb - "
 "KiloByte... y|Y|YB|Yb - YottaByte."
@@ -1023,234 +1030,233 @@ msgstr ""
 "You have a false multiplicative suffix specified. Its only k|K|KB|Kb - "
 "KiloByte... y|Y|YB|Yb - YottaByte."
 
-#: ../../functions/sys/sys_conf:798
+#: ../../functions/sys/sys_conf:822
 #, sh-format
 msgid ""
 "Die Laenge des/der Passworts/Passphrase muss mindestens $MinChar und "
 "hoechstens $MaxChar Zeichen sein."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:807
+#: ../../functions/sys/sys_conf:831
 #, sh-format
 msgid ""
 "Die Laenge des/der Passworts/Passphrase muss mindestens $MinChar Zeichen "
 "sein."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:1009
+#: ../../functions/sys/sys_conf:1033
 msgid "Uhrzeit"
 msgstr "Time"
 
-#: ../../functions/sys/sys_conf:1010
+#: ../../functions/sys/sys_conf:1034
 msgid "Stellen Sie bitte Ihre Zeit ein und bestaetigen Sie diese."
 msgstr "Please to enter your time and to verify this."
 
-#: ../../functions/sys/sys_conf:1450
+#: ../../functions/sys/sys_conf:1474
 msgid ""
 "Sie haben eine falsche Anzahl an Zeichen eingegeben. Sie muessen 4 oder 3 "
 "Integer Zahlen in Reihenfolge eingeben die die Rechte definieren (man 1 "
 "chmod)."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:1526
+#: ../../functions/sys/sys_conf:1550
 msgid "keine_Kompression"
 msgstr "no Compression"
 
-#: ../../functions/sys/sys_conf:1536
+#: ../../functions/sys/sys_conf:1560
 msgid "Kompression"
 msgstr "Compression."
 
-#: ../../functions/sys/sys_conf:1537
+#: ../../functions/sys/sys_conf:1561
 #, fuzzy
 msgid "Waehlen Sie ein Kompressionsprogramm aus."
 msgstr "Please select a program for compression."
 
-#: ../../functions/sys/sys_conf:2097
+#: ../../functions/sys/sys_conf:2121
 #, fuzzy
 msgid "Sonderzeichen"
 msgstr "special Character"
 
-#: ../../functions/sys/sys_conf:2099
+#: ../../functions/sys/sys_conf:2123
 msgid "Minute"
 msgstr "Minute"
 
-#: ../../functions/sys/sys_conf:2100
+#: ../../functions/sys/sys_conf:2124
 #, fuzzy
 msgid "Stunde"
 msgstr "Hour"
 
-#: ../../functions/sys/sys_conf:2101
+#: ../../functions/sys/sys_conf:2125
 msgid "Monatstag"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:2102
+#: ../../functions/sys/sys_conf:2126
 msgid "Monat"
 msgstr "Month"
 
-#: ../../functions/sys/sys_conf:2103
+#: ../../functions/sys/sys_conf:2127
 msgid "Wochentag"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:2111
+#: ../../functions/sys/sys_conf:2135
 msgid "crontab::Ausfuehrungszeit"
 msgstr "crontab::Executiontime"
 
-#: ../../functions/sys/sys_conf:2112
+#: ../../functions/sys/sys_conf:2136
 #, fuzzy
 msgid "Veraendern Sie hier die Ausfuehrungszeit."
 msgstr "Change the Executiontime."
 
-#: ../../functions/sys/sys_conf:2422
+#: ../../functions/sys/sys_conf:2446
 #, fuzzy
 msgid "Waehlen Sie bitte die Minuten aus."
 msgstr "Please select the minutes."
 
-#: ../../functions/sys/sys_conf:2449
+#: ../../functions/sys/sys_conf:2473
 #, fuzzy
 msgid "Waehlen Sie bitte die Stunden aus."
 msgstr "Please select the hours."
 
-#: ../../functions/sys/sys_conf:2476
+#: ../../functions/sys/sys_conf:2500
 #, fuzzy
 msgid "Waehlen Sie bitte die Monatstage aus."
 msgstr "Please select the days of months."
 
-#: ../../functions/sys/sys_conf:2503
+#: ../../functions/sys/sys_conf:2527
 #, fuzzy
 msgid "Waehlen Sie bitte die Monate aus."
 msgstr "Please select the months."
 
-#: ../../functions/sys/sys_conf:2530
+#: ../../functions/sys/sys_conf:2554
 #, fuzzy
 msgid "Waehlen Sie bitte die Wochentage aus."
 msgstr "Please select the days of week."
 
-#: ../../functions/sys/sys_conf:2861
+#: ../../functions/sys/sys_conf:2885
 msgid ""
 "Sie benoetigen die dialog Version 1.1-20070227 oder groesser, um mit diesem "
 "Script arbeiten zu koennen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:2889
+#: ../../functions/sys/sys_conf:2913
 #, fuzzy
 msgid "Verzeichnisse"
-msgstr "Directory."
+msgstr "Directories."
 
-#: ../../functions/sys/sys_conf:2890
+#: ../../functions/sys/sys_conf:2914
 #, fuzzy
 msgid "Dateien"
-msgstr "Filename"
+msgstr "Files"
 
-#: ../../functions/sys/sys_conf:2891
+#: ../../functions/sys/sys_conf:2915
 msgid "Verzeichnis- oder Dateiauswahl"
 msgstr "Choice directory or Files"
 
-#: ../../functions/sys/sys_conf:2937
+#: ../../functions/sys/sys_conf:2961
 msgid "Das Verzeichnis ${DIR%/} ist nicht vorhanden. Soll es angelegt werden?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:2946
+#: ../../functions/sys/sys_conf:2970
 #, sh-format
 msgid "Sie haben keine Rechte das Verzeichnis $DIR anzulegen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:2971
+#: ../../functions/sys/sys_conf:2995
 #, fuzzy, sh-format
 msgid "$DIR ist kein Verzeichnis."
-msgstr "$DIR is not a directory."
+msgstr "$DIR is not directory."
 
-#: ../../functions/sys/sys_conf:2975
-#, fuzzy, sh-format
+#: ../../functions/sys/sys_conf:2999
+#, sh-format
 msgid "Sie haben keine Leserechte fuer das Verzeichnis $DIR."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3031
+#: ../../functions/sys/sys_conf:3057
 msgid "Rechteverwaltung"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3037
+#: ../../functions/sys/sys_conf:3063
 #, sh-format
 msgid "Mode \"$MOD\" User \"$U\" Gruppe \"$G\" $gv_Save \"\" $gv_Back \"\""
 msgstr "Mode \"$MOD\" User \"$U\" Group \"$G\" $gv_Save \"\" $gv_Back \"\""
 
-#: ../../functions/sys/sys_conf:3064
+#: ../../functions/sys/sys_conf:3090
 #, fuzzy
 msgid "Waehlen Sie einen Benutzer aus."
 msgstr "Select a user."
 
-#: ../../functions/sys/sys_conf:3085
+#: ../../functions/sys/sys_conf:3111
 #, fuzzy
 msgid "Waehlen Sie eine Gruppe aus."
 msgstr "Select a group."
 
-#: ../../functions/sys/sys_conf:3111
+#: ../../functions/sys/sys_conf:3137
 msgid "Sie muessen erst alle Menuepunkte auswaehlen und mit Werten belegen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3146
+#: ../../functions/sys/sys_conf:3173
 msgid "Dateiauswahl"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3150
+#: ../../functions/sys/sys_conf:3177
 #, fuzzy
 msgid "Waehlen Sie ein oder mehrere Dateien aus."
 msgstr "Select one or more Files."
 
-#: ../../functions/sys/sys_conf:3171
+#: ../../functions/sys/sys_conf:3198
 #, fuzzy
 msgid "Waehlen Sie eine Datei aus oder legen eine neue an."
 msgstr "Select a File or create a new file."
 
-#: ../../functions/sys/sys_conf:3181
+#: ../../functions/sys/sys_conf:3208
 msgid "Geben Sie hier bitte einen neuen Namen fuer die Datei ein."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3202
+#: ../../functions/sys/sys_conf:3229
 #, fuzzy
 msgid "Waehlen Sie eine Datei aus."
 msgstr "Select a file."
 
-#: ../../functions/sys/sys_conf:3600
+#: ../../functions/sys/sys_conf:3627
 #, sh-format
 msgid ""
 "Die Datei $File ist nicht vorhanden. Soll sie angelegt werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3609
+#: ../../functions/sys/sys_conf:3636
 #, sh-format
 msgid "Sie haben keine Rechte die Datei $FILE anzulegen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3635
+#: ../../functions/sys/sys_conf:3662
 #, fuzzy, sh-format
 msgid "Die Datei $i ist nicht vorhanden."
 msgstr "File $i is not exists."
 
-#: ../../functions/sys/sys_conf:3676
+#: ../../functions/sys/sys_conf:3703
 msgid "Geben Sie bitte eine Zeichenkette zur Erzeugung des Passwortes ein."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3682
+#: ../../functions/sys/sys_conf:3709
 msgid "Zeichenlaenge"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3707
+#: ../../functions/sys/sys_conf:3734
 msgid "Geben Sie bitte die Laenge des zu erstellenden Passwortes an."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3725
+#: ../../functions/sys/sys_conf:3752
 #, sh-format
 msgid ""
 "Sie muessen erst die Menuepunkte $gv_Input und $lv_Charlength mit Werten "
 "belegen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3765
-#, fuzzy
+#: ../../functions/sys/sys_conf:3792
 msgid "Waehlen Sie die Standard Schluessel ID aus."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:3782
+#: ../../functions/sys/sys_conf:3809
 #, sh-format
 msgid ""
 "Es wurde kein oeffentlicher Schluessel fuer den User \"$User\" gefunden. "
@@ -1258,106 +1264,111 @@ msgid ""
 "Bitte die Hilfe."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4264
+#: ../../functions/sys/sys_conf:4291
 #, sh-format
 msgid "Bei \"$Os\" muessen Sie nur das Startscript (mdmonitor) aktivieren."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4273
+#: ../../functions/sys/sys_conf:4300
 #, sh-format
 msgid ""
 "Es gibt kein Quickly-Konfigurationstool fuer das Paket \"postfix\" unter "
 "\"$Os\"."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4345
+#: ../../functions/sys/sys_conf:4372
 #, fuzzy
 msgid "Sie muessen erst das Paket \\\"yast2-mail\\\" installieren."
 msgstr "You must to install \\\"yast2-network\\\", first."
 
-#: ../../functions/sys/sys_conf:4360 ../../functions/sys/sys_conf:4390
+#: ../../functions/sys/sys_conf:4387 ../../functions/sys/sys_conf:4417
 #, fuzzy
 msgid "Sie muessen erst das Paket \\\"yast2-network\\\" installieren."
 msgstr "You must to install \\\"yast2-network\\\", first."
 
-#: ../../functions/sys/sys_conf:4375
+#: ../../functions/sys/sys_conf:4402
 #, fuzzy
 msgid "Sie muessen erst das Paket \\\"yast2-ntp-client\\\" installieren."
 msgstr "You must to install \\\"yast2-ntp-clien\\\"t, first."
 
-#: ../../functions/sys/sys_conf:4405
+#: ../../functions/sys/sys_conf:4432
 #, fuzzy
 msgid "Sie muessen erst das Paket \\\"yast2-sysconfig\\\" installieren."
 msgstr "You must to install \\\"yast2-sysconfig\\\", first."
 
-#: ../../functions/sys/sys_conf:4420
+#: ../../functions/sys/sys_conf:4447
 #, fuzzy
 msgid "Sie muessen erst das Paket \\\"yast2-runlevel\\\" installieren."
 msgstr "You must to install \\\"yast2-network\\\", first."
 
-#: ../../functions/sys/sys_conf:4618
+#: ../../functions/sys/sys_conf:4644
 msgid "Shell-Auswahl"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4619
+#: ../../functions/sys/sys_conf:4645
 msgid "Waehlen Sie eine der installierten Shells aus."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4695
+#: ../../functions/sys/sys_conf:4724
+#, sh-format
+msgid "$i wird gerade benutzt. Versuchen Sie es spaeter nochmal."
+msgstr ""
+
+#: ../../functions/sys/sys_conf:4738
 msgid "Das Device wird gerade benutzt. Versuchen Sie es spaeter nochmal."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4720
+#: ../../functions/sys/sys_conf:4771
 #, sh-format
 msgid "Das loopback Geraet ($gv_Loop_Dev) konnte nicht ausgebunden werden."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4730
+#: ../../functions/sys/sys_conf:4781
 msgid "Es sind keine freien loop Schnittstellen mehr vorhanden."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4747
+#: ../../functions/sys/sys_conf:4798
 msgid "Zugriffsrechte"
 msgstr "Access"
 
-#: ../../functions/sys/sys_conf:4748
+#: ../../functions/sys/sys_conf:4799
 msgid ""
 "Geben Sie bitte die Zugriffsrechte ein. (1=ausfuehren , 2=schreiben, "
 "4=lesen) Man kann diese Zahlen unterschiedlich zusammenrechnen (Bsp. 0640, "
 "man 1 chmod)."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4749
+#: ../../functions/sys/sys_conf:4800
 msgid ""
 "Geben Sie hier bitte die 3 oder 4 Oktalzifern fuer die Zugriffsrechte ein "
 "(Bsp. 0022 oder 022, man 2 umask)."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4798
+#: ../../functions/sys/sys_conf:4849
 #, sh-format
 msgid ""
 "$MOUNTPOINT wird nicht aus dem Verzeichnisbaum ausgebunden, da es vom "
 "Betriebssystem benoetigt wird."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4804
+#: ../../functions/sys/sys_conf:4855
 #, sh-format
 msgid "$PART_DEV konnte(n) nicht aus dem Dateisystem entfernt werden."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4810
+#: ../../functions/sys/sys_conf:4861
 #, sh-format
 msgid "$PART_DEV wird ausgelassen."
 msgstr "$PART_DEV to be omit."
 
-#: ../../functions/sys/sys_conf:4814
+#: ../../functions/sys/sys_conf:4865
 #, sh-format
 msgid ""
 "$PART_DEV ist ins Dateisystem eingebunden. Es muss oder kann entfernt "
 "werden. Soll dies jetzt geschehen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:4892 ../../functions/sys/sys_conf:4910
+#: ../../functions/sys/sys_conf:4943 ../../functions/sys/sys_conf:4961
 #, sh-format
 msgid ""
 "$PART_DEV konnte nicht ins Dateisystem eingebunden werden. Das Laufwerk muss "
@@ -1365,87 +1376,87 @@ msgid ""
 "angestoepselt sein."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5055
+#: ../../functions/sys/sys_conf:5106
 msgid ""
 "Sie benoetigen eine CentOS 5.0 oder hoeher um mit diesem Modul arbeiten zu "
 "koennen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5069
+#: ../../functions/sys/sys_conf:5120
 msgid ""
 "Sie benoetigen ein grml 1.0 oder hoeher um mit diesem Modul arbeiten zu "
 "koennen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5077 ../../functions/sys/sys_conf:5083
+#: ../../functions/sys/sys_conf:5128 ../../functions/sys/sys_conf:5134
 msgid ""
 "Sie benoetigen ein Debian 5.0 oder hoeher um mit diesem Modul arbeiten zu "
 "koennen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5096
+#: ../../functions/sys/sys_conf:5147
 msgid ""
 "Sie benoetigen eine Fedora 12 oder hoeher um mit diesem Modul arbeiten zu "
 "koennen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5107
+#: ../../functions/sys/sys_conf:5158
 msgid ""
 "Sie benoetigen eine SuSE 11.0 oder hoeher um mit diesem Modul arbeiten zu "
 "koennen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5116
+#: ../../functions/sys/sys_conf:5167
 #, fuzzy
 msgid ""
 "Diese Distribution wird noch nicht unterstuetzt. Sie arbeiten auf eigene "
 "Gefahr."
 msgstr "No Support for this distribution (not yet)."
 
-#: ../../functions/sys/sys_conf:5157
+#: ../../functions/sys/sys_conf:5208
 msgid "Drucken"
 msgstr "Print"
 
-#: ../../functions/sys/sys_conf:5158
+#: ../../functions/sys/sys_conf:5209
 #, sh-format
 msgid "Soll die Datei $File gedruckt werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5334
+#: ../../functions/sys/sys_conf:5403
 #, sh-format
 msgid "$RAIDDEV wird erstellt und/oder syncronisiert - "
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5569
+#: ../../functions/sys/sys_conf:5643
 msgid ""
 "Fuer diese Aktion benoetigen Sie root Rechte. In den Administrator Modus "
 "wechseln (ja/nein)?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5598
+#: ../../functions/sys/sys_conf:5672
 msgid ""
 "Scripte mit root Rechten duerfen nur in einer Instanz laufen. Das Script "
 "beendet sich jetzt."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5615
+#: ../../functions/sys/sys_conf:5689
 msgid "Partitionierung"
 msgstr "Partitioning"
 
-#: ../../functions/sys/sys_conf:5616
+#: ../../functions/sys/sys_conf:5690
 #, fuzzy
 msgid "Waehlen Sie eine Festplatte zum partitionieren aus."
 msgstr "Select a disk to partition."
 
-#: ../../functions/sys/sys_conf:5661
+#: ../../functions/sys/sys_conf:5735
 msgid "Es wurde keines der Programme, kwparted, cfdisk oder fdisk gefunden."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5727
+#: ../../functions/sys/sys_conf:5801
 msgid "Fehler: Kann das Programm logger nicht finden oder ausfuehren."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5777
+#: ../../functions/sys/sys_conf:5851
 #, sh-format
 msgid ""
 "Sie duerfen auf dem Device/Datei ($SYS_DEV) nicht lesen/schreiben. Sie "
@@ -1453,194 +1464,193 @@ msgid ""
 "Gruppe angehoeren."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:5887
+#: ../../functions/sys/sys_conf:5961
 #, fuzzy
 msgid "Es ist keine /etc/group Datei vorhanden."
 msgstr "No /etc/group file to exist."
 
-#: ../../functions/sys/sys_conf:5898
+#: ../../functions/sys/sys_conf:5972
 #, fuzzy
 msgid "Es ist keine /etc/passwd Datei vorhanden."
 msgstr "No /etc/passwd file to exist."
 
-#: ../../functions/sys/sys_conf:5906
+#: ../../functions/sys/sys_conf:5980
 #, fuzzy
 msgid "Es ist kein(e) Benutzer/Gruppe vorhanden."
 msgstr "No User/Group to exist."
 
-#: ../../functions/sys/sys_conf:5973
+#: ../../functions/sys/sys_conf:6047
 msgid ""
 "Das Passwort basiert auf einem Woerterbucheintrag.\\nPassworteingabe "
 "wiederholen (ja/nein)?"
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6046
+#: ../../functions/sys/sys_conf:6120
 #, fuzzy
 msgid "Dateien loeschen"
 msgstr "files delete"
 
-#: ../../functions/sys/sys_conf:6047
+#: ../../functions/sys/sys_conf:6121
 msgid ""
 "Soll(en) die (Original) Datei(en) geloescht werden (ja/nein)? Dies kann ein "
 "soeben erstelltes Image sein oder Dateien die in andere Dateien umgewandelt "
 "worden sind."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6056
+#: ../../functions/sys/sys_conf:6130
 msgid "Die Passworteingaben waren unterschiedlich."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6064
+#: ../../functions/sys/sys_conf:6138
 msgid ""
 "Sie haben einige Menuepunkte vergessen zu belegen, die benoetigt werden. "
 "Lesen Sie bitte die Hilfe."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6075
+#: ../../functions/sys/sys_conf:6149
 #, fuzzy, sh-format
 msgid "Die Datei $FILE existiert bereits."
 msgstr "The file it exists."
 
-#: ../../functions/sys/sys_conf:6093
+#: ../../functions/sys/sys_conf:6167
 #, sh-format
 msgid "Hier ist noch nichts ($What)."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6105
-#, fuzzy
+#: ../../functions/sys/sys_conf:6179
 msgid "Sie muessen alle Felder mit Werten belegen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6117
+#: ../../functions/sys/sys_conf:6191
 #, fuzzy, sh-format
 msgid "$Dir ist ein Verzeichnis und keine Datei."
 msgstr "$DIR is not a directory and not a file."
 
-#: ../../functions/sys/sys_conf:6129
+#: ../../functions/sys/sys_conf:6203
 msgid "Dieser Vorgang kann einige Minuten dauern."
 msgstr "This process to take a minutes."
 
-#: ../../functions/sys/sys_conf:6137
+#: ../../functions/sys/sys_conf:6211
 msgid ""
 "Sie haben kein Backup Verzeichnis angegeben. Konfigurieren Sie dies erst."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6148
+#: ../../functions/sys/sys_conf:6222
 #, sh-format
 msgid "$Block_Dev ist kein blockorientiertes Geraet."
 msgstr "$Block_Dev is not a block device."
 
-#: ../../functions/sys/sys_conf:6159
+#: ../../functions/sys/sys_conf:6233
 #, fuzzy
 msgid "Sie muessen eine Dezimal Zahl eingeben (Bsp. 0.9 oder 0,9)."
 msgstr "You must to enter a floating-point number (f.E. 0.9 or 0,9)."
 
-#: ../../functions/sys/sys_conf:6171
+#: ../../functions/sys/sys_conf:6245
 #, fuzzy, sh-format
 msgid "$Dir ist kein Verzeichnis."
-msgstr "$DIR is not a directory."
+msgstr "$DIR is not directory."
 
-#: ../../functions/sys/sys_conf:6182
+#: ../../functions/sys/sys_conf:6256
 msgid ""
-"Sie muessen die Variable EDITOR, mit einem Editor ihrer Wahl belegen "
-"(EDITOR=vim)."
+"Sie muessen die Variable EDITOR, mit einem Editor ihrer Wahl belegen (Bsp.: "
+"EDITOR=vim)."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6192
+#: ../../functions/sys/sys_conf:6266
 #, fuzzy
 msgid "Es ist kein Eintrag vorhanden."
 msgstr "No entry to exist."
 
-#: ../../functions/sys/sys_conf:6205
+#: ../../functions/sys/sys_conf:6279
 #, fuzzy, sh-format
 msgid "Es sind keine ($FM) Dateien vorhanden."
-msgstr "No ($FM) files to exist."
+msgstr "No ($FM) files to exists."
 
-#: ../../functions/sys/sys_conf:6222
+#: ../../functions/sys/sys_conf:6296
 #, sh-format
 msgid ""
 "Es konnte kein Dateisystemtyp fuer das Laufwerk $Lw festgestellt werden. "
 "Lesen Sie bitte die Hilfe."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6232
+#: ../../functions/sys/sys_conf:6306
 msgid "Hier ist noch keine Hilfe verfuegbar."
 msgstr "Here is not help available (yet)."
 
-#: ../../functions/sys/sys_conf:6244
+#: ../../functions/sys/sys_conf:6318
 #, sh-format
 msgid "Diese User ID ($Nr) ist schon vergeben. Bitte nehmen Sie eine andere."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6258
+#: ../../functions/sys/sys_conf:6332
 msgid ""
 "Sie muessen auch etwas ordentliches eingeben oder auswaehlen, ausser Sie "
 "wollten den Vorgang abbrechen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6266
+#: ../../functions/sys/sys_conf:6340
 #, fuzzy
 msgid "Sie muessen eine Integer Zahl eingeben."
 msgstr "You must to insert a integer number."
 
-#: ../../functions/sys/sys_conf:6275
+#: ../../functions/sys/sys_conf:6349
 #, fuzzy
 msgid "Es ist nicht genug Arbeitsspeicher vorhanden."
 msgstr "No enough memory to exist."
 
-#: ../../functions/sys/sys_conf:6285
+#: ../../functions/sys/sys_conf:6359
 msgid "Diese Optionen funktionieren nicht zusammen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6293
+#: ../../functions/sys/sys_conf:6367
 msgid ""
 "Die Variable \"PAGER\" ist nicht belegt (z.B. PAGER=less). Erledigen Sie "
 "dies mit dem Script \"kwadmin\"."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6302
+#: ../../functions/sys/sys_conf:6376
 #, sh-format
 msgid ""
 "Sie haben falsche oder nicht genuegend Parameter der Funktion $FUNC "
 "uebergeben."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6312
+#: ../../functions/sys/sys_conf:6386
 #, sh-format
 msgid ""
 "Sie duerfen das Script/Programm ($Prog) nicht ausfuehren. Lesen Sie die "
 "Hilfe zu $Prog."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6325
+#: ../../functions/sys/sys_conf:6400
 #, sh-format
 msgid ""
-"Kann das/die Script(s)/Programm(e) ($Prog) nicht finden oder ausfuehren. "
+"Kann das/die Script(s)/Programm(e) ($Prog) nicht finden oder\\nausfuehren. "
 "Stellen Sie sicher das es/sie installiert ist/sind."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6334
+#: ../../functions/sys/sys_conf:6417
 #, sh-format
 msgid "Es konnte keine Version dieser Distribution ($OS) festgestellt werden."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6342
+#: ../../functions/sys/sys_conf:6425
 msgid "Sie duerfen keine Sonderzeichen benutzen."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6358
+#: ../../functions/sys/sys_conf:6441
 #, sh-format
 msgid ""
 "Das Verzeichnis $Value darf in diesem Fall nicht doppelt vergeben werden."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6369
+#: ../../functions/sys/sys_conf:6452
 msgid ""
 "Die angegebene Groesse ueberschreitet den verfuegbaren Platz. Geben Sie "
 "bitte eine andere Groesse an."
 msgstr ""
 
-#: ../../functions/sys/sys_conf:6389
+#: ../../functions/sys/sys_conf:6472
 msgid ""
 "Achtung Fehler:\\nSchauen Sie sich bitte die letzten Meldungen an.\\nMit "
 "shift+bild (hoch/runter) koennen Sie scrollen.\\nDruecken sie ENTER danach."
@@ -1648,7 +1658,7 @@ msgstr ""
 "Attention Error:\\nPlease look the last messages.\\nWithshift+bild she can "
 "scroll up and down.\\nPress after ENTER."
 
-#: ../../functions/sys/sys_conf:6406
+#: ../../functions/sys/sys_conf:6489
 #, sh-format
 msgid "Sie haben einen falschen Parameter der Funktion ($Func) uebergeben."
 msgstr ""
@@ -1784,7 +1794,6 @@ msgid "${gv_Configuration}::Laufwerke::${gv_Help}"
 msgstr "${gv_Configuration}::Drives::${gv_Help}"
 
 #: ../../help/share/cdrom_help:3
-#, fuzzy
 msgid ""
 "Hier kann man aus allen vorhandenen CD/DVD Laufwerken eines\n"
 "auswaehlen."
@@ -1805,7 +1814,6 @@ msgid ""
 msgstr ""
 
 #: ../../help/share/conf_change_help:3
-#, fuzzy
 msgid ""
 "Hier kann man einen Eintrag aus der Konfiguration zur weiteren\n"
 "Bearbeitung auswaehlen."
@@ -1837,10 +1845,9 @@ msgid "crontbconf::${gv_Configuration}::${gv_Help}"
 msgstr "crontbconf::${gv_Configuration}::${gv_Help}"
 
 #: ../../help/share/cron_help:3
-#, sh-format
 msgid ""
 "Hier koennen Sie exact den cronjob fuer Scripte einstellen. Schauen\n"
-"Sie auch in die ${gv_Help} oder Header der Funktion (crontbconf).\n"
+"Sie auch in die Hilfe oder Header der Funktion (crontbconf).\n"
 "\n"
 "Programm: Kann man nicht aendern und dient nur zur Anzeige, von \n"
 "\\twelchem Programm gerade die crontab Eintraege gaendert \n"
@@ -1941,7 +1948,6 @@ msgid "Netzwerkkarten::${gv_Help}"
 msgstr "Netcards::${gv_Help}"
 
 #: ../../help/share/netcard_help:3
-#, fuzzy
 msgid ""
 "Hier kann man eine der vorhandenen Ethernet-, Tokenring- oder\n"
 "Wlankarte auswaehlen."
@@ -1959,7 +1965,6 @@ msgid ""
 msgstr ""
 
 #: ../../help/share/part_only_help:3
-#, fuzzy
 msgid "Hier kann man Partitionen zur weiteren Verarbeitung auswaehlen."
 msgstr ""
 
@@ -2003,14 +2008,13 @@ msgid "${gv_Configuration}::Dateigroesse::${gv_Help}"
 msgstr "${gv_Configuration}::Devicesize::${gv_Help}"
 
 #: ../../help/share/split_size_help:3
-#, sh-format
 msgid ""
 "Hier kann man zwischen den Groessen 650, 680, 700, 800, 1000, 2000,\n"
 "4000 und 64000 Megabyte auswaehlen. Ab dieser Groesse werden die\n"
 "Dateien gesplittet.\n"
 "\n"
 "NOTIZ: Frage Sie ihren Administrator oder schauen Sie sich die\n"
-"\\tKernel ${gv_Configuration} an, welche Groesse ihr Dateisystem \n"
+"\\tKernel Konfiguration an, welche Groesse ihr Dateisystem \n"
 "\\tunterstuetzt."
 msgstr ""
 
@@ -2074,6 +2078,5 @@ msgid "Variablen::${gv_Help}"
 msgstr "Variables::${gv_Help}"
 
 #: ../../help/share/var_help:3
-#, fuzzy
 msgid "Hier kann man Unix Variablen des Systems auswaehlen."
 msgstr ""
