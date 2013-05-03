@@ -15,13 +15,15 @@ Bis Version 0.8.7
 
 Bis Version 0.8.6
 * Bug fixing.
-* kwpostfix neue Optionen implementieren.
+* kwparted Sicherung zurueck spielen.
+* kwpostfix weitere neue Optionen implementieren.
 
 Bis Version 0.8.5
 * Bug fixing.
 * dialog Option --default-item weiter integrieren.
   Dient zur schnelleren Handhabung, z. B. koennen die vorher
   ausgewaehlten Menuepunkte markiert werden.
+* kwpostfix neue Optionen implementieren.
 * kwrsync_backup neue Features einfügen.
 * kwrsync neue Features einfügen.
 
