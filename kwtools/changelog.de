@@ -6,8 +6,10 @@ kwtools (0.8.5-4) unstable; urgency=low
   * kwadmin - Bug in der Konfiguration des Tmp-Verzeichnis
   * Functions: fselect/file_choice - Support fuer vorherigen Wert.
   * kwpostfix: Bugs gefixt und  erweitert.
+  * Neue globale Variablen "gv_User", "gv_Group" und "gv_Passwd" integriert.
+  * sys_conf: Funktioni exec_edit_prog wurde nach edit_file umbenannt.
 
- -- Kai Wilke <kiste@netzworkk.de>  Thu, 11 Oct 2012 15:24:34 +0100
+ -- Kai Wilke <kiste@netzworkk.de>  Sat, 04 May 2013 06:13:17 +0100
  
 kwtools (0.8.5-3) unstable; urgency=low
   * Funktion: update sys_conf (prog_check,file_filter,lock,...).

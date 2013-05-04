@@ -10,8 +10,8 @@ dns: Rechner werden im DNS gesucht. Dies ist die zu bevorzugende
 native: Es wird nur der native name Service benutzt
 \t(/etc/nsswitch.conf oder aehnliche Mechanismen).
 
-dns,native: Es wird der native name Service benutzt, falls der
-\ŧRechner nicht im DNS gefunden wird.
+dns,native: Es wird der native name Service benutzt,
+\tfalls der Rechner nicht im DNS gefunden wird.
 ')
 #}}}
 ### Modeline {{{

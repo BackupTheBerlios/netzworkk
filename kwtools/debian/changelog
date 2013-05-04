@@ -1,3 +1,16 @@
+kwtools (0.8.5-4) unstable; urgency=low
+  * all *_cron scripts updateted (lock -r in line "trap '...'").
+  * kwnetstat - Bugfixing Hauptmenu
+  * kwvmstat - Option -m only user root
+  * kwecryptfs - Support for Kernel >=3
+  * kwadmin - Bugfixing in Configuration (Tmp directory)
+  * Functions: fselect/file_choice - support for previous Value.
+  * kwpostfix: Bugfixing and extended.
+  * integreted new global variables "gv_User", "gv_Group" and "gv_Passwd".
+  * sys_conf: function exec_edit_prog change to edit_file.
+
+ -- Kai Wilke <kiste@netzworkk.de>  Sat, 04 May 2013 06:13:17 +0100
+ 
 kwtools (0.8.5-3) unstable; urgency=low
   * Function: update sys_conf (prog_check,file_filter,lock,...).
   * Function: lock implemented to all Cron Scripts.
