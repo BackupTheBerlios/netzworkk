@@ -1,13 +1,13 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 07.09.2010
+# Autor: Kai Wilke <kiste@netzworkk.de> 22.07.2013
 #
 # Script: kwparted, ein frontend fuer parted (Partitionierungstool)
 # ++++++++++++++++++++++++++++++
 # Es fehlt die Unterstuetzung zum kopieren der Dateisysteme hfs* und jfs.
 # ++++++++++++++++++++++++++++++
 #
-# Version: 0.2.12
+# Version: 0.2.13
 
 # ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da auf einigen OS
