@@ -3,10 +3,17 @@
 #
 kwparted_parttab() {
 	lv_Backup=$(gettext 'Sicherung')
+	lv_Mbr=$(gettext 'MBR')
+	lv_Fp=$(gettext 'Festplatte')
 	# Funktion parttab_menue{{{
+	PARTTAB_MENU=(\"$PART_TAB $gv_Create\" \"\" \"$PART_TAB $gv_Delete\" \"\"
+		\"$lv_Backup $gv_Create\" \"\" \"$lv_Backup $gv_Back\" \"\" $gv_Back \"\")
 	parttab_menue() {
-		PARTTAB_MENU=(\"$PART_TAB $gv_Create\" \"\" \"$PART_TAB $gv_Delete\" \"\" \"$lv_Backup $gv_Create\" \"\" \"$lv_Backup $gv_Back\" \"\" $gv_Back \"\")
-		menubox "$PART_TAB" "$gv_Menupoint" "$PARTTAB_MENU"
+		if [[ ${#argv} == 1 ]] ; then
+			menubox -d "$1" "$PART_TAB" "$gv_Menupoint" "$PARTTAB_MENU"
+		else
+			menubox "$PART_TAB" "$gv_Menupoint" "$PARTTAB_MENU"
+		fi
 	}
 	#}}}
 	# Funktion (no_parttab_msg)# {{{
@@ -38,14 +45,11 @@ kwparted_parttab() {
 				# besitzen und zur Auswahl anbieten.
 				#
 				label_create_menu() {
-					unset -- Disk_Part_Cr Anz
-					local Anz
-					integer Anz
-					Anz=0
+					unset -- Disk_Part_Cr
 					for i in $DISK_DEV ; {
 						if [ -z "`parted -s $i print 2>/dev/null`" ] ; then
 							(( Anz++ ))
-							Disk_Part_Cr[Anz]="$i \"\""
+							Disk_Part_Cr+=($i \"\")
 						fi	
 					}
 					#
@@ -77,7 +81,7 @@ kwparted_parttab() {
 					esac
 				done
 				## }}}
-				parttab_menue
+				parttab_menue "$PART_TAB $gv_Create"
 				;;
 			"$PART_TAB $gv_Delete")
 				# Partitionstabelle loeschen# {{{
@@ -136,7 +140,7 @@ kwparted_parttab() {
 						HELP*)	script_help parttab_help
 							backup_delete_menu
 							;;
-						all*)
+						$Disk_Choice_ALL)
 							# alle Festplatten Partitionstabellen loeschen.# {{{
 							for i in $DISK_DEV ; {
 								disk_delete_parttab $i
@@ -154,13 +158,15 @@ kwparted_parttab() {
 					esac
 				done
 				## }}}
-				parttab_menue
+				parttab_menue "$PART_TAB $gv_Delete"
 				;;
 			"$lv_Backup $gv_Create")
 				# Sicherung erstellen - alle oder einzeln# {{{
+				Date="`date +%d.%m.%Y`"
 				# Funktion backup_create_menu# {{{
 				backup_create_menu() {
-					menubox "$PART_TAB" "$gv_Menupoint" "$Disk_Choice_ALL \"\" $DISK_DEV_E $gv_Back \"\""
+					menubox "$PART_TAB" "$gv_Menupoint" "$Disk_Choice_ALL \"\"
+						$DISK_DEV_E $gv_Back \"\""
 				}
 				## }}}
 				# Funktion (backup_part_mbr), MBR und Partitionstabelle sichern# {{{
@@ -169,11 +175,10 @@ kwparted_parttab() {
 				# FP - Festplatte
 				#
 				backup_part_mbr() {
-					if [ $# = 1 ] ; then
-						unset -- Backup_Fp Backup_Pt_File Backup_Mbr_File Date
-						local Backup_Fp Backup_Pt_File Backup_Mbr_File Date
+					if [[ ${#argv} == 1 ]] ; then
+						#unset -- Backup_Fp Backup_Pt_File Backup_Mbr_File Date
+						local Backup_Fp Backup_Pt_File Backup_Mbr_File
 						Backup_Fp="$1"
-						Date="`date +%d.%m.%Y`"
 						# wird gespeichert als hda.parttab-${Date}.txt
 						Backup_Pt_File="/boot/${Backup_Fp##*/}.parttab-${Date}.txt"
 						Backup_Mbr_File="/boot/${Backup_Fp##*/}-${Date}.mbr"
@@ -197,7 +202,7 @@ kwparted_parttab() {
 						HELP*)	script_help parttab_help
 							backup_create_menu
 							;;
-						alle|all)
+						$Disk_Choice_ALL)
 							# alle Festplatten Partitionstabellen sichern.# {{{
 							for i in $DISK_DEV ; {
 								backup_part_mbr $i
@@ -215,12 +220,93 @@ kwparted_parttab() {
 					esac
 				done
 				## }}}
-				parttab_menue
+				parttab_menue "$lv_Backup $gv_Create"
 				;;
 			"$lv_Backup $gv_Back")
-				# Sicherung zurueck spielen - einzeln
-				hier_ist_noch_nichts "$lv_Backup $gv_Back"
-				parttab_menue
+				# Sicherung zurueck spielen - einzeln# {{{
+				#######################################
+				# 1. MBR Auswahl
+				# 2. FP Auswahl
+				# 3. speichern ausfuehren
+				# 4. Status
+				unset -- MBR FP
+				# Funktion backup_back_menu# {{{
+				backup_back_menu() {
+					BACK_MENU=($lv_Mbr \"$MBR\" $lv_Fp \"$FP\"
+						$gv_Save \"\" $gv_Back \"\")
+					if [[ ${#argv} == 1 ]] ; then
+						menubox -d "$1" "$PART_TAB" "$gv_Menupoint" "$BACK_MENU"
+					else
+						menubox "$PART_TAB" "$gv_Menupoint" "$BACK_MENU"
+					fi
+				}
+				## }}}
+				backup_back_menu
+				while [[ -n $gv_Auswahl ]] ; do
+					case "$gv_Auswahl" in
+						HELP*)	script_help parttab_help
+							backup_back_menu
+							;;
+						$lv_Mbr)
+							# Sicherungsdatei auswaehlen# {{{
+							SUFFIX=".mbr"
+							FORMAT=""
+							file_choice /boot only "$MBR"
+							if [[ -n $WERT ]] ; then
+								MBR="$WERT"
+							fi
+							## }}}
+							backup_back_menu $lv_Mbr
+							;; 
+						$lv_Fp)
+							# Festplatte auswaehlen# {{{
+							if [[ -n ${DISK_DEV_E[1]} ]] ; then
+								# Funktion backup_back_fp_menu# {{{
+								backup_back_fp_menu() {
+									BACK_FP_MENU=($DISK_DEV_E)
+									if [[ ${#argv} == 1 ]] ; then
+										menubox -d "$1" "$PART_TAB" "$gv_Menupoint" "$BACK_FP_MENU"
+									else
+										menubox "$PART_TAB" "$gv_Menupoint" "$BACK_FP_MENU"
+									fi
+								}
+								## }}}
+								#
+								backup_back_fp_menu $FP
+								while [ "$gv_Auswahl" ] ; do
+									case "$gv_Auswahl" in
+										HELP*)
+											script_help parttab_help
+											backup_back_fp_menu $FP
+											;;
+										*)
+											FP="$gv_Auswahl"
+											break
+											;;
+									esac
+								done
+							fi
+							## }}}
+							backup_back_menu $lv_Fp
+							;; 
+						$gv_Save)
+							# Sicherung zurueckspielen.# {{{
+							if [ -n "$MBR" -a -n "$FP" ] ; then
+								break
+							else
+								MSG=$(gettext 'Sie muessen beide Menuepunkte mit Werten belegen.')
+								msgbox "$gv_Info" "$MSG"
+								backup_back_menu
+							fi
+							## }}}
+							;;
+						$gv_Back)
+							break
+							;;
+					esac
+				done
+				## }}}
+				parttab_menue "$lv_Backup $gv_Back"
 				;;
 			$gv_Back)	break
 				;;
