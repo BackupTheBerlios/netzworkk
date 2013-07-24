@@ -292,7 +292,7 @@ kwparted_parttab() {
 						$gv_Save)
 							# Sicherung zurueckspielen.# {{{
 							if [ -n "$MBR" -a -n "$FP" ] ; then
-								break
+								dd if="$MBR" of="$FP" &>/dev/null
 							else
 								MSG=$(gettext 'Sie muessen beide Menuepunkte mit Werten belegen.')
 								msgbox "$gv_Info" "$MSG"
