@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 03.06.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 05.08.2013
 #
-# Script: kwpasswd, ein Script zum Passort aendern,
+# Script: kwpasswd, ein Script zum Passwort aendern,
 # passwd und yppasswd.
 #
-# Version: 0.0.2
+# Version: 0.0.3
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -48,7 +48,7 @@ else
 	PASSWD="passwd"
 fi
 
-# Pruefen ob password Programm ausfuehrbar ist.
+# Pruefen ob Passwort Programm ausfuehrbar ist.
 prog_check expect $PASSWD
 if [ ! -z "$NO_PROGS" ] ; then
 	exit 1
@@ -75,11 +75,6 @@ del_expect() {
 ## }}}
 # Funktion (main_menu), Hauptmenue# {{{
 #
-#######################################
-# TODO:
-# gerade bei Passwoertern
-#  >&3- bla?
-#######################################
 main_menu() {
 	MAIN_MSG=$(gettext 'Geben Sie hier zuerst Ihr aktuelles Passwort und dann das neue Passwort ein.')
 	MAIN_TITLE=$(gettext 'Passwortaenderung')

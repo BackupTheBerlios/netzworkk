@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 27.11.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 05.08.2013
 #
 # Script: kwuser, legt an, aendert und loescht User
-# Version: 1.0.1
+# Version: 1.0.2
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -919,10 +919,6 @@ while [ "$gv_Auswahl" ] ; do
 		$gv_Configuration)
 			# Konfiguration# {{{
 			autoload kwuser_conf kwuser_config hw_conf
-			####################################
-			# TODO:
-			# Ist dies auch bei anderen Distries so?
-			####################################
 			if [ -f /etc/login.defs ] ; then
 				KWUSER_UMASK="`print ${${(ws: :)${=${(M)${(f)"$(< /etc/login.defs)"}##(#s)UMASK[[:space:]]*}}}[2]}`"
 				ENCRYPT_METHOD="`print ${${(ws: :)${=${(M)${(f)"$(< /etc/login.defs)"}##(#s)ENCRYPT_METHOD[[:space:]]*}}}[2]}`"
