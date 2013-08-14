@@ -10,7 +10,7 @@
 # Description: Wrapper for xterm/kwpasswd/xmessage
 #
 # Changelog:
-# 2013-08-14 - update: Array commands used.
+# 2013-08-14 - update
 # 2010-01-07 - created
 #
 PATH="/bin:/sbin:/usr/bin:/usr/sbin"
@@ -23,7 +23,7 @@ errormsg () {
 
 if [ -e ~/.firstlogin ] ; then
 	if [ -n "$DISPLAY" ] ; then
-		if [ -x "${commands[xterm]}" -a -x "${commands[kwpasswd]}" ] ; then
+		if [ -x "`which xterm`" -a -x "`which kwpasswd`" ] ; then
 			xterm -geometry 800x600 -T "Change user password" -e kwpasswd
 		else
 			if which xmessage > /dev/null 2>&1 ; then
