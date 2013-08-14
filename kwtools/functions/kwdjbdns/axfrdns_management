@@ -5,6 +5,7 @@
 axfrdns_management() {
 if [ -d ${SV_DIR}/${DNS} ] ; then
 	cd ${SV_DIR}/${DNS}
+	AXFR_MAIN_TITLE=(${lv_Administration}::${lv_Axfrdns})
 	#
 	# Funktion um die Adressen Angaben fuer axfrdns zu pruefen{{{
 	#
@@ -22,7 +23,6 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 	}
 	#}}}
 	# Funktion axfr_haupt_menue{{{
-	AXFR_MAIN_TITLE=(${lv_Administration}::${lv_Axfrdns})
 	AXFR_MAIN_MENU=($gv_Display \"\" $gv_Create \"\" $gv_Delete \"\"
 		$lv_Database \"$lv_New_Create\" $gv_Back \"\")
 	axfr_haupt_menue() {
@@ -58,16 +58,16 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 				# Funktion axfr_menue{{{
 				lv_Access=$(gettext 'Rechte')
 				lv_Axfr=$(gettext 'AXFR')
-				AXFR_INPUT_TITLE=(${lv_Administration}::${lv_Axfrdns}::${gv_create})
+				AXFR_INPUT_TITLE=(${lv_Administration}::${lv_Axfrdns})
 				#
 				axfr_input_menue() {
 					AXFR_INPUT_MENU=($lv_Ip \"$H_DNS_IP\" $gv_Host \"$H_DNS_NAME\"
 						$gv_Network \"$DNS_NET\" $lv_Access \"$ACCESS\"
 						$lv_Axfr \"$AXFR\" $gv_Save \"\" $gv_Back \"\")
 						if [[ ${#argv} == 1 ]] ; then
-							menubox -d "$1" "$AXFR_INPUT_TITLE" "$gv_Menupoint" "$AXFR_INPUT_MENU"
+							menubox -d "$1" "$AXFR_MAIN_TITLE" "$gv_Menupoint" "$AXFR_INPUT_MENU"
 						else
-							menubox "$AXFR_INPUT_TITLE" "$gv_Menupoint" "$AXFR_INPUT_MENU"
+							menubox "$AXFR_MAIN_TITLE" "$gv_Menupoint" "$AXFR_INPUT_MENU"
 						fi
 				}
 				#}}}
@@ -133,7 +133,7 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 									ACCESS_MSG=$(gettext 'Soll der Zugriff global erlaubt werden?')
 								fi
 								#
-								ACCESS_TITLE=(${lv_Administration}::${lv_Axfrdns}::${lv_Access})
+								ACCESS_TITLE=(${AXFR_MAIN_TITLE}::${lv_Access})
 								yesno "$ACCESS_TITLE" "$ACCESS_MSG"
 								if [ "$?" = 0 ] ; then
 									ACCESS=allow
@@ -153,7 +153,7 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 									if [ "$H_DNS_NAME" ] ; then
 										# Die AXFR Variable kann nur belegt werden, wenn der 
 										# volle Rechnername bekannt ist.
-										VAR_TITLE=(${lv_Administration}::${lv_Axfrdns}::${lv_Axfr})
+										VAR_TITLE=(${AXFR_MAIN_TITLE}::${lv_Axfr})
 										VAR_MSG=$(gettext 'Soll die Variable AXFR belegt werden (ja/nein)?')
 										yesno "$VAR_TITLE" "$VAR_MSG"
 										if [ "$?" = 0 ] ; then
@@ -270,12 +270,12 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 				#
 				if [ -n "${D_Menue[1]}" ] ; then
 					DEL_MENU=($D_Menue)
-					DEL_TITLE=(${lv_Administration}::${lv_Axfrdns}::${gv_Delete})
-					checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+					DEL_TITLE=(${lv_Administration}::${lv_Axfrdns})
+					checklist "$AXFR_MAIN_TITLE" "$DEL_MSG" "$DEL_MENU"
 					while [ "$gv_Auswahl" ] ; do
 						case $gv_Auswahl in
 							HELP*)	script_help share/conf_del_help
-								checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+								checklist "$AXFR_MAIN_TITLE" "$DEL_MSG" "$DEL_MENU"
 								;;
 							*)
 								# loeschen der ausgewaehlten Daten

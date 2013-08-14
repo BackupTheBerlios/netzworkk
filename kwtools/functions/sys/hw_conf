@@ -14,7 +14,7 @@ hw_conf() {
 	{
 		local Anz Dev Desc
 		kernel_release
-		if [[ -x "`which hwinfo`" ]] && \
+		if [[ -x ${commands[hwinfo]} ]] && \
 			[[ ${gv_K_Release%%-*} > 2.6.0 ]] ; then
 			# ${gv_WorkDir}/cdrom neu erstellen falls die Datei nicht vorhanden ist.
 			if [ ! -f ${gv_WorkDir}/cdrom ] ; then
@@ -140,7 +140,7 @@ hw_conf() {
 		kernel_release
 		local Anz Anz1 Block Cyl_Bytes
 		typeset -ax DISK_DEV DISK_DEV_E DISK_DEV_M DISK_DEV_CAP DISK_CYL_BYTES
-		if [[ -x "`which hwinfo`" ]] && \
+		if [[ -x ${commands[hwinfo]} ]] && \
 			[[ ${gv_K_Release%%-*} > 2.6.0 ]] ; then
 			# ${gv_WorkDir}/disk neu erstellen falls die Datei nicht vorhanden ist.
 			if [ ! -f ${gv_WorkDir}/disk ] ; then
@@ -285,7 +285,7 @@ hw_conf() {
 	floppy()
 	{
 		local Anz Dev Rest
-		if [ -x "`which hwinfo`" -a "$gv_K_Minor" = 6 ] ; then
+		if [ -x "${commands[hwinfo]}" -a "$gv_K_Minor" = 6 ] ; then
 			# ${gv_WorkDir}/floppy neu erstellen falls die Datei nicht vorhanden ist.
 			if [ ! -f ${gv_WorkDir}/floppy ] ; then
 				hwinfo --short --floppy > ${gv_WorkDir}/floppy
@@ -430,12 +430,12 @@ lv_free_size() {
 		}
 		## }}}
 		#
-		if [ -x "`which lvm`" ] ; then
+		if [[ -x ${commands[lvm]} ]] ; then
 			kernel_release
 			#
 			# LVM Module je nach Kernelversion laden.
 			#
-			if [[ $gv_K_Major == 3 ]] ; then
+			if [ "$gv_K_Major" -ge 3 ] ; then
 				load_module dm-mod
 			else
 				case "$gv_K_Minor" in

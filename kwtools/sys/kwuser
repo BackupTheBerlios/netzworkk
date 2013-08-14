@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 05.08.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 14.08.2013
 #
 # Script: kwuser, legt an, aendert und loescht User
-# Version: 1.0.2
+# Version: 1.0.3
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -216,7 +216,7 @@ $P_USER			$P_PASS"
 		# prufen ob Quota Programme installiert sind
 		if [ "${#argv}" = 1 ] ; then
 			if [[ ${BH_LIMIT%%[a-zA-Z]*} > 0 ]] ; then
-				if [ -x "`which repquota`" -a -x "`which setquota`" ] ; then
+				if [ -x "${commands[repquota]}" -a -x "${commands[setquota]}" ] ; then
 					# Pruefen ob das HOME Verzeichnis Support fuer Quota hat.
 					# Geht nur wenn das Home Verz. eine eigene Partition ist,
 					# ansonsten das Script kwquota benutzen.

@@ -702,7 +702,7 @@ multi_conf() {
 	# Mit dd(_rescue) eine temporaere Datei erstellen (1:1 Kopie).
 	# usage: check_exec_dd
 	check_exec_dd() {
-	if [ -x "`which dd_rescue`" ] ; then
+	if [[ -x ${commands[dd_rescue]} ]] ; then
 		BREAK=1
 		dd_rescue -b 1024 -m $Dvd_Size $R_DVD ${TMP_DIR%/}/dvd$$.iso 2>&1 | progressbox "$BURN_PROGRESS_TITLE" "$COPY_DVD_PROGRESS1_MSG" || (print ; prog_failure)
 	else
@@ -836,7 +836,7 @@ multi_conf() {
 				# image erstellen
 				eval nice -n 0 genisoimage $MKISOFS_OPT ${gv_WorkDir}/filelist.tmp -o ${TMP_DIR%/}/${VOLID}.iso 2>&1 | progressbox "$BURN_PROGRESS_TITLE" "$CREATE_PROGRESS_ISO_MSG" || (print ; prog_failure)
 			# on-the-fly geht nur mit wodim
-			elif [ "$RET" = 0 -a "$ON_THE_FLY" = yes -a -x "`which wodim`" ] ; then
+			elif [ "$RET" = 0 -a "$ON_THE_FLY" = yes -a -x "${commands[wodim]}" ] ; then
 				ON_THE_FLY_OPT="$MKISOFS_OPT ${gv_WorkDir}/filelist.tmp 2>&1"
 				ON_THE_FLY_DVD_OPT="$MKISOFS_OPT ${gv_WorkDir}/filelist.tmp 2>&1"
 			elif [ "$RET" = 0 ] ; then

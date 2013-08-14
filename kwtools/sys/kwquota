@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 27.11.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 14.08.2013
 #
 # Script: kwquota, Frontend fuer quota und xfs_quota
 #
-# Version: 0.0.9
+# Version: 0.0.10
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -382,7 +382,7 @@ while [ "$gv_Auswahl" ] ; do
 									if [ "$p" = "${${(ws: :)${FSTAB_VALUES[i]}}[2]}" ] ; then
 										QFS="${Fsystem[i]}"
 										# Bei xfs xfs eigene Werkzeuge benutzen, falls vorhanden.
-										if [ "$QFS" = xfs -a -x "`which xfs_quota`" ] ; then
+										if [ "$QFS" = xfs -a -x "${commands[xfs_quota]}" ] ; then
 											if [ ! -s "$gv_LogFile" ] ; then
 												xfs_quota -x -c 'report -bir -th' $p > $gv_LogFile
 											else

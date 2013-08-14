@@ -45,9 +45,8 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 				;;
 			$gv_Create)
 				# Dateneingabe{{{
-				TITLE=(${lv_Administration}::${lv_Rbldns}::${gv_Create})
 				MSG=$(gettext 'Geben Sie bitte einen Rechner, Netzwerk oder einen Text fuer A records an.')
-				inputbox "$TITLE" "$MSG"
+				inputbox "$RBL_ADMIN_TITLE" "$MSG"
 				if [ "$gv_Auswahl" ] ; then
 					H_IP="${${${gv_Auswahl/:/}%%:*}%\/*}"
 					# ip_analyse liefert die noetigen Variablen IP1, IP2,...
@@ -116,13 +115,12 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 				#
 				if [ -n "${D_Menue[1]}" ] ; then
 					DEL_MENU=($D_Menue)
-					DEL_TITLE=(${lv_Administration}::${lv_Rbldns}::${gv_Delete})
-					checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+					checklist "$RBL_ADMIN_TITLE" "$DEL_MSG" "$DEL_MENU"
 					# Eintraege loeschen
 					while [ "$gv_Auswahl" ] ; do
 						case $gv_Auswahl in
 							HELP*)	script_help share/conf_del_help
-								checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+								checklist "$RBL_ADMIN_TITLE" "$DEL_MSG" "$DEL_MENU"
 								;;
 							*)
 								for i in ${=gv_Auswahl} ; {

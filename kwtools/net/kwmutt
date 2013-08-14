@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 20.03.2013
+# Autor: Kai Wilke  <kiste@netzworkk.de> 09.08.2013
 #
 # Script: kwmutt, konfiguriert den Mail-Client Mutt.
 #
-# Version: 0.0.7
+# Version: 0.0.8
 
 ###################################################################
 # TODO:
@@ -62,7 +62,12 @@ MUTT="${gv_HomePath}/.kwtools/kwmutt"
 L_DEFAULT_SERVER="default_server"
 L_DEFAULT_SMTP="default_smtp"
 
-ABOOK_CMD=$(which abook)
+# Pruefen ob, abook installiert und ausfuehrbar ist.
+if [[ -x ${commands[abook]} ]] ; then
+	ABOOK_CMD="${commands[abook]}"
+else
+	unset -- ABOOK_CMD
+fi
 M_ABOOK="${MUTT}/address"
 M_CHARSETHOOKS="${MUTT}/charsethooks"
 M_COLORS="${MUTT}/colors"

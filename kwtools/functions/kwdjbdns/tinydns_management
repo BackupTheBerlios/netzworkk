@@ -22,22 +22,22 @@ tinydns_management() {
 			# einige gettext Variablen
 			lv_Nameserver=$(gettext 'Nameserver')
 			lv_Mailserver=$(gettext 'Mailserver')
+			TINYDNS_TITLE="${lv_Administration}::${lv_Tinydns}"
 			#
 			case $gv_Auswahl in
 				*.de | *.com | *.org | *.at | *.br | *.ch | *.dk | *.fr | *.hu | *.it | *.nl | *.no | *.ru | *.us )	
 					
 				DOMAIN_NAME="$gv_Auswahl"
 				# Funktion tinydns_conf_menue{{{
-				CONF_TITLE="${lv_Administration}::${lv_Tinydns}"
 				CONF_MENU=($gv_Display \"\" $lv_Nameserver $lv_Add $gv_Host $lv_Add
 					$lv_Mailserver $lv_Add $gv_Delete \"\"
 					$lv_Database \"$lv_New_Create\" $gv_Back \"\")
 				#
 				tinydns_conf_menue() {
 					if [[ ${#argv} == 1 ]] ; then
-						menubox -d "$1" "$CONF_TITLE" "$gv_Menupoint" "$CONF_MENU"
+						menubox -d "$1" "$TINYDNS_TITLE" "$gv_Menupoint" "$CONF_MENU"
 					else
-						menubox "$CONF_TITLE" "$gv_Menupoint" "$CONF_MENU"
+						menubox "$TINYDNS_TITLE" "$gv_Menupoint" "$CONF_MENU"
 					fi
 				}
 				#}}}
@@ -195,12 +195,11 @@ tinydns_management() {
 							#
 							if [ -n "${E_Menue[1]}" ] ; then
 								DEL_MENU=($E_Menue)
-								DEL_TITLE=(${lv_Administration}::${lv_Tinydns}::${gv_Delete})
-								checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+								checklist "$TINYDNS_TITLE" "$DEL_MSG" "$DEL_MENU"
 								while [ -n "$gv_Auswahl" ] ; do
 									case "$gv_Auswahl" in
 										HELP*)	script_help share/conf_del_help
-											checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+											checklist "$TINYDNS_TITLE" "$DEL_MSG" "$DEL_MENU"
 											;;
 										*)
 											# Eintraege loeschen

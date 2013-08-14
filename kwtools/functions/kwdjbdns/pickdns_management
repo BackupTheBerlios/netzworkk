@@ -17,6 +17,7 @@ pickdns_management() {
 		lv_Location_Prefix="$lv_Location $lv_Prefix"
 		lv_Location_Add="$lv_Location $gv_Host $lv_Add"
 		lv_Location_Ignore="$lv_Location $gv_Host $lv_Ignore"
+		PICKDNS_TITLE=(${lv_Administration}::${lv_Pickdns})
 		#
 		# Funktion (sort_entries), Eintraege sortieren.# {{{
 		sort_entries() {
@@ -88,7 +89,7 @@ pickdns_management() {
 				PREFIX_CHAR="$1"
 			fi
 			# Funktion pickdns_location_menu{{{
-			LOADD_TITLE=(${lv_Administration}::${lv_Pickdns}::${lv_Location})
+			LOADD_TITLE=(${PICKDNS_TITLE}::${lv_Location})
 			#
 			pickdns_location_menu() {
 				if [[ -z $PREFIX_CHAR ]] ; then
@@ -241,7 +242,7 @@ pickdns_management() {
 			if [ "$argv" = + -o "$argv" = - ] ; then
 				PREFIX_CHAR="$1"
 				# Funktion pickdns_host_menu{{{
-				HOSTADD_TITLE=(${lv_Administration}::${lv_Pickdns}::${gv_Host})
+				HOSTADD_TITLE=(${PICKDNS_TITLE}::${gv_Host})
 				#
 				pickdns_host_menu() {
 					HOSTADD_MENU=($gv_Host \"$HOSTNAME\" $lv_Ip \"$IP\"
@@ -331,16 +332,15 @@ pickdns_management() {
 		}
 		#}}}
 		# Funktion pickdns_conf_menue{{{
-		CONF_TITLE="${lv_Administration}::${lv_Pickdns}"
 		pickdns_conf_menue() {
 			CONF_MENU=($gv_Display \"\" \"$lv_Host_Add\" \"\" \"$lv_Host_Ignore\" \"\"
 				\"$lv_Location_Prefix\" \"\" \"$lv_Location_Add\" \"\"
 				\"$lv_Location_Ignore\" \"\" $gv_Delete \"\"
 				$lv_Database \"$lv_New_Create\" $gv_Back \"\")
 			if [[ ${#argv} == 1 ]] ; then
-				menubox -d "$1" "$CONF_TITLE" "$gv_Menupoint" "$CONF_MENU"
+				menubox -d "$1" "$PICKDNS_TITLE" "$gv_Menupoint" "$CONF_MENU"
 			else
-				menubox "$CONF_TITLE" "$gv_Menupoint" "$CONF_MENU"
+				menubox "$PICKDNS_TITLE" "$gv_Menupoint" "$CONF_MENU"
 			fi
 		}
 		#}}}
@@ -427,12 +427,12 @@ pickdns_management() {
 					#
 					if [ -n "${E_Menue[1]}" ] ; then
 						DEL_MENU=($E_Menue)
-						DEL_TITLE=(${lv_Administration}::${lv_Pickdns}::${gv_Delete})
-						checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+						DEL_TITLE=(${PICKDNS_TITLE})
+						checklist "$PICKDNS_TITLE" "$DEL_MSG" "$DEL_MENU"
 						while [ -n "$gv_Auswahl" ] ; do
 							case "$gv_Auswahl" in
 								HELP*)	script_help share/conf_del_help
-									checklist "$DEL_TITLE" "$DEL_MSG" "$DEL_MENU"
+									checklist "$PICKDNS_TITLE" "$DEL_MSG" "$DEL_MENU"
 									;;
 								*)
 									# Eintraege loeschen

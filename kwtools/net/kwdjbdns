@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 21.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 09.08.2013
 #
 # Script: kwdjbdns, konfiguriert, loescht Dan Bernsteins DNS server
-# Version: 0.3.5
+# Version: 0.3.6
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT

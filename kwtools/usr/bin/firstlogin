@@ -3,13 +3,14 @@
 # firstlogin
 #
 # Developed by Kai Wilke <kiste@netzworkk.de>
-# Copyright (c) 2010 Netzworkk
+# Copyright (c) 2010-2013 Netzworkk
 # Licensed under terms of GNU General Public License.
 # All rights reserved.
 #
 # Description: Wrapper for xterm/kwpasswd/xmessage
 #
 # Changelog:
+# 2013-08-14 - update: Array commands used.
 # 2010-01-07 - created
 #
 PATH="/bin:/sbin:/usr/bin:/usr/sbin"
@@ -22,7 +23,7 @@ errormsg () {
 
 if [ -e ~/.firstlogin ] ; then
 	if [ -n "$DISPLAY" ] ; then
-		if [ -x "`which xterm`" -a -x "`which kwpasswd`" ] ; then
+		if [ -x "${commands[xterm]}" -a -x "${commands[kwpasswd]}" ] ; then
 			xterm -geometry 800x600 -T "Change user password" -e kwpasswd
 		else
 			if which xmessage > /dev/null 2>&1 ; then

@@ -1550,7 +1550,7 @@ sys_conf() {
 			No_Compress=$(gettext 'keine_Kompression')
 			K_Menue="$No_Compress \"\""
 			for i in $@ ; {
-				if [ -x "`which $i`" ] ; then
+				if [[ -x ${commands[$i]} ]] ; then
 					K_Menue="$K_Menue $i \"\""
 				fi
 			}
@@ -1571,13 +1571,13 @@ sys_conf() {
 					b* | g* |co*)
 						# Kompressionsart auswaehlen (gzip/bzip2/compress)
 						#
-						COMPRESS="`which $gv_Auswahl`"
+						COMPRESS="${commands[$gv_Auswahl]}"
 						if [ "${COMPRESS##*/}" = gzip ] ; then
-							UNCOMPRESS="`which gunzip`"
+							UNCOMPRESS="${commands[gunzip]}"
 						elif [ "${COMPRESS##*/}" = bzip2 ] ; then
-							UNCOMPRESS="`which bunzip2`"
+							UNCOMPRESS="${commands[bunzip2]}"
 						else
-							UNCOMPRESS="`which uncompress`"
+							UNCOMPRESS="${commands[uncompress]}"
 						fi
 						break
 						;;
@@ -2115,7 +2115,7 @@ sys_conf() {
 	# -s $USER - Sudo Einstellungen fuer $USER taetigen.
 	# CRONTAB_SCRIPT - Srciptname welches ausgefuehrt werden soll.
 	crontbconf() {
-		if [ "${#argv}" -ge 1 ] ; then
+		if [[ ${#argv} -ge 1 ]] ; then
 			#
 			# Variablen
 			lv_Extra_Char=$(gettext 'Sonderzeichen')
@@ -2612,7 +2612,7 @@ sys_conf() {
 						fi
 						#
 						if [ -f "$Cron_File" ] ; then
-							Prog_Wahl_X="`which $Prog_Wahl`"
+							Prog_Wahl_X="${commands[$Prog_Wahl]}"
 							IST=${(M)"${(qf)$(< $Cron_File)}"##*${Prog_Wahl}*}
 							if [ "$IST" ] ; then
 								print -l ${${(R)"${(qf)$(< $Cron_File)}"##*${Prog_Wahl}*}//\'\'/ } >${Cron_File}$$
@@ -2623,7 +2623,7 @@ sys_conf() {
 								crontab -u $USER $Cron_File
 							fi
 						else	
-							Prog_Wahl_X="`which $Prog_Wahl`"
+							Prog_Wahl_X="${commands[$Prog_Wahl]}"
 							> $Cron_File <<< "SHELL=/bin/sh
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 #
@@ -2662,7 +2662,7 @@ $TIME test -x $Prog_Wahl_X && $Sudo $Prog_Wahl_X"
 				-s)	Sudo=sudo
 					# User veraendern
 					if [ -n "$3" ] ; then
-						if [ -x "`which $3`" ] ; then
+						if [[ -x ${commands[$3]} ]] ; then
 							Prog_Wahl="$3"
 							USER="$2"
 							check_time
@@ -2676,7 +2676,7 @@ $TIME test -x $Prog_Wahl_X && $Sudo $Prog_Wahl_X"
 					;;
 				*)
 					if [ -n "$1" ] ; then
-						if [ -x "`which $1`" ] ; then
+						if [[ -x ${commands[$1]} ]] ; then
 							Prog_Wahl="$1"
 							check_time
 							main_func
@@ -3027,7 +3027,7 @@ $TIME test -x $Prog_Wahl_X && $Sudo $Prog_Wahl_X"
 		exec_edit() {
 			if [[ $EDITOR == dialog ]] ; then
 				editbox "$EDIT_TITLE" "$EDIT_FILE"
-			elif [[ -x ${commands[EDITOR]} ]] ; then
+			elif [[ -x ${commands[$EDITOR]} ]] ; then
 				"$EDITOR" "$EDIT_FILE"
 			else
 				no_editor_msg
@@ -5297,13 +5297,13 @@ kernel_choice() {
 	#
 	prog_exec() {
 		RET=0
-		if [ $# -ge 2 ] ; then
+		if [ "${#argv}" -ge 2 ] ; then
 			case $1 in
 				-i)
 					# inverse Darstellung im Terminal.
 					Prog="$2"
 					# pruefen, ob Programm ausfuehrbar ist.
-					if [ -x "`which $Prog`" ] ; then
+					if [[ -x ${commands[$Prog]} ]] ; then
 						if [[ -n $gv_Terminal ]] ; then
 							setterm -clear
 							setterm -inversescreen on
@@ -5328,7 +5328,7 @@ kernel_choice() {
 					# Darstellung mit progressbox
 					Prog="$2"
 					# pruefen, ob Programm ausfuehrbar ist.
-					if [ -x "`which $Prog`" ] ; then
+					if [[ -x ${commands[$Prog]} ]] ; then
 						if [[ -n $gv_Terminal ]] ; then
 							setterm -clear
 							eval "$Prog" "$3"
@@ -5343,7 +5343,7 @@ kernel_choice() {
 				*)
 					# pruefen, ob Programm ausfuehrbar ist.
 					Prog="$1"
-					if [ -x "`which $Prog`" ] ; then
+					if [[ -x ${commands[$Prog]} ]] ; then
 						if [[ -n $gv_Terminal ]] ; then
 							setterm -clear
 							eval "$Prog" "$2"
@@ -5376,10 +5376,10 @@ kernel_choice() {
 	#
 	prog_exec_only() {
 		RET=0
-		if [ $# -ge 1 ] ; then
+		if [ ${#argv} -ge 1 ] ; then
 			# pruefen, ob Programm ausfuehrbar ist.
 			Prog="$1"
-			if [ -x "`which $Prog`" ] ; then
+			if [ -x "${commands[$Prog]}" ] ; then
 				eval "$Prog" "$2"
 				if [ "$?" != 0 ] ; then
 					prog_failure
@@ -5683,15 +5683,16 @@ kernel_choice() {
 #
 # In dieser Reihenfolge werden die Partitionierungs-tools gesucht:
 # kwparted, cfdisk, fdisk.
+#
 # usage: search_fdisks
 #
 search_fdisks() {
 	PART_DISK_TITLE=$(gettext 'Partitionierung')
 	PART_DISK_MSG=$(gettext 'Waehlen Sie eine Festplatte zum partitionieren aus.')
 	#
-	if [ -x "`which kwparted`" -a -x "`which parted`" ] ; then
+	if [ -x "${commands[kwparted]}" -a -x "${commands[parted]}" ] ; then
 		kwparted
-	elif [ -x "`which cfdisk`" ] ; then
+	elif [ -x "${commands[cfdisk]}" ] ; then
 		disk
 		if [ -n "$DISK_DEV_E" ] ; then
 			menubox "$PART_DISK_TITLE" "$PART_DISK_MSG" "$DISK_DEV_E $gv_Back \"\""
@@ -5711,7 +5712,7 @@ search_fdisks() {
 		else
 			no_disk_msg
 		fi
-	elif [ -x "`which fdisk`" ] ; then
+	elif [ -x "${commands[fdisk]}" ] ; then
 		disk
 		if [ -n "$DISK_DEV_E" ] ; then
 			menubox "$PART_DISK_TITLE" "$PART_DISK_MSG" "$DISK_DEV_E $gv_Back \"\""
@@ -5760,7 +5761,7 @@ search_fdisks() {
 			local Facility="$2"
 			local Log_Prog="$3"
 			local Log_Msg="$4"
-	        if [ -x "`which logger`" ] ; then
+	        if [ -x "${commands[logger]}" ] ; then
 		        case "$Log_Opt" in
 		            -a) # alert
 					    eval logger "-p ${Facility}.alert -t "$Log_Prog" -i \"$Log_Msg\""
@@ -5997,8 +5998,8 @@ search_fdisks() {
 			Opt="$1"
 			PASSWD_MSG="$2"
 			#
-			# Pruefen auf cracklib
-			CRACKLIB_CHECK="`which cracklib-check`"
+			# Pruefen auf cracklib Programm
+			CRACKLIB_CHECK="${commands[cracklib-check]}"
 			#
 			# Funktion (passwd_conf_menu), Hauptmenue# {{{
 			passwd_conf_menu() {

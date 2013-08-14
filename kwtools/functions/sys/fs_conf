@@ -698,25 +698,25 @@ fs_conf() {
 		for i in $Fs ; {
 			case $i in
 				fat16|fat32)
-					if [ -x "`which mkfs.vfat`" ] ; then
+					if [[ -x ${commands[mkfs.vfat]} ]] ; then
 						(( Anz++ ))
 						FM_Menue[Anz]="$i \"\""
 					fi
 					;;
 				ntfs)
-					if [ -x "`which mk${i}`" ] ; then
+					if [[ -x ${commands[mk${i}]} ]] ; then
 						(( Anz++ ))
 						FM_Menue[Anz]="$i \"\""
 					fi
 					;;
 				*swap) # Das * steht fuer Kompalitaet zu kwparted (linux-swap).
-					if [ -x "`which mk${i##*-}`" ] ; then
+					if [[ -x ${commands[mk${i##*-}]} ]] ; then
 						(( Anz++ ))
 						FM_Menue[Anz]="$i \"\""
 					fi
 					;;
 				*)
-					if [ -x "`which mkfs.${i}`" ] ; then
+					if [[ -x ${commands[mkfs.${i}]} ]] ; then
 						(( Anz++ ))
 						FM_Menue[Anz]="$i \"\""
 					fi

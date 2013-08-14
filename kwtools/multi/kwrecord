@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 14.08.2013
 #
 # Script: kwrecord, ein Script um verschiedene Sachen
 # auf CD-R(W) und DVD-+R(W)/RAM zu brennen.
 #
-# Version: 0.1.26
+# Version: 0.1.27
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -274,7 +274,7 @@ while [ "$gv_Auswahl" ] ; do
 					PROG_OPT="-force $CDROM"
 					dvd+rw-format ${=PROG_OPT}
 					# Wenn DVD?RAM, dann mit mkudffs ein UDF Dateisystem erstellen.
-					if [ "$DVD_RW" = DVDRAM -a -x "`which mkudffs`" ] ; then
+					if [ "$DVD_RW" = DVDRAM -a -x "${commands[mkudffs]}" ] ; then
 						#PROG_OPT="--udfrev=0x0150 --media-type=dvdram $CDROM"
 						PROG_OPT="--media-type=dvdram $CDROM"
 						mkudffs ${=PROG_OPT}

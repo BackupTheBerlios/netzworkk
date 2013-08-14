@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 10.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 14.08.2013
 #
 # Script: kwnarcconf, Firewall Frontend fuer kwnarc
 # 		mittels iptables.
@@ -12,7 +12,7 @@
 #
 #       http://www.knowplace.org/netfilter/narc.html
 #
-# Version: 0.1.11
+# Version: 0.1.12
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -173,7 +173,7 @@ while [ "$gv_Auswahl" ] ; do
 							cp ${EXAMPLES_DIR}/kwnarc-custom.conf ${CUSTOM_NARC_CONF} &>/dev/null
 						fi
 						CUSTOM_TITLE=($lv_Custom_Conf)
-						exec_edit_prog "$CUSTOM_TITLE" "$CUSTOM_NARC_CONF"
+						edit_file "$CUSTOM_TITLE" "$CUSTOM_NARC_CONF"
 						#}}}
 						conf_menue $lv_Custom_Conf
 						;;

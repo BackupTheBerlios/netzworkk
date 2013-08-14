@@ -55,7 +55,7 @@ kwmutt_print_conf() {
 				MSG=$(gettext 'Geben Sie ein Programm zum drucken ein (z.B. muttprint).')
 				inputbox "$PRINT_TITLE" "$MSG" "$print_command"
 				if [ -n "$gv_Auswahl" ] ; then
-					if [ -x "`which $gv_Auswahl`" ] ; then
+					if [[ -x ${commands[$gv_Auswahl]} ]] ; then
 						print_command="$gv_Auswahl"
 					else
 						no_prog_exec_msg "$gv_Auswahl"

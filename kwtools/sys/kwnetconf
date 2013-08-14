@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 07.05.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 14.08.2018
 #
 # Script: kwnetconf, ist ein Frontend fuer verschiedene
 #	      Netzwerk Konfigurationsprogramme.
 #
-# Version: 0.1.0
+# Version: 0.1.1
 #
 
 trap 'setterm -inversescreen off ; setterm -reset ;
@@ -55,7 +55,7 @@ unset -- TYPES
 typeset -a TYPES
 Anz=1
 for i in kwnetcardconf pppoeconf isdnconfig wvdial ; {
-	if [ -x "`which $i`" ] ; then
+	if [[ -x ${commands[$i]} ]] ; then
 		TYPES[Anz]="$i \"${DESC[Anz]}\""
 	fi
 	(( Anz++ ))
@@ -82,11 +82,11 @@ while [ -n "$gv_Auswahl" ] ; do
 					wvdialconf /etc/wvdial.conf || prog_failure
 				fi
 			else
-				if [ -x "`which kwwvdialconf`" ] ; then
+				if [[ -x ${commands[kwwvdialconf]} ]] ; then
 					kwwvdialconf
 				else
 					EDIT_TITLE=$(gettext '${gv_Configuration}::wvdial')
-					exec_edit_prog "$EDIT_TITLE" /etc/wvdial.conf
+					edit_file "$EDIT_TITLE" /etc/wvdial.conf
 				fi
 			fi
 			check_status

@@ -9,7 +9,7 @@ Rechner: Hier kann man den Rechnernamen zur IP Adresse zuordnen,
 Netzwerk: Hier kann man Netzwerke eingeben fuer die der Zonentransfer
 \terlaubt oder verboten ist. Werden Netzwerke eingegeben,
 \twerden die IP und der Rechnername automatisch geloescht, da
-\tSie in diesem Fall nicht benoetigt werden.
+\tsie in diesem Fall nicht benoetigt werden.
 
 Rechte: Hier kann man zwischen allow und deny auswaehlen.
 
