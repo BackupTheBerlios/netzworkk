@@ -557,8 +557,8 @@ kwgrub2_conf() {
 						user_device_check "$VERZ" AE
 						cd "$VERZ"
 						# Dateien mit folgendem Suffix ausnehmen
-						A_SUFFIX=".jpeg .jpg .png .tga"
-						FORMAT="allimg"
+						A_SUFFIX=".jpeg .JPEG .jpg .JPG .png .PNG .tga .TGA"
+						FORMAT="ALL_IMAGE"
 						#
 						file_filter -r "$FORMAT" "$SUFFIX" "$A_SUFFIX"
 						if [ -n "${DF_ARRAY_M[1]}" ] ; then
@@ -603,8 +603,8 @@ kwgrub2_conf() {
 						user_device_check "$VERZ" AE
 						cd "$VERZ"
 						# Dateien mit folgendem Suffix ausnehmen
-						A_SUFFIX=".jpeg .jpg .png .tga"
-						FORMAT="allimg"
+						A_SUFFIX=".jpeg .JPEG .jpg .JPG .png .PNG .tga .TGA"
+						FORMAT="ALL_IMAGE"
 						#
 						file_filter -r "$FORMAT" "$SUFFIX" "$A_SUFFIX"
 						if [ -n "${DF_ARRAY_M[1]}" ] ; then

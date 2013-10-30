@@ -10,6 +10,7 @@ kwpwsafe_open_db() {
 		lv_Password_Gen=$(gettext 'Passwort generieren')
 		lv_Notes=$(gettext 'Notiz')
 		#
+		UNSET=(PW_NAME PW_GROUP PW_USER PW_PASSWD PW_NOTES)
 		DATA_MSG=$(gettext 'Waehlen Sie einen Eintrag aus der Liste der Datenbank $DB_FILE.')
 		OPEN_DB_TITLE="$lv_Db::${DB_FILE##*/}"
 		# Auswahl Abfrage, eingabe, aendern, loeschen
@@ -67,13 +68,14 @@ ${lv_Notes}:
 					;;
 				$gv_Create)
 					# Eintrag erstellen# {{{
-					unset -- PW_NAME PW_GROUP PW_USER PW_PASSWD PW_NOTES
+					unset -- $UNSET
 					kwpwsafe_db_conf
 					#}}}
 					open_db_menu
 					;;
 				$gv_Change)
 					# Eintrag aendern# {{{
+					unset -- $UNSET
 					read_pwsafe_entry "$DB_FILE"
 					if [ -n "${PW_ENTRY[1]}" ] ; then
 						CHANGE_MENU=($PW_ENTRY)
@@ -106,6 +108,7 @@ ${lv_Notes}:
 					;;
 				$gv_Delete)
 					# Eintraege loeschen# {{{
+					unset -- $UNSET
 					read_pwsafe_entry "$DB_FILE"
 					if [ -n "${PW_ENTRY_M[1]}" ] ; then
 						DEL_MENU=($PW_ENTRY_M)

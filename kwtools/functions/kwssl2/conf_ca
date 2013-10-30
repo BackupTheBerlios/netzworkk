@@ -326,8 +326,7 @@ conf_ca() {
 					# Basis: CN EMAIL OU O L ST C
 					gen_name
 					########################################
-					# TODO:
-					# NOTIZ: wirklich benutzen?
+					# INFO: wirklich benutzen?
 					########################################
 #					# Grundkonfiguration erstellen
 #					if [[ $Cert_Opt == server_cert ]] ; then
