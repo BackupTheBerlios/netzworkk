@@ -3359,7 +3359,11 @@ file_choice() {
 							;;
 						IMAGE)
 							# Bild Dateien
-							Filetype=(gif jpg png tif allimg)
+							Filetype=(gif jpg png tif)
+							;;
+						ALL_IMAGE)
+							# Bild Dateien
+							Filetype=(allimg)
 							;;
 						ISO)
 							# UDF und ISO 9660 Dateien
