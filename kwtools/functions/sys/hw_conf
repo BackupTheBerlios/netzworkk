@@ -882,8 +882,7 @@ lv_free_size() {
 			# RAID Level 1,4,5,6
 			RAIDLEVEL=$(raid_is_level $RAIDDEV)
 			#####################################
-			# TODO:
-			# Menu fur Level erstellen?
+			# TODO: Menu fur Level erstellen?
 			#####################################
 			case "$RAIDLEVEL" in
 				raid[1456])
