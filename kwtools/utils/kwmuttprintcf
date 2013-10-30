@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 08.04.2011
+# Autor: Kai Wilke  <kiste@netzworkk.de> 18.09.2013
 #
 # Script: kwmuttprintcf, konfiguriert muttprint, drucken mit
 # dem mailclienten mutt.
 #
-# Version: 0.0.2
+# Version: 0.0.3
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -242,7 +242,7 @@ while [ -n "$gv_Auswahl" ] ; do
 			;;
 		$lv_Penguin)
 			# Datei als Grafik (oben rechts) zum drucken auswaehlen# {{{
-			FORMAT="allimg"
+			FORMAT="ALL_IMAGE"
 			if [ -f "$PENGUIN" ] ; then
 				file_choice "$PENGUIN" only
 			else

@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 20.03.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 06.09.2013
 #
 # Script: kwpwsafe, Frontend zur Verwaltung der Passwoerter mit dem Programm
 #         pwsafe.
 #
-# Version: 0.0.8
+# Version: 0.0.9
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
