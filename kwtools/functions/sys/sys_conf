@@ -4832,13 +4832,15 @@ kernel_choice() {
 	#
 	# benoetigt die Funktionen check_part_fs, no_fs_type_msg
 	#
-	# usage: mount_check [ -a | -c | -fs | -m | -s | -u ] $PARTITION, (u)mount,filesystemtype
+	# usage: mount_check [ -a | -c | -fs | -m | -s | -u | -w ] $PARTITION, 
+	#        (u)mount,filesystemtype
 	# -a - automatisch ohne Fragen umounten
-	# -c - checken, ob gemountet oder nicht.
+	# -c - checken, ob gemountet ist oder nicht.
 	# -fs - Dateisystem herrausbekommen
 	# -m - Dateisystem mounten
 	# -s - Swap Dateisystem mounten
 	# -u - Dateisystem umounten, mit Nachfrage
+	# -w - checken, ob Laufwerk ins Arbeitsverzeichnis gemountet ist oder nicht.
 	#
 	# Variablen:
 	# FS - enthaelt das Dateisystem
@@ -4871,7 +4873,7 @@ kernel_choice() {
 			export MOUNTPOINT
 			PART_DEV="$2"
 			# Pruefen ob es ein LVM Device ist und dementsprechend
-			# die Variable PART_DEV belegen.
+			# die Variable PART_DEV1 belegen.
             if [ "${#${(ws:/:)$(print ${PART_DEV})}}" = 3 ] && \
 				[ "${PART_DEV%%/*}" = /dev ] ; then
 				print ${(ws:/:)$(print ${PART_DEV})} | while read Dev Vg Lv ; do
@@ -5022,12 +5024,12 @@ kernel_choice() {
 					# Dateisystem herausfinden# {{{
 					unset -- FS
 					if [ -z "`print ${${(s: :)${(M)${(f)"$(mount)"}##(#s)${PART_DEV1}[[:space:]]*}}[5]}`" ] ; then
-						# mittels dem Paket udev (Debian) das Filesystem herausfinden.
+						# mittels dem Paket util-linux das Filesystem herausfinden.
 						check_part_fs $PART_DEV
 						if [ "$gv_Fs" != "$gv_Unknown" ] ; then
 							FS="$gv_Fs"
 						else
-						# nochmal mount ueber die Datei /etc/fstab versuchen.
+							# Laufwerk ins Arbeitsverzeichnis mounten.
 							mount $PART_DEV1 $gv_WorkDir
 							if [ $? = 0 ] ; then
 								FS="`print ${${(s: :)${(M)${(f)"$(mount)"}##(#s)${PART_DEV1}[[:space:]]*}}[5]}`"
@@ -5042,6 +5044,16 @@ kernel_choice() {
 					fi
 					#
 					MOUNTPOINT=$(print ${${(s: :)${(M)${(f)"$(mount)"}##*${PART_DEV1}[[:space:]]*}}[3]})
+					## }}}
+					;;
+				-w)
+					# Pruefen, ob ein Laufwerk ins Arbeitsverzeichnis eingebunden ist# {{{
+					unset -- MOUNT
+					if [ "`print ${(M)${(f)"$(< /proc/mounts)"}##*[[:space:]]$gv_WorkDir}[[:space:]]*`" ] ; then
+						MOUNT=no
+					else
+						MOUNT=yes
+					fi
 					## }}}
 					;;
 			esac
