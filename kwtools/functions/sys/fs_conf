@@ -754,15 +754,24 @@ fs_conf() {
 	# DEVICE - Laufwerk/Device
 	#
 	resize_fs() {
-		# Funktion (no_reduce_xfs_msg), Das xfs Dateisystem kann man# {{{
+		# Funktion (no_reduce_fs_msg), Das Dateisystem kann man# {{{
 		# nicht verkleinern.
-		no_reduce_xfs_msg() {
-			MSG=$(gettext 'Das xfs Dateisystem kann man nicht verkleinern.')
-			msgbox "$gv_Attention" "$MSG"
-			# Wurde eine Partition ins Arbeitsverz. gemountet, wird sie wieder
-			# umountet.
-			if [ "`print ${(M)${(f)"$(< /proc/mounts)"}##*$gv_WorkDir}`" ] ; then
-				mount_check -a "$gv_WorkDir"
+		#
+		# usage: no_reduce_fs_msg FS
+		# FS - Dateisystem
+		#
+		no_reduce_fs_msg() {
+			if [[ ${#argv} == 1 ]] ; then 
+				MSG=$(gettext 'Das $1 Dateisystem kann man nicht verkleinern.')
+				msgbox "$gv_Attention" "$MSG"
+				# Wurde eine Partition ins Arbeitsverz. gemountet, wird sie wieder
+				# umountet.
+				mount_check -w "$gv_WorkDir"
+				if [[ $MOUNT == yes ]] ; then
+					mount_check -a "$gv_WorkDir"
+				fi
+			else
+				no_para_msg $0
 			fi
 		}
 		## }}}
@@ -788,6 +797,11 @@ fs_conf() {
 			mount_check -fs "$MAP_DEV"
 			if [ "$FS" ] ; then
 				case "$FS" in
+					crypto*)
+						# Crypto-Laufwerke muessen extra bearbeitet werden# {{{
+						use_kwcryptsetup_msg
+						## }}}
+						;;
 					ext[234])
 						# EXT2/3/4 Dateisysteme verkleinern/vergroessern{{{
 						mount_check -a "$MAP_DEV"
@@ -802,12 +816,12 @@ fs_conf() {
 									resize_cryptdisk
 									# Dateisystem checken
 									e2fsck -f -y $MAP_DEV || prog_failure
-									# Dateisystem ext2/3 vergroessern
+									# Dateisystem ext2/3/4 vergroessern
 									resize2fs -p $MAP_DEV || prog_failure
 								else
 									# Dateisystem checken
 									e2fsck -f -y $MAP_DEV || prog_failure
-									# Dateisystem ext2/3 reduzieren
+									# Dateisystem ext2/3/4 reduzieren
 									(( Resize_Size = OLD_SIZE-${NEW_SIZE#-} ))
 									resize2fs -p $MAP_DEV ${Resize_Size%.*}k || prog_failure
 									# Falls dieses Laufwerk verschluesselt ist, stoppen.
@@ -823,34 +837,8 @@ fs_conf() {
 						fi
 						#}}}
 						;;
-					reiserfs)
-						# REISERFS (nicht reiser4) Dateisysteme verkleinern/vergroessern{{{
-						mount_check -a "$MAP_DEV"
-						if [ "$U_MOUNT" = yes ] ; then
-							if [ "${NEW_SIZE%%[0-9]*}" = + ] ; then
-								# Falls dieses Laufwerk verschluesselt ist, stoppen.
-								resize_cryptdisk_stop
-								# LV vergroessern
-								lvextend -L${NEW_SIZE%.*}k $DEV || prog_failure
-								# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
-								resize_cryptdisk
-								# Dateisystem reiserfs vergroessern
-								resize_reiserfs -s ${NEW_SIZE%.*}k $MAP_DEV || prog_failure
-							else
-								# Dateisystem reiserfs verkleinern
-								echo y | resize_reiserfs -s ${NEW_SIZE%.*}k $MAP_DEV || prog_failure
-								# Falls dieses Laufwerk verschluesselt ist, stoppen.
-								resize_cryptdisk_stop
-								# LV reduzieren
-								echo y | lvreduce -L${NEW_SIZE%.*}k $DEV || prog_failure
-								# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
-								resize_cryptdisk
-							fi
-						fi
-						#}}}
-						;;
-					xfs*)
-						# XFS Dateisystem kann man nicht verkleinern nur vergroessern{{{
+					jfs)
+						# JFS Dateisystem vergroessern{{{
 						if [ "${NEW_SIZE%%[0-9]*}" = + ] ; then
 							# Falls dieses Laufwerk verschluesselt ist, stoppen.
 							resize_cryptdisk_stop
@@ -858,17 +846,16 @@ fs_conf() {
 							lvextend -L${NEW_SIZE%.*}k $DEV || prog_failure
 							# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
 							resize_cryptdisk
-							# Ist das LV schon gemountet kann man das FS problemlos vergroessern.
-							if [ ! -z "$MOUNTPOINT" ] ; then
-								xfs_growfs $MOUNTPOINT || prog_failure
-							fi
-							# Wurde eine Partition ins Arbeitsverz. gemountet, wird sie wieder
+							# Dateisystem jfs vergroessern
+							mount -o remount,resize $MAP_DEV || prog_failure
+							# Wurde ein Laufwerk ins Arbeitsverz. gemountet, wird es wieder
 							# umountet.
-							if [ "`print ${(M)${(f)"$(< /proc/mounts)"}##*$gv_WorkDir}`" ] ; then
+							mount_check -w "$gv_WorkDir"
+							if [[ $MOUNT == yes ]] ; then
 								mount_check -a "$gv_WorkDir"
 							fi
 						else
-							no_reduce_xfs_msg
+							no_reduce_fs_msg JFS
 						fi
 						#}}}
 						;;
@@ -904,10 +891,31 @@ fs_conf() {
 						fi
 						#}}}
 						;;
-					crypto*)
-						# Crypto-Laufwerke muessen extra bearbeitet werden# {{{
-						use_kwcryptsetup_msg
-						## }}}
+					reiserfs)
+						# REISERFS (nicht reiser4) Dateisysteme verkleinern/vergroessern{{{
+						mount_check -a "$MAP_DEV"
+						if [ "$U_MOUNT" = yes ] ; then
+							if [ "${NEW_SIZE%%[0-9]*}" = + ] ; then
+								# Falls dieses Laufwerk verschluesselt ist, stoppen.
+								resize_cryptdisk_stop
+								# LV vergroessern
+								lvextend -L${NEW_SIZE%.*}k $DEV || prog_failure
+								# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+								resize_cryptdisk
+								# Dateisystem reiserfs vergroessern
+								resize_reiserfs -s ${NEW_SIZE%.*}k $MAP_DEV || prog_failure
+							else
+								# Dateisystem reiserfs verkleinern
+								echo y | resize_reiserfs -s ${NEW_SIZE%.*}k $MAP_DEV || prog_failure
+								# Falls dieses Laufwerk verschluesselt ist, stoppen.
+								resize_cryptdisk_stop
+								# LV reduzieren
+								echo y | lvreduce -L${NEW_SIZE%.*}k $DEV || prog_failure
+								# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+								resize_cryptdisk
+							fi
+						fi
+						#}}}
 						;;
 					swap)
 						# Swap verkleinern/vergroessern{{{
@@ -936,6 +944,30 @@ fs_conf() {
 								# Swap wieder einbinden
 								mount_check -s $MAP_DEV
 							fi
+						fi
+						#}}}
+						;;
+					xfs*)
+						# XFS Dateisystem kann man nicht verkleinern nur vergroessern{{{
+						if [ "${NEW_SIZE%%[0-9]*}" = + ] ; then
+							# Falls dieses Laufwerk verschluesselt ist, stoppen.
+							resize_cryptdisk_stop
+							# LV vergroessern
+							lvextend -L${NEW_SIZE%.*}k $DEV || prog_failure
+							# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+							resize_cryptdisk
+							# Ist das LV schon gemountet kann man das FS problemlos vergroessern.
+							if [ ! -z "$MOUNTPOINT" ] ; then
+								xfs_growfs $MOUNTPOINT || prog_failure
+							fi
+							# Wurde ein Laufwerk ins Arbeitsverz. gemountet, wird es wieder
+							# umountet.
+							mount_check -w "$gv_WorkDir"
+							if [[ $MOUNT == yes ]] ; then
+								mount_check -a "$gv_WorkDir"
+							fi
+						else
+							no_reduce_fs_msg xfs
 						fi
 						#}}}
 						;;
@@ -1259,6 +1291,9 @@ fs_conf() {
 				;;
 			-p)
 				# Partitionen
+				########################################
+				# TODO: hier fehlt noch was
+				########################################
 				;;
 			-r)
 				# SW-RAID# {{{
