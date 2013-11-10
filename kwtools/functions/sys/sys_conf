@@ -4955,10 +4955,6 @@ kernel_choice() {
 					;;
 				-s)
 					# Swap einbinden# {{{
-					# ###############################################
-					# TODO:
-					# erst Dateisystem herrausfinden oder nur fstab?
-					# ################################################
 					unset -- MOUNT
 					SW_DEV="`print ${(M)${(f)"$(< /proc/swaps)"}##(#s)${PART_DEV1}}`"
 					if [[ -z $SW_DEV ]] ; then

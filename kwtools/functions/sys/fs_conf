@@ -1050,6 +1050,11 @@ fs_conf() {
 				}
 				## }}}
 				case "$FS" in
+					crypto*)
+						# Crypto-Laufwerke muessen extra bearbeitet werden# {{{
+						use_kwcryptsetup_msg
+						## }}}
+						;;
 					ext[234])
 						# EXT2/3/4 Dateisysteme verkleinern/vergroessern{{{
 						mount_check -a "$MAP_DEV"
@@ -1071,7 +1076,7 @@ fs_conf() {
 									resize_cryptdisk
 									# Dateisystem checken
 									e2fsck -f -y $MAP_DEV || (BREAK=2 ; prog_failure)
-									# Dateisystem ext2/3 vergroessern
+									# Dateisystem ext2/3/4 vergroessern
 									resize2fs -p $MAP_DEV || prog_failure
 								else
 									# Falls dieses Laufwerk verschluesselt war, starten.
@@ -1085,9 +1090,105 @@ fs_conf() {
 								if [ "${RAIDLEVEL##*[a-z]}" != 1 ] ; then
 									# Dateisystem checken
 									e2fsck -f -y $MAP_DEV || prog_failure
-									# Dateisystem ext2/3 reduzieren
+									# Dateisystem ext2/3/4 reduzieren
 									(( Resize_Size = OLD_SIZE-${NEW_SIZE#-} ))
 									resize2fs -p $MAP_DEV ${Resize_Size%.*}k || (BREAK=2 ; prog_failure)
+									# Falls dieses Laufwerk verschluesselt ist, stoppen.
+									resize_cryptdisk_stop
+									# Raid-Array reduzieren
+									raid_minus
+									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+									resize_cryptdisk
+								else
+									# Falls dieses Laufwerk verschluesselt ist, stoppen.
+									resize_cryptdisk_stop
+									# Raid-Array reduzieren
+									raid_minus
+									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+									resize_cryptdisk
+								fi
+							fi
+						fi
+						#}}}
+						;;
+					jfs)
+						# JFS Dateisystem kann man nicht verkleinern nur vergroessern{{{
+						if [ "${NEW_SIZE%%[0-9]*}" = + ] ; then
+							# Falls dieses Laufwerk verschluesselt ist, stoppen.
+							resize_cryptdisk_stop
+							# RAID ARRAY vorbereiten/Laufwerk addieren
+							raid_add
+							# Ist das Raidlevel >1 muss die Dateisystemgroesse
+							# eingestellt werden, bei Level 1 (Spiegel) ist sie
+							# immer gleich gross.
+							if [ "${RAIDLEVEL##*[a-z]}" != 1 ] ; then
+								# Array vergroessern
+								(( Resize_Size = OLD_SIZE+${NEW_SIZE#+} ))
+								mdadm $RAIDDEV -G --array-size=${Resize_Size} >/dev/null || (BREAK=2 ; prog_failure)
+								# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+								resize_cryptdisk
+								# Laufwerk mit FS jfs wenn noetig ins Arbeitsverzeichnis mounten.
+								mount_check -c $MAP_DEV
+								if [[ $MOUNT == no ]] ; then
+									mount -t $FS $MAP_DEV $gv_WorkDir || prog_failure
+									MOUNTPOINT="$gv_WorkDir"
+								fi
+								# Dateisystem jfs vergroessern
+								if [ ! -z "$MOUNTPOINT" ] ; then
+									# Ist das RAID-ARRAY schon gemountet kann man das FS
+									# problemlos vergroessern.
+									mount -o remount,resize $MAP_DEV || prog_failure
+								fi
+								# Wurde ein Laufwerk ins Arbeitsverz. gemountet, wird es wieder
+								# umountet.
+								mount_check -a "$gv_WorkDir"
+							else
+								# Falls dieses Laufwerk verschluesselt war,
+								# starten und Groesse anpassen.
+								resize_cryptdisk
+							fi
+						else
+							no_reduce_fs_msg
+						fi
+						#}}}
+						;;
+					ntfs)
+						# NTFS Dateisystem vergroessern/verkleinern{{{
+						mount_check -a "$MAP_DEV"
+						if [ "$U_MOUNT" = yes ] ; then
+							if [ "${NEW_SIZE%%[0-9]*}" = + ] ; then
+								# Falls dieses Laufwerk verschluesselt ist, stoppen.
+								resize_cryptdisk_stop
+								# RAID ARRAY vorbereiten/Laufwerk addieren
+								raid_add
+								# Ist das Raidlevel >1 muss die Dateisystemgroesse
+								# eingestellt werden, bei Level 1 (Spiegel) ist sie
+								# immer gleich gross.
+								#
+								if [ "${RAIDLEVEL##*[a-z]}" != 1 ] ; then
+									# Array vergroessern
+									(( Resize_Size = OLD_SIZE+${NEW_SIZE#+} ))
+									mdadm $RAIDDEV -G --array-size=${Resize_Size} >/dev/null || (BREAK=2 ; prog_failure)
+									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+									resize_cryptdisk
+									# Dateisystem ntfs vergroessern
+									echo y | ntfsresize -f -s ${Resize_Size}k $MAP_DEV || (BREAK=2 ; prog_failure)
+									# NTFS Probleme checken und fixen
+									ntfsfix $MAP_DEV || prog_failure
+								else
+									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+									resize_cryptdisk
+								fi
+							else
+								# Ist das Raidlevel >1 muss die Dateisystemgroesse
+								# eingestellt werden, bei Level 1 (Spiegel) ist sie
+								# immer gleich gross.
+								if [ "${RAIDLEVEL##*[a-z]}" != 1 ] ; then
+									# Dateisystem reiserfs reduzieren
+									(( Resize_Size = OLD_SIZE-${NEW_SIZE#-} ))
+									echo y | ntfsresize -f -s ${Resize_Size%.*}k $MAP_DEV || (BREAK=2 ; prog_failure)
+                                	# NTFS Probleme checken und fixen
+                               		ntfsfix $MAP_DEV || (BREAK=2 ; prog_failure)
 									# Falls dieses Laufwerk verschluesselt ist, stoppen.
 									resize_cryptdisk_stop
 									# Raid-Array reduzieren
@@ -1174,77 +1275,28 @@ fs_conf() {
 								mdadm $RAIDDEV -G --array-size=${Resize_Size} >/dev/null || (BREAK=2 ; prog_failure)
 								# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
 								resize_cryptdisk
-								# Ist das RAID-ARRAY schon gemountet kann man das FS problemlos vergroessern.
-								# vergroessern
+								# Laufwerk mit FS xfs wenn noetig ins Arbeitsverzeichnis mounten.
+								mount_check -c $MAP_DEV
+								if [[ $MOUNT == no ]] ; then
+									mount -t $FS $MAP_DEV $gv_WorkDir || prog_failure
+									MOUNTPOINT="$gv_WorkDir"
+								fi
+								# Dateisystem xfs vergroessern
 								if [ ! -z "$MOUNTPOINT" ] ; then
+									# Ist das RAID-ARRAY schon gemountet kann man das FS
+									# problemlos vergroessern.
 									xfs_growfs "$MOUNTPOINT" || prog_failure
 								fi
-								# Wurde eine Partition ins Arbeitsverz. gemountet, wird sie wieder
+								# Wurde ein Laufwerk ins Arbeitsverz. gemountet, wird es wieder
 								# umountet.
-								if [ "`print ${(M)${(f)"$(< /proc/mounts)"}##*$gv_WorkDir}`" ] ; then
-									mount_check -a "$gv_WorkDir"
-								fi
+								mount_check -a "$gv_WorkDir"
 							else
-								# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
+								# Falls dieses Laufwerk verschluesselt war,
+								# starten und Groesse anpassen.
 								resize_cryptdisk
 							fi
 						else
-							no_reduce_xfs_msg
-						fi
-						#}}}
-						;;
-					ntfs)
-						# NTFS Dateisystem vergroessern/verkleinern{{{
-						mount_check -a "$MAP_DEV"
-						if [ "$U_MOUNT" = yes ] ; then
-							if [ "${NEW_SIZE%%[0-9]*}" = + ] ; then
-								# Falls dieses Laufwerk verschluesselt ist, stoppen.
-								resize_cryptdisk_stop
-								# RAID ARRAY vorbereiten/Laufwerk addieren
-								raid_add
-								# Ist das Raidlevel >1 muss die Dateisystemgroesse
-								# eingestellt werden, bei Level 1 (Spiegel) ist sie
-								# immer gleich gross.
-								#
-								if [ "${RAIDLEVEL##*[a-z]}" != 1 ] ; then
-									# Array vergroessern
-									(( Resize_Size = OLD_SIZE+${NEW_SIZE#+} ))
-									mdadm $RAIDDEV -G --array-size=${Resize_Size} >/dev/null || (BREAK=2 ; prog_failure)
-									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
-									resize_cryptdisk
-									# Dateisystem ntfs vergroessern
-									echo y | ntfsresize -f -s ${Resize_Size}k $MAP_DEV || (BREAK=2 ; prog_failure)
-									# NTFS Probleme checken und fixen
-									ntfsfix $MAP_DEV || prog_failure
-								else
-									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
-									resize_cryptdisk
-								fi
-							else
-								# Ist das Raidlevel >1 muss die Dateisystemgroesse
-								# eingestellt werden, bei Level 1 (Spiegel) ist sie
-								# immer gleich gross.
-								if [ "${RAIDLEVEL##*[a-z]}" != 1 ] ; then
-									# Dateisystem reiserfs reduzieren
-									(( Resize_Size = OLD_SIZE-${NEW_SIZE#-} ))
-									echo y | ntfsresize -f -s ${Resize_Size%.*}k $MAP_DEV || (BREAK=2 ; prog_failure)
-                                	# NTFS Probleme checken und fixen
-                               		ntfsfix $MAP_DEV || (BREAK=2 ; prog_failure)
-									# Falls dieses Laufwerk verschluesselt ist, stoppen.
-									resize_cryptdisk_stop
-									# Raid-Array reduzieren
-									raid_minus
-									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
-									resize_cryptdisk
-								else
-									# Falls dieses Laufwerk verschluesselt ist, stoppen.
-									resize_cryptdisk_stop
-									# Raid-Array reduzieren
-									raid_minus
-									# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
-									resize_cryptdisk
-								fi
-							fi
+							no_reduce_fs_msg
 						fi
 						#}}}
 						;;
@@ -1253,11 +1305,6 @@ fs_conf() {
 						mount_check -a "$MAP_DEV"
 						MSG=$(gettext 'Dieses RAID Array besitzt ein LVM und muss extra bearbeitet werden. Starten Sie bitte das Script kwlvm, um das Dateisystem anzupassen.')
 						msgbox "$gv_Info" "$MSG"
-						## }}}
-						;;
-					crypto*)
-						# Crypto-Laufwerke muessen extra bearbeitet werden# {{{
-						use_kwcryptsetup_msg
 						## }}}
 						;;
 					*)
