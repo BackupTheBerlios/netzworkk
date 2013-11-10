@@ -4840,7 +4840,6 @@ kernel_choice() {
 	# -m - Dateisystem mounten
 	# -s - Swap Dateisystem mounten
 	# -u - Dateisystem umounten, mit Nachfrage
-	# -w - checken, ob Laufwerk ins Arbeitsverzeichnis gemountet ist oder nicht.
 	#
 	# Variablen:
 	# FS - enthaelt das Dateisystem
@@ -4875,9 +4874,9 @@ kernel_choice() {
 			# Pruefen ob es ein LVM Device ist und dementsprechend
 			# die Variable PART_DEV1 belegen.
             if [ "${#${(ws:/:)$(print ${PART_DEV})}}" = 3 ] && \
-				[ "${PART_DEV%%/*}" = /dev ] ; then
+				[ "/${${(ws:/:)$(print ${PART_DEV})}[1]}" = /dev ] ; then
 				print ${(ws:/:)$(print ${PART_DEV})} | while read Dev Vg Lv ; do
-					PART_DEV1="${Dev}/mapper/${Vg}-${Lv}"
+					PART_DEV1="/${Dev}/mapper/${Vg}-${Lv}"
 				done
 			fi
             # bei loop Devices muss man den Device Pfad neu einstellen.
@@ -4928,8 +4927,9 @@ kernel_choice() {
 					;;
 				-c)
 					# Pruefen, ob Verzeichnis/Partition/... eingebunden ist# {{{
-					unset -- MOUNT
-					if [ -z "`print ${${(s: :)${(M)${(f)"$(mount)"}##(#s)${PART_DEV1}[[:space:]]*}}[3]}`" ] ; then
+					unset -- MOUNT MOUNTPOINT
+					MOUNTPOINT="`print ${${(s: :)${(M)${(f)"$(mount)"}##*${PART_DEV1}[[:space:]]*}}[3]}`"
+					if [ -z "$MOUNTPOINT" ] ; then
 						MOUNT=no
 					else
 						MOUNT=yes
@@ -5044,16 +5044,6 @@ kernel_choice() {
 					fi
 					#
 					MOUNTPOINT=$(print ${${(s: :)${(M)${(f)"$(mount)"}##*${PART_DEV1}[[:space:]]*}}[3]})
-					## }}}
-					;;
-				-w)
-					# Pruefen, ob ein Laufwerk ins Arbeitsverzeichnis eingebunden ist# {{{
-					unset -- MOUNT
-					if [ "`print ${(M)${(f)"$(< /proc/mounts)"}##*[[:space:]]$gv_WorkDir}[[:space:]]*`" ] ; then
-						MOUNT=no
-					else
-						MOUNT=yes
-					fi
 					## }}}
 					;;
 			esac
