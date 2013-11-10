@@ -761,17 +761,13 @@ fs_conf() {
 		# FS - Dateisystem
 		#
 		no_reduce_fs_msg() {
-			if [[ ${#argv} == 1 ]] ; then 
-				MSG=$(gettext 'Das $1 Dateisystem kann man nicht verkleinern.')
-				msgbox "$gv_Attention" "$MSG"
-				# Wurde eine Partition ins Arbeitsverz. gemountet, wird sie wieder
-				# umountet.
-				mount_check -w "$gv_WorkDir"
-				if [[ $MOUNT == yes ]] ; then
-					mount_check -a "$gv_WorkDir"
-				fi
-			else
-				no_para_msg $0
+			MSG=$(gettext 'Das $FS Dateisystem kann man nicht verkleinern.')
+			msgbox "$gv_Attention" "$MSG"
+			# Wurde eine Partition ins Arbeitsverz. gemountet, wird sie wieder
+			# umountet.
+			mount_check -w "$gv_WorkDir"
+			if [[ $MOUNT == yes ]] ; then
+				mount_check -a "$gv_WorkDir"
 			fi
 		}
 		## }}}
@@ -846,16 +842,21 @@ fs_conf() {
 							lvextend -L${NEW_SIZE%.*}k $DEV || prog_failure
 							# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
 							resize_cryptdisk
+							# Laufwerk mit FS jfs wenn noetig ins Arbeitsverzeichnis mounten.
+							mount_check -c $MAP_DEV
+							if [[ $MOUNT == no ]] ; then
+								mount -t $FS $MAP_DEV $gv_WorkDir || prog_failure
+								MOUNTPOINT="$gv_WorkDir"
+							fi
 							# Dateisystem jfs vergroessern
-							mount -o remount,resize $MAP_DEV || prog_failure
+							if [ ! -z "$MOUNTPOINT" ] ; then
+								mount -o remount,resize $MAP_DEV || prog_failure
+							fi
 							# Wurde ein Laufwerk ins Arbeitsverz. gemountet, wird es wieder
 							# umountet.
-							mount_check -w "$gv_WorkDir"
-							if [[ $MOUNT == yes ]] ; then
-								mount_check -a "$gv_WorkDir"
-							fi
+							mount_check -a "$gv_WorkDir"
 						else
-							no_reduce_fs_msg JFS
+							no_reduce_fs_msg
 						fi
 						#}}}
 						;;
@@ -956,18 +957,21 @@ fs_conf() {
 							lvextend -L${NEW_SIZE%.*}k $DEV || prog_failure
 							# Falls dieses Laufwerk verschluesselt war, starten und Groesse anpassen.
 							resize_cryptdisk
+							# Laufwerk mit FS xfs wenn noetig ins Arbeitsverzeichnis mounten.
+							mount_check -c $MAP_DEV
+							if [[ $MOUNT == no ]] ; then
+								mount -t $FS $MAP_DEV $gv_WorkDir || prog_failure
+								MOUNTPOINT="$gv_WorkDir"
+							fi
 							# Ist das LV schon gemountet kann man das FS problemlos vergroessern.
 							if [ ! -z "$MOUNTPOINT" ] ; then
 								xfs_growfs $MOUNTPOINT || prog_failure
 							fi
 							# Wurde ein Laufwerk ins Arbeitsverz. gemountet, wird es wieder
 							# umountet.
-							mount_check -w "$gv_WorkDir"
-							if [[ $MOUNT == yes ]] ; then
-								mount_check -a "$gv_WorkDir"
-							fi
+							mount_check -a "$gv_WorkDir"
 						else
-							no_reduce_fs_msg xfs
+							no_reduce_fs_msg
 						fi
 						#}}}
 						;;
