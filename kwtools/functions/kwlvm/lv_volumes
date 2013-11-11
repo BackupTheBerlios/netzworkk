@@ -172,7 +172,7 @@ lv_volumes() {
 							$gv_Create)
 								# LV erzeugen{{{
 								if [ "$VG_AUSWAHL" -a "$LV_NAME" -a "$CREATE_SIZE" ] ; then
-									lvcreate -v -n $LV_NAME -L${CREATE_SIZE} $VG_AUSWAHL || prog_failure
+									lvcreate -v -n $LV_NAME -L${CREATE_SIZE} $VG_AUSWAHL 2>&1 | progressbox $gv_Create "$LV_NAME" || prog_failure
 									#
 									# Formatieren yes/no
 									#
@@ -320,7 +320,7 @@ lv_volumes() {
 									#
 									if [ "$gv_Auswahl" ] ; then
 										Lv_Path="${O_Lv%/*}"
-										lvrename -v $O_Lv ${Lv_Path}/${gv_Auswahl} || prog_failure
+										lvrename -v $O_Lv ${Lv_Path}/${gv_Auswahl} 2>&1 | progressbox $lv_Rename "$gv_Auswahl" || prog_failure
 									else
 										no_input_msg
 									fi
@@ -363,7 +363,7 @@ lv_volumes() {
 										# LVs beenden
 										lvchange -a n ${=gv_Auswahl} &>/dev/null || prog_failure
 										# LVs loeschen
-										lvremove -v -f ${=gv_Auswahl} || prog_failure
+										lvremove -v -f ${=gv_Auswahl} 2>&1 | progressbox $gv_Delete "${=gv_Auswahl}" || prog_failure
 									fi
 									break
 									;;

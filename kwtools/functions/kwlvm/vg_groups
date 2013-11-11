@@ -23,7 +23,7 @@ vg_groups() {
 		unset -- LV_ACTIV LV_NO_ACTIV LV_ALL
 		# PVs der VG herraus bekommen und dann den Status der LVs.
 		Lvs=${(M)$(lvdisplay $1)##/dev*}
-		if [[ -n $Lvs ]] ; then
+		if [[ -n ${Lvs[1]} ]] ; then
 			Anz=1
 			for i in ${=Lvs} ; {
 				if [ "`print ${${(s: :)${(M)${(f)"$(lvdisplay $i)"}##*(LV Status)*}}[3]}`" = available ] ; then
@@ -167,9 +167,9 @@ vg_groups() {
 											S_Vg="$gv_Auswahl"
 											# Welches LVM ist am start?
 											if [ "$LVM" = 1 ] ; then
-												vgcfgbackup -v ${=S_Vg} || prog_failure
+												vgcfgbackup -v ${=S_Vg} 2>&1 | progressbox $lv_Backup_Create "${=S_Vg}" || prog_failure
 											else
-												vgcfgbackup -v --ignorelockingfailure ${=S_Vg} || prog_failure
+												vgcfgbackup -v --ignorelockingfailure ${=S_Vg} 2>&1 | progressbox $lv_Backup_Create "${=S_Vg}" || prog_failure
 											fi
 											break
 											;;
@@ -192,7 +192,7 @@ vg_groups() {
 										# Bei LVM1 muss man den PhysicalVolumePath angeben.
 										#
 										for i in $WERT ; {
-											vgcfgrestore -v -f $i -n ${i%.conf*} ${(M)PV##$i} || prog_failure
+											vgcfgrestore -v -f $i -n ${i%.conf*} ${(M)PV##$i} 2>&1 | progressbox $lv_Backup_Back $i || prog_failure
 										}
 									fi
 								else
@@ -201,7 +201,7 @@ vg_groups() {
 									file_choice "${BAK_DIR//\"/}" only
 									if [ "$WERT" ] ; then
 										lvm_type
-										vgcfgrestore -v -M ${LVM_TYPE:-2} $WERT || prog_failure
+										vgcfgrestore -v -M ${LVM_TYPE:-2} $WERT 2>&1 | progressbox $lv_Backup_Back "$WERT" || prog_failure
 									fi
 								fi
 								#}}}
@@ -327,11 +327,11 @@ vg_groups() {
 								#
 								if [ "$VG_NAME" -a "$PV_AUSWAHL" ] ; then
 									if [ "$LVM" = 1 ] ; then
-										vgcreate $VG_NAME -v $PV_AUSWAHL || prog_failure
+										vgcreate $VG_NAME -v $PV_AUSWAHL 2>&1 | progressbox $gv_Create $VG_NAME || prog_failure
 										vgchange -a y $VG_NAME &>/dev/null || prog_failure
 										break
 									else
-										vgcreate $VG_NAME -v -s ${VG_PE_SIZE:-4M} -M ${LVM_TYPE:-2} $PV_AUSWAHL || prog_failure
+										vgcreate $VG_NAME -v -s ${VG_PE_SIZE:-4M} -M ${LVM_TYPE:-2} $PV_AUSWAHL 2>&1 | progressbox $gv_Create $VG_NAME || prog_failure
 										vgchange -a y $VG_NAME &>/dev/null || prog_failure
 										break
 									fi
@@ -369,7 +369,7 @@ vg_groups() {
 								# ausgewaehlte VG's konvertieren
 								Vg="$gv_Auswahl"
 								lvm_type
-								vgconvert -v -M ${LVM_TYPE:-2} $Vg || prog_failure
+								vgconvert -v -M ${LVM_TYPE:-2} $Vg 2>&1 | progressbox $lv_Convert $Vg || prog_failure
 								checklist "$VG_CONVERT_TITLE" "$VG_CONVERT_MSG" "$VG_M"
 								;;
 							*)	break 2
@@ -420,7 +420,7 @@ vg_groups() {
 										*)	# uebernehmen
 											S_VG="$gv_Auswahl"
 											# ueberpruefen ob die LVs dieser VG noch activ
-											# sind und denn deaktivieren.
+											# sind und wenn deaktivieren.
 											check_lv_active "$S_VG"
 											lv_deactive
 											break
@@ -479,7 +479,7 @@ vg_groups() {
 									check_lv_active "$S_VG"
 									lv_deactive
 									if [ "$RET" = 0 ] ; then
-										vgsplit -v $S_VG $Z_VG $PV_AUSWAHL || prog_failure
+										vgsplit -v $S_VG $Z_VG $PV_AUSWAHL 2>&1 | progressbox $lv_Merge "$S_VG --> $S_VG $Z_VG" || prog_failure
 										vg_display
 									fi
 									break
@@ -571,7 +571,7 @@ vg_groups() {
 										if [ "$?" = 0 ] ; then
 											vgchange -a n $S_VG &>/dev/null || prog_failure
 											# VGs verbinden
-											vgmerge -v $Z_VG $S_VG || prog_failure
+											vgmerge -v $Z_VG $S_VG 2>&1 | progressbox $lv_Merge "$S_VG --> $Z_VG" || prog_failure
 											vg_display
 										fi
 										break
@@ -621,7 +621,7 @@ vg_groups() {
 								inputbox "$VG_RENAME_TITLE" "$VG_NEW_NAME_MSG"
 								#
 								if [ "$gv_Auswahl" ] ; then
-									vgrename -v $O_VG $gv_Auswahl || prog_failure
+									vgrename -v $O_VG $gv_Auswahl 2>&1 | progressbox $lv_Rename "$O_VG --> $gv_Auswahl" || prog_failure
 								else
 									no_input_msg
 								fi
@@ -670,16 +670,16 @@ vg_groups() {
 												# alle LVs der VG umounten
 												mount_check -u "$i"
 											}
-											lvremove -v -f ${=LV_ALL} || prog_failure
+											lvremove -v -f ${=LV_ALL} 2>&1 | progressbox $gv_Delete "${=LV_ALL}" || prog_failure
 											# VGs deaktivieren
 											vgchange -a n $v &>/dev/null || prog_failure
 											# VGs loeschen
-											vgremove -v $v || prog_failure
+											vgremove -v $v 2>&1 | progressbox $gv_Delete $v || prog_failure
 										elif [ "$RET" = 0 ] ; then
 											# VGs deaktivieren
 											vgchange -a n $v &>/dev/null || prog_failure
 											# VGs loeschen
-											vgremove -v $v || prog_failure
+											vgremove -v $v 2>&1 | progressbox $gv_Delete $v || prog_failure
 										fi
 									}
 								fi

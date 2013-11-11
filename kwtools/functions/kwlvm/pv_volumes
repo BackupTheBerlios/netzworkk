@@ -115,7 +115,7 @@ pv_volumes() {
 									else
 										PROG_OPT="-v $gv_Auswahl"
 									fi
-									pvcreate ${=PROG_OPT} || prog_failure
+									pvcreate ${=PROG_OPT} 2>&1 | progressbox $gv_Create $gv_Auswahl || prog_failure
 								fi
 								break
 								;;
@@ -224,7 +224,7 @@ pv_volumes() {
 											$gv_Save)
 												# speichern
 												if [ -n "$FROM_PV" -a -n "$TO_PV" ] ; then
-													pvmove -v $FROM_PV $TO_PV || prog_failure
+													pvmove -v $FROM_PV $TO_PV 2>&1 | progressbox "$lv_Move" "$FROM_PV --> $TO_PV" || prog_failure
 													# Werte neu berechnen
 													count_menu "$PV_IN_VG"
 													unset -- FROM_PV TO_PV
@@ -308,7 +308,7 @@ pv_volumes() {
 													fi
 												}
 												#
-												if [ -n "$SELECT_PV_DEV" ] ; then
+												if [ -n "${SELECT_PV_DEV[1]}" ] ; then
 													if [ "$Anz" = "$ANZ_PV" ] ; then
 														MSG=$(gettext 'Sie koennen nicht alle Physikalischen Volumes einer Volume Group loeschen.')
 														msgbox "$gv_Attention" "$MSG"
@@ -324,7 +324,7 @@ pv_volumes() {
 													#
 													if [ $? = 0 ] ; then
 														BREAK=2
-														vgreduce -v $AUSWAHL $SELECT_PV_DEV || prog_failure
+														vgreduce -v $AUSWAHL $SELECT_PV_DEV 2>&1 | progressbox "$lv_Remove" "$SELECT_PV_DEV" || prog_failure
 													fi
 												else
 													MSG=$(gettext 'Kein PV zum entfernen uebrig geblieben.')
@@ -389,7 +389,7 @@ pv_volumes() {
 												#
 												if [ $? = 0 ] ; then
 													BREAK=2
-													vgextend -v $gv_Auswahl $AUSWAHL || prog_failure
+													vgextend -v $gv_Auswahl $AUSWAHL 2>&1 | progressbox "$lv_Add" "$AUSWAHL --> $gv_Auswahl" || prog_failure
 												fi
 												unset -- BREAK
 												break 2
@@ -432,7 +432,7 @@ pv_volumes() {
 								MSG=$(gettext 'Jetzt werden alle ausgewaehlten Physikalischen Volumes geloescht.\n$Devs\n\nFortfahren (ja/nein)?')
 								yesno "$gv_Attention" "$MSG" "$Anz"
 								if [ "$?" = 0 ] ; then
-									pvremove -v $gv_Auswahl || prog_failure
+									pvremove -v $gv_Auswahl 2>&1 | progressbox $gv_Delete $gv_Auswahl || prog_failure
 								fi
 								#
 								break
