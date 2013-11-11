@@ -4938,10 +4938,6 @@ kernel_choice() {
 					;;
 				-m)
 					# Partition einbinden# {{{
-					# ###############################################
-					# TODO:
-					# erst Dateisystem herrausfinden oder nur fstab?
-					# ################################################
 					unset -- MOUNT
 					if [ -z "`print ${${(s: :)${(M)${(f)"$(mount)"}##(#s)*${PART_DEV1}[[:space:]]*}}[3]}`" ] ; then
 						mount "$PART_DEV" &>/dev/null
