@@ -2,12 +2,12 @@
 .\"     Title: KWPOSTFIX
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 10/11/2012
+.\"      Date: 11/12/2013
 .\"    Manual: Handbuch f\(:ur kwpostfix
 .\"    Source: Version 0.1.15
 .\"  Language: English
 .\"
-.TH "KWPOSTFIX" "1" "10/11/2012" "Version 0.1.15" "Handbuch f\(:ur kwpostfix"
+.TH "KWPOSTFIX" "1" "11/12/2013" "Version 0.1.15" "Handbuch f\(:ur kwpostfix"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -46,76 +46,7 @@ angeben kann, konfigurieren\&. Nur die haupts\(:achlichsten\&. Ausserdem konnte 
 noch nicht getestet werden\&.
 .SH "OPTIONEN"
 .PP
-\fBKurz\-Konfiguration\fR
-.RS 4
-Eine simple Konfiguration mittels dem Distributions speziefischen Konfigurationsprogramm\&. Bei Debian ist dies
-\(lq\fBdpkg\-reconfigure\fR \fBpostfix\fR\(rq\&.
-.RE
-.PP
-\fBKonfiguration\fR
-.RS 4
-Konfiguration der
-\fI/etc/kwtools/main\&.cf\fR
-mit fast allen M\(:oglichkeiten, die zur Verf\(:ugung stehen\&. Bei der Eintragung von IPv6 Adressen, diese immer in eckige Klammern
-\(lq[]\(rq
-stellen, da es sonst zu Komplikationen kommt\&. Die IPv6 Adresse besitzt das Zeichen
-\(lq:\(rq
-und der Eintrag
-\fItype:tabelle\fR
-auch\&.
-.RE
-.PP
-\fBerweiterte Konfiguration\fR
-.RS 4
-Erweiterte Konfiguration der
-\fI/etc/kwtools/main\&.cf\fR
-mit den M\(:oglichkeiten, die unter dem Men\(:upunkt
-\(lqKonfiguration\(rq
-nicht zur Verf\(:ugung stehen\&. Zum Beispiel die Konfiguration von
-\(lq\fBbsmtp\fR\(rq,
-\(lq\fBpostscreen\fR\(rq, etc\&.\&. Bei der Eintragung von IPv6 Adressen, diese immer in eckige Klammern
-\(lq[]\(rq
-stellen, da es sonst zu Komplikationen kommt\&. Die IPv6 Adresse besitzt das Zeichen
-\(lq:\(rq
-und der Eintrag
-\fItype:tabelle\fR
-auch\&.
-.RE
-.PP
-\fBTabellen\fR
-.RS 4
-Ansicht, anlegen, \(:andern und l\(:oschen von Tabellen Eintragungen\&. Danach wird die Tabelle neu erstellt (Datenbank neu erzeugen)\&.
-.sp
-\fBNotiz:\fR
-Es werden nur die von ihrem System unterst\(:utzten Tabellentypen angeboten\&.
-\fBbtree\fR,
-\fBcidr\fR,
-\fB(s)dbm\fR,
-\fBenviron\fR,
-\fBhash\fR,
-\fBnis\fR,
-\fBpcre\fR,
-\fBproxy\fR,
-\fBregexp\fR,
-\fBstatic\fR
-und
-\fBtcp\fR
-sind Standard\&.
-.RE
-.PP
-\fBSteuerdatei\fR
-.RS 4
-Ansicht, anlegen, \(:andern und l\(:oschen von Eintragungen in der Steuerdatei
-\fI/etc/postfix/master\&.cf\&\fR.
-.RE
-.PP
-\fBAufr\(:aumen\fR
-.RS 4
-L\(:oscht \(:ubrig gebliebene tempor\(:are Dateien, checkt die Queue\-Struktur und repariert diese gegebenfalls\&. Da
-\fBpostfix\fR
-in seinem Queue\-File auf die Inode Nummer der Datei Bezug nimmt, m\(:ussen Sie diesen Men\(:upunkt nach dem zur\(:uck spielen eines Backups aufrufen (\fBpostsuper\fR
-\fB\-s\fR)\&.
-.RE
+\fBkwpostfix\fR hat keine Kommandozeilen Optionen.
 .SH "DATEIEN"
 .PP
 \fI/etc/postfix/main\&.cf\fR
@@ -140,5 +71,5 @@ Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2002-2012 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

@@ -1,11 +1,11 @@
 .\"     Title: KWVCDBURN
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 12/09/2008
+.\"      Date: 11/13/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwvcdburn
-.\"    Source: Version 0.0.5
+.\"    Source: Version 0.0.9
 .\"
-.TH "KWVCDBURN" "1" "12/09/2008" "Version 0.0.5" "Benutzerhandbuch f\(:ur kwvcdburn"
+.TH "KWVCDBURN" "1" "11/13/2013" "Version 0.0.9" "Benutzerhandbuch f\(:ur kwvcdburn"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -29,45 +29,7 @@ und zur Video CD Erstellung
 \fBvcdimager\fR\&.
 .SH "OPTIONEN"
 .PP
-\fBKonfiguration\fR
-.RS 4
-Konfiguration von
-\fBkwvcdburn\fR, wie Mount\-Verzeichnis, Basis Verzeichnis und Video Type\&. Als Video Type stehen
-\fIvcd1\fR,
-\fIvcd2\fR,
-\fIsvcd\fR
-und
-\fIhqvcd\fR
-zur Verf\(:ugung\&. Bei Mount\-Verzeichnis w\(:ahlen Sie das Verzeichnis aus welches eventuell vorher gemountet werden muss\&. Dieses muss in der
-\fI/etc/fstab\fR
-bekannt sein und Sie m\(:ussen auch dementsprechende Rechte besitzen\&.
-.RE
-.PP
-\fBVideo\-CD\-Erstellung\fR
-.RS 4
-Hier kann man einzelne oder mehrere Filme ausw\(:ahlen und zu einer Video\-CD multiplexen oder alle Filme seperat umwandeln\&. Dabei kann man einen Dateinamen, auch bei mehreren Filmen, vergeben\&.
-.RE
-.PP
-\fBPhoto\-CD\-Erstellung\fR
-.RS 4
-Hier kann man einzelne Photos oder ein ganzes Verzeichnis, mit Photos, ausw\(:ahlen und zu einer Photo\-CD Film multiplexen\&. Dabei kann man vorher einen Dateinamen vergeben, ohne
-\(lq\fI\&.cue\fR\(rq
-Endung, ansonsten heisst die Datei
-\fIphotocd\&.cue\fR\&.
-.RE
-.PP
-\fBbrennen\fR
-.RS 4
-Video\-CD brennen mittels der Funktion
-\fIcd_dvd_burn\fR
-und der Option
-\fB\-\-vcd\fR\&.
-.sp
-\fBNotiz:\fR
-Die Brennereinstellungen k\(:onnen Sie bequem mit dem Script
-\fBkwrecord\fR
-einstellen\&.
-.RE
+\fBkwvcdburn\fR hat keine Kommandozeilen Optionen.
 .SH "DATEI"
 .PP
 \fI~/\&.kwtools/kwvcdburnrc\fR
@@ -89,5 +51,5 @@ Dies ist die Konfigurations Datei f\(:ur
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2008 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

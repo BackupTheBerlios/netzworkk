@@ -1,11 +1,11 @@
 .\"     Title: KWDJBDNS
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 07/04/2008
+.\"      Date: 11/12/2013
 .\"    Manual: Handbuch f\(:ur kwdjbdns
-.\"    Source: Version 0.3.1
+.\"    Source: Version 0.3.6
 .\"
-.TH "KWDJBDNS" "1" "07/04/2008" "Version 0.3.1" "Handbuch f\(:ur kwdjbdns"
+.TH "KWDJBDNS" "1" "11/12/2013" "Version 0.3.6" "Handbuch f\(:ur kwdjbdns"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -48,67 +48,9 @@ und
 \fBwalldns\fR\&.
 .SH "OPTIONEN"
 .PP
-\fBKonfiguration\fR
-.RS 4
-Hier werden die einzelnen Server konfiguriert/aktiviert und dem Supervise Daemon mitgeteilt bzw\&. gel\(:oscht\&.
-.RE
-.PP
-\fBdnscache\fR
-.RS 4
-Ein
-\fIDNS\fR
-Cache daemon\&. Hier kann man angeben welches Netz Zugriff auf den Cache haben darf, falls er so konfiguriert wurde\&.
-.RE
-.PP
-\fBtinydns\fR
-.RS 4
-\fBtinydns\fR
-ist ein kleiner sicherer eigenst\(:andiger
-\fIDNS\fR
-Server\&. Hier kann man Rechner, Mailserver und Nameserver eingeben und auch l\(:oschen, die von
-\fBtinydns\fR
-verwaltet werden sollen\&. Zuerst muss man aber die Domain eingeben die verwaltet werden soll\&.
-.RE
-.PP
-\fBaxfrdns\fR
-.RS 4
-\fBaxfrdns\fR
-ist ein
-\fIDNS\-Zone\-Transfer\fR
-Server\&. Hier konfiguriert man, f\(:ur welche IP\'s, Rechner oder Netzwerke dies erlaubt oder verweigert werden soll\&. Dieser muss laufen, wenn
-\fBtinydns\fR
-eingerichtet wurde und ein
-\fBdnscache\fR
-den Cache des
-\fBtinydns\fR
-nutzen darf, genauso wie das ucspi\-tcp Paket installiert worden sein muss\&.
-.RE
-.PP
-\fBrbldns\fR
-.RS 4
-\fBrbldns\fR
-ist ein IP\-address\-listing
-\fIDNS\fR
-Server\&. Er akzeptiert wiederholende
-\fIDNS\fR\-Fragen von Rechnern aus dem Internet, die \(:uber verschiedenartige IP\-Adressen Anfragen stellen\&. Er versorgt Sie mit Antworten, die zeigen, ob die Adressen auf einer \(:ortlich konfigurierten Liste, wie RBL oder DUL (Blacklists) sind\&. Hier kann man IP\'s, Netzmasken und A records eintragen\&.
-.RE
-.PP
-\fBwalldns\fR
-.RS 4
-\fBwalldns\fR
-ist ein reverse
-\fIDNS\fR
-wall Server\&. Er akzeptiert wiederholende
-\fIDNS\fR\-Fragen f\(:ur in\-addr\&.arpa Domainen von Rechnern aus dem Internet, und liefert allgemeine (generische) Antworten, die vermeiden, lokale Rechner Information zu offenbaren\&. Zum Beispiel, versorgt
-\fBwalldns\fR
-einen PTR\-record f\(:ur 4\&.3\&.2\&.1\&.in\-addr\&.arpa und zeigt 4\&.3\&.2\&.1\&.in\-addr\&.arpa, als den Namen von IP 1\&.2\&.3\&.4 an, und ein passender A record zeigt 1\&.2\&.3\&.4 als die IP Adresse von 4\&.3\&.2\&.1\&.in\-addr\&.arpa\&.
-.sp
-\fBNotiz:\fR
-Kann man nur in der Konfiguration aktivieren/l\(:oschen\&.
-.RE
+\fBkwdjbdns\fR hat keine Kommandozeilen Optionen.
 .SH "BUGS"
 .PP
-.RS 4
 Wenn man einen Server l\(:oscht, l\(:auft der Supervise Daemon f\(:ur diesen weiter\&.
 .RE
 .SH "SIEHE AUCH"
@@ -125,5 +67,5 @@ Wenn man einen Server l\(:oscht, l\(:auft der Supervise Daemon f\(:ur diesen wei
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2008 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

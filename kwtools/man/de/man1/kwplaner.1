@@ -1,11 +1,11 @@
 .\"     Title: KWPLANER
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 07/04/2008
+.\"      Date: 11/12/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwplaner
-.\"    Source: Version 0.0.2
+.\"    Source: Version 0.0.6
 .\"
-.TH "KWPLANER" "1" "07/04/2008" "Version 0.0.2" "Benutzerhandbuch f\(:ur kwplaner"
+.TH "KWPLANER" "1" "11/12/2013" "Version 0.0.6" "Benutzerhandbuch f\(:ur kwplaner"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -21,44 +21,11 @@ kwplaner \- ein Zshell Script zur Terminverwaltung.
 vereinigt verschiedene Scripts f\(:ur Ihre Terminverwaltung\&.
 .SH "OPTIONEN"
 .PP
-\fBKonfiguration\fR
-.RS 4
-Konfiguration f\(:ur die Programme/Scripts
-\fBcalendar\fR,
-\fBgcal\fR,
-\fBkwholiday\fR,
-\fBkwtex\-cal\fR,
-\fBkwtermin\fR
-und
-\fBkwtermin_cron\fR\&.
-.RE
-.PP
-\fBkwholiday\fR
-.RS 4
-Mit
-\fBkwholiday\fR
-kann man sich die Feiertage anschauen, entsprechend seinem Bundesland\&. Alle Tage die mit einem + in der 2\&. Spalte beginnen sind reale Feiertage im konfigurierten Bundesland\&. Sie brauchen nur das dementsprechende Jahr ausw\(:ahlen\&. Gibt es keine Konfiguration wird das aktuelle Jahr und das Bundesland Deutschland/Hamburg benutzt\&.
-.RE
-.PP
-\fBkwtex\-cal\fR
-.RS 4
-\fBkwtex\-cal\fR
-kann einen Jahreskalender mit Bildern erzeugen und auch ausdrucken\&. Die Bilder (\fIjpeg\fR) kann man im Verzeichnis
-\fI~/\&.kwtools/kwplaner\fR
-ablegen\&. Es m\(:ussen 13 St\(:uck sein, 12 Monate+1 Deckblatt\&. Die Bilder werden automatisch in die richtige Gr\(:osse konvertiert, wenn Sie nicht gr\(:osser als eine Postkarte sind\&. Sie brauchen nur das dementsprechende Jahr ausw\(:ahlen\&. Gibt es keine Konfiguration wird das aktuelle Jahr und das Bundesland Deutschland/Hamburg benutzt\&.
-.RE
-.PP
-\fBkwtermin\fR
-.RS 4
-\fBkwtermin\fR
-ist ein client\-script, mit deren Hilfe man seine Termine verwalten kann\&. Termine werden per mail gemeldet, wenn man m\(:ochte\&. Geben Sie also immer Ihre
-\fBMailadresse\fR
-an\&.
-.RE
+\fBkwplaner\fR hat keine Kommandozeilen Optionen.
 .SH "DATEI"
 .PP
 \fI~/\&.kwtools/kwplanerrc\fR
-.RS 4
+.RS 0
 Dies ist die Konfigurations Datei f\(:ur
 \fBkwholiday\fR,
 \fBkwplaner\fR,
@@ -84,5 +51,5 @@ und
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2008 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br
