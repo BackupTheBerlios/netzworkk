@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 18.08.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 13.11.2013
 #
 # Script: kwsnd2sndfm, konvertiert soundformate
-# Version: 0.0.8
+# Version: 0.0.9
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -49,8 +49,8 @@ fi
 # Konfigurationen einlesen.
 read_file kwsnd2sndfmrc
 
-Lame_Prog="`which lame`"
-Ogg_Prog="`which oggenc`"
+Lame_Prog="${commands[lame]}"
+Ogg_Prog="${commands[oggenc]}"
 
 # Optionen und Moeglichkeiten ausloten{{{
 if [ -x "$Lame_Prog" -a -x "$Ogg_Prog" ] ; then
