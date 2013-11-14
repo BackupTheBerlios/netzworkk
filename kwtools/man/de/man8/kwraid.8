@@ -1,11 +1,11 @@
 .\"     Title: KWRAID
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 01/27/2010
+.\"      Date: 11/14/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwraid
-.\"    Source: Version 0.3.3
+.\"    Source: Version 0.3.6
 .\"
-.TH "KWRAID" "8" "01/27/2010" "Version 0.3.3" "Benutzerhandbuch f\(:ur kwraid"
+.TH "KWRAID" "8" "11/14/2013" "Version 0.3.6" "Benutzerhandbuch f\(:ur kwraid"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -30,42 +30,8 @@ http://www\&.linuxhaven\&.de/dlhp/HOWTO/DE\-Software\-RAID\-HOWTO\&.html
 .RE
 .SH "OPTIONEN"
 .PP
-\fBKonfiguration\fR
-.RS 4
-Hier kann man die Konfiguration f\(:ur
-\fBmdadm\fR
-bearbeiten\&. Dazu geh\(:oren die Einstellung von Standardwerten f\(:ur die Erstellung von Arrays oder Mailadressen,\&.\&.\&.\&.
-.RE
-.PP
-\fBLaufwerke\fR
-.RS 4
-Hier kann man RAID Arrays erstellen, \(:andern, vergr\(:ossern, reparieren, Partitionen/Festplatten wechseln und Arrays l\(:oschen\&.
-.RE
-.PP
-\fBMonitor\fR
-.RS 4
-Hier kann man einen RAID Monitor einstellen, wobei man per mail benachrichtigt wird, wenn in einem RAID Array Partitionen/Festplatten ausgefallen/besch\(:adigt sind\&.
-.sp
-\fBDebian:\fR
-Zur Einstellung vom RAID Monitor wird
-\(lq\fBdpkg\-reconfigure mdadm\fR\(rq
-verwendet\&.
-.sp
-\fBSuSE:\fR
-Zur Einstellung vom RAID Monitor wird
-\fByast2\fR
-verwendet (\fByast2\fR
-\fBsysconfig \-> System \-> File systems \-> Mdadm\fR)\&.
-.sp
-\fBCentOS|Fedora:\fR
-Hier ist noch nichts\&.
-.RE
-.PP
-\fBStatus\fR
-.RS 4
-Statusanzeige der RAID Arrays\&.
-.RE
-.SH "DATEI"
+\fBkwraid\fR hat keine Kommandozeilen Optionen.
+.SH "DATEIEN"
 .PP
 \fI/etc/mdadm/mdadm\&.conf\fR
 .RS 4
@@ -98,5 +64,5 @@ f\(:ur weitere Details\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2010 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

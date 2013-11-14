@@ -1,11 +1,11 @@
 .\"     Title: KWLVM
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 06/11/2008
+.\"      Date: 11/13/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwlvm
-.\"    Source: Version 0.2.9
+.\"    Source: Version 0.3.8
 .\"
-.TH "KWLVM" "8" "06/11/2008" "Version 0.2.9" "Benutzerhandbuch f\(:ur kwlvm"
+.TH "KWLVM" "8" "11/13/2013" "Version 0.3.8" "Benutzerhandbuch f\(:ur kwlvm"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -22,37 +22,7 @@ Mit
 k\(:onnen Sie Physikalische Volumes (\fBPV\fR), Volume Groups (\fBVG\fR) und logische Volumes (\fBLV\fR) erstellen, sich anzeigen lassen, vergr\(:ossern, verkleinern, zusammenf\(:ugen, splitten, verschieben und l\(:oschen\&.
 .SH "OPTIONEN"
 .PP
-\fBPV\fR
-.RS 4
-Physikalische Volumes, also Festplattenpartitionen oder RAID Arrays\&. Hier k\(:onnen Sie
-\fBPVs\fR
-anlegen, anzeigen lassen,
-\fBLV\fR
-Daten verschieben,
-\fBPV\fR
-einer
-\fBVG\fR
-hinzuf\(adgen oder entfernen, und
-\fBPVs\fR
-l\(:oschen\&.
-.RE
-.PP
-\fBVG\fR
-.RS 4
-Volume Groups sind virtuelle Festplatten, die eine oder mehrere
-\fBPVs\fR
-zusammen fassen k\(:onnen\&. Hier k\(:onnen Sie
-\fBVGs\fR
-anlegen, sichern, zur\(:uck sichern, konvertieren (nur
-\fIlvm2\fR), teilen, verbinden, umbenennen, l\(:oschen und anzeigen lassen\&.
-.RE
-.PP
-\fBLV\fR
-.RS 4
-Logische Volumes sind virtuelle Partitionen, auf welchen dann Dateisysteme angelegt werden k\(:onnen\&. Hier k\(:onnen Sie
-\fBLVs\fR
-anlegen, vergr\(:ossern, verkleinern, umbenennen, l\(:oschen und anzeigen lassen\&.
-.RE
+\fBkwlvm\fR hat keine Kommandozeilen Optionen.
 .SH "SIEHE AUCH"
 .PP
 \fBlvm\fR(8)
@@ -63,5 +33,5 @@ anlegen, vergr\(:ossern, verkleinern, umbenennen, l\(:oschen und anzeigen lassen
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2008 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

@@ -1,11 +1,11 @@
 .\"     Title: KWLOGROTATE
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 12/09/2009
+.\"      Date: 11/13/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwlogrotate
-.\"    Source: Version 0.2.9
+.\"    Source: Version 0.3.0
 .\"
-.TH "KWLOGROTATE" "8" "12/09/2009" "Version 0.2.9" "Benutzerhandbuch f\(:ur kwlogrota"
+.TH "KWLOGROTATE" "8" "11/13/2013" "Version 0.3.0" "Benutzerhandbuch f\(:ur kwlogrota"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -25,66 +25,7 @@ benutzt oder angelegt\&.
 Eine Konfiguration der Hauptkonfigurationsdatei ist noch nicht vorhanden\&. Dieses Script schreibt die Logdatei jedesmal neu, heisst das kwlogrotate nicht alles unterst\(:utzt\&. Bei komplexeren Logdateien werden Sie eventuell ein paar Optionen, nach dem speichern vermissen\&. Konfigurieren Sie also am besten nur Ihre eigenen Dateien\&.
 .SH "OPTIONEN"
 .PP
-\fBEintrag hinzuf\(:ugen\fR
-.RS 4
-Wenn Sie schon eine Logdatei Konfiguration in dieser Datei (s\&. Name) besitzen oder gerade erstellt haben und dazu noch weitere Logdateien mit anderen Regeln, in derselben Datei, einstellen m\(:ochten, dann k\(:onnen Sie hiermit neue Einstellm\(:oglichkeiten hinzuf\(:ugen\&.
-.RE
-.PP
-\fBName\fR
-.RS 4
-Vorhandene Konfiguration \(:andern oder eine neue anlegen\&.
-.RE
-.PP
-\fBLogdatei\fR
-.RS 4
-Auswahl ein oder mehrerer Logdateien f\(:ur die die jeweilige Einstellung (s\&. Eintrag hinzufuegen) gelten soll\&.
-.RE
-.PP
-\fBAnzahl\fR
-.RS 4
-Anzahl der Rotierungen, bevor die \(:alteste Version gel\(:oscht wird\&. Es werden nur Integer Zahlen zugelassen\&.
-.RE
-.PP
-\fBRotierzeit\fR
-.RS 4
-Wann soll die Logdatei rotiert werden,
-\fIt\(:aglich\fR,
-\fIw\(:ochentlich\fR
-oder
-\fImonatlich\fR\&.
-.RE
-.PP
-\fBMail\fR
-.RS 4
-An wen soll die Aktion gemailt werden (Bsp\&. name@domain\&.de)\&.
-.RE
-.PP
-\fBGr\(:osse\fR
-.RS 4
-Ab welcher Gr\(:osse soll die Logdatei rotiert werden\&.
-.RE
-.PP
-\fBKompression\fR
-.RS 4
-Auswahl des Kompressions Programms\&. Zur Auswahl stehen
-\fBgzip\fR
-und
-\fBbzip2\fR, falls diese installiert sind\&.
-.RE
-.PP
-\fBRechte\fR
-.RS 4
-Mit welchen Rechten soll die Logdatei neu erstellt werden\&.
-.RE
-.PP
-\fBScript\fR
-.RS 4
-Hier k\(:onnen Sie einen Befehl eingeben der nach der Rotierung der Logdatei ausgef\(:uhrt werden soll\&. Zum Beispiel liest der folgende Befehl, dem
-\fBsyslog\fR
-daemon seine Konfiguration neu ein ohne ihn zu beenden:
-\fB/sbin/killall\fR
-\fB\-HUP syslogd\fR\&.
-.RE
+\fBkwlogrotate\fR hat keine Kommandozeilen Optionen.
 .SH "DATEIEN"
 .PP
 \fI/var/lib/logrotate/status\fR
@@ -110,5 +51,5 @@ f\(:ur weitere Details\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2009 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

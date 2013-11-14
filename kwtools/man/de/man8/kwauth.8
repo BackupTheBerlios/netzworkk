@@ -1,11 +1,11 @@
 .\"     Title: KWAUTH
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 01/19/2010
+.\"      Date: 11/12/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwauth
-.\"    Source: Version 0.0.1
+.\"    Source: Version 0.0.2
 .\"
-.TH "KWAUTH" "8" "01/19/2010" "Version 0.0.1" "Benutzerhandbuch f\(:ur kwauth"
+.TH "KWAUTH" "8" "11/12/2013" "Version 0.0.2" "Benutzerhandbuch f\(:ur kwauth"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -38,36 +38,7 @@ das Programm
 \fBauthconfig\-tui\fR\&.
 .SH "OPTIONEN"
 .PP
-\fBPAM\fR
-.RS 4
-Authentifizierung \(:uber
-\fIPAM\fR
-einstellen\&. Dabei wird das Programm
-\fBpam\-auth\-update\fR
-benutzt, welches im ab dem Paket
-\fIlibpam\-runtime\-1\&.0\&.1\-6\fR
-verf\(:ugbar ist, benutzt\&.
-.RE
-.PP
-\fBLDAP\fR
-.RS 4
-Authentifizierung \(:uber
-\fILDAP\fR
-einstellen\&. Dabei wird mittels dem Programm
-\(lq\fBdpkg \-\-reconfigure libpam\-ldap\fR\(rq
-die
-\fILDAP\fR
-Einstellungen vorgenommen und anschliessend die Authentifizierung \(:uber
-\fIPAM\fR\&.
-.RE
-.PP
-\fBNIS\fR
-.RS 4
-Authentifizierung \(:uber
-\fINIS\fR, ehemals
-\(lqyellow pages\(rq
-einstellen\&.
-.RE
+\fBkwauth\fR hat keine Kommandozeilen Optionen.
 .SH "SIEHE AUCH"
 .PP
 \fBpam-auth-update\fR(8),
@@ -80,5 +51,5 @@ einstellen\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2010 Kai Wilke
+Copyright \(co 2010-2013 Kai Wilke
 .br

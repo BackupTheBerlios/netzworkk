@@ -1,11 +1,11 @@
 .\"     Title: KWNARCCONF
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 08/27/2009
+.\"      Date: 11/13/2013
 .\"    Manual: Benutzerhandbuch kwnarcconf
-.\"    Source: Version 0.1.10
+.\"    Source: Version 0.1.12
 .\"
-.TH "KWNARCCONF" "8" "08/27/2009" "Version 0.1.10" "Benutzerhandbuch kwnarcconf"
+.TH "KWNARCCONF" "8" "11/13/2013" "Version 0.1.12" "Benutzerhandbuch kwnarcconf"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -26,36 +26,7 @@ konfigurieren\&. Netfilter ist Ihre Firewall, die man mit
 \fBiptables\fR, seit Kernel >=2\&.4, konfiguriert\&.
 .SH "OPTIONEN"
 .PP
-\fBKonfiguration\fR
-.RS 4
-Die Konfiguration der Firewall ist in die Bereiche Hauptkonfiguration, Logkonfiguration, Portweiterleitung und Zusatzkonfiguration unterteilt\&. F\(:ur die Bearbeitung der Zusatzkonfiguration kann man die Variable
-\(lq\fBEDITOR\fR\(rq
-in der Datei
-\fI/etc/kwtools/main\&.cf\fR, mit einem Editor Ihrer Wahl belegen\&. Ansonsten wird die Dialogbox
-\(lq\fBeditbox\fR\(rq
-verwendet\&. (Bsp\&.:
-\fBEDITOR\fR=\fI/usr/bin/vim\fR)\&.
-.RE
-.PP
-\fBRestart\fR
-.RS 4
-Neustart der Firewall \- neu einlesen der Konfiguration\&.
-.RE
-.PP
-\fBStatus\fR
-.RS 4
-Anzeige der bestehenden Firewall Regeln\&.
-.RE
-.PP
-\fBVerbindungen\fR
-.RS 4
-Anzeige der bestehenden Verbindungen\&.
-.RE
-.PP
-\fBRegelketten\fR
-.RS 4
-Anzeige des Namen von bestehenden Regelketten\&.
-.RE
+\fBkwnarcconf\fR hat keine Kommandozeilen Optionen.
 .SH "DATEI"
 .PP
 \fI/etc/kwtools/kwnarc\&.conf\fR
@@ -77,5 +48,5 @@ f\(:ur weitere Details\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2009 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

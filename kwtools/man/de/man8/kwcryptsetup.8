@@ -1,11 +1,11 @@
 .\"     Title: KWCRYPTSETUP
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 11/05/2008
+.\"      Date: 11/12/2013
 .\"    Manual: Handbuch f\(:ur kwcryptsetup
-.\"    Source: Version 0.0.6
+.\"    Source: Version 0.1.5
 .\"
-.TH "KWCRYPTSETUP" "8" "11/05/2008" "Version 0.0.6" "Handbuch f\(:ur kwcryptsetup"
+.TH "KWCRYPTSETUP" "8" "11/12/2013" "Version 0.1.5" "Handbuch f\(:ur kwcryptsetup"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -27,54 +27,7 @@ und
 benutzt\&.
 .SH "OPTIONEN"
 .PP
-\fBKonfiguration\fR
-.RS 4
-Konfiguration der Standardwerte f\(:ur zu erstellende Laufwerke\&.
-.RE
-.PP
-\fBStatus\fR
-.RS 4
-Anzeige des Status von verschl\(:usselten Laufwerken, die in der Konfigurations Datei
-\fI/etc/crypttab\fR
-eingetragen sind\&.
-.RE
-.PP
-\fBLUKS\fR
-.RS 4
-Hier k\(:onnen Sie Schl\(:ussel addieren, l\(:oschen oder sich den Dump von verschl\(:uesselten Laufwerken, mit LUKS Erweiterung, anschauen\&.
-.RE
-.PP
-\fBLaufwerke\fR
-.RS 4
-Hier kann man verschl\(:uesselte Laufwerke/Container erstellen, l\(:oschen, vergr\(:ossern, verkleinern und deren Optionen \(:andern und den Inhalt der Datei
-\fI/etc/crypttab\fR
-ansehen\&.
-.RE
-.PP
-\fBSchl\(:ussel\fR
-.RS 4
-Hier k\(:onnen Sie eine Schl\(:usseldatei erstellen\&. Diese wird aus der Ger\(:atedatei
-\fI/dev/urandom\fR
-erzeugt\&. Sind die Programme
-\fBgnupg\fR
-und/oder
-\fBopenssl\fR
-installiert kann man diese auch gleichzeitig verschl\(:usseln\&. Ansonsten wird keine Schl\(:usseldatei erstellt\&.
-.RE
-.PP
-\fBstart\fR
-.RS 4
-Starten von verschl\(:usselten Laufwerken, die in der Konfigurations Datei
-\fI/etc/crypttab\fR
-eingetragen sind\&.
-.RE
-.PP
-\fBstop\fR
-.RS 4
-Stoppen von verschl\(:usselten Laufwerken, die in der Konfigurations Datei
-\fI/etc/crypttab\fR
-eingetragen sind\&.
-.RE
+\fBkwcryptsetup\fR hat keine Kommandozeilen Optionen.
 .SH "DATEI"
 .PP
 \fI~/\&.kwtools/kwcryptsetuprc\fR
@@ -98,5 +51,5 @@ f\(:ur weitere Details\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2008 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

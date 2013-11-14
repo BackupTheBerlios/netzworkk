@@ -1,11 +1,11 @@
 .\"     Title: KWNETCRADCONF
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 07/25/2008
+.\"      Date: 11/13/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwnetcardconf
-.\"    Source: Version 0.1.9
+.\"    Source: Version 0.1.13
 .\"
-.TH "KWNETCRADCONF" "8" "07/25/2008" "Version 0.1.9" "Benutzerhandbuch f\(:ur kwnetcard"
+.TH "KWNETCRADCONF" "8" "11/13/2013" "Version 0.1.13" "Benutzerhandbuch f\(:ur kwnetcard"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -25,25 +25,7 @@ oder
 \fBmanuell\fR\&. Es werden alle vorhandenen Karten aufgelistet\&. Dies sind WLan\-, (Gigabyte)Ethernet\-, Firewire\- und Tokenringkarten\&.
 .SH "OPTIONEN"
 .PP
-\fBeth,tr,wlan\fR
-.RS 4
-Auswahl der Karte\&. Darauf folgt ein Men\(:u zur Konfiguration\&. Die Konfiguration erfolgt entweder \(:uber
-\fBdhcp\fR
-oder
-\fBmanuell\fR\&. Die Auswahl hat folgendes Format: Interface_Kartentyp_Hardwareadresse_Treiber\&.
-\fBdhcp\fR
-steht nur zur Verf\(:ugung wenn
-\fBdhclient\fR
-installiert ist\&. Ansonsten wird gleich die manuelle Konfiguration angezeigt\&. Dort kann man dann die IP Adresse, Boot Option, Broadcast, Netmaske, Gateway und Nameserver eintragen\&.
-.sp
-Bis auf die IP Adresse sind alle Eingaben optional\&. Die Nameserver werden aus der Datei
-\fI/etc/resolv\&.conf\fR
-gelesen und m\(:ussen meist nicht ge\(:andert werden\&. Alle Eingaben erfolgen im
-\fBipv4\fR
-Format\&. Leider gehen
-\fBipv6\fR
-Adressen noch nicht, da keine Testm\(:oglichkeit\&.
-.RE
+\fBkwnetcardconf\fR hat keine Kommandozeilen Optionen.
 .SH "NOTIZ"
 .PP
 Bei SuSE wird
@@ -80,5 +62,5 @@ Netzwerk Konfiguration Datei f\(:ur (Open)SuSE\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2008 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

@@ -1,11 +1,11 @@
 .\"     Title: KWPARTED
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 01/22/2010
+.\"      Date: 11/13/2013
 .\"    Manual: Benutzerhandbuch f\(:ur kwparted
-.\"    Source: Version 0.2.11
+.\"    Source: Version 0.2.13
 .\"
-.TH "KWPARTED" "8" "01/22/2010" "Version 0.2.11" "Benutzerhandbuch f\(:ur kwparted"
+.TH "KWPARTED" "8" "11/13/2013" "Version 0.2.13" "Benutzerhandbuch f\(:ur kwparted"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -55,54 +55,7 @@ und
 und dann auch nur wenn die dementsprechenden Dateisystem Werkzeuge oder Bibliotheken installiert sind\&.
 .SH "OPTIONEN"
 .PP
-\fBStatus\fR
-.RS 4
-Anzeige wie welche Dateisysteme von
-\fBkwparted\fR
-wie unterst\(:utzt werden\&.
-.RE
-.PP
-\fBPartitionstabelle\fR
-.RS 4
-Hier kann man die Partitionstabelle aller oder einzelner Festplatten sichern, zur\(:uck sichern und l\(:oschen\&. Die Partitionstabelle wird mit den Parametern Byte und compact gespeichert\&. Die Werte werden in den Dateien \- bei
-\fIdevfs\fR
-in die Datei
-\fI/boot/dev_ide_\&.\&.\&._disc\-parttab\-DATUM\&.txt\fR, ansonsten in
-\fI/boot/[sh]d[a\-z]\&.parttab\-DATUM\&.txt\fR\&. Ein Abbild des
-\fIMBR\fR
-wird in der Datei
-\fI/boot/DISKNAME\-DATUM\&.mbr\fR
-gespeichert\&.
-.RE
-.PP
-\fB/dev/*\fR
-.RS 4
-Vorhandene Festplatten werden zur weiteren Bearbeitung angeboten (Patitionierung,\&.\&.\&.)\&.
-.RE
-.PP
-\fBlvm\fR
-.RS 4
-Wenn das Programm
-\fBkwlvm\fR
-(Paket kwtools\-sys\-lvm) installiert ist kann man von
-\fBkwparted\fR
-aus auch gleich Logische Volumes anlegen, etc\&. (manpage
-\fBkwlvm\fR(8))\&. Dazu muss vorher mindestens eine Partition mit dem Flag
-\fI\(lqlvm\(rq\fR
-oder ein RAID Array angelegt/vorhanden sein\&.
-.RE
-.PP
-\fBraid\fR
-.RS 4
-Wenn das Programm
-\fBkwraid\fR
-(Paket kwtools\-sys\-raid) installiert ist kann man von
-\fBkwparted\fR
-aus auch gleich RAID Arrays anlegen, etc\&. (manpage
-\fBkwraid\fR(8))\&. Dazu muss vorher mindestens eine Partition mit dem Flag
-\fI\(lqraid\(rq\fR
-oder ein RAID Array angelegt/vorhanden sein\&.
-.RE
+\fBkwparted\fR hat keine Kommandozeilen Optionen.
 .SH "SIEHE AUCH"
 .PP
 \fBkwlvm\fR(8),
@@ -116,5 +69,5 @@ oder ein RAID Array angelegt/vorhanden sein\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2010 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br
