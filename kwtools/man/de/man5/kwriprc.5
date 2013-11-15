@@ -1,13 +1,12 @@
-'\" t
 .\"     Title: KWRIPRC
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.75.0 <http://docbook.sf.net/>
-.\"      Date: 06/19/2009
-.\"    Manual: [FIXME: manual]
-.\"    Source: Version 0.0.5
+.\"      Date: 11/15/2013
+.\"    Manual:
+.\"    Source: Version 0.0.9
 .\"  Language: English
 .\"
-.TH "KWRIPRC" "5" "06/19/2009" "Version 0.0.5" "[FIXME: manual]"
+.TH "KWRIPRC" "5" "11/15/2013" "Version 0.0.9" "Benutzer Anleitung"
 .\" -----------------------------------------------------------------
 .\" * set default formatting
 .\" -----------------------------------------------------------------
@@ -19,13 +18,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-kwriprc \- Konfigurations Datei f\(:ur kwrip\&.
+kwriprc \- Konfigurationsdatei f\(:ur kwrip\&.
 .SH "BESCHREIBUNG"
 .PP
 Beim Start von
 \fBkwrip\fR
 wird die Datei
-~/\&.kwtools/kwriprc
+\fI~/\&.kwtools/kwriprc\fR
 eingelesen\&. Diese werden haupts\(:achlich von den Programmen
 \fBcd\-discid\fR,
 \fBcddbcmd\fR,
@@ -35,7 +34,7 @@ und
 ben\(:otigt\&. Beginnt eine Zeile mit
 \(lq#\(rq
 oder ist leer wird dies als Kommentar interpretiert\&.
-.SH "OPTIONEN"
+.SH "VARIABELN"
 .PP
 \fBAUDIO_OPTIONS\fR
 .RS 4
@@ -61,7 +60,7 @@ die jeweilige Tracknummer ist\&.
 \fBAUDIO_MOUNT_PATH\fR
 .RS 4
 Geben Sie hier das Mountverzeichnis ein\&. Dieses Verzeichnis muss in der Datei
-/etc/fstab
+\fI/etc/fstab\fR
 konfiguriert sein\&. Dies kann man nutzen falls das Audio Verzeichnis nicht standardm\(:assig ins System eingebunden ist\&.
 .RE
 .PP
@@ -144,7 +143,7 @@ ein\&.
 \fBVIDEO_MOUNT_PATH\fR
 .RS 4
 Geben Sie hier das Mountverzeichnis ein\&. Dieses Verzeichnis muss in der Datei
-/etc/fstab
+\fI/etc/fstab\fR
 konfiguriert sein\&. Dies kann man nutzen falls das Video Verzeichnis nicht standardm\(:assig ins System eingebunden ist\&.
 .RE
 .PP
@@ -154,7 +153,7 @@ Geben Sie hier das Standard Videoverzeichnis an, in das Ihre Filme gerippt werde
 .RE
 .SH "DATEI"
 .PP
-~/\&.kwtools/kwriprc
+\fI~/\&.kwtools/kwriprc\fR
 .RS 4
 Dies ist die Konfigurations Datei f\(:ur
 \fBkwrip\fR
@@ -178,5 +177,5 @@ Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .RE
 .SH "COPYRIGHT"
 .br
-CopyrightCopyright \(co 2002-2008 Kai Wilke
+CopyrightCopyright \(co 2002-2013 Kai Wilke
 .br

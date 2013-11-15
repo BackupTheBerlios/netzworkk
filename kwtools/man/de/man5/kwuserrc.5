@@ -1,13 +1,12 @@
-'\" t
 .\"     Title: KWUSERRC
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 03/08/2012
-.\"    Manual: Kongurationsdatei
-.\"    Source: Version 1.0.0
+.\"      Date: 11/16/2013
+.\"    Manual: Benutzer Anleitung
+.\"    Source: Version 1.0.3
 .\"  Language: English
 .\"
-.TH "KWUSERRC" "5" "03/08/2012" "Version 1.0.0" "Kongurationsdatei"
+.TH "KWUSERRC" "5" "11/16/2013" "Version 1.0.3" "Benutzer Anleitung"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,7 +27,7 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-kwuserrc \- Konfigurations Datei f\(:ur kwuser\&.
+kwuserrc \- Konfigurationsdatei f\(:ur kwuser\&.
 .SH "BESCHREIBUNG"
 .PP
 Beim Start von
@@ -40,7 +39,7 @@ eingelesen\&. Sie beinhaltet die Variablen die von
 benutzt werden k\(:onnen, zum erstellen von neuen Benutzern\&. Beginnt eine Zeile mit
 \(lq#\(rq
 oder ist leer wird dies als Kommentar interpretiert\&.
-.SH "OPTIONEN"
+.SH "VARIABELN"
 .PP
 \fBKW_GROUP\fR
 .RS 4
@@ -72,8 +71,6 @@ Zu Einstellungen (Passwortaenderung) beim 1\&. Login auffordern (\fIyes\fR/\fIno
 .sp
 Notiz: Ben\(:otigt das Paket
 \(lq\fBkwtools\-sys\-kwpasswd\fR\(rq, ausser Sie benutzen die Sourcen\&.
-.RE
-.SH ""
 .PP
 Quota Einstellungen zum anlegen von Benutzern\&. Quota bedeutet Plattenplatzbeschr\(:ankung\&. Quota wird nur angelegt wenn das Home Verzeichnis des Benutzers auch auf einer eigenen Partition mit
 \fB\(lqQuota\(rq\fR
@@ -110,7 +107,7 @@ Dies ist die Konfigurations Datei f\(:ur
 \fBrepquota\fR(8),
 \fBsetquota\fR(8),
 \fBshadow\fR(5)
-.SH "AUTHOR"
+.SH "AUTOR"
 .PP
 \fBKai Wilke\fR <\&kiste@netzworkk\&.de\&>
 .RS 4
@@ -118,5 +115,5 @@ Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2002-2012 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br

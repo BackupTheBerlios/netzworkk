@@ -1,24 +1,24 @@
 .\"     Title: KWECRYPTFSRC
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 01/27/2010
+.\"      Date: 11/15/2013
 .\"    Manual: 
-.\"    Source: Version 0.0.1
+.\"    Source: Version 0.0.4
 .\"
-.TH "KWECRYPTFSRC" "5" "01/27/2010" "Version 0.0.1" ""
+.TH "KWECRYPTFSRC" "5" "11/15/2013" "Version 0.0.4" "Benutzer Anleitung"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-kwecryptfsrc \- Konfigurations Datei f\(:ur kwecryptfs.
+kwecryptfsrc \- Konfigurationsdatei f\(:ur kwecryptfs.
 .SH "BESCHREIBUNG"
 .PP
 Dies ist die Standard Konfigurationsdatei vom Script
 \fBkwecryptfs\fR\&. Diese Werte werden beim Erstellen von verschl\(:usselten Verzeichnissen angeboten\&. Beginnt eine Zeile mit
 \(lq#\(rq
 oder ist leer wird dies als Kommentar interpretiert\&.
-.SH "OPTIONEN"
+.SH "VARIABELN"
 .PP
 \fBCIPHER\fR
 .RS 4
@@ -115,7 +115,7 @@ ist gut f\(:ur Backup Tools die erweiterte Attribute des Dateisystems unterst\(:
 \fBXATTR\fR
 .RS 4
 Sollen die Metadaten der verschl\(:usselten Dateien in den erweiterten Attributen des Dateisystems gespeichert werden (\fByes/no\fR)? Dateisysteme wie
-\fIext2/3\fR
+\fIext2/3/4\fR
 unterst\(:utzen dies zum Beispiel\&.
 .RE
 .SH "DATEI"
@@ -139,5 +139,5 @@ F\(:ur weitere Details siehe
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2009-2010 Kai Wilke
+Copyright \(co 2009-2013 Kai Wilke
 .br

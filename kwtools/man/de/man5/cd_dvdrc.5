@@ -1,17 +1,17 @@
 .\"     Title: CD_DVDRC
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-.\"      Date: 03/03/2010
+.\"      Date: 11/15/2013
 .\"    Manual: 
-.\"    Source: Version 0.1.23
+.\"    Source: Version 0.1.27
 .\"
-.TH "CD_DVDRC" "5" "03/03/2010" "Version 0.1.23" ""
+.TH "CD_DVDRC" "5" "11/15/2013" "Version 0.1.27" "Benutzer Anleitung"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-cd_dvdrc \- Konfigurations Datei f\(:ur alle kwtools Scripte die die Funktion cd_dvd_burn zum brennen benutzen.
+cd_dvdrc \- Konfigurationsdatei f\(:ur alle kwtools Scripte die die Funktion cd_dvd_burn zum brennen benutzen.
 .SH "BESCHREIBUNG"
 .PP
 Dies sind ein paar Brennereinstellungen f\(:ur alle Scripte die die Funktion
@@ -19,14 +19,14 @@ Dies sind ein paar Brennereinstellungen f\(:ur alle Scripte die die Funktion
 benutzen\&. Dies sind unter anderem
 \fBkwrecord\fR,
 \fBkwsnd2sndfm\fR,
-\fBkwvcdburn\fR
 und
-\fBkwvdvdburn\fR\&. Die Variablen werden beim Start der Scripte eingelesen\&. Sind diese nicht belegt, wird vor dem brennen ein Konfigurationsmen\(:u aufgerufen\&. Beginnt eine Zeile mit
+\fBkwvcdburn\fR\&.
+Die Variablen werden beim Start der Scripte eingelesen\&. Sind diese nicht belegt, wird vor dem brennen ein Konfigurationsmen\(:u aufgerufen\&. Beginnt eine Zeile mit
 \(lq#\(rq
 oder ist leer wird dies als Kommentar interpretiert\&.
 .PP
 Vor jeder Brennaction wird nochmal ein kleines Men\(:u aufgerufen zum einstellen der Kopieanzahl und weiterer Parameter die nicht in diese Konfiguration geh\(:oren aber n\(:utzlich sein k\(:onnen\&.
-.SH "OPTIONEN"
+.SH "VARIABELN"
 .PP
 \fBCD_PROG\fR
 .RS 4
@@ -224,5 +224,5 @@ Scripte\&.
 .IP "" 4
 Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .SH "COPYRIGHT"
-Copyright \(co 2002-2010 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br
