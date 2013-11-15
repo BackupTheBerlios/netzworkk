@@ -1,13 +1,12 @@
-'\" t
 .\"     Title: KWUSER
 .\"    Author: Kai Wilke <kiste@netzworkk.de>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 03/08/2012
+.\"      Date: 11/15/2013
 .\"    Manual: Handbuch f\(:ur kwuser
-.\"    Source: Version 1.0.0
+.\"    Source: Version 1.0.3
 .\"  Language: English
 .\"
-.TH "KWUSER" "8" "03/08/2012" "Version 1.0.0" "Handbuch f\(:ur kwuser"
+.TH "KWUSER" "8" "11/15/2013" "Version 1.0.3" "Handbuch f\(:ur kwuser"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -39,10 +38,16 @@ Mit
 k\(:onnen Sie Benutzer anlegen, ver\(:andern, l\(:oschen und die Datei
 \fI/etc/passwd\fR
 ansehen\&. Beim anlegen eines Benutzers muss immer ein Passwort mit angegeben werden\&. Die Variable die es enth\(:alt wird sofort nach dem Gebrauch gel\(:oscht\&.
+Einen Benutzer anlegen\&. Es wird bei der Auswahl die Benutzer\- und Gruppen\-ID \(:uberpr\(:uft, ob diese schon vergeben ist\&. Falls
+\fB\(lqQuota\(rq\fR
+konfiguriert wurde wird dieses auch gleich f\(:ur den Benutzer eingestellt, falls das Homeverzeichnis auf einer eigenen Partition liegt und
+\fB\(lqQuota\(rq\fR
+Unterst\(:utzung besitzt\&.
+.SH "OPTIONEN"
 .PP
-Die Option
-\fB[ \-m | \-\-multi ]\fR
-ist ein Sonderfall mit der Sie viele Benutzer gleichzeitig anlegen k\(:onnen\&. Es erscheint dann eine etwas andere Men\(:uauswahl mit den zus\(:atzlichen Punkten Prefix, Prefix_Homeverz\&. und Anzahl\&. Die Benutzer werden dann mit der Kombination aus Prefix+Anzahl erstellt\&.
+\fB-m --multi\fR
+.RS 4
+Mit dieser Option k\(:onnen Sie viele Benutzer gleichzeitig anlegen\&. Es erscheint dann eine etwas andere Men\(:uauswahl mit den zus\(:atzlichen Punkten Prefix, Prefix_Homeverz\&. und Anzahl\&. Die Benutzer werden dann mit der Kombination aus Prefix+Anzahl erstellt\&.
 .PP
 Die Passw\(:orter stehen danach in der Datei
 \fI/root/passwd\-prefix\&.txt\fR\&. Es wird ein Hash mittels openssl f\(:ur die Passw\(:orter gebildet\&. Sie sollten diese Datei ordentlich sichern! Die Datei hat das Format:
@@ -59,36 +64,6 @@ User Passwort
 .sp
 
 Auch sollten Sie bei der Erstellung von mehr als 10000 Benutzern lieber eine Datenbank benutzen\&. Die Geschwindigkeit ist dann besser\&.
-.SH "OPTIONEN"
-.PP
-\fBKonfiguration\fR
-.RS 4
-Belegung von Standard Werten zum anlegen von neuen Benutzern\&.
-.RE
-.PP
-\fBAnsicht\fR
-.RS 4
-Ansicht der Datei
-\fI/etc/passwd\fR\&.
-.RE
-.PP
-\fBanlegen\fR
-.RS 4
-Einen Benutzer anlegen\&. Dabei wird bei der Auswahl die Benutzer\- und Gruppen\-ID \(:uberpr\(:uft, ob diese schon vergeben ist\&. Falls
-\fB\(lqQuota\(rq\fR
-konfiguriert wurde wird dieses auch gleich f\(:ur den Benutzer eingestellt, falls das Homeverzeichnis auf einer eigenen Partition liegt und
-\fB\(lqQuota\(rq\fR
-Unterst\(:utzung besitzt\&.
-.RE
-.PP
-\fB\(:andern\fR
-.RS 4
-Vorhandenen Benutzer \(:andern, zum Beispiel dessen Rechte\&.
-.RE
-.PP
-\fBl\(:oschen\fR
-.RS 4
-Ein oder mehrere Benutzer l\(:oschen\&.
 .RE
 .SH "DATEIEN"
 .PP
@@ -132,5 +107,5 @@ Die Manpage wurde in DocBook XML f\(:ur die Debian Distribution geschrieben\&.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2002-2012 Kai Wilke
+Copyright \(co 2002-2013 Kai Wilke
 .br
