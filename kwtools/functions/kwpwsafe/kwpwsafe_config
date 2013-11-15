@@ -13,7 +13,7 @@ kwpwsafe_config() {
 # Standard Datenbank
 DEFAULT_PWSAFE_FILE=\"$DEFAULT_PWSAFE_FILE\"
 
-# Passwortlaenge diebeim generieren eines Passwortes
+# Passwortlaenge die beim generieren eines Passwortes
 # benutzt werden soll.
 PASSWD_LENGTH=\"$PASSWD_LENGTH\"
 
