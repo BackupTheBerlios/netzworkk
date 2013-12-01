@@ -1,7 +1,7 @@
 # kwpwsafe_open_db_help# {{{
 TITLE="${lv_Db}::${gv_Help}"
-MSG=$(gettext 'Ansicht: Anzeige des Benutzernames, dem dazugehoerigen Passwort
-\tund der Notizen.
+MSG=$(gettext 'Eintraege: Anzeige von Daten und Uebernahme von Benutzernamen
+\tPasswort nach X Clipboard oder STOUT.
 
 anlegen: Einen Eintrag fuer die Datenbank erstellen. Beim anlegen
 \tkoennen Sie eine Gruppe auswaehlen oder erstellen, um die Eintraege
