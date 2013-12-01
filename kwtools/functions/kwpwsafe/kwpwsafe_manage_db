@@ -212,7 +212,7 @@ expect eof"
 								pass_input "$Db_Choice"
 								if [ ! -z "$DB_PASS" ] ; then
 									Db_Choice_Ex="`print ${gv_Auswahl}(:r)`"
-									echo "$DB_PASS" | pwsafe --exportdb -f $Db_Choice > ${Db_Choice_Ex}.txt
+									print "$DB_PASS" | pwsafe --exportdb -f $Db_Choice > ${Db_Choice_Ex}.txt
 									# Passphrase loeschen
 									unset -- DB_PASS
 								fi
