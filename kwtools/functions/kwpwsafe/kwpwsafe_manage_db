@@ -7,12 +7,11 @@
 # usage: kwpwsafe_manage_db
 #
 kwpwsafe_manage_db() {
+	# Variablen
 	MANAGE_TITLE=$(gettext 'Datenbankverwaltung')
-	#
 	lv_Delete_Db=$(gettext 'Datenbank loeschen')
 	lv_Export_Db=$(gettext 'Datenbank exportieren')
 	lv_Import_Db=$(gettext 'Datenbank importieren')
-	lv_Db_Name=$(gettext 'Datenbank-Name')
 	lv_Passwd=$(gettext 'Passwort')
 	OK_MSG=$(gettext 'Passwort wurde erfolgreich geaendert.')
 	NOOK_MSG=$(gettext 'Das Passwort konnte nicht geaendert werden. Wiederholen?')
@@ -20,12 +19,6 @@ kwpwsafe_manage_db() {
 	IMPORT_OK_MSG=$(gettext 'Der Import der Datenbank wurde erfolgreich durchgefuehrt.')
 	IMPORT_NOOK_MSG=$(gettext 'Der Import der Datenbank ist fehlgschlagen.')
 	#
-	# Funktion (incorrect_6pass_length), falsche Passwortlaenge# {{{
-	incorrect_6pass_length() {
-		MSG=$(gettext 'Die Laenge des/der Passworts/Passphrase muss mindestens 6 Zeichen sein.')
-		msgbox "$gv_Attention" "$MSG"
-	}
-	## }}}
 	# Funktion (manage_db_menu)# {{{
 	manage_db_menu() {
 		MANAGE_DB_MENU=(\"$lv_Create_Db\" \"\"
@@ -38,148 +31,6 @@ kwpwsafe_manage_db() {
 		else
 			menubox "$MANAGE_TITLE" "$gv_Menupoint" "$MANAGE_DB_MENU"
 		fi
-	}
-	## }}}
-	# Funktion (create_db)# {{{
-	#
-	# usage: create_db
-	create_db() {
-		# Funktion (create_db_menu)# {{{
-		create_db_menu() {
-			CREATE_DB_MENU=(\"$lv_Db_Name\" \"$CR_PWSAFE\"
-			\"$gv_Passwd\" \"$DB_PASSWD1\" $gv_Save \"\"
-			\"$gv_Back\" \"\")
-			if [[ ${#argv} == 1 ]] ; then
-				menubox -d "$1" "$MANAGE_TITLE" "$gv_Menupoint" "$CREATE_DB_MENU"
-			else
-				menubox "$MANAGE_TITLE" "$gv_Menupoint" "$CREATE_DB_MENU"
-			fi
-		}
-		## }}}
-		create_db_menu
-		while [ -n "$gv_Auswahl" ] ; do
-			case "$gv_Auswahl" in
-				HELP*)	script_help kwpwsafe_db_help
-					create_db_menu
-					;;
-				$lv_Db_Name)
-					# Datenbank Name eingeben# {{{
-					MSG=$(gettext 'Geben Sie den Datenbank-Namen ohne Endung (*.dat) ein.')
-					inputbox "$lv_Db_Name" "$MSG" "${CR_PWSAFE%.dat}"
-					if [ -n "$gv_Auswahl" ] ; then
-						# pruefen ob diese DB schon vorhanden ist.
-						if [ ! -f "${LOCAL_PWSAFE_PATH}/${gv_Auswahl}.dat" ] ; then
-							CR_PWSAFE="${gv_Auswahl}.dat"
-						else
-							MSG=$(gettext 'Die Datenbank ${gv_Auswahl}.dat ist schon vorhanden.')
-							msgbox "$gv_Info" "$MSG"
-							CR_PWSAFE=""
-						fi
-					else
-						CR_PWSAFE=""
-					fi
-					## }}}
-					create_db_menu $lv_Db_Name
-					;;
-				$gv_Passwd)
-					# Passwort eingeben# {{{
-					# Funktion (passwd_db_menu)# {{{
-					passwd_db_menu() {
-						PASSWD_DB_MSG=$(gettext 'Geben Sie ein Passwort ein. Nehmen Sie am besten unterschiedliche Zeichen in Gross- und Kleinschreibung. Mit den Pfeiltasten koennen Sie zwischen den Eingabefeldern springen.')
-						PASSWD_DB_MENU=(\"$gv_New_Passwd\" "1 1 \"\" 1 20 20 0 1"
-						\"$gv_New_Passwd\" "2 1 \"\" 2 20 20 0 1")
-						mixedform -i "$MANAGE_TITLE" "$PASSWD_DB_MSG" "$PASSWD_DB_MENU"
-					}
-					## }}}
-					passwd_db_menu
-					while [ -n "$gv_Auswahl" ] ; do
-						case "$gv_Auswahl" in
-							HELP*)	script_help kwpwsafe_db_help
-								passwd_db_menu
-								;;
-							*)
-								# Passwoerter pruefen und evtl. uebernehmen.# {{{
-								Anz="${(w)#gv_Auswahl}"
-								NPW="${${(ws: :)${=gv_Auswahl}}[1]}"
-								NNPW="${${(ws: :)${=gv_Auswahl}}[2]}"
-								if [ "$Anz" -eq 2 ] ; then
-									if [ "$NPW" = "$NNPW" ] ; then
-										Char="${(c)#NPW}"
-										if [ "$Char" -ge 6 ] ; then
-											password_display "$NPW"
-											DB_PASSWD1="$gv_Star_Passphrase"
-											unset -- gv_Star_Passphrase
-											DB_PASSWD="$NPW" 
-											break
-										else
-											# falsche Password Laenge
-											incorrect_6pass_length
-											passwd_db_menu
-										fi
-									else
-										different_passwd
-										passwd_db_menu
-									fi
-								else
-									input_all_field_msg
-									passwd_db_menu
-								fi
-								## }}}
-								;;
-						esac
-					done
-					## }}}
-					create_db_menu $gv_Passwd
-					;;
-				$gv_Save)
-					# Pruefen ob Datenbank-Name und Passwort eingegeben sind# {{{
-					if [ -n "$CR_PWSAFE" -a -n "$DB_PASSWD" ] ; then
-						# expect mit der Einstellungsdatei ausfuehren
-						> ${gv_WorkDir}/expect <<<"#!/usr/bin/expect -f
-
-set force_conservative 0  ;# set to 1 to force conservative mode even if
-              ;# script wasn't run conservatively originally
-if {\$force_conservative} {
-    set send_slow {1 .1}
-    proc send {ignore arg} {
-        sleep .1
-        exp_send -s -- \$arg
-    }
-}
-
-set db_pass \"$DB_PASSWD\"
-
-set timeout 1
-match_max 100000
-stty -echo
-spawn pwsafe --createdb -f ${LOCAL_PWSAFE_PATH}/${CR_PWSAFE}
-expect \"Enter passphrase .*: \"
-send -- \"\$db_pass\r\"
-expect \"Reenter .*: \"
-send -- \"\$db_pass\r\"
-stty echo
-expect eof"
-						(export LC_ALL=C ; expect -f ${gv_WorkDir}/expect >/dev/null) || (del_expect ; prog_failure)
-						# schnell die Erstellungsdatei loeschen
-						del_expect
-						# Variablen loeschen
-						unset -- DB_PASSWD CR_PWSAFE
-						break
-					else
-						MSG=$(gettext 'Sie muessen erst die Menuepunkte $lv_Db_Name und $gv_Passwd mit einem Wert belegen.')
-						msgbox "$gv_Info" "$MSG"
-						create_db_menu
-					fi
-					## }}}
-					;;
-				$gv_Back)
-					# zurueck ohne speichern
-					# Variablen loeschen
-					unset -- DB_PASSWD CR_PWSAFE
-					break
-					;;
-			esac
-		done
 	}
 	## }}}
 	manage_db_menu
