@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 06.09.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 01.12.2013
 #
 # Script: kwpwsafe, Frontend zur Verwaltung der Passwoerter mit dem Programm
 #         pwsafe.
 #
-# Version: 0.0.9
+# Version: 0.1.0
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -108,7 +108,7 @@ pass_input() {
 		password "$gv_Passwd_TITLE" "$PASSWD_MSG" 1
 		if [ -n "$PASSPHRASE" ] ; then
 			# Passwort pruefen
-			if echo "$PASSPHRASE" | pwsafe -f $DB_FILE >/dev/null ; then
+			if print "$PASSPHRASE" | pwsafe -q -f $DB_FILE &>/dev/null ; then
 				DB_PASS="$PASSPHRASE"
 				unset -- PASSPHRASE
 			else
@@ -139,7 +139,7 @@ read_pwsafe_data() {
 			PWSAFECF="$1"
 			Group="${2%.*}"
 			Name="${2##*.}"
-			echo "$DB_PASS" | pwsafe --exportdb -f "$PWSAFECF" >/dev/null | \
+			print "$DB_PASS" | pwsafe --exportdb -f "$PWSAFECF" &>/dev/null | \
 			grep "$Group" | grep "$Name" | \
 			while read uuid group name login passwd notes ; do
 				PW_GROUP="${group//\"/}"
@@ -167,7 +167,7 @@ read_pwsafe_entry() {
 	if [ "${#argv}" = 1 ] ; then
 		if [ -f "$1" ] ; then
 			PWSAFECF="$1"
-			echo "$DB_PASS" | pwsafe --list -f "$PWSAFECF" | \
+			print "$DB_PASS" | pwsafe --list -f "$PWSAFECF" | \
 				while read Pw_Entry ; do
 					case "$Pw_Entry" in
 						*[^:]*)
