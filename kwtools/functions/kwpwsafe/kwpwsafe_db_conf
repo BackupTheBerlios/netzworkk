@@ -291,7 +291,7 @@ set pw_enablepass \"$PW_PASSWD\""
 							if [ -n "$PW_NOTES" ] ; then
 								>> ${gv_WorkDir}/expect <<<"set pw_notes \"${PW_NOTES//\\012/012}\""
 							else
-								>> ${gv_WorkDir}/expect <<<"set pw_notes \"\""
+								>> ${gv_WorkDir}/expect <<<"set pw_notes \" \""
 							fi
 							# Standard Ausfuehrungen speichern/erstellen
 							>> ${gv_WorkDir}/expect <<<"set pw_name \"$PW_NAME\"
