@@ -66,7 +66,7 @@ expect eof"
 		# Variable loeschen
 		unset -- PBKDF2_PASSWD
 		#
-		GRUB_PASSWD_PBKDF2=${${(ws: :)${(M)${(f)"$(< ${gv_WorkDir}/hash)"}##(s#)Your*}}[4]}
+		GRUB_PASSWD_PBKDF2=${${(M)${(f)"$(< ${gv_WorkDir}/hash)"}##*PBKDF2*}##* }
 	}
 	## }}}
 	# Funktion (security_menu)# {{{
