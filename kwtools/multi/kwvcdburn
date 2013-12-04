@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 07.01.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 04.12.2013
 #
 # Script: kwvcdburn, kreiert und brennt (S)VCD Filme
-# Version: 0.0.8
+# Version: 0.0.9
 #
 
 trap 'setterm -inversescreen off ; setterm -reset ;
@@ -33,7 +33,7 @@ autoload -U script_init
 script_init
 
 # auf Programme pruefen
-prog_check vcdimager vcdxgen vcdxbuild jpeg2yuv mplex yuvscaler 
+prog_check vcdimager vcdxgen vcdxbuild jpeg2yuv mpeg2enc mplex yuvscaler 
 if [ -n "${NO_PROGS[1]}" ] ; then
 	exit 0
 fi
@@ -60,27 +60,13 @@ fi
 if [ -z "$VCD_TYPE" ] ; then
 	VCD_TYPE="svcd"
 fi
-if [ -z "$FRAME_RATE" ] ; then
-	FRAME_RATE=25
-fi
-if [ -z "$FRAME_SIZE" ] ; then
-	FRAME_SIZE="480x576"
-fi
-if [ -z "$IMAGE_FORMAT" ] ; then
-	IMAGE_FORMAT="2"
-fi
-if [ -z "$SIZE" ] ; then
-	SIZE="200"
-fi
 
 CREATE_NAME_MSG=$(gettext 'Vergeben Sie einen Namen fuer die Video-CD ohne .cue Endung, ansonsten heisst sie videocd.cue.')
-NAME_MSG=$(gettext 'Vergeben Sie einen Namen fuer die Photo-CD ohne .cue Endung, ansonsten wird die Datei photocd.cue genannt.')
 
 # Funktion haupt_menue{{{
 lv_Video_Cd=$(gettext 'Video-CD')
-lv_Photo_Cd=$(gettext 'Photo-CD')
 lv_Burn=$(gettext 'brennen')
-MAIN_MENU=($gv_Configuration \"\" $lv_Video_Cd \"\" $lv_Photo_Cd \"\" $lv_Burn \"\" $gv_Back \"\")
+MAIN_MENU=($gv_Configuration \"\" $lv_Video_Cd \"\" $lv_Burn \"\" $gv_Back \"\")
 #
 haupt_menue() {
 	menubox "$gv_Mainmenu" "$gv_Menupoint" "$MAIN_MENU"
@@ -164,115 +150,6 @@ while [ "$gv_Auswahl" ] ; do
 				rm -rf $gv_LogFile$$ &>/dev/null
 			fi
 			#}}}
-			haupt_menue
-			;;
-		$lv_Photo_Cd)
-			####################
-			# TODO:
-			# testen auch andere VCD Formate
-			####################
-			# Photo-CD erstellen# {{{
-			#
-			# Funktion multiplex_image, wandelt Bilder in# {{{
-			# die richtige Groesse um und multiplext diese.
-			#
-			# usage: multiplex_image DATEIEN
-			#
-			multiplex_image() {
-				if [ "$#" -ge 1 ] ; then
-					local Anz File
-					integer Anz
-					unset -- File VALUE
-					File="$1"
-					case "$VCD_TYPE" in
-						svcd)
-							VCD_SUFFIX=m2v
-							;;
-						*)
-							VCD_SUFFIX=m1v
-							;;
-					esac
-					# einzelne JPEG Dateien umwandeln.
-					Anz=0
-					for a in ${=File} ; {
-						if [ -n "`print ${(M)${(f)"$(file -b "$a")"}##*(image data)*}`" ] ; then
-							# erst pruefen ob die Bildhoehe ein vielfaches von 16 ist.
-							# Wenn nicht abbrechen.
-							if jpeg2yuv -f $FRAME_RATE -j $a &>/dev/null ; then
-								jpeg2yuv -f $FRAME_RATE -j $a -I p -n -1 | \
-								yuvscaler -O $FRAME_SIZE | \
-								mpeg2enc -a $IMAGE_FORMAT -T $SIZE -n p \
-								-f 7 -o ${a%.*}.${VCD_SUFFIX}
-								# mplexen der Dateien zur mpg Datei
-								mplex -f 7 -o ${a%.*}.mpg ${a%.*}.${VCD_SUFFIX} || prog_failure
-								(( Anz++ ))
-								VALUE[Anz]="${a%.*}.mpg"
-							else
-								MSG=$(gettext 'Die Bildhoehe ist kein mehrfaches von 16. Sie muessen das Bild neu skalieren.')
-								msgbox "$gv_Info" "$MSG"
-								break 2
-							fi
-						fi
-					}
-					#
-					# Programm vcdxgen ausfuehren.
-					vcdxgen $VALUE -t $VCD_TYPE -o ${gv_WorkDir}/photocd.xml
-					# Namen fuer die Video-CD vergeben
-					inputbox "$PHOTO_TITLE" "$NAME_MSG"
-					if [ -n "$gv_Auswahl" ] ; then
-						VideoCd="$gv_Auswahl"
-					else
-						VideoCd=photocd
-					fi
-					# Programm vcdxbuild ausfuehren.
-					vcdxbuild -c ${VideoCd}.cue -b ${VideoCd}.bin ${gv_WorkDir}/photocd.xml
-				else
-					no_para_msg $0
-				fi
-			}
-			## }}}
-			# Funktion photo_choice_menu, komplettes Verzeichnis oder einzeln# {{{
-			#
-			lv_Choice=$(gettext 'Auswahl')
-			lv_Complete=$(gettext 'komplett')
-			PHOTO_TITLE=($lv_Photo_Cd)
-			PHOTO_CHOICE_MENU=($lv_Choice \"\" $lv_Complete \"\" $gv_Back \"\")
-			photo_choice_menu() {
-				menubox "$PHOTO_TITLE" "$gv_Menupoint" "$PHOTO_CHOICE_MENU"
-			}
-			## }}}
-			photo_choice_menu
-			while [ -n "$gv_Auswahl" ] ; do
-				case "$gv_Auswahl" in
-					HELP*)	script_help photo_choice_help
-						photo_choice_menu
-						;;
-					$lv_Choice)
-						FORMAT="IMAGE"
-						file_choice "$PHOTO_DIR" multi
-						# Einzelne Dateien umwandeln
-						if [ "${WERT[1]}" ] ; then
-							multiplex_image "$WERT"
-						fi
-						photo_choice_menu
-						;;
-					$lv_Complete)
-						# komplette Verzeichnisse umwandeln.
-						dselect "$PHOTO_DIR"
-						if [ -n "$VERZ" ] ; then
-							dselect_check "$VERZ"
-							if [ -n "$VERZ" ] ; then
-								cd "$VERZ"
-								multiplex_image "`print *(.)`"
-							fi
-						fi
-						photo_choice_menu
-						;;
-					$gv_Back)	break
-						;;
-				esac
-			done
-			## }}}
 			haupt_menue
 			;;
 		$lv_Burn)

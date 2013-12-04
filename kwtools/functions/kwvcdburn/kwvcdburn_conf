@@ -7,17 +7,11 @@
 kwvcdburn_conf() {
 	lv_Mountdir=$(gettext 'Mountverz.')
 	lv_Video_Typ=$(gettext 'Video_Typ')
-	lv_Image_Format=$(gettext 'Bildformat')
-	lv_Size=$(gettext 'Groesse')
-	lv_Frame_Rate=$(gettext 'Framerate')
-	lv_Frame_Size=$(gettext 'Framegroesse')
 	#
 	# Funktion vcdburn_conf_menue{{{
 	vcdburn_conf_menue() {
 		CONF_MENU=($lv_Mountdir \"$MOUNT_PATH\" $gv_Directory \"$FILM_DIR\"
-		$lv_Video_Typ \"$VCD_TYPE\" $lv_Image_Format \"$IMAGE_FORMAT\"
-		$lv_Size \"$SIZE\" $lv_Frame_Rate \"$FRAME_RATE\"
-		$lv_Frame_Size \"$FRAME_SIZE\" $gv_Save \"\" $gv_Back \"\")
+		$lv_Video_Typ \"$VCD_TYPE\" $gv_Save \"\" $gv_Back \"\")
 		if [[ ${#argv} == 1 ]] ; then
 			menubox -d "$1" "$gv_Configuration" "$gv_Menupoint" "$CONF_MENU"
 		else
@@ -86,152 +80,12 @@ kwvcdburn_conf() {
 							;;
 						*)	#	
 							VCD_TYPE="$gv_Auswahl"
-							unset -- gv_Auswahl
+							break
 							;;
 					esac		
 				done	
 				#}}}
 				vcdburn_conf_menue $lv_Video_Typ
-				;;
-			$lv_Image_Format)
-				# Bildformat auswaehlen# {{{
-				FORMAT_TITLE=(${gv_Configuration}::${lv_Image_Format})
-				FORMAT_MSG=$(gettext 'Waehlen Sie das Bildformat aus (Standard ist 2).')
-				FORMAT_MENU=(1 \"1:1\" 2 \"4:3\" 3 \"16:9\" 4 \"2.21:1\" $gv_Back \"\")
-				# Funktion image_format_menu# {{{
-				#
-				image_format_menu() {
-					if [[ -n $IMAGE_FORMAT ]] ; then
-						menubox -d "$IMAGE_FORMAT" "$FORMAT_TITLE" "$FORMAT_MSG" "$FORMAT_MENU"
-					else
-						menubox "$FORMAT_TITLE" "$FORMAT_MSG" "$FORMAT_MENU"
-					fi
-				}
-				## }}}
-				image_format_menu
-				while [ -n "$gv_Auswahl" ] ; do
-					case "$gv_Auswahl" in
-						HELP*)	script_help format_help
-							image_format_menu
-							;;
-						$gv_Back)	break
-							;;
-						*)	# uebernehmen
-							IMAGE_FORMAT="$gv_Auswahl"
-							break
-							;;
-					esac
-				done
-				## }}}
-				vcdburn_conf_menue $lv_Image_Format
-				;;
-			$lv_Size)
-				# Bildgroesse eingeben (Standard ist 200 / in KByte)# {{{
-				SIZE_TITLE=(${gv_Configuration}::${lv_Size})
-				SIZE_MSG=$(gettext 'Geben Sie die Bildgroesse, in Kilobyte als Integer Zahl, ein (Standard ist 200).')
-				number_input "$SIZE_TITLE" "$SIZE_MSG" "$SIZE"
-				if [ -n "$NUMBER" ] ; then
-					if [ "$NUMBER" -ge 50 ] ; then
-						SIZE="$NUMBER"
-					else
-						no_input_msg
-					fi
-				fi
-				## }}}
-				vcdburn_conf_menue $lv_Size
-				;;
-			$lv_Frame_Rate)
-				# Framerate fuer jpeg2yuv auswaehlen# {{{
-				FRAME_TITLE=(${gv_Configuration}::${lv_Frame_Rate})
-				FRAME_MSG=$(gettext 'Waehlen Sie die Framerate aus (Standard ist 25).')
-				FRAME_MENU=(25 PAL 30000 NTSC $gv_Back \"\")
-				# Funktion frame_rate_menu# {{{
-				#
-				frame_rate_menu() {
-					if [[ -n $FRAME_RATE ]] ; then
-						menubox -d "$FRAME_RATE" "$FRAME_TITLE" "$FRAME_MSG" "$FRAME_MENU"
-					else
-						menubox "$FRAME_TITLE" "$FRAME_MSG" "$FRAME_MENU"
-					fi
-				}
-				## }}}
-				frame_rate_menu
-				while [ -n "$gv_Auswahl" ] ; do
-					case "$gv_Auswahl" in
-						HELP*)	script_help framerate_help
-							frame_rate_menu
-							;;
-						$gv_Back)	break
-							;;
-						*)	# uebernehmen
-							FRAME_RATE="$gv_Auswahl"
-							break
-							;;
-					esac
-				done
-				## }}}
-				vcdburn_conf_menue $lv_Frame_Rate
-				;;
-			$lv_Frame_Size)
-				# Framegroesse fuer eingeben/auswaehlen# {{{
-				lv_Monochrom=$(gettext 'MONOCHROM')
-				lv_Vcd=$(gettext 'VCD')
-				lv_Svcd=$(gettext 'SVCD')
-				lv_Dvd=$(gettext 'DVD')
-				#
-				FRAME_S_TITLE=(${gv_Configuration}::${lv_Frame_Size})
-				FRAME_S_MSG=$(gettext 'Waehlen Sie die Framegroesse aus oder geben Sie sie ein (Standard sind 480x576/PAL/SVCD).')
-				FRAME_S_MENU=($gv_Create \"\" $lv_Monochrom \"\" $lv_Vcd \"\"
-				$lv_Svcd \"\" $lv_Dvd \"\" $gv_Back \"\")
-				# Funktion frame_size_menu# {{{
-				#
-				frame_size_menu() {
-					if [[ -n $FRAME_SIZE ]] ; then
-						menubox -d "$1" "$FRAME_S_TITLE" "$FRAME_S_MSG" "$FRAME_S_MENU"
-					else
-						menubox "$FRAME_S_TITLE" "$FRAME_S_MSG" "$FRAME_S_MENU"
-					fi
-				}
-				## }}}
-				frame_size_menu
-				while [ -n "$gv_Auswahl" ] ; do
-					case "$gv_Auswahl" in
-						HELP*)	script_help framesize_help
-							frame_size_menu
-							;;
-						$gv_Create)
-							# Eingabe der Frame Groesse# {{{
-							FRAME_I_MSG=$(gettext 'Geben Sie die Framegroesse ein (z. B. 480x576/PAL/SVCD)')
-							inputbox "$FRAME_S_TITLE" "$FRAME_I_MSG" "$FRAME_SIZE"
-							if [ -n "$gv_Auswahl" ] ; then
-								# Wert pruefen
-								case "$gv_Auswahl" in
-									[1-9][0-9][0-9]*x[1-9][0-9][0-9]*)
-										# Wert uebernehmen
-										FRAME_SIZE="${gv_Auswahl}"
-										break
-										;;
-									*)	# Fehlermeldung
-										no_input_msg
-										break
-										;;
-								esac
-							else
-								no_input_msg
-								break
-							fi
-							## }}}
-							;;
-						$gv_Back)	break
-							;;
-						*)	# uebernehmen
-							FRAME_SIZE="$gv_Auswahl"
-							break
-							;;
-					esac
-				done
-				## }}}
-				vcdburn_conf_menue $lv_Frame_Size
 				;;
 			$gv_Save)
 				# Konfiguration schreiben
