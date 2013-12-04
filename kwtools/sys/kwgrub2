@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 18.09.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 04.12.2013
 #
 # Script: kwgrub2, konfiguriert und installiert grub2
 # Version: 0.0.4
@@ -116,14 +116,7 @@ os_check
 if_conf_file "$OS" grub2
 
 # auf Programme pruefen.# {{{
-if [[ $OS == Debian ]] ; then
-	prog_check grub-mkconfig
-	if [ -n "$PROGS" ] ; then
-		UPDATE_GRUB="$PROGS"
-	else
-		exit 0
-	fi
-elif [[ $OS == SUSE ]] ; then
+if [[ $OS == SUSE ]] ; then
 	prog_check grub2-mkconfig
 	if [ -n "$PROGS" ] ; then
 		UPDATE_GRUB="$PROGS"
