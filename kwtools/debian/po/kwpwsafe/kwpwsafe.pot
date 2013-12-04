@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 18:18+0100\n"
+"POT-Creation-Date: 2013-12-04 16:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,28 +30,63 @@ msgid "Passwort aendern"
 msgstr ""
 
 #: ../../utils/kwpwsafe:65
-msgid "Datenbank oeffnen"
+msgid "Daten verwalten"
 msgstr ""
 
 #: ../../utils/kwpwsafe:66
-msgid "Datenbank verwalten"
+msgid "Datenbank oeffnen"
 msgstr ""
 
 #: ../../utils/kwpwsafe:67
-msgid "Waehlen Sie eine Datenbank aus."
+msgid "Datenbank verwalten"
 msgstr ""
 
 #: ../../utils/kwpwsafe:68
+msgid "Waehlen Sie eine Datenbank aus."
+msgstr ""
+
+#: ../../utils/kwpwsafe:69
 msgid "Sie haben das falsche Passwort eingegeben."
 msgstr ""
 
-#: ../../utils/kwpwsafe:93
+#: ../../utils/kwpwsafe:94
 msgid "Es sind keine Datenbanken vorhanden. Sie muessen erst eine erstellen."
 msgstr ""
 
-#: ../../utils/kwpwsafe:105
+#: ../../utils/kwpwsafe:106
 #, sh-format
 msgid "Geben Sie das Passwort fuer die Datenbank $DB_FILE ein."
+msgstr ""
+
+#: ../../utils/kwpwsafe:197
+msgid "Datenbank-Name"
+msgstr ""
+
+#: ../../utils/kwpwsafe:200
+msgid "Die Laenge des/der Passworts/Passphrase muss mindestens 6 Zeichen sein."
+msgstr ""
+
+#: ../../utils/kwpwsafe:223
+msgid "Geben Sie den Datenbank-Namen ohne Endung (.dat) ein."
+msgstr ""
+
+#: ../../utils/kwpwsafe:230
+#, sh-format
+msgid "Die Datenbank ${gv_Auswahl}.dat ist schon vorhanden."
+msgstr ""
+
+#: ../../utils/kwpwsafe:244
+msgid ""
+"Geben Sie ein Passwort ein. Nehmen Sie am besten unterschiedliche Zeichen in "
+"Gross- und Kleinschreibung. Mit den Pfeiltasten koennen Sie zwischen den "
+"Eingabefeldern springen."
+msgstr ""
+
+#: ../../utils/kwpwsafe:323
+#, sh-format
+msgid ""
+"Sie muessen erst die Menuepunkte $lv_Db_Name und $gv_Passwd mit einem Wert "
+"belegen."
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_conf:5
@@ -113,7 +148,7 @@ msgstr ""
 msgid "Sie muessen mindestens einen $lv_Name eingeben."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:10
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:11
 msgid "Datenbankverwaltung"
 msgstr ""
 
@@ -130,104 +165,89 @@ msgid "Datenbank importieren"
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_manage_db:15
-msgid "Datenbank-Name"
-msgstr ""
-
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:16
 msgid "Passwort"
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:17
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:16
 msgid "Passwort wurde erfolgreich geaendert."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:18
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:17
 msgid "Das Passwort konnte nicht geaendert werden. Wiederholen?"
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:19
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:18
 msgid "Sie haben das falsche Passwort eingegeben. Wiederholen?"
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:20
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:19
 msgid "Der Import der Datenbank wurde erfolgreich durchgefuehrt."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:21
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:20
 msgid "Der Import der Datenbank ist fehlgschlagen."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:25
-msgid "Die Laenge des/der Passworts/Passphrase muss mindestens 6 Zeichen sein."
-msgstr ""
-
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:67
-msgid "Geben Sie den Datenbank-Namen ohne Endung (*.dat) ein."
-msgstr ""
-
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:74
-#, sh-format
-msgid "Die Datenbank ${gv_Auswahl}.dat ist schon vorhanden."
-msgstr ""
-
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:88
-msgid ""
-"Geben Sie ein Passwort ein. Nehmen Sie am besten unterschiedliche Zeichen in "
-"Gross- und Kleinschreibung. Mit den Pfeiltasten koennen Sie zwischen den "
-"Eingabefeldern springen."
-msgstr ""
-
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:169
-#, sh-format
-msgid ""
-"Sie muessen erst die Menuepunkte $lv_Db_Name und $gv_Passwd mit einem Wert "
-"belegen."
-msgstr ""
-
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:202
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:53
 msgid ""
 "Waehlen Sie eine Datenbank zum exportieren aus. Diese wird im Klartext "
 "gespeichert."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:234
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:85
 msgid ""
 "Waehlen Sie eine Datenbank aus in Sie eine andere Datenbank importieren "
 "moechten."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:250
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:101
 msgid ""
 "Geben Sie hier die Passwoerter fuer die beiden Datenbanken ein. Mit den "
 "Pfeiltasten koennen Sie zwischen den Eingabefeldern springen."
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_manage_db:403
+#: ../../functions/kwpwsafe/kwpwsafe_manage_db:254
 msgid ""
 "Geben Sie hier erst das alte Passwort und dann in wiederholter Form das neue "
 "Passwort fuer die Datenbank ein. Mit den Pfeiltasten koennen Sie zwischen "
 "den Eingabefeldern springen."
 msgstr ""
 
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:6
+msgid "Eintraege"
+msgstr ""
+
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:7
+msgid "Benutzer kopieren"
+msgstr ""
+
 #: ../../functions/kwpwsafe/kwpwsafe_open_db:8
-msgid "Gruppe anlegen"
+msgid "Passwort kopieren"
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_open_db:9
-msgid "Name"
+msgid "Gruppe anlegen"
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_open_db:10
-msgid "Passwort generieren"
+msgid "Name"
 msgstr ""
 
 #: ../../functions/kwpwsafe/kwpwsafe_open_db:11
+msgid "Passwort generieren"
+msgstr ""
+
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:12
 msgid "Notiz"
 msgstr ""
 
-#: ../../functions/kwpwsafe/kwpwsafe_open_db:13
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:15
 #, sh-format
 msgid "Waehlen Sie einen Eintrag aus der Liste der Datenbank $DB_FILE."
+msgstr ""
+
+#: ../../functions/kwpwsafe/kwpwsafe_open_db:72
+msgid "Druecken Sie ENTER, wenn Sie die Daten uebernommen haben."
 msgstr ""
 
 #: ../../help/kwpwsafe/help:3
@@ -235,14 +255,18 @@ msgid ""
 "Mit kwpwsafe koennen Sie Ihre Passwoerter und die dazu\n"
 "gehoerigen Benutzernamen verwalten beziehungsweise abrufen.\n"
 "\n"
-"Konfiguration: Hier koennen Sie die Standard Datenbank und die\n"
-"\\tPasswortlaenge des zu generierenden Passwortes auswaehlen\n"
-"\\tbeziehungsweise eingeben.\n"
+"Daten verwalten: Eintraege der Datenbank erstellen, bearbeiten,\n"
+"\\tloeschen, ansehen und Benutzername und Passwort nach X Clipboard\n"
+"\\toder STOUT kopieren.\n"
 "\n"
 "Datenbank oeffnen: Zu bearbeitende Datenbank auswaehlen.\n"
 "\n"
 "Datenbank verwalten: Datenbanken erstellen, Passwort aendern\n"
 "\\tund Datenbanken loeschen.\n"
+"\n"
+"Konfiguration: Hier koennen Sie die Standard Datenbank und die\n"
+"\\tPasswortlaenge des zu generierenden Passwortes auswaehlen\n"
+"\\tbeziehungsweise eingeben.\n"
 msgstr ""
 
 #: ../../help/kwpwsafe/kwpwsafe_conf_help:3
@@ -255,6 +279,14 @@ msgid ""
 "\\teines Passwortes benutzt werden soll. Wird nichts angegeben wird\n"
 "\\teine Laenge von 8 Zeichen benutzt.\n"
 "."
+msgstr ""
+
+#: ../../help/kwpwsafe/kwpwsafe_create_db_help:3
+msgid ""
+"Datenbank erstellen: Eine neue Datenbank erstellen. Geben Sie\n"
+"\\teinen Dateinamen und ein Passwort ein. Der Dateiname sollte ohne\n"
+"\\tDateiendung (.dat) eingegeben werden. Diese wird automatisch\n"
+"\\tangehaengt.\n"
 msgstr ""
 
 #: ../../help/kwpwsafe/kwpwsafe_db_conf_help:3
@@ -286,7 +318,7 @@ msgstr ""
 msgid ""
 "Datenbank erstellen: Eine neue Datenbank erstellen. Geben Sie\n"
 "\\teinen Dateinamen und ein Passwort ein. Der Dateiname sollte ohne\n"
-"\\tDateiendung (*.dat) eingegeben werden. Diese wird automatisch\n"
+"\\tDateiendung (.dat) eingegeben werden. Diese wird automatisch\n"
 "\\tangehaengt.\n"
 "\n"
 "Datenbank exportieren: Eine Datenbank exportieren. Die entstehende\n"
@@ -306,6 +338,19 @@ msgid ""
 "Datenbank loeschen: Ein oder mehrere Datenbanken loeschen.\n"
 msgstr ""
 
+#: ../../help/kwpwsafe/kwpwsafe_entries_help:3
+msgid ""
+"Ansicht: Anzeige aller Daten.\n"
+"\n"
+"NOTIZ: Bei folgenden Menuepunkten gilt X Clipboard wenn die\n"
+"\\tVariable DISPLAY belegt ist. Ansonsten wird nach STOUT kopiert.\n"
+"\n"
+"Benutzer kopieren: Benutzernamen nach X Clipboard oder STOUT\n"
+"\\tkopieren.\n"
+"\n"
+"Passwort kopieren: Passwort nach X Clipboard oder STOUT kopieren.\n"
+msgstr ""
+
 #: ../../help/kwpwsafe/kwpwsafe_list_db_help:3
 msgid ""
 "Hier koennen Sie aus der Liste eine Datenbank auswaehlen um sie\n"
@@ -314,14 +359,15 @@ msgstr ""
 
 #: ../../help/kwpwsafe/kwpwsafe_list_help:3
 msgid ""
-"Hier koennen Sie einen Eintrag auswaehlen um den Benutzernamen\n"
-"und das dazugehoerige Passwort ansehen zu koennen."
+"Hier koennen Sie einen Eintrag auswaehlen um sich die Daten dazu\n"
+"anzusehen. Desweiteren koennen Sie Passwort und Benutzernamen nach\n"
+"STOUT oder X Clipboard kopieren."
 msgstr ""
 
 #: ../../help/kwpwsafe/kwpwsafe_open_db_help:3
 msgid ""
-"Ansicht: Anzeige des Benutzernames, dem dazugehoerigen Passwort\n"
-"\\tund der Notizen.\n"
+"Eintraege: Anzeige von Daten und Uebernahme von Benutzernamen\n"
+"\\tPasswort nach X Clipboard oder STOUT.\n"
 "\n"
 "anlegen: Einen Eintrag fuer die Datenbank erstellen. Beim anlegen\n"
 "\\tkoennen Sie eine Gruppe auswaehlen oder erstellen, um die Eintraege\n"
