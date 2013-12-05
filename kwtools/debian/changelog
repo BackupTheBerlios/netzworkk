@@ -1,3 +1,14 @@
+kwtools (0.8.5-5) unstable; urgency=low
+  * dialogbox progressbox implemented in functions resize_fs,
+    format, floppy_format and script kwlvm.
+  * manpages: optimized. 
+  * kwlvm/kwraid: enlarge JFS filesystem.
+  * kwpwsafe: copying username and password to X clipboard and stout.
+  * kwgrub2: update to create grub.cfg and create PBKDF2 password.
+  * kwvcdburn: support for photo-cd deleted.
+
+ -- Kai Wilke <kiste@netzworkk.de>  Thu, 05 Dec 2013 03:30:36 +0100
+ 
 kwtools (0.8.5-4) unstable; urgency=low
   * all *_cron scripts updateted (lock -r in line "trap '...'").
   * kwnetstat - Bugfixing Hauptmenu

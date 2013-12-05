@@ -11,7 +11,7 @@ Architecture: all
 Priority: optional
 Pre-Depends: zsh (>= 4.2.0)
 Depends: dialog (>= 1.1-20070227-1), coreutils (>= 8.13), file (>= 4.10), gettext (>= 0.14.5-3), hwinfo, udev, util-linux (>= 2.17.2), sharutils
-Suggests: less
+Suggests: less, ddrescue
 Description: General functions for kwtools scripts
  These are general functions which are required by every kwtools script.
 Homepage: http://www.netzworkk.org
@@ -86,8 +86,8 @@ Package: kwtools-multi
 Section: utils
 Priority: optional
 Architecture: all
-Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), cddb, cd-discid, cdparanoia, cdrdao (>=1.1.9), dvd+rw-tools, mjpegtools (>= 1.6.0), lame, genisoimage (>= 1.1.8), vcdimager, zsh (>= 4.2.0)
-Suggests: kwtools-bin, ddrescue, vorbis-tools (>=1.0.0), wodim 
+Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), cddb, cd-discid, cdparanoia, cdrdao (>=1.1.9), dvd+rw-tools, lame, genisoimage (>= 1.1.8), vcdimager, zsh (>= 4.2.0)
+Suggests: kwtools-bin, vorbis-tools (>=1.0.0), wodim 
 Description: Multimedia scripts
  Multimedia scripts to create VCD's, audio CD's, etc.
  .
@@ -96,7 +96,7 @@ Description: Multimedia scripts
  kwrip: Rips a complete CD into a certain directory. Video and audio.
  kwsnd2sndfm: Transforms different audio formats into different formats
         (raw,mp3,ogg,wav).
- kwvcdburn: Creates and burns video/photo CD's.
+ kwvcdburn: Creates and burns video CD's.
 Homepage: http://www.netzworkk.org
 
 Package: kwtools-multi-xmms2
@@ -121,7 +121,7 @@ Suggests: kwtools-bin, xmms2-plugin-cdda, xmms2-plugin-curl, xmms2-plugin-all
 Description: Frontend for xmms2d server
  Frontend script to use xmms2d server.
  .
- kwxmms2: This is a simple frontend to configures and manage the XMMS2
+ kwxmms2d: This is a simple frontend to configures and manage the XMMS2
           (X-Music-Multiplexing-System2) server.
 Homepage: http://www.netzworkk.org
 
@@ -129,7 +129,7 @@ Package: kwtools-net
 Priority: optional
 Architecture: all
 Section: net
-Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), logrotate, rsync, zsh (>= 4.2.0) 
+Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), rsync, zsh (>= 4.2.0) 
 Suggests: kwtools-bin, openssh-client | ssh-client, sudo
 Description: Network scripts
  Includes several network scripts.
@@ -365,7 +365,7 @@ Section: utils
 Priority: optional
 Architecture: all
 Depends: ${misc:Depends}, kwtools-common (>= ${source:Version}), bzip2, expect, gnupg | gpg, muttprint, pwsafe, zsh (>= 4.2.0)
-Suggests: kwtools-bin
+Suggests: kwtools-bin, gpm
 Description: Scripts for general tasks
  Includes several scripts for general tasks.
  .
