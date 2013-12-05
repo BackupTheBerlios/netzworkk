@@ -54,7 +54,7 @@ case "$1" in
 				db_get kwtools-net-narc/boot || RET="false"
 				if [ "$RET" = "true" ] ; then
 					# Runlevel Symlinks erstellen
-					update-rc.d kwnarc defaults 02 02 >/dev/null
+					update-rc.d kwnarc defaults >/dev/null
 					#
 					if iptables -L | grep '^[DROP|ACCEPT|REJECT|LOG]' | grep -v '^Chain' ; then
 						$Init_Script restart

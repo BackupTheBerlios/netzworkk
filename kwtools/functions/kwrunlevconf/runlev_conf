@@ -65,8 +65,18 @@ while [ "$gv_Auswahl" ] ; do
 							lv_Start=$(gettext 'Start')
 							#
 							rc_conf() {
-								RC_MENU=($lv_Nr \"$NR\" $lv_Start \"$ANSW\" $gv_Save \"\" $gv_Back \"\")
-								menubox "$CONF_RL_TITLE" "$gv_Menupoint" "$RC_MENU"
+								# sysv-rc >=2.88dsf-42
+								if [[ $PACKAGE == sysv-rc ]] ; then
+									RC_MENU=($lv_Start \"$ANSW\" $gv_Save \"\" $gv_Back \"\")
+								else
+									# file-rc
+									RC_MENU=($lv_Nr \"$NR\" $lv_Start \"$ANSW\" $gv_Save \"\" $gv_Back \"\")
+								fi
+								if [[ ${#argv} == 1 ]] ; then
+									menubox -d "$1" "$CONF_RL_TITLE" "$gv_Menupoint" "$RC_MENU"
+								else
+									menubox "$CONF_RL_TITLE" "$gv_Menupoint" "$RC_MENU"
+								fi
 							}
 							## }}}
 							rc_conf
@@ -95,7 +105,7 @@ while [ "$gv_Auswahl" ] ; do
 										else
 											no_input_msg
 										fi
-										rc_conf
+										rc_conf $ALL
 										## }}}
 										;;
 									$lv_Start)
@@ -112,19 +122,17 @@ while [ "$gv_Auswahl" ] ; do
 										else
 											ANSW="$gv_No"
 										fi
-										rc_conf
+										rc_conf $ALL
 										## }}}
 										;;
 									$gv_Save)
 										# speichern# {{{
-										Anz=1
 										Nr=${#RunLevel[@]}
 										for i in {1..$Nr} ; {
 											if [ ${RunLevel[i]%% *} = $ALL ] ; then
 												RunLevel[i]="$ALL \"$NR $ANSW\""
 												break
 											fi
-											(( Anz++ ))
 										}
 										break
 										## }}}
@@ -140,7 +148,6 @@ while [ "$gv_Auswahl" ] ; do
 							# Runlevellinks Einstellungen speichern.{{{
 							unset -- START STOP Start Stop
 							#
-							Anz="0"
 							print ${RunLevel// \"/ } | tr '"' '\n' | \
 								while read rl nr yn ; do
 									# Pruefen ob Variable $rl belegt und 

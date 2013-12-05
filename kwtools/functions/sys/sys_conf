@@ -3894,7 +3894,7 @@ file_choice() {
 				RunLevelNr=${=$(runlevel)[2]}
 				# Wurde fur dieses Runlevel etwas ausgewaehlt wird das
 				# Init Script gestartet oder gestopt
-				Nr=${(M)${(ws: :)${RUN_LEVEL}}##${RunLevelNr}}
+				Nr=${${(M)${(ws: :)${RUN_LEVEL}}##${RunLevelNr}}// /}
 				#Nr=${${(M)${${(s:.:)${RUN_LEVEL}}[1]}##${RunLevelNr}}[1]}
 				Start_Stop=${${(M)${${(s:.:)${RUN_LEVEL}}[1]}##(start|stop)}// */}
 				if [ "$Start_Stop" = start -a ! -z "$Nr" ] ; then
@@ -3982,13 +3982,29 @@ file_choice() {
 									INIT_SCRIPT="$Init_Script"
 									RUN_LEVEL="$RunLevel"
 									# alle vorherigen Links loeschen
+									################################
+									# INFO: sysv-rc >=2.88dsf-42
+									################################
 									update-rc.d -f $INIT_SCRIPT remove &>/dev/null
-									update-rc.d $INIT_SCRIPT ${=RUN_LEVEL} &>/dev/null
+									if [[ $PACKAGE == sysv-rc ]] ; then
+										update-rc.d $INIT_SCRIPT defaults &>/dev/null
+										if [[ ${RUN_LEVEL%% *} == start ]] ; then
+											RL_Tmp="${${(ws: :)${RUN_LEVEL%% .*}}[3,$]}"
+											update-rc.d $INIT_SCRIPT enable ${=RL_Tmp} &>/dev/null
+										fi
+										if [[ ${${RUN_LEVEL#*. }%% *} == stop ]] ; then
+											RL_Tmp="${${(ws: :)${${RUN_LEVEL#*. }% .*}}[3,$]}"
+											update-rc.d $INIT_SCRIPT disable ${=RL_Tmp} &>/dev/null
+										fi
+									else
+										update-rc.d $INIT_SCRIPT ${=RUN_LEVEL} &>/dev/null
+									fi
 								done <${gv_WorkDir}/runlevconf_startstop
 								rm -rf ${gv_WorkDir}/runlevconf_startstop &>/dev/null
 								#
-								if [ "${(M)${RUN_LEVEL}##start}" = start ] ; then
-									ln -sf ${INITD_PATH}/${INIT_SCRIPT} /usr/sbin/rc${INIT_SCRIPT}
+								if [ "${(M)${RUN_LEVEL}##start}" ] ; then
+									ln -sf ${INITD_PATH}/${INIT_SCRIPT} \
+									/usr/sbin/rc${INIT_SCRIPT}
 									# Prozesse starten/stoppen (init-Scripts)
 									init_start_stop
 								else

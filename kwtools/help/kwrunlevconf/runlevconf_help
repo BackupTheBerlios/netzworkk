@@ -19,6 +19,8 @@ Nr: Eingabe der Nummer an welcher Stelle das Script gestartet werden
 \tsoll (01-99). Wenn das Script nicht gestartet werden soll
 \tgeben Sie ein - (Minuszeichen) ein.
 
+NOTIZ: Ab sysv-rc >=2.88dsf-43 benoetigt man keine Nummer mehr.
+
 Start: Soll der Dienst im jeweiligen Runlevel gestartet werden
 \t(ja/nein)? Bei Nein wird er im jeweiligen Runlevel gestoppt.
 
