@@ -1,9 +1,5 @@
 # Funktion (kwpwsafe_manage_db), managed die Datenbanken von pwsafe.# {{{
 #
-# ###############################################
-# TODO: Datenbanken mergen?
-# ###############################################
-#
 # usage: kwpwsafe_manage_db
 #
 kwpwsafe_manage_db() {

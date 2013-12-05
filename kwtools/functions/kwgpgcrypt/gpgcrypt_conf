@@ -39,11 +39,6 @@ gpgcrypt_conf() {
 				lv_Port=$(gettext 'Port')
 				lv_Mail_Address=$(gettext 'Mailadresse')
 				# Funktion keyserv_menue{{{
-				##################################
-				# TODO:
-				# Verzeichnisauswahl fehlt noch?
-				# Bsp.: hkp://server:port/dir/dir
-				##################################
 				keyserv_menue() {
 					if [[ $PROTOCOL == mailto ]] ; then
 						MENU=($lv_Protocol \"$PROTOCOL\" $lv_Mail_Address \"$MAIL_ADR\"

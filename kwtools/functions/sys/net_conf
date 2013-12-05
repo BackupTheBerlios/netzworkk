@@ -685,7 +685,7 @@ net_conf() {
 		unset -- R_SHELL
 		local Remote_Shell Tmp_Shell
 		for i in rsh ssh ; {
-			Remote_Shell="`which $i`"
+			Remote_Shell="${commands[$i]}"
 			if [ -n "$Remote_Shell" ] ; then
 				Tmp_Shell=$(readlink -f $Remote_Shell)
 				# Duplikate nicht mit aufnehmen.
