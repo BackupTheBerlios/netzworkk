@@ -3983,7 +3983,7 @@ file_choice() {
 									RUN_LEVEL="$RunLevel"
 									# alle vorherigen Links loeschen
 									update-rc.d -f $INIT_SCRIPT remove &>/dev/null
-									update-rc.d-insserv $INIT_SCRIPT ${=RUN_LEVEL} &>/dev/null
+									update-rc.d $INIT_SCRIPT ${=RUN_LEVEL} &>/dev/null
 								done <${gv_WorkDir}/runlevconf_startstop
 								rm -rf ${gv_WorkDir}/runlevconf_startstop &>/dev/null
 								#
