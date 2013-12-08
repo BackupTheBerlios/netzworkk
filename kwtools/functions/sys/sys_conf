@@ -605,9 +605,6 @@ sys_conf() {
 	#               aus der Funktion script_init.
 	#
 	msgbox() {
-		unset -- Anz
-		local Anz
-		integer Anz
 		if [ "$#" -eq 2 ] ; then
             # Berechnung der uebergebenen Zeichen der Nachricht und
             # dementsprechend die Zeilengroesse einstellen.
@@ -4730,21 +4727,24 @@ kernel_choice() {
 	#
 	lock() {
 		case $1 in
-			-r)	#
-				# lock loeschen
-				#
+			-r)	# lock loeschen
 				for i in $2 ; {
 					rm -f /var/tmp/${i##*/}.lock &>/dev/null
 				}
 				;;
 			-s)	# Script lock anlegen
+				# Wird das Script schon benutzt kommt eine Nachricht das das Script
+				# gerade benutzt wird und 2 Ebenen hoeher gesprungen, ohne Terminal
+				# wird das Script beendet.
 				for i in $2 ; {
 					if [ -e /var/tmp/${i##*/}.lock ] ; then
+						# Nachricht nur wenn ein Terminal offen ist anzeigen.
 						if [[ -n $gv_Terminal ]] ; then
 							MSG=$(gettext '$i wird gerade benutzt. Versuchen Sie es spaeter nochmal.')
 							msgbox "$gv_Attention" "$MSG"
 							break 2
 						else
+							print "$MSG"
 							exit 0
 						fi
 					else
@@ -4753,19 +4753,18 @@ kernel_choice() {
 				}
 				;;
 			*)	# Device lock anlegen
+				# Wird das Device schon benutzt kommt eine Nachricht das das Device
+				# gerade benutzt wird und 2 Ebenen hoeher gesprungen.
 				for i in $1 ; {
 					if [ -e /var/tmp/${i##*/}.lock ] ; then
-						MSG=$(gettext 'Das Device wird gerade benutzt. Versuchen Sie es spaeter nochmal.')
+						MSG=$(gettext 'Das Device (${i}) wird gerade benutzt. Versuchen Sie es spaeter nochmal.')
+						# Nachricht nur wenn ein Terminal offen ist anzeigen.
 						if [[ -n $gv_Terminal ]] ; then
 							msgbox "$gv_Attention" "$MSG"
-							break 2
 						else
-							$ERROR
-							print
 							print "$MSG"
-							print
-							$NORMAL
 						fi
+						break 2
 					else
 						create_file "/var/tmp/${i##*/}.lock"
 					fi
@@ -5806,17 +5805,7 @@ search_fdisks() {
 		                ;;
 		        esac
 	        else
-	            if [ -n "$gv_Terminal" ] ; then
-	                no_prog_exec_msg logger
-	            else
-					print $ERROR_BG
-					print $ERROR
-					print
-					print "$gv_Attention"
-					MSG=$(gettext 'Fehler: Kann das Programm logger nicht finden oder ausfuehren.')
-					print "$MSG"
-					print $NORMAL
-	            fi
+				no_prog_exec_msg logger
 		        if [ "$BREAK" ] ; then
 			        break $BREAK
 	        		unset -- BREAK
@@ -5835,15 +5824,14 @@ search_fdisks() {
 	# Da bekommt dialog kein Fenster hin oder es ist ziehmlich gequetscht.
 	# 
 	if [ $COLUMNS -le 79 -o $LINES -le 20 ] ; then
-		MSG=$(gettext "Ihre Bildschirmaufloesung ist zu klein (${COLUMNS}x${LINES}). Um vernuenftig arbeiten zu koennen, benoetigen Sie mindestens 80x20, besser 80x40. Druecken Sie jetzt ENTER.")
-		$ERROR
+		MSG=$(gettext "${ERROR}Ihre Bildschirmaufloesung ist zu klein (${GREEN}${COLUMNS}x${LINES}${ERROR}). Um vernuenftig arbeiten zu koennen, benoetigen Sie mindestens ${GREEN}80x20${ERROR}, besser ${GREEN}80x40${ERROR}. Druecken Sie jetzt ENTER.${NORMAL}")
 		print
+		print "${ERROR}${gv_Attention}!"
 		print "$MSG"
 		print
-		$NORMAL
 		read
 		exit 0
-	fi	
+	fi
 	}
 	#}}}
 	# Funktion (user_device_check), um Rechte des Devices/Datei, fuer User zu pruefen{{{
@@ -6162,7 +6150,7 @@ zsh_modload() {
 		if [ "$#" = 1 ] ; then
 			FILE="$1"
 			MSG=$(gettext 'Die Datei $FILE existiert bereits.')
-			if [ "$gv_Terminal" ] ; then
+			if [[ -n $gv_Terminal ]] ; then
 				msgbox "$gv_Attention" "$MSG"
 			else
 				print "$MSG"
@@ -6416,11 +6404,7 @@ no_option_msg() {
 			if [[ -n $gv_Terminal ]] ; then
 				msgbox "$gv_Attention" "$MSG"
 			else
-				$ERROR
-				print
 				print "$MSG"
-				print
-				$NORMAL
 			fi
 		else
 			no_para_msg $0
@@ -6468,7 +6452,7 @@ no_use_dir_msg() {
 		msgbox "$gv_Attention" "$MSG"
 	}
 	#}}}
-	# Funktion (prog_failure) fuer Fehlermeldugen bei der {{{
+	# Funktion (prog_failure) fuer Fehlermeldungen bei der {{{
 	# Ausfuehrung eines Programms
 	#
 	# Die Variable BREAK, falls benoetigt muss in den einzelnen Scripten
@@ -6478,17 +6462,16 @@ no_use_dir_msg() {
 	#
 	prog_failure() {
 		RET=1
-		if [ "$DEVICES" ] ; then
+		if [[ -n $DEVICES ]] ; then
 			lock -r $DEVICES
 		fi
-		print $ERROR_BG
-		print $ERROR
-		print
+		print ${ERROR_BG}${ERROR}
 		MSG=$(gettext 'Achtung Fehler:\nSchauen Sie sich bitte die letzten Meldungen an.\nMit shift+bild (hoch/runter) koennen Sie scrollen.\nDruecken sie ENTER danach.')
 		print "$MSG"
-		read -k 1
 		print $NORMAL
 		setterm -clear
+		read
+		#
 		if [ "$BREAK" ] ; then
 			break $BREAK
 			unset -- BREAK
