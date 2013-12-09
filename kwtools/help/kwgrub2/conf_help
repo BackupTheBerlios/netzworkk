@@ -1,7 +1,7 @@
 # conf_help fuer kwgrub2{{{
 TITLE="${gv_Configuration}::${gv_Help}"
 MSG=$(gettext 'Hier koennen Sie einige Einstellungen fuer den Bootloader
-"grub" taetigen. 
+"grub" taetigen. Siehe "info -f grub -n Simple configuration".
 
 Standard Boot Eintrag: Waehlen Sie einen Standard Eintrag aus,
 \tden grub2 standardmaessig starten soll. Es werden die vorhandenen
@@ -71,23 +71,50 @@ Terminal: Waehlen Sie fuer das Terminal die Ein-/Ausgabegeraete aus.
 NOTIZ: Diese Option ueberschreibt die beiden Optionen "Terminal
 \tEin- und Ausgabe".
 
-Serial Kommando: Optinale Eintraege zur seriellen Schnittstelle
+Serial Kommando: Optimale Eintraege zur seriellen Schnittstelle
 \twerden hier nach dem "serial" jeweils hinter einem Doppel-Minus
 \teingetragen (z.B.: --unit=, --port=, --speed=, --device=).
 \tDazu muss bei "Terminal"-Optionen serial ausgewaehlt werden.
 
-Linux Argumente: Geben Sie bitte Ihre Kernel Parameter ein (s.
-\tkernel Dokumentation).
+Linux Argumente: Geben Sie bitte Ihre Linux Kernel Parameter ein
+\t(s. kernel Dokumentation).
 
-Standard Linux Argumente: Geben Sie bitte Ihre Kernel Parameter fuer
-\tden Standard Menueeintrag ein (s. kernel Dokumentation).
+Standard Linux Argumente: Geben Sie bitte Ihre Linux Kernel
+\tParameter fuer den Standard Menueeintrag ein (s. kernel
+\tDokumentation). Diese werden an die im Menueeintrag "Linux
+\tArgumente" aufgelisteten Parameter angehaengt. Meist ist dies
+\t"quiet"; dadurch wird beim Boot Prozess nur das Noetigste
+\tangezeigt.
+
+NetBSD Argumente: Geben Sie bitte Ihre NetBSD Kernel Parameter ein
+\t(s. kernel Dokumentation). Ist gleich dem Menueeintrag "Linux
+\tArgumente" bloss fuer NetBSD.
+
+Standard NetBSD Argumente: Geben Sie bitte Ihre NetBSD Kernel
+\tParameter fuer den Standard Menueeintrag ein (s. kernel
+\tDokumentation). Ist gleich dem Menueeintrag "Standard Linux
+\tArgumente" bloss fuer NetBSD.
+
+GNU Mach Argumente: Geben Sie bitte Ihre GNU Mach Kernel Parameter
+\tein (s. kernel Dokumentation). Ist gleich dem Menueeintrag "Linux
+\tArgumente" bloss fuer GNU Mach.
 
 Xen Argumente: Geben Sie bitte Ihre Parameter fuer den Xen Kernel
-\tein (s. kernel Dokumentation).
+\tein (s. kernel Dokumentation). Ist gleich dem Menueeintrag "Linux
+\tArgumente" bloss fuer Xen.
 
 Standard Xen Argumente: Geben Sie bitte Ihre Parameter fuer den
 \tStandard Menueeintrag des Xen Kernels ein (s. kernel
-\tDokumentation).
+\tDokumentation). Ist gleich dem Menueeintrag "Standard Linux
+\tArgumente" bloss fuer Xen.
+
+Xen Tausch Argumente: Die Werte die Sie hier eingeben werden
+\tgetauscht mit den Werten im Menueeintrag "Linux Argumente"
+\tfuer alle Linux und Xen Menueeintraege.
+
+Standard Xen Tausch Argumente: Die Werte die Sie hier eingeben
+\twerden getauscht mit den Werten im Menueeintrag "Standard Linux
+\tArgumente" fuer alle Linux und Xen Menueeintraege.
 
 UUID: Soll die Benutzung von universally-unique identifiers (UUID)
 \tausgeschaltet werden (ja/nein)?

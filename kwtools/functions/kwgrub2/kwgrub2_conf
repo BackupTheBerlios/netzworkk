@@ -7,18 +7,20 @@ kwgrub2_conf() {
 		read_file -f "$GRUB_DEFAULT_CONFFILE"
 	fi
 	
-	# Variablen die nach dem speichern/zurueck geloescht werden sollen.
+	# Variablen die nach dem speichern/zurueck geloescht werden sollen.# {{{
 	UNSET_CONF_VAR=(GRUB_DEFAULT GRUB_SAVEDEFAULT GRUB_TIMEOUT GRUB_HIDDEN_TIMEOUT
 	GRUB_HIDDEN_TIMEOUT_QUIET GRUB_DEFAULT_BUTTON GRUB_TIMEOUT_BUTTON
 	GRUB_HIDDEN_TIMEOUT_BUTTON GRUB_BUTTON_CMOS_ADDRESS GRUB_DISBRUTOR
 	GRUB_TERMINAL_INPUT GRUB_TERMINAL_OUTPUT GRUB_TERMINAL
 	GRUB_SERIAL_COMMAND GRUB_CMDLINE_LINUX GRUB_CMDLINE_LINUX_DEFAULT
-	GRUB_CMDLINE_XEN GRUB_CMDLINE_XEN_DEFAULT GRUB_DISABLE_LINUX_UUID
+	GRUB_CMDLINE_NETBSD GRUB_CMDLINE_NETBSD_DEFAULT GRUB_CMDLINE_GNUMACH
+	GRUB_CMDLINE_XEN GRUB_CMDLINE_XEN_DEFAULT GRUB_CMDLINE_XEN_REPLACE
+	GRUB_CMDLINE_XEN_REPLACE_DEFAULT GRUB_DISABLE_LINUX_UUID
 	GRUB_DISABLE_LINUX_RECOVERY GRUB_VIDEO_BACKEND GRUB_GFXMODE
 	GRUB_BACKGROUND GRUB_THEME GRUB_GFXPAYLOAD_LINUX GRUB_DISABLE_OS_PROPPER
 	GRUB_INIT_TUNE GRUB_PRELOAD_MODULES GRUB_BADRAM)
-
-	# Funktion (conf_menue){{{
+	## }}}
+	# Variablen# {{{
 	lv_Grub_Default=$(gettext 'Standard Boot Eintrag')
 	lv_Grub_Savedefault=$(gettext 'Standard speichern')
 	lv_Grub_Timeout=$(gettext 'Timeout')
@@ -35,8 +37,13 @@ kwgrub2_conf() {
 	lv_Grub_Serial_Cmd=$(gettext 'Serial Kommando')
 	lv_Grub_Cmdline_Linux=$(gettext 'Linux Argumente')
 	lv_Grub_Cmdline_Linux_Default=$(gettext 'Standard Linux Argumente')
+	lv_Grub_Cmdline_Netbsd=$(gettext 'NetBSD Argumente')
+	lv_Grub_Cmdline_Netbsd_Default=$(gettext 'Standard NetBSD Argumente')
+	lv_Grub_Cmdline_Gnumach=$(gettext 'GNU Mach Argumente')
 	lv_Grub_Cmdline_Xen=$(gettext 'Xen Argumente')
 	lv_Grub_Cmdline_Xen_Default=$(gettext 'Standard Xen Argumente')
+	lv_Grub_Cmdline_Xen_Replace=$(gettext 'Xen Tausch Argumente')
+	lv_Grub_Cmdline_Xen_Replace_Default=$(gettext 'Standard Xen Tausch Argumente')
 	lv_Grub_Disable_Linux_Uuid=$(gettext 'UUID')
 	lv_Grub_Disable_Linux_Recovery=$(gettext 'Wiederherstellung')
 	lv_Grub_Video_Backend=$(gettext 'Video Backend')
@@ -48,7 +55,8 @@ kwgrub2_conf() {
 	lv_Grub_Init_Tune=$(gettext 'Klang')
 	lv_Grub_Preload_Modules=$(gettext 'Kernel Module')
 	lv_Grub_Badram=$(gettext 'Speicheradressen')
-	#
+	## }}}
+	# Funktion (conf_menue){{{
 	conf_menue() {
 		#\"$lv_Grub_Video_Backend\" \"$GRUB_VIDEO_BACKEND\"
 		CONF_MENU=(\"$lv_Grub_Default\" \"${GRUB_DEFAULT:-0}\"
@@ -67,8 +75,13 @@ kwgrub2_conf() {
 		\"$lv_Grub_Serial_Cmd\" \"$GRUB_SERIAL_COMMAND\"
 		\"$lv_Grub_Cmdline_Linux\" \"$GRUB_CMDLINE_LINUX\"
 		\"$lv_Grub_Cmdline_Linux_Default\" \"${GRUB_CMDLINE_LINUX_DEFAULT:-quiet}\"
+		\"$lv_Grub_Cmdline_Netbsd \" \"$GRUB_CMDLINE_NETBSD\"
+		\"$lv_Grub_Cmdline_Netbsd_Default\" \"$GRUB_CMDLINE_NETBSD_DEFAULT\"
+		\"$lv_Grub_Cmdline_Gnumach\" \"$GRUB_CMDLINE_GNUMACH\"
 		\"$lv_Grub_Cmdline_Xen\" \"$GRUB_CMDLINE_XEN\"
 		\"$lv_Grub_Cmdline_Xen_Default\" \"$GRUB_CMDLINE_XEN_DEFAULT\"
+		\"$lv_Grub_Cmdline_Xen_Replace\" \"$GRUB_CMDLINE_XEN_REPLACE\"
+		\"$lv_Grub_Cmdline_Xen_Replace_Default\" \"$GRUB_CMDLINE_XEN_REPLACE_DEFAULT\"
 		$lv_Grub_Disable_Linux_Uuid \"${GRUB_DISABLE_LINUX_UUID:-false}\"
 		$lv_Grub_Disable_Linux_Recovery \"${GRUB_DISABLE_LINUX_RECOVERY:-false}\"
 		$lv_Grub_Gfxmode \"$GRUB_GFXMODE\"
@@ -88,6 +101,7 @@ kwgrub2_conf() {
 	}
 	#}}}
 	# Funktion (check_anz_menuentry), zaehlt die vorhandenen Menueeintraege# {{{
+	# Dient dazu damit man default Boot Eintrag auswaehlen kann (0, 1, 2...)
 	#
 	check_anz_menuentry() {
 		unset -- TMP_MENU
@@ -96,15 +110,16 @@ kwgrub2_conf() {
 		#
 		Anz=0
 		Anz1=1
-		print -l ${${${(M)${(f)"$(< $GRUB_CONFFILE)"}##(#s)menuentry*}%%--*}%% \{} | while read t k ; do
-			if [ -n "$k" ] ; then
-				TMP_MENU+=($Anz "$k")
-				(( Anz++ ))
-				(( Anz1++ ))
-			else
-				TMP_MENU+=(0 \"\")
-			fi
-		done
+		print -l ${${${(M)${(f)"$(< $GRUB_CONFFILE)"}##(#s)menuentry*}%%--*}%% \{} | \
+			while read t k ; do
+				if [ -n "$k" ] ; then
+					TMP_MENU+=($Anz "$k")
+					(( Anz++ ))
+					(( Anz1++ ))
+				else
+					TMP_MENU+=(0 \"\")
+				fi
+			done
 	}
 	## }}}
 	conf_menue
@@ -421,7 +436,6 @@ kwgrub2_conf() {
 							*)
 								unset -- Init_Tmp
 								no_input_msg
-								break
 								;;
 						esac
 					}
@@ -438,12 +452,14 @@ kwgrub2_conf() {
 				conf_menue "$lv_Grub_Serial_Cmd"
 				;;
 			"$lv_Grub_Cmdline_Linux")
-				# Linux Argumente eingeben# {{{
+				# Linux Kernel Kommandozeilen Argumente eingeben# {{{
 				GRUB_CMDLINE_TITLE=(${gv_Configuration}::${lv_Grub_Cmdline_Linux})
 				GRUB_CMDLINE_MSG=$(gettext 'Geben Sie bitte Ihre Kernel Parameter ein (s. kernel Dokumentation).')
 				inputbox "$GRUB_CMDLINE_TITLE" "$GRUB_CMDLINE_MSG" "$GRUB_CMDLINE_LINUX"
 				if [ -n "$gv_Auswahl" ] ; then
 					GRUB_CMDLINE_LINUX="$gv_Auswahl"
+					unset -- GRUB_CMDLINE_NETBSD GRUB_CMDLINE_NETBSD_DEFAULT \
+						GRUB_CMDLINE_GNUMACH
 				else
 					unset -- GRUB_CMDLINE_LINUX
 				fi
@@ -451,17 +467,64 @@ kwgrub2_conf() {
 				conf_menue "$lv_Grub_Cmdline_Linux"
 				;;
 			"$lv_Grub_Cmdline_Linux_Default")
-				# Linux Argumente fuer default Menue Eintrag eingeben# {{{
+				# Linux Kernel Kommandozeilen Argumente fuer default Menue Eintrag eingeben# {{{
 				GRUB_CMDLINE_DEFAULT_TITLE=(${gv_Configuration}::${lv_Grub_Cmdline_Linux_Default})
 				GRUB_CMDLINE_DEFAULT_MSG=$(gettext 'Geben Sie bitte Ihre Kernel Parameter fuer den Standard Menueeintrag ein (s. kernel Dokumentation).')
 				inputbox "$GRUB_CMDLINE_DEFAULT_TITLE" "$GRUB_CMDLINE_DEFAULT_MSG" "$GRUB_CMDLINE_LINUX_DEFAULT"
 				if [ -n "$gv_Auswahl" ] ; then
 					GRUB_CMDLINE_LINUX_DEFAULT="$gv_Auswahl"
+					unset -- GRUB_CMDLINE_NETBSD GRUB_CMDLINE_NETBSD_DEFAULT \
+						GRUB_CMDLINE_GNUMACH
 				else
 					unset -- GRUB_CMDLINE_LINUX_DEFAULT
 				fi
 				## }}}
 				conf_menue "$lv_Grub_Cmdline_Linux_Default"
+				;;
+			"$lv_Grub_Cmdline_Netbsd")
+				# NetBSD Kernel Kommandozeilen Argumente eingeben# {{{
+				GRUB_CMDLINE_NETBSD_TITLE=(${gv_Configuration}::${lv_Grub_Cmdline_Netbsd})
+				GRUB_CMDLINE_NETBSD_MSG=$(gettext 'Geben Sie bitte Ihre NetBSD Kernel Parameter ein (s. kernel Dokumentation).')
+				inputbox "$GRUB_CMDLINE_NETBSD_TITLE" "$GRUB_CMDLINE_NETBSD_MSG" "$GRUB_CMDLINE_NETBSD"
+				if [ -n "$gv_Auswahl" ] ; then
+					GRUB_CMDLINE_NETBSD="$gv_Auswahl"
+					unset -- GRUB_CMDLINE_LINUX GRUB_CMDLINE_LINUX_DEFAULT \
+						GRUB_CMDLINE_GNUMACH
+				else
+					unset -- GRUB_CMDLINE_NETBSD
+				fi
+				## }}}
+				conf_menue "$lv_Grub_Cmdline_Netbsd"
+				;;
+			"$lv_Grub_Cmdline_Netbsd_Default")
+				# NetBSD Kernel Kommandozeilen Argumente eingeben# {{{
+				GRUB_CMDLINE_NETBSD_DEFAULT_TITLE=(${gv_Configuration}::${lv_Grub_Cmdline_Netbsd_Default})
+				GRUB_CMDLINE_NETBSD_DEFAULT_MSG=$(gettext 'Geben Sie bitte Ihre NetBSD Kernel Parameter fuer den Standard Menueeintrag ein (s. kernel Dokumentation).')
+				inputbox "$GRUB_CMDLINE_NETBSD_DEFAULT_TITLE" "$GRUB_CMDLINE_NETBSD_DEFAULT_MSG" "$GRUB_CMDLINE_NETBSD_DEFAULT"
+				if [ -n "$gv_Auswahl" ] ; then
+					GRUB_CMDLINE_NETBSD_DEFAULT="$gv_Auswahl"
+					unset -- GRUB_CMDLINE_LINUX GRUB_CMDLINE_LINUX_DEFAULT \
+						GRUB_CMDLINE_GNUMACH
+				else
+					unset -- GRUB_CMDLINE_NETBSD_DEFAULT
+				fi
+				## }}}
+				conf_menue "$lv_Grub_Cmdline_Netbsd_Default"
+				;;
+			"$lv_Grub_Cmdline_Gnumach")
+				# NetBSD Kernel Kommandozeilen Argumente eingeben# {{{
+				GRUB_CMDLINE_GNUMACH_TITLE=(${gv_Configuration}::${lv_Grub_Cmdline_Gnumach})
+				GRUB_CMDLINE_GNUMACH_MSG=$(gettext 'Geben Sie bitte Ihre GNU Mach Kernel Parameter ein (s. kernel Dokumentation).')
+				inputbox "$GRUB_CMDLINE_GNUMACH_TITLE" "$GRUB_CMDLINE_GNUMACH_MSG" "$GRUB_CMDLINE_GNUMACH"
+				if [ -n "$gv_Auswahl" ] ; then
+					GRUB_CMDLINE_GNUMACH="$gv_Auswahl"
+					unset -- GRUB_CMDLINE_LINUX GRUB_CMDLINE_LINUX_DEFAULT \
+						GRUB_CMDLINE_NETBSD GRUB_CMDLINE_NETBSD_DEFAULT
+				else
+					unset -- GRUB_CMDLINE_GNUMACH
+				fi
+				## }}}
+				conf_menue "$lv_Grub_Cmdline_Gnumach"
 				;;
 			"$lv_Grub_Cmdline_Xen")
 				# XEN Linux Argumente eingeben# {{{
@@ -488,6 +551,32 @@ kwgrub2_conf() {
 				fi
 				## }}}
 				conf_menue "$lv_Grub_Cmdline_Xen_Default"
+				;;
+			"$lv_Grub_Cmdline_Xen_Replace")
+				# XEN Linux Argumente eingeben# {{{
+				GRUB_CMDLINE_XEN_REPLACE_TITLE=(${gv_Configuration}::${lv_Grub_Cmdline_Xen_Replace})
+				GRUB_CMDLINE_XEN_REPLACE_MSG=$(gettext 'Geben Sie bitte Ihre Parameter fuer den Xen Kernel ein (s. kernel Dokumentation).')
+				inputbox "$GRUB_CMDLINE_XEN_REPLACE_TITLE" "$GRUB_CMDLINE_XEN_REPLACE_MSG" "$GRUB_CMDLINE_XEN_REPLACE"
+				if [ -n "$gv_Auswahl" ] ; then
+					GRUB_CMDLINE_XEN_REPLACE="$gv_Auswahl"
+				else
+					unset -- GRUB_CMDLINE_XEN_REPLACE
+				fi
+				## }}}
+				conf_menue "$lv_Grub_Cmdline_Xen_Replace"
+				;;
+			"$lv_Grub_Cmdline_Xen_Replace_Default")
+				# Linux Argumente eingeben# {{{
+				GRUB_CMDLINE_XEN_REPLACE_DEFAULT_TITLE=(${gv_Configuration}::${lv_Grub_Cmdline_Xen_Replace_Default})
+				GRUB_CMDLINE_XEN_REPLACE_DEFAULT_MSG=$(gettext 'Geben Sie bitte Ihre Parameter fuer den Standard Menueeintrag des Xen Kernels ein (s. kernel Dokumentation).')
+				inputbox "$GRUB_CMDLINE_XEN_REPLACE_DEFAULT_TITLE" "$GRUB_CMDLINE_XEN_REPLACE_DEFAULT_MSG" "$GRUB_CMDLINE_XEN_REPLACE_DEFAULT"
+				if [ -n "$gv_Auswahl" ] ; then
+					GRUB_CMDLINE_XEN_REPLACE_DEFAULT="$gv_Auswahl"
+				else
+					unset -- GRUB_CMDLINE_XEN_REPLACE_DEFAULT
+				fi
+				## }}}
+				conf_menue "$lv_Grub_Cmdline_Xen_Replace_Default"
 				;;
 			$lv_Grub_Disable_Linux_Uuid)
 				# UUID ausschalten ja/nein# {{{

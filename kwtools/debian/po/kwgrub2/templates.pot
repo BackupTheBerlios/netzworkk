@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-03 09:48+0200\n"
+"POT-Creation-Date: 2013-12-09 01:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,267 +42,305 @@ msgid ""
 "$lv_Actual."
 msgstr ""
 
-#: ../../sys/kwgrub2:187
+#: ../../sys/kwgrub2:180
 #, sh-format
 msgid "Update der $GRUB_CONFFILE Datei."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:22
+#: ../../functions/kwgrub2/kwgrub2_conf:24
 msgid "Standard Boot Eintrag"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:23
+#: ../../functions/kwgrub2/kwgrub2_conf:25
 msgid "Standard speichern"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:24
+#: ../../functions/kwgrub2/kwgrub2_conf:26
 msgid "Timeout"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:25
+#: ../../functions/kwgrub2/kwgrub2_conf:27
 msgid "versteckter Timeout"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:26
+#: ../../functions/kwgrub2/kwgrub2_conf:28
 msgid "stiller versteckter Timeout"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:27
+#: ../../functions/kwgrub2/kwgrub2_conf:29
 msgid "Standard Schalter"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:28
+#: ../../functions/kwgrub2/kwgrub2_conf:30
 msgid "Timeout Schalter"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:29
+#: ../../functions/kwgrub2/kwgrub2_conf:31
 msgid "versteckter Timeout Schalter"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:30
+#: ../../functions/kwgrub2/kwgrub2_conf:32
 msgid "BIOS Adress Schalter"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:31
+#: ../../functions/kwgrub2/kwgrub2_conf:33
 msgid "Verteiler"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:32
+#: ../../functions/kwgrub2/kwgrub2_conf:34
 msgid "Terminal Eingabe"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:33
+#: ../../functions/kwgrub2/kwgrub2_conf:35
 msgid "Terminal Ausgabe"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:34
+#: ../../functions/kwgrub2/kwgrub2_conf:36
 msgid "Terminal"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:35
+#: ../../functions/kwgrub2/kwgrub2_conf:37
 msgid "Serial Kommando"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:36
+#: ../../functions/kwgrub2/kwgrub2_conf:38
 msgid "Linux Argumente"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:37
+#: ../../functions/kwgrub2/kwgrub2_conf:39
 msgid "Standard Linux Argumente"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:38
-msgid "Xen Argumente"
-msgstr ""
-
-#: ../../functions/kwgrub2/kwgrub2_conf:39
-msgid "Standard Xen Argumente"
-msgstr ""
-
 #: ../../functions/kwgrub2/kwgrub2_conf:40
-msgid "UUID"
+msgid "NetBSD Argumente"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:41
-msgid "Wiederherstellung"
+msgid "Standard NetBSD Argumente"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:42
-msgid "Video Backend"
+msgid "GNU Mach Argumente"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:43
-msgid "Aufloesung"
+msgid "Xen Argumente"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:44
-msgid "Hintergrundbild"
+msgid "Standard Xen Argumente"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:45
-msgid "Theme"
+msgid "Xen Tausch Argumente"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:46
-msgid "GFX Zuladung"
+msgid "Standard Xen Tausch Argumente"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:47
-msgid "OS suchen"
+msgid "UUID"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:48
-msgid "Klang"
+msgid "Wiederherstellung"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:49
-msgid "Kernel Module"
+msgid "Video Backend"
 msgstr ""
 
 #: ../../functions/kwgrub2/kwgrub2_conf:50
+msgid "Aufloesung"
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:51
+msgid "Hintergrundbild"
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:52
+msgid "Theme"
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:53
+msgid "GFX Zuladung"
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:54
+msgid "OS suchen"
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:55
+msgid "Klang"
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:56
+msgid "Kernel Module"
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:57
 msgid "Speicheradressen"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:123
-#: ../../functions/kwgrub2/kwgrub2_conf:229
+#: ../../functions/kwgrub2/kwgrub2_conf:138
+#: ../../functions/kwgrub2/kwgrub2_conf:244
 msgid ""
 "Waehlen Sie einen Standard Eintrag aus, den grub2 standardmaessig starten "
 "soll."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:148
+#: ../../functions/kwgrub2/kwgrub2_conf:163
 msgid ""
 "Soll der letzte Menueeintrag, der mit \\\"grub-set-default\\\" oder \\\"grub-"
 "reboot\\\" ausgefuehrt wird, gespeichert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:161
-#: ../../functions/kwgrub2/kwgrub2_conf:254
-#: ../../functions/kwgrub2/kwgrub2_conf:279
+#: ../../functions/kwgrub2/kwgrub2_conf:176
+#: ../../functions/kwgrub2/kwgrub2_conf:269
+#: ../../functions/kwgrub2/kwgrub2_conf:294
 msgid ""
 "Waehlen Sie den Timeout aus, nach welcher Zeit (s) grub2 die Standard "
 "Bootkonfiguration starten soll."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:187
+#: ../../functions/kwgrub2/kwgrub2_conf:202
 msgid ""
 "Waehlen Sie den versteckten Timeout aus, nach welcher Zeit (s) grub2 die "
 "Standard Bootkonfiguration starten soll an. Ausser es wird eine Taste "
 "gedrueckt um das Bootmenue anzuzeigen an."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:212
+#: ../../functions/kwgrub2/kwgrub2_conf:227
 msgid ""
 "Soll die Anzeige des Countdown vom \\\"versteckten Timeout\\\" unterdrueckt "
 "werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:304
+#: ../../functions/kwgrub2/kwgrub2_conf:319
 msgid ""
 "Geben Sie bitte die herstellerabhaengige Adresse zum starten Ihres "
 "Betriebssystem ein."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:318
+#: ../../functions/kwgrub2/kwgrub2_conf:333
 msgid "Geben Sie bitte den Namen Ihrer Distribution ein."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:332
+#: ../../functions/kwgrub2/kwgrub2_conf:347
 msgid "Waehlen Sie fuer das Terminal die Eingabegeraete aus."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:358
+#: ../../functions/kwgrub2/kwgrub2_conf:373
 msgid "Waehlen Sie fuer das Terminal die Ausgabegeraete aus."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:383
+#: ../../functions/kwgrub2/kwgrub2_conf:398
 msgid "Waehlen Sie fuer das Terminal die Ein-/Ausgabegeraete aus."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:409
+#: ../../functions/kwgrub2/kwgrub2_conf:424
 msgid ""
 "Geben Sie bitte die Optionen fuer das \\\"serial\\\" Kommando, getrennt "
 "durch ein Leerzeichen ein (Bsp.: serial --port=xxx --speed=xxx, s. info "
 "grub)."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:443
+#: ../../functions/kwgrub2/kwgrub2_conf:457
 msgid "Geben Sie bitte Ihre Kernel Parameter ein (s. kernel Dokumentation)."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:456
+#: ../../functions/kwgrub2/kwgrub2_conf:472
 msgid ""
 "Geben Sie bitte Ihre Kernel Parameter fuer den Standard Menueeintrag ein (s. "
 "kernel Dokumentation)."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:469
+#: ../../functions/kwgrub2/kwgrub2_conf:487
+msgid ""
+"Geben Sie bitte Ihre NetBSD Kernel Parameter ein (s. kernel Dokumentation)."
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:502
+msgid ""
+"Geben Sie bitte Ihre NetBSD Kernel Parameter fuer den Standard Menueeintrag "
+"ein (s. kernel Dokumentation)."
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:517
+msgid ""
+"Geben Sie bitte Ihre GNU Mach Kernel Parameter ein (s. kernel Dokumentation)."
+msgstr ""
+
+#: ../../functions/kwgrub2/kwgrub2_conf:532
+#: ../../functions/kwgrub2/kwgrub2_conf:558
 msgid ""
 "Geben Sie bitte Ihre Parameter fuer den Xen Kernel ein (s. kernel "
 "Dokumentation)."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:482
+#: ../../functions/kwgrub2/kwgrub2_conf:545
+#: ../../functions/kwgrub2/kwgrub2_conf:571
 msgid ""
 "Geben Sie bitte Ihre Parameter fuer den Standard Menueeintrag des Xen "
 "Kernels ein (s. kernel Dokumentation)."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:494
+#: ../../functions/kwgrub2/kwgrub2_conf:583
 msgid ""
 "Soll die Benutzung von universally-unique identifiers (UUID) ausgeschaltet "
 "werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:506
+#: ../../functions/kwgrub2/kwgrub2_conf:595
 msgid ""
 "Soll die Benutzung von Recovery Menueeintragen ausgeschaltet werden (ja/"
 "nein)?"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:525
+#: ../../functions/kwgrub2/kwgrub2_conf:614
 msgid "Waehlen Sie die Aufloesung des grafischen Terminals aus."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:567
+#: ../../functions/kwgrub2/kwgrub2_conf:656
 msgid "Waehlen Sie ein Hintergrundbild aus."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:587
+#: ../../functions/kwgrub2/kwgrub2_conf:676
 msgid "Es sind keine Bilder vorhanden."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:613
+#: ../../functions/kwgrub2/kwgrub2_conf:702
 msgid "Waehlen Sie ein Theme Bild aus."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:633
+#: ../../functions/kwgrub2/kwgrub2_conf:722
 msgid "Es sind keine Theme Bilder vorhanden."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:646
+#: ../../functions/kwgrub2/kwgrub2_conf:735
 msgid "Waehlen Sie einen Zusatz zum Menuepunt \\\"Aufloesung\\\" aus."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:670
+#: ../../functions/kwgrub2/kwgrub2_conf:759
 msgid ""
 "Soll das proben nach anderen Betriebssystemen ausgeschaltet werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:684
+#: ../../functions/kwgrub2/kwgrub2_conf:773
 msgid ""
 "Geben Sie bitte die Werte fuer den Klang, getrennt durch ein Leerzeichen "
 "(Bsp.: 480 440 1) oder eine Musik Datei mit vollem Pfad ein (s. info grub)."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:718
+#: ../../functions/kwgrub2/kwgrub2_conf:807
 msgid ""
 "Geben Sie bitte die Kernel Module, getrennt durch ein Leerzeichen, ein die "
 "von grub2 vor dem Starten des Betriebssystems geladen werden sollen (Bsp.: "
 "xfs ext4."
 msgstr ""
 
-#: ../../functions/kwgrub2/kwgrub2_conf:734
+#: ../../functions/kwgrub2/kwgrub2_conf:823
 msgid ""
 "Tragen Sie bitte die Speicheradressen ein die grub2 nicht benutzen soll "
 "(Bsp.: 0x01234567,0xfefefefe,0x89abcdef,0xefefefef)."
@@ -382,7 +420,7 @@ msgstr ""
 #, sh-format
 msgid ""
 "Hier koennen Sie einige Einstellungen fuer den Bootloader\n"
-"\"grub\" taetigen. \n"
+"\"grub\" taetigen. Siehe \"info -f grub -n Simple configuration\".\n"
 "\n"
 "Standard Boot Eintrag: Waehlen Sie einen Standard Eintrag aus,\n"
 "\\tden grub2 standardmaessig starten soll. Es werden die vorhandenen\n"
@@ -420,7 +458,8 @@ msgid ""
 "\\t\"versteckter Timeout Schalter\" und \"BIOS Adress Schalter\" und\n"
 "\\tanschliessendem speichern werden die richtigen Variablen in der\n"
 "\\tDatei $GRUB_DEFAULT_CONFFILE gesetzt. \n"
-"Die Werte von \"Timeout Schalter\", \"Standard Schalter\" und\n"
+"\n"
+"NOTIZ: Die Werte von \"Timeout Schalter\", \"Standard Schalter\" und\n"
 "\\t\"versteckter Timeout Schalter\" werden anstelle der Werte von\n"
 "\\t\"Standard Boot Eintrag\", \"Timeout\" und \"versteckter Timeout\"\n"
 "\\tbenutzt, falls so ein spezial Schalter getaetigt wird.\n"
@@ -451,23 +490,50 @@ msgid ""
 "NOTIZ: Diese Option ueberschreibt die beiden Optionen \"Terminal\n"
 "\\tEin- und Ausgabe\".\n"
 "\n"
-"Serial Kommando: Optinale Eintraege zur seriellen Schnittstelle\n"
+"Serial Kommando: Optimale Eintraege zur seriellen Schnittstelle\n"
 "\\twerden hier nach dem \"serial\" jeweils hinter einem Doppel-Minus\n"
 "\\teingetragen (z.B.: --unit=, --port=, --speed=, --device=).\n"
 "\\tDazu muss bei \"Terminal\"-Optionen serial ausgewaehlt werden.\n"
 "\n"
-"Linux Argumente: Geben Sie bitte Ihre Kernel Parameter ein (s.\n"
-"\\tkernel Dokumentation).\n"
+"Linux Argumente: Geben Sie bitte Ihre Linux Kernel Parameter ein\n"
+"\\t(s. kernel Dokumentation).\n"
 "\n"
-"Standard Linux Argumente: Geben Sie bitte Ihre Kernel Parameter fuer\n"
-"\\tden Standard Menueeintrag ein (s. kernel Dokumentation).\n"
+"Standard Linux Argumente: Geben Sie bitte Ihre Linux Kernel\n"
+"\\tParameter fuer den Standard Menueeintrag ein (s. kernel\n"
+"\\tDokumentation). Diese werden an die im Menueeintrag \"Linux\n"
+"\\tArgumente\" aufgelisteten Parameter angehaengt. Meist ist dies\n"
+"\\t\"quiet\"; dadurch wird beim Boot Prozess nur das Noetigste\n"
+"\\tangezeigt.\n"
+"\n"
+"NetBSD Argumente: Geben Sie bitte Ihre NetBSD Kernel Parameter ein\n"
+"\\t(s. kernel Dokumentation). Ist gleich dem Menueeintrag \"Linux\n"
+"\\tArgumente\" bloss fuer NetBSD.\n"
+"\n"
+"Standard NetBSD Argumente: Geben Sie bitte Ihre NetBSD Kernel\n"
+"\\tParameter fuer den Standard Menueeintrag ein (s. kernel\n"
+"\\tDokumentation). Ist gleich dem Menueeintrag \"Standard Linux\n"
+"\\tArgumente\" bloss fuer NetBSD.\n"
+"\n"
+"GNU Mach Argumente: Geben Sie bitte Ihre GNU Mach Kernel Parameter\n"
+"\\tein (s. kernel Dokumentation). Ist gleich dem Menueeintrag \"Linux\n"
+"\\tArgumente\" bloss fuer GNU Mach.\n"
 "\n"
 "Xen Argumente: Geben Sie bitte Ihre Parameter fuer den Xen Kernel\n"
-"\\tein (s. kernel Dokumentation).\n"
+"\\tein (s. kernel Dokumentation). Ist gleich dem Menueeintrag \"Linux\n"
+"\\tArgumente\" bloss fuer Xen.\n"
 "\n"
 "Standard Xen Argumente: Geben Sie bitte Ihre Parameter fuer den\n"
 "\\tStandard Menueeintrag des Xen Kernels ein (s. kernel\n"
-"\\tDokumentation).\n"
+"\\tDokumentation). Ist gleich dem Menueeintrag \"Standard Linux\n"
+"\\tArgumente\" bloss fuer Xen.\n"
+"\n"
+"Xen Tausch Argumente: Die Werte die Sie hier eingeben werden\n"
+"\\tgetauscht mit den Werten im Menueeintrag \"Linux Argumente\"\n"
+"\\tfuer alle Linux und Xen Menueeintraege.\n"
+"\n"
+"Standard Xen Tausch Argumente: Die Werte die Sie hier eingeben\n"
+"\\twerden getauscht mit den Werten im Menueeintrag \"Standard Linux\n"
+"\\tArgumente\" fuer alle Linux und Xen Menueeintraege.\n"
 "\n"
 "UUID: Soll die Benutzung von universally-unique identifiers (UUID)\n"
 "\\tausgeschaltet werden (ja/nein)?\n"
