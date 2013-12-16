@@ -1,6 +1,6 @@
 #! /bin/sh -e
 #
-# Copyright (c) 2002-2010 Netzworkk, Germany.
+# Copyright (c) 2002-2013 Netzworkk, Germany.
 #
 # Author: Kai Wilke <kiste@netzworkk.de>
 #
@@ -22,50 +22,69 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/sbin
 
 DESC="kwtools Netfilter Automatic Rule Configurator"
-NAME="kwnarc"
-# description: 
+KWNARC="`which kwnarc`"
+
+# Check for programm presence
+[ -x "$KWNARC" ] || exit 0
 
 # lsb-base >=3.0-6
 . /lib/lsb/init-functions
 
+confcheck() {
 if [ -f /etc/kwtools/kwnarc.conf ] ; then
 	CONFIG="/etc/kwtools/kwnarc.conf"
-	. $CONFIG
 elif [ -f /usr/local/etc/kwtools/kwnarc.conf ] ; then
 	CONFIG="/usr/local/etc/kwtools/kwnarc.conf"
-	. $CONFIG
+else
+	CONFIG=""
 fi
+if [ ! -z "$CONFIG" ] ; then
+	. $CONFIG
+else
+	log_failure_msg "Cannot find $CONFIG! Aborting." 
+	exit 0
+fi
+}
 
+check_variables() {
 if [ ! "$START_IPTABLES" = "yes" ] ; then
 	log_warning_msg "Not starting iptables script kwnarc, disabled via $CONFIG"
 	exit 0
 fi
+# Check for the iptables binary
+if [ ! -x "$IPTABLES" ] ; then
+	log_failure_msg "$IPTABLES executable missing."
+	exit 0
+fi
+}
+
+confcheck
+check_variables
 
 case "$1" in
     chains)
-		$NAME chains || log_end_msg 1
-		log_end_msg 0 
+		$KWNARC chains
         ;;
     conntrack)
-		$NAME conntrack || log_end_msg 1
-		log_end_msg 0 
+		$KWNARC conntrack
         ;;
     start)
-       $NAME start || log_end_msg 1
-		log_end_msg 0
+		log_begin_msg "Starting kwnarc services..."
+		$KWNARC start 1>/dev/null
+		log_end_msg $?
         ;;
     stop)
-		$NAME stop || log_end_msg 1
-		log_end_msg 0
+		log_begin_msg "Stopping kwnarc services..."
+		$KWNARC stop 1>/dev/null
+		log_end_msg $?
         ;;
     restart|reload|force-reload)
-        $0 stop
+		$0 stop
 		sleep 1
 		$0 start
         ;;
     status)
-		$NAME status || log_end_msg 1
-		log_end_msg 0 
+		$KWNARC status
         ;;
     *)
         echo "Usage: $0 {chains|conntrack|start|stop|reload|force-reload|restart|status}"
