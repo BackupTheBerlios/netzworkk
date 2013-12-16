@@ -125,9 +125,6 @@ ENABLE_IPLIMIT: Soll eine TCP basierte Limitierung der Logeintraege
 \teingeschaltet werden (ja/nein)? Benoetigt die Eintraege in
 \tIPLIMIT_MAX_ACCEPT und IPLIMIT_NETMASK.
 
-NOTIZ: Benoetigt den CONFIG_IP_NF_MATCH_IPLIMIT Kernel Patch
-\t(iplimit patch).
-
 ENABLE_LIMIT_RATE: Soll eine generelle Limitierung der Logeintraege
 \teingeschaltet werden (ja/nein)? Benoetigt die Eintraege in
 \tLIMIT_BURST und LIMIT_RATE.
@@ -158,7 +155,6 @@ ILLEGAL_TCP_FLAGS: Geben Sie hier TCP Flagskombinatikonen ein, die
 
 INGRESS_FILTER: 1 simple oder 2 komplett nach RFC1812 section 5.3.8.
 \tSiehe http://andrew2.andrew.cmu.edu/rfc/rfc1812.html
-
 
 IPLIMIT_MAX_ACCEPT: Geben Sie hier die Anzahl der Logeintraege fuer
 \tdie Netzmaske (IPLIMIT_NETMASK) ein.

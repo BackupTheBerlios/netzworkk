@@ -1,5 +1,5 @@
 # ingress_filter_help fuer kwnarcconf{{{
-TITLE=$(gettext '${lv_Manin_Conf}::Ingress_Filter::${gv_Help}')
+TITLE=$(gettext '${lv_Main_Conf}::Ingress_Filter::${gv_Help}')
 MSG=$(gettext 'Anschalten der "source-address" Bestaetigung.
 
 1: simple
