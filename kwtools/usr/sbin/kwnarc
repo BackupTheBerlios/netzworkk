@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 20.06.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 16.12.2013
 #
 # Script: kwnarc, Firewall mittels iptables starten.
 # KWNARC - kwtools Netfilter Automatic Rule Configurator
@@ -8,7 +8,7 @@
 # NARC - Netfilter Automatic Rule Configurator v0.7
 # Copyright (c) 2001, Shane Chen (shane@knowplace.org).
 #
-# Version: 0.0.7
+# Version: 0.0.8
 #
 setopt extendedglob
 
@@ -44,22 +44,23 @@ else
 	RCABORT="$ABORT"
 fi
 
-# temp file remove function
+# temp file remove function# {{{
 removetemp()
 {
-	if test -f $TMPDIR/narc.tmp ; then
-		rm $TMPDIR/narc.tmp
+	if test -f $TMPDIR/kwnarc.tmp ; then
+		rm $TMPDIR/kwnarc.tmp
 	fi
 }
-
-# Exit functions
+## }}}
+# Configurations Error exit functions# {{{
 confexit()
 {
 	echo $RCCONF_ERR
 	removetemp
 	exit 1
 }
-
+## }}}
+# Abort exit functions# {{{
 abortexit()
 {
 	echo $RCABORT
@@ -67,6 +68,7 @@ abortexit()
 	removetemp
 	exit 1
 }
+## }}}
 
 # temp directory detection
 if test -d /var/tmp ; then
@@ -81,20 +83,14 @@ fi
 if [ ! -z "$CONFIG" ] ; then
 	. $CONFIG
 else
-	echo "KWNARC error: Cannot find $CONFIG!  Aborting." || exit 1
+	echo "KWNARC error: Cannot find $CONFIG! Aborting." || exit 1
 	abortexit
 fi
 
 # Check for the iptables binary
-if ! test -f "$IPTABLES" ; then
-	echo $RED"Conf error:$NORMAL $BOLD$IPTABLES$NORMAL missing."
+if [[ ! -x $IPTABLES ]] ; then
+	echo $RED"Conf error:$NORMAL $BOLD$IPTABLES$NORMAL executable missing."
 	confexit
-else
-	$IPTABLES -V > /dev/null 2>&1 || BADBIN='yes'
-	if [ "$BADBIN" = 'yes' ] ; then
-		echo $RED"Conf error:$NORMAL $BOLD$IPTABLES$NORMAL path incorrect. Try `which iptables`."
-		confexit
-	fi
 fi
 
 ##
@@ -156,10 +152,10 @@ case "$1" in
 		echo $BOLD"kwnarc$NORMAL (kwtools Netfilter Automatic Rule Configurator)"
 		echo "Displaying current chains:"
 		if [[ -r /proc/net/ip_tables_names ]] ; then
-			for table in `< /proc/net/ip_tables_names` ; {
-				$IPTABLES -t $table -L -n | grep Chain \
-				| cut --fields=2 --delimiter=\
-			}
+			while read table ; do
+				$IPTABLES -t $table -L -n | grep Chain | \
+				cut --fields=2 --delimiter='\'
+			done < /proc/net/ip_tables_names
 		fi
 		exit 0
 		;;
@@ -174,17 +170,11 @@ esac
 ## Idiot checks - make sure kwnarc.conf file has been edited properly
 ##
 
-# Check if narc.conf is edited
-if [ "$EDITED" != 'yes' ] ; then
-	echo $RED"Conf error:$NORMAL $BOLD$CONFIG$NORMAL not edited."
-	confexit
-fi
-
 # Make sure ipchains isn't loaded
 removetemp
 /sbin/lsmod > $TMPDIR/kwnarc.tmp
-if grep ipchains $TMPDIR/kwnarc.tmp > /dev/null 2>&1 ; then
-	echo $BOLD"ipchains$NORMAL is loaded.  Please disable it before attempting to start iptables"
+if grep ipchains $TMPDIR/kwnarc.tmp &>/dev/null ; then
+	echo $BOLD"ipchains$NORMAL is loaded. Please disable it before attempting to start iptables"
 	abortexit
 fi
 
@@ -298,8 +288,8 @@ fi
 if [ "$CHECK_SYN_PACKET_LENGTH" != 'no' ] ; then
 	if [[ ! -f /lib/xtables/libxt_length.so && ! -f /usr/lib/xtables/libxt_length.so \
 	&& ! -f /usr/local/lib/xtables/libxt_length.so ]] ; then
-		echo $RED"Conf error:$NORMAL ${BOLD}CHECK_SYN_PACKET_LENGTH$NORMAL requires CONFIG_IP_NF_MATCH_LENGTH"
-		echo "Missing libipt_length.so"
+		echo $RED"Conf error:$NORMAL ${BOLD}CHECK_SYN_PACKET_LENGTH$NORMAL requires CONFIG_NETFILTER_XT_MATCH_LENGTH"
+		echo "Missing libxt_length.so"
 		confexit
 	fi
 fi
@@ -308,8 +298,8 @@ fi
 if [ "$ENABLE_LIMIT_RATE" != 'no' ] ; then
 	if [[ ! -f /lib/xtables/libxt_limit.so && ! -f /usr/lib/xtables/libxt_limit.so \
 	&& ! -f /usr/local/lib/xtables/libxt_limit.so ]] ; then
-		echo $RED"Conf error:$NORMAL ${BOLD}CHECK_SYN_PACKET_LENGTH$NORMAL requires CONFIG_IP_NF_MATCH_LIMIT"
-		echo "Missing ibipt_limit.so"
+		echo $RED"Conf error:$NORMAL ${BOLD}ENABLE_LIMIT_RATE$NORMAL requires CONFIG_NETFILTER_XT_MATCH_LIMIT"
+		echo "Missing libxt_limit.so"
 		confexit
 	fi
 	if [[ "$LIMIT_RATE" == '' || "$LIMIT_BURST" == '' ]] ; then
@@ -319,10 +309,6 @@ if [ "$ENABLE_LIMIT_RATE" != 'no' ] ; then
 fi
 
 # iplimit module detection
-################################################
-# TODO:
-# iprange wird noch nicht konfiguriert bzw. benutzt.
-################################################
 if [ "$ENABLE_IPLIMIT" != 'no' ] ; then
 	if [[ -f "/lib/modules/$KERNVER/kernel/net/netfilter/xt_iprange.ko" || -f "/lib/xtables/libxt_iprange.so" \
 	|| -f "/usr/lib/xtables/libxt_iprange.so" || -f "/usr/local/lib/xtables/libxt_iprange.so" ]] ; then \
@@ -333,8 +319,8 @@ if [ "$ENABLE_IPLIMIT" != 'no' ] ; then
 		CONNMODULE="connlimit"
 	fi
 	if [ "$CONNMODULE" == '' ] ; then
-		echo $RED"Conf error:$NORMAL ${BOLD}IPLIMIT_ENABLE$NORMAL requires CONFIG_NETFILTER_XT_MATCH_IPRANGE or CONFIG_NETFILTER_XT_MATCH_CONNLIMIT"
-		echo "Missing xt_iprange.ko, libxt_iprange.so, xt_connlimit.ko or libxt_connlimit.so"
+		echo $RED"Conf error:$NORMAL ${BOLD}ENABLE_IPLIMIT$NORMAL requires CONFIG_NETFILTER_XT_MATCH_IPRANGE or CONFIG_NETFILTER_XT_MATCH_CONNLIMIT"
+		echo "Missing xt_iprange.ko or libxt_iprange.so, xt_connlimit.ko or libxt_connlimit.so"
 		confexit
 	else
 		/sbin/modprobe -a "$CONNMODULE" || confexit
@@ -423,7 +409,7 @@ fi
 if [ "$LOAD_MODULES" = 'yes' ] ; then
 	echo -n "Loading module: "
 	for module in ${=PRELOAD_IP_MODULES} ; {
-	    if ! grep $module /var/tmp/narc.tmp > /dev/null 2>&1 ; then
+	    if ! grep $module /var/tmp/kwnarc.tmp > /dev/null 2>&1 ; then
 			/sbin/modprobe $module && echo -n "[ $BOLD$module$NORMAL - $RCOK ] " || echo -n \
 			"[ $BOLD$module$NORMAL - $RCFAIL ] "
 		fi
@@ -1111,7 +1097,7 @@ if [ "$MASQUERADE" = 'yes' ] ; then
 	if [ "$LOAD_MODULES" = 'yes' ] ; then
 		echo -n "Enabling network masquerading: "
 		for module in ${=NAT_MODULES} ; {
-			if ! grep $module /var/tmp/narc.tmp > /dev/null 2>&1 ; then
+			if ! grep $module /var/tmp/kwnarc.tmp > /dev/null 2>&1 ; then
 				/sbin/modprobe $module && echo -n "[ $BOLD$module$NORMAL - $RCOK ] " || echo -n \
 				"[ $BOLD$module$NORMAL - $RCFAIL ] "
 			fi
