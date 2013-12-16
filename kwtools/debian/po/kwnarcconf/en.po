@@ -1,14 +1,14 @@
 # kwnarcconf english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2011-2013
 # This file is distributed under the same license as the kwtools-net-narc package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kwnarcconf-0.1.11\n"
+"Project-Id-Version: kwnarcconf-0.1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-09 09:15+0200\n"
-"PO-Revision-Date: 2011-04-09 22:13+0200\n"
+"POT-Creation-Date: 2013-12-16 19:09+0100\n"
+"PO-Revision-Date: 2013-12-16 19:14+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -393,7 +393,7 @@ msgstr ""
 
 #: ../../help/kwnarcconf/ingress_filter_help:2
 #, sh-format
-msgid "${lv_Manin_Conf}::Ingress_Filter::${gv_Help}"
+msgid "${lv_Main_Conf}::Ingress_Filter::${gv_Help}"
 msgstr ""
 
 #: ../../help/kwnarcconf/ingress_filter_help:3
@@ -621,9 +621,6 @@ msgid ""
 "\\teingeschaltet werden (ja/nein)? Benoetigt die Eintraege in\n"
 "\\tIPLIMIT_MAX_ACCEPT und IPLIMIT_NETMASK.\n"
 "\n"
-"NOTIZ: Benoetigt den CONFIG_IP_NF_MATCH_IPLIMIT Kernel Patch\n"
-"\\t(iplimit patch).\n"
-"\n"
 "ENABLE_LIMIT_RATE: Soll eine generelle Limitierung der Logeintraege\n"
 "\\teingeschaltet werden (ja/nein)? Benoetigt die Eintraege in\n"
 "\\tLIMIT_BURST und LIMIT_RATE.\n"
@@ -654,7 +651,6 @@ msgid ""
 "\n"
 "INGRESS_FILTER: 1 simple oder 2 komplett nach RFC1812 section 5.3.8.\n"
 "\\tSiehe http://andrew2.andrew.cmu.edu/rfc/rfc1812.html\n"
-"\n"
 "\n"
 "IPLIMIT_MAX_ACCEPT: Geben Sie hier die Anzahl der Logeintraege fuer\n"
 "\\tdie Netzmaske (IPLIMIT_NETMASK) ein.\n"
