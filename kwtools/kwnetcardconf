@@ -1,12 +1,12 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 03.06.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 05.01.2014
 #
 # Script: kwnetcardconf, Konfiguriert ihre Netzwerkkarten und deren
 #	      IP Adressen. Zur Zeit nur WLAN und Ethernet. DSL wird noch
 #	      nicht konfiguriert, dazu ist pppoeconf zustaendig.
 #
-# Version: 0.1.13
+# Version: 0.1.14
 
 trap 'setterm -inversescreen off ; setterm -reset ; rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
 
