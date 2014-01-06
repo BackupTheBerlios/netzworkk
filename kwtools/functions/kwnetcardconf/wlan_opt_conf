@@ -40,7 +40,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Essid)
 				# ESSID eingeben.# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie die ESSID fuer $ETH ein (Bsp. any, \"Mein Netzwerk\").')
 				inputbox "$WL_OPT_TITLE" "$MSG" "${ESSID:-any}"
 				if [ "$gv_Auswahl" ] ; then
@@ -53,7 +52,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Network_Id)
 				# Netzwerk ID eingeben# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie die Netzwerk ID fuer $ETH ein (Zellenname).')
 				inputbox "$WL_OPT_TITLE" "$MSG" "$NWID"
 				if [ "$gv_Auswahl" ] ; then
@@ -100,7 +98,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Channel)
 				# Kanal von 0-16 eingeben.# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie eine Kanal Nummer fuer $ETH ein (0-16).')
 				number_input "$WL_OPT_TITLE" "$MSG" "$CHANNEL"
 				if [ "$NUMBER" -lt 17 ] ; then
@@ -114,7 +111,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Freq)
 				# Frequenz eingeben# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie die Frequenz fuer $ETH ein (Bsp. 2.224G = 2.224GHz).')
 				number_input -D "$WL_OPT_TITLE" "$MSG" "$FREQ"
 				if [ -n "$NUMBER" ] ; then
@@ -128,7 +124,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Sensity)
 				# Empfindlichkeit einstellen (sens -80)# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie die Empfindlichkeit der Verbindung ein (Bsp. -80, 2).')
 				inputbox "$WL_OPT_TITLE" "$MSG" "$SENS"
 				if [ -n "$gv_Auswahl" ] ; then
@@ -147,7 +142,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Bitrate)
 				# Bitrate einstellen (rate 5.5M)# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie die Bitrate fuer $ETH ein (Bsp. 5.5M = 5.5 MByte).')
 				number_input -D "$WL_OPT_TITLE" "$MSG" "$RATE"
 				if [ -n "$NUMBER" ] ; then
@@ -234,7 +228,7 @@ wlan_opt_conf() {
 					else
 						WPASECRET=""
 						# No need for a wep key if we are using wpa
-						PASS_MSG=$(gettext 'Geben Sie einen Schluessel fuer die Verschluessellung von $ETH ein (Bsp. ).')
+						PASS_MSG=$(gettext 'Geben Sie einen Schluessel fuer die Verschluessellung von $ETH ein.')
 						password "$WL_OPT_TITLE" "$PASS_MSG" 8 63
 						if [ -n "$PASSPHRASE" ] ; then
 							KEY="$PASSPHRASE"
@@ -257,7 +251,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Rts)
 				# RTS einstellen (rts 512)# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie die Groesse des kleinsten Pakets ein, fuer welches ein RTS Handshake gesendet wird (Bsp. 512).')
 				number_input "$WL_OPT_TITLE" "$MSG" "$RTS"
 				if [ -n "$NUMBER" ] ; then
@@ -270,7 +263,6 @@ wlan_opt_conf() {
 				;;
 			$lv_Fragment)
 				# Fragment_Groesse einstellen (frag 512)# {{{
-				unset -- MSG
 				MSG=$(gettext 'Geben Sie die Fragment Groesse ein (Bsp. 512).')
 				number_input "$WL_OPT_TITLE" "$MSG" "$FRAG"
 				if [ -n "$NUMBER" ] ; then
@@ -282,19 +274,27 @@ wlan_opt_conf() {
 				wlan_opt_menu $lv_Fragment
 				;;
 			$lv_Iwspy)
-				####################################
-				# TODO:
-				# ?
-				####################################
-				hier_ist_noch_nichts $lv_Iwspy
+				# iwspy Paramter eingeben, zeigt Statistiken der WLAN Karte an.# {{{
+				MSG=$(gettext 'Geben Sie  die Parameter fuer "iwspy" ein.')
+				inputbox "$WL_OPT_TITLE" "$MSG" "$IWSPY"
+				if [ "$gv_Auswahl" ] ; then
+					IWSPY="$gv_Auswahl"
+				else
+					IWSPY=""
+				fi
+				## }}}
 				wlan_opt_menu $lv_Iwspy
 				;;
 			$lv_Iwpriv)
-				####################################
-				# TODO:
-				# ?
-				####################################
-				hier_ist_noch_nichts $lv_Iwpriv
+				# iwpriv Paramter eingeben, stellt Treiber-speziefische Parameter ein.# {{{
+				MSG=$(gettext 'Geben Sie die Parameter fuer "iwpriv" ein.')
+				inputbox "$WL_OPT_TITLE" "$MSG" "$IWPRIV"
+				if [ "$gv_Auswahl" ] ; then
+					IWPRIV="$gv_Auswahl"
+				else
+					IWPRIV=""
+				fi
+				## }}}
 				wlan_opt_menu $lv_Iwpriv
 				;;
 			$gv_Save)

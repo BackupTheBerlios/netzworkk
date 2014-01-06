@@ -74,6 +74,8 @@ read_wlan_option() {
 			else
 				PUBKEY=1
 			fi
+		else
+			PUBKEY=1
 		fi
 	fi
 }

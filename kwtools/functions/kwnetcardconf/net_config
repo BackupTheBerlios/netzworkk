@@ -4,10 +4,6 @@
 #
 net_config() {
 	# Funktion (save_dhcp_wlan), WLAN-Einstellungen speichern# {{{
-	#############################
-	# TODO:
-	# interfaces oder wpa_supplicant
-	#############################
 	#
 	# usage: save_dhcp_wlan
 	save_dhcp_wlan() {
