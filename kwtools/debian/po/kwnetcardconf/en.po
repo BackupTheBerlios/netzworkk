@@ -1,15 +1,15 @@
 # kwnetcardconf english Translation.
-# Copyright (C) 2011
+# Copyright (C) 2011-2014
 # This file is distributed under the same license as the kwtools-sys package.
-# Kai Wilke <kiste@netzworkk.de>, 2011.
+# Kai Wilke <kiste@netzworkk.de>, 2014.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: kwnetcardconf-0.1.13\n"
+"Project-Id-Version: kwnetcardconf-0.1.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-03 08:03+0200\n"
-"PO-Revision-Date: 2011-06-03 08:08+0200\n"
+"POT-Creation-Date: 2014-01-06 23:24+0100\n"
+"PO-Revision-Date: 2014-01-06 23:25+0200\n"
 "Last-Translator: Kai Wilke <kiste@netzworkk.de>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -120,84 +120,83 @@ msgstr "iwspy_Options"
 msgid "iwpriv_Optionen"
 msgstr "iwpriv_Options"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:44
+#: ../../functions/kwnetcardconf/wlan_opt_conf:43
 #, sh-format
 msgid "Geben Sie die ESSID fuer $ETH ein (Bsp. any, \\\"Mein Netzwerk\\\")."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:57
+#: ../../functions/kwnetcardconf/wlan_opt_conf:55
 #, sh-format
 msgid "Geben Sie die Netzwerk ID fuer $ETH ein (Zellenname)."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:69
+#: ../../functions/kwnetcardconf/wlan_opt_conf:67
 msgid "Managed"
 msgstr "Managed"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:70
+#: ../../functions/kwnetcardconf/wlan_opt_conf:68
 msgid "Standard"
 msgstr "Default"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:71
+#: ../../functions/kwnetcardconf/wlan_opt_conf:69
 msgid "Ad-Hoc"
 msgstr "Ad-Hoc"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:72
+#: ../../functions/kwnetcardconf/wlan_opt_conf:70
 msgid "Master"
 msgstr "Master"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:73
+#: ../../functions/kwnetcardconf/wlan_opt_conf:71
 msgid "Monitor"
 msgstr "Monitor"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:74
+#: ../../functions/kwnetcardconf/wlan_opt_conf:72
 msgid "Repeater"
 msgstr "Repeater"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:75
+#: ../../functions/kwnetcardconf/wlan_opt_conf:73
 msgid "Secondary"
 msgstr "Secondary"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:76
+#: ../../functions/kwnetcardconf/wlan_opt_conf:74
 msgid "auto"
 msgstr "auto"
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:104
+#: ../../functions/kwnetcardconf/wlan_opt_conf:101
 #, sh-format
 msgid "Geben Sie eine Kanal Nummer fuer $ETH ein (0-16)."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:118
+#: ../../functions/kwnetcardconf/wlan_opt_conf:114
 #, sh-format
 msgid "Geben Sie die Frequenz fuer $ETH ein (Bsp. 2.224G = 2.224GHz)."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:132
+#: ../../functions/kwnetcardconf/wlan_opt_conf:127
 msgid "Geben Sie die Empfindlichkeit der Verbindung ein (Bsp. -80, 2)."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:151
+#: ../../functions/kwnetcardconf/wlan_opt_conf:145
 #, sh-format
 msgid "Geben Sie die Bitrate fuer $ETH ein (Bsp. 5.5M = 5.5 MByte)."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:181
+#: ../../functions/kwnetcardconf/wlan_opt_conf:175
 msgid "Soll WPA aktiviert werden (ja/nein)?"
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:215
+#: ../../functions/kwnetcardconf/wlan_opt_conf:209
 msgid ""
 "Geben Sie die Passphrase fuer WPA ein. Die Passphrase muss 8-63 Zeichen "
 "besitzen."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:237
+#: ../../functions/kwnetcardconf/wlan_opt_conf:231
 #, sh-format
-msgid ""
-"Geben Sie einen Schluessel fuer die Verschluessellung von $ETH ein (Bsp. )."
+msgid "Geben Sie einen Schluessel fuer die Verschluessellung von $ETH ein."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:243
+#: ../../functions/kwnetcardconf/wlan_opt_conf:237
 #, sh-format
 msgid ""
 "Soll der Schluessel in einer eigenen Datei gespeichert werden ( $ETH )? Bei "
@@ -205,14 +204,22 @@ msgid ""
 "fuer manche System Benutzer lesbar ist. Die Rechte werden auf 0600 gesetzt."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:261
+#: ../../functions/kwnetcardconf/wlan_opt_conf:254
 msgid ""
 "Geben Sie die Groesse des kleinsten Pakets ein, fuer welches ein RTS "
 "Handshake gesendet wird (Bsp. 512)."
 msgstr ""
 
-#: ../../functions/kwnetcardconf/wlan_opt_conf:274
+#: ../../functions/kwnetcardconf/wlan_opt_conf:266
 msgid "Geben Sie die Fragment Groesse ein (Bsp. 512)."
+msgstr ""
+
+#: ../../functions/kwnetcardconf/wlan_opt_conf:278
+msgid "Geben Sie  die Parameter fuer \"iwspy\" ein."
+msgstr ""
+
+#: ../../functions/kwnetcardconf/wlan_opt_conf:290
+msgid "Geben Sie die Parameter fuer \"iwpriv\" ein."
 msgstr ""
 
 #: ../../help/kwnetcardconf/conf_help:3
@@ -253,6 +260,11 @@ msgid ""
 "Mit kwnetcardconf koennen Sie ihre Netzwerkkarten konfigurieren.\n"
 "Waehlen Sie ein Interface (Bsp.: eth0) zur weiteren Bearbeitung aus. \n"
 "\n"
+"Bei WLAN Karten wird nur die Konfiguration mittels der wireless-\n"
+"\\ttools unterstuetzt. Wennn Sie eine bessere Unterstuetzung fuer\n"
+"\\tdie Verschluesslung benoetigen benutzen Sie das Paket\n"
+"\\twpasupplicant.\n"
+"\n"
 "Die Anzeige ist unterteilt in:\n"
 "Schnittstelle_Kartentyp_MAC-Adresse_Treiber"
 msgstr ""
@@ -286,27 +298,31 @@ msgstr "${gv_Configuration}::WLAN-Option::${gv_Help}"
 msgid ""
 "Hier kann man die Optionen fuer die WLAN Karte einstellen.\n"
 "\n"
-"ESSID: Geben Sie Namen oder den Namen des Netzwerks ein.\n"
+"ESSID: Eingabe des Namen oder den Namen des Netzwerks.\n"
 "\n"
-"Netzwerk_ID: \n"
+"Netzwerk_ID: Eingabe der Netzwerk-ID.\n"
 "\n"
 "Modus: Auswahl des Operations Modus dieser Node.\n"
 "\n"
-"Kanal: Geben Sie die Kanal Nummer auf dem gesendet/empfangen\n"
+"Kanal: Eingabe der Kanal Nummer auf der gesendet/empfangen wird\n"
 "\\t(1...16).\n"
 "\n"
-"Frequenz: (Bsp. 2.24G = 2.24 GHz)\n"
+"Frequenz: Eingabe der Frequenz fuer diese Karte\n"
+"\\t(Bsp. 2.24G = 2.24 GHz).\n"
 "\n"
-"Empfindlichkeit: \n"
+"Empfindlichkeit: Eingabe der Empfindlichkeit fuer die Verbindung\n"
+"\\t(Bsp. -80, 2).\n"
 "\n"
-"Bitrate: (Bsp. 5.5M = 5.5 MByte)\n"
+"Bitrate: Eingabe der Bitrate (Bsp. 5.5M = 5.5 MByte).\n"
 "\n"
 "Schluessel: Hier kann man die Verschluessellung beziehungsweise den\n"
-"\\tSchluessel.\n"
+"\\tSchluessel eingeben.\n"
 "\n"
-"RTS_Handshake: (Bsp. 512)\n"
+"RTS_Handshake: Eingabe der kleinsten Groesse eines Packetes fuer\n"
+"\\twelches die Node einen RTS Handschlag sendet (Bsp. 512).\n"
 "\n"
-"Fragment_Groesse: (Bsp. 512)\n"
+"Fragment_Groesse: Eingabe der Fragment Groesse ab der ein IP Packet\n"
+"\\tgeteilt werden soll (Bsp. 512).\n"
 "\n"
 "iwspy_Optionen: Geben Sie hier die Parameter fuer \"iwspy\"\n"
 "\\t(siehe man 8 iwspy) ein. \"iwspy\" zeigt Statistiken\n"
