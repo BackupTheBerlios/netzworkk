@@ -236,7 +236,7 @@ charset-hook ^euc-jp$ euc-jp-ms
 ## ============================================================================
 $Un_Set
 
-# Hier wird das Muster eingestellt, aus was reagiert werden soll."
+# Hier wird das Muster eingestellt, auf was reagiert werden soll."
 					fi
 				fi
 			}
