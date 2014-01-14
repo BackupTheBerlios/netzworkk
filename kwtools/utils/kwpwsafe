@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 01.12.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 14.01.2014
 #
 # Script: kwpwsafe, Frontend zur Verwaltung der Passwoerter mit dem Programm
 #         pwsafe.
@@ -168,7 +168,8 @@ read_pwsafe_entry() {
 	if [ "${#argv}" = 1 ] ; then
 		if [ -f "$1" ] ; then
 			PWSAFECF="$1"
-			print "$DB_PASS" | pwsafe --list -f "$PWSAFECF" | \
+			print "$DB_PASS" | pwsafe --list -q -f "$PWSAFECF" 2>/dev/null | \
+				grep -v "$PWSAFECF" | \
 				while read Pw_Entry ; do
 					case "$Pw_Entry" in
 						*[^:]*)

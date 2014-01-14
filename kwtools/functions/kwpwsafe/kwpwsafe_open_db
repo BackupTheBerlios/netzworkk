@@ -163,7 +163,6 @@ ${lv_Notes}:
 								fi
 								CHANGE=""
 								break
-								#pwsafe -e "$gv_Auswahl" -f "$DB_FILE" || prog_failure
 								;;
 						esac
 					done
@@ -188,7 +187,7 @@ ${lv_Notes}:
 							*)
 								# Auswahl loeschen
 								for i in ${=gv_Auswahl} ; {
-									print "$DB_PASS" | pwsafe --delete "$i" -f "$DB_FILE" 1>/dev/null || prog_failure
+									print "$DB_PASS" | pwsafe --delete "$i" -q -f "$DB_FILE" &>/dev/null || prog_failure
 								}
 								break
 								;;

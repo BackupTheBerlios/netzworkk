@@ -58,8 +58,9 @@ kwpwsafe_manage_db() {
 								# Passphrase eingeben
 								pass_input "$Db_Choice"
 								if [ ! -z "$DB_PASS" ] ; then
-									Db_Choice_Ex="`print ${gv_Auswahl}(:r)`"
-									print "$DB_PASS" | pwsafe --exportdb -f $Db_Choice > ${Db_Choice_Ex}.txt
+									Db_Choice_Ex="`print ${Db_Choice}(:r)`"
+									print "$DB_PASS" | pwsafe --exportdb -q -f $Db_Choice &>/dev/null | \
+									   grep '"'	> ${Db_Choice_Ex}.txt
 									# Passphrase loeschen
 									unset -- DB_PASS
 								fi
