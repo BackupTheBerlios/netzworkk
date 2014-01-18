@@ -87,7 +87,7 @@ kwmutt_abook() {
 					# oder nur neu speichern.
 					if [ -f "$alias_file" ] ; then
 						if [ -n "$ABOOK_VALUE_OLD" ] ; then
-							print -l ${(R)${(f)"$(< $ABOOK)"}##alias[[:space:]]${ABOOK_VALUE_OLD}*} >${gv_WorkDir}/abook
+							print -l ${(R)${(f)"$(< $alias_file)"}##alias[[:space:]]${ABOOK_VALUE_OLD}*} >${gv_WorkDir}/abook
 							>> "${gv_WorkDir}/abook" <<< "alias $MAIL_ALIAS $MAIL_ADR"
 							mv ${gv_WorkDir}/abook $alias_file
 						else
@@ -188,7 +188,6 @@ alias $MAIL_ALIAS $MAIL_ADR"
 									read_address_value $gv_Auswahl
 									kwmutt_abook_conf
 									unset -- ABOOK_VALUE_OLD
-									break
 									;;
 							esac
 						done

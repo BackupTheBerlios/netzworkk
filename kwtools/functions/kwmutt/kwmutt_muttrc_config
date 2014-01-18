@@ -183,7 +183,7 @@ set alias_file=\"$alias_file\"
 set reverse_alias=\"$reverse_alias\"
 
 # Aliasdatei einlesen, damit die Adressen gleich bekannt sind
-source $M_ABOOK
+source $alias_file
 
 ## ------------------------------ABOOK----------------------------------------
 # ABOOK Adressbuch

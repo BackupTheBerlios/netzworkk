@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 09.08.2013
+# Autor: Kai Wilke  <kiste@netzworkk.de> 18.01.2014
 #
 # Script: kwmutt, konfiguriert den Mail-Client Mutt.
 #
-# Version: 0.0.8
+# Version: 0.0.9
 
 ###################################################################
 # TODO:
