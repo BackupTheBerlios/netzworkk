@@ -1,13 +1,13 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 22.07.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 22.01.2014
 #
 # Script: kwparted, ein frontend fuer parted (Partitionierungstool)
 # ++++++++++++++++++++++++++++++
 # Es fehlt die Unterstuetzung zum kopieren der Dateisysteme hfs* und jfs.
 # ++++++++++++++++++++++++++++++
 #
-# Version: 0.2.13
+# Version: 0.2.14
 
 # ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da auf einigen OS
@@ -116,8 +116,8 @@ read_parted() {
 	# anlegen will (s. man 1 parted).
 	#
 	if [[ -z "$FP_Cap" ]] ; then
-		yesno "$gv_Attention" "$NO_PARTTAB"
-		if [ "$?" = 0 ] ; then
+		yesno "$gv_Attention" "$NO_PARTTAB" ""
+		if [ "$gv_Auswahl" = yes ] ; then
 			disk_create_parttab $Disk
 			#
 			if [ -n "$LABEL" ] ; then
@@ -560,8 +560,9 @@ while [ "$gv_Auswahl" ] ; do
 						#}}}
 						# Funktion choice_flags, Flags auswählen (z.B. boot){{{
 						choice_flags() {
+							local FLAGs Flag_Del
 							# Ist die Variable Fs_Type = linux-swap, benoetigt man kein Flag mehr.
-							# genauso bei erweiterten Partitionen.
+							# Genauso bei erweiterten Partitionen.
 							if [ x${Ist_Part_Type} != xextended ] ; then
 								if [ "$Fs_Type" != linux-swap ] ; then
 									PART_FLAG_TITLE=$(gettext 'Partitions-Flag')
@@ -569,19 +570,15 @@ while [ "$gv_Auswahl" ] ; do
 									# Funktion part_flags_menue{{{
 									#
 									part_flags_menue() {
-										unset -- Part_Flag
-										local Anz
-										integer Anz
-										Anz=1
+										local Part_Flag
 										Flag_Old="$Flag"
 										for i in boot lba lvm palo raid root swap ; {
 											Fl="${i%,}"
 											if [ ! -z ${(M)${Flag_Old}[(fr)${Fl}*]} ] ; then
-												Part_Flag[Anz]="$i \"\" on"
+												Part_Flag+=($i \"\" on)
 											else
-												Part_Flag[Anz]="$i \"\" off"
+												Part_Flag+=($i \"\" off)
 											fi
-											(( Anz++ ))
 										}
 										PART_FLAG_MENU=($Part_Flag)
 										checklist "$PART_FLAG_TITLE" "$PART_FLAG_MSG" "$PART_FLAG_MENU"
@@ -595,22 +592,25 @@ while [ "$gv_Auswahl" ] ; do
 												;;
 											*)
 												#
-												PART_FLAG_MSG=$(gettext 'Soll das/die Flag(s) (${gv_Auswahl// /, }) aktiviert werden (ja/nein)?')
-												yesno "$PART_FLAG_TITLE" "$PART_FLAG_MSG"
-												if [ "$?" = 0 ] ; then
-													# Variable Flag fuers Menue auf on stellen und
-													# die alten Einstellungen zum loeschen kennzeichnen.
-													Flag_Del="${Flag_Old//on/off}"
-													Flag="${gv_Auswahl// / on, } on"
-												else
-													Flag="${gv_Auswahl// / off, } off"
-													unset -- Flag_Del
+												FLAGs="$gv_Auswahl"
+												PART_FLAG_MSG=$(gettext 'Sollen die Flags (${FLAGs// /, }) aktiviert werden (ja/nein)?')
+												yesno "$PART_FLAG_TITLE" "$PART_FLAG_MSG" ""
+												if [ ! -z "$gv_Auswahl" ] ; then
+													if [ "$gv_Auswahl" = yes ] ; then
+														# Variable Flag fuers Menue auf on stellen und
+														# die alten Einstellungen zum loeschen kennzeichnen.
+														Flag_Del="${Flag_Old//on/off}"
+														Flag="${FLAGs// / on, } on"
+													else
+														Flag="${FLAGs// / off, } off"
+														unset -- Flag_Del
+													fi
 												fi
 												break
 												;;
 										esac
 									done
-									if [ -z "$gv_Auswahl" ] ; then
+									if [ -z "$FLAGs" ] ; then
 										# Variable Flag fuers Menue auf off stellen und zum loeschen kennzeichnen.
 										Flag_Del="${Flag_Old//on/off}"
 										Flag="$Flag_Del"

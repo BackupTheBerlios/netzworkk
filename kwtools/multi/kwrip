@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 15.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2014
 #
 # Script: kwrip, rippt ganze Audio und Video CD's
 #
-# Version: 0.0.9
+# Version: 0.0.10
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -37,8 +37,8 @@ script_init
 if [ -f "${gv_HomePath}/.kwtools/cdriprc" -a ! -f "${gv_HomePath}/.kwtools/kwriprc" ] ; then
 	CONVERT_TITLE=$(gettext 'Konfigurationsuebernahme')
 	CONVERT_MSG=$(gettext 'Soll die Konfigurations Datei ${gv_HomePath}/.kwtools/cdriprc nach ${gv_HomePath}/.kwtools/kwriprc uebernommen werden (ja/nein)? Bei nein wird die alte Konfigurationsdatei nur geloescht.')
-	yesno "$CONVERT_TITLE" "$CONVERT_MSG"
-	if [ "$?" = 0 ] ; then
+	yesno "$CONVERT_TITLE" "$CONVERT_MSG" "yes"
+	if [ "$gv_Auswahl" != no ] ; then
 		mv "${gv_HomePath}/.kwtools/cdriprc" "${gv_HomePath}/.kwtools/kwriprc" &>/dev/null
 	else
 		rm "${gv_HomePath}/.kwtools/cdriprc" &>/dev/null
@@ -576,8 +576,8 @@ while [ "$gv_Auswahl" ] ; do
 								if [ -n "$gv_Auswahl" ] ; then
 									if ls ${gv_Auswahl}-<->*.mpg(.) &>/dev/null ; then
 										MSG=$(gettext 'Die Datei ($gv_Auswahl) ist schon vorhanden. Soll diese ueberschrieben werden (ja/nein)?')
-										yesno "$gv_Info" "$MSG"
-										if [[ $? == 0 ]] ; then
+										yesno "$gv_Info" "$MSG" "no"
+										if [[ $gv_Auswahl == yes ]] ; then
 											VCD_NAME="$gv_Auswahl"
 											exec_vcdxrip
 										else

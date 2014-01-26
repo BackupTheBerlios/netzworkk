@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 11.02.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2014
 #
 # Script: kwssl2, erstellt eine PKI (Public Key Infrastructur),
 # CAs, Zertifikate, signiert diese ....
 #
-# Version: 0.0.2
+# Version: 0.0.3
 #
 
 # Ausführen von Befehlen auf bestimmte Signale.
@@ -277,7 +277,7 @@ check_default_revoke_days() {
 # Funktion (check_preservedn), prueft ob email zu Subject DN hinzugefuegt werden soll# {{{
 #
 check_preservedn() {
-	if [[ $PRESERVEDN == $gv_Yes ]] ; then
+	if [[ $PRESERVEDN == yes ]] ; then
 		PRESERVEDN_YES="-preserveDN"
 	else
 		unset -- PRESERVEDN_YES
@@ -289,11 +289,11 @@ check_preservedn() {
 choice_preservedn() {
 	PRESERVEDN_TITLE="$lv_Ssl_PreserveDN"
 	PRESERVEDN_MSG=$(gettext 'Email Adresse zum Subject DN hinzufuegen (ja/nein)?')
-	yesno "$PRESERVEDN_TITLE" "$PRESERVEDN_MSG"
-	if [ "$?" = 0 ] ; then
-		PRESERVEDN="$gv_Yes"
+	yesno "$PRESERVEDN_TITLE" "$PRESERVEDN_MSG" "yes"
+	if [ "$gv_Auswahl" != no ] ; then
+		PRESERVEDN="yes"
 	else
-		PRESERVEDN="$gv_No"
+		PRESERVEDN="no"
 	fi
 }
 ## }}}
@@ -1480,9 +1480,9 @@ while [ "$gv_Auswahl" ] ; do
 					$gv_Create)
 						# Diffie Hellman Datei erstellen.# {{{
 						if [ -n "$DH_FILENAME" -a -f "$DH_FILENAME" ] ; then
-							MSG=$(gettext 'Die Datei "$DH_FILENAME" ist schon vorhanden.\n\nSoll sie ueberschrieben werden ($gv_Yes/$gv_No)?')
-							yesno "$gv_Info" "$MSG"
-							if [ "$?" = 0 ] ; then
+							MSG=$(gettext 'Die Datei "$DH_FILENAME" ist schon vorhanden.\n\nSoll sie ueberschrieben werden (ja/nein)?')
+							yesno "$gv_Info" "$MSG" "no"
+							if [ "$gv_Auswahl" != no ] ; then
 								openssl dhparam -out "$DH_FILENAME" $KEYLENGTH || prog_failure
 							fi
 							break

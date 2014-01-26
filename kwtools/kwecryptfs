@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 16.10.2012
+# Autor: Kai Wilke  <kiste@netzworkk.de> 26.01.2014
 #
 # Script: kwecryptfs, erstellt ein verschluesseltes Dateisystem
 #         ueber einem Verzeichnis.
 #
-# Version: 0.0.4
+# Version: 0.0.5
 
 # Ausfuehren von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS

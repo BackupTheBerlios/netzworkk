@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 18.01.2014
+# Autor: Kai Wilke  <kiste@netzworkk.de> 26.01.2014
 #
 # Script: kwmutt, konfiguriert den Mail-Client Mutt.
 #
-# Version: 0.0.9
+# Version: 0.1.0
 
 ###################################################################
 # TODO:
@@ -273,8 +273,8 @@ if [[ -L $ORIG_MUTTCONF ]] ; then
 		ln -sf "$MUTTCONF" "$ORIG_MUTTCONF" &>/dev/null
 	fi
 elif [[ -f $ORIG_MUTTCONF ]] ; then
-	yesno "$gv_Info" "$MUTTRC_MSG"
-	if [ "$?" = 0 ] ; then
+	yesno "$gv_Info" "$MUTTRC_MSG" ""
+	if [ "$gv_Auswahl" = yes ] ; then
 		cp -a "$ORIG_MUTTCONF" "${gv_HomePath}/.muttrc.kwtools-`date +%Y-%m-%d`" &>/dev/null
 		mv "$ORIG_MUTTCONF" "$MUTTCONF" &>/dev/null
 		# Link von ~/.kwtools/kwmuttrc --> ~/.muttrc anlegen.
@@ -307,8 +307,8 @@ if [[ -L $ORIG_MUTT ]] ; then
 		ln -sf "$MUTT" "$ORIG_MUTT" &>/dev/null
 	fi
 elif [[ -d $ORIG_MUTT ]] ; then
-	yesno "$gv_Info" "$MUTT_MSG"
-	if [ "$?" = 0 ] ; then
+	yesno "$gv_Info" "$MUTT_MSG" ""
+	if [ "$gv_Auswahl" = yes ] ; then
 		cp -a "$ORIG_MUTT" "${gv_HomePath}/.mutt.kwtools-`date +%Y-%m-%d`" &>/dev/null
 		mv "$ORIG_MUTT" "$MUTT" &>/dev/null
 		# Link von ~/.kwtools/kwmutt --> ~/.mutt anlegen.
@@ -356,19 +356,17 @@ create_tmp_conf() {
 #
 yesno_select() {
 	if [ "$#" -ge 2 ] ; then
-		unset -- YN_TITLE YN_MSG Old_Value M_Tmp VALUE
-		integer Anz
+		unset -- VALUE
+		local YN_TITLE YN_MSG Old_Value M_Tmp
 		YN_TITLE="$1"
 		YN_MSG="$2"
 		Old_Value="$3"
 		#
-		Anz=0
 		for i in yes ask-yes no ask-no ; {
-			(( Anz++ ))
 			if [ "$i" = "$Old_Value" ] ; then
-				M_Tmp[Anz]="$i \"\" on"
+				M_Tmp+=($i \"\" on)
 			else
-				M_Tmp[Anz]="$i \"\" off"
+				M_Tmp+=($i \"\" off)
 			fi
 		}
 		#

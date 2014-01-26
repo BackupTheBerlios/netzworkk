@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 14.08.2013
+# Autor: Kai Wilke  <kiste@netzworkk.de> 22.01.2014
 #
 # Script: kwquota, Frontend fuer quota und xfs_quota
 #
-# Version: 0.0.10
+# Version: 0.0.11
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -535,8 +535,8 @@ while [ "$gv_Auswahl" ] ; do
 													# Quota Informationen in einer Datei sichern.# {{{
 													if [ -s "$Q_BAK_FILE" ] ; then
 														BAK_MSG=$(gettext 'Es existiert schon eine Backup Datei. Ueberschreiben (ja/nein)?')
-														yesno "$XFS_DRIVE_TITLE" "$BAK_MSG"
-														if [ "$?" = 0 ] ; then
+														yesno "$XFS_DRIVE_TITLE" "$BAK_MSG" ""
+														if [ "$gv_Auswahl" = yes ] ; then
 															xfs_quota -x -c "dump $QU_OPT" $FS_MP > $Q_BAK_FILE || prog_failure
 															# Ist die Datei leer wird sie gleich
 															# wieder geloescht.
@@ -588,8 +588,8 @@ while [ "$gv_Auswahl" ] ; do
 													OFF_MSG=$(gettext ' Das Quota auf dem Laufwerk komplett ausschalten (ja/nein)?\n
 \n
 Notiz: Sie muessen das Laufwerk danach neu einbinden oder den Rechner neu starten.')
-													yesno "$XFS_DRIVE_TITLE" "$OFF_MSG"
-													if [ "$?" = 0 ] ; then
+													yesno "$XFS_DRIVE_TITLE" "$OFF_MSG" ""
+													if [ "$gv_Auswahl" = yes ] ; then
 														xfs_quota -x -c "off $QU_OPT -v" $FS_MP || prog_failure
 													fi
 													QUOTA_STATE="$(quota_status "$QU_OPT" "$QUOTA_PART")"

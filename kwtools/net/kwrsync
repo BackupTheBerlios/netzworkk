@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 16.03.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 26.01.2014
 #
 # Script: kwrsync
-# Version: 1.0.0
+# Version: 1.0.1
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT

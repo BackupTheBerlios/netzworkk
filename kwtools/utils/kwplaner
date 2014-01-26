@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de>, 13.04.2011
+# Autor: Kai Wilke <kiste@netzworkk.de>, 19.01.2014
 #
 # Script: kwplaner, für Termine, Kalender etc.
-# Version: 0.0.6
+# Version: 0.0.7
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_WorkDir &>/dev/null' EXIT INT
@@ -34,8 +34,8 @@ script_init
 if [ -f "${gv_HomePath}/.kwtools/planerrc" -a ! -f "${gv_HomePath}/.kwtools/kwplanerrc" ] ; then
 	CONVERT_TITLE=$(gettext 'Konfigurationsuebernahme')
 	CONVERT_MSG=$(gettext 'Soll die Konfigurations Datei ${gv_HomePath}/.kwtools/planerrc nach ${gv_HomePath}/.kwtools/kwplanerrc uebernommen werden (ja/nein)? Bei nein wird die alte Konfigurationsdatei nur geloescht.')
-	yesno "$CONVERT_TITLE" "$CONVERT_MSG"
-	if [ "$?" = 0 ] ; then
+	yesno "$CONVERT_TITLE" "$CONVERT_MSG" "yes"
+	if [ "$gv_Auswahl" != no ] ; then
 		mv "${gv_HomePath}/.kwtools/planerrc" "${gv_HomePath}/.kwtools/kwplanerrc" &>/dev/null
 		mv "${gv_HomePath}/.kwtools/planer" "${gv_HomePath}/.kwtools/kwplaner" &>/dev/null
 	else

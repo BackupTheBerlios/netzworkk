@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 14.08.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 22.01.2014
 #
 # Script: kwuser, legt an, aendert und loescht User
-# Version: 1.0.3
+# Version: 1.0.4
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -1040,17 +1040,17 @@ while [ "$gv_Auswahl" ] ; do
 						#
 			            DEL_PREFIX_MSG=$(gettext 'Geben Sie einen Prefix Namen fuer die zu loeschenden Benutzer ein.')
 						inputbox "$DEL_TITLE" "$DEL_PREFIX_MSG"
-						if [ "$gv_Auswahl" ] ; then
+						if [ -n "$gv_Auswahl" ] ; then
 							check_prefix -m "$gv_Auswahl"
 							if [ -n "$P_IS_USER" ] ; then
 								DEL_ASK_MSG=$(gettext 'Sollen die Benutzer mit dem Prefix \"$gv_Auswahl\" wirklich geloescht werden (ja/nein)?')
-								yesno "$gv_Info" "$DEL_ASK_MSG"
-								if [[ $? == 0 ]] ; then
+								yesno "$gv_Info" "$DEL_ASK_MSG" ""
+								if [[ $gv_Auswahl == yes ]] ; then
 									# Gibts es einen Prefix+Nr werden alle Benutzer
 									# mit diesem geloescht.
-									for i in ${=P_IS_USER} ; do
+									for i in ${=P_IS_USER} ; {
 										userdel -r $i >/dev/null || prog_failure
-									done
+									}
 									unset -- NUSER NUSER_ID NGROUP NGROUPS COMMENT HOME_V U_SHELL
 								fi
 							else

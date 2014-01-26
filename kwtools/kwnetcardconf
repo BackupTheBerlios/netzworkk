@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 05.01.2014
+# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2014
 #
 # Script: kwnetcardconf, Konfiguriert ihre Netzwerkkarten und deren
 #	      IP Adressen. Zur Zeit nur WLAN und Ethernet. DSL wird noch
@@ -100,8 +100,8 @@ while [ "$gv_Auswahl" ] ; do
 				IWDRIVER=${DRIVER[gv_Auswahl]}
 				# Frage soll oder nicht.
 				WLOPT_MSG=$(gettext 'Wollen Sie die Optionen ihrer WLAN-Karte einstellen (ja/nein)?')
-				yesno "$gv_Configuration" "$WLOPT_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$WLOPT_MSG" "yes"
+				if [ "$gv_Auswahl" != no ] ; then
 					read_wlan_option
 					wlan_opt_conf
 				fi

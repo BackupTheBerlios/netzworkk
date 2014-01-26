@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 05.12.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2014
 #
 # Script: kwgpgcrypt, ent/verschluesselt Dateien oder ganze Verzeichnisse.
 # Version: 0.0.9
@@ -78,9 +78,8 @@ pub_create() {
 			# Wenn ja wird dies mitgeteilt und gefragt, ob ein 
 			# neuer key erstellt werden soll.
 			MSG=$(gettext 'Es ist schon ein privater Schluessel vorhanden. Soll ein neuer erzeugt werden (ja/nein)? Bedenken Sie das Sie erst alle alten verschluesselten Dateien/Verzeichnisse mit dem alten Scluessel entschluesseln sollten bevor Sie einen neuen erstellen.')
-			yesno "$gv_Attention" "$MSG"
-			#
-			if [ $? = 0 ] ; then
+			yesno "$gv_Attention" "$MSG" "no"
+			if [ "$gv_Auswahl" != no ] ; then
 				$PROG --homedir $PGP_HOME --gen-key
 			fi
 		else

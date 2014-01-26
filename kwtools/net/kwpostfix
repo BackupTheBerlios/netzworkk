@@ -1,9 +1,9 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 03.05.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 26.01.2014
 #
 # Script: kwpostfix, Konfiguriert Mailserver (MTA) postfix
-# Version: 0.1.15
+# Version: 0.1.16
 
 trap 'setterm -inversescreen off ; setterm -reset ;
 rm -rf $gv_Script_Lock $gv_WorkDir &>/dev/null' EXIT INT
@@ -410,8 +410,8 @@ tls_file_choice() {
 # TODO: aendern?
 #######################################
 ja_nein_tausch() {
-yesno "$1" "$2"
-if [ $? = 0 ] ; then
+yesno "$1" "$2" ""
+if [ "$gv_Auswahl" = yes ] ; then
 	WERT=yes
 else
 	WERT=no
@@ -829,8 +829,8 @@ default_or_input (){
 		#
 		TITLE="$gv_Configuration"
 		MSG=$(gettext 'Sis koennen die Standardvariable benutzen oder eine Eingabe machen.\n\nSoll die Standardvariable \"$NewKey\" benutzt werden?')
-		yesno "$TITLE" "$MSG"
-		if [ "$?" = 0 ] ; then
+		yesno "$TITLE" "$MSG" ""
+		if [ "$gv_Auswahl" = yes ] ; then
 			# Standardvariable benutzen
 			Value="$NewKey"
 		else
@@ -843,6 +843,9 @@ default_or_input (){
 						unset -- Value
 					fi
 					;;
+					########################################
+					# TODO: tls_file_choice hier und einzeln.
+					# Wohin nun?
 				ja_nein_tausch|loglevel|tls_ciphers|tls_eecdh_grade|tls_exclude_ciphers|tls_file_choice|tls_fingerprint_digest|tls_protocols|tls_security_level)
 					# Ja/Nein Tausch, Loglevel Auswahl (Integer), tls_file_choice,
 					# tls_protocols

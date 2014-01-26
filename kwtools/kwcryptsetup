@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 08.10.2012
+# Autor: Kai Wilke <kiste@netzworkk.de> 26.01.2014
 #
 # Script: kwcryptsetup, Erstellung und Bearbeitung von verschluesselten
 # Devices mittels cryptsetup.
 #
-# Version: 0.1.5
+# Version: 0.1.6
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -88,6 +88,10 @@ if [ -f /etc/default/cryptdisks ] ; then
 	source /etc/default/cryptdisks
 fi
 #
+#################################################
+# TODO: aes-xts-essiv:plain(plain64) s. http://www.heise.de
+# oder manpage
+#################################################
 if [ "$gv_K_Minor" = 6 -a "$gv_K_S_Minor" -gt 10 ] ; then
 	CIPHER="aes-cbc-essiv:sha256"
 else

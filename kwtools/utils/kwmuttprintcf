@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke  <kiste@netzworkk.de> 18.09.2013
+# Autor: Kai Wilke  <kiste@netzworkk.de> 19.01.2014
 #
 # Script: kwmuttprintcf, konfiguriert muttprint, drucken mit
 # dem mailclienten mutt.
 #
-# Version: 0.0.3
+# Version: 0.0.4
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -260,8 +260,8 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Xface)
 			# Bilder im Mailheader ausdrucken?# {{{
 			MSG=$(gettext 'Sollen kleine Bilder im Mailheader mit ausgedruckt werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$gv_Mainmenu" "$MSG" "$XFACE"
+			if [ "$gv_Auswahl" != no ] ; then
 				XFACE="on"
 			else
 				XFACE="off"
@@ -272,8 +272,8 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Duplex)
 			# Soll beidseitig gedruckt werden?# {{{
 			MSG=$(gettext 'Soll der beidseitige Druck aktiviert werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$gv_Mainmenu" "$MSG" "$DUPLEX"
+			if [ "$gv_Auswahl" != no ] ; then
 				DUPLEX="on"
 			else
 				DUPLEX="off"
@@ -284,8 +284,8 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Papersave)
 			# Sollen 2 Seiten auf 1 Seite gedruckt werden?# {{{
 			MSG=$(gettext 'Sollen 2 Seiten auf 1 Seite gedruckt werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$gv_Mainmenu" "$MSG" "$PAPERSAVE"
+			if [ "$gv_Auswahl" != no ] ; then
 				PAPERSAVE="on"
 			else
 				PAPERSAVE="off"
@@ -362,8 +362,8 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Headrule)
 			# Soll nach der Kopfzeile eine Linie gedruckt werden?# {{{
 			MSG=$(gettext 'Soll nach der Kopfzeile eine Linie gedruckt werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$gv_Mainmenu" "$MSG" "$HEADRULE"
+			if [ "$gv_Auswahl" != no ] ; then
 				HEADRULE="on"
 			else
 				HEADRULE="off"
@@ -374,8 +374,8 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Footrule)
 			# Soll vor der Fusszeile eine Linie gedruckt werden?# {{{
 			MSG=$(gettext 'Soll vor der Fusszeile eine Linie gedruckt werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$gv_Mainmenu" "$MSG" "$FOOTRULE"
+			if [ "$gv_Auswahl" != no ] ; then
 				FOOTRULE="on"
 			else
 				FOOTRULE="off"
@@ -405,8 +405,8 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Remove_Sign)
 			# Soll die Signatur nicht mit gedruckt werden?# {{{
 			MSG=$(gettext 'Soll die Signatur nicht mit gedruckt werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$gv_Mainmenu" "$MSG" "$REM_SIG"
+			if [ "$gv_Auswahl" != no ] ; then
 				REM_SIG="on"
 			else
 				REM_SIG="off"
@@ -429,11 +429,11 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Remove_Quote)
 			# Sollen zitierte Absaetze nicht mit gedruckt werden?# {{{
 			MSG=$(gettext 'Sollen zitierte Absaetze nicht mit gedruckt werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
-				REM_SIG="on"
+			yesno "$gv_Mainmenu" "$MSG" "$REM_QUOTE"
+			if [ "$gv_Auswahl" != no ] ; then
+				REM_QUOTE="on"
 			else
-				REM_SIG="off"
+				REM_QUOTE="off"
 			fi
 			## }}}
 			main_menu $lv_Remove_Quote
@@ -453,8 +453,8 @@ while [ -n "$gv_Auswahl" ] ; do
 		$lv_Debug)
 			# Sollen Fehlermeldungen nach /tmp/mutprint.log geschrieben werden?# {{{
 			MSG=$(gettext 'Sollen Fehlermeldungen nach /tmp/mutprint.log geschrieben werden (ja/nein)?')
-			yesno "$gv_Mainmenu" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$gv_Mainmenu" "$MSG" "$DEBUG"
+			if [ "$gv_Auswahl" != no ] ; then
 				DEBUG="on"
 			else
 				DEBUG="off"

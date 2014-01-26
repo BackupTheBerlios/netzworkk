@@ -1,11 +1,11 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 05.08.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 22.01.2014
 #
 # Script: kwpasswd, ein Script zum Passwort aendern,
 # passwd und yppasswd.
 #
-# Version: 0.0.3
+# Version: 0.0.4
 
 # Ausführen von Befehlen auf bestimmte Signale.
 # Notiz. Immer den Namen verwenden, da es auf einigen OS
@@ -57,15 +57,15 @@ fi
 # Variablen
 lv_User=$(gettext 'Benutzer		:')
 OK_MSG=$(gettext 'Passwort wurde erfolgreich geaendert. Sie koennen sich jetzt mit Ihrem neuen Passwort anmelden.')
-NOOK_MSG=$(gettext 'Das Passwort konnte nicht geaendert werden. Wiederholen?')
+NOOK_MSG=$(gettext 'Das Passwort konnte nicht geaendert werden. Wiederholen (ja/nein)?')
 # passwd Meldungen
-SHORT_MSG=$(gettext 'Das Passwort ist zu kurz. Es wurde nicht geaendert. Wiederholen?')
-SIMILAR_MSG=$(gettext 'Das Passwort ist zu aehnlich dem alten. Es wurde nicht geaendert. Wiederholen?')
-DICT_MSG=$(gettext 'Das Passwort basiert auf einem Woerterbucheintrag. Es wurde nicht geaendert. Wiederholen?')
+SHORT_MSG=$(gettext 'Das Passwort ist zu kurz. Es wurde nicht geaendert. Wiederholen (ja/nein)?')
+SIMILAR_MSG=$(gettext 'Das Passwort ist zu aehnlich dem alten. Es wurde nicht geaendert. Wiederholen (ja/nein)?')
+DICT_MSG=$(gettext 'Das Passwort basiert auf einem Woerterbucheintrag. Es wurde nicht geaendert. Wiederholen (ja/nein)?')
 # yppasswd Meldungen
-NIS_PW_MSG=$(gettext 'Das Passwort ist zu aehnlich dem Benutzernamen. Es wurde nicht geaendert. Wiederholen?')
-NIS_DICT_MSG=$(gettext 'Das Passwort muss grosse und kleine Buchstaben, bzw. nicht nur Buchstaben enthalten. Es wurde nicht geaendert. Wiederholen?')
-NIS_CHAR_MSG=$(gettext 'Das Passwort muss mindestens 6 Zeichen lang sein. Es wurde nicht geaendert. Wiederholen?')
+NIS_PW_MSG=$(gettext 'Das Passwort ist zu aehnlich dem Benutzernamen. Es wurde nicht geaendert. Wiederholen (ja/nein)?')
+NIS_DICT_MSG=$(gettext 'Das Passwort muss grosse und kleine Buchstaben, bzw. nicht nur Buchstaben enthalten. Es wurde nicht geaendert. Wiederholen (ja/nein)?')
+NIS_CHAR_MSG=$(gettext 'Das Passwort muss mindestens 6 Zeichen lang sein. Es wurde nicht geaendert. Wiederholen (ja/nein)?')
 
 # Funktion (del_expect), loescht die temporaere Datei expect# {{{
 #
@@ -162,7 +162,7 @@ expect eof"
 					# EXIT Wert uerberpruefen# {{{
 					case "$?" in
 						9)
-							yesno "$gv_Attention" "$SHORT_MSG"
+							yesno "$gv_Attention" "$SHORT_MSG" ""
 							if [ "$?" = 0 ] ; then
 								main_menu
 							else
@@ -171,7 +171,7 @@ expect eof"
 							fi
 							;;
 						10)
-							yesno "$gv_Attention" "$SIMILAR_MSG"
+							yesno "$gv_Attention" "$SIMILAR_MSG" ""
 							if [ "$?" = 0 ] ; then
 								main_menu
 							else
@@ -180,7 +180,7 @@ expect eof"
 							fi
 							;;
 						11)
-							yesno "$gv_Attention" "$DICT_MSG"
+							yesno "$gv_Attention" "$DICT_MSG" ""
 							if [ "$?" = 0 ] ; then
 								main_menu
 							else
@@ -189,7 +189,7 @@ expect eof"
 							fi
 							;;
 						12)
-							yesno "$gv_Attention" "$NIS_DICT_MSG"
+							yesno "$gv_Attention" "$NIS_DICT_MSG" ""
 							if [ "$?" = 0 ] ; then
 								main_menu
 							else
@@ -198,7 +198,7 @@ expect eof"
 							fi
 							;;
 						13)
-							yesno "$gv_Attention" "$NIS_PW_MSG"
+							yesno "$gv_Attention" "$NIS_PW_MSG" ""
 							if [ "$?" = 0 ] ; then
 								main_menu
 							else
@@ -207,7 +207,7 @@ expect eof"
 							fi
 							;;
 						14)
-							yesno "$gv_Attention" "$NIS_CHAR_MSG"
+							yesno "$gv_Attention" "$NIS_CHAR_MSG" ""
 							if [ "$?" = 0 ] ; then
 								main_menu
 							else
@@ -226,7 +226,7 @@ expect eof"
 							exit 0
 							;;
 						*)
-							yesno "$gv_Attention" "$NOOK_MSG"
+							yesno "$gv_Attention" "$NOOK_MSG" ""
 							if [ "$?" = 0 ] ; then
 								main_menu
 							else

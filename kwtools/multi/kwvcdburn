@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 04.12.2013
+# Autor: Kai Wilke <kiste@netzworkk.de> 19.01.2014
 #
 # Script: kwvcdburn, kreiert und brennt (S)VCD Filme
 # Version: 0.0.9
@@ -33,7 +33,7 @@ autoload -U script_init
 script_init
 
 # auf Programme pruefen
-prog_check vcdimager vcdxgen vcdxbuild jpeg2yuv mpeg2enc mplex yuvscaler 
+prog_check vcdimager
 if [ -n "${NO_PROGS[1]}" ] ; then
 	exit 0
 fi
@@ -42,8 +42,8 @@ fi
 if [ -f "${gv_HomePath}/.kwtools/vcdburnrc" -a ! -f "${gv_HomePath}/.kwtools/kwvcdburnrc" ] ; then
 	CONVERT_TITLE=$(gettext 'Konfigurationsuebernahme')
 	CONVERT_MSG=$(gettext 'Soll die Konfigurations Datei ${gv_HomePath}/.kwtools/vcdburnrc nach ${gv_HomePath}/.kwtools/kwvcdburnrc uebernommen werden (ja/nein)? Bei nein wird die alte Konfigurationsdatei nur geloescht.')
-	yesno "$CONVERT_TITLE" "$CONVERT_MSG"
-	if [ "$?" = 0 ] ; then
+	yesno "$CONVERT_TITLE" "$CONVERT_MSG" "yes"
+	if [ "$gv_Auswahl" != no ] ; then
 		mv "${gv_HomePath}/.kwtools/vcdburnrc" "${gv_HomePath}/.kwtools/kwvcdburnrc" &>/dev/null
 	else
 		rm "${gv_HomePath}/.kwtools/vcdburnrc" &>/dev/null
