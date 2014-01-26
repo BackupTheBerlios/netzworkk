@@ -12,7 +12,7 @@ pager_context: Zeilen, die bei PgUp/PgDown zweimal angezeigt werden
 pager_index_lines: Eingabe der Zeilen die vom Index angezeigt werden sollen.
 \tDefault ist pager_index_lines="0"
 
-pager_stop: Falls die Variable auf "ja" gesetzt ist, wird der
+pager_stop: Falls die Variable auf "yes" gesetzt ist, wird der
 \tPager nicht zur naechsten Nachricht springen, auch nicht beim
 \tAufruf der next-page Funktion, wenn man am Ende der Nachricht
 \tist. Die mail wird also vom Pager offen gehalten und nicht
