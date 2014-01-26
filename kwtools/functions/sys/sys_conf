@@ -546,8 +546,8 @@ sys_conf() {
 									if [ "$Char" -lt "$MinChar" -o "$Char" -gt "$MaxChar" ] ; then
 										# falsche Password Laenge
 										MSG=$(gettext 'Die Laenge des/der Passworts/Passphrase muss mindestens $MinChar und hoechstens $MaxChar Zeichen sein.\nSoll die Eingabe der Passphrase wiederholt werden (ja/nein)?')
-										yesno "$gv_Attention" "$MSG"
-										if [ "$?" = 0 ] ; then
+										yesno "$gv_Attention" "$MSG" ""
+										if [ "$gv_Auswahl" = yes ] ; then
 											mixed_password_menu
 										else
 											unset -- OPW NPW NNPW gv_Pass gv_Old_Pass
@@ -563,8 +563,8 @@ sys_conf() {
 								elif [ "$Char" -lt "$MinChar" ] ; then
 									# falsche Password Laenge
 							        MSG=$(gettext 'Die Laenge des/der Passworts/Passphrase muss mindestens $MinChar Zeichen sein.\nSoll die Eingabe der Passphrase wiederholt werden (ja/nein)?')
-									yesno "$gv_Attention" "$MSG"
-									if [ "$?" = 0 ] ; then
+									yesno "$gv_Attention" "$MSG" ""
+									if [ "$gv_Auswahl" = yes ] ; then
 										mixed_password_menu
 									else
 										unset -- OPW NPW NNPW gv_Pass gv_Old_Pass
@@ -1066,27 +1066,69 @@ sys_conf() {
 	#}}}
 	# Funktion (yesno), Ja/Nein Abfrage{{{
 	#
-	# usage: yesno TITLE MSG [ Anzahl ]
-	#        Anzahl - die Anzahl der im ARRAY sich befindenen Werte werden als
-	#                Extra Overhead mitberechnet, sonst wird als Overhead nur 7
-	#                (Zeilen) angezeigt. 
+	# usage: yesno "TITLE" "MSG" "" [ Anzahl ]
+	# usage: yesno "TITLE" "MSG" "VALUE" [ Anzahl ]
+	#        VALUE  - no, yes oder Wert für --default-label. Kann auch leer sein
+	#        Anzahl - die Anzahl der Zeilen die zusätzlich mit Extra_Overhead
+	#                 berechnet werden sollen, sonst wird als Overhead nur 7
+	#                 (Zeilen) angezeigt. Ist optional.
 	#
 	yesno() {
-		unset -- Extra_Overhead
-		local Extra_Overhead
-		integer Extra_Overhead
-		if [ "$#" -ge 2 ] ; then
-			# Berechnung der Fenstergroesse (Zeilen).
-			if [ ! -z "$3" ] ; then
-				(( Extra_Overhead = 7 + $3 ))
+		local Extra_Overhead E_Lines Label
+		integer Extra_Overhead E_Lines
+		if [ "${#argv}" -ge 3 ] ; then
+			if [[ ${#argv} == 4 ]] ; then
+				Label="$3"
+				E_Lines="$4"
 			else
-				Extra_Overhead=7
+				Label="$3"
+				E_Lines="0"
 			fi
+			case "$Label" in
+				no|off|false)
+					# Anzeige mit --default-label NO
+					DialogLabel="--default-button NO"
+					;;
+				yes|on|true|\$*|[a-zA-Z0-9]*)
+					# Anzeige mit --default-label YES
+					DialogLabel="--default-button YES"
+					;;
+				*)
+					# Anzeige mit --default-label YES
+					DialogLabel="--default-button YES"
+					;;
+			esac
+			# Berechnung der Fenstergroesse (Zeilen).
+			(( Extra_Overhead = 7 + $E_Lines ))
 			count_display_line -l "$Extra_Overhead" "$2"
-			
+
 			DialogTitle="--title \"${gv_ScriptName}::${1}\" $DialogBackTitle"
 			DialogPara="--yesno \"$2\" $DisplayLines $[COLUMNS-8]"
-			eval $Dialog $DialogTitle $DialogPara
+			eval $Dialog $DialogLabel $DialogTitle $DialogPara
+			
+			# return check
+			case "$?" in
+				0)
+					# Yes
+					if [ ! -z "$Label" -a "$Label" != no ] ; then
+						gv_Auswahl="$Label"
+					else
+						gv_Auswahl="yes"
+					fi
+					;;
+				1)
+					# No
+					gv_Auswahl="no"
+					;;
+				255)
+					# Abbruch
+					if [ ! -z "$Label" ] ; then
+						gv_Auswahl="$Label"
+					else
+						gv_Auswahl=""
+					fi
+					;;
+			esac
 		else
 			no_para_msg $0
 		fi
@@ -2956,11 +2998,11 @@ $TIME test -x $Prog_Wahl_X && $Sudo $Prog_Wahl_X"
 					DIR="$2"
 					if [ ! -d "$DIR" ] ; then
 						MSG=$(gettext 'Das Verzeichnis ${DIR%/} ist nicht vorhanden. Soll es angelegt werden?')
-					    yesno "$gv_Attention" "$MSG"
+					    yesno "$gv_Attention" "$MSG" ""
 						#
 						# Verzeichnis anlegen?
 						#
-						if [ $? = 0 ] ; then
+						if [ "$gv_Auswahl" = yes ] ; then
 							VERZ="$DIR"
 							create_file -d "$DIR" 2>/dev/null
 							if [ $? != 0 ] ; then
@@ -3626,11 +3668,13 @@ file_choice() {
 					if [ ! -d $File ] ; then
 						if [ ! -f "$File" ] ; then
 							MSG=$(gettext 'Die Datei $File ist nicht vorhanden. Soll sie angelegt werden (ja/nein)?')
-						    yesno "$gv_Attention" "$MSG"
+							# Vorschlag "yes" für die Funktion "yesno", siehe Funktion
+							# "yesno".
+						    yesno "$gv_Attention" "$MSG" ""
 							#
 							# Datei anlegen?
 							#
-							if [ $? = 0 ] ; then
+							if [ "$gv_Auswahl" = yes ] ; then
 								FILE="$File"
 								create_file "$FILE" 2>/dev/null
 								if [ $? != 0 ] ; then
@@ -4989,10 +5033,13 @@ kernel_choice() {
 								no_umount_os_msg
 								U_MOUNT=no
 								;;
-							*)	# Falls die Partition gemountet, ist nachfragen ob sie umountet werden soll.
-								yesno "$gv_Attention" "$YES_NO_MOUNT_MSG"
+							*)	# Falls die Partition gemountet, ist nachfragen ob sie
+								# umountet werden soll.
+								# Vorschlag "yes" für die Funktion "yesno", siehe Funktion
+								# "yesno".
+								yesno "$gv_Attention" "$YES_NO_MOUNT_MSG" ""
 								# Wenn ja, umounten
-								if [ $? = 0 ] ; then
+								if [ "$gv_Auswahl" = yes ] ; then
 									umount "$MOUNTPOINT" 
 									if [ $? != 0 ] ; then
 										no_umount_msg
@@ -5008,9 +5055,13 @@ kernel_choice() {
 						esac
 						# Swap bearbeiten
 					elif [ -n "$SW_DEV" ] ; then
-						yesno "$gv_Attention" "$YES_NO_MOUNT_MSG"
+						# Falls die Partition gemountet, ist nachfragen ob sie
+						# umountet werden soll.
+						# Vorschlag "yes" für die Funktion "yesno", siehe Funktion
+						# "yesno".
+						yesno "$gv_Attention" "$YES_NO_MOUNT_MSG" ""
 						# Wenn ja, umounten
-						if [ $? = 0 ] ; then
+						if [ "$gv_Auswahl" = yes ] ; then
 							swapoff "$SW_DEV"
 							if [ $? != 0 ] ; then
 								no_umount_msg
@@ -5204,7 +5255,7 @@ kernel_choice() {
 		fi
 	}
 	#}}}
-	# Funktion (print_file), Dateie Drucken ja/nein{{{
+	# Funktion (print_file), Datei Drucken ja/nein{{{
 	#
 	# benoetigt die Funktion yesno
 	# usage: print_file File
@@ -5220,8 +5271,8 @@ kernel_choice() {
 			File="$1"
 			TITLE=$(gettext 'Drucken')
 			MSG=$(gettext 'Soll die Datei $File gedruckt werden (ja/nein)?')
-			yesno "$TITLE" "$MSG"
-			if [ "$?" = 0 ] ; then
+			yesno "$TITLE" "$MSG" ""
+			if [ "$gv_Auswahl" = yes ] ; then
 				lpr "$File"
 			fi
 		else
@@ -5654,9 +5705,9 @@ kernel_choice() {
 	root_check() {
 		if [ "`id -u`" != 0 ] ; then
 			MSG=$(gettext 'Fuer diese Aktion benoetigen Sie root Rechte. In den Administrator Modus wechseln (ja/nein)?')
-			yesno "$gv_Attention" "$MSG"
+			yesno "$gv_Attention" "$MSG" ""
 			#
-			if [ $? = 0 ] ; then
+			if [ "$gv_Auswahl" = yes ] ; then
 				# sudo only
 				if which sudo >/dev/null && ( sudo -l -S < /dev/null &>/dev/null ) ; then
 					exec sudo -E "$gv_ScriptName" $gv_Opt || exit 0
@@ -6048,8 +6099,8 @@ search_fdisks() {
 									else
 										# Passwort basiert auf einem Woerterbucheintrag.
 										DICT_MSG=$(gettext 'Das Passwort basiert auf einem Woerterbucheintrag.\nPassworteingabe wiederholen (ja/nein)?')
-										yesno "$gv_Attention" "$DICT_MSG"
-										if [ "$?" = 0 ] ; then
+										yesno "$gv_Attention" "$DICT_MSG" ""
+										if [ "$gv_Auswahl" = yes ] ; then
 											passwd_conf_menu
 										else
 											password_display $NPW
@@ -6080,37 +6131,53 @@ search_fdisks() {
 		fi
 	}
 	## }}}
-# Funktion (zsh_modload), laedt zsh Module# {{{
-#
-# usage: zsh_modload [ -OPTION MODUL MODUL | MODUL MODUL ...]
-#
-zsh_modload() {
-	unset -- Opt Mod
-	local Opt Mod
-	#
-	if [ "$#" -ge 1 ] ; then
-		case "$1" in
-			-*)
-				# mit Option module laden
-				Opt="$1"
-				Mod="$2"
-				;;
-			*)
-				# normal - module laden
-				Mod="$1"
-				;;
-		esac
-		# laden
-		for i in $Mod ; {
-			if [ -z ${(M)$(zmodload)##(#s)zsh/${i}} ] ; then
-				zmodload $Opt zsh/${i}
+	# Funktion (yesno_option) die eine Optionsvariable# {{{
+	# auf einen Wert prüft und dementsprechend die Variable
+	# F_OPT belegt.
+	yesno_option()
+	{
+		if [[ ${#argv} == 2 ]] ; then
+			if [ ! -z "$1" -a "$1" = "$2" ] ; then
+				YN_OPT=yes
+			else
+				YN_OPT=no
 			fi
-		}
-	else
-		no_para_msg $0
-	fi
-}
-## }}}
+		else
+			no_para_msg $0
+		fi
+	}
+	## }}}
+	# Funktion (zsh_modload), laedt zsh Module# {{{
+	#
+	# usage: zsh_modload [ -OPTION MODUL MODUL | MODUL MODUL ...]
+	#
+	zsh_modload() {
+		unset -- Opt Mod
+		local Opt Mod
+		#
+		if [ "$#" -ge 1 ] ; then
+			case "$1" in
+				-*)
+					# mit Option module laden
+					Opt="$1"
+					Mod="$2"
+					;;
+				*)
+					# normal - module laden
+					Mod="$1"
+					;;
+			esac
+			# laden
+			for i in $Mod ; {
+				if [ -z ${(M)$(zmodload)##(#s)zsh/${i}} ] ; then
+					zmodload $Opt zsh/${i}
+				fi
+			}
+		else
+			no_para_msg $0
+		fi
+	}
+	## }}}
 	## }}}
 	###### allgemeine System Nachrichten ###### {{{
 	# Funktion (del_file_msg), Nachricht zum Dateien loeschen{{{
@@ -6122,7 +6189,7 @@ zsh_modload() {
 	del_file_msg() {
 		TITLE=$(gettext 'Dateien loeschen')
 		MSG=$(gettext 'Soll(en) die (Original) Datei(en) geloescht werden (ja/nein)? Dies kann ein soeben erstelltes Image sein oder Dateien die in andere Dateien umgewandelt worden sind.')
-		yesno "$TITLE" "$MSG"
+		yesno "$TITLE" "$MSG" ""
 	}
 	#}}}
 	# Funktion (different_passwd){{{
@@ -6511,7 +6578,7 @@ no_use_dir_msg() {
 					# aus Datei einlesen
 					#
 					del_file_msg
-					if [ $? = 0 ] ; then
+					if [ "$gv_Auswahl" = yes ] ; then
                         while read a ; do
                             rm -rf "$a"
                         done < "$2"
@@ -6521,7 +6588,7 @@ no_use_dir_msg() {
 					# rekursives loeschen
 					#
 					del_file_msg
-					if [ $? = 0 ] ; then
+					if [ "$gv_Auswahl" = yes ] ; then
 						shift
 						for i in $@ ; {
 							rm -rf ./(*/)*$i(.N)
@@ -6532,7 +6599,7 @@ no_use_dir_msg() {
 					# ARRAY Inhalt loeschen
 					#
 					del_file_msg
-					if [ $? = 0 ] ; then
+					if [ "$gv_Auswahl" = yes ] ; then
 						rm -rf ${(ws: :)${2//\'/}}
 					fi
 					;;
@@ -6540,7 +6607,7 @@ no_use_dir_msg() {
 					# Dateien/Verzeichnisse einzeln loeschen
 					#
 					del_file_msg
-					if [ $? = 0 ] ; then
+					if [ "$gv_Auswahl" = yes ] ; then
 						shift
 						for i in $@ ; {
 							rm -rf $i(.N)
@@ -6551,7 +6618,7 @@ no_use_dir_msg() {
 					# alle Dateien, auf die das Suffix passt, loeschen
 					#
 					del_file_msg
-					if [ $? = 0 ] ; then
+					if [ "$gv_Auswahl" = yes ] ; then
 						for i in *$1 ; {
 							rm -rf *$i(.N)
 						}
