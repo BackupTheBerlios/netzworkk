@@ -31,7 +31,7 @@ kwmutt_ssl_conf() {
 		read_file -f $gv_LogFile
 	fi
 	## }}}
-	# leere Variable mit Standardwerten fuellen.
+	# leere Variable mit Standardwerten fuellen.# {{{
 	ssl_starttls="${ssl_starttls:-yes}"
 	ssl_force_tls="${ssl_force_tls:-no}"
 	ssl_min_dh_prime_bits="${ssl_min_dh_prime_bits:-0}"
@@ -39,7 +39,7 @@ kwmutt_ssl_conf() {
 	ssl_use_sslv3="${ssl_use_sslv3:-yes}"
 	certificate_file="${certificate_file:-~/.mutt_certificates}"
 	ssl_ca_certificates_file="$ssl_ca_certificates_file"
-	#
+	## }}}
 	ssl_conf_menu
 	while [ -n "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
@@ -61,8 +61,8 @@ kwmutt_ssl_conf() {
 			ssl_force_tls)
 				# SSL/TLS unbedingt aktivieren# {{{
 				MSG=$(gettext 'Soll die Verschluesselung auf jeden Fall aktiviert werden (ja/nein)?')
-				yesno "$SSL_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$SSL_TITLE" "$MSG" "$ssl_force_tls"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ssl_force_tls=yes
 				else
 					ssl_force_tls=no
@@ -85,8 +85,8 @@ kwmutt_ssl_conf() {
 			ssl_use_tlsv1)
 				# Soll TLS Version 1 benutzt werden# {{{
 				MSG=$(gettext 'Soll die TLS Version 1 fuer die verschluesselte Verbundung zum Mail Server benutzt werden (ja/nein)?')
-				yesno "$SSL_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$SSL_TITLE" "$MSG" "$ssl_use_tlsv1"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ssl_use_tlsv1=yes
 				else
 					ssl_use_tlsv1=no
@@ -97,13 +97,8 @@ kwmutt_ssl_conf() {
 			ssl_use_sslv3)
 				# Soll SSL Version 3 benutzt werden# {{{
 				MSG=$(gettext 'Soll die SSL Version 3 fuer die verschluesselte Verbundung zum Mail Server benutzt werden (ja/nein)?')
-				yesno "$SSL_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
-					# Beide SSL (2/3) Typen gehen nicht zusammen.
-					# Also wird der jeweilige Typ ausgeschaltet.
-					if [ "$ssl_use_sslv2" = yes ] ; then
-						ssl_use_sslv2=no
-					fi
+				yesno "$SSL_TITLE" "$MSG" "$ssl_use_sslv3"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ssl_use_sslv3=yes
 				else
 					ssl_use_sslv3=no

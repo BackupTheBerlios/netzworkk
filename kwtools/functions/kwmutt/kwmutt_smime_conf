@@ -74,8 +74,8 @@ kwmutt_smime_conf() {
 			smime_ask_cert_label)
 				# Soll Mutt nach der Eingabe eines Labels fuer ein Zertifikat fragen (ja/nein)?# {{{
 				MSG=$(gettext 'Soll Mutt nach der Eingabe eines Labels fuer ein Zertifikat fragen (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$smime_ask_cert_label"
+				if [ "$gv_Auswahl" = yes ] ; then
 					smime_ask_cert_label=yes
 				else
 					smime_ask_cert_label=no
@@ -127,8 +127,8 @@ kwmutt_smime_conf() {
 			smime_decrypt_use_default_key)
 				# Soll Mutt den Standard Schluessel fuer die Entschluesselung benutzen (ja/nein)?# {{{
 				MSG=$(gettext 'Soll Mutt den Standard Schluessel fuer die Entschluesselung benutzen (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$smime_decrypt_use_default_key"
+				if [ "$gv_Auswahl" = yes ] ; then
 					smime_decrypt_use_default_key=yes
 				else
 					smime_decrypt_use_default_key=no
@@ -242,8 +242,8 @@ kwmutt_smime_conf() {
 			smime_is_default)
 				# Soll OpenSSL zur Verschluesselung genutzt werden?# {{{
 				MSG=$(gettext 'Soll OpenSSL zur Verschluesselung genutzt werden (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$smime_is_default"
+				if [ "$gv_Auswahl" = yes ] ; then
 					smime_is_default=yes
 				else
 					smime_is_default=no

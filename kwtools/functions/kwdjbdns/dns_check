@@ -5,11 +5,10 @@
 #
 dns_check() {
 	if [[ -h ${SERVICE_DIR}/${DNS} ]] ; then
-		unset -- Dir
 		local Dir
 		MSG=$(gettext 'Es ist schon ein $DNS eingerichtet worden. Soll er erneut eingerichtet werden?')
-		yesno "$gv_Attention" "$MSG"
-		if [ "$?" = 0 ] ; then
+		yesno "$gv_Attention" "$MSG" ""
+		if [ "$gv_Auswahl" = yes ] ; then
 			Dir=$(readlink -f ${SERVICE_DIR}/${DNS})
 			svc -dx $Dir &>/dev/null
 			rm -rf $Dir &>/dev/null

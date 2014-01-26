@@ -14,7 +14,7 @@ filerc_start_stop() {
 	if [ -z "$(< ${gv_WorkDir}/is_file)" ] ; then
 		Anz=1
 		for n in {0..6} S ; {
-			RunLevel[Anz]="$n \"- $gv_No\""
+			RunLevel[Anz]="$n \"- no\""
 			(( Anz++ ))
 		}
 	else
@@ -28,16 +28,16 @@ filerc_start_stop() {
 				IFS=,
 				for i in $Off ; {
 					if [ -f ${gv_WorkDir}/filerc ] ; then
-						>> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_No"
+						>> ${gv_WorkDir}/filerc <<< "$i $Nr no"
 					else
-						> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_No"
+						> ${gv_WorkDir}/filerc <<< "$i $Nr no"
 					fi
 				}
 				for i in $On ; {
 					if [ -f ${gv_WorkDir}/filerc ] ; then
-						>> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_Yes"
+						>> ${gv_WorkDir}/filerc <<< "$i $Nr yes"
 					else
-						> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_Yes"
+						> ${gv_WorkDir}/filerc <<< "$i $Nr yes"
 					fi
 				}
 				IFS="$IFSOLD"
@@ -48,9 +48,9 @@ filerc_start_stop() {
 				IFS=,
 				for i in $Off ; {
 					if [ -f ${gv_WorkDir}/filerc ] ; then
-						>> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_No"
+						>> ${gv_WorkDir}/filerc <<< "$i $Nr no"
 					else
-						> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_No"
+						> ${gv_WorkDir}/filerc <<< "$i $Nr no"
 					fi
 				}
 				IFS="$IFSOLD"
@@ -61,9 +61,9 @@ filerc_start_stop() {
 				IFS=,
 				for i in $On ; {
 					if [ -f ${gv_WorkDir}/filerc ] ; then
-						>> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_Yes"
+						>> ${gv_WorkDir}/filerc <<< "$i $Nr yes"
 					else
-						> ${gv_WorkDir}/filerc <<< "$i $Nr $gv_Yes"
+						> ${gv_WorkDir}/filerc <<< "$i $Nr yes"
 					fi
 				}
 				IFS="$IFSOLD"
@@ -79,7 +79,7 @@ filerc_start_stop() {
 				Is=${${(s: :)${(M)${(f)"$(< ${gv_WorkDir}/filerc)"}##${n}*}}[3]}
 				Nr=${${(s: :)${(M)${(f)"$(< ${gv_WorkDir}/filerc)"}##${n}*}}[2]}
 				if [ -z "$Is" ] ; then
-					Is="$gv_No"
+					Is="no"
 					Nr="-"
 					if [ -f ${gv_WorkDir}/filerc$$ ] ; then
 						>> ${gv_WorkDir}/filerc$$ <<< "$n $Nr $Is"

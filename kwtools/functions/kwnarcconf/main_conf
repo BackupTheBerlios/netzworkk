@@ -178,8 +178,8 @@ main_conf() {
 			$lv_START_IPTABLES)
 				# iptables starten (yes/no){{{
 				MSG=$(gettext 'Soll die Firewall (iptables) beim booten gestartet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$START_IPTABLES"
+				if [ "$gv_Auswahl" = yes ] ; then
 					START_IPTABLES=yes
 				else
 					START_IPTABLES=no
@@ -190,8 +190,8 @@ main_conf() {
 			$lv_LOAD_MODULES)
 				# Netfilter Module laden?{{{
 				MSG=$(gettext 'Sollen Netfilter Kernel Module geladen werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$LOAD_MODULES"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOAD_MODULES=yes
 				else
 					LOAD_MODULES=no
@@ -203,8 +203,8 @@ main_conf() {
 				# accept_source_route einschalten{{{
 				# (Kernel_option yes/no)?
 				MSG=$(gettext 'Soll die Kerneloption ACCEPT_SOURCE_ROUTE eingeschaltet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$ACCEPT_SOURCE_ROUTE"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ACCEPT_SOURCE_ROUTE=yes
 				else
 					ACCEPT_SOURCE_ROUTE=no
@@ -492,8 +492,8 @@ main_conf() {
 			$lv_ALWAYS_FORWARD)
 				# Sollen Ports immer weitergeleitet werden (yes/no)?{{{
 				MSG=$(gettext 'Sollen Ports immer weitergeleitet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$ALWAYS_FORWARD"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ALWAYS_FORWARD=yes
 				else
 					ALWAYS_FORWARD=no
@@ -506,8 +506,8 @@ main_conf() {
 				# Rechnern eingeschaltet werden soll muss ANSWER_PING
 				# auf yes stehen
 				MSG=$(gettext 'Auf Ping antworten (ja/nein)? Wenn traceroute von Windows Rechnern eingeschaltet werden soll muss "ANSWER_PING" auf ja stehen.')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$ANSWER_PING"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ANSWER_PING=yes
 				else
 					ANSWER_PING=no
@@ -518,8 +518,8 @@ main_conf() {
 			$lv_ANSWER_TRACEROUTE)
 				# Auf Traceroute Anfragen antworten (yes/no){{{
 				MSG=$(gettext 'Soll auf Traceroute Anfragen geantwortet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$ANSWER_TRACEROUTE"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ANSWER_TRACEROUTE=yes
 				else
 					ANSWER_TRACEROUTE=no
@@ -530,8 +530,8 @@ main_conf() {
 			$lv_ANTI_SMURF)
 				# ANTI_SMURF einschalten (Kernel_option yes/no)?{{{
 				MSG=$(gettext 'Soll die Kerneloption "ANTI_SMURF" eingeschaltet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$ANTI_SMURF"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ANTI_SMURF=yes
 				else
 					ANTI_SMURF=no
@@ -542,8 +542,8 @@ main_conf() {
 			$lv_AUTH_REJECT)
 				# AUTH_REJECT einschalten (yes/no)?{{{
 				MSG=$(gettext 'Sollen Anfragen auf den Auth Port mit einem REJECT beantwortet werden (ja/nein)? Bei nein werden die Anfragen verworfen.')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$AUTH_REJECT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					AUTH_REJECT=yes
 				else
 					AUTH_REJECT=no
@@ -585,8 +585,8 @@ main_conf() {
 			$lv_CHECK_SYN_PACKET_LENGTH)
 				# Soll die SYN Paketlaenge gecheckt werden (yes/no)?{{{
 				MSG=$(gettext 'Soll die Laenge der SYN Pakete ueberprueft werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$CHECK_SYN_PACKET_LENGTH"
+				if [ "$gv_Auswahl" = yes ] ; then
 					CHECK_SYN_PACKET_LENGTH=yes
 				else
 					CHECK_SYN_PACKET_LENGTH=no
@@ -629,8 +629,8 @@ main_conf() {
 			$lv_DROP_BROADCASTS)
 				# Broadcast Anfragen wegschmeissen (yes/no)?{{{
 				MSG=$(gettext 'Sollen Broadcast Anfragen verworfen werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$DROP_BROADCASTS"
+				if [ "$gv_Auswahl" = yes ] ; then
 					DROP_BROADCASTS=yes
 				else
 					DROP_BROADCASTS=no
@@ -642,8 +642,8 @@ main_conf() {
 				# Pakete die als unclean gekennzeichnet verwerfen (yes/no)?{{{
 				# Experimentell (Sollte man nicht benutzen.)
 				MSG=$(gettext 'Pakete die als unclean gekennzeichnet sind verwerfen (ja/nein)? Experimentell (Sollte man nicht benutzen).')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "${DROP_UNCLEAN_PACKETS:-no}"
+				if [ "$gv_Auswahl" = yes ] ; then
 					DROP_UNCLEAN_PACKETS=yes
 				else
 					DROP_UNCLEAN_PACKETS=no
@@ -654,8 +654,8 @@ main_conf() {
 			$lv_DYNAMIC_EXTERNAL_IP)
 				# Wird die externe IP dynamisch vergeben (yes/no)?{{{
 				MSG=$(gettext 'Wird Ihre Externe IP Adresse automatisch vergeben (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$DYNAMIC_EXTERNAL_IP"
+				if [ "$gv_Auswahl" = yes ] ; then
 					DYNAMIC_EXTERNAL_IP=yes
 				else
 					DYNAMIC_EXTERNAL_IP=no
@@ -666,8 +666,8 @@ main_conf() {
 			$lv_ENABLE_IPLIMIT)
 				# iplimit starten (yes/no){{{
 				MSG=$(gettext 'Soll die TCP basierte Netzwerk Rate limitiert werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$ENABLE_IPLIMIT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ENABLE_IPLIMIT=yes
 				else
 					ENABLE_IPLIMIT=no
@@ -678,8 +678,8 @@ main_conf() {
 			$lv_ENABLE_LIMIT_RATE)
 				#  Generelle Limitierung der Rate (yes/no){{{
 				MSG=$(gettext 'Generelle Limitierung der Netzwerk Rate einschalten (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$ENABLE_LIMIT_RATE"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ENABLE_LIMIT_RATE=yes
 				else
 					ENABLE_LIMIT_RATE=no
@@ -691,8 +691,8 @@ main_conf() {
 				# TCP Congestion Notifikation einschalten{{{
 				# (Kernel_option yes/no)?
 				MSG=$(gettext 'Soll die Kerneloption ECN (TCP Congestion Notification) eingeschaltet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "${ENABLE_TCP_ECN:-no}"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ENABLE_TCP_ECN=yes
 				else
 					ENABLE_TCP_ECN=no
@@ -703,8 +703,8 @@ main_conf() {
 			$lv_EXECUTE_CUSTOM_SCRIPT)
 				# Zusatz-Konfigration mit einbeziehen (yes/no)?{{{
 				MSG=$(gettext 'Zusatzkonfigration mit einbeziehen (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "${EXECUTE_CUSTOM_SCRIPT:-yes}"
+				if [ "$gv_Auswahl" = yes ] ; then
 					EXECUTE_CUSTOM_SCRIPT=yes
 				else
 					EXECUTE_CUSTOM_SCRIPT=no
@@ -744,8 +744,8 @@ main_conf() {
 			$lv_FINSCAN)
 				# Anfragen mit TCP Flag FIN verwerfen?{{{
 				MSG=$(gettext 'Sollen Anfragen mit dem TCP Flag FIN verworfen werden bzw. als illegal gekennzeichnet weren (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$FINSCAN"
+				if [ "$gv_Auswahl" = yes ] ; then
 					FINSCAN=FIN
 				else
 					FINSCAN=""
@@ -756,8 +756,8 @@ main_conf() {
 			$lv_FORWARD_LAN_TO_DMZ)
 				# Sollen Pakete vom LAN zur DMZ weitergeleitet werden (yes/no)?{{{
 				MSG=$(gettext 'Sollen Pakete vom LAN zur DMZ weitergeleitet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$FORWARD_LAN_TO_DMZ"
+				if [ "$gv_Auswahl" = yes ] ; then
 					FORWARD_LAN_TO_DMZ=yes
 				else
 					FORWARD_LAN_TO_DMZ=no
@@ -879,8 +879,8 @@ main_conf() {
 				# Log_martians einschalten{{{
 				# (Kernel_option yes/no)?
 				MSG=$(gettext 'Soll die Kerneloption "LOG_MARTIANS" (loggt unmoegliche Quell IP Adressen) eingeschaltet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$LOG_MARTIANS"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_MARTIANS=yes
 				else
 					LOG_MARTIANS=no
@@ -892,8 +892,8 @@ main_conf() {
 				# Traffic zum Loopback Device erlauben{{{
 				# (Kernel_option yes/no)?
 				MSG=$(gettext 'Soll der Traffic auf das loopback Device erlaubt werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$LOOPBACK_ACCEPT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOOPBACK_ACCEPT=yes
 				else
 					LOOPBACK_ACCEPT=no
@@ -927,8 +927,8 @@ main_conf() {
 			$lv_MASQUERADE)
 				# Masquerading einschalten?{{{
 				MSG=$(gettext 'Soll Masquerading (NAT - Network Address Translation) eingeschaltet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$MASQUERADE"
+				if [ "$gv_Auswahl" = yes ] ; then
 					MASQUERADE=yes
 				else
 					MASQUERADE=no
@@ -963,8 +963,8 @@ main_conf() {
 			$lv_NULLSCAN)
 				# Anfragen mit TCP Flags NONE verwerfen?{{{
 				MSG=$(gettext 'Sollen Anfragen mit dem TCP Flags NONE verworfen werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$NULLSCAN"
+				if [ "$gv_Auswahl" = yes ] ; then
 					NULLSCAN=NONE
 				else
 					NULLSCAN=""
@@ -993,8 +993,8 @@ main_conf() {
 			$lv_PORT_FORWARD)
 				# Port Forwarding einschalten (yes/no)?{{{
 				MSG=$(gettext 'Soll die Port Weiterleitung eingeschaltet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$PORT_FORWARD"
+				if [ "$gv_Auswahl" = yes ] ; then
 					PORT_FORWARD=yes
 				else
 					PORT_FORWARD=no
@@ -1051,8 +1051,8 @@ main_conf() {
 			$lv_PROTECT_FROM_DMZ)
 				# Vor der DMZ schuetzen (yes/no)?{{{
 				MSG=$(gettext 'Soll der Rechner vor der Demilitarisierten Zone (DMZ) geschuetzt werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$PROTECT_FROM_DMZ"
+				if [ "$gv_Auswahl" = yes ] ; then
 					PROTECT_FROM_DMZ=yes
 				else
 					PROTECT_FROM_DMZ=no
@@ -1063,8 +1063,8 @@ main_conf() {
 			$lv_PROTECT_FROM_LAN)
 				# Vor dem LAN schuetzen (yes/no)?{{{
 				MSG=$(gettext 'Soll der Rechner vor dem internen Netzwerk (LAN) geschuetzt werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$PROTECT_FROM_LAN"
+				if [ "$gv_Auswahl" = yes ] ; then
 					PROTECT_FROM_LAN=yes
 				else
 					PROTECT_FROM_LAN=no
@@ -1098,8 +1098,8 @@ main_conf() {
 			$lv_SYNCOOKIES)
 				# Schutz vor Syncookies einschalten (Kernel_option yes/no)?{{{
 				MSG=$(gettext 'Soll die Kerneloption syn-cookies (syn-flooding attacks) eingeschaltet werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$SYNCOOKIES"
+				if [ "$gv_Auswahl" = yes ] ; then
 					SYNCOOKIES=yes
 				else
 					SYNCOOKIES=no
@@ -1182,8 +1182,8 @@ main_conf() {
 			$lv_XMASSCAN)
 				# Anfragen mit TCP Flags URG,PSH,FIN verwerfen?{{{
 				MSG=$(gettext 'Sollen die Anfragen mit der TCP Flags Kombination URG,PSH,FIN verworfen werden (ja/nein)?')
-				yesno "$MAIN_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MAIN_CONF_TITLE" "$MSG" "$XMASSCAN"
+				if [ "$gv_Auswahl" = yes ] ; then
 					XMASSCAN=URG,PSH,FIN
 				else
 					XMASSCAN=""

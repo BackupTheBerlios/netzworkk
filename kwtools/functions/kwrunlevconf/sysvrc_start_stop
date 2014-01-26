@@ -19,13 +19,13 @@ sysvrc_start_stop() {
 			K_Prog=(K??${Init_Script}(@N))
 		fi
 		if [ "$S_Prog" ] ; then
-			RunLevel[Anz]="$i \"${${S_Prog}[2,3]} $gv_Yes\""
+			RunLevel[Anz]="$i \"${${S_Prog}[2,3]} yes\""
 			(( Anz++ ))
 		elif [ "$K_Prog" ] ; then
-			RunLevel[Anz]="$i \"${${K_Prog}[2,3]} $gv_No\""
+			RunLevel[Anz]="$i \"${${K_Prog}[2,3]} no\""
 			(( Anz++ ))
 		else	
-			RunLevel[Anz]="$i \"- $gv_No\""
+			RunLevel[Anz]="$i \"- no\""
 			(( Anz++ ))
 		fi	
 	}

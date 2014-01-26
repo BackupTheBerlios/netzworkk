@@ -261,9 +261,10 @@ tls_conf() {
 				# Soll prng_exch fuer tlsmgr aktiviert werden, eine Datei welche {{{
 				# er von Zeit zu Zeit neu schreibt.
 				# Standard = ${data_directory}/prng_exch
+				yesno_option "$tls_random_exchange_name" "\${data_directory}/prng_exch"
 				TLS_EXCHANGE_MSG=$(gettext 'Soll pseudo random number generator (PRNG) (\$data_directory/prng_exch) aktiviert werden (ja/nein)?')
-				yesno "$TLS_TITLE" "$TLS_EXCHANGE_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$TLS_TITLE" "$TLS_EXCHANGE_MSG" "$YN_OPT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					tls_random_exchange_name="\${data_directory}/prng_exch"
 					postconf -e tls_random_exchange_name="\${data_directory}/prng_exch"
 				else

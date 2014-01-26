@@ -141,11 +141,11 @@ export_files() {
 		#
 		pass_add() {
 			PASSADD_MSG=$(gettext 'Ohne Passwort exportieren (ja/nein). Standard ist Nein - mit Passwort.')
-			yesno "$EXPORT_TITLE" "$PASSADD_MSG"
-			if [ "$?" = 0 ] ; then
-				PASS_VALUE="$gv_Yes"
+			yesno "$EXPORT_TITLE" "$PASSADD_MSG" "$PASS_VALUE"
+			if [ "$gv_Auswahl" != no ] ; then
+				PASS_VALUE="yes"
 			else
-				PASS_VALUE="$gv_No"
+				PASS_VALUE="no"
 			fi
 		}
 		## }}}
@@ -153,11 +153,11 @@ export_files() {
 		#
 		key_add() {
 			KEY_MSG=$(gettext 'Schluessel hinzufuegen (ja/nein).')
-			yesno "$CERT_EXPORT_TITLE" "$KEY_MSG"
-			if [ "$?" = 0 ] ; then
-				KEY_VALUE="$gv_Yes"
+			yesno "$CERT_EXPORT_TITLE" "$KEY_MSG" "$KEY_VALUE"
+			if [ "$gv_Auswahl" != no ] ; then
+				KEY_VALUE="yes"
 			else
-				KEY_VALUE="$gv_No"
+				KEY_VALUE="no"
 			fi
 		}
 		## }}}
@@ -165,11 +165,11 @@ export_files() {
 		#
 		cert_add() {
 			CERTADD_MSG=$(gettext 'Zertifikat hinzufuegen (ja/nein).')
-			yesno "$EXPORT_TITLE" "$CERTADD_MSG"
-			if [ "$?" = 0 ] ; then
-				CERT_VALUE="$gv_Yes"
+			yesno "$EXPORT_TITLE" "$CERTADD_MSG" "$CERT_VALUE"
+			if [ "$gv_Auswahl" != no ] ; then
+				CERT_VALUE="yes"
 			else
-				CERT_VALUE="$gv_No"
+				CERT_VALUE="no"
 			fi
 		}
 		## }}}

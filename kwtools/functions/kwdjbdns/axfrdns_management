@@ -134,8 +134,8 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 								fi
 								#
 								ACCESS_TITLE=(${AXFR_MAIN_TITLE}::${lv_Access})
-								yesno "$ACCESS_TITLE" "$ACCESS_MSG"
-								if [ "$?" = 0 ] ; then
+								yesno "$ACCESS_TITLE" "$ACCESS_MSG" ""
+								if [ "$gv_Auswahl" = yes ] ; then
 									ACCESS=allow
 								else
 									ACCESS=deny
@@ -155,8 +155,8 @@ if [ -d ${SV_DIR}/${DNS} ] ; then
 										# volle Rechnername bekannt ist.
 										VAR_TITLE=(${AXFR_MAIN_TITLE}::${lv_Axfr})
 										VAR_MSG=$(gettext 'Soll die Variable AXFR belegt werden (ja/nein)?')
-										yesno "$VAR_TITLE" "$VAR_MSG"
-										if [ "$?" = 0 ] ; then
+										yesno "$VAR_TITLE" "$VAR_MSG" ""
+										if [ "$gv_Auswahl" = yes ] ; then
 											AXFR=yes
 										else
 											AXFR=no

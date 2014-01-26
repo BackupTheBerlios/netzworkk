@@ -72,8 +72,8 @@ kwmutt_smtp_serv_conf() {
 					;;
 				$lv_Default_Smtp)
 					# Soll diese SMTP Einstellung als Standard deklariert werden (ja/nein)?# {{{
-					yesno "$SMTP_TITLE" "$DEFAULT_SMTP_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$SMTP_TITLE" "$DEFAULT_SMTP_MSG" "$DEFAULT_SERVER"
+					if [ "$gv_Auswahl" = yes ] ; then
 						DEFAULT_SERVER="yes"
 					else
 						DEFAULT_SERVER="no"
@@ -175,8 +175,8 @@ kwmutt_smtp_serv_conf() {
 					;;
 				$lv_Default_Smtp)
 					# Soll diese SMTP Einstellung als Standard deklariert werden (ja/nein)?# {{{
-					yesno "$SMTP_TITLE" "$DEFAULT_SMTP_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$SMTP_TITLE" "$DEFAULT_SMTP_MSG" "$DEFAULT_SERVER"
+					if [ "$gv_Auswahl" = yes ] ; then
 						DEFAULT_SERVER="yes"
 					else
 						DEFAULT_SERVER="no"
@@ -243,6 +243,9 @@ kwmutt_smtp_serv_conf() {
 							$lv_Choice)
 								# Auswahl der Auth-Methoden# {{{
 								# vorhandene Auth-Methoden mit on zum Auflisten markieren# {{{
+								###########################################
+								# TODO: andere Methode wählen?, wie
+								# is_file, generate_is_file etc....
 								is_auth_methode "$smtp_authenticators" "cram-md5 digest-md5 gssapi login"
 								if [ -n "$M_TMP" ] ; then
 									CHOICE_MENU=($M_TMP)

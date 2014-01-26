@@ -75,31 +75,6 @@ transport_table() {
 					transport_menue $lv_Transport
 					;;
 				$gv_Host)
-#					# Rechner eingeben{{{
-#					HOST_MSG=$(gettext 'Geben Sie hier bitte einen Rechnernamen oder IP ein (Bsp. host.domain.de | 192.168.0.1).')
-#					inputbox "$TABLE_TITLE" "$HOST_MSG" "$HOST"
-#					if [ "$gv_Auswahl" ] ; then
-#						case "$gv_Auswahl" in
-#							\[*\])
-#								HOST="$gv_Auswahl"
-#								;;
-#							*)
-#								# Server in eckige Klammern stellen?
-#								SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
-#								yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
-#								if [ "$?" = 0 ] ; then
-#									HOST="[${gv_Auswahl}]"
-#								else
-#									HOST="$gv_Auswahl"
-#								fi
-#								;;
-#						esac
-#						OldHost="$HOST"
-#					else
-#						unset -- HOST
-#						no_input_msg
-#					fi
-#					#}}}
 					# Zielrechner fuer Transport eingeben# {{{
 					regexp_pcre_access_host
 					if [ -n "$HOST" ] ; then
@@ -109,17 +84,6 @@ transport_table() {
 					transport_menue $gv_Host
 					;;
 				$lv_Port)
-#					# Port vergeben{{{
-#					PORT_MSG=$(gettext 'Geben Sie hier einen Port fuer den Rechner ein (Bsp. 25).')
-#					inputbox "$TABLE_TITLE" "$PORT_MSG" "$PORT"
-#					if [[ $gv_Auswahl == 0 ]] ; then
-#						no_input_msg
-#						unset -- PORT
-#					else
-#						PORT="$gv_Auswahl"
-#						OldPort="$PORT"
-#					fi
-#					#}}}
 					# Port eingeben# {{{
 					regexp_pcre_access_port
 					if [[ -n $PORT ]] ; then

@@ -150,9 +150,9 @@ kwuser_conf() {
 			$lv_Firstlogin)
 				# Zu Einstellungen beim 1. Login auffordern.# {{{
 				FIRSTLOGIN_TITLE="${gv_Configuration}::${lv_Firstlogin}"
-				FIRSTLOGIN_MSG=(gettext 'Soll beim 1. Login zu weiteren Einstellungen, wie Passwortaenderung aufgefordrt werden (yes/no)?')
-				yesno "$FIRSTLOGIN_TITLE" "$FIRSTLOGIN_MSG"
-				if [ "$?" = 0 ] ; then
+				FIRSTLOGIN_MSG=(gettext 'Soll beim 1. Login zu weiteren Einstellungen, wie Passwortaenderung aufgefordert werden (ja/nein)?')
+				yesno "$FIRSTLOGIN_TITLE" "$FIRSTLOGIN_MSG" "${FIRSTLOGIN:-yes}"
+				if [ "$gv_Auswahl" != no ] ; then
 					FIRSTLOGIN="yes"
 				else
 					FIRSTLOGIN="no"

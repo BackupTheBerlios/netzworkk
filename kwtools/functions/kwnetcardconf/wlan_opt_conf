@@ -173,8 +173,8 @@ wlan_opt_conf() {
 				#
 				if [ -n "$WPA_DEV" ]; then
 					KEY_MSG=$(gettext 'Soll WPA aktiviert werden (ja/nein)?')
-					yesno "$WL_OPT_TITLE" "$KEY_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$WL_OPT_TITLE" "$KEY_MSG" ""
+					if [ "$gv_Auswahl" = yes ] ; then
 						# Other wpa options
 						# scan_ssid [0]|1
 						# bssid 00:11:22:33:44:55
@@ -235,8 +235,8 @@ wlan_opt_conf() {
 							unset -- PASSPHRASE
 							# Schluessel in eigenener Datei speichern?
 							SAVE_KEY_MSG=$(gettext 'Soll der Schluessel in einer eigenen Datei gespeichert werden ( $ETH )? Bei nein wird Ihr Schluessel in der Datei $NET_CONF_FILE gespeichert, welche fuer manche System Benutzer lesbar ist. Die Rechte werden auf 0600 gesetzt.')
-							yesno "$WL_OPT_TITLE" "$SAVE_KEY_MSG"
-							if [ "$?" = 0 ] ; then
+							yesno "$WL_OPT_TITLE" "$SAVE_KEY_MSG" ""
+							if [ "$gv_Auswahl" = yes ] ; then
 								PUBKEY=1
 							else
 								PUBKEY=0

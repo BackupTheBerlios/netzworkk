@@ -15,7 +15,7 @@ manage_export_most() {
 		Suffix="$3"
 		#
 		# Variablen belegen
-		CERT_VALUE="$gv_No"
+		CERT_VALUE="no"
 		#
 		# Export Dateiname und Suffix erst einmal festlegen
 		export_create_filename "$Opt" "$Suffix"
@@ -239,7 +239,7 @@ manage_export_most() {
 									CACERT="${In_File/\/keys\///certs/}"
 									# ohne Passwort, mit Zertifikat
 									if [[ -n $CA_CAPASSWORD ]] && \
-										[[ $CERT_VALUE == $gv_Yes ]] ; then
+										[[ $CERT_VALUE == yes ]] ; then
 										openssl "$ALGORITHM" -in "$In_File" \
 										-outform DER -out "$EXPORT_FILENAME" \
 										-passin env:CA_CAPASSWD || prog_failure
@@ -251,7 +251,7 @@ manage_export_most() {
 										break
 									# ohne Passwort, ohne Zertifikat
 									elif [[ -n $CA_CAPASSWORD ]] && \
-										[[ $CERT_VALUE == $gv_No ]] ; then
+										[[ $CERT_VALUE == no ]] ; then
 										openssl "$ALGORITHM" -in "$In_File" \
 										-outform DER -out "$EXPORT_FILENAME" \
 										-passin env:CA_CAPASSWD || prog_failure

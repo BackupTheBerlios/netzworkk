@@ -113,9 +113,10 @@ kwmutt_muttrc_conf() {
 				;;
 			alias_file)
 				# Soll das Mutt eigene Adressbuch benutzen werden. {{{
+				yesno_option "$alias_file" "$M_ABOOK"
 				MSG=$(gettext 'Soll das Mutt eigene Adressbuch benutzen werden. Es liegt unter ${M_ABOOK}.')
-				yesno "$MUTTRC_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MUTTRC_TITLE" "$MSG" "$YN_OPT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					alias_file="$M_ABOOK"
 				else
 					unset -- alias_file
@@ -127,7 +128,7 @@ kwmutt_muttrc_conf() {
 				# Soll Mutt 8-Bit Zeichen zu 7-Bit Zeichen kodieren?# {{{
 				MSG=$(gettext 'Soll Mutt beim versenden 8-Bit Zeichen zu 7-Bit Zeichen kodieren (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$allow_8bit"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					allow_8bit="yes"
 				else
 					allow_8bit="no"
@@ -140,7 +141,7 @@ kwmutt_muttrc_conf() {
 				# zur Bearbeitung oeffnen (ja/nein)?
 				MSG=$(gettext 'Soll Mutt ohne Eingangsfragen des Sende-Menues die Nachricht zur Bearbeitung oeffnen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$autoedit"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					autoedit="yes"
 				else
 					autoedit="no"
@@ -152,7 +153,7 @@ kwmutt_muttrc_conf() {
 				# Soll Mutt bei Fehlern piepsen?# {{{
 				MSG=$(gettext 'Soll Mutt bei einem Fehler einen Piepston ausloesen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$beep"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					beep="yes"
 				else
 					beep="no"
@@ -164,7 +165,7 @@ kwmutt_muttrc_conf() {
 				# Soll Mutt bei neuen Nachrichten piepsen?# {{{
 				MSG=$(gettext 'Soll Mutt bei neuen Nachrichten einen Piepston ausloesen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$beep_new"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					beep_new="yes"
 				else
 					beep_new="no"
@@ -200,8 +201,8 @@ kwmutt_muttrc_conf() {
 				# Im Editor die Header noch anzeigen, damit diese nachtraeglich# {{{
 				# eingefuegt/abgeaendert werden koennen.
 				MSG=$(gettext 'Soll Mutt immer den Header im Editor zum editieren mit anzeigen (ja/nein)?')
-				yesno "$MUTTRC_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MUTTRC_TITLE" "$MSG" "$edit_headers"
+				if [ "$gv_Auswahl" = yes ] ; then
 					edit_headers="yes"
 				else
 					edit_headers="no"
@@ -225,7 +226,7 @@ kwmutt_muttrc_conf() {
 				# Soll Mutt beim Antworten verzichten nach einzelnen Dingen zu fragen?# {{{
 				MSG=$(gettext 'Soll Mutt beim Antworten verzichten nach einzelnen Dingen zu fragen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$fast_reply"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					fast_reply="yes"
 				else
 					fast_reply="no"
@@ -238,7 +239,7 @@ kwmutt_muttrc_conf() {
 				# Mailinglisten setzen (ja/nein)?
 				MSG=$(gettext 'Soll Mutt den Mail-Followup-To Header bei bekannten (abonnierten) Mailinglisten setzen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$followup_to"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					followup_to="yes"
 				else
 					followup_to="no"
@@ -275,7 +276,7 @@ kwmutt_muttrc_conf() {
 				# ignorieren (ja/nein)?
 				MSG=$(gettext 'Soll Mutt den Reply-To Header bei der Antwort auf Mailinglisten ignorieren (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$ignore_list_reply_to"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					ignore_list_reply_to="yes"
 				else
 					ignore_list_reply_to="no"
@@ -352,7 +353,7 @@ kwmutt_muttrc_conf() {
 				# neue ungelesene Nachrichten beim verlassen von mutt als old kennzeichnen# {{{
 				MSG=$(gettext 'Sollen neue ungelesene Nachrichten beim verlassen von mutt immer als old gekennzeichnet werden (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$mark_old"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					mark_old="yes"
 				else
 					mark_old="no"
@@ -364,7 +365,7 @@ kwmutt_muttrc_conf() {
 				# Soll bei Benutzung des internen Pagers ein "+" bei einem Zeilenumbruch eingefuegt werden (ja/nein)?# {{{
 				MSG=$(gettext 'Soll bei Benutzung des internen Pagers ein \"+\" bei einem Zeilenumbruch eingefuegt werden (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$markers"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					markers="yes"
 				else
 					markers="no"
@@ -376,7 +377,7 @@ kwmutt_muttrc_conf() {
 				# Soll Mutt Mail Adresse in Empfaenger-Liste behalten (ja/nein)?# {{{
 				MSG=$(gettext 'Soll Mutt Ihre Adresse, bei einer Antwort, in der Liste der Empfaenger belassen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$metoo"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					metoo="yes"
 				else
 					metoo="no"
@@ -501,7 +502,7 @@ kwmutt_muttrc_conf() {
 				# Soll Mutt den persoenlichen Namen aus dem adressbuch verwenden?# {{{
 				MSG=$(gettext 'Soll Mutt versuchen den persoenlichen Namen aus Ihrem Adressbuch im Index-Menue an zu zeigen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$reverse_alias"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					reverse_alias="yes"
 				else
 					reverse_alias="no"
@@ -514,7 +515,7 @@ kwmutt_muttrc_conf() {
 				# oder den augenblicklichen Rechnernamen benutzen (ja/nein)?
 				MSG=$(gettext 'Soll Mutt die Mail-Adresse aus dem From-Header ermitteln oder den augenblicklichen Rechnernamen benutzen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$reverse_name"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					reverse_name="yes"
 				else
 					reverse_name="no"
@@ -586,7 +587,7 @@ kwmutt_muttrc_conf() {
 				# (ja/nein)?
 				MSG=$(gettext 'Soll der interne Pager von Mutt Leerzeilen bis zur Unterkante des Bildschirms mit einer Tilde (~) auffuellen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$tilde"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					tilde="yes"
 				else
 					tilde="no"
@@ -599,7 +600,7 @@ kwmutt_muttrc_conf() {
 				# dem "From:"-Header herzuleiten (ja/nein)?
 				MSG=$(gettext 'Soll Mutt versuchen den Envelope-Absender von Nachrichten aus dem \"From:\"-Header herzuleiten (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$use_envelope_from"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					use_envelope_from="yes"
 				else
 					use_envelope_from="no"
@@ -610,8 +611,8 @@ kwmutt_muttrc_conf() {
 			user_agent)
 				# User-Agent Header aktivieren# {{{
 				MSG=$(gettext 'Soll Mutt immer einen User-Agent: Mutt/Versions-Header generieren (ja/nein)?')
-				yesno "$MUTTRC_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$MUTTRC_TITLE" "$MSG" "$user_agent"
+				if [ "$gv_Auswahl" = yes ] ; then
 					user_agent="yes"
 				else
 					user_agent="no"
@@ -624,7 +625,7 @@ kwmutt_muttrc_conf() {
 				# versenden einer Nachricht mit anzeigen?
 				MSG=$(gettext 'Soll Mutt auch das Bcc Feld beim vorbereiten zum versenden einer Nachricht mit anzeigen (ja/nein)?')
 				yesno "$MUTTRC_TITLE" "$MSG" "$write_bcc"
-				if [ "$?" = 0 ] ; then
+				if [ "$gv_Auswahl" = yes ] ; then
 					write_bcc="yes"
 				else
 					write_bcc="no"

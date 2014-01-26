@@ -37,7 +37,7 @@ conf_ca() {
 		# Variablen
 		KEYLENGTH="4096"
 		VALIDITY=${VALIDITY:-3650}
-		PRESERVEDN=${PRESERVEDN:-$gv_Yes}
+		PRESERVEDN=${PRESERVEDN:-yes}
 		REQ_CREATE_TITLE="${lv_Request_Create}"
 		#
 		# Funktion (create_private_key), erstellt einen privaten Schluessel# {{{

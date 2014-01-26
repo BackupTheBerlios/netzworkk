@@ -35,12 +35,13 @@ tls_per_site_table() {
 							;;
 						*)
 							# Server in eckige Klammern stellen?
-							SQUARE_BRACKET=$(gettext 'Soll der Rechnername ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
-							yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
-							if [ "$?" = 0 ] ; then
-								ADR="[${gv_Auswahl}]"
+							Adr="$gv_Auswahl"
+							SQUARE_BRACKET=$(gettext 'Soll der Rechnername ($Adr) in eckige Klammern (direkte Einlieferung) gestellt werden?')
+							yesno "$TABLE_TITLE" "$SQUARE_BRACKET" ""
+							if [ "$gv_Auswahl" = yes ] ; then
+								ADR="[${Adr}]"
 							else
-								ADR="$gv_Auswahl"
+								ADR="$Adr"
 							fi
 							;;
 					esac

@@ -155,8 +155,8 @@ kwcryptsetup_conf() {
 			$lv_Gnupg)
 				# Soll gnupg verwendet werden?# {{{
 				GPG_MSG=$(gettext 'Soll gnupg zum entschluesseln der Schluesseldatei verwendet werden (ja/nein)?')
-				yesno "$gv_Configuration" "$GPG_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$GPG_MSG" "$GPG"
+				if [ "$gv_Auswahl" = yes ] ; then
 					GPG=yes
 					if [ -n "$SSL" ] ; then
 						SSL=no
@@ -197,8 +197,8 @@ kwcryptsetup_conf() {
 			$lv_Use_Luks)
 				# Soll die Erweiterung Luks verwendet werden?# {{{
 				LUKS_MSG=$(gettext 'Soll die Erweiterung "LUKS" verwendet werden (ja/nein)?')
-				yesno "$gv_Configuration" "$LUKS_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$LUKS_MSG" "$USELUKS"
+				if [ "$gv_Auswahl" = yes ] ; then
 					USELUKS=yes
 				else
 					USELUKS=no
@@ -215,8 +215,8 @@ kwcryptsetup_conf() {
 				# Auswahl ob beim Bootprozess das Laufwerk gemappt werden soll,# {{{
 				# oder erst spaeter manuell (Ja/Nein).
 				NOAUTO_MSG=$(gettext 'Soll das verschluesselte Laufwerk beim Start des Rechners manuell erstellt werden (ja/nein)?')
-				yesno "$gv_Configuration" "$NOAUTO_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$NOAUTO_MSG" "$NOAUTO"
+				if [ "$gv_Auswahl" = yes ] ; then
 					NOAUTO=yes
 				else
 					NOAUTO=no
@@ -239,8 +239,8 @@ kwcryptsetup_conf() {
 			$lv_Readonly)
 				# Setup Readonly?# {{{
 				RO_MSG=$(gettext 'Soll das Laufwerk im Nur Lesemodus erstellt werden (ja/nein)?')
-				yesno "$gv_Configuration" "$RO_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$RO_MSG" "$READONLY"
+				if [ "$gv_Auswahl" = yes ] ; then
 					READONLY=yes
 				else
 					READONLY=no
@@ -251,8 +251,8 @@ kwcryptsetup_conf() {
 			$lv_Verify)
 				# Soll die Passphrase uberprueft werden?# {{{
 				PASS_VERIFY_MSG=$(gettext 'Soll die Passphrase nochmal ueberprueft werden (ja/nein)?')
-				yesno "$gv_Configuration" "$PASS_VERIFY_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$PASS_VERIFY_MSG" "$VERIFY"
+				if [ "$gv_Auswahl" = yes ] ; then
 					VERIFY=yes
 				else
 					VERIFY=no
@@ -311,8 +311,8 @@ kwcryptsetup_conf() {
 			$lv_Ssl)
 				# Soll openssl verwendet werden?# {{{
 				SSL_MSG=$(gettext 'Soll openssl zum entschluesseln der Schluesseldatei verwendet werden (ja/nein)?')
-				yesno "$gv_Configuration" "$SSL_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$SSL_MSG" "$SSL"
+				if [ "$gv_Auswahl" = yes ] ; then
 					SSL=yes
 					if [ "$GPG" = yes ] ; then
 						GPG=no
@@ -328,8 +328,8 @@ kwcryptsetup_conf() {
 			$lv_Swap)
 				# Soll ein Swap Laufwerk erstellt werden?# {{{
 				SWAP_MSG=$(gettext 'Soll ein verschluesseltes Swap-Laufwerk erstellt werden (ja/nein)?')
-				yesno "$gv_Configuration" "$SWAP_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$SWAP_MSG" "$MAKESWAP"
+				if [ "$gv_Auswahl" = yes ] ; then
 					MAKESWAP=yes
 					if [ -n "$TMPFS" ] ; then
 						TMPFS=no
@@ -345,10 +345,10 @@ kwcryptsetup_conf() {
 			$lv_Tmp)
 				# Soll ein temporaeres Laufwerk erstellt werden?# {{{
 				TMP_MSG=$(gettext 'Soll ein verschluesseltes temporaeres Laufwerk erstellt werden (ja/nein)?')
-				yesno "$gv_Configuration" "$TMP_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$TMP_MSG" ""
+				if [ "$gv_Auswahl" = yes ] ; then
 					formatprogs_check
-					if [ -n "$FM_Menue" ] ; then
+					if [ -n "${FM_Menue[1]}" ] ; then
 						menubox "$gv_Configuration" "$gv_Menupoint" "$FM_Menue"
 						while [ -n "$gv_Auswahl" ] ; do
 							case "$gv_Auswahl" in
@@ -390,8 +390,8 @@ kwcryptsetup_conf() {
 				# werden soll, z. B. nachdem LVM oder RAID Arrays erstellt worden sind
 				# (Ja/Nein).
 				NOEARLY_MSG=$(gettext 'Soll das verschluesselte Laufwerk beim Start des Rechners verzoegert erstellt werden, zum Beispiel nach dem erstellen von RAID Arrays (ja/nein)?')
-				yesno "$gv_Configuration" "$NOEARLY_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$NOEARLY_MSG" "$NOEARLY"
+				if [ "$gv_Auswahl" = yes ] ; then
 					NOEARLY=yes
 				else
 					NOEARLY=no
@@ -402,8 +402,8 @@ kwcryptsetup_conf() {
 			$lv_Warn)
 				# Soll loud verwendet werden?# {{{
 				LOUD_MSG=$(gettext 'Soll beim starten des Laufwerks eine Warnung ausgegeben werden, wenn dieses nicht existiert?')
-				yesno "$gv_Configuration" "$LOUD_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$LOUD_MSG" "$LOUD"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOUD=yes
 				else
 					LOUD=no

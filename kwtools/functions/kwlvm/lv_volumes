@@ -352,18 +352,19 @@ lv_volumes() {
 								*)
 									# loeschen der LVs
 									Anz=${(w)#gv_Auswahl}
+									DEVS="$gv_Auswahl"
 									Devs=${gv_Auswahl//\ /\\n}
 									MSG=$(gettext 'Jetzt werden alle ausgewaehlten logischen Volumes geloescht.\n$Devs\n\nFortfahren (ja/nein)?')
-									yesno "$gv_Attention" "$MSG" "$Anz"
-									if [ "$?" = 0 ] ; then
-										for i in ${=gv_Auswahl} ; {
+									yesno "$gv_Attention" "$MSG" "" "$Anz"
+									if [ "$gv_Auswahl" = yes ] ; then
+										for i in ${=DEVS} ; {
 											# LVs umounten
 											mount_check -u "$i"
 										}
 										# LVs beenden
-										lvchange -a n ${=gv_Auswahl} &>/dev/null || prog_failure
+										lvchange -a n ${=DEVS} &>/dev/null || prog_failure
 										# LVs loeschen
-										lvremove -v -f ${=gv_Auswahl} 2>&1 | progressbox $gv_Delete "${=gv_Auswahl}" || prog_failure
+										lvremove -v -f ${=DEVS} 2>&1 | progressbox $gv_Delete "${=DEVS}" || prog_failure
 									fi
 									break
 									;;

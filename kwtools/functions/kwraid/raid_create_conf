@@ -473,9 +473,9 @@ raid_create_conf() {
 			"$lv_Symlinks")
 				# Bei neu creierten MD Devices Symlinks erstellen# {{{
 				# Bsp.: /dev/md/n --> /dev/mdn
-				SYMLINK_MSG=$(gettext 'Sollen Symlinks von ARRAYs in /dev/md/n nach /dev/mdn erstellt werden.')
-				yesno "$gv_Configuration" "$SYMLINK_MSG"
-				if [ "$?" = 0 ] ; then
+				SYMLINK_MSG=$(gettext 'Sollen Symlinks von ARRAYs in /dev/md/n nach /dev/mdn erstellt werden (ja/nein)?')
+				yesno "$gv_Configuration" "$SYMLINK_MSG" "$CR_SYM"
+				if [ "$gv_Auswahl" = yes ] ; then
 					CR_SYM="yes"
 				else
 					CR_SYM="no"
@@ -530,8 +530,8 @@ raid_create_conf() {
 							# -x Ersatz Devices (spare)
 							# -f force
 							# Fragen ob man fortfahren soll.
-							yesno "$gv_Attention" "$CREATE_RAID_MSG"
-							if [ "$?" = 0 ] ; then
+							yesno "$gv_Attention" "$CREATE_RAID_MSG" ""
+							if [ "$gv_Auswahl" = yes ] ; then
 								if [ "$PARITYALGORITHM" != - ] ; then
 									Parity_Alg="-p $PARITYALGORITHM"
 								else
@@ -558,9 +558,8 @@ raid_create_conf() {
 					else
 						# ohne Spare Disks{{{
 						# Fragen ob man fortfahren soll.
-						yesno "$gv_Attention" "$CREATE_RAID_MSG"
-						if [ "$?" = 0 ] ; then
-							#
+						yesno "$gv_Attention" "$CREATE_RAID_MSG" ""
+						if [ "$gv_Auswahl" = yes ] ; then
 							if [ "$PARITYALGORITHM" != - ] ; then
 								Parity_Alg="-p $PARITYALGORITHM"
 							else

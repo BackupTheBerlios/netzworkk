@@ -122,9 +122,10 @@ master_conf() {
 				$lv_Service)
 					# Servicename einstellen{{{
 					#
+					yesno_option "$HOME_HOST" "${HOST}:"
 					HOST_NAME_MSG=$(gettext 'Soll der Rechnername mit vorangestellt werden (ja/nein)?')
-					yesno "$MASTER_CONF_TITLE" "$HOST_NAME_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$MASTER_CONF_TITLE" "$HOST_NAME_MSG" "$YN_OPT"
+					if [ "$gv_Auswahl" = yes ] ; then
 						HOME_HOST="${HOST}:"
 						service_name
 					else
@@ -229,9 +230,10 @@ master_conf() {
 						WAKEUP="${NUMBER}?"
 					else
 						# Frage ob ein ? mit angehaegt werden soll
+						yesno_option "$WAKEUP" "${NUMBER}?"
 						MSG=$(gettext 'Soll ein ? an die Zeit angehaengt werden (ja/nein)?')
-						yesno "$MASTER_CONF_TITLE" "$MSG"
-						if [ "$?" = 0 ] ; then
+						yesno "$MASTER_CONF_TITLE" "$MSG" "$YN_OPT"
+						if [ "$gv_Auswahl" = yes ] ; then
 							WAKEUP="${NUMBER}?"
 						else
 							WAKEUP="$NUMBER"

@@ -19,12 +19,13 @@ regexp_pcre_access() {
 					;;
 				*)
 					# Server in eckige Klammern stellen?
-					SQUARE_BRACKET=$(gettext 'Soll der Rechner ($gv_Auswahl) in eckige Klammern (direkte Einlieferung) gestellt werden?')
-					yesno "$TABLE_TITLE" "$SQUARE_BRACKET"
-					if [ "$?" = 0 ] ; then
-						HOST="[${gv_Auswahl}]"
+					Host="$gv_Auswahl"
+					SQUARE_BRACKET=$(gettext 'Soll der Rechner ($Host) in eckige Klammern (direkte Einlieferung) gestellt werden?')
+					yesno "$TABLE_TITLE" "$SQUARE_BRACKET" ""
+					if [ "$gv_Auswahl" = yes ] ; then
+						HOST="[${Host}]"
 					else
-						HOST="$gv_Auswahl"
+						HOST="$Host"
 					fi
 					;;
 			esac

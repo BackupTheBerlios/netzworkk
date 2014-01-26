@@ -140,8 +140,8 @@ manage_keys() {
 								if [ -e "$KEY_FILE_NAME" ] ; then
 									# Datei ist vorhanden - ueberschreiben ?
 									MSG=$(gettext 'Die Datei $KEY_FILE_NAME ist schon vorhanden. Soll sie ueberschrieben werden (ja/nein)? Denken Sie an Ihre verschluesselten Dateien die Sie mit einem neuen Schluessel nicht mehr entschluesseln koennen.')
-									yesno "$gv_Attention" "$MSG"
-									if [ "$?" = 0 ] ; then
+									yesno "$gv_Attention" "$MSG" "no"
+									if [ "$gv_Auswahl" = yes ] ; then
 										> "$KEY_FILE_NAME" <<< "${FILE_OPT}=${KEY_CRYPT}"
 										chmod 0400 "$KEY_FILE_NAME"
 										unset -- FILE_OPT KEY_CRYPT KEY_FILE_NAME

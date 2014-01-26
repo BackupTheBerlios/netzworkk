@@ -153,9 +153,10 @@ smtpd_conf() {
 				;;
 			smtpd_authorized_xforward_hosts)
 				# SMTP Clients das XFORWARD Feature erlauben.{{{
+				yesno_option "$smtpd_authorized_xforward_hosts" "127.0.0.0/8"
 				SMTPD_AUTH_XFORWARD_HOSTS_MSG=$(gettext 'Soll den SMTP Clients das XFORWARD Feature erlaubt werden (ja/nein)?')
-				yesno "$SMTPD_TITLE" "$SMTPD_AUTH_XFORWARD_HOSTS_MSG" "$smtpd_authorized_xforward_hosts"
-				if [ "$?" = 0 ] ; then
+				yesno "$SMTPD_TITLE" "$SMTPD_AUTH_XFORWARD_HOSTS_MSG" "$YN_OPT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					smtpd_authorized_xforward_hosts="127.0.0.0/8"
 					postconf -e smtpd_authorized_xforward_hosts="127.0.0.0/8"
 				else

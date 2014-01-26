@@ -198,8 +198,8 @@ kwgrub_boot_conf() {
 					# lock aktivieren (yes/no){{{
 					LOCK_TITLE=(${lv_Boot_Conf}::${lv_Lock})
 					LOCK_MSG=$(gettext 'Hier brauchen Sie nur mit ja zu antworten, wenn Benutzer diesen Menueeintrag nicht ohne Password booten duerfen. Password wird in der Konfiguration erzeugt/geaendert.')
-					yesno "$LOCK_TITLE" "$LOCK_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$LOCK_TITLE" "$LOCK_MSG" ""
+					if [ "$gv_Auswahl" = yes ] ; then
 						LOCK=lock
 					else
 						unset -- LOCK
@@ -241,8 +241,8 @@ kwgrub_boot_conf() {
 					# Makeactive aktivieren fuer andere bootloader (yes/no){{{
 					MAKEACTIVE_TITLE=(${lv_Boot_Conf}::${lv_Makeactive})
 					MAKEACTIVE_MSG=$(gettext 'Hier brauchen Sie nur mit ja zu antworten, wenn sie einen anderen Bootloader beim Start ausfuehren wollen/muessen. Zum Beispiel bei Windows.')
-					yesno "$MAKEACTIVE_TITLE" "$MAKEACTIVE_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$MAKEACTIVE_TITLE" "$MAKEACTIVE_MSG" ""
+					if [ "$gv_Auswahl" = yes ] ; then
 						MAKEACTIVE=makeactive
 						unset -- INITRD APPEND ROOT_PART VMLINUZ MEMTEST MODULE MODULE1
 					else

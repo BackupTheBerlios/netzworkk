@@ -216,9 +216,10 @@ kwmutt_conf() {
 					autoload -U kwmutt_urlview_conf kwmutt_urlview_config
 					kwmutt_urlview_conf
 				else
-					MSG=$(gettext 'Da $lv_Urlview nicht (mehr) vorhanden. Soll die Tastenkombination deaktiviert werden (ja/nein)?')
-					yesno "$lv_Urlview" "$MSG"
-					if [ "$?" = 0 ] ; then
+					MSG=$(gettext '$lv_Urlview ist nicht (mehr) vorhanden. Soll die Tastenkombination deaktiviert werden (ja/nein)?')
+					yesno "$lv_Urlview" "$MSG" ""
+					if [ "$gv_Auswahl" = yes ] ; then
+						autoload -U kwmutt_urlview_config
 						kwmutt_urlview_config -d
 					fi
 				fi

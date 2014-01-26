@@ -24,12 +24,12 @@ manage_export_pkcs12() {
 		# vorbelegen.
 		case "$Opt" in
 			-keys)
-				PASS_VALUE=${PASS_VALUE:-$gv_Yes}
-				PKCS_VALUE=${PKCS_VALUE:-$gv_Yes}
+				PASS_VALUE=${PASS_VALUE:-yes}
+				PKCS_VALUE=${PKCS_VALUE:-yes}
 				;;
 			*)
-				PASS_VALUE=${PASS_VALUE:-$gv_No}
-				PKCS_VALUE=${PKCS_VALUE:-$gv_Yes}
+				PASS_VALUE=${PASS_VALUE:-no}
+				PKCS_VALUE=${PKCS_VALUE:-yes}
 				;;
 		esac
 		#
@@ -39,7 +39,7 @@ manage_export_pkcs12() {
 		# Funktion (export_pkcs12_menu)# {{{
 		#
 		export_pkcs12_menu() {
-			if [[ $PASS_VALUE == $gv_No ]] ; then
+			if [[ $PASS_VALUE == no ]] ; then
 				EXPORT_PKCS12_MENU=(\"$lv_ExportFilename\" \"$EXPORT_FILENAME\"
 				\"$lv_PassAdd\" \"$PASS_VALUE\"
 				\"$lv_Ssl_Key_Password\" \"$CA_CAPASSWORD\"
@@ -123,11 +123,11 @@ manage_export_pkcs12() {
 				"$lv_PKCS_Structure")
 					# CA in die PKCS#12 Struktur hinzufuegen .# {{{
 					MSG=$(gettext 'Soll die CA in die PKCS#12 Struktur hinzugefuegt werden (ja/nein)?')
-					yesno "$gv_Info" "$MSG"
-					if [ "$?" = 0 ] ; then
-						PKCS_VALUE=$gv_Yes
+					yesno "$gv_Info" "$MSG" "$PKCS_VALUE"
+					if [ "$gv_Auswahl" != no ] ; then
+						PKCS_VALUE=yes
 					else
-						PKCS_VALUE=$gv_No
+						PKCS_VALUE=no
 					fi
 					## }}}
 					export_pkcs12_menu $lv_PKCS_Structure
@@ -148,7 +148,7 @@ manage_export_pkcs12() {
 					## }}}
 					# Funktion (check_pkcs12_structure)# {{{
 					check_pkcs12_structure() {
-						if [[ $PKCS_VALUE == $gv_Yes ]] ; then
+						if [[ $PKCS_VALUE == yes ]] ; then
 							PROG_OPT+=(-certfile ${KWSSL_DIR}/${CA_OPEN_NAME}/cacert.pem)
 						fi
 					}
@@ -172,7 +172,7 @@ manage_export_pkcs12() {
 					esac
 					#
 					# exportieren mit Passwort# {{{
-					if [[ $PASS_VALUE == $gv_No ]] ; then
+					if [[ $PASS_VALUE == no ]] ; then
 						if [ -n "$CA_CAPASSWORD" -a -n "$EXPORT_PASSWORD" ] ; then
 							# grundlegende Befehlsoptionen in der Variable
 							# PROG_OPT speichern.

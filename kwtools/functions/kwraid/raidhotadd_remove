@@ -85,9 +85,8 @@ raidhotadd_remove() {
 											#
 											HDDEV="$gv_Auswahl"
 											PART_RAID_DEL_MSG=$(gettext 'Soll die Partition "$HDDEV" aus dem RAID Array "$RAIDDEV" entfernt werden (ja/nein)?')
-											yesno "$RAID_CHANGE_PART_TITLE" "$PART_RAID_DEL_MSG"
-											#
-											if [ $? = 0 ] ; then
+											yesno "$RAID_CHANGE_PART_TITLE" "$PART_RAID_DEL_MSG" ""
+											if [ "$gv_Auswahl" = yes ] ; then
 												# Gibt es keine faulty Disks, wird eine beim
 												# entfernen, als faulty, markiert.
 												Part_State_Nr=${PARTS_STATE[(i)$HDDEV]}

@@ -59,8 +59,8 @@ kwmutt_imap_serv_conf() {
 					;;
 				$lv_Default_Mailbox)
 					# Soll dieses Postfach als Standard Eroeffnungsfach deklariert werden (ja/nein)?# {{{
-					yesno "$IMAP_TITLE" "$DEFAULT_MB_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$IMAP_TITLE" "$DEFAULT_MB_MSG" "$DEFAULT_SERVER"
+					if [ "$gv_Auswahl" = yes ] ; then
 						DEFAULT_SERVER="yes"
 					else
 						DEFAULT_SERVER="no"

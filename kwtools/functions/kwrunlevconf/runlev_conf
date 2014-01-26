@@ -96,7 +96,7 @@ while [ "$gv_Auswahl" ] ; do
 													;;
 												-)	# Bei der Nr = - muss die Antwort nein sein.
 													NR="$gv_Auswahl"
-													ANSW="$gv_No"
+													ANSW="no"
 													;;
 												*)
 													no_input_msg
@@ -110,17 +110,17 @@ while [ "$gv_Auswahl" ] ; do
 										;;
 									$lv_Start)
 										# Soll der Dienst gestartet werden (yes/no)?# {{{
-										yesno "$CONF_RL_TITLE" "$START_STOP_MSG"
-										if [ "$?" = 0 ] ; then
+										yesno "$CONF_RL_TITLE" "$START_STOP_MSG" "$ANSW"
+										if [ "$gv_Auswahl" = yes ] ; then
 											if [ "$NR" != - ] ; then
-												ANSW="$gv_Yes"
+												ANSW="yes"
 											else
-												ANSW="$gv_No"
+												ANSW="no"
 												MSG=$(gettext 'Wenn die Start/Stop Nummer ein - ist, kann Start nur mit nein belegt werden.')
 												msgbox "$gv_Attention" "$MSG"
 											fi
 										else
-											ANSW="$gv_No"
+											ANSW="no"
 										fi
 										rc_conf $ALL
 										## }}}
@@ -154,7 +154,7 @@ while [ "$gv_Auswahl" ] ; do
 									# die Variable $nr != - ist.
 									if [ -n "$rl" -a "$nr" != - ] ; then
 										case "$yn" in
-											$gv_Yes)
+											yes)
 												# Ist die Variable $START nicht belegt
 												# wird sie mit den Variablen $nr und $rl belegt.
 												# Ansonsten mit schon vorhandenen Werten.
@@ -164,7 +164,7 @@ while [ "$gv_Auswahl" ] ; do
 													START="$START $rl"
 												fi
 												;;
-											$gv_No)
+											no)
 												if [ -z "$STOP" ] ; then
 													STOP="$nr $rl"
 												else

@@ -56,8 +56,8 @@ kwmutt_crypt_conf() {
 			fcc_clear)
 				# Soll Mutt FCCs Nachrichten unverschluesselt speichern# {{{
 				MSG=$(gettext 'Soll Mutt FCCs Nachrichten unverschluesselt speichern, wenn sie verschluesselt/signiert sind (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$fcc_clear"
+				if [ "$gv_Auswahl" = yes ] ; then
 					fcc_clear=yes
 				else
 					fcc_clear=no
@@ -68,8 +68,8 @@ kwmutt_crypt_conf() {
 			crypt_autosign)
 				# automatisch signieren# {{{
 				MSG=$(gettext 'Soll Mutt immer versuchen ausgehende Nachrichten zu signieren (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_autosign"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_autosign=yes
 				else
 					crypt_autosign=no
@@ -80,8 +80,8 @@ kwmutt_crypt_conf() {
 			crypt_autoencrypt)
 				# automatisch verschluesseln# {{{
 				MSG=$(gettext 'Soll Mutt immer versuchen ausgehende Nachrichten zu verschluesseln (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_autoencrypt"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_autoencrypt=yes
 				else
 					crypt_autoencrypt=no
@@ -92,8 +92,8 @@ kwmutt_crypt_conf() {
 			crypt_autopgp)
 				# automatisch mit PGP verschluesseln# {{{
 				MSG=$(gettext 'Soll Mutt immer versuchen ausgehende Nachrichten mit PGP zu verschluesseln (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_autopgp"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_autopgp=yes
 				else
 					crypt_autopgp=no
@@ -104,8 +104,8 @@ kwmutt_crypt_conf() {
 			crypt_autosmime)
 				# automatisch mit S/MIME verschluesseln# {{{
 				MSG=$(gettext 'Soll Mutt immer versuchen ausgehende Nachrichten mit S/MIME zu verschluesseln (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_autosmime"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_autosmime=yes
 				else
 					crypt_autosmime=no
@@ -116,8 +116,8 @@ kwmutt_crypt_conf() {
 			crypt_replyencrypt)
 				# automatisch mit PGP oder OpenSSL verschluesselt antworten# {{{
 				MSG=$(gettext 'Soll Mutt automatisch die Antwort auf eine verschluesselte Nachricht mit PGP oder OpenSSL verschluesseln (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_replyencrypt"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_replyencrypt=yes
 				else
 					crypt_replyencrypt=no
@@ -128,8 +128,8 @@ kwmutt_crypt_conf() {
 			crypt_replysign)
 				# automatisch mit PGP oder OpenSSL signiert antworten# {{{
 				MSG=$(gettext 'Soll Mutt automatisch die Antwort auf eine signierte Nachricht mit PGP oder OpenSSL signieren (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_replysign"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_replysign=yes
 				else
 					crypt_replysign=no
@@ -140,8 +140,8 @@ kwmutt_crypt_conf() {
 			crypt_replysignencrypted)
 				# automatisch mit PGP oder OpenSSL verschluesselte Nachrichten signieren# {{{
 				MSG=$(gettext 'Soll Mutt automatisch die Antwort auf eine verschluesselte Nachricht mit PGP oder OpenSSL signieren (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_replysignencrypted"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_replysignencrypted=yes
 				else
 					crypt_replysignencrypted=no
@@ -152,8 +152,8 @@ kwmutt_crypt_conf() {
 			crypt_timestamp)
 				# automatisch verschluesseln# {{{
 				MSG=$(gettext 'Soll Mutt einen Zeitstempel in die Ausgabe von PGP oder S/MIME einfuegen (ja/nein)?')
-				yesno "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$CRYPT_TITLE" "$MSG" "$crypt_timestamp"
+				if [ "$gv_Auswahl" = yes ] ; then
 					crypt_timestamp=yes
 				else
 					crypt_timestamp=no
@@ -164,8 +164,8 @@ kwmutt_crypt_conf() {
 			crypt_verify_sig)
 				# automatisch verschluesseln# {{{
 				MSG=$(gettext 'Soll Mutt immer versuchen PGP oder S/MIME Signaturen zu ueberpruefen (ja/nein)?')
-				yesno_select "$CRYPT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno_select "$CRYPT_TITLE" "$MSG" "$crypt_verify_sig"
+				if [ -n "$VALUE" ] ; then
 					crypt_verify_sig="$VALUE"
 				else
 					crypt_verify_sig=yes

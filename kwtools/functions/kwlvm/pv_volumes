@@ -100,22 +100,23 @@ pv_volumes() {
 								;;
 							*)	#
 								Anz=${(w)#gv_Auswahl}
+								DEVS="$gv_Auswahl"
 								Devs=${gv_Auswahl//\ /\\n}
 								MSG=$(gettext 'Jetzt wird auf allen ausgewaehlten Laufwerken Physikalische Volumes erzeugt.\n$Devs\n\nFortfahren (ja/nein)?')
-								yesno "$gv_Attention" "$MSG" "$Anz"
-								if [ "$?" = 0 ] ; then
+								yesno "$gv_Attention" "$MSG" "" "$Anz"
+								if [ "$gv_Auswahl" = yes ] ; then
 									# Auf Partitionen die gemountet sind, kann man keine
 									# Physikalischen Volumes erzeugen.
-									for i in ${=gv_Auswahl} ; {
+									for i in ${=DEVS} ; {
 										mount_check -u $i
 									}
 									# Optionen fuer LVM1/2 einstellen
 									if [ "$LVM" = 2 ] ; then
-										PROG_OPT="-v -M ${LVM_TYPE:-2} $gv_Auswahl"
+										PROG_OPT="-v -M ${LVM_TYPE:-2} $DEVS"
 									else
-										PROG_OPT="-v $gv_Auswahl"
+										PROG_OPT="-v $DEVS"
 									fi
-									pvcreate ${=PROG_OPT} 2>&1 | progressbox $gv_Create $gv_Auswahl || prog_failure
+									pvcreate ${=PROG_OPT} 2>&1 | progressbox $gv_Create "$DEVS" || prog_failure
 								fi
 								break
 								;;
@@ -318,11 +319,11 @@ pv_volumes() {
 													Anz=${(w)#SELECT_PV_DEV}
 													Devs=${SELECT_PV_DEV//\ /\\n}
 													MSG=$(gettext 'Jetzt werden alle ausgewaehlten Physikalischen Volumes entfernt.\n$Devs\n\nFortfahren (ja/nein)?')
-													yesno "$gv_Attention" "$MSG" "$Anz"
+													yesno "$gv_Attention" "$MSG" "" "$Anz"
 													#
 													# Löschen aller ausgewählten PV's
 													#
-													if [ $? = 0 ] ; then
+													if [ "$gv_Auswahl" = yes ] ; then
 														BREAK=2
 														vgreduce -v $AUSWAHL $SELECT_PV_DEV 2>&1 | progressbox "$lv_Remove" "$SELECT_PV_DEV" || prog_failure
 													fi
@@ -381,15 +382,16 @@ pv_volumes() {
 												;;
 											*)	#
 												Anz=${(w)#AUSWAHL}
+												DEV="$gv_Auswahl"
 												Devs=${AUSWAHL//\ /\\n}
-												MSG=$(gettext 'Jetzt werden alle ausgewaehlten Physikalischen Volumes zur VG $gv_Auswahl hinzugefuegt.\n$AUSWAHL\n\nFortfahren (ja/nein)?')
-												yesno "$gv_Attention" "$MSG" "$Anz"
+												MSG=$(gettext 'Jetzt werden alle ausgewaehlten Physikalischen Volumes zur VG $DEV hinzugefuegt.\n$AUSWAHL\n\nFortfahren (ja/nein)?')
+												yesno "$gv_Attention" "$MSG" "" "$Anz"
 												#
 												# Hinzufügen aller ausgewählten PV's
 												#
-												if [ $? = 0 ] ; then
+												if [ "$gv_Auswahl" = yes ] ; then
 													BREAK=2
-													vgextend -v $gv_Auswahl $AUSWAHL 2>&1 | progressbox "$lv_Add" "$AUSWAHL --> $gv_Auswahl" || prog_failure
+													vgextend -v $DEV $AUSWAHL 2>&1 | progressbox "$lv_Add" "$AUSWAHL --> $DEV" || prog_failure
 												fi
 												unset -- BREAK
 												break 2
@@ -427,12 +429,13 @@ pv_volumes() {
 							*)	#
 								# loeschen aller ausgewählten PV's
 								Anz=${(w)#gv_Auswahl}
+								DEVS="$gv_Auswahl"
 								Devs=${gv_Auswahl//\ /\\n}
 								#
 								MSG=$(gettext 'Jetzt werden alle ausgewaehlten Physikalischen Volumes geloescht.\n$Devs\n\nFortfahren (ja/nein)?')
-								yesno "$gv_Attention" "$MSG" "$Anz"
-								if [ "$?" = 0 ] ; then
-									pvremove -v $gv_Auswahl 2>&1 | progressbox $gv_Delete $gv_Auswahl || prog_failure
+								yesno "$gv_Attention" "$MSG" "" "$Anz"
+								if [ "$gv_Auswahl" = yes ] ; then
+									pvremove -v $DEVS 2>&1 | progressbox $gv_Delete "$DEVS" || prog_failure
 								fi
 								#
 								break

@@ -34,14 +34,14 @@ kwmutt_sort_conf() {
 		read_file -f $gv_LogFile
 	fi
 	## }}}
-	# leere Variable mit Standardwerten fuellen.
+	# leere Variable mit Standardwerten fuellen.# {{{
 	sort="${sort:-date}"
 	sort_alias="${sort_alias:-alias}"
 	sort_aux="${sort_aux:-date}"
 	sort_browser="${sort_browser:-alpha}"
 	sort_re="${sort_re:-yes}"
 	strict_threads="${strict_threads:-no}"
-	#
+	## }}}
 	sort_conf_menu
 	while [ -n "$gv_Auswahl" ] ; do
 		case "$gv_Auswahl" in
@@ -50,11 +50,11 @@ kwmutt_sort_conf() {
 				;;
 			sort)
 				# Auswahl der Sortierung im Index Menue# {{{
-				menubox "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
+				menubox -d "$sort" "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
 				while [ -n "$gv_Auswahl" ] ; do
 					case "$gv_Auswahl" in
 						HELP*)	script_help kwmutt_sort_help
-							menubox "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
+							menubox -d "$sort" "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
 							;;
 						$gv_Back)
 							# ohne speichern abbrechen
@@ -93,11 +93,11 @@ kwmutt_sort_conf() {
 				;;
 			sort_aux)
 				# Auswahl der Sortierung im Index Menue# {{{
-				menubox "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
+				menubox -d "$sort_aux" "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
 				while [ -n "$gv_Auswahl" ] ; do
 					case "$gv_Auswahl" in
 						HELP*)	script_help kwmutt_sort_help
-							menubox "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
+							menubox -d "$sort_aux" "$TREE_TITLE" "$gv_Menupoint" "$T_MENU"
 							;;
 						$gv_Back)
 							# ohne speichern abbrechen
@@ -137,8 +137,8 @@ kwmutt_sort_conf() {
 			sort_re)
 				# Soll das Threading nach dem Subjekt sortiert werden (ja/nein)?# {{{
 				MSG=$(gettext 'Soll das Threading nach dem Subjekt sortiert werden (ja/nein)?')
-				yesno "$TREE_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$TREE_TITLE" "$MSG" "$sort_re"
+				if [ "$gv_Auswahl" = yes ] ; then
 					sort_re=yes
 				else
 					sort_re=no
@@ -150,8 +150,8 @@ kwmutt_sort_conf() {
 				# Soll Threading nur auf dem In-Reply-To:-Header und Referenz Feld# {{{
 				# basieren (yes/no)?
 				MSG=$(gettext 'Soll Threading nur auf dem In-Reply-To:-Header und Referenz Feld basieren (ja/nein)?')
-				yesno "$TREE_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$TREE_TITLE" "$MSG" "$strict_threads"
+				if [ "$gv_Auswahl" = yes ] ; then
 					strict_threads=yes
 				else
 					strict_threads=no

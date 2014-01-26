@@ -10,8 +10,8 @@ kwpwsafe_manage_db() {
 	lv_Import_Db=$(gettext 'Datenbank importieren')
 	lv_Passwd=$(gettext 'Passwort')
 	OK_MSG=$(gettext 'Passwort wurde erfolgreich geaendert.')
-	NOOK_MSG=$(gettext 'Das Passwort konnte nicht geaendert werden. Wiederholen?')
-	INCORRECT_PW_DB_MSG=$(gettext 'Sie haben das falsche Passwort eingegeben. Wiederholen?')
+	NOOK_MSG=$(gettext 'Das Passwort konnte nicht geaendert werden. Wiederholen (ja/nein)?')
+	INCORRECT_PW_DB_MSG=$(gettext 'Sie haben das falsche Passwort eingegeben. Wiederholen (ja/nein)?')
 	IMPORT_OK_MSG=$(gettext 'Der Import der Datenbank wurde erfolgreich durchgefuehrt.')
 	IMPORT_NOOK_MSG=$(gettext 'Der Import der Datenbank ist fehlgschlagen.')
 	#
@@ -185,8 +185,8 @@ expect eof"
 													# Exit Code ueberpruefen# {{{
 													case "$?" in
 														10)
-															yesno "$gv_Attention" "$INCORRECT_PW_DB_MSG"
-															if [ "$?" = 0 ] ; then
+															yesno "$gv_Attention" "$INCORRECT_PW_DB_MSG" "yes"
+															if [ "$gv_Auswahl" = yes ] ; then
 																db_import_pass_menu
 															else
 																# schnell die Erstellungsdatei loeschen
@@ -306,8 +306,8 @@ expect eof"
 														# EXIT Wert uerberpruefen# {{{
 														case "$?" in
 															10)
-																yesno "$gv_Attention" "$INCORRECT_PW_DB_MSG"
-																if [ "$?" = 0 ] ; then
+																yesno "$gv_Attention" "$INCORRECT_PW_DB_MSG" "yes"
+																if [ "$gv_Auswahl" = yes ] ; then
 																	db_change_pass_menu
 																else
 																	# schnell die Erstellungsdatei loeschen
@@ -322,8 +322,8 @@ expect eof"
 																break 2
 																;;
 															*)
-																yesno "$gv_Attention" "$NOOK_MSG"
-																if [ "$?" = 0 ] ; then
+																yesno "$gv_Attention" "$NOOK_MSG" "yes"
+																if [ "$gv_Auswahl" = yes ] ; then
 																	db_change_pass_menu
 																else
 																	del_expect

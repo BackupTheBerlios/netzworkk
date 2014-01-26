@@ -161,8 +161,8 @@ kwgrub2_conf() {
 			"$lv_Grub_Savedefault")
 				# Savedefault# {{{
 				SAVE_DEFAULT_MSG=$(gettext 'Soll der letzte Menueeintrag, der mit \"grub-set-default\" oder \"grub-reboot\" ausgefuehrt wird, gespeichert werden (ja/nein)?')
-				yesno "$gv_Configuration" "$SAVE_DEFAULT_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$SAVE_DEFAULT_MSG" "$GRUB_SAVEDEFAULT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					GRUB_SAVEDEFAULT="true"
 				else
 					GRUB_SAVEDEFAULT="false"
@@ -225,8 +225,8 @@ kwgrub2_conf() {
 			"$lv_Grub_Hidden_Timeout_Quiet")
 				# stiller versteckter Timeout # {{{
 				HIDDEN_TIMEOUT_QUIET_MSG=$(gettext 'Soll die Anzeige des Countdown vom \"versteckten Timeout\" unterdrueckt werden (ja/nein)?')
-				yesno "$gv_Configuration" "$HIDDEN_TIMEOUT_QUIET_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$HIDDEN_TIMEOUT_QUIET_MSG" "$GRUB_HIDDEN_TIMEOUT_QUIET"
+				if [ "$gv_Auswahl" = yes ] ; then
 					GRUB_HIDDEN_TIMEOUT_QUIET="true"
 				else
 					GRUB_HIDDEN_TIMEOUT_QUIET="false"
@@ -581,8 +581,8 @@ kwgrub2_conf() {
 			$lv_Grub_Disable_Linux_Uuid)
 				# UUID ausschalten ja/nein# {{{
 				DISABLE_UUID_MSG=$(gettext 'Soll die Benutzung von universally-unique identifiers (UUID) ausgeschaltet werden (ja/nein)?')
-				yesno "$gv_Configuration" "$DISABLE_UUID_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$DISABLE_UUID_MSG" "$GRUB_DISABLE_LINUX_UUID"
+				if [ "$gv_Auswahl" = yes ] ; then
 					GRUB_DISABLE_LINUX_UUID="true"
 				else
 					GRUB_DISABLE_LINUX_UUID="false"
@@ -593,8 +593,8 @@ kwgrub2_conf() {
 			$lv_Grub_Disable_Linux_Recovery)
 				# Recovery Menueeintrag ausschalten ja/nein# {{{
 				DISABLE_RECOVERY_MSG=$(gettext 'Soll die Benutzung von Recovery Menueeintragen ausgeschaltet werden (ja/nein)?')
-				yesno "$gv_Configuration" "$DISABLE_RECOVERY_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$gv_Configuration" "$DISABLE_RECOVERY_MSG" "$GRUB_DISABLE_LINUX_RECOVERY"
+				if [ "$gv_Auswahl" = yes ] ; then
 					GRUB_DISABLE_LINUX_RECOVERY="true"
 				else
 					GRUB_DISABLE_LINUX_RECOVERY="false"
@@ -757,8 +757,8 @@ kwgrub2_conf() {
 				# OS Propper ausschalten ja/nein# {{{
 				DISABLE_OS_PROPPER_TITLE=(${gv_Configuration}::${lv_Grub_Disable_Os_Propper})
 				DISABLE_OS_PROPPER_MSG=$(gettext 'Soll das proben nach anderen Betriebssystemen ausgeschaltet werden (ja/nein)?')
-				yesno "$DISABLE_OS_PROPPER_TITLE" "$DISABLE_OS_PROPPER_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$DISABLE_OS_PROPPER_TITLE" "$DISABLE_OS_PROPPER_MSG" "$GRUB_DISABLE_OS_PROPPER"
+				if [ "$gv_Auswahl" = yes ] ; then
 					GRUB_DISABLE_OS_PROPPER="true"
 				else
 					GRUB_DISABLE_OS_PROPPER="false"

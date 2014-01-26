@@ -87,8 +87,8 @@ kwrsync_conf() {
 				# Homesynchronisation per cronob ausfuehren# {{{
 				HOME_SYNC_CRON_TITLE=(${lv_Configuration}::${lv_Home_Sync_Cron})
 				HOME_SYNC_CRON_MSG=$(gettext 'Soll das Homeverzeichnis auch per Cron synchronisiert werden (ja/nein)?')
-				yesno "$HOME_SYNC_CRON_TITLE" "$HOME_SYNC_CRON_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$HOME_SYNC_CRON_TITLE" "$HOME_SYNC_CRON_MSG" "$HOME_SYNC_CRON"
+				if [ "$gv_Auswahl" = yes ] ; then
 					HOME_SYNC_CRON="yes"
 				else
 					HOME_SYNC_CRON="no"

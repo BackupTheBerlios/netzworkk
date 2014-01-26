@@ -90,8 +90,8 @@ kwmutt_gpg_conf() {
 			pgp_autosign)
 				# automatisch signieren# {{{
 				MSG=$(gettext 'Soll Mutt immer versuchen ausgehende Nachrichten zu signieren (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_autosign"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_autosign=yes
 				else
 					pgp_autosign=no
@@ -102,8 +102,8 @@ kwmutt_gpg_conf() {
 			pgp_autoencrypt)
 				# automatisch verschluesseln# {{{
 				MSG=$(gettext 'Soll Mutt immer versuchen ausgehende Nachrichten zu verschluesseln (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_autoencrypt"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_autoencrypt=yes
 				else
 					pgp_autoencrypt=no
@@ -126,8 +126,8 @@ kwmutt_gpg_conf() {
 			pgp_check_exit)
 				# Exit Status ueberpruefen# {{{
 				MSG=$(gettext 'Soll Mutt den Exit Status der PGP Subprozesse beim signieren/verschluesseln ueberpruefen (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_check_exit"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_check_exit=yes
 				else
 					pgp_check_exit=no
@@ -138,8 +138,8 @@ kwmutt_gpg_conf() {
 			pgp_long_ids)
 				# Soll 64bit oder 32bit Schluessel-ID benutzt werden# {{{
 				MSG=$(gettext 'Sollen die 64 Bit Schluessel-IDs benutzt werden (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_long_ids"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_long_ids=yes
 				else
 					pgp_long_ids=no
@@ -150,8 +150,8 @@ kwmutt_gpg_conf() {
 			pgp_retainable_sigs)
 				# aeussere Schicht entfernen von Nachrichten# {{{
 				MSG=$(gettext 'Soll die aeussere Schicht bei signierten/verschluesselten Nachrichten entfernt werden (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_retainable_sigs"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_retainable_sigs=yes
 				else
 					pgp_retainable_sigs=no
@@ -162,8 +162,8 @@ kwmutt_gpg_conf() {
 			pgp_show_unusable)
 				# # unbrauchbare, abgelaufene Schluessel anzeigen{{{
 				MSG=$(gettext 'Sollen auch abgelaufene, unbrauchbare Schluessel im Schluesselauswahlmenue angezeigt werden (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_show_unusable"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_show_unusable=yes
 				else
 					pgp_show_unusable=no
@@ -187,8 +187,8 @@ kwmutt_gpg_conf() {
 			pgp_strict_enc)
 				# Kodierung von PGP/MIME Nachrichten#{{{
 				MSG=$(gettext 'Soll Mutt automatisch PGP/MIME signierte Nachrichten quoted-printable kodieren (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_strict_enc"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_strict_enc=yes
 				else
 					pgp_strict_enc=no
@@ -229,8 +229,8 @@ kwmutt_gpg_conf() {
 			pgp_auto_decode)
 				# entschluesseln nach altmodischer Art#{{{
 				MSG=$(gettext 'Soll Mutt versuchen verschluesselte Nachrichten nach der altmodischen Art zu entschluesseln (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$pgp_auto_decode"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pgp_auto_decode=yes
 				else
 					pgp_auto_decode=no
@@ -397,8 +397,8 @@ kwmutt_gpg_conf() {
 			forward_decrypt)
 				# Soll die aeussere Schicht beim Weiterleiten entfernt werden?# {{{
 				MSG=$(gettext '(Soll beim weiterleiten einer Nachricht die aeussere Schicht der Verschluesselung entfernt werden (ja/nein)?')
-				yesno "$GPG_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$GPG_TITLE" "$MSG" "$forward_decrypt"
+				if [ "$gv_Auswahl" = yes ] ; then
 					forward_decrypt=yes
 				else
 					forward_decrypt=no

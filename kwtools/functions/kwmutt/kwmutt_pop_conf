@@ -42,8 +42,8 @@ kwmutt_pop_conf() {
 			pop_auth_try_all)
 				# Sollen alle verfuegbaren Authentifizierungs Methoden versucht werden (yes/no)?# {{{
 				MSG=$(gettext 'Sollen alle verfuegbaren Authentifizierungs Methoden versucht werden (ja/nein)?')
-				yesno "$POP_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$POP_TITLE" "$MSG" "$pop_auth_try_all"
+				if [ "$gv_Auswahl" = yes ] ; then
 					pop_auth_try_all="yes"
 				else
 					pop_auth_try_all="no"

@@ -50,8 +50,8 @@ log_conf() {
 				# Drops loggen, bei nein haben alle anderen Optionen{{{
 				# kein Effekt.
 				MSG=$(gettext 'Sollen Drops geloggt werden, bei nein haben alle anderen LOG-Optionen kein Effekt (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "${LOG_DROPS:-yes}"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_DROPS=yes
 				else
 					LOG_DROPS=no
@@ -74,8 +74,8 @@ log_conf() {
 			$lv_Log_All_Else)
 				# Alles loggen was nicht irgendwie auf ein Muster passt? {{{
 				MSG=$(gettext 'Alles loggen was nicht irgendwie auf ein Muster passt (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_ALL_ELSE"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_ALL_ELSE=yes
 				else
 					LOG_ALL_ELSE=no
@@ -86,8 +86,8 @@ log_conf() {
 			$lv_Log_Illegal)
 				# Illegale TCP Flags loggen?{{{
 				MSG=$(gettext 'Illegale TCP Flags loggen (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_ILLEGAL"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_ILLEGAL=yes
 				else
 					LOG_ILLEGAL=no
@@ -98,8 +98,8 @@ log_conf() {
 			$lv_Log_Icmp)
 				# ICMP Pakete, die weiter unten angegeben sind, loggen?{{{
 				MSG=$(gettext 'ICMP Pakete loggen (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_ICMP"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_ICMP=yes
 				else
 					LOG_ICMP=no
@@ -111,8 +111,8 @@ log_conf() {
 				# Pakete loggen die nicht zu einer gueltigen Verbindung{{{
 				# gehoeren?
 				MSG=$(gettext 'Pakete loggen die nicht zu einer gueltigen Verbindung gehoeren (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_INVALID"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_INVALID=yes
 				else
 					LOG_INVALID=no
@@ -124,8 +124,8 @@ log_conf() {
 				# Verbindungen loggen die den Wert{{{
 				# IPLIMIT_MAX_ACCEPT ueberschreiten?.
 				MSG=$(gettext 'Verbindungen loggen die den Wert von "IPLIMIT_MAX_ACCEPT" ueberschreiten (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_IPLIMIT_EXCEED"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_IPLIMIT_EXCEED=yes
 				else
 					LOG_IPLIMIT_EXCEED=no
@@ -137,8 +137,8 @@ log_conf() {
 				# Verbindungen loggen die den Wert{{{
 				# LIMIT_RATE ueberschreiten?.
 				MSG=$(gettext 'Verbindungen loggen die den Wert in "LIMIT_RATE" ueberschreiten (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_LIMIT_EXCEED"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_LIMIT_EXCEED=yes
 				else
 					LOG_LIMIT_EXCEED=no
@@ -150,8 +150,8 @@ log_conf() {
 				# TCP SYN Pakete loggen die eine irre Header Laenge{{{
 				# besitzen (PACKET_LENGTH)?.
 				MSG=$(gettext 'TCP SYN Pakete loggen die eine irre Header Laenge besitzen "PACKET_LENGTH" (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_PACKET_LENGTH"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_PACKET_LENGTH=yes
 				else
 					LOG_PACKET_LENGTH=no
@@ -162,8 +162,8 @@ log_conf() {
 			$lv_Log_Probes)
 				# Monitoring von TCP/UDP Probe Ports?{{{
 				MSG=$(gettext 'Monitoring von TCP/UDP Probe Ports (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_PROBES"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_PROBES=yes
 				else
 					LOG_PROBES=no
@@ -193,8 +193,8 @@ log_conf() {
 				# SMB/Windows CIFS verwandte Pakete{{{
 				# loggen?
 				MSG=$(gettext 'SMB/Windows CIFS verwandte Pakete loggen (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_SMB"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_SMB=yes
 				else
 					LOG_SMB=no
@@ -206,8 +206,8 @@ log_conf() {
 				# Pakete loggen die in der Anti-Spoof Section definiert{{{
 				# sind?
 				MSG=$(gettext 'Pakete loggen die in der Anti-Spoof Section definiert sind (ja/nein)?')
-				yesno "$LOG_CONF_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LOG_CONF_TITLE" "$MSG" "$LOG_SPOOF"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LOG_SPOOF=yes
 				else
 					LOG_SPOOF=no

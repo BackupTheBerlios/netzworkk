@@ -104,8 +104,8 @@ kwrsync_backup_conf() {
 				# Soll der Partitions-/Festplattenplatz gecheckt werden?{{{
 				C_TITLE=(${gv_Configuration}::${lv_Check_Space})
 				C_MSG=$(gettext 'Soll die Festplatten/Partitionsgroesse geprueft werden ($gv_Yes/$gv_No)?')
-				yesno "$C_TITLE" "$C_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$C_TITLE" "$C_MSG" "$CHECK_HDMINFREE"
+				if [ "$gv_Auswahl" = yes ] ; then
 					CHECK_HDMINFREE=yes
 				else
 					CHECK_HDMINFREE=no
@@ -248,8 +248,8 @@ kwrsync_backup_conf() {
 				# Dateisystemgrenze einschalten ?{{{
 				ONE_FS_TITLE=(${gv_Configuration}::${lv_One_Fs})
 				ONE_FS_MSG=$(gettext 'Soll das rekursive Sichern ueber Dateisystemgrenzen hinweg ausgeschaltet werden ($gv_Yes/$gv_No)?')
-				yesno "$ONE_FS_TITLE" "$ONE_FS_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$ONE_FS_TITLE" "$ONE_FS_MSG" "$ONE_FS"
+				if [ "$gv_Auswahl" = yes ] ; then
 					ONE_FS=yes
 				else
 					ONE_FS=no
@@ -261,8 +261,8 @@ kwrsync_backup_conf() {
 				# Hardlinks erstellen einschalten?{{{
 				LINK_DST_TITLE=(${gv_Configuration}::${lv_Link_Dest})
 				LINK_DST_MSG=$(gettext 'Sollen Hardlinks bei identischen Dateien erstellt werden ($gv_Yes/$gv_No)?')
-				yesno "$LINK_DST_TITLE" "$LINK_DST_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$LINK_DST_TITLE" "$LINK_DST_MSG" "$LINK_DST"
+				if [ "$gv_Auswahl" = yes ] ; then
 					LINK_DST=yes
 				else
 					LINK_DST=no
@@ -412,8 +412,8 @@ kwrsync_backup_conf() {
 						# SSH# {{{
 						if [[ ! -f /root/.ssh/id_dsa.pub ]] ; then
 							NO_ID_DSA_MSG=$(gettext 'Es gibt keinen DSA Schluessel (ssh) fuer den Benutzer \"root\". Soll jetzt einer erstellt werden (Ja/Nein)? Beantworten Sie bei \"Ja\" die Frage nach der Passphrase mit \"ENTER\", sonst ist kein automatischer \"cronjob\" moeglich.')
-							yesno "$gv_Info" "$NO_ID_DSA_MSG" 2
-							if [ "$?" -eq 0 ] ; then
+							yesno "$gv_Info" "$NO_ID_DSA_MSG" "" 2
+							if [ "$gv_Auswahl" = yes ] ; then
 								PROG_OPT="-t dsa -b 1024 -f /root/.ssh/id_dsa"
 								ssh-keygen ${=PROG_OPT} || (MSG=$(gettext 'Es konnte kein Schluessel erstellt werden') ; msgbox "$gv_Attention" "$MSG")
 								print "command=\"sudo rsync --server --sender -vlogDtHAXprz --numeric-ids --relative . /\" "$(< /root/.ssh/id_dsa.pub) > /root/.ssh/authorized_keys.rsync

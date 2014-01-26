@@ -49,8 +49,8 @@ manage_reqs() {
 								if [ -f "$Check_File" ] ; then
 									cert_existed_msg
 									CONTINUE_MSG=$(gettext 'Wirklich versuchen das Zertifikat zu ueberschrieben?')
-									yesno "$REQ_SIGN_TITLE" "$CONTINUE_MSG"
-									if [ "$?" != 0 ] ; then
+									yesno "$REQ_SIGN_TITLE" "$CONTINUE_MSG" "no"
+									if [ "$gv_Auswahl" = no ] ; then
 										break
 									fi
 								fi
@@ -58,7 +58,7 @@ manage_reqs() {
 								read_openssl_conf "$Conf_Section"
 								# Variablen belegen, falls leer
 								VALIDITY=${VALIDITY:-3650}
-								PRESERVEDN=${PRESERVEDN:-$gv_Yes}
+								PRESERVEDN=${PRESERVEDN:-yes}
 								# Einstellungen taetigen# {{{
 								# Funktion (sign_menu)# {{{
 								#
@@ -252,8 +252,8 @@ manage_reqs() {
 								# Frage ob diese Request Datei importiert werden soll
 								IMPORT_REQ_TITLE="${lv_Request}::${lv_Import}"
 								IMPORT_REQ_MSG=$(gettext 'Soll diese Anforderung wirklich importiert werden (ja/nein)?\n\n${lv_Ssl_CommonName}: $COMMONNAME\n${lv_Ssl_Land_Code}: $COUNTRYCODE\n${lv_Ssl_Bundesstaat}: $COUNTRY\n${lv_Ssl_Location}: $LOCATION\n${lv_Ssl_Organisation}: $ORGANISATION\n${lv_Ssl_Organisation_Unit}: $ORGANISATIONUNIT\n${lv_Ssl_Email}: $MAIL')
-								yesno "$IMPORT_REQ_TITLE" "$IMPORT_REQ_MSG"
-								if [ "$?" = 0 ] ; then
+								yesno "$IMPORT_REQ_TITLE" "$IMPORT_REQ_MSG" "yes"
+								if [ "$gv_Auswahl" != no ] ; then
 									# Request importieren
 									PROG_OPT=(req ${=INFORM_FORMAT} -in $REQ_FILE
 								   		-outform PEM -out $REQ_NEW_FILE)

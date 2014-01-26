@@ -56,8 +56,8 @@ kwgrub_conf() {
 				# Menue anzeigen (yes/no)# {{{
 				DEFAULT_MENU_TITLE=(${gv_Configuration}::${lv_Display_Menu})
 				DEFAULT_MENU_MSG=$(gettext 'Soll beim booten das grub Menue angezeigt werden (ja/nein)?')
-				yesno "$DEFAULT_MENU_TITLE" "$DEFAULT_MENU_MSG" "$HIDDENMENU"
-				if [ "$?" = 0 ] ; then
+				yesno "$DEFAULT_MENU_TITLE" "$DEFAULT_MENU_MSG" "${HIDDENMENU:-yes}"
+				if [ "$gv_Auswahl" = yes ] ; then
 					HIDDENMENU=yes
 				else
 					HIDDENMENU=no

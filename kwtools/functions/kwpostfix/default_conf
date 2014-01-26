@@ -170,9 +170,10 @@ default_conf() {
 				# zu welchem Filter (content_filter) springen, <postfix 2.6# {{{
 				# war es $myhostname. Bei leer wird der Domainname des
 				# Empfaengers benutzt.
+				yesno_option "$default_filter_nexthop" "\$myhostname"
 				FILTER_NEXTHOP_MSG=$(gettext 'Filter:\nFuer Postfix Versionen <=2.6 sollte aus Kompalitaetsgruenden \"\$myhostname\" benutzt werden. Bei spaeteren Versionen wird der Domainname des Empfaengers benutzt, falls dieser Wert leer ist. Sie sollten den Parameter \"content_filter\" konfigurieren und \"default_filter_nexthop\" leer lassen.\n\nSoll die Variable \$myhostname aktiviert werden (ja/nein)?')
-				yesno "$DEFAULT_TITLE" "$FILTER_NEXTHOP_MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$DEFAULT_TITLE" "$FILTER_NEXTHOP_MSG" "$YN_OPT"
+				if [ "$gv_Auswahl" = yes ] ; then
 					default_filter_nexthop="\$myhostname"
 					postconf -e default_filter_nexthop="\$myhostname"
 				else

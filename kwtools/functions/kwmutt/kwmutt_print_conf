@@ -70,8 +70,8 @@ kwmutt_print_conf() {
 			print_decode)
 				# Soll die Nachricht vor dem drucken dekodiert werden (ja/nein)?# {{{
 				MSG=$(gettext 'Soll die Nachricht vor dem drucken dekodiert werden (ja/nein)?')
-				yesno "$PRINT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$PRINT_TITLE" "$MSG" "$print_decode"
+				if [ "$gv_Auswahl" = yes ] ; then
 					print_decode="yes"
 				else
 					print_decode="no"
@@ -82,8 +82,8 @@ kwmutt_print_conf() {
 			print_split)
 				# Sollen die Nachrichten einzeln gedruckt werden (ja/nein)?# {{{
 				MSG=$(gettext 'Sollen die Nachrichten einzeln gedruckt werden (ja/nein)?')
-				yesno "$PRINT_TITLE" "$MSG"
-				if [ "$?" = 0 ] ; then
+				yesno "$PRINT_TITLE" "$MSG" "$print_split"
+				if [ "$gv_Auswahl" = yes ] ; then
 					print_split="yes"
 				else
 					print_split="no"
