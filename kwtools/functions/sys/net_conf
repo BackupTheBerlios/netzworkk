@@ -211,8 +211,8 @@ net_conf() {
 	# usage: iface_dhcp
 	iface_dhcp() {
 		DHCP_MSG=$(gettext 'Soll das Netzwerk per dhcp konfiguriert werden (ja/nein)?')
-		yesno "$gv_Configuration" "$DHCP_MSG"
-		if [ "$?" = 0 ] ; then
+		yesno "$gv_Configuration" "$DHCP_MSG" "$gv_Dhcp"
+		if [ "$gv_Auswahl" = yes ] ; then
 			gv_Dhcp=yes
 			gv_Ip=""
 		else
@@ -426,8 +426,8 @@ net_conf() {
 	iface_onboot() {
 		# Soll das Interface schon beim Systemstart gestartet werden (ja/nein)?
 		BOOT_MSG=$(gettext 'Soll das Interface beim Systemstart gestartet werden (ja/nein)?')
-		yesno "$gv_Configuration" "$BOOT_MSG"
-		if [ "$?" = 0 ] ; then
+		yesno "$gv_Configuration" "$BOOT_MSG" "$gv_Boot"
+		if [ "$gv_Auswahl" = yes ] ; then
 			gv_Boot=yes
 		else
 			gv_Boot=no

@@ -179,8 +179,8 @@ fs_conf() {
 							e2fsck -f -y $Dst &>/dev/null || prog_failure
 							# Fragen ob das kopierte Dateisystem auf dem Ziel Laufwerk an die
 							# korrekte Groesse des Laufwerks angepasst werden soll.
-							yesno "$COPY_TITLE" "$COPY_MSG"
-							if [ "$?" = 0 ] ; then
+							yesno "$COPY_TITLE" "$COPY_MSG" ""
+							if [ "$gv_Auswahl" = yes ] ; then
 								resize2fs $Dst &>/dev/null || prog_failure
 							fi
 						elif [ "$Src_Current_Size" -eq "$Dst_Current_Size" ] ; then
@@ -233,8 +233,8 @@ fs_conf() {
 							ntfsclone -f --overwrite $Dst $Src || prog_failure
 							# Fragen ob das kopierte Dateisystem auf dem Ziel Laufwerk an die
 							# korrekte Groesse des Laufwerks angepasst werden soll.
-							yesno "$COPY_TITLE" "$COPY_MSG"
-							if [ "$?" = 0 ] ; then
+							yesno "$COPY_TITLE" "$COPY_MSG" ""
+							if [ "$gv_Auswahl" = yes ] ; then
 								(( Src_To_Dst_Size = Dst_Current_Size / 1024 ))
 								ntfsresize -P -f -s ${Src_To_Dst_Size}k $Dst || prog_failure
 							fi
@@ -285,8 +285,8 @@ fs_conf() {
 							reiserfsck -y $Dst || prog_failure
 							# Fragen ob das kopierte Dateisystem auf dem Ziel Laufwerk an die
 							# korrekte Groesse des Laufwerks angepasst werden soll.
-							yesno "$COPY_TITLE" "$COPY_MSG"
-							if [ "$?" = 0 ] ; then
+							yesno "$COPY_TITLE" "$COPY_MSG" ""
+							if [ "$gv_Auswahl" = yes ] ; then
 								resize_reiserfs $Dst || prog_failure
 							fi
 						elif [ "$Src_Current_Size" -eq "$Dst_Current_Size" ] ; then
@@ -419,8 +419,8 @@ fs_conf() {
 							xfsdump -J - "$Src_Mp" &>/dev/null | xfsrestore -J - "$Dst_Mp" 1>/dev/null || prog_failure
 							# Fragen ob das kopierte Dateisystem auf dem Ziel Laufwerk an die
 							# korrekte Groesse des Laufwerks angepasst werden soll.
-							yesno "$COPY_TITLE" "$COPY_MSG"
-							if [ "$?" = 0 ] ; then
+							yesno "$COPY_TITLE" "$COPY_MSG" ""
+							if [ "$gv_Auswahl" = yes ] ; then
 								xfs_growfs $Dst_Mp 1>/dev/null || prog_failure
 							fi
 							# ohne Frage umounten.
@@ -463,7 +463,7 @@ fs_conf() {
 	# usage: floppy_format "$FLOPPY"
 	#
 	floppy_format() {
-		if [ "$#" -ge 1 ] ; then
+		if [ "$#" -eq 1 ] ; then
 			# pruefen, ob Programm ausfuehrbar ist.
 			FTITLE=$(gettext 'Formatierung')
 			prog_check fdformat
@@ -473,11 +473,12 @@ fs_conf() {
 					fdformat $Floppy 2>&1 | progressbox $FTITLE "$Floppy"
 					while [ $? = 1 ] ; do
 						MSG=$(gettext 'Es ist keine Diskette im Laufwerk. Schieben sie bitte eine rein. Wollen Sie fortfahren (ja/nein)?')
-						yesno "$gv_Attention" "$MSG"
-					    if [ $? != 0 ] ; then
+						yesno "$gv_Attention" "$MSG" ""
+					    if [ "$gv_Auswahl" = yes ] ; then
+					    	fdformat $Floppy 2>&1 | progressbox $FTITLE "$Floppy"
+						else
 					    	break
 					    fi
-					    fdformat $Floppy 2>&1 | progressbox $FTITLE "$Floppy"
 					done
 				else
 	                no_block_dev_msg "$Floppy"
@@ -637,8 +638,8 @@ fs_conf() {
 			F_PART="$1"
 			F_FS="$2"
 			MSG=$(gettext 'Soll das Laufwerk ($F_PART) wirklich formatiert werden? Alle Daten gehen dabei verloren. Fortfahren (ja/nein)?')
-			yesno "$gv_Attention" "$MSG"
-			if [ $? != 0 ] ; then
+			yesno "$gv_Attention" "$MSG" ""
+			if [ "$gv_Auswahl" != yes ] ; then
 			   	#break
 			   	return 1
 			fi

@@ -397,8 +397,8 @@ multi_conf() {
 				$lv_On_The_Fly)
 					# CD/DVD on the fly kopieren (yes/no)?{{{
 					ONTHEFLY_MSG=$(gettext 'Soll die CD/DVD ohne temporaere Datei kopiert werden (ja/nein)?')
-					yesno "$PROJECT_TITLE" "$ONTHEFLY_MSG"
-					if [ "$?" = 0 ] ; then
+					yesno "$PROJECT_TITLE" "$ONTHEFLY_MSG" "$ON_THE_FLY"
+					if [ "$gv_Auswahl" = yes ] ; then
 						ON_THE_FLY=yes
 						CREATE_IMAGE_ONLY=no
 					else
@@ -439,8 +439,8 @@ multi_conf() {
 				$lv_CreateImageOnly)
 		            # Nur ein Image erstellen# {{{
 		            CREATE_IMAGE_ONLY_MSG=$(gettext 'Moechten Sie nur ein Image erstellen (ja/nein)?')
-			        yesno "$PROJECT_TITLE" "$CREATE_IMAGE_ONLY_MSG"
-					if [ "$?" = 0 ] ; then
+			        yesno "$PROJECT_TITLE" "$CREATE_IMAGE_ONLY_MSG" "$CREATE_IMAGE_ONLY"
+					if [ "$gv_Auswahl" = yes ] ; then
 						CREATE_IMAGE_ONLY=yes
 						ON_THE_FLY=no
 		                COPYNR=1
@@ -654,7 +654,7 @@ multi_conf() {
 		check_cd_state "$WRITE_DEVICE"
 		while [ "$CD_R_EMPTY" != yes ] ; do
 			no_empty_medium1_msg
-			if [ "$?" = 0 ] ; then
+			if [ "$gv_Auswahl" = yes ] ; then
 				check_cd_state "$WRITE_DEVICE"
 			else
 				unset -- $Unset
@@ -2451,6 +2451,9 @@ split_size() {
 	}
 	## }}}
 	# Funktion (no_empty_medium_msg), Rohling ist nicht leer# {{{
+	#############################################
+	# INFO: gerade nicht in Funktion
+	#############################################
 	no_empty_medium_msg() {
 		MSG=$(gettext 'Sie muessen einen leeren Rohling einlegen oder den vorhanden erst loeschen/formatieren.')
 		msgbox "$gv_Attention" "$MSG"
@@ -2459,7 +2462,7 @@ split_size() {
 	# Funktion (no_empty_medium1_msg), Rohling ist nicht leer + Frage auf Wiederholung# {{{
 	no_empty_medium1_msg() {
 		MSG=$(gettext 'Sie muessen einen leeren Rohling einlegen oder den vorhanden erst loeschen/formatieren. Wollen Sie einen neuen leeren Rohling einlegen oder abbrechen (ja/nein)?')
-		yesno "$gv_Attention" "$MSG"
+		yesno "$gv_Attention" "$MSG" ""
 	}
 	## }}}
 	# Funktion (over_medium_size_msg), Fehlernachricht wenn die Auswahl die CD/DVD{{{
