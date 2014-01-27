@@ -6133,7 +6133,13 @@ search_fdisks() {
 	## }}}
 	# Funktion (yesno_option) die eine Optionsvariable# {{{
 	# auf einen Wert prüft und dementsprechend die Variable
-	# F_OPT belegt.
+	# YN_OPT belegt. Und zwar auf yes oder no.
+	#
+	# usage: yesno_option "Var" "Standard-Value"
+	#
+	# Var            - werdende und vorhandende Variable.
+	# Standard-Value - Standard Wert für "yes" zum Vergleich.
+	#
 	yesno_option()
 	{
 		if [[ ${#argv} == 2 ]] ; then

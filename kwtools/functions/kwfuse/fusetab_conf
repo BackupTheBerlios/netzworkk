@@ -21,22 +21,6 @@ fusetab_conf() {
 		DUMP=${DUMP:-0}
 		FILESYSTEM=${FILESYSTEM:-fuse}
 		#
-		# Funktion (check_option) die eine Optionsvariable# {{{
-		# auf einen Wert prüft und dementsprechend die Variable
-		# F_OPT belegt.
-		check_option()
-		{
-			if [[ ${#argv} == 2 ]] ; then
-				if [ ! -z "$1" -a "$1" = "$2" ] ; then
-					F_OPT=yes
-				else
-					F_OPT=no
-				fi
-			else
-				no_para_msg $0
-			fi
-		}
-		## }}}
 		# Funktion no_input_msg# {{{
 		#
 		no_input_msg() {
@@ -231,9 +215,9 @@ fusetab_conf() {
 								;;
 							$lv_Auto)
 								# Soll das FS beim starten eingebunden werden (yes/no)?{{{
-								check_option "$FUSE_AUTO" auto
+								yesno_option "$FUSE_AUTO" auto
 								FUSETAB_AUTO_MSG=$(gettext 'Soll das Dateisystem beim starten des Rechners automatisch eingebunden werden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_AUTO_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_AUTO_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									FUSE_AUTO=auto
 								else
@@ -244,9 +228,9 @@ fusetab_conf() {
 								;;
 							$lv_User)
 								# Darf ein User das FS ein/ausbinden (yes/no)?{{{
-								check_option "$FUSE_USER" user
+								yesno_option "$FUSE_USER" user
 								FUSETAB_USER_MSG=$(gettext 'Duerfen normale Benutzer das Dateisystem ein- oder ausbinden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_USER_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_USER_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									FUSE_USER=user
 								else
@@ -257,9 +241,9 @@ fusetab_conf() {
 								;;
 							$lv_AO)
 								# all user file access (yes/no)?{{{
-								check_option "$AO" allow_other
+								yesno_option "$AO" allow_other
 								FUSETAB_AO_MSG=$(gettext 'Dies Option ueberschreibt den Sichherheitsmechanismus fuer den Dateisystemzugriff des Benutzer, der das Dateisystem eingebunden hat.\n\nDuerfen alle Benutzer inclusive root Zugriff auf das Dateisystem haben (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_AO_MSG" "$F_OPT" 2
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_AO_MSG" "$YN_OPT" 2
 								if [ "$gv_Auswahl" = yes ] ; then
 									AO=allow_other
 									unset -- AR
@@ -271,9 +255,9 @@ fusetab_conf() {
 								;;
 							$lv_AR)
 								# file access limited to the user mounting the filesystem and root (yes/no)?{{{
-								check_option "$AR" allow_root
+								yesno_option "$AR" allow_root
 								FUSETAB_AR_MSG=$(gettext 'Ist aehnlich der Option allow_other, aber es limitiert den Dateisystemzugriff auf root und dem Benutzer der das Dateisystem eingebunden hat.\n\nSoll diese Option aktiviert werden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_AR_MSG" "$F_OPT" 2
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_AR_MSG" "$YN_OPT" 2
 								if [ "$gv_Auswahl" = yes ] ; then
 									AR=allow_root
 									unset -- AO
@@ -285,9 +269,9 @@ fusetab_conf() {
 								;;
 							$lv_Debug)
 								# Debug Informationen einschalten (yes/no)?{{{
-								check_option "$DEBUG" debug
+								yesno_option "$DEBUG" debug
 								FUSETAB_DEBUG_MSG=$(gettext 'Sollen die Debug Informationen eingeschaltet werden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_DEBUG_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_DEBUG_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									DEBUG=debug
 								else
@@ -298,9 +282,9 @@ fusetab_conf() {
 								;;
 							$lv_Default_Perm)
 								# Soll FUSE die Zugriffsrechte regeln (yes/no)?{{{
-								check_option "$DPERM" default_permissions
+								yesno_option "$DPERM" default_permissions
 								FUSETAB_DPERM_MSG=$(gettext 'Soll FUSE die Zugriffsrechte des Dateisystems regeln (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_DPERM_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_DPERM_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									DPERM=default_permissions
 								else
@@ -311,9 +295,9 @@ fusetab_conf() {
 								;;
 							$lv_Direct_Io)
 								# Soll der Cache fuer den Dateiinhalt ausgeschaltet werden (yes/no)?{{{
-								check_option "$D_IO" direct_io
+								yesno_option "$D_IO" direct_io
 								FUSETAB_D_IO_MSG=$(gettext 'Soll der Cache fuer den Dateiinhalt ausgeschaltet werden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_D_IO_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_D_IO_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									D_IO=direct_io
 								else
@@ -383,9 +367,9 @@ fusetab_conf() {
 								;;
 							$lv_Hard_Remove)
 								# Sollen Dateien sofort komplett geloescht werden (yes/no)?{{{
-								check_option "$HREMOVE" hard_remove
+								yesno_option "$HREMOVE" hard_remove
 								FUSETAB_HREMOVE_MSG=$(gettext 'Sollen Dateien sofort geloescht werden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_HREMOVE_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_HREMOVE_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									HREMOVE=hard_remove
 								else
@@ -397,9 +381,9 @@ fusetab_conf() {
 							$lv_Kernel_Cache)
 								# This option disables flushing the cache of the file contents on
 								# every open() (yes/no)?{{{
-								check_option "$K_CACHE" kernel_cache
+								yesno_option "$K_CACHE" kernel_cache
 								FUSETAB_K_CACHE_MSG=$(gettext 'Diese Option schaltet das Leeren des Cache aus (ja/nein).')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_K_CACHE_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_K_CACHE_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									K_CACHE=kernel_cache
 								else
@@ -410,9 +394,9 @@ fusetab_conf() {
 								;;
 							$lv_Large_Read)
 								# Lesen von grossen Anfragen aktivieren (yes/no)?{{{
-								check_option "$LARGE" large_read
+								yesno_option "$LARGE" large_read
 								FUSETAB_LARGE_MSG=$(gettext 'Soll das Lesen von grossen Anfragen ans Dateisystem aktiviert werden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_LARGE_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_LARGE_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									LARGE=large_read
 								else
@@ -441,9 +425,9 @@ fusetab_conf() {
 								;; 
 							$lv_Nonempty)
 								# Allow mounts over a non-empty file or directory (yes/no)?{{{
-								check_option "$NO_EMPTY" nonempty
+								yesno_option "$NO_EMPTY" nonempty
 								FUSETAB_NO_EMPTY_MSG=$(gettext 'Darf das Laufwerk ueber einer nicht leeren Datei oder Verzeichnis eingebunden werden (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_NO_EMPTY_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_NO_EMPTY_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									NO_EMPTY=nonempty
 								else
@@ -454,9 +438,9 @@ fusetab_conf() {
 								;;
 							$lv_Readdir_Ino)
 								# readdir_ino einschalten (yes/no)?{{{
-								check_option "$RD_INO" readdir_ino
+								yesno_option "$RD_INO" readdir_ino
 								FUSETAB_RD_INO_MSG=$(gettext 'Soll die Option readdir_ino benutzt werden, siehe Hilfe (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_RD_INO_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_RD_INO_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									RD_INO=readdir_ino
 								else
@@ -503,9 +487,9 @@ fusetab_conf() {
 								;;
 							$lv_Use_Ino)
 								# use_ino einschalten (yes/no)?{{{
-								check_option "$USE_INO" use_ino
+								yesno_option "$USE_INO" use_ino
 								FUSETAB_USE_INO_MSG=$(gettext 'Soll die Option use_ino benutzt werden, siehe Hilfe (ja/nein)?')
-								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_USE_INO_MSG" "$F_OPT"
+								yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_USE_INO_MSG" "$YN_OPT"
 								if [ "$gv_Auswahl" = yes ] ; then
 									USE_INO=use_ino
 								else
@@ -543,9 +527,9 @@ fusetab_conf() {
 					;;
 				$lv_Dump)
 					# Dump Filesystem (yes/no)?{{{
-					check_option "$DUMP" 1
+					yesno_option "$DUMP" 1
 					FUSETAB_INPUT_DUMP_MSG=$(gettext 'Soll das Laufwerk gedumpt werden (ja/nein)?')
-					yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_INPUT_DUMP_MSG" "$F_OPT"
+					yesno "$FUSETAB_CONF_TITLE" "$FUSETAB_INPUT_DUMP_MSG" "$YN_OPT"
 					if [ "$gv_Auswahl" = yes ] ; then
 						DUMP=1
 					else

@@ -3,7 +3,7 @@
 # usage: fuse_conf
 #
 fuse_conf() {
-	# existiert fuse.conf wird sie eingelesen# {{{
+	# Falls $FUSE_CONF existiert wird sie eingelesen# {{{
 	if [ -f "$FUSE_CONF" ] ; then
 		MOUNT_MAX=${(L)${${(s:=:)${(M)${(f)"$(< ${FUSE_CONF})"}##mount_max*}}[2]}}
 		if [ -n "`print ${(M)${(f)"$(< ${FUSE_CONF})"}##user_allow_other}`" ] ; then

@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Autor: Kai Wilke <kiste@netzworkk.de> 25.01.2014
+# Autor: Kai Wilke <kiste@netzworkk.de> 26.01.2014
 #
 # Script: Konfiguration, mount und umount von Dateisystemen mit FUSE.
 # Version: 0.1.11
